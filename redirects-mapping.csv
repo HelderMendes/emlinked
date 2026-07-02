@@ -1,0 +1,9 @@
+oude_url,nieuwe_url,status_code,beslissing,reden,pagina_type,prioriteit,confidence,seo_verkeer,backlinks,verantwoordelijke,opmerkingen
+https://www.emlinked.nl/,https://www.emlinked.com/,301,behouden,Exacte vervanging homepage,homepage,hoog,hoog,1200,85,marketing,
+https://www.emlinked.nl/diensten/erp-advies,https://www.emlinked.com/oplossingen/erp-advies,301,behouden,URL blijft functioneel gelijk,service,hoog,hoog,430,24,marketing,
+https://www.emlinked.nl/category/nieuws,https://www.emlinked.com/kennisbank/,301,samenvoegen,Categorie opgeheven en samengebracht in kennisbank-hub,category,hoog,medium,95,12,content,Controleer interne links
+https://www.emlinked.nl/tag/erp,https://www.emlinked.com/kennisbank/,301,samenvoegen,Tag-archief samengevoegd in kennisbank-hub,tag,medium,medium,18,4,content,
+https://www.emlinked.nl/oude-campagne,,410,vervallen,Tijdelijke campagne definitief beëindigd,landing,laag,hoog,0,0,marketing,Geen vervangende pagina
+https://www.emlinked.nl/blog/wat-is-erp,https://www.emlinked.com/kennisbank/wat-is-erp,301,behouden,Blog verplaatst naar nieuwe kennisbank-structuur,article,hoog,hoog,310,16,content,
+https://www.emlinked.nl/contact,https://www.emlinked.com/contact,301,behouden,Zelfde intent en bestemming,contact,hoog,hoog,210,9,sales,
+https://www.emlinked.nl/search?q=erp,https://www.emlinked.com/kennisbank/,301,samenvoegen,Zoekresultaat-URL niet indexwaardig,search,laag,laag,2,0,seo,Query-params normaliseren

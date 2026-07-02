@@ -3,12 +3,17 @@ import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'rqeokhhk'
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
+
 export default defineConfig({
   name: 'default',
   title: 'emlinked',
 
-  projectId: 'rqeokhhk',
-  dataset: 'production',
+  projectId,
+  dataset,
+
+  basePath: '/studio',
 
   plugins: [structureTool(), visionTool()],
 

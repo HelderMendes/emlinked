@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --background: 210 20% 98%;
+  --foreground: 222 47% 11%;
+  
+  --primary: 220 90% 45%;
+  --primary-foreground: 210 20% 98%;
+  
+  --muted: 215 20% 65%;
+  --muted-foreground: 215 15% 40%;
+  
+  --border: 214.3 31.8% 91.4%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: 222 47% 4%;
+    --foreground: 210 40% 96%;
+    
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222 47% 4%;
+    
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20% 65%;
+    
+    --border: 217.2 32.6% 17.5%;
+    --card: 222 47% 6%;
+    --card-foreground: 210 40% 96%;
+  }
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-border: hsl(var(--border));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), sans-serif;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+}

@@ -1,0 +1,66 @@
+{
+  "https://www.emlinked.nl/": {
+    "destination": "https://www.emlinked.com/",
+    "status": 301
+  },
+  "/": {
+    "destination": "https://www.emlinked.com/",
+    "status": 301
+  },
+  "https://www.emlinked.nl/diensten/erp-advies": {
+    "destination": "https://www.emlinked.com/oplossingen/erp-advies",
+    "status": 301
+  },
+  "/diensten/erp-advies": {
+    "destination": "https://www.emlinked.com/oplossingen/erp-advies",
+    "status": 301
+  },
+  "https://www.emlinked.nl/category/nieuws": {
+    "destination": "https://www.emlinked.com/kennisbank/",
+    "status": 301
+  },
+  "/category/nieuws": {
+    "destination": "https://www.emlinked.com/kennisbank/",
+    "status": 301
+  },
+  "https://www.emlinked.nl/tag/erp": {
+    "destination": "https://www.emlinked.com/kennisbank/",
+    "status": 301
+  },
+  "/tag/erp": {
+    "destination": "https://www.emlinked.com/kennisbank/",
+    "status": 301
+  },
+  "https://www.emlinked.nl/oude-campagne": {
+    "destination": "",
+    "status": 410
+  },
+  "/oude-campagne": {
+    "destination": "",
+    "status": 410
+  },
+  "https://www.emlinked.nl/blog/wat-is-erp": {
+    "destination": "https://www.emlinked.com/kennisbank/wat-is-erp",
+    "status": 301
+  },
+  "/blog/wat-is-erp": {
+    "destination": "https://www.emlinked.com/kennisbank/wat-is-erp",
+    "status": 301
+  },
+  "https://www.emlinked.nl/contact": {
+    "destination": "https://www.emlinked.com/contact",
+    "status": 301
+  },
+  "/contact": {
+    "destination": "https://www.emlinked.com/contact",
+    "status": 301
+  },
+  "https://www.emlinked.nl/search?q=erp": {
+    "destination": "https://www.emlinked.com/kennisbank/",
+    "status": 301
+  },
+  "/search": {
+    "destination": "https://www.emlinked.com/kennisbank/",
+    "status": 301
+  }
+}
