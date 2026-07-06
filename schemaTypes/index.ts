@@ -3,6 +3,7 @@ import { page } from './page'
 import { author } from './author'
 import { article } from './article'
 import { doc } from './doc';
+import { siteSettings } from './siteSettings';
 
-export const schemaTypes = [seoFields, page, author, article, doc];
+export const schemaTypes = [seoFields, page, author, article, doc, siteSettings];
 

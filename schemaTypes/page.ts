@@ -12,6 +12,21 @@ export const page = defineType({
             validation: (Rule) => Rule.required(),
         }),
         defineField({
+            name: 'language',
+            title: 'Language',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Nederlands', value: 'nl' },
+                    { title: 'English', value: 'en' },
+                    { title: 'Deutsch', value: 'de' },
+                    { title: 'Français', value: 'fr' },
+                ],
+            },
+            initialValue: 'nl',
+            validation: (Rule) => Rule.required(),
+        }),
+        defineField({
             name: 'slug',
             title: 'Slug',
             type: 'slug',
@@ -30,9 +45,15 @@ export const page = defineType({
             of: [
                 defineArrayMember({
                     name: 'hero',
-                    title: 'Hero Block',
+                    title: 'Hero Block (Client Specs)',
                     type: 'object',
                     fields: [
+                        defineField({
+                            name: 'label',
+                            title: 'Urgency Label / Badge',
+                            type: 'string',
+                            description: 'Pill text above title (e.g., "Nieuw: Microsoft Dynamics 365 BC Koppeling")',
+                        }),
                         defineField({
                             name: 'title',
                             title: 'Hero Title',
@@ -42,24 +63,96 @@ export const page = defineType({
                             name: 'subtitle',
                             title: 'Hero Subtitle',
                             type: 'text',
-                            rows: 2,
+                            rows: 3,
                         }),
                         defineField({
                             name: 'ctaLabel',
-                            title: 'CTA Button Label',
+                            title: 'Primary CTA Label',
                             type: 'string',
                         }),
                         defineField({
                             name: 'ctaLink',
-                            title: 'CTA Button Link',
+                            title: 'Primary CTA Link',
                             type: 'string',
                         }),
                         defineField({
-                            name: 'backgroundImage',
-                            title: 'Background Image',
-                            type: 'image',
-                            options: { hotspot: true },
+                            name: 'secondaryCtaLabel',
+                            title: 'Secondary CTA Label',
+                            type: 'string',
                         }),
+                        defineField({
+                            name: 'secondaryCtaLink',
+                            title: 'Secondary CTA Link',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'showProof',
+                            title: 'Show Social Proof Bar',
+                            type: 'boolean',
+                            initialValue: true,
+                        }),
+                        defineField({
+                            name: 'proofText',
+                            title: 'Social Proof Text',
+                            type: 'string',
+                            description: 'Text displayed next to avatars',
+                        }),
+                        defineField({
+                            name: 'cardTitle',
+                            title: 'Dashboard Preview Card Title',
+                            type: 'string',
+                            initialValue: 'LIVE PORTFOLIO METRICS',
+                        }),
+                        defineField({
+                            name: 'cardStats',
+                            title: 'Dashboard Preview Stats',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({ name: 'label', title: 'Stat Label', type: 'string' }),
+                                        defineField({ name: 'value', title: 'Stat Value', type: 'string' }),
+                                        defineField({ name: 'badgeText', title: 'Badge Text (Optional)', type: 'string' }),
+                                        defineField({
+                                            name: 'badgeType',
+                                            title: 'Badge Color Theme',
+                                            type: 'string',
+                                            options: {
+                                                list: [
+                                                    { title: 'Amber / Good', value: 'good' },
+                                                    { title: 'Blue / Neutral', value: 'blue' },
+                                                    { title: 'Red / Warn', value: 'warn' },
+                                                ]
+                                            },
+                                            initialValue: 'good',
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ],
+                }),
+                defineArrayMember({
+                    name: 'trustBar',
+                    title: 'Trust Bar',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'items',
+                            title: 'Trust Items',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({ name: 'text', title: 'Text', type: 'string' }),
+                                        defineField({ name: 'icon', title: 'Icon (e.g. check, shield, star)', type: 'string' }),
+                                        defineField({ name: 'link', title: 'Link (Optional)', type: 'string' }),
+                                    ]
+                                })
+                            ]
+                        })
                     ],
                 }),
                 defineArrayMember({

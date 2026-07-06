@@ -1,44 +1,29 @@
-import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import type { Metadata } from 'next';
 import { ThemeProvider } from '@/components/ThemeProvider';
-import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
-
-const outfit = Outfit({
-  variable: "--font-display",
-  subsets: ["latin"],
-});
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Emlinked | Estate Management Linked",
-  description: "Premium software voor het beheer van vastgoedportefeuilles.",
+    title: 'Emlinked | Estate Management Linked',
+    description: 'Premium software voor het beheer van vastgoedportefeuilles.',
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-      <html
-          lang='nl'
-          className={`${inter.variable} ${outfit.variable} h-full antialiased`}
-          suppressHydrationWarning
-      >
-          <body className='min-h-full flex flex-col'>
-              <ThemeProvider
-                  attribute='class'
-                  defaultTheme='system'
-                  enableSystem
-                  disableTransitionOnChange
-              >
-                  {children}
-              </ThemeProvider>
-          </body>
-      </html>
-  );
+    return (
+        <html lang='nl' className='h-full antialiased' suppressHydrationWarning>
+            <body className='min-h-full flex flex-col'>
+                <ThemeProvider
+                    attribute='class'
+                    defaultTheme='system'
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    {children}
+                </ThemeProvider>
+            </body>
+        </html>
+    );
 }

@@ -1,4 +1,7 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&f[]=general-sans@300,400,500,600,700&display=swap');
 @import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
     --background: 0 0% 100%;
@@ -15,14 +18,26 @@
     --border: 215 30% 90%;
     --card: 0 0% 100%;
     --card-foreground: 230 78% 11%;
+
+    --navy: 230 46% 17%;
+    --navy-mid: 232 47% 21%;
+    --navy-dark: 232 45% 11%;
+    --amber: 35 100% 50%;
+    --amber-hover: 35 100% 45%;
+    --amber-light: 36 100% 61%;
+    --amber-pale: 42 100% 92%;
+    --amber-ultra: 45 100% 97%;
+
+    --font-sans: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'General Sans', sans-serif;
 }
 
 .dark {
-    --background: 230 78% 5%;
+    --background: 229 79% 11%;
     --foreground: 210 40% 98%;
 
     --primary: 14.46, 80.25%, 52.35%;
-    --primary-foreground: 230 78% 5%;
+    --primary-foreground: 229 79% 11%;
 
     --muted: 230 40% 15%;
     --muted-foreground: 215 20% 65%;
@@ -43,8 +58,17 @@
     --color-card: hsl(var(--card));
     --color-card-foreground: hsl(var(--card-foreground));
 
-    --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-    --font-display: var(--font-display), sans-serif;
+    --color-navy: hsl(var(--navy));
+    --color-navy-mid: hsl(var(--navy-mid));
+    --color-navy-dark: hsl(var(--navy-dark));
+    --color-amber: hsl(var(--amber));
+    --color-amber-hover: hsl(var(--amber-hover));
+    --color-amber-light: hsl(var(--amber-light));
+    --color-amber-pale: hsl(var(--amber-pale));
+    --color-amber-ultra: hsl(var(--amber-ultra));
+
+    --font-sans: var(--font-sans);
+    --font-display: var(--font-display);
 
     --width-8xl: 88rem;
 
@@ -64,4 +88,45 @@ body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
+
+h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes float-glow {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translate(-45%, -55%) scale(1.15);
+        opacity: 0.7;
+    }
+}
+
+.animate-hero-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 15s ease infinite;
+}
+
+.animate-float-glow {
+    animation: float-glow 8s ease-in-out infinite;
+}
+
