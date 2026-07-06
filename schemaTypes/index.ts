@@ -2,5 +2,7 @@ import { seoFields } from './seoFields'
 import { page } from './page'
 import { author } from './author'
 import { article } from './article'
+import { doc } from './doc';
 
-export const schemaTypes = [seoFields, page, author, article]
+export const schemaTypes = [seoFields, page, author, article, doc];
+

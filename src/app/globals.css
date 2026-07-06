@@ -1,54 +1,67 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: 210 20% 98%;
-  --foreground: 222 47% 11%;
-  
-  --primary: 220 90% 45%;
-  --primary-foreground: 210 20% 98%;
-  
-  --muted: 215 20% 65%;
-  --muted-foreground: 215 15% 40%;
-  
-  --border: 214.3 31.8% 91.4%;
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
+    --background: 0 0% 100%;
+    --foreground: 230 78% 11%;
+
+    /* --primary: 35 100% 50% ; */
+    --primary: 14.46, 80.25%, 52.35%;
+
+    --primary-foreground: 0 0% 100%;
+
+    --muted: 215 15% 92%;
+    --muted-foreground: 215 15% 40%;
+
+    --border: 215 30% 90%;
+    --card: 0 0% 100%;
+    --card-foreground: 230 78% 11%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: 222 47% 4%;
-    --foreground: 210 40% 96%;
-    
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222 47% 4%;
-    
-    --muted: 217.2 32.6% 17.5%;
+.dark {
+    --background: 230 78% 5%;
+    --foreground: 210 40% 98%;
+
+    --primary: 14.46, 80.25%, 52.35%;
+    --primary-foreground: 230 78% 5%;
+
+    --muted: 230 40% 15%;
     --muted-foreground: 215 20% 65%;
-    
-    --border: 217.2 32.6% 17.5%;
-    --card: 222 47% 6%;
-    --card-foreground: 210 40% 96%;
-  }
+
+    --border: 230 40% 15%;
+    --card: 230 78% 10%;
+    --card-foreground: 210 40% 98%;
 }
 
 @theme inline {
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-  --color-border: hsl(var(--border));
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
+    --color-background: hsl(var(--background));
+    --color-foreground: hsl(var(--foreground));
+    --color-primary: hsl(var(--primary));
+    --color-primary-foreground: hsl(var(--primary-foreground));
+    --color-muted: hsl(var(--muted));
+    --color-muted-foreground: hsl(var(--muted-foreground));
+    --color-border: hsl(var(--border));
+    --color-card: hsl(var(--card));
+    --color-card-foreground: hsl(var(--card-foreground));
 
-  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-display), sans-serif;
+    --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-display), sans-serif;
+
+    --width-8xl: 88rem;
+
+    --animate-star-btn: star-btn 4s linear infinite;
+
+    @keyframes star-btn {
+        0% {
+            offset-distance: 0%;
+        }
+        100% {
+            offset-distance: 100%;
+        }
+    }
 }
 
 body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-family: var(--font-sans);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
 }
