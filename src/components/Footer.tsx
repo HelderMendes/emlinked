@@ -90,12 +90,28 @@ const translations = {
 export default function Footer({ locale = 'nl', settings }: FooterProps) {
     const t = translations[locale as 'nl' | 'en'] || translations.nl;
 
-    // Helper to prepend locale for links
+    // Helper to prepend locale for links and translate categories/slugs
     const getPath = (path: string) => {
         if (locale === 'nl') {
-            return path; // Dutch is clean and un-prefixed
+            return path;
         }
-        return `/en${path === '/' ? '' : path}`; // English is prefixed
+
+        let translatedPath = path;
+        translatedPath = translatedPath.replace(
+            '/oplossingen/vastgoedbeheer-software',
+            '/solutions/property-management-software',
+        );
+        translatedPath = translatedPath.replace(
+            '/oplossingen/huurdersportaal',
+            '/solutions/tenant-portal',
+        );
+        translatedPath = translatedPath.replace(
+            '/oplossingen/payment',
+            '/solutions/payment-software',
+        );
+        translatedPath = translatedPath.replace('/oplossingen', '/solutions');
+
+        return `/en${translatedPath === '/' ? '' : translatedPath}`;
     };
 
     return (
@@ -178,7 +194,11 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                         {/* Address & Phone details */}
                         <div className='flex flex-col gap-2 mt-2 text-xs text-muted-foreground'>
                             <a
-                                href={settings?.phone ? `tel:${settings.phone.replace(/[^\d+]/g, '')}` : 'tel:+310887077000'}
+                                href={
+                                    settings?.phone
+                                        ? `tel:${settings.phone.replace(/[^\d+]/g, '')}`
+                                        : 'tel:+310887077000'
+                                }
                                 className='flex items-center gap-2 hover:text-[#ff9400] transition-colors'
                             >
                                 <svg
@@ -201,7 +221,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 </svg>
                                 <span>{settings?.phone || t.phone}</span>
                             </a>
-                             <span className='flex items-center gap-2'>
+                            <span className='flex items-center gap-2'>
                                 <svg
                                     className='h-3.5 w-3.5 text-[#ff9400] shrink-0'
                                     fill='none'
@@ -376,9 +396,12 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                         {/* Social icons */}
                         <div className='flex gap-3 mt-1.5'>
                             <a
-                                href={settings?.linkedinUrl || 'https://linkedin.com'}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                href={
+                                    settings?.linkedinUrl ||
+                                    'https://linkedin.com'
+                                }
+                                target='_blank'
+                                rel='noopener noreferrer'
                                 className='h-7 w-7 rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-[#ff9400] transition-colors'
                                 aria-label='LinkedIn'
                             >
@@ -392,8 +415,8 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             </a>
                             <a
                                 href={settings?.twitterUrl || 'https://x.com'}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                target='_blank'
+                                rel='noopener noreferrer'
                                 className='h-7 w-7 rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-[#ff9400] transition-colors'
                                 aria-label='X (Twitter)'
                             >
@@ -411,7 +434,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                 {/* 3. Bottom Legal Copyright Bar */}
                 <div className='mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left max-w-7xl mx-auto'>
-                    <p className='text-[10px] text-muted-foreground'>{t.rights}</p>
+                    <p className='text-[10px] text-muted-foreground'>
+                        {t.rights}
+                    </p>
                     <div className='flex flex-wrap justify-center gap-4 md:gap-6 text-[10px] text-muted-foreground'>
                         <Link
                             href={getPath('/privacybeleid')}
@@ -419,7 +444,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                         >
                             {t.disclaimer}
                         </Link>
-                        <span className='text-white/10 dark:text-slate-200'>|</span>
+                        <span className='text-white/10 dark:text-slate-200'>
+                            |
+                        </span>
                         <Link
                             href={getPath('/algemene-voorwaarden')}
                             className='hover:text-[#ff9400] transition-colors'

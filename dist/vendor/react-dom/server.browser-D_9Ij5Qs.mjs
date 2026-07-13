@@ -1,0 +1,1 @@
+import{t as e}from"./server-kD00-_yT.mjs";const t=e();export default t;export const renderToStaticMarkup=t.renderToStaticMarkup;export const renderToString=t.renderToString;export const version=t.version;
