@@ -312,6 +312,91 @@ export const page = defineType({
                         }),
                     ],
                 }),
+                defineArrayMember({
+                    name: 'integrationsList',
+                    title: 'Integrations List',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'sectionTitle',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'integrations',
+                            title: 'Integrations',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({ name: 'title', title: 'Integration Title', type: 'string' }),
+                                        defineField({ name: 'badge', title: 'Badge Text', type: 'string' }),
+                                        defineField({ name: 'description', title: 'Description', type: 'text', rows: 3 }),
+                                        defineField({ name: 'imagePlaceholder', title: 'Image Placeholder Name', type: 'string', description: 'e.g. BC-Integration-Flowchart.webp' }),
+                                        defineField({
+                                            name: 'bullets',
+                                            title: 'Bullet Points',
+                                            type: 'array',
+                                            of: [defineArrayMember({ type: 'string' })]
+                                        }),
+                                        defineField({ name: 'link', title: 'Link (Optional)', type: 'string' }),
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
+                }),
+                defineArrayMember({
+                    name: 'calculatorBlock',
+                    title: 'Calculator Block',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'calculatorType',
+                            title: 'Calculator Type',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Box 3 Calculator', value: 'box3' }
+                                ]
+                            },
+                            initialValue: 'box3',
+                        })
+                    ]
+                }),
+                defineArrayMember({
+                    name: 'richText',
+                    title: 'Rich Text Content',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'sectionTitle',
+                            title: 'Section Title (Optional)',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'content',
+                            title: 'Content',
+                            type: 'array',
+                            of: [
+                                { type: 'block' },
+                                {
+                                    type: 'image',
+                                    options: { hotspot: true },
+                                    fields: [
+                                        {
+                                            name: 'alt',
+                                            type: 'string',
+                                            title: 'Alternative Text',
+                                            validation: (Rule) => Rule.required(),
+                                        }
+                                    ]
+                                }
+                            ]
+                        })
+                    ]
+                }),
             ],
         }),
         defineField({
