@@ -67,6 +67,10 @@
     --color-amber-pale: hsl(var(--amber-pale));
     --color-amber-ultra: hsl(var(--amber-ultra));
 
+    --color-orange: hsl(var(--amber));
+    --color-darkBlue: hsl(230 78% 10%);
+    --color-emlinkedblue: var(--color-darkBlue);
+
     --font-sans: var(--font-sans);
     --font-display: var(--font-display);
 
@@ -128,5 +132,44 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 .animate-float-glow {
     animation: float-glow 8s ease-in-out infinite;
+}
+
+@keyframes wave-move-slow {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes wave-move-mid {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes wave-move-fast {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-wave-slow {
+    animation: wave-move-slow 24s linear infinite;
+}
+
+.animate-wave-mid {
+    animation: wave-move-mid 18s linear infinite;
+}
+
+.animate-wave-fast {
+    animation: wave-move-fast 12s linear infinite;
 }
 

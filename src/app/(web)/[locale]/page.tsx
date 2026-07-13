@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { client } from '@/sanity/client';
 import { 
@@ -250,17 +251,96 @@ export default async function HomePage({ params }: HomePageProps) {
                         const cardStats = block.cardStats || [];
 
                         return (
-                            <section key={block._key} className='relative px-6 py-20 md:py-32 overflow-hidden bg-gradient-to-br from-[#030616] via-[#091236] to-[#01020a] animate-hero-gradient text-white dark:bg-gradient-to-br dark:from-[#FFFBEF] dark:via-[#FFFDF9] dark:to-[#FFF3D4] dark:animate-none dark:text-[#060e32] border-b border-white/10 dark:border-amber/10 transition-colors duration-300'>
+                            <section
+                                key={block._key}
+                                className='relative px-6 py-14 md:py-26 overflow-hidden bg-[url("/hero/bkg_darkBlue.jpg")] bg-cover bg-center bg-no-repeat text-white dark:bg-gradient-to-br dark:from-[#FFFBEF] dark:via-[#FFFDF9] dark:to-[#FFF3D4] dark:animate-none dark:text-[#060e32] border-b border-white/10 dark:border-amber/10 transition-colors duration-300'
+                            >
                                 {/* Ambient Background Glow */}
                                 <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber/5 rounded-full blur-[120px] pointer-events-none animate-float-glow' />
 
+                                {/* Wave Animation with Orange Glow */}
+                                <div className='absolute bottom-[-5%] left-0 w-full h-[20%] overflow-hidden pointer-events-none z-0 '>
+                                    <svg
+                                        className='absolute w-[200%] h-full'
+                                        viewBox='0 0 2000 120'
+                                        preserveAspectRatio='none'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                    >
+                                        <defs>
+                                            <linearGradient
+                                                id='wave-glow'
+                                                x1='0%'
+                                                y1='0%'
+                                                x2='0%'
+                                                y2='100%'
+                                            >
+                                                <stop
+                                                    offset='0%'
+                                                    stopColor='#ff9400'
+                                                    stopOpacity='0.45'
+                                                />
+                                                <stop
+                                                    offset='15%'
+                                                    stopColor='#ff9400'
+                                                    stopOpacity='0.15'
+                                                />
+                                                <stop
+                                                    offset='60%'
+                                                    stopColor='#ff9400'
+                                                    stopOpacity='0'
+                                                />
+                                            </linearGradient>
+                                            <filter
+                                                id='glow-blur'
+                                                x='-10%'
+                                                y='-10%'
+                                                width='120%'
+                                                height='120%'
+                                            >
+                                                <feGaussianBlur
+                                                    stdDeviation='5'
+                                                    result='blur'
+                                                />
+                                                <feMerge>
+                                                    <feMergeNode in='blur' />
+                                                    <feMergeNode in='SourceGraphic' />
+                                                </feMerge>
+                                            </filter>
+                                        </defs>
+
+                                        {/* Wave 1 */}
+                                        <path
+                                            d='M0,60 C250,100 250,20 500,60 C750,100 750,20 1000,60 C1250,100 1250,20 1500,60 C1750,100 1750,20 2000,60 L2000,120 L0,120 Z'
+                                            fill='url(#wave-glow)'
+                                            filter='url(#glow-blur)'
+                                            className='animate-wave-slow'
+                                        />
+
+                                        {/* Wave 2 */}
+                                        <path
+                                            d='M0,60 C150,10 350,110 500,60 C650,10 850,110 1000,60 C1150,10 1350,110 1500,60 C1650,10 1850,110 2000,60 L2000,120 L0,120 Z'
+                                            fill='url(#wave-glow)'
+                                            filter='url(#glow-blur)'
+                                            className='animate-wave-mid opacity-40'
+                                        />
+
+                                        {/* Wave 3 */}
+                                        <path
+                                            d='M0,60 C200,90 300,30 500,60 C700,90 800,30 1000,60 C1200,90 1300,30 1500,60 C1700,90 1800,30 2000,60 L2000,120 L0,120 Z'
+                                            fill='url(#wave-glow)'
+                                            filter='url(#glow-blur)'
+                                            className='animate-wave-fast opacity-60'
+                                        />
+                                    </svg>
+                                </div>
+
                                 {/* Visual Watermarks */}
-                                <div className='absolute right-[-60px] top-[-60px] w-[520px] h-auto opacity-[0.06] dark:opacity-[0.03] pointer-events-none select-none text-white dark:text-[#060e32] font-display text-[300px] leading-none font-bold'>
+                                {/* <div className='absolute right-[-60px] top-[-60px] w-[520px] h-auto opacity-[0.06] dark:opacity-[0.03] pointer-events-none select-none text-white dark:text-[#060e32] font-display text-[300px] leading-none font-bold'>
                                     EM
                                 </div>
                                 <div className='absolute left-[-30px] bottom-[-40px] w-[260px] h-auto opacity-[0.04] dark:opacity-[0.02] pointer-events-none select-none text-amber font-display text-[150px] leading-none font-bold'>
                                     EM
-                                </div>
+                                </div> */}
 
                                 <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10'>
                                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
@@ -278,26 +358,106 @@ export default async function HomePage({ params }: HomePageProps) {
                                             </p>
                                             <div className='flex flex-col sm:flex-row gap-4 mt-2'>
                                                 <Link
-                                                    href={getPath(primaryCtaLink)}
-                                                    className="inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-white transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]"
+                                                    href={getPath(
+                                                        primaryCtaLink,
+                                                    )}
+                                                    className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-white transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
                                                 >
                                                     {primaryCtaLabel}
                                                 </Link>
-                                                {secondaryCtaLabel && secondaryCtaLink && (
-                                                    <Link href={getPath(secondaryCtaLink)} className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'>
-                                                        {secondaryCtaLabel}
-                                                    </Link>
-                                                )}
+                                                {secondaryCtaLabel &&
+                                                    secondaryCtaLink && (
+                                                        <Link
+                                                            href={getPath(
+                                                                secondaryCtaLink,
+                                                            )}
+                                                            className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                                                        >
+                                                            {secondaryCtaLabel}
+                                                        </Link>
+                                                    )}
                                             </div>
 
                                             {showProof && (
                                                 <div className='flex items-center gap-4 pt-6 border-t border-white/10 dark:border-[#060e32]/10 mt-2'>
-                                                    <div className='flex -space-x-2'>
-                                                        <span className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] bg-amber flex items-center justify-center text-[10px] font-bold text-navy'>HM</span>
-                                                        <span className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] bg-navy-mid flex items-center justify-center text-[10px] font-bold text-amber'>ML</span>
-                                                        <span className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] bg-amber-light flex items-center justify-center text-[10px] font-bold text-navy'>EM</span>
+                                                    <div className='flex -space-x-2.5 overflow-visible relative'>
+                                                        {/* Levi Bosboom */}
+                                                        <div className='relative group z-30 hover:z-50'>
+                                                            <Image
+                                                                src='/hero/levi-bosboom.png'
+                                                                alt='Levi Bosboom'
+                                                                width={32}
+                                                                height={32}
+                                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                                            />
+                                                            {/* Tooltip */}
+                                                            <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>Levi Bosboom</div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>Eigenaar, Vastgoedbeheer Rotterdam</div>
+                                                                <div className='text-[10px] text-amber mt-1'>★★★★★</div>
+                                                                {/* Arrow */}
+                                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Angelique */}
+                                                        <div className='relative group z-25 hover:z-50'>
+                                                            <Image
+                                                                src='/hero/angelique.png'
+                                                                alt='Angelique van Doorn-Franke'
+                                                                width={32}
+                                                                height={32}
+                                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                                            />
+                                                            {/* Tooltip */}
+                                                            <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>Angelique van Doorn</div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>Vastgoedbeheerder, Van Overhagen</div>
+                                                                <div className='text-[10px] text-amber mt-1'>★★★★★</div>
+                                                                {/* Arrow */}
+                                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Michel */}
+                                                        <div className='relative group z-20 hover:z-50'>
+                                                            <Image
+                                                                src='/hero/MichelDeWaal.jpg'
+                                                                alt='Michel De Waal'
+                                                                width={32}
+                                                                height={32}
+                                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                                            />
+                                                            {/* Tooltip */}
+                                                            <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>Michel De Waal</div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>Directeur, M2 Capital Real Estate</div>
+                                                                <div className='text-[10px] text-amber mt-1'>★★★★★</div>
+                                                                {/* Arrow */}
+                                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Sander */}
+                                                        <div className='relative group z-15 hover:z-50'>
+                                                            <Image
+                                                                src='/hero/sander-bot.png'
+                                                                alt='Sander Bot'
+                                                                width={32}
+                                                                height={32}
+                                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                                            />
+                                                            {/* Tooltip */}
+                                                            <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>Sander Bot</div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>Mede-eigenaar, Baetland Vastgoed</div>
+                                                                <div className='text-[10px] text-amber mt-1'>★★★★★</div>
+                                                                {/* Arrow */}
+                                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <span className='text-xs text-white/55 dark:text-[#060e32]/60 font-light'>
+                                                    <span className='text-sm text-white/65 dark:text-orange font-light'>
                                                         {proofText}
                                                     </span>
                                                 </div>
@@ -306,78 +466,16 @@ export default async function HomePage({ params }: HomePageProps) {
 
                                         {/* Right Column */}
                                         <div className='lg:col-span-5 hover:scale-[1.01] transition-transform duration-300'>
-                                            <div className='bg-white/[0.03] dark:bg-white/80 border border-white/10 dark:border-[#060e32]/10 rounded-2xl p-7 backdrop-blur-md relative overflow-hidden shadow-2xl dark:shadow-xl hover:shadow-2xl dark:hover:border-[#060e32]/20 transition-all duration-300'>
-                                                <div className='absolute right-[-20px] top-[-20px] w-28 h-28 opacity-[0.03] dark:opacity-[0.02] pointer-events-none select-none text-white dark:text-[#060e32] font-bold text-8xl'>
-                                                    EM
-                                                </div>
-                                                <div className="flex items-center gap-2 mb-4">
-                                                    <h3 className='text-xs font-semibold text-white/40 dark:text-[#060e32]/45 uppercase tracking-widest'>
-                                                        {cardTitle}
-                                                    </h3>
-                                                    <span className="flex h-2 w-2 relative">
-                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                                                    </span>
-                                                </div>
-                                                <div className='flex flex-col gap-1'>
-                                                    {cardStats.map((stat: any) => {
-                                                        let badgeClass = 'bg-white/10 text-white/70 dark:bg-[#060e32]/5 dark:text-[#060e32]/80';
-                                                        if (stat.badgeType === 'good') {
-                                                            badgeClass = 'bg-amber/20 text-amber dark:bg-amber/10 dark:text-amber-hover';
-                                                        } else if (stat.badgeType === 'warn') {
-                                                            badgeClass = 'bg-red-600/20 text-red-300 dark:text-red-600';
-                                                        } else if (stat.badgeType === 'blue') {
-                                                            badgeClass = 'bg-blue-500/20 text-blue-300 dark:text-blue-600';
-                                                        }
-                                                        return (
-                                                            <div key={stat._key} className='flex justify-between items-center py-3 border-b border-white/5 dark:border-[#060e32]/5 last:border-b-0'>
-                                                                <span className='text-sm text-white/50 dark:text-[#060e32]/55'>{stat.label}</span>
-                                                                <div className='flex items-center gap-2.5'>
-                                                                    <span className='text-sm font-medium text-white dark:text-[#060e32]'>{stat.value}</span>
-                                                                    {stat.badgeText && (
-                                                                        <span className={`text-[10px] px-2 py-0.5 rounded font-semibold ${badgeClass}`}>
-                                                                            {stat.badgeText}
-                                                                        </span>
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                        );
-                                                    })}
-                                                </div>
-                                                
-                                                {/* Mini Sparkline SVG Chart */}
-                                                <div className='mt-6 rounded-xl border border-white/5 dark:border-[#060e32]/5 p-4 bg-white/[0.01] dark:bg-[#060e32]/5 flex flex-col gap-2'>
-                                                    <div className="flex justify-between items-center mb-1">
-                                                        <span className="text-[10px] text-white/40 dark:text-[#060e32]/45 uppercase tracking-wider font-semibold">
-                                                            {locale === 'en' ? 'Rent index trend' : 'Huurindex trend'}
-                                                        </span>
-                                                        <span className="text-[10px] text-emerald-500 font-bold flex items-center gap-0.5">
-                                                            +3.4% {locale === 'en' ? 'this month' : 'deze maand'}
-                                                        </span>
-                                                    </div>
-                                                    <div className="h-16 w-full flex items-end">
-                                                        <svg className="w-full h-full text-amber stroke-[2]" viewBox="0 0 100 30" preserveAspectRatio="none">
-                                                            <defs>
-                                                                <linearGradient id="chart-glow" x1="0" y1="0" x2="0" y2="1">
-                                                                    <stop offset="0%" stopColor="#FE9400" stopOpacity="0.25"/>
-                                                                    <stop offset="100%" stopColor="#FE9400" stopOpacity="0"/>
-                                                                </linearGradient>
-                                                            </defs>
-                                                            <path 
-                                                                d="M0,25 Q15,10 30,20 T60,5 T90,8 L100,12" 
-                                                                fill="none" 
-                                                                stroke="currentColor" 
-                                                                className="text-amber"
-                                                            />
-                                                            <path 
-                                                                d="M0,25 Q15,10 30,20 T60,5 T90,8 L100,12 L100,30 L0,30 Z" 
-                                                                fill="url(#chart-glow)"
-                                                                stroke="none"
-                                                            />
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <h3>
+                                                <Image
+                                                    src='/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                                                    alt='hero-image'
+                                                    width={500}
+                                                    height={500}
+                                                    className='w-full h-auto rounded-2xl'
+                                                    priority
+                                                />
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>

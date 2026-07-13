@@ -201,7 +201,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     </button>
 
                     {/* Logo & Brand Title (Aligned to left column) */}
-                    <div className='flex-shrink-0 flex items-center xl:w-1/4'>
+                    <div className='flex items-center flex-shrink-0'>
                         <Link
                             href={getPath('/')}
                             className='flex items-center'
@@ -216,11 +216,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     </div>
 
                     {/* Desktop Navigation Links (Mathematically centered) */}
-                    <nav className='hidden xl:flex items-center justify-center gap-6 xl:w-2/4'>
+                    <nav className='hidden xl:flex items-center justify-center gap-6 flex-grow'>
                         {/* Vastgoedsoftware */}
                         <div className='group relative py-2'>
                             <button
-                                className={`flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer ${
+                                className={`flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                                     isActive(
                                         '/oplossingen/vastgoedbeheer-software',
                                     ) ||
@@ -251,11 +251,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
                                 >
                                     <div
-                                        className={`text-xs font-bold ${isActive('/oplossingen/vastgoedbeheer-software') ? 'text-amber' : 'text-foreground'}`}
+                                        className={`text-[12px] font-bold ${isActive('/oplossingen/vastgoedbeheer-software') ? 'text-amber' : 'text-foreground'}`}
                                     >
                                         {t.vastgoedbeheer}
                                     </div>
-                                    <div className='text-[10px] text-muted-foreground'>
+                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
                                         {t.vastgoedbeheerDesc}
                                     </div>
                                 </Link>
@@ -266,11 +266,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
                                 >
                                     <div
-                                        className={`text-xs font-bold ${isActive('/oplossingen/huurdersportaal') ? 'text-amber' : 'text-foreground'}`}
+                                        className={`text-sm font-bold ${isActive('/oplossingen/huurdersportaal') ? 'text-amber' : 'text-foreground'}`}
                                     >
                                         {t.huurdersportaal}
                                     </div>
-                                    <div className='text-[10px] text-muted-foreground'>
+                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
                                         {t.huurdersportaalDesc}
                                     </div>
                                 </Link>
@@ -279,11 +279,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
                                 >
                                     <div
-                                        className={`text-xs font-bold ${isActive('/oplossingen/payment') ? 'text-amber' : 'text-foreground'}`}
+                                        className={`text-sm font-bold ${isActive('/oplossingen/payment') ? 'text-amber' : 'text-foreground'}`}
                                     >
                                         {t.payment}
                                     </div>
-                                    <div className='text-[10px] text-muted-foreground'>
+                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
                                         {t.paymentDesc}
                                     </div>
                                 </Link>
@@ -319,11 +319,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
                                 >
                                     <div
-                                        className={`text-xs font-bold ${isActive('/integraties') ? 'text-amber' : 'text-foreground'}`}
+                                        className={`text-sm font-bold ${isActive('/integraties') ? 'text-amber' : 'text-foreground'}`}
                                     >
                                         {t.integrations}
                                     </div>
-                                    <div className='text-[10px] text-muted-foreground'>
+                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
                                         Koppelingen met Business Central,
                                         Document Capture en Telebankieren.
                                     </div>
@@ -333,11 +333,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
                                 >
                                     <div
-                                        className={`text-xs font-bold ${isActive('/kennisbank/box3-check') ? 'text-amber' : 'text-foreground'}`}
+                                        className={`text-sm font-bold ${isActive('/kennisbank/box3-check') ? 'text-amber' : 'text-foreground'}`}
                                     >
                                         {t.box3}
                                     </div>
-                                    <div className='text-[10px] text-muted-foreground'>
+                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
                                         Bereken de impact van Box 3 wetgeving op
                                         uw vastgoed.
                                     </div>
@@ -373,11 +373,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
                                 >
                                     <div
-                                        className={`text-xs font-bold ${isActive('/referenties') ? 'text-amber' : 'text-foreground'}`}
+                                        className={`text-sm font-bold ${isActive('/referenties') ? 'text-amber' : 'text-foreground'}`}
                                     >
                                         {t.referenties}
                                     </div>
-                                    <div className='text-[10px] text-muted-foreground'>
+                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
                                         Ontdek ervaringen van vastgoedbeheerders
                                         en beleggers.
                                     </div>
@@ -425,11 +425,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
                                 >
                                     <div
-                                        className={`text-xs font-bold ${isActive('/team') ? 'text-amber' : 'text-foreground'}`}
+                                        className={`text-sm font-bold ${isActive('/team') ? 'text-amber' : 'text-foreground'}`}
                                     >
                                         {t.team}
                                     </div>
-                                    <div className='text-[10px] text-muted-foreground'>
+                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
                                         Maak kennis met ons specialistische
                                         team.
                                     </div>
@@ -451,11 +451,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     </nav>
 
                     {/* Right side: Global Actions (Aligned to right column) */}
-                    <div className='flex items-center gap-3 sm:gap-4 shrink-0 xl:w-1/4 justify-end'>
+                    <div className='flex items-center gap-3 sm:gap-4 flex-shrink-0 justify-end'>
                         {/* Docs Book Icon */}
                         <Link
                             href='/docs'
-                            className={`p-2 rounded-md hover:bg-muted transition-all ${
+                            className={`p-1 rounded-md hover:bg-muted transition-all ${
                                 pathname?.startsWith('/docs')
                                     ? 'text-amber bg-muted/40'
                                     : 'text-muted-foreground hover:text-foreground'
@@ -463,7 +463,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             title={t.docs}
                         >
                             <svg
-                                className='h-5 w-5 stroke-[1.75]'
+                                className='size-6 stroke-[1.5]'
                                 fill='none'
                                 viewBox='0 0 24 24'
                                 stroke='currentColor'
@@ -486,7 +486,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 aria-label='Select Language'
                             >
                                 <svg
-                                    className='size-7 stroke-[1.75]'
+                                    className='size-6 stroke-[1.5]'
                                     fill='none'
                                     viewBox='0 0 24 24'
                                     stroke='currentColor'
@@ -509,15 +509,17 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 'emlinked_locale=nl; path=/; max-age=31536000; SameSite=Lax';
                                             setLangDropdownOpen(false);
                                         }}
-                                        className='flex items-center justify-between px-2 py-1 text-xs font-semibold rounded-md text-white/70 dark:text-slate-600 hover:bg-white/10 dark:hover:bg-slate-100 hover:text-white dark:hover:text-slate-900 transition-all'
+                                        className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
                                     >
                                         <div className='flex items-center gap-2'>
-                                            <span>🇳🇱</span>
+                                            <span className='text-xl mr-1'>
+                                                🇳🇱
+                                            </span>
                                             <span>Nederlands</span>
                                         </div>
                                         {locale === 'nl' && (
                                             <svg
-                                                className='size-8 text-primary'
+                                                className='size-6 text-primary'
                                                 fill='none'
                                                 viewBox='0 0 24 24'
                                                 stroke='currentColor'
@@ -540,15 +542,17 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 'emlinked_locale=en; path=/; max-age=31536000; SameSite=Lax';
                                             setLangDropdownOpen(false);
                                         }}
-                                        className='flex items-center justify-between px-2 py-1 text-xs font-semibold rounded-md text-white/70 dark:text-slate-600 hover:bg-white/10 dark:hover:bg-slate-100 hover:text-white dark:hover:text-slate-900 transition-all'
+                                        className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
                                     >
                                         <div className='flex items-center gap-2'>
-                                            <span>🇬🇧</span>
+                                            <span className='text-xl mr-1'>
+                                                🇬🇧
+                                            </span>
                                             <span>English</span>
                                         </div>
                                         {locale === 'en' && (
                                             <svg
-                                                className='size-8 text-primary'
+                                                className='size-6 text-primary'
                                                 fill='none'
                                                 viewBox='0 0 24 24'
                                                 stroke='currentColor'
@@ -569,7 +573,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         {/* Sun/Moon Theme Toggle Switch */}
                         <button
                             onClick={toggleTheme}
-                            className='p-2 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer'
+                            className='p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer'
                             aria-label='Switch Theme'
                         >
                             {mounted &&
@@ -579,7 +583,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                         '(prefers-color-scheme: dark)',
                                     ).matches)) ? (
                                 <svg
-                                    className='size-7 stroke-[1.75]'
+                                    className='size-6 stroke-[1.5]'
                                     fill='none'
                                     viewBox='0 0 24 24'
                                     stroke='currentColor'
@@ -592,7 +596,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 </svg>
                             ) : (
                                 <svg
-                                    className='h-5 w-5 stroke-[1.75]'
+                                    className='size-6 stroke-[1.5]'
                                     fill='none'
                                     viewBox='0 0 24 24'
                                     stroke='currentColor'
@@ -609,10 +613,10 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         {/* Sign In Button / Portal Access - Restored original Mijn Emlinked Design with Badtz Star Effect */}
                         <Link
                             href='/docs'
-                            className='inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-md border transition-all duration-300 bg-[#ff9400] border-white text-white hover:bg-white hover:border-[#ff9400] hover:text-[#ff9400] dark:bg-[#060e32] dark:border-[#ff9400] dark:text-[#ff9400] dark:hover:bg-[#ff9400] dark:hover:border-[#060e32] dark:hover:text-[#060e32]'
+                            className='inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-md border transition-all duration-300 bg-orange border-darkBlue text-darkBlue hover:bg-darkBlue hover:border-darkBlue hover:text-orange dark:bg-darkBlue dark:border-orange dark:text-orange dark:hover:bg-orange dark:hover:border-darkBlue dark:hover:text-darkBlue'
                         >
                             <BsRocketTakeoff className='h-4 w-4 shrink-0' />
-                            <span>{t.mijnEmlinked}</span>
+                            <span className='text-sm'>{t.mijnEmlinked}</span>
                         </Link>
                     </div>
                 </div>
