@@ -7,9 +7,7 @@
     --background: 0 0% 100%;
     --foreground: 230 78% 11%;
 
-    --primary: 35 100% 50% ;
-    /* --primary: 14.46, 80.25%, 52.35%; */
-
+    --primary: 35 100% 50%;
     --primary-foreground: 0 0% 100%;
 
     --muted: 215 15% 92%;
@@ -36,7 +34,7 @@
     --background: 229 79% 11%;
     --foreground: 210 40% 98%;
 
-    --primary: 14.46, 80.25%, 52.35%;
+    --primary: 35 100% 50%;
     --primary-foreground: 229 79% 11%;
 
     --muted: 230 40% 15%;

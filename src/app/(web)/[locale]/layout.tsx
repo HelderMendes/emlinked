@@ -10,8 +10,9 @@ interface WebLayoutProps {
 
 async function getSiteSettings(locale: string) {
     try {
+        const id = `siteSettings-${locale}`;
         return await client.fetch(
-            `*[_type == "siteSettings" && language == $locale][0] {
+            `*[_id == $id][0] {
                 announcementActive,
                 announcementText,
                 announcementLink,
@@ -19,9 +20,11 @@ async function getSiteSettings(locale: string) {
                 email,
                 address,
                 linkedinUrl,
-                twitterUrl
+                twitterUrl,
+                calendlyUrl,
+                navigationMenu
             }`,
-            { locale }
+            { id },
         );
     } catch (e) {
         console.error('Error fetching site settings from Sanity:', e);

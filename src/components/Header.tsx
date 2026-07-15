@@ -2,10 +2,42 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { DemoModal } from '@/components/DemoModal';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BsRocketTakeoff } from 'react-icons/bs';
+import {
+    BsRocketTakeoff,
+    BsBuilding,
+    BsChatSquareText,
+    BsCreditCard2Back,
+    BsPeopleFill,
+    BsGraphUpArrow,
+    BsReceipt,
+    BsBank2,
+    BsArrowUpRight,
+} from 'react-icons/bs';
+
+// Maps a submenu link title to a representative icon so the mega-menu
+// reads as a scannable grid instead of a wall of text.
+function getSubIcon(title: string) {
+    const t = title.toLowerCase();
+    if (t.includes('vastgoedbeheer') || t.includes('property management'))
+        return BsBuilding;
+    if (t.includes('huurdersportaal') || t.includes('tenant'))
+        return BsChatSquareText;
+    if (t.includes('payment') || t.includes('betal'))
+        return BsCreditCard2Back;
+    if (t.includes('referenties') || t.includes('references'))
+        return BsPeopleFill;
+    if (t.includes('indexatie') || t.includes('indexation') || t.includes('cpi'))
+        return BsGraphUpArrow;
+    if (t.includes('prolongatie') || t.includes('invoicing') || t.includes('facturatie'))
+        return BsReceipt;
+    if (t.includes('boekhouding') || t.includes('accounting'))
+        return BsBank2;
+    return BsArrowUpRight;
+}
 
 interface HeaderProps {
     locale?: string;
@@ -75,6 +107,132 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
     const { theme, setTheme } = useTheme();
     const pathname = usePathname();
     const t = translations[locale as 'nl' | 'en'] || translations.nl;
+    const isEn = locale === 'en';
+    const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
+
+    // Fallback menu structure if Sanity settings are empty
+    const defaultMenu = isEn
+        ? [
+              {
+                  _type: 'menuDropdown',
+                  title: 'Property Software',
+                  path: '/vastgoedsoftware',
+                  links: [
+                      {
+                          title: 'Property Management',
+                          path: '/oplossingen/vastgoedbeheer-software',
+                          description: 'Core SaaS property management module.',
+                      },
+                      {
+                          title: 'Tenant Portal',
+                          path: '/oplossingen/huurdersportaal',
+                          description:
+                              'Self-service portal for support tickets.',
+                      },
+                      {
+                          title: 'Payment Software',
+                          path: '/oplossingen/payment',
+                          description: 'Automated billing transactions.',
+                      },
+                  ],
+              },
+              {
+                  _type: 'menuDropdown',
+                  title: 'Features',
+                  path: '/functies',
+                  links: [
+                      {
+                          title: 'CPI Indexation',
+                          path: '/kennisbank/box3-check',
+                          description: 'Automated CBS-based lease adjustments.',
+                      },
+                      {
+                          title: 'Rent Invoicing',
+                          path: '/oplossingen/vastgoedbeheer-software',
+                          description: 'Recurring billing runs.',
+                      },
+                      {
+                          title: 'Accounting Integration',
+                          path: '/integraties',
+                          description:
+                              'Native Dynamics Business Central ledger sync.',
+                      },
+                  ],
+              },
+              {
+                  _type: 'menuLink',
+                  title: 'Integrations',
+                  path: '/integraties',
+              },
+              { _type: 'menuLink', title: 'Pricing', path: '/prijzen' },
+              { _type: 'menuLink', title: 'References', path: '/referenties' },
+              {
+                  _type: 'menuLink',
+                  title: 'Knowledge Base',
+                  path: '/kennisbank/box3-check',
+              },
+          ]
+        : [
+              {
+                  _type: 'menuDropdown',
+                  title: 'Vastgoedsoftware',
+                  path: '/vastgoedsoftware',
+                  links: [
+                      {
+                          title: 'Vastgoedbeheer',
+                          path: '/oplossingen/vastgoedbeheer-software',
+                          description:
+                              'De core SaaS module voor vastgoedmanagement.',
+                      },
+                      {
+                          title: 'Huurdersportaal',
+                          path: '/oplossingen/huurdersportaal',
+                          description:
+                              'Self-service portaal voor communicatie & meldingen.',
+                      },
+                      {
+                          title: 'Payment Software',
+                          path: '/oplossingen/payment',
+                          description: 'Geautomatiseerde betalingstransacties.',
+                      },
+                  ],
+              },
+              {
+                  _type: 'menuDropdown',
+                  title: 'Functies',
+                  path: '/functies',
+                  links: [
+                      {
+                          title: 'CPI Indexatie',
+                          path: '/kennisbank/box3-check',
+                          description:
+                              'Automatische huurverhogingen op basis van CBS-indexen.',
+                      },
+                      {
+                          title: 'Huurprolongatie',
+                          path: '/oplossingen/vastgoedbeheer-software',
+                          description:
+                              'Geautomatiseerde kwartaal- en maandfacturatie.',
+                      },
+                      {
+                          title: 'Boekhouding',
+                          path: '/integraties',
+                          description:
+                              'Native Dynamics Business Central koppeling.',
+                      },
+                  ],
+              },
+              { _type: 'menuLink', title: 'Integraties', path: '/integraties' },
+              { _type: 'menuLink', title: 'Tarieven', path: '/prijzen' },
+              { _type: 'menuLink', title: 'Referenties', path: '/referenties' },
+              {
+                  _type: 'menuLink',
+                  title: 'Kennisbank',
+                  path: '/kennisbank/box3-check',
+              },
+          ];
+
+    const menuItems = (settings as any)?.navigationMenu || defaultMenu;
 
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -91,8 +249,20 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
-        return () =>
+
+        // Listen for #demo hash triggers
+        const handleHashChange = () => {
+            if (window.location.hash === '#demo') {
+                setIsDemoModalOpen(true);
+                window.history.replaceState(null, '', window.location.pathname);
+            }
+        };
+        handleHashChange();
+        window.addEventListener('hashchange', handleHashChange);
+        return () => {
             document.removeEventListener('mousedown', handleClickOutside);
+            window.removeEventListener('hashchange', handleHashChange);
+        };
     }, []);
 
     // Close mobile menu on path changes
@@ -201,258 +371,201 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     </button>
 
                     {/* Logo & Brand Title (Aligned to left column) */}
-                    <div className='flex items-center flex-shrink-0'>
+                    <div className='flex items-center shrink-0'>
                         <Link
                             href={getPath('/')}
                             className='flex items-center'
-                            title='emlinked - Vastgoedbeheer Software'
+                            aria-label='emlinked - Vastgoedsoftware voor Business Central'
+                            title='emlinked - Vastgoedsoftware voor Business Central'
                         >
                             <img
                                 src={logoSrc}
-                                alt='emlinked - Vastgoedbeheer software homepage'
+                                alt='emlinked logo'
                                 className='w-auto h-11 transition-all'
                             />
                         </Link>
                     </div>
 
                     {/* Desktop Navigation Links (Mathematically centered) */}
-                    <nav className='hidden xl:flex items-center justify-center gap-6 flex-grow'>
-                        {/* Vastgoedsoftware */}
-                        <div className='group relative py-2'>
-                            <button
-                                className={`flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
-                                    isActive(
-                                        '/oplossingen/vastgoedbeheer-software',
-                                    ) ||
-                                    isActive('/oplossingen/huurdersportaal') ||
-                                    isActive('/oplossingen/payment')
-                                        ? 'text-primary'
-                                        : 'text-muted-foreground hover:text-foreground'
-                                }`}
-                            >
-                                {t.vastgoedsoftware}
-                                <svg
-                                    className='h-3.5 w-3.5 transition-transform group-hover:rotate-180'
-                                    viewBox='0 0 20 20'
-                                    fill='currentColor'
-                                >
-                                    <path
-                                        fillRule='evenodd'
-                                        d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'
-                                        clipRule='evenodd'
-                                    />
-                                </svg>
-                            </button>
-                            <div className='absolute left-0 mt-2 w-72 origin-top-left rounded-lg border border-border bg-card p-2 shadow-lg transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto'>
-                                <Link
-                                    href={getPath(
-                                        '/oplossingen/vastgoedbeheer-software',
-                                    )}
-                                    className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
-                                >
+                    <nav className='hidden xl:flex items-center justify-center gap-6 grow'>
+                        {menuItems.map((item: any, idx: number) => {
+                            if (item._type === 'menuDropdown') {
+                                return (
                                     <div
-                                        className={`text-[12px] font-bold ${isActive('/oplossingen/vastgoedbeheer-software') ? 'text-amber' : 'text-foreground'}`}
+                                        key={idx}
+                                        className='group relative py-2'
                                     >
-                                        {t.vastgoedbeheer}
-                                    </div>
-                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
-                                        {t.vastgoedbeheerDesc}
-                                    </div>
-                                </Link>
-                                <Link
-                                    href={getPath(
-                                        '/oplossingen/huurdersportaal',
-                                    )}
-                                    className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
-                                >
-                                    <div
-                                        className={`text-sm font-bold ${isActive('/oplossingen/huurdersportaal') ? 'text-amber' : 'text-foreground'}`}
-                                    >
-                                        {t.huurdersportaal}
-                                    </div>
-                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
-                                        {t.huurdersportaalDesc}
-                                    </div>
-                                </Link>
-                                <Link
-                                    href={getPath('/oplossingen/payment')}
-                                    className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
-                                >
-                                    <div
-                                        className={`text-sm font-bold ${isActive('/oplossingen/payment') ? 'text-amber' : 'text-foreground'}`}
-                                    >
-                                        {t.payment}
-                                    </div>
-                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
-                                        {t.paymentDesc}
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
+                                        {item.path ? (
+                                            <Link
+                                                href={getPath(item.path)}
+                                                className={`flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+                                                    item.links?.some((l: any) =>
+                                                        isActive(l.path),
+                                                    ) || isActive(item.path)
+                                                        ? 'text-primary'
+                                                        : 'text-muted-foreground hover:text-foreground'
+                                                }`}
+                                            >
+                                                {item.title}
+                                                <svg
+                                                    className='h-3.5 w-3.5 transition-transform group-hover:rotate-180'
+                                                    viewBox='0 0 20 20'
+                                                    fill='currentColor'
+                                                >
+                                                    <path
+                                                        fillRule='evenodd'
+                                                        d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'
+                                                        clipRule='evenodd'
+                                                    />
+                                                </svg>
+                                            </Link>
+                                        ) : (
+                                            <button
+                                                className={`flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+                                                    item.links?.some((l: any) =>
+                                                        isActive(l.path),
+                                                    )
+                                                        ? 'text-primary'
+                                                        : 'text-muted-foreground hover:text-foreground'
+                                                }`}
+                                            >
+                                                {item.title}
+                                                <svg
+                                                    className='h-3.5 w-3.5 transition-transform group-hover:rotate-180'
+                                                    viewBox='0 0 20 20'
+                                                    fill='currentColor'
+                                                >
+                                                    <path
+                                                        fillRule='evenodd'
+                                                        d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'
+                                                        clipRule='evenodd'
+                                                    />
+                                                </svg>
+                                            </button>
+                                        )}
+                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-[560px] max-w-[92vw] origin-top rounded-xl border border-border bg-card p-2 shadow-2xl ring-1 ring-black/5 transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50'>
+                                            <div className='grid grid-cols-2 gap-1'>
+                                                {item.links?.map(
+                                                    (
+                                                        subLink: any,
+                                                        sIdx: number,
+                                                    ) => {
+                                                        const isDemo =
+                                                            subLink.path ===
+                                                            '#demo';
+                                                        const isLast =
+                                                            sIdx ===
+                                                            item.links.length -
+                                                                1;
+                                                        const isOdd =
+                                                            item.links
+                                                                .length %
+                                                                2 !==
+                                                            0;
+                                                        const Icon =
+                                                            getSubIcon(
+                                                                subLink.title,
+                                                            );
+                                                        const active =
+                                                            isActive(
+                                                                subLink.path,
+                                                            );
+                                                        const subContent = (
+                                                            <>
+                                                                <span
+                                                                    className={`flex size-9 shrink-0 items-center justify-center rounded-lg transition-colors ${active ? 'bg-primary text-primary-foreground' : 'bg-primary/10 text-primary'}`}
+                                                                >
+                                                                    <Icon className='size-4.5' />
+                                                                </span>
+                                                                <span className='min-w-0'>
+                                                                    <span
+                                                                        className={`block text-[13px] font-bold leading-tight ${active ? 'text-primary' : 'text-foreground'}`}
+                                                                    >
+                                                                        {
+                                                                            subLink.title
+                                                                        }
+                                                                    </span>
+                                                                    {subLink.description && (
+                                                                        <span className='mt-0.5 block text-[12px] leading-snug text-muted-foreground line-clamp-2'>
+                                                                            {
+                                                                                subLink.description
+                                                                            }
+                                                                        </span>
+                                                                    )}
+                                                                </span>
+                                                            </>
+                                                        );
 
-                        {/* Software Oplossingen */}
-                        <div className='group relative py-2'>
-                            <button
-                                className={`flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer ${
-                                    isActive('/integraties') ||
-                                    isActive('/kennisbank/box3-check')
-                                        ? 'text-amber'
-                                        : 'text-muted-foreground hover:text-foreground'
-                                }`}
-                            >
-                                {t.oplossingen}
-                                <svg
-                                    className='h-3.5 w-3.5 transition-transform group-hover:rotate-180'
-                                    viewBox='0 0 20 20'
-                                    fill='currentColor'
-                                >
-                                    <path
-                                        fillRule='evenodd'
-                                        d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'
-                                        clipRule='evenodd'
-                                    />
-                                </svg>
-                            </button>
-                            <div className='absolute left-0 mt-2 w-72 origin-top-left rounded-lg border border-border bg-card p-2 shadow-lg transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto'>
-                                <Link
-                                    href={getPath('/integraties')}
-                                    className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
-                                >
-                                    <div
-                                        className={`text-sm font-bold ${isActive('/integraties') ? 'text-amber' : 'text-foreground'}`}
-                                    >
-                                        {t.integrations}
-                                    </div>
-                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
-                                        Koppelingen met Business Central,
-                                        Document Capture en Telebankieren.
-                                    </div>
-                                </Link>
-                                <Link
-                                    href={getPath('/kennisbank/box3-check')}
-                                    className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
-                                >
-                                    <div
-                                        className={`text-sm font-bold ${isActive('/kennisbank/box3-check') ? 'text-amber' : 'text-foreground'}`}
-                                    >
-                                        {t.box3}
-                                    </div>
-                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
-                                        Bereken de impact van Box 3 wetgeving op
-                                        uw vastgoed.
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
+                                                        const cellClass = `flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-muted/50 ${isLast && isOdd ? 'col-span-2' : ''}`;
 
-                        {/* Diensten */}
-                        <div className='group relative py-2'>
-                            <button
-                                className={`flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer ${
-                                    isActive('/referenties')
-                                        ? 'text-amber'
-                                        : 'text-muted-foreground hover:text-foreground'
-                                }`}
-                            >
-                                {t.diensten}
-                                <svg
-                                    className='h-3.5 w-3.5 transition-transform group-hover:rotate-180'
-                                    viewBox='0 0 20 20'
-                                    fill='currentColor'
-                                >
-                                    <path
-                                        fillRule='evenodd'
-                                        d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'
-                                        clipRule='evenodd'
-                                    />
-                                </svg>
-                            </button>
-                            <div className='absolute left-0 mt-2 w-72 origin-top-left rounded-lg border border-border bg-card p-2 shadow-lg transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto'>
-                                <Link
-                                    href={getPath('/referenties')}
-                                    className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
-                                >
-                                    <div
-                                        className={`text-sm font-bold ${isActive('/referenties') ? 'text-amber' : 'text-foreground'}`}
+                                                        if (isDemo) {
+                                                            return (
+                                                                <button
+                                                                    key={sIdx}
+                                                                    onClick={() =>
+                                                                        setIsDemoModalOpen(
+                                                                            true,
+                                                                        )
+                                                                    }
+                                                                    className={`text-left cursor-pointer ${cellClass}`}
+                                                                >
+                                                                    {subContent}
+                                                                </button>
+                                                            );
+                                                        }
+
+                                                        return (
+                                                            <Link
+                                                                key={sIdx}
+                                                                href={getPath(
+                                                                    subLink.path,
+                                                                )}
+                                                                className={cellClass}
+                                                            >
+                                                                {subContent}
+                                                            </Link>
+                                                        );
+                                                    },
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            }
+
+                            // Single link
+                            const isDemo = item.path === '#demo';
+                            if (isDemo) {
+                                return (
+                                    <button
+                                        key={idx}
+                                        onClick={() => setIsDemoModalOpen(true)}
+                                        className='text-sm font-semibold transition-colors text-muted-foreground hover:text-foreground cursor-pointer'
                                     >
-                                        {t.referenties}
-                                    </div>
-                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
-                                        Ontdek ervaringen van vastgoedbeheerders
-                                        en beleggers.
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
+                                        {item.title}
+                                    </button>
+                                );
+                            }
 
-                        {/* Prijzen */}
-                        <Link
-                            href={getPath('/prijzen')}
-                            className={`text-sm font-semibold transition-colors ${
-                                isActive('/prijzen')
-                                    ? 'text-amber'
-                                    : 'text-muted-foreground hover:text-foreground'
-                            }`}
-                        >
-                            {t.prijzen}
-                        </Link>
-
-                        {/* Over ons */}
-                        <div className='group relative py-2'>
-                            <button
-                                className={`flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer ${
-                                    isActive('/team')
-                                        ? 'text-amber'
-                                        : 'text-muted-foreground hover:text-foreground'
-                                }`}
-                            >
-                                {t.overons}
-                                <svg
-                                    className='h-3.5 w-3.5 transition-transform group-hover:rotate-180'
-                                    viewBox='0 0 20 20'
-                                    fill='currentColor'
-                                >
-                                    <path
-                                        fillRule='evenodd'
-                                        d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'
-                                        clipRule='evenodd'
-                                    />
-                                </svg>
-                            </button>
-                            <div className='absolute left-0 mt-2 w-72 origin-top-left rounded-lg border border-border bg-card p-2 shadow-lg transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto'>
+                            return (
                                 <Link
-                                    href={getPath('/team')}
-                                    className='block rounded-md p-2 hover:bg-muted/50 transition-colors'
+                                    key={idx}
+                                    href={getPath(item.path)}
+                                    className={`text-sm font-semibold transition-colors ${
+                                        isActive(item.path)
+                                            ? 'text-primary'
+                                            : 'text-muted-foreground hover:text-foreground'
+                                    }`}
                                 >
-                                    <div
-                                        className={`text-sm font-bold ${isActive('/team') ? 'text-amber' : 'text-foreground'}`}
-                                    >
-                                        {t.team}
-                                    </div>
-                                    <div className='text-[13px]/4.5  pt-0.5 text-muted-foreground'>
-                                        Maak kennis met ons specialistische
-                                        team.
-                                    </div>
+                                    {item.title}
                                 </Link>
-                            </div>
-                        </div>
-
-                        {/* Nieuws */}
-                        <Link
-                            href={getPath('/blog')}
-                            className={`text-sm font-semibold transition-colors ${
-                                isActive('/blog')
-                                    ? 'text-amber'
-                                    : 'text-muted-foreground hover:text-foreground'
-                            }`}
-                        >
-                            {t.nieuws}
-                        </Link>
+                            );
+                        })}
                     </nav>
 
                     {/* Right side: Global Actions (Aligned to right column) */}
-                    <div className='flex items-center gap-3 sm:gap-4 flex-shrink-0 justify-end'>
-                        {/* Docs Book Icon */}
+                    <div className='flex items-center gap-3 sm:gap-4 shrink-0 justify-end'>
+                        {/* Docs Book Icon - Commented out to reduce header noise
                         <Link
                             href='/docs'
                             className={`p-1 rounded-md hover:bg-muted transition-all ${
@@ -475,6 +588,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 />
                             </svg>
                         </Link>
+                        */}
 
                         {/* Globe Language Selector Dropdown */}
                         <div className='relative' ref={dropdownRef}>
@@ -610,6 +724,14 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             )}
                         </button>
 
+                        {/* Demo inplannen Button */}
+                        <button
+                            onClick={() => setIsDemoModalOpen(true)}
+                            className='inline-flex items-center gap-1.5 px-4 py-2  font-semibold rounded-md border transition-all duration-300 bg-primary border-primary text-primary-foreground hover:bg-primary/90 cursor-pointer shadow-sm text-sm'
+                        >
+                            {isEn ? 'Book Demo' : 'Demo inplannen'}
+                        </button>
+
                         {/* Sign In Button / Portal Access - Restored original Mijn Emlinked Design with Badtz Star Effect */}
                         <Link
                             href='/docs'
@@ -633,191 +755,142 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         className='xl:hidden border-t border-border bg-card overflow-hidden shadow-inner'
                     >
                         <nav className='flex flex-col gap-1 p-4'>
-                            {/* Vastgoedsoftware Accordion */}
-                            <div className='border-b border-border/60 py-2'>
-                                <button
-                                    onClick={() =>
-                                        toggleMobileSubmenu('vastgoed')
-                                    }
-                                    className='flex w-full items-center justify-between text-sm font-semibold text-foreground py-1'
-                                >
-                                    <span>{t.vastgoedsoftware}</span>
-                                    <svg
-                                        className={`h-4 w-4 transition-transform duration-200 ${mobileSubmenu === 'vastgoed' ? 'rotate-180 text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                        fill='none'
-                                        viewBox='0 0 24 24'
-                                        stroke='currentColor'
-                                        strokeWidth='2.5'
+                            {menuItems.map((item: any, idx: number) => {
+                                const key = `mobile-nav-${idx}`;
+                                if (item._type === 'menuDropdown') {
+                                    const isOpen = mobileSubmenu === item.title;
+                                    return (
+                                        <div
+                                            key={key}
+                                            className='border-b border-border/60 py-2'
+                                        >
+                                            <button
+                                                onClick={() =>
+                                                    toggleMobileSubmenu(
+                                                        item.title,
+                                                    )
+                                                }
+                                                className='flex w-full items-center justify-between text-sm font-semibold text-foreground py-1'
+                                            >
+                                                <span>{item.title}</span>
+                                                <svg
+                                                    className={`h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180 text-amber' : 'text-white/70 dark:text-slate-500'}`}
+                                                    fill='none'
+                                                    viewBox='0 0 24 24'
+                                                    stroke='currentColor'
+                                                    strokeWidth='2.5'
+                                                >
+                                                    <path
+                                                        strokeLinecap='round'
+                                                        strokeLinejoin='round'
+                                                        d='M19.5 8.25l-7.5 7.5-7.5-7.5'
+                                                    />
+                                                </svg>
+                                            </button>
+                                            {isOpen && (
+                                                <div className='pl-4 pr-2 py-2 flex flex-col gap-3.5 bg-muted/20 rounded-md mt-1'>
+                                                    {item.path && (
+                                                        <Link
+                                                            href={getPath(item.path)}
+                                                            onClick={() => setMobileMenuOpen(false)}
+                                                            className='text-xs font-semibold text-primary hover:text-primary/80 transition-colors pb-1.5 border-b border-border/20'
+                                                        >
+                                                            {isEn ? '→ Overview' : '→ Overzicht'}
+                                                        </Link>
+                                                    )}
+                                                    {item.links?.map(
+                                                        (
+                                                            subLink: any,
+                                                            sIdx: number,
+                                                        ) => {
+                                                            const isDemo =
+                                                                subLink.path ===
+                                                                '#demo';
+                                                            if (isDemo) {
+                                                                return (
+                                                                    <button
+                                                                        key={
+                                                                            sIdx
+                                                                        }
+                                                                        onClick={() => {
+                                                                            setIsDemoModalOpen(
+                                                                                true,
+                                                                            );
+                                                                            setMobileMenuOpen(
+                                                                                false,
+                                                                            );
+                                                                        }}
+                                                                        className='text-xs font-medium text-left text-white/70 dark:text-slate-500 hover:text-primary transition-colors cursor-pointer'
+                                                                    >
+                                                                        {
+                                                                            subLink.title
+                                                                        }
+                                                                    </button>
+                                                                );
+                                                            }
+                                                            return (
+                                                                <Link
+                                                                    key={sIdx}
+                                                                    href={getPath(
+                                                                        subLink.path,
+                                                                    )}
+                                                                    onClick={() =>
+                                                                        setMobileMenuOpen(
+                                                                            false,
+                                                                        )
+                                                                    }
+                                                                    className={`text-xs font-medium ${isActive(subLink.path) ? 'text-amber' : 'text-white/70 dark:text-slate-500'}`}
+                                                                >
+                                                                    {
+                                                                        subLink.title
+                                                                    }
+                                                                </Link>
+                                                            );
+                                                        },
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                }
+
+                                const isDemo = item.path === '#demo';
+                                if (isDemo) {
+                                    return (
+                                        <div
+                                            key={key}
+                                            className='border-b border-border/60 py-2.5'
+                                        >
+                                            <button
+                                                onClick={() => {
+                                                    setIsDemoModalOpen(true);
+                                                    setMobileMenuOpen(false);
+                                                }}
+                                                className='text-sm font-semibold block text-left w-full text-foreground hover:text-primary transition-colors cursor-pointer'
+                                            >
+                                                {item.title}
+                                            </button>
+                                        </div>
+                                    );
+                                }
+
+                                return (
+                                    <div
+                                        key={key}
+                                        className='border-b border-border/60 py-2.5'
                                     >
-                                        <path
-                                            strokeLinecap='round'
-                                            strokeLinejoin='round'
-                                            d='M19.5 8.25l-7.5 7.5-7.5-7.5'
-                                        />
-                                    </svg>
-                                </button>
-                                {mobileSubmenu === 'vastgoed' && (
-                                    <div className='pl-4 pr-2 py-2 flex flex-col gap-3.5 bg-muted/20 rounded-md mt-1'>
                                         <Link
-                                            href={getPath(
-                                                '/oplossingen/vastgoedbeheer-software',
-                                            )}
-                                            className={`text-xs font-medium ${isActive('/oplossingen/vastgoedbeheer-software') ? 'text-amber' : 'text-white/70 dark:text-slate-500'}`}
+                                            href={getPath(item.path)}
+                                            onClick={() =>
+                                                setMobileMenuOpen(false)
+                                            }
+                                            className={`text-sm font-semibold block ${isActive(item.path) ? 'text-primary' : 'text-foreground'}`}
                                         >
-                                            {t.vastgoedbeheer}
-                                        </Link>
-                                        <Link
-                                            href={getPath(
-                                                '/oplossingen/huurdersportaal',
-                                            )}
-                                            className={`text-xs font-medium ${isActive('/oplossingen/huurdersportaal') ? 'text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                        >
-                                            {t.huurdersportaal}
-                                        </Link>
-                                        <Link
-                                            href={getPath(
-                                                '/oplossingen/payment',
-                                            )}
-                                            className={`text-xs font-medium ${isActive('/oplossingen/payment') ? 'text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                        >
-                                            {t.payment}
+                                            {item.title}
                                         </Link>
                                     </div>
-                                )}
-                            </div>
-
-                            {/* Software Oplossingen Accordion */}
-                            <div className='border-b border-border/60 py-2'>
-                                <button
-                                    onClick={() =>
-                                        toggleMobileSubmenu('oplossingen')
-                                    }
-                                    className='flex w-full items-center justify-between text-sm font-semibold text-foreground py-1'
-                                >
-                                    <span>{t.oplossingen}</span>
-                                    <svg
-                                        className={`h-4 w-4 transition-transform duration-200 ${mobileSubmenu === 'oplossingen' ? 'rotate-180 text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                        fill='none'
-                                        viewBox='0 0 24 24'
-                                        stroke='currentColor'
-                                        strokeWidth='2.5'
-                                    >
-                                        <path
-                                            strokeLinecap='round'
-                                            strokeLinejoin='round'
-                                            d='M19.5 8.25l-7.5 7.5-7.5-7.5'
-                                        />
-                                    </svg>
-                                </button>
-                                {mobileSubmenu === 'oplossingen' && (
-                                    <div className='pl-4 pr-2 py-2 flex flex-col gap-3.5 bg-muted/20 rounded-md mt-1'>
-                                        <Link
-                                            href={getPath('/integraties')}
-                                            className={`text-xs font-medium ${isActive('/integraties') ? 'text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                        >
-                                            {t.integrations}
-                                        </Link>
-                                        <Link
-                                            href={getPath(
-                                                '/kennisbank/box3-check',
-                                            )}
-                                            className={`text-xs font-medium ${isActive('/kennisbank/box3-check') ? 'text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                        >
-                                            {t.box3}
-                                        </Link>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Diensten Accordion */}
-                            <div className='border-b border-border/60 py-2'>
-                                <button
-                                    onClick={() =>
-                                        toggleMobileSubmenu('diensten')
-                                    }
-                                    className='flex w-full items-center justify-between text-sm font-semibold text-foreground py-1'
-                                >
-                                    <span>{t.diensten}</span>
-                                    <svg
-                                        className={`h-4 w-4 transition-transform duration-200 ${mobileSubmenu === 'diensten' ? 'rotate-180 text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                        fill='none'
-                                        viewBox='0 0 24 24'
-                                        stroke='currentColor'
-                                        strokeWidth='2.5'
-                                    >
-                                        <path
-                                            strokeLinecap='round'
-                                            strokeLinejoin='round'
-                                            d='M19.5 8.25l-7.5 7.5-7.5-7.5'
-                                        />
-                                    </svg>
-                                </button>
-                                {mobileSubmenu === 'diensten' && (
-                                    <div className='pl-4 pr-2 py-2 flex flex-col gap-3.5 bg-muted/20 rounded-md mt-1'>
-                                        <Link
-                                            href={getPath('/referenties')}
-                                            className={`text-xs font-medium ${isActive('/referenties') ? 'text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                        >
-                                            {t.referenties}
-                                        </Link>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Prijzen link */}
-                            <div className='border-b border-border/60 py-2.5'>
-                                <Link
-                                    href={getPath('/prijzen')}
-                                    className={`text-sm font-semibold block ${isActive('/prijzen') ? 'text-primary' : 'text-foreground'}`}
-                                >
-                                    {t.prijzen}
-                                </Link>
-                            </div>
-
-                            {/* Over ons Accordion */}
-                            <div className='border-b border-border/60 py-2'>
-                                <button
-                                    onClick={() =>
-                                        toggleMobileSubmenu('overons')
-                                    }
-                                    className='flex w-full items-center justify-between text-sm font-semibold text-foreground py-1'
-                                >
-                                    <span>{t.overons}</span>
-                                    <svg
-                                        className={`h-4 w-4 transition-transform duration-200 ${mobileSubmenu === 'overons' ? 'rotate-180 text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                        fill='none'
-                                        viewBox='0 0 24 24'
-                                        stroke='currentColor'
-                                        strokeWidth='2.5'
-                                    >
-                                        <path
-                                            strokeLinecap='round'
-                                            strokeLinejoin='round'
-                                            d='M19.5 8.25l-7.5 7.5-7.5-7.5'
-                                        />
-                                    </svg>
-                                </button>
-                                {mobileSubmenu === 'overons' && (
-                                    <div className='pl-4 pr-2 py-2 flex flex-col gap-3.5 bg-muted/20 rounded-md mt-1'>
-                                        <Link
-                                            href={getPath('/team')}
-                                            className={`text-xs font-medium ${isActive('/team') ? 'text-amber' : 'text-muted-foreground'}`}
-                                        >
-                                            {t.team}
-                                        </Link>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Nieuws link */}
-                            <div className='py-2.5'>
-                                <Link
-                                    href={getPath('/blog')}
-                                    className={`text-sm font-semibold block ${isActive('/blog') ? 'text-primary' : 'text-foreground'}`}
-                                >
-                                    {t.nieuws}
-                                </Link>
-                            </div>
+                                );
+                            })}
                         </nav>
                     </motion.div>
                 )}
@@ -826,7 +899,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             {/* Hover Trigger Tab + Sliding Announcement Box */}
             {settings?.announcementActive && settings?.announcementText && (
                 <div
-                    className='fixed right-0 top-[150px] z-[9999] pointer-events-auto'
+                    className='fixed right-0 top-[150px] z-9999 pointer-events-auto'
                     onMouseEnter={() => setAnnouncementHovered(true)}
                     onMouseLeave={() => setAnnouncementHovered(false)}
                 >
@@ -878,26 +951,47 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     {settings.announcementText}
                                 </p>
 
-                                {settings.announcementLink && (
-                                    <Link
-                                        href={getPath(
-                                            settings.announcementLink,
-                                        )}
-                                        className='inline-flex items-center gap-1 text-xs text-amber-light hover:text-amber font-semibold transition-all hover:translate-x-0.5'
-                                    >
-                                        <span>
-                                            {locale === 'en'
-                                                ? 'Read more'
-                                                : 'Lees meer'}
-                                        </span>
-                                        <span>&rarr;</span>
-                                    </Link>
-                                )}
+                                {settings.announcementLink &&
+                                    (settings.announcementLink === '#demo' ? (
+                                        <button
+                                            onClick={() =>
+                                                setIsDemoModalOpen(true)
+                                            }
+                                            className='inline-flex items-center gap-1 text-xs text-amber-light hover:text-amber font-semibold transition-all hover:translate-x-0.5 cursor-pointer text-left w-max'
+                                        >
+                                            <span>
+                                                {locale === 'en'
+                                                    ? 'Book a Demo'
+                                                    : 'Demo inplannen'}
+                                            </span>
+                                            <span>&rarr;</span>
+                                        </button>
+                                    ) : (
+                                        <Link
+                                            href={getPath(
+                                                settings.announcementLink,
+                                            )}
+                                            className='inline-flex items-center gap-1 text-xs text-amber-light hover:text-amber font-semibold transition-all hover:translate-x-0.5'
+                                        >
+                                            <span>
+                                                {locale === 'en'
+                                                    ? 'Read more'
+                                                    : 'Lees meer'}
+                                            </span>
+                                            <span>&rarr;</span>
+                                        </Link>
+                                    ))}
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </div>
             )}
+
+            <DemoModal
+                isOpen={isDemoModalOpen}
+                onClose={() => setIsDemoModalOpen(false)}
+                calendlyUrl={(settings as any)?.calendlyUrl}
+            />
         </header>
     );
 }

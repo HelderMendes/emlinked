@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export const siteSettings = defineType({
     name: 'siteSettings',
@@ -73,6 +73,101 @@ export const siteSettings = defineType({
             title: 'X / Twitter Profile URL',
             type: 'url',
             initialValue: 'https://x.com',
+        }),
+        defineField({
+            name: 'calendlyUrl',
+            title: 'Calendly Booking URL',
+            type: 'url',
+            description:
+                'The URL for scheduling meetings (e.g. https://calendly.com/your-team).',
+            initialValue: 'https://calendly.com',
+        }),
+        defineField({
+            name: 'navigationMenu',
+            title: 'Header Navigation Menu',
+            type: 'array',
+            description: 'Configure menu links and dropdowns dynamically.',
+            of: [
+                defineArrayMember({
+                    name: 'menuLink',
+                    title: 'Direct Link',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'title',
+                            title: 'Link Title',
+                            type: 'string',
+                            validation: (Rule) => Rule.required(),
+                        }),
+                        defineField({
+                            name: 'path',
+                            title: 'Path / URL',
+                            type: 'string',
+                            validation: (Rule) => Rule.required(),
+                        }),
+                    ],
+                    preview: {
+                        select: { title: 'title', subtitle: 'path' },
+                    },
+                }),
+                defineArrayMember({
+                    name: 'menuDropdown',
+                    title: 'Dropdown Group',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'title',
+                            title: 'Group Title',
+                            type: 'string',
+                            validation: (Rule) => Rule.required(),
+                        }),
+                        defineField({
+                            name: 'path',
+                            title: 'Group Overview Path / URL',
+                            type: 'string',
+                            description:
+                                'Optional. Path to navigate to when the group title itself is clicked on desktop.',
+                        }),
+                        defineField({
+                            name: 'links',
+                            title: 'Sub Links',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Link Title',
+                                            type: 'string',
+                                            validation: (Rule) =>
+                                                Rule.required(),
+                                        }),
+                                        defineField({
+                                            name: 'path',
+                                            title: 'Path / URL',
+                                            type: 'string',
+                                            validation: (Rule) =>
+                                                Rule.required(),
+                                        }),
+                                        defineField({
+                                            name: 'description',
+                                            title: 'Short Description (Optional)',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
+                    preview: {
+                        select: { title: 'title' },
+                        prepare({ title }) {
+                            return { title, subtitle: 'Dropdown menu group' };
+                        },
+                    },
+                }),
+            ],
         }),
     ],
 });

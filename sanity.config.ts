@@ -23,37 +23,96 @@ export default defineConfig({
                     .title('Content')
                     .items([
                         S.listItem()
-                            .title('Pages')
+                            .title('Nederlandse Content')
+                            .icon(() => '🇳🇱')
                             .child(
                                 S.list()
-                                    .title('Pages')
+                                    .title('Nederlandse Content')
                                     .items([
-                                        S.documentTypeListItem('page').title(
-                                            'General Pages',
-                                        ),
-                                        S.documentTypeListItem(
-                                            'solutionPage',
-                                        ).title('Solution Pages'),
-                                    ]),
+                                        S.listItem()
+                                            .title("Pagina's")
+                                            .child(
+                                                S.documentList()
+                                                    .title("Pagina's (NL)")
+                                                    .filter('_type == "page" && language == "nl"')
+                                                    .schemaType('page')
+                                            ),
+                                        S.listItem()
+                                            .title('Oplossingen')
+                                            .child(
+                                                S.documentList()
+                                                    .title('Oplossingen (NL)')
+                                                    .filter('_type == "solutionPage" && language == "nl"')
+                                                    .schemaType('solutionPage')
+                                            ),
+                                        S.listItem()
+                                            .title('Blog / Nieuws')
+                                            .child(
+                                                S.documentList()
+                                                    .title('Artikelen (NL)')
+                                                    .filter('_type == "article" && language == "nl"')
+                                                    .schemaType('article')
+                                            ),
+                                    ])
                             ),
                         S.listItem()
-                            .title('Blog / News')
+                            .title('English Content')
+                            .icon(() => '🇬🇧')
                             .child(
                                 S.list()
-                                    .title('Blog / Nieuws')
+                                    .title('English Content')
                                     .items([
-                                        S.documentTypeListItem('article').title(
-                                            'Articles',
-                                        ),
-                                        S.documentTypeListItem('author').title(
-                                            'Authors',
-                                        ),
-                                    ]),
+                                        S.listItem()
+                                            .title('Pages')
+                                            .child(
+                                                S.documentList()
+                                                    .title('Pages (EN)')
+                                                    .filter('_type == "page" && language == "en"')
+                                                    .schemaType('page')
+                                            ),
+                                        S.listItem()
+                                            .title('Solutions')
+                                            .child(
+                                                S.documentList()
+                                                    .title('Solutions (EN)')
+                                                    .filter('_type == "solutionPage" && language == "en"')
+                                                    .schemaType('solutionPage')
+                                            ),
+                                        S.listItem()
+                                            .title('Blog / News')
+                                            .child(
+                                                S.documentList()
+                                                    .title('Articles (EN)')
+                                                    .filter('_type == "article" && language == "en"')
+                                                    .schemaType('article')
+                                            ),
+                                    ])
                             ),
                         S.divider(),
-                        S.documentTypeListItem('siteSettings').title(
-                            'Site Settings',
-                        ),
+                        S.listItem()
+                            .title('Auteurs / Authors')
+                            .child(
+                                S.documentTypeList('author').title('Auteurs')
+                            ),
+                        S.divider(),
+                        S.listItem()
+                            .title('Nederlandse Instellingen')
+                            .icon(() => '⚙️')
+                            .child(
+                                S.document()
+                                    .schemaType('siteSettings')
+                                    .documentId('siteSettings-nl')
+                                    .title('Nederlandse Instellingen')
+                            ),
+                        S.listItem()
+                            .title('English Settings')
+                            .icon(() => '⚙️')
+                            .child(
+                                S.document()
+                                    .schemaType('siteSettings')
+                                    .documentId('siteSettings-en')
+                                    .title('English Settings')
+                            ),
                     ]),
         }),
         visionTool(),

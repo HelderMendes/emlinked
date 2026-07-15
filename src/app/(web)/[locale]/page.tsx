@@ -3,20 +3,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { client } from '@/sanity/client';
-import { 
-    Check, 
-    Shield, 
-    Star, 
-    AlertCircle, 
-    Info, 
-    TrendingUp, 
-    FileText, 
-    Cpu, 
-    Calendar, 
-    Database, 
-    BarChart3 
+import {
+    Check,
+    Shield,
+    Star,
+    AlertCircle,
+    Info,
+    TrendingUp,
+    FileText,
+    Cpu,
+    Calendar,
+    Database,
+    BarChart3,
 } from 'lucide-react';
 import { Metadata } from 'next';
+import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 
 interface HomePageProps {
     params: Promise<{ locale: string }>;
@@ -31,25 +32,29 @@ export async function generateMetadata({
     let seoData: any = null;
     try {
         seoData = await client.fetch(
-            `*[_type == "page" && slug.current == "home" && language == $locale][0].seo {
+            `*[_type == "page" && (slug.current == "home" || slug.current == "/" || slug.current == "/en/") && language == $locale][0].seo {
                 seoTitle,
                 seoDescription,
                 canonical,
                 noIndex
             }`,
-            { locale }
+            { locale },
         );
     } catch (e) {
         console.error('Error fetching homepage metadata from Sanity:', e);
     }
 
-    const title = seoData?.seoTitle || (isEn
-        ? 'Property Management Software for Professional Portfolios | Emlinked'
-        : 'Vastgoedbeheer Software voor Professionele Portefeuilles | Emlinked');
+    const title =
+        seoData?.seoTitle ||
+        (isEn
+            ? 'Property Management Software for Professional Portfolios | Emlinked'
+            : 'Vastgoedbeheer Software voor Professionele Portefeuilles | Emlinked');
 
-    const description = seoData?.seoDescription || (isEn
-        ? 'Emlinked is the first fully integrated platform for commercial and mixed-use real estate management. Natively synced with Microsoft Dynamics 365 Business Central.'
-        : 'Emlinked is het eerste, volledig geïntegreerde platform voor commercieel en mixed-use vastgoedbeheer. Native gekoppeld aan Microsoft Dynamics 365 Business Central.');
+    const description =
+        seoData?.seoDescription ||
+        (isEn
+            ? 'Emlinked is the first fully integrated platform for commercial and mixed-use real estate management. Natively synced with Microsoft Dynamics 365 Business Central.'
+            : 'Emlinked is het eerste, volledig geïntegreerde platform voor commercieel en mixed-use vastgoedbeheer. Native gekoppeld aan Microsoft Dynamics 365 Business Central.');
 
     const robots = seoData?.noIndex ? 'noindex, nofollow' : 'index, follow';
 
@@ -67,7 +72,7 @@ export async function generateMetadata({
 async function getHomepageData(locale: string) {
     try {
         return await client.fetch(
-            `*[_type == "page" && slug.current == "home" && language == $locale][0] {
+            `*[_type == "page" && (slug.current == "home" || slug.current == "/" || slug.current == "/en/") && language == $locale][0] {
                 title,
                 pageBlocks[] {
                     _type,
@@ -114,7 +119,7 @@ async function getHomepageData(locale: string) {
                     structuredData
                 }
             }`,
-            { locale }
+            { locale },
         );
     } catch (e) {
         console.error('Error fetching homepage data from Sanity:', e);
@@ -125,41 +130,45 @@ async function getHomepageData(locale: string) {
 function getTrustIcon(iconName: string) {
     switch (iconName?.toLowerCase()) {
         case 'check':
-            return <Check className="h-5 w-5 text-amber flex-shrink-0" />;
+            return <Check className='h-5 w-5 text-amber flex-shrink-0' />;
         case 'shield':
-            return <Shield className="h-5 w-5 text-amber flex-shrink-0" />;
+            return <Shield className='h-5 w-5 text-amber flex-shrink-0' />;
         case 'star':
-            return <Star className="h-5 w-5 text-amber fill-amber flex-shrink-0" />;
+            return (
+                <Star className='h-5 w-5 text-amber fill-amber flex-shrink-0' />
+            );
         case 'warn':
         case 'alert':
-            return <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0" />;
+            return (
+                <AlertCircle className='h-5 w-5 text-red-500 flex-shrink-0' />
+            );
         default:
-            return <Info className="h-5 w-5 text-amber flex-shrink-0" />;
+            return <Info className='h-5 w-5 text-amber flex-shrink-0' />;
     }
 }
 
 function getIcon(iconName: string) {
     switch (iconName?.toLowerCase()) {
         case 'check':
-            return <Check className="h-6 w-6" />;
+            return <Check className='h-6 w-6' />;
         case 'shield':
-            return <Shield className="h-6 w-6" />;
+            return <Shield className='h-6 w-6' />;
         case 'star':
-            return <Star className="h-6 w-6" />;
+            return <Star className='h-6 w-6' />;
         case 'trending-up':
-            return <TrendingUp className="h-6 w-6" />;
+            return <TrendingUp className='h-6 w-6' />;
         case 'file-text':
-            return <FileText className="h-6 w-6" />;
+            return <FileText className='h-6 w-6' />;
         case 'cpu':
-            return <Cpu className="h-6 w-6" />;
+            return <Cpu className='h-6 w-6' />;
         case 'calendar':
-            return <Calendar className="h-6 w-6" />;
+            return <Calendar className='h-6 w-6' />;
         case 'database':
-            return <Database className="h-6 w-6" />;
+            return <Database className='h-6 w-6' />;
         case 'bar-chart-3':
-            return <BarChart3 className="h-6 w-6" />;
+            return <BarChart3 className='h-6 w-6' />;
         default:
-            return <Info className="h-6 w-6" />;
+            return <Info className='h-6 w-6' />;
     }
 }
 
@@ -172,7 +181,10 @@ function formatHeroTitle(title: string) {
     return parts.map((part, index) => {
         if (part.startsWith('*') && part.endsWith('*')) {
             return (
-                <span key={index} className="text-transparent bg-clip-text bg-gradient-to-r from-amber to-amber-light font-extrabold tracking-tight">
+                <span
+                    key={index}
+                    className='text-transparent bg-clip-text bg-gradient-to-r from-amber to-amber-light font-extrabold tracking-tight'
+                >
                     {part.slice(1, -1)}
                 </span>
             );
@@ -196,33 +208,81 @@ export default async function HomePage({ params }: HomePageProps) {
         {
             _type: 'hero',
             _key: 'fallback-hero',
-            label: isEn ? 'DE STANDAARD VOOR MODERN VASTGOEDBEHEER' : 'DE STANDAARD VOOR MODERN VASTGOEDBEHEER',
-            title: isEn ? 'Uw vastgoedportefeuille altijd automatisch aangifte-klaar' : 'Je vastgoedportefeuille altijd *automatisch* aangifte-klaar',
-            subtitle: isEn 
-                ? 'Emlinked is the first fully integrated platform for commercial and mixed-use real estate management. Natively synced with Microsoft Dynamics 365 Business Central.'
-                : 'Beheer huurcontracten, kosten en de volledige financiële administratie in één centraal systeem. Volledig voorbereid op de Box 3-aangifte en gebouwd op het betrouwbare fundament van Microsoft Dynamics 365 Business Central.',
-            ctaLabel: isEn ? 'Request Free Demo' : 'Gratis Demo Aanvragen',
-            ctaLink: '/contact',
-            secondaryCtaLabel: isEn ? 'Calculate Box 3' : 'Bereken je Box 3 voordeel',
-            secondaryCtaLink: '/kennisbank/box3-check',
+            label: isEn
+                ? 'NATIVE PROPERTY MODULE FOR DYNAMICS 365 BUSINESS CENTRAL'
+                : 'NATIVE VASTGOEDMODULE VOOR DYNAMICS 365 BUSINESS CENTRAL',
+            title: isEn
+                ? 'Property management and financial accounting *native* in one system'
+                : 'Vastgoedbeheer en financiële administratie *native* in één systeem',
+            subtitle: isEn
+                ? 'Emlinked automates leases, CPI indexations, and bank reconciliation directly within Microsoft Dynamics. No separate databases, no manual exports, but 100% real-time control.'
+                : 'Emlinked automatiseert huurovereenkomsten, CPI-indexaties en bankreconciliatie rechtstreeks binnen Microsoft Dynamics. Geen losse databases, geen handmatige exports, maar 100% realtime controle.',
+            ctaLabel: isEn ? 'Book a Demo' : 'Demo inplannen',
+            ctaLink: '#demo',
+            secondaryCtaLabel: isEn
+                ? 'Discover Integration'
+                : 'Koppeling ontdekken',
+            secondaryCtaLink: '/integraties',
             showProof: true,
-            proofText: isEn ? 'Trusted by professional real estate managers' : 'Vertrouwd door professionele vastgoedbeheerders',
+            proofText: isEn
+                ? 'Trusted by professional real estate managers'
+                : 'Vertrouwd door professionele vastgoedbeheerders',
             cardTitle: 'LIVE PORTFOLIO METRICS',
             cardStats: [
-                { _key: 's1', label: isEn ? 'Rent Flow Indexed' : 'Huurstromen Geïndexeerd', value: '100%', badgeText: 'Automatisch', badgeType: 'good' },
-                { _key: 's2', label: isEn ? 'Active Contracts' : 'Actief beheer', value: '1.240+', badgeText: 'Microsoft BC', badgeType: 'blue' },
-                { _key: 's3', label: isEn ? 'Box 3 Status' : 'Box 3 Status', value: 'Gereed', badgeText: 'Belastingdienst-proof', badgeType: 'warn' }
-            ]
+                {
+                    _key: 's1',
+                    label: isEn
+                        ? 'Error-free CPI Indexation'
+                        : 'Foutloze CPI-Indexatie',
+                    value: '100%',
+                    badgeText: isEn ? 'Automated' : 'Geautomatiseerd',
+                    badgeType: 'good',
+                },
+                {
+                    _key: 's2',
+                    label: isEn
+                        ? 'Bank Reconciliation (PSD2)'
+                        : 'Bankaflettering (PSD2)',
+                    value: 'Direct',
+                    badgeText: isEn ? 'Reconciled' : 'Reconciliatie',
+                    badgeType: 'blue',
+                },
+                {
+                    _key: 's3',
+                    label: isEn
+                        ? 'Business Central Postings'
+                        : 'Business Central Boekingen',
+                    value: 'Native',
+                    badgeText: isEn ? 'Ledger Sync' : 'Grootboek-synchroon',
+                    badgeType: 'warn',
+                },
+            ],
         },
         {
             _type: 'trustBar',
             _key: 'fallback-trustbar',
             items: [
-                { _key: 't1', text: '100% Box 3 Compliant', icon: 'shield' },
-                { _key: 't2', text: 'Gecertificeerde Microsoft BC Koppeling', icon: 'check' },
-                { _key: 't3', text: 'ISAE 3402 Type II Gecertificeerd', icon: 'star' }
-            ]
-        }
+                {
+                    _key: 't1',
+                    text: 'Native Dynamics 365 Module',
+                    icon: 'shield',
+                },
+                {
+                    _key: 't2',
+                    text: isEn
+                        ? 'Real-time Bank Reconciliation'
+                        : 'Realtime Bankreconciliatie',
+                    icon: 'check',
+                },
+                {
+                    _key: 't3',
+                    text: isEn
+                        ? '100% Data Integrity'
+                        : '100% Data-integriteit',
+                    icon: 'star',
+                },
+            ],
+        },
     ];
 
     const structuredData = pageData?.seo?.structuredData;
@@ -231,23 +291,29 @@ export default async function HomePage({ params }: HomePageProps) {
         <div className='flex flex-col min-h-screen'>
             {structuredData && (
                 <script
-                    type="application/ld+json"
+                    type='application/ld+json'
                     dangerouslySetInnerHTML={{ __html: structuredData }}
                 />
             )}
             {blocks.map((block: any) => {
                 switch (block._type) {
                     case 'hero': {
-                        const heroLabel = block.label || 'DE STANDAARD VOOR MODERN VASTGOEDBEHEER';
-                        const heroTitle = block.title || 'Uw vastgoedportefeuille altijd *automatisch* aangifte-klaar';
+                        const heroLabel =
+                            block.label ||
+                            'DE STANDAARD VOOR MODERN VASTGOEDBEHEER';
+                        const heroTitle =
+                            block.title ||
+                            'Uw vastgoedportefeuille altijd *automatisch* aangifte-klaar';
                         const heroSubtitle = block.subtitle || '';
-                        const primaryCtaLabel = block.ctaLabel || 'Gratis Demo Aanvragen';
+                        const primaryCtaLabel =
+                            block.ctaLabel || 'Gratis Demo Aanvragen';
                         const primaryCtaLink = block.ctaLink || '/contact';
                         const secondaryCtaLabel = block.secondaryCtaLabel || '';
                         const secondaryCtaLink = block.secondaryCtaLink || '';
                         const showProof = block.showProof ?? true;
                         const proofText = block.proofText || '';
-                        const cardTitle = block.cardTitle || 'LIVE PORTFOLIO METRICS';
+                        const cardTitle =
+                            block.cardTitle || 'LIVE PORTFOLIO METRICS';
                         const cardStats = block.cardStats || [];
 
                         return (
@@ -255,6 +321,8 @@ export default async function HomePage({ params }: HomePageProps) {
                                 key={block._key}
                                 className='relative px-6 py-14 md:py-26 overflow-hidden bg-[url("/hero/bkg_darkBlue.jpg")] bg-cover bg-center bg-no-repeat text-white dark:bg-gradient-to-br dark:from-[#FFFBEF] dark:via-[#FFFDF9] dark:to-[#FFF3D4] dark:animate-none dark:text-[#060e32] border-b border-white/10 dark:border-amber/10 transition-colors duration-300'
                             >
+                                <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
+
                                 {/* Ambient Background Glow */}
                                 <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber/5 rounded-full blur-[120px] pointer-events-none animate-float-glow' />
 
@@ -392,9 +460,17 @@ export default async function HomePage({ params }: HomePageProps) {
                                                             />
                                                             {/* Tooltip */}
                                                             <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
-                                                                <div className='text-[12px] font-bold text-amber leading-tight'>Levi Bosboom</div>
-                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>Eigenaar, Vastgoedbeheer Rotterdam</div>
-                                                                <div className='text-[10px] text-amber mt-1'>★★★★★</div>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>
+                                                                    Levi Bosboom
+                                                                </div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
+                                                                    Eigenaar,
+                                                                    Vastgoedbeheer
+                                                                    Rotterdam
+                                                                </div>
+                                                                <div className='text-[10px] text-amber mt-1'>
+                                                                    ★★★★★
+                                                                </div>
                                                                 {/* Arrow */}
                                                                 <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
                                                             </div>
@@ -411,9 +487,18 @@ export default async function HomePage({ params }: HomePageProps) {
                                                             />
                                                             {/* Tooltip */}
                                                             <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
-                                                                <div className='text-[12px] font-bold text-amber leading-tight'>Angelique van Doorn</div>
-                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>Vastgoedbeheerder, Van Overhagen</div>
-                                                                <div className='text-[10px] text-amber mt-1'>★★★★★</div>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>
+                                                                    Angelique
+                                                                    van Doorn
+                                                                </div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
+                                                                    Vastgoedbeheerder,
+                                                                    Van
+                                                                    Overhagen
+                                                                </div>
+                                                                <div className='text-[10px] text-amber mt-1'>
+                                                                    ★★★★★
+                                                                </div>
                                                                 {/* Arrow */}
                                                                 <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
                                                             </div>
@@ -430,9 +515,18 @@ export default async function HomePage({ params }: HomePageProps) {
                                                             />
                                                             {/* Tooltip */}
                                                             <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
-                                                                <div className='text-[12px] font-bold text-amber leading-tight'>Michel De Waal</div>
-                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>Directeur, M2 Capital Real Estate</div>
-                                                                <div className='text-[10px] text-amber mt-1'>★★★★★</div>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>
+                                                                    Michel De
+                                                                    Waal
+                                                                </div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
+                                                                    Directeur,
+                                                                    M2 Capital
+                                                                    Real Estate
+                                                                </div>
+                                                                <div className='text-[10px] text-amber mt-1'>
+                                                                    ★★★★★
+                                                                </div>
                                                                 {/* Arrow */}
                                                                 <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
                                                             </div>
@@ -449,9 +543,17 @@ export default async function HomePage({ params }: HomePageProps) {
                                                             />
                                                             {/* Tooltip */}
                                                             <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
-                                                                <div className='text-[12px] font-bold text-amber leading-tight'>Sander Bot</div>
-                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>Mede-eigenaar, Baetland Vastgoed</div>
-                                                                <div className='text-[10px] text-amber mt-1'>★★★★★</div>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>
+                                                                    Sander Bot
+                                                                </div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
+                                                                    Mede-eigenaar,
+                                                                    Baetland
+                                                                    Vastgoed
+                                                                </div>
+                                                                <div className='text-[10px] text-amber mt-1'>
+                                                                    ★★★★★
+                                                                </div>
                                                                 {/* Arrow */}
                                                                 <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
                                                             </div>
@@ -485,10 +587,16 @@ export default async function HomePage({ params }: HomePageProps) {
                     case 'trustBar': {
                         const items = block.items || [];
                         return (
-                            <section key={block._key} className='bg-white dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-4 px-6 md:px-10 shadow-sm'>
+                            <section
+                                key={block._key}
+                                className='bg-white dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-4 px-6 md:px-10 shadow-sm'
+                            >
                                 <div className='max-w-8xl mx-auto flex items-center justify-center gap-9 flex-wrap'>
                                     {items.map((item: any) => (
-                                        <div key={item._key} className='flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-white/75 hover:text-amber dark:hover:text-amber transition-colors'>
+                                        <div
+                                            key={item._key}
+                                            className='flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-white/75 hover:text-amber dark:hover:text-amber transition-colors'
+                                        >
                                             {getTrustIcon(item.icon)}
                                             <span>{item.text}</span>
                                         </div>
@@ -503,7 +611,10 @@ export default async function HomePage({ params }: HomePageProps) {
                         const features = block.features || [];
 
                         return (
-                            <section key={block._key} className='px-6 py-20 bg-card border-b border-border'>
+                            <section
+                                key={block._key}
+                                className='px-6 py-20 bg-card border-b border-border'
+                            >
                                 <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-12'>
                                     <div className='max-w-3xl mx-auto flex flex-col gap-4'>
                                         <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-foreground'>
@@ -518,10 +629,13 @@ export default async function HomePage({ params }: HomePageProps) {
 
                                     <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-left'>
                                         {features.map((feature: any) => (
-                                            <div key={feature._key} className='p-8 rounded-2xl border border-border bg-background flex flex-col gap-4 hover:shadow-2xl hover:-translate-y-2 hover:border-amber/30 transition-all duration-300 group cursor-pointer relative overflow-hidden'>
+                                            <div
+                                                key={feature._key}
+                                                className='p-8 rounded-2xl border border-border bg-background flex flex-col gap-4 hover:shadow-2xl hover:-translate-y-2 hover:border-amber/30 transition-all duration-300 group cursor-pointer relative overflow-hidden'
+                                            >
                                                 {/* Card Corner Glow */}
-                                                <div className="absolute -right-16 -top-16 w-32 h-32 bg-amber/5 rounded-full blur-2xl group-hover:bg-amber/15 transition-all duration-500" />
-                                                
+                                                <div className='absolute -right-16 -top-16 w-32 h-32 bg-amber/5 rounded-full blur-2xl group-hover:bg-amber/15 transition-all duration-500' />
+
                                                 <div className='h-10 w-10 rounded-md bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300 z-10'>
                                                     {getIcon(feature.icon)}
                                                 </div>
@@ -545,14 +659,19 @@ export default async function HomePage({ params }: HomePageProps) {
                         const buttonLink = block.buttonLink || '';
 
                         return (
-                            <section key={block._key} className='px-6 py-20 bg-background'>
+                            <section
+                                key={block._key}
+                                className='px-6 py-20 bg-background'
+                            >
                                 <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 border border-border/80 rounded-2xl bg-card p-8 md:p-12 hover:shadow-xl transition-all duration-300 relative overflow-hidden group'>
                                     {/* Ambient Glow Blob */}
                                     <div className='absolute -left-20 -bottom-20 w-80 h-80 bg-amber/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-amber/15 transition-all duration-500' />
                                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center'>
                                         <div className='lg:col-span-8 flex flex-col gap-4 text-left'>
                                             <span className='text-xs font-semibold text-primary uppercase tracking-widest'>
-                                                {locale === 'en' ? 'Product Focus' : 'Platform Focus'}
+                                                {locale === 'en'
+                                                    ? 'Product Focus'
+                                                    : 'Platform Focus'}
                                             </span>
                                             <h2 className='font-display text-3xl font-bold tracking-tight text-foreground'>
                                                 {title}
@@ -563,7 +682,10 @@ export default async function HomePage({ params }: HomePageProps) {
                                         </div>
                                         {buttonLabel && buttonLink && (
                                             <div className='lg:col-span-4 flex justify-end'>
-                                                <GlowingLink href={getPath(buttonLink)} className="h-12 text-sm w-full lg:w-auto">
+                                                <GlowingLink
+                                                    href={getPath(buttonLink)}
+                                                    className='h-12 text-sm w-full lg:w-auto'
+                                                >
                                                     {buttonLabel}
                                                 </GlowingLink>
                                             </div>
