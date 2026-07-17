@@ -52,7 +52,8 @@ export const page = defineType({
                             name: 'label',
                             title: 'Urgency Label / Badge',
                             type: 'string',
-                            description: 'Pill text above title (e.g., "Nieuw: Microsoft Dynamics 365 BC Koppeling")',
+                            description:
+                                'Pill text above title (e.g., "Nieuw: Microsoft Dynamics 365 BC Koppeling")',
                         }),
                         defineField({
                             name: 'title',
@@ -111,26 +112,47 @@ export const page = defineType({
                                 defineArrayMember({
                                     type: 'object',
                                     fields: [
-                                        defineField({ name: 'label', title: 'Stat Label', type: 'string' }),
-                                        defineField({ name: 'value', title: 'Stat Value', type: 'string' }),
-                                        defineField({ name: 'badgeText', title: 'Badge Text (Optional)', type: 'string' }),
+                                        defineField({
+                                            name: 'label',
+                                            title: 'Stat Label',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'value',
+                                            title: 'Stat Value',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'badgeText',
+                                            title: 'Badge Text (Optional)',
+                                            type: 'string',
+                                        }),
                                         defineField({
                                             name: 'badgeType',
                                             title: 'Badge Color Theme',
                                             type: 'string',
                                             options: {
                                                 list: [
-                                                    { title: 'Amber / Good', value: 'good' },
-                                                    { title: 'Blue / Neutral', value: 'blue' },
-                                                    { title: 'Red / Warn', value: 'warn' },
-                                                ]
+                                                    {
+                                                        title: 'Amber / Good',
+                                                        value: 'good',
+                                                    },
+                                                    {
+                                                        title: 'Blue / Neutral',
+                                                        value: 'blue',
+                                                    },
+                                                    {
+                                                        title: 'Red / Warn',
+                                                        value: 'warn',
+                                                    },
+                                                ],
                                             },
                                             initialValue: 'good',
-                                        })
-                                    ]
-                                })
-                            ]
-                        })
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
                     ],
                 }),
                 defineArrayMember({
@@ -146,13 +168,25 @@ export const page = defineType({
                                 defineArrayMember({
                                     type: 'object',
                                     fields: [
-                                        defineField({ name: 'text', title: 'Text', type: 'string' }),
-                                        defineField({ name: 'icon', title: 'Icon (e.g. check, shield, star)', type: 'string' }),
-                                        defineField({ name: 'link', title: 'Link (Optional)', type: 'string' }),
-                                    ]
-                                })
-                            ]
-                        })
+                                        defineField({
+                                            name: 'text',
+                                            title: 'Text',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'icon',
+                                            title: 'Icon (e.g. check, shield, star)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'link',
+                                            title: 'Link (Optional)',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
                     ],
                 }),
                 defineArrayMember({
@@ -330,22 +364,49 @@ export const page = defineType({
                                 defineArrayMember({
                                     type: 'object',
                                     fields: [
-                                        defineField({ name: 'title', title: 'Integration Title', type: 'string' }),
-                                        defineField({ name: 'badge', title: 'Badge Text', type: 'string' }),
-                                        defineField({ name: 'description', title: 'Description', type: 'text', rows: 3 }),
-                                        defineField({ name: 'imagePlaceholder', title: 'Image Placeholder Name', type: 'string', description: 'e.g. BC-Integration-Flowchart.webp' }),
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Integration Title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'badge',
+                                            title: 'Badge Text',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'description',
+                                            title: 'Description',
+                                            type: 'text',
+                                            rows: 3,
+                                        }),
+                                        defineField({
+                                            name: 'imagePlaceholder',
+                                            title: 'Image Placeholder Name',
+                                            type: 'string',
+                                            description:
+                                                'e.g. BC-Integration-Flowchart.webp',
+                                        }),
                                         defineField({
                                             name: 'bullets',
                                             title: 'Bullet Points',
                                             type: 'array',
-                                            of: [defineArrayMember({ type: 'string' })]
+                                            of: [
+                                                defineArrayMember({
+                                                    type: 'string',
+                                                }),
+                                            ],
                                         }),
-                                        defineField({ name: 'link', title: 'Link (Optional)', type: 'string' }),
-                                    ]
-                                })
-                            ]
-                        })
-                    ]
+                                        defineField({
+                                            name: 'link',
+                                            title: 'Link (Optional)',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
                 }),
                 defineArrayMember({
                     name: 'calculatorBlock',
@@ -358,12 +419,15 @@ export const page = defineType({
                             type: 'string',
                             options: {
                                 list: [
-                                    { title: 'Box 3 Calculator', value: 'box3' }
-                                ]
+                                    {
+                                        title: 'Box 3 Calculator',
+                                        value: 'box3',
+                                    },
+                                ],
                             },
                             initialValue: 'box3',
-                        })
-                    ]
+                        }),
+                    ],
                 }),
                 defineArrayMember({
                     name: 'richText',
@@ -389,13 +453,140 @@ export const page = defineType({
                                             name: 'alt',
                                             type: 'string',
                                             title: 'Alternative Text',
-                                            validation: (Rule) => Rule.required(),
-                                        }
-                                    ]
-                                }
-                            ]
-                        })
-                    ]
+                                            validation: (Rule) =>
+                                                Rule.required(),
+                                        },
+                                    ],
+                                },
+                            ],
+                        }),
+                    ],
+                }),
+                defineArrayMember({
+                    name: 'pricingBlock',
+                    title: 'Pricing Block',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'sectionTitle',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'sectionSubtitle',
+                            title: 'Section Subtitle',
+                            type: 'text',
+                            rows: 2,
+                        }),
+                        defineField({
+                            name: 'tiers',
+                            title: 'Pricing Tiers',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Tier Title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'subtitle',
+                                            title: 'Tier Subtitle',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'price',
+                                            title: 'Price',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'unit',
+                                            title: 'Unit',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'badge',
+                                            title: 'Badge',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'features',
+                                            title: 'Features List',
+                                            type: 'array',
+                                            of: [
+                                                defineArrayMember({
+                                                    type: 'string',
+                                                }),
+                                            ],
+                                        }),
+                                        defineField({
+                                            name: 'ctaLabel',
+                                            title: 'CTA Label',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'ctaLink',
+                                            title: 'CTA Link',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
+                }),
+                defineArrayMember({
+                    name: 'teamBlock',
+                    title: 'Team Block',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'sectionTitle',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'sectionSubtitle',
+                            title: 'Section Subtitle',
+                            type: 'text',
+                            rows: 2,
+                        }),
+                        defineField({
+                            name: 'members',
+                            title: 'Team Members',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'name',
+                                            title: 'Member Name',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'role',
+                                            title: 'Member Role',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'bio',
+                                            title: 'Biography',
+                                            type: 'text',
+                                            rows: 3,
+                                        }),
+                                        defineField({
+                                            name: 'image',
+                                            title: 'Avatar Image',
+                                            type: 'image',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
                 }),
             ],
         }),

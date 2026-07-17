@@ -217,7 +217,7 @@ export default async function HomePage({ params }: HomePageProps) {
             subtitle: isEn
                 ? 'Emlinked automates leases, CPI indexations, and bank reconciliation directly within Microsoft Dynamics. No separate databases, no manual exports, but 100% real-time control.'
                 : 'Emlinked automatiseert huurovereenkomsten, CPI-indexaties en bankreconciliatie rechtstreeks binnen Microsoft Dynamics. Geen losse databases, geen handmatige exports, maar 100% realtime controle.',
-            ctaLabel: isEn ? 'Book a Demo' : 'Demo inplannen',
+            ctaLabel: isEn ? 'Request a Demo' : 'Demo aanvragen',
             ctaLink: '#demo',
             secondaryCtaLabel: isEn
                 ? 'Discover Integration'
@@ -326,7 +326,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                 {/* Ambient Background Glow */}
                                 <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber/5 rounded-full blur-[120px] pointer-events-none animate-float-glow' />
 
-                                {/* Wave Animation with Orange Glow */}
+                                {/* Wave Animation with Orange Glow - Disabled
                                 <div className='absolute bottom-[-5%] left-0 w-full h-[20%] overflow-hidden pointer-events-none z-0 '>
                                     <svg
                                         className='absolute w-[200%] h-full'
@@ -376,7 +376,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                             </filter>
                                         </defs>
 
-                                        {/* Wave 1 */}
+                                        {/* Wave 1 }
                                         <path
                                             d='M0,60 C250,100 250,20 500,60 C750,100 750,20 1000,60 C1250,100 1250,20 1500,60 C1750,100 1750,20 2000,60 L2000,120 L0,120 Z'
                                             fill='url(#wave-glow)'
@@ -384,7 +384,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                             className='animate-wave-slow'
                                         />
 
-                                        {/* Wave 2 */}
+                                        {/* Wave 2 }
                                         <path
                                             d='M0,60 C150,10 350,110 500,60 C650,10 850,110 1000,60 C1150,10 1350,110 1500,60 C1650,10 1850,110 2000,60 L2000,120 L0,120 Z'
                                             fill='url(#wave-glow)'
@@ -392,7 +392,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                             className='animate-wave-mid opacity-40'
                                         />
 
-                                        {/* Wave 3 */}
+                                        {/* Wave 3 }
                                         <path
                                             d='M0,60 C200,90 300,30 500,60 C700,90 800,30 1000,60 C1200,90 1300,30 1500,60 C1700,90 1800,30 2000,60 L2000,120 L0,120 Z'
                                             fill='url(#wave-glow)'
@@ -401,6 +401,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                         />
                                     </svg>
                                 </div>
+                                */}
 
                                 {/* Visual Watermarks */}
                                 {/* <div className='absolute right-[-60px] top-[-60px] w-[520px] h-auto opacity-[0.06] dark:opacity-[0.03] pointer-events-none select-none text-white dark:text-[#060e32] font-display text-[300px] leading-none font-bold'>

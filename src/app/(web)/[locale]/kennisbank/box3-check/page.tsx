@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { ArrowRight, Star, AlertCircle, Info, BookOpen } from 'lucide-react';
 import { Box3Calculator } from '@/components/Box3Calculator';
 import { sanityFetch } from '@/lib/sanity';
+import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 
 interface Box3PageProps {
     params: Promise<{ locale: string }>;
@@ -277,23 +278,104 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
     return (
         <div className='flex flex-col min-h-screen'>
             {/* Hero Header */}
-            <section className='relative px-6 py-24 bg-radial from-card via-background to-background border-b border-border overflow-hidden'>
-                <div className='absolute inset-0 pointer-events-none'>
-                    <div className='absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-3xl' />
+            <section className="relative px-6 py-20 md:py-28 overflow-hidden bg-[url('/hero/bkg_darkBlue.jpg')] bg-cover bg-center bg-no-repeat text-white border-b border-white/10">
+                <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-10' />
+
+                {/* Ambient Background Glow */}
+                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber/5 rounded-full blur-[120px] pointer-events-none animate-float-glow z-0' />
+
+                {/* Wave Animation with Orange Glow - Disabled
+                <div className='absolute bottom-[-5%] left-0 w-full h-[20%] overflow-hidden pointer-events-none z-0 '>
+                    <svg
+                        className='absolute w-[200%] h-full'
+                        viewBox='0 0 2000 120'
+                        preserveAspectRatio='none'
+                        xmlns='http://www.w3.org/2000/svg'
+                    >
+                        <defs>
+                            <linearGradient
+                                id='wave-glow-box3'
+                                x1='0%'
+                                y1='0%'
+                                x2='0%'
+                                y2='100%'
+                            >
+                                <stop
+                                    offset='0%'
+                                    stopColor='#ff9400'
+                                    stopOpacity='0.45'
+                                />
+                                <stop
+                                    offset='15%'
+                                    stopColor='#ff9400'
+                                    stopOpacity='0.15'
+                                />
+                                <stop
+                                    offset='60%'
+                                    stopColor='#ff9400'
+                                    stopOpacity='0'
+                                />
+                            </linearGradient>
+                            <filter
+                                id='glow-blur-box3'
+                                x='-10%'
+                                y='-10%'
+                                width='120%'
+                                height='120%'
+                            >
+                                <feGaussianBlur
+                                    stdDeviation='5'
+                                    result='blur'
+                                />
+                                <feMerge>
+                                    <feMergeNode in='blur' />
+                                    <feMergeNode in='SourceGraphic' />
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        {/* Wave 1 }
+                        <path
+                            d='M0,60 C250,100 250,20 500,60 C750,100 750,20 1000,60 C1250,100 1250,20 1500,60 C1750,100 1750,20 2000,60 L2000,120 L0,120 Z'
+                            fill='url(#wave-glow-box3)'
+                            filter='url(#glow-blur-box3)'
+                            className='animate-wave-slow'
+                        />
+
+                        {/* Wave 2 }
+                        <path
+                            d='M0,60 C150,10 350,110 500,60 C650,10 850,110 1000,60 C1150,10 1350,110 1500,60 C1650,10 1850,110 2000,60 L2000,120 L0,120 Z'
+                            fill='url(#wave-glow-box3)'
+                            filter='url(#glow-blur-box3)'
+                            className='animate-wave-mid opacity-40'
+                        />
+
+                        {/* Wave 3 }
+                        <path
+                            d='M0,60 C200,90 300,30 500,60 C700,90 800,30 1000,60 C1200,90 1300,30 1500,60 C1700,90 1800,30 2000,60 L2000,120 L0,120 Z'
+                            fill='url(#wave-glow-box3)'
+                            filter='url(#glow-blur-box3)'
+                            className='animate-wave-fast opacity-60'
+                        />
+                    </svg>
                 </div>
-                <div className='mx-auto max-w-4xl text-center flex flex-col gap-6 relative z-10 animate-fadeIn'>
-                    <span className='inline-flex items-center gap-1.5 self-center rounded-full bg-primary/10 px-3.5 py-1 text-xs font-semibold tracking-wide text-primary uppercase'>
+                */}
+
+                <div className="mx-auto max-w-4xl text-center flex flex-col gap-6 relative z-10 animate-fadeIn">
+                    <span className="inline-flex items-center gap-1.5 self-center rounded-full bg-primary/10 px-3.5 py-1 text-xs font-bold tracking-wider text-primary uppercase">
                         {isEn ? 'Knowledge Base' : 'Kennisbank'}
                     </span>
-                    <h1 className='font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-tight'>
+                    <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
                         {title}
                     </h1>
-                    <p className='text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto'>
+                    <p className="text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">
                         {pageData?.tagline || fallbackTagline}
                     </p>
-                    <p className='text-sm text-muted-foreground/85 max-w-2xl mx-auto leading-relaxed'>
-                        {pageData?.desc || fallbackIntro}
-                    </p>
+                    {(pageData?.desc || fallbackIntro) && (
+                        <p className="text-xs text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                            {pageData?.desc || fallbackIntro}
+                        </p>
+                    )}
                 </div>
             </section>
 

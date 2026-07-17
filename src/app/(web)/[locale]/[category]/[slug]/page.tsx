@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { SolutionSimulators } from '@/components/SolutionSimulators';
 import { sanityFetch } from '@/lib/sanity';
+import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 
 const IconMap: Record<string, React.ElementType> = {
     Building2,
@@ -244,7 +245,7 @@ const solutionsContent = {
             cta: {
                 title: 'Klaar om jouw portefeuillebeheer te automatiseren?',
                 desc: 'Plan een vrijblijvende demo en laat je zien hoe Emlinked jouw vastgoedbeheer proces volledig digitaliseert — van contract tot betaling.',
-                primary: 'Demo inplannen',
+                primary: 'Demo aanvragen',
                 secondary: 'Bekijk alle modules',
             },
         },
@@ -297,7 +298,7 @@ const solutionsContent = {
             cta: {
                 title: 'Geef jouw huurders een premium service-ervaring',
                 desc: 'Plan een demo en ontdek hoe je met het Emlinked Huurdersportaal de communicatie met jouw huurders volledig digitaliseert.',
-                primary: 'Demo inplannen',
+                primary: 'Demo aanvragen',
                 secondary: 'Bekijk alle modules',
             },
         },
@@ -350,7 +351,7 @@ const solutionsContent = {
             cta: {
                 title: 'Stop met handmatig bankieren. Start met Emlinked Pay.',
                 desc: 'Ontdek in een persoonlijke demo hoe Emlinked Pay jouw gehele betalingsproces automatiseert — van PSD2 koppeling tot grootboekboeking.',
-                primary: 'Demo inplannen',
+                primary: 'Demo aanvragen',
                 secondary: 'Bekijk alle modules',
             },
         },
@@ -461,7 +462,7 @@ const solutionsContent = {
             cta: {
                 title: 'Ready to automate your property management?',
                 desc: 'Schedule a free demo and see how Emlinked fully digitalises your property management process — from contract to payment.',
-                primary: 'Schedule a Demo',
+                primary: 'Request a Demo',
                 secondary: 'View all modules',
             },
         },
@@ -514,7 +515,7 @@ const solutionsContent = {
             cta: {
                 title: 'Give your tenants a premium service experience',
                 desc: 'Schedule a demo and discover how the Emlinked Tenant Portal fully digitalises your tenant communication.',
-                primary: 'Schedule a Demo',
+                primary: 'Request a Demo',
                 secondary: 'View all modules',
             },
         },
@@ -566,7 +567,7 @@ const solutionsContent = {
             cta: {
                 title: 'Stop manual banking. Start with Emlinked Pay.',
                 desc: 'Discover in a personal demo how Emlinked Pay automates your entire payment process — from PSD2 connection to ledger posting.',
-                primary: 'Schedule a Demo',
+                primary: 'Request a Demo',
                 secondary: 'View all modules',
             },
         },
@@ -591,38 +592,117 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
 
     return (
         <div className='flex flex-col min-h-screen'>
-            {/* ── Hero Header ─────────────────────────────────────────── */}
-            <section className='relative px-6 py-24 bg-radial from-card via-background to-background border-b border-border overflow-hidden'>
-                {/* subtle background glow */}
-                <div className='absolute inset-0 pointer-events-none'>
-                    <div className='absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-3xl' />
+            {/* Hero Header */}
+            <section className="relative px-6 py-20 md:py-28 overflow-hidden bg-[url('/hero/bkg_darkBlue.jpg')] bg-cover bg-center bg-no-repeat text-white border-b border-white/10">
+                <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-10' />
+
+                {/* Ambient Background Glow */}
+                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber/5 rounded-full blur-[120px] pointer-events-none animate-float-glow z-0' />
+
+                {/* Wave Animation with Orange Glow - Disabled
+                <div className='absolute bottom-[-5%] left-0 w-full h-[20%] overflow-hidden pointer-events-none z-0 '>
+                    <svg
+                        className='absolute w-[200%] h-full'
+                        viewBox='0 0 2000 120'
+                        preserveAspectRatio='none'
+                        xmlns='http://www.w3.org/2000/svg'
+                    >
+                        <defs>
+                            <linearGradient
+                                id='wave-glow-solutions'
+                                x1='0%'
+                                y1='0%'
+                                x2='0%'
+                                y2='100%'
+                            >
+                                <stop
+                                    offset='0%'
+                                    stopColor='#ff9400'
+                                    stopOpacity='0.45'
+                                />
+                                <stop
+                                    offset='15%'
+                                    stopColor='#ff9400'
+                                    stopOpacity='0.15'
+                                />
+                                <stop
+                                    offset='60%'
+                                    stopColor='#ff9400'
+                                    stopOpacity='0'
+                                />
+                            </linearGradient>
+                            <filter
+                                id='glow-blur-solutions'
+                                x='-10%'
+                                y='-10%'
+                                width='120%'
+                                height='120%'
+                            >
+                                <feGaussianBlur
+                                    stdDeviation='5'
+                                    result='blur'
+                                />
+                                <feMerge>
+                                    <feMergeNode in='blur' />
+                                    <feMergeNode in='SourceGraphic' />
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        {/* Wave 1 }
+                        <path
+                            d='M0,60 C250,100 250,20 500,60 C750,100 750,20 1000,60 C1250,100 1250,20 1500,60 C1750,100 1750,20 2000,60 L2000,120 L0,120 Z'
+                            fill='url(#wave-glow-solutions)'
+                            filter='url(#glow-blur-solutions)'
+                            className='animate-wave-slow'
+                        />
+
+                        {/* Wave 2 }
+                        <path
+                            d='M0,60 C150,10 350,110 500,60 C650,10 850,110 1000,60 C1150,10 1350,110 1500,60 C1650,10 1850,110 2000,60 L2000,120 L0,120 Z'
+                            fill='url(#wave-glow-solutions)'
+                            filter='url(#glow-blur-solutions)'
+                            className='animate-wave-mid opacity-40'
+                        />
+
+                        {/* Wave 3 }
+                        <path
+                            d='M0,60 C200,90 300,30 500,60 C700,90 800,30 1000,60 C1200,90 1300,30 1500,60 C1700,90 1800,30 2000,60 L2000,120 L0,120 Z'
+                            fill='url(#wave-glow-solutions)'
+                            filter='url(#glow-blur-solutions)'
+                            className='animate-wave-fast opacity-60'
+                        />
+                    </svg>
                 </div>
+                */}
 
                 <div className='mx-auto max-w-5xl text-center flex flex-col gap-6 relative z-10'>
-                    <span className='inline-flex items-center gap-1.5 self-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold tracking-wide text-primary'>
+                    <span className='inline-flex items-center gap-1.5 self-center rounded-full bg-primary/10 px-3.5 py-1 text-xs font-bold tracking-wider text-primary uppercase'>
                         <HeroIcon className='h-3.5 w-3.5' />
                         {content.badge}
                     </span>
-                    <h1 className='font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground'>
+                    <h1 className='font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight'>
                         {content.title}
                     </h1>
-                    <p className='text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
+                    <p className='text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto'>
                         {content.tagline}
                     </p>
-                    <p className='text-base text-muted-foreground/80 max-w-2xl mx-auto leading-relaxed'>
-                        {content.desc}
-                    </p>
+                    {content.desc && (
+                        <p className='text-xs text-slate-400 max-w-2xl mx-auto leading-relaxed'>
+                            {content.desc}
+                        </p>
+                    )}
                     <div className='flex flex-wrap justify-center gap-4 mt-4'>
                         <Link
                             href={`/${locale}/contact`}
-                            className='inline-flex h-11 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow hover:bg-primary/95 transition-all'
+                            className='inline-flex h-11 items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground shadow hover:bg-primary/95 transition-all'
                         >
                             {content.cta.primary}
                             <ArrowRight className='ml-2 h-4 w-4' />
                         </Link>
                         <Link
                             href={`/${locale}/${category}`}
-                            className='inline-flex h-11 items-center justify-center rounded-md border border-border px-6 text-sm font-medium text-foreground hover:bg-muted/50 transition-all'
+                            className='inline-flex h-11 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] px-6 text-sm font-semibold text-white hover:bg-white/[0.08] transition-all'
                         >
                             {content.cta.secondary}
                         </Link>

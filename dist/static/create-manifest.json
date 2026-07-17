@@ -1,6 +1,6 @@
 {
-  "createdAt": "2026-07-13T20:33:47.620Z",
-  "studioVersion": "6.4.0",
+  "createdAt": "2026-07-17T16:28:12.696Z",
+  "studioVersion": "6.5.0",
   "version": 3,
   "workspaces": [
     {
@@ -13,7 +13,7 @@
       },
       "name": "default",
       "projectId": "rqeokhhk",
-      "schema": "799eed77.create-schema.json",
+      "schema": "b3e94eea.create-schema.json",
       "title": "emlinked",
       "tools": "ef87c8fe.create-tools.json"
     }

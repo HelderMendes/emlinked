@@ -387,7 +387,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     </div>
 
                     {/* Desktop Navigation Links (Mathematically centered) */}
-                    <nav className='hidden xl:flex items-center justify-center gap-6 grow'>
+                    <nav className='hidden xl:flex items-center justify-center gap-2.5 2xl:gap-5 grow'>
                         {menuItems.map((item: any, idx: number) => {
                             if (item._type === 'menuDropdown') {
                                 return (
@@ -398,7 +398,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                         {item.path ? (
                                             <Link
                                                 href={getPath(item.path)}
-                                                className={`flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+                                                className={`flex items-center gap-1.5 text-[13px] 2xl:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                                                     item.links?.some((l: any) =>
                                                         isActive(l.path),
                                                     ) || isActive(item.path)
@@ -421,7 +421,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                             </Link>
                                         ) : (
                                             <button
-                                                className={`flex items-center gap-1.5 text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+                                                className={`flex items-center gap-1.5 text-[13px] 2xl:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                                                     item.links?.some((l: any) =>
                                                         isActive(l.path),
                                                     )
@@ -443,8 +443,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 </svg>
                                             </button>
                                         )}
-                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-[560px] max-w-[92vw] origin-top rounded-xl border border-border bg-card p-2 shadow-2xl ring-1 ring-black/5 transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50'>
-                                            <div className='grid grid-cols-2 gap-1'>
+                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-72 origin-top rounded-xl border border-border bg-card p-2 shadow-2xl ring-1 ring-black/5 transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50'>
+                                            <div className='flex flex-col gap-1'>
                                                 {item.links?.map(
                                                     (
                                                         subLink: any,
@@ -453,50 +453,25 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                         const isDemo =
                                                             subLink.path ===
                                                             '#demo';
-                                                        const isLast =
-                                                            sIdx ===
-                                                            item.links.length -
-                                                                1;
-                                                        const isOdd =
-                                                            item.links
-                                                                .length %
-                                                                2 !==
-                                                            0;
-                                                        const Icon =
-                                                            getSubIcon(
-                                                                subLink.title,
-                                                            );
-                                                        const active =
-                                                            isActive(
-                                                                subLink.path,
-                                                            );
+                                                        const active = isActive(
+                                                            subLink.path,
+                                                        );
                                                         const subContent = (
-                                                            <>
+                                                            <div className='flex flex-col gap-0.5'>
                                                                 <span
-                                                                    className={`flex size-9 shrink-0 items-center justify-center rounded-lg transition-colors ${active ? 'bg-primary text-primary-foreground' : 'bg-primary/10 text-primary'}`}
+                                                                    className={`block text-[13px] font-bold leading-tight ${active ? 'text-primary' : 'text-foreground'}`}
                                                                 >
-                                                                    <Icon className='size-4.5' />
+                                                                    {subLink.title}
                                                                 </span>
-                                                                <span className='min-w-0'>
-                                                                    <span
-                                                                        className={`block text-[13px] font-bold leading-tight ${active ? 'text-primary' : 'text-foreground'}`}
-                                                                    >
-                                                                        {
-                                                                            subLink.title
-                                                                        }
+                                                                {subLink.description && (
+                                                                    <span className='block text-[11px] leading-snug text-muted-foreground'>
+                                                                        {subLink.description}
                                                                     </span>
-                                                                    {subLink.description && (
-                                                                        <span className='mt-0.5 block text-[12px] leading-snug text-muted-foreground line-clamp-2'>
-                                                                            {
-                                                                                subLink.description
-                                                                            }
-                                                                        </span>
-                                                                    )}
-                                                                </span>
-                                                            </>
+                                                                )}
+                                                            </div>
                                                         );
 
-                                                        const cellClass = `flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-muted/50 ${isLast && isOdd ? 'col-span-2' : ''}`;
+                                                        const cellClass = 'block rounded-lg p-2.5 transition-colors hover:bg-muted/50 text-left w-full';
 
                                                         if (isDemo) {
                                                             return (
@@ -507,7 +482,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                                             true,
                                                                         )
                                                                     }
-                                                                    className={`text-left cursor-pointer ${cellClass}`}
+                                                                    className={`cursor-pointer ${cellClass}`}
                                                                 >
                                                                     {subContent}
                                                                 </button>
@@ -520,7 +495,9 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                                 href={getPath(
                                                                     subLink.path,
                                                                 )}
-                                                                className={cellClass}
+                                                                className={
+                                                                    cellClass
+                                                                }
                                                             >
                                                                 {subContent}
                                                             </Link>
@@ -540,7 +517,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     <button
                                         key={idx}
                                         onClick={() => setIsDemoModalOpen(true)}
-                                        className='text-sm font-semibold transition-colors text-muted-foreground hover:text-foreground cursor-pointer'
+                                        className='text-[13px] 2xl:text-sm font-semibold transition-colors text-muted-foreground hover:text-foreground cursor-pointer'
                                     >
                                         {item.title}
                                     </button>
@@ -551,7 +528,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 <Link
                                     key={idx}
                                     href={getPath(item.path)}
-                                    className={`text-sm font-semibold transition-colors ${
+                                    className={`text-[13px] 2xl:text-sm font-semibold transition-colors ${
                                         isActive(item.path)
                                             ? 'text-primary'
                                             : 'text-muted-foreground hover:text-foreground'
@@ -684,7 +661,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             )}
                         </div>
 
-                        {/* Sun/Moon Theme Toggle Switch */}
+                        {/* Sun/Moon Theme Toggle Switch - Commented out as light theme is forced
                         <button
                             onClick={toggleTheme}
                             className='p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer'
@@ -723,13 +700,14 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 </svg>
                             )}
                         </button>
+                        */}
 
-                        {/* Demo inplannen Button */}
+                        {/* Demo aanvragen Button */}
                         <button
                             onClick={() => setIsDemoModalOpen(true)}
                             className='inline-flex items-center gap-1.5 px-4 py-2  font-semibold rounded-md border transition-all duration-300 bg-primary border-primary text-primary-foreground hover:bg-primary/90 cursor-pointer shadow-sm text-sm'
                         >
-                            {isEn ? 'Book Demo' : 'Demo inplannen'}
+                            {isEn ? 'Request a Demo' : 'Demo aanvragen'}
                         </button>
 
                         {/* Sign In Button / Portal Access - Restored original Mijn Emlinked Design with Badtz Star Effect */}
@@ -791,11 +769,19 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 <div className='pl-4 pr-2 py-2 flex flex-col gap-3.5 bg-muted/20 rounded-md mt-1'>
                                                     {item.path && (
                                                         <Link
-                                                            href={getPath(item.path)}
-                                                            onClick={() => setMobileMenuOpen(false)}
+                                                            href={getPath(
+                                                                item.path,
+                                                            )}
+                                                            onClick={() =>
+                                                                setMobileMenuOpen(
+                                                                    false,
+                                                                )
+                                                            }
                                                             className='text-xs font-semibold text-primary hover:text-primary/80 transition-colors pb-1.5 border-b border-border/20'
                                                         >
-                                                            {isEn ? '→ Overview' : '→ Overzicht'}
+                                                            {isEn
+                                                                ? '→ Overview'
+                                                                : '→ Overzicht'}
                                                         </Link>
                                                     )}
                                                     {item.links?.map(
@@ -961,8 +947,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                         >
                                             <span>
                                                 {locale === 'en'
-                                                    ? 'Book a Demo'
-                                                    : 'Demo inplannen'}
+                                                    ? 'Request a Demo'
+                                                    : 'Demo aanvragen'}
                                             </span>
                                             <span>&rarr;</span>
                                         </button>
@@ -990,7 +976,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             <DemoModal
                 isOpen={isDemoModalOpen}
                 onClose={() => setIsDemoModalOpen(false)}
-                calendlyUrl={(settings as any)?.calendlyUrl}
+                locale={locale}
+                settings={settings}
             />
         </header>
     );

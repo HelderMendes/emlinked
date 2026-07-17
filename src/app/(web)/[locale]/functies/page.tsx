@@ -193,7 +193,7 @@ export default async function FunctiesPage({ params }: FunctiesPageProps) {
     };
 
     return (
-        <main className='flex-1 bg-[#060e32] text-white'>
+        <main className="flex-1 bg-[url('/hero/bkg_darkBlue.jpg')] bg-cover bg-center bg-no-repeat text-white">
             <script
                 type='application/ld+json'
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -293,7 +293,7 @@ export default async function FunctiesPage({ params }: FunctiesPageProps) {
                                 href='#demo'
                                 className='h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold rounded-lg flex items-center gap-2 transition-all shadow-md'
                             >
-                                {isEn ? 'Schedule Demo' : 'Demo Inplannen'}
+                                {isEn ? 'Request a Demo' : 'Demo aanvragen'}
                                 <ArrowRight className='h-4.5 w-4.5' />
                             </Link>
                             <Link

@@ -115,7 +115,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
     };
 
     return (
-        <footer className='w-full bg-background text-foreground border-t border-border pt-16 pb-12 transition-all'>
+        <footer className="w-full bg-[url('/hero/bkg_darkBlue.jpg')] bg-cover bg-center bg-no-repeat text-white border-t border-white/10 pt-16 pb-12 transition-all">
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
                 {/* 1. Dynamic Callback Callout Banner */}
                 <div className='bg-[#ff9400] text-[#060e32] p-6 md:p-8 rounded-xl flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden'>
@@ -173,26 +173,21 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                 </div>
 
                 {/* 2. Main Footer Navigation Grid */}
-                <div className='grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 max-w-7xl mx-auto pb-12 border-b border-border'>
+                <div className='grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 max-w-7xl mx-auto pb-12 border-b border-white/10'>
                     {/* Brand Info (Col span 4) */}
                     <div className='md:col-span-4 flex flex-col gap-5'>
                         <Link href={getPath('/')} className='inline-flex'>
                             <img
-                                src='/emlinked/Emlinked_logo__liggend.svg'
-                                alt='emlinked - Vastgoedbeheer software homepage'
-                                className='w-auto h-12 transition-opacity hover:opacity-90 dark:hidden'
-                            />
-                            <img
                                 src='/emlinked/Emlinked_logo__liggend_white.png'
                                 alt='emlinked - Vastgoedbeheer software homepage'
-                                className='w-auto h-12 transition-opacity hover:opacity-90 hidden dark:block'
+                                className='w-auto h-12 transition-opacity hover:opacity-90'
                             />
                         </Link>
-                        <p className='text-xs text-muted-foreground leading-relaxed'>
+                        <p className='text-xs text-slate-400 leading-relaxed'>
                             {t.tagline}
                         </p>
                         {/* Address & Phone details */}
-                        <div className='flex flex-col gap-2 mt-2 text-xs text-muted-foreground'>
+                        <div className='flex flex-col gap-2 mt-2 text-xs text-slate-400'>
                             <a
                                 href={
                                     settings?.phone
@@ -247,10 +242,10 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 1: Product (Col span 2) */}
                     <div className='md:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-foreground font-mono'>
+                        <h4 className='text-xs font-bold uppercase tracking-wider text-white font-mono'>
                             {t.product}
                         </h4>
-                        <ul className='flex flex-col gap-2.5 text-xs text-muted-foreground'>
+                        <ul className='flex flex-col gap-2.5 text-xs text-slate-400'>
                             <li>
                                 <Link
                                     href={getPath(
@@ -284,10 +279,10 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 2: Integrations (Col span 2) */}
                     <div className='md:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-foreground font-mono'>
+                        <h4 className='text-xs font-bold uppercase tracking-wider text-white font-mono'>
                             {t.integrations}
                         </h4>
-                        <ul className='flex flex-col gap-2.5 text-xs text-muted-foreground'>
+                        <ul className='flex flex-col gap-2.5 text-xs text-slate-400'>
                             <li>
                                 <Link
                                     href={getPath(
@@ -331,10 +326,10 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 3: Company (Col span 2) */}
                     <div className='md:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-foreground font-mono'>
+                        <h4 className='text-xs font-bold uppercase tracking-wider text-white font-mono'>
                             {t.company}
                         </h4>
-                        <ul className='flex flex-col gap-2.5 text-xs text-muted-foreground'>
+                        <ul className='flex flex-col gap-2.5 text-xs text-slate-400'>
                             <li>
                                 <Link
                                     href={getPath('/team')}
@@ -372,10 +367,10 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 4: Resources (Col span 2) */}
                     <div className='md:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-foreground font-mono'>
+                        <h4 className='text-xs font-bold uppercase tracking-wider text-white font-mono'>
                             {t.resources}
                         </h4>
-                        <ul className='flex flex-col gap-2.5 text-xs text-muted-foreground'>
+                        <ul className='flex flex-col gap-2.5 text-xs text-slate-400'>
                             <li>
                                 <Link
                                     href='/docs'
@@ -402,7 +397,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 }
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                className='h-7 w-7 rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-[#ff9400] transition-colors'
+                                className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#ff9400] transition-colors'
                                 aria-label='LinkedIn'
                             >
                                 <svg
@@ -417,7 +412,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 href={settings?.twitterUrl || 'https://x.com'}
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                className='h-7 w-7 rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-[#ff9400] transition-colors'
+                                className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#ff9400] transition-colors'
                                 aria-label='X (Twitter)'
                             >
                                 <svg
@@ -434,17 +429,17 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                 {/* 3. Bottom Legal Copyright Bar */}
                 <div className='mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left max-w-7xl mx-auto'>
-                    <p className='text-[10px] text-muted-foreground'>
+                    <p className='text-[10px] text-slate-400'>
                         {t.rights}
                     </p>
-                    <div className='flex flex-wrap justify-center gap-4 md:gap-6 text-[10px] text-muted-foreground'>
+                    <div className='flex flex-wrap justify-center gap-4 md:gap-6 text-[10px] text-slate-400'>
                         <Link
                             href={getPath('/privacybeleid')}
                             className='hover:text-[#ff9400] transition-colors'
                         >
                             {t.disclaimer}
                         </Link>
-                        <span className='text-white/10 dark:text-slate-200'>
+                        <span className='text-white/10'>
                             |
                         </span>
                         <Link

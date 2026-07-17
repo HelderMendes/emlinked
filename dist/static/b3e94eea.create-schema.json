@@ -1682,6 +1682,159 @@
         "name": "twitterUrl",
         "type": "url",
         "title": "X / Twitter Profile URL"
+      },
+      {
+        "initialValue": "https://calendly.com",
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "description": "The URL for scheduling meetings (e.g. https://calendly.com/your-team).",
+        "name": "calendlyUrl",
+        "type": "url",
+        "title": "Calendly Booking URL"
+      },
+      {
+        "description": "Configure menu links and dropdowns dynamically.",
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "name": "title",
+                "type": "string",
+                "title": "Link Title"
+              },
+              {
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "name": "path",
+                "type": "string",
+                "title": "Path / URL"
+              }
+            ],
+            "type": "object",
+            "name": "menuLink",
+            "title": "Direct Link"
+          },
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "name": "title",
+                "type": "string",
+                "title": "Group Title"
+              },
+              {
+                "description": "Optional. Path to navigate to when the group title itself is clicked on desktop.",
+                "name": "path",
+                "type": "string",
+                "title": "Group Overview Path / URL"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "validation": [
+                          {
+                            "level": "error",
+                            "rules": [
+                              {
+                                "flag": "presence",
+                                "constraint": "required"
+                              }
+                            ]
+                          }
+                        ],
+                        "name": "title",
+                        "type": "string",
+                        "title": "Link Title"
+                      },
+                      {
+                        "validation": [
+                          {
+                            "level": "error",
+                            "rules": [
+                              {
+                                "flag": "presence",
+                                "constraint": "required"
+                              }
+                            ]
+                          }
+                        ],
+                        "name": "path",
+                        "type": "string",
+                        "title": "Path / URL"
+                      },
+                      {
+                        "name": "description",
+                        "type": "string",
+                        "title": "Short Description (Optional)"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "links",
+                "type": "array",
+                "title": "Sub Links"
+              }
+            ],
+            "type": "object",
+            "name": "menuDropdown",
+            "title": "Dropdown Group"
+          }
+        ],
+        "name": "navigationMenu",
+        "type": "array",
+        "title": "Header Navigation Menu"
       }
     ],
     "name": "siteSettings",
