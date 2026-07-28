@@ -483,13 +483,19 @@
           {
             "fields": [
               {
+                "name": "sectionTag",
+                "type": "string",
+                "title": "Section Subtitle / Tag (e.g. \"MODULAIR EN FLEXIBEL\")"
+              },
+              {
                 "name": "sectionTitle",
                 "type": "string"
               },
               {
-                "rows": 2,
+                "rows": 3,
                 "name": "sectionSubtitle",
-                "type": "text"
+                "type": "text",
+                "title": "Intro Paragraph / Subtitle"
               },
               {
                 "of": [
@@ -511,6 +517,31 @@
                         "name": "icon",
                         "type": "string",
                         "title": "Feature Icon"
+                      },
+                      {
+                        "name": "imagePath",
+                        "type": "string",
+                        "title": "Image Path (Optional)"
+                      },
+                      {
+                        "of": [
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "name": "bullets",
+                        "type": "array",
+                        "title": "Bullet Points (Optional)"
+                      },
+                      {
+                        "name": "ctaLabel",
+                        "type": "string",
+                        "title": "CTA Label (Optional)"
+                      },
+                      {
+                        "name": "ctaLink",
+                        "type": "string",
+                        "title": "CTA Link (Optional)"
                       }
                     ],
                     "type": "object"
@@ -600,6 +631,11 @@
           {
             "fields": [
               {
+                "name": "tag",
+                "type": "string",
+                "title": "Section Subtitle / Tag Badge (e.g. \"ERP INTEGRATIE\")"
+              },
+              {
                 "name": "title",
                 "type": "string"
               },
@@ -624,8 +660,19 @@
           {
             "fields": [
               {
+                "name": "sectionTag",
+                "type": "string",
+                "title": "Section Tag (e.g. \"ERP INTEGRATIE\")"
+              },
+              {
                 "name": "sectionTitle",
                 "type": "string"
+              },
+              {
+                "rows": 3,
+                "name": "sectionSubtitle",
+                "type": "text",
+                "title": "Intro Paragraph / Subtitle"
               },
               {
                 "of": [
@@ -853,6 +900,123 @@
             "type": "object",
             "name": "richText",
             "title": "Rich Text Content"
+          },
+          {
+            "fields": [
+              {
+                "name": "sectionTitle",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "sectionSubtitle",
+                "type": "text"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "title": "Tier Title"
+                      },
+                      {
+                        "name": "subtitle",
+                        "type": "string",
+                        "title": "Tier Subtitle"
+                      },
+                      {
+                        "name": "price",
+                        "type": "string"
+                      },
+                      {
+                        "name": "unit",
+                        "type": "string"
+                      },
+                      {
+                        "name": "badge",
+                        "type": "string"
+                      },
+                      {
+                        "of": [
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "name": "features",
+                        "type": "array",
+                        "title": "Features List"
+                      },
+                      {
+                        "name": "ctaLabel",
+                        "type": "string",
+                        "title": "CTA Label"
+                      },
+                      {
+                        "name": "ctaLink",
+                        "type": "string",
+                        "title": "CTA Link"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "tiers",
+                "type": "array",
+                "title": "Pricing Tiers"
+              }
+            ],
+            "type": "object",
+            "name": "pricingBlock"
+          },
+          {
+            "fields": [
+              {
+                "name": "sectionTitle",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "sectionSubtitle",
+                "type": "text"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "name",
+                        "type": "string",
+                        "title": "Member Name"
+                      },
+                      {
+                        "name": "role",
+                        "type": "string",
+                        "title": "Member Role"
+                      },
+                      {
+                        "rows": 3,
+                        "name": "bio",
+                        "type": "text",
+                        "title": "Biography"
+                      },
+                      {
+                        "name": "image",
+                        "type": "image",
+                        "title": "Avatar Image"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "members",
+                "type": "array",
+                "title": "Team Members"
+              }
+            ],
+            "type": "object",
+            "name": "teamBlock"
           }
         ],
         "name": "pageBlocks",
@@ -1599,17 +1763,84 @@
         "initialValue": true,
         "name": "announcementActive",
         "type": "boolean",
-        "title": "Show Top Announcement Bar"
+        "title": "Show Bottom Announcement Pill"
       },
       {
-        "description": "Text shown in the top urgency/announcement bar.",
+        "description": "Body description text shown inside the announcement card.",
         "name": "announcementText",
+        "type": "string",
+        "title": "Announcement Subtitle / Text"
+      },
+      {
+        "description": "Main heading title inside the announcement card.",
+        "name": "announcementTitle",
         "type": "string"
       },
       {
-        "description": "Optional link destination for the announcement bar.",
+        "description": "Text shown on the action button (e.g. \"Gratis demo aanvragen\").",
+        "name": "announcementCtaLabel",
+        "type": "string",
+        "title": "Announcement CTA Button Label"
+      },
+      {
+        "description": "Label shown next to the rating stars when collapsed (e.g. \"4.9 van 5\").",
+        "name": "announcementPillText",
+        "type": "string",
+        "title": "Announcement Collapsed Pill Text"
+      },
+      {
+        "description": "Provide up to 2 stars reviews shown at the bottom of the card.",
+        "of": [
+          {
+            "fields": [
+              {
+                "rows": 2,
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "name": "text",
+                "type": "text",
+                "title": "Review Quote / Text"
+              },
+              {
+                "validation": [
+                  {
+                    "level": "error",
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ]
+                  }
+                ],
+                "name": "author",
+                "type": "string",
+                "title": "Author / Subtitle"
+              }
+            ],
+            "type": "object",
+            "name": "review",
+            "title": "Review Item"
+          }
+        ],
+        "name": "announcementReviews",
+        "type": "array",
+        "title": "Announcement Card Reviews"
+      },
+      {
+        "description": "Optional link destination (use \"#demo\" to open the demo form).",
         "name": "announcementLink",
-        "type": "string"
+        "type": "string",
+        "title": "Announcement Link Target"
       },
       {
         "initialValue": "+31 (0)88 707 7000",
