@@ -17,6 +17,7 @@ import {
     BsBank2,
     BsArrowUpRight,
 } from 'react-icons/bs';
+import { BorderBeam } from 'border-beam';
 
 // Maps a submenu link title to a representative icon so the mega-menu
 // reads as a scannable grid instead of a wall of text.
@@ -103,7 +104,6 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
     const [langDropdownOpen, setLangDropdownOpen] = useState(false);
     const [mobileSubmenu, setMobileSubmenu] = useState<string | null>(null);
     const [mounted, setMounted] = useState(false);
-    const [announcementHovered, setAnnouncementHovered] = useState(false);
     const { theme, setTheme } = useTheme();
     const pathname = usePathname();
     const t = translations[locale as 'nl' | 'en'] || translations.nl;
@@ -250,18 +250,32 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         };
         document.addEventListener('mousedown', handleClickOutside);
 
-        // Listen for #demo hash triggers
+        // Listen for #demo hash triggers and click events
         const handleHashChange = () => {
             if (window.location.hash === '#demo') {
                 setIsDemoModalOpen(true);
                 window.history.replaceState(null, '', window.location.pathname);
             }
         };
+
+        const handleDemoClick = (e: MouseEvent) => {
+            const target = (e.target as HTMLElement).closest('a, button');
+            if (target) {
+                const href = target.getAttribute('href');
+                if (href === '#demo' || href?.endsWith('#demo')) {
+                    e.preventDefault();
+                    setIsDemoModalOpen(true);
+                }
+            }
+        };
+
         handleHashChange();
         window.addEventListener('hashchange', handleHashChange);
+        document.addEventListener('click', handleDemoClick);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
             window.removeEventListener('hashchange', handleHashChange);
+            document.removeEventListener('click', handleDemoClick);
         };
     }, []);
 
@@ -336,7 +350,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
     };
 
     return (
-        <header className='sticky top-0 z-50 w-full border-t-4 border-amber bg-background/95 backdrop-blur-md transition-all duration-300 shadow-md text-foreground'>
+        <header className='sticky top-0 z-50 w-full border-t-4 border-amber bg-white/95 backdrop-blur-md transition-all duration-300 shadow-md text-foreground'>
             {/* Orange Top border line (now border-t-4 on header tag) */}
 
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
@@ -387,7 +401,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     </div>
 
                     {/* Desktop Navigation Links (Mathematically centered) */}
-                    <nav className='hidden xl:flex items-center justify-center gap-2.5 2xl:gap-5 grow'>
+                    <nav className='hidden xl:flex items-center justify-center gap-2.5 2xl:gap-5 grow mt-3.5'>
                         {menuItems.map((item: any, idx: number) => {
                             if (item._type === 'menuDropdown') {
                                 return (
@@ -461,17 +475,22 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                                 <span
                                                                     className={`block text-[13px] font-bold leading-tight ${active ? 'text-primary' : 'text-foreground'}`}
                                                                 >
-                                                                    {subLink.title}
+                                                                    {
+                                                                        subLink.title
+                                                                    }
                                                                 </span>
                                                                 {subLink.description && (
                                                                     <span className='block text-[11px] leading-snug text-muted-foreground'>
-                                                                        {subLink.description}
+                                                                        {
+                                                                            subLink.description
+                                                                        }
                                                                     </span>
                                                                 )}
                                                             </div>
                                                         );
 
-                                                        const cellClass = 'block rounded-lg p-2.5 transition-colors hover:bg-muted/50 text-left w-full';
+                                                        const cellClass =
+                                                            'block rounded-lg p-2.5 transition-colors hover:bg-muted/50 text-left w-full';
 
                                                         if (isDemo) {
                                                             return (
@@ -573,7 +592,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 onClick={() =>
                                     setLangDropdownOpen(!langDropdownOpen)
                                 }
-                                className='p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer'
+                                className='p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer mt-2'
                                 aria-label='Select Language'
                             >
                                 <svg
@@ -664,7 +683,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         {/* Sun/Moon Theme Toggle Switch - Commented out as light theme is forced
                         <button
                             onClick={toggleTheme}
-                            className='p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer'
+                            className='p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer mt-2'
                             aria-label='Switch Theme'
                         >
                             {mounted &&
@@ -703,12 +722,18 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         */}
 
                         {/* Demo aanvragen Button */}
-                        <button
-                            onClick={() => setIsDemoModalOpen(true)}
-                            className='inline-flex items-center gap-1.5 px-4 py-2  font-semibold rounded-md border transition-all duration-300 bg-primary border-primary text-primary-foreground hover:bg-primary/90 cursor-pointer shadow-sm text-sm'
+                        <BorderBeam
+                            size='line'
+                            colorVariant='ocean'
+                            strength={1}
                         >
-                            {isEn ? 'Request a Demo' : 'Demo aanvragen'}
-                        </button>
+                            <button
+                                onClick={() => setIsDemoModalOpen(true)}
+                                className='inline-flex items-center gap-1.5 px-4 py-2  font-semibold rounded-md border transition-all duration-300 bg-primary border-primary text-primary-foreground hover:bg-primary/90 cursor-pointer shadow-sm text-sm'
+                            >
+                                {isEn ? 'Request a Demo' : 'Demo aanvragen'}
+                            </button>
+                        </BorderBeam>
 
                         {/* Sign In Button / Portal Access - Restored original Mijn Emlinked Design with Badtz Star Effect */}
                         <Link
@@ -881,97 +906,6 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     </motion.div>
                 )}
             </AnimatePresence>
-
-            {/* Hover Trigger Tab + Sliding Announcement Box */}
-            {settings?.announcementActive && settings?.announcementText && (
-                <div
-                    className='fixed right-0 top-[150px] z-9999 pointer-events-auto'
-                    onMouseEnter={() => setAnnouncementHovered(true)}
-                    onMouseLeave={() => setAnnouncementHovered(false)}
-                >
-                    <AnimatePresence>
-                        {!announcementHovered ? (
-                            /* Small Fixed Tab Badge */
-                            <motion.div
-                                key='announcement-tab'
-                                initial={{ opacity: 0, x: 100 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: 100 }}
-                                transition={{
-                                    type: 'spring',
-                                    damping: 25,
-                                    stiffness: 150,
-                                }}
-                                className='bg-amber text-navy font-bold text-[11px] px-4 py-3 rounded-l-xl shadow-xl flex items-center gap-2 cursor-pointer border-l border-y border-white/20 select-none hover:bg-amber-light'
-                            >
-                                <span className='w-1.5 h-1.5 bg-navy rounded-full animate-pulse' />
-                                <span>
-                                    {locale === 'en'
-                                        ? 'Important announcement'
-                                        : 'Belangrijke aankondiging'}
-                                </span>
-                            </motion.div>
-                        ) : (
-                            /* Sliding Large Announcement Box */
-                            <motion.div
-                                key='announcement-card'
-                                initial={{ opacity: 0, x: 100 }}
-                                animate={{ opacity: 1, x: -12 }} // x: -12 offset to sit nicely on viewport
-                                exit={{ opacity: 0, x: 100 }}
-                                transition={{
-                                    type: 'spring',
-                                    damping: 22,
-                                    stiffness: 120,
-                                }}
-                                className='w-[340px] p-5 rounded-xl bg-navy/95 border border-white/10 shadow-2xl backdrop-blur-md flex flex-col gap-3 text-left'
-                            >
-                                <div className='flex items-center justify-between'>
-                                    <span className='bg-amber text-navy text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider'>
-                                        {locale === 'en'
-                                            ? 'Important Announcement'
-                                            : 'Belangrijke aankondiging'}
-                                    </span>
-                                </div>
-
-                                <p className='text-xs text-white/90 leading-relaxed font-sans font-medium'>
-                                    {settings.announcementText}
-                                </p>
-
-                                {settings.announcementLink &&
-                                    (settings.announcementLink === '#demo' ? (
-                                        <button
-                                            onClick={() =>
-                                                setIsDemoModalOpen(true)
-                                            }
-                                            className='inline-flex items-center gap-1 text-xs text-amber-light hover:text-amber font-semibold transition-all hover:translate-x-0.5 cursor-pointer text-left w-max'
-                                        >
-                                            <span>
-                                                {locale === 'en'
-                                                    ? 'Request a Demo'
-                                                    : 'Demo aanvragen'}
-                                            </span>
-                                            <span>&rarr;</span>
-                                        </button>
-                                    ) : (
-                                        <Link
-                                            href={getPath(
-                                                settings.announcementLink,
-                                            )}
-                                            className='inline-flex items-center gap-1 text-xs text-amber-light hover:text-amber font-semibold transition-all hover:translate-x-0.5'
-                                        >
-                                            <span>
-                                                {locale === 'en'
-                                                    ? 'Read more'
-                                                    : 'Lees meer'}
-                                            </span>
-                                            <span>&rarr;</span>
-                                        </Link>
-                                    ))}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
-            )}
 
             <DemoModal
                 isOpen={isDemoModalOpen}

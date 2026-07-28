@@ -195,15 +195,20 @@ export const page = defineType({
                     type: 'object',
                     fields: [
                         defineField({
+                            name: 'sectionTag',
+                            title: 'Section Subtitle / Tag (e.g. "MODULAIR EN FLEXIBEL")',
+                            type: 'string',
+                        }),
+                        defineField({
                             name: 'sectionTitle',
                             title: 'Section Title',
                             type: 'string',
                         }),
                         defineField({
                             name: 'sectionSubtitle',
-                            title: 'Section Subtitle',
+                            title: 'Intro Paragraph / Subtitle',
                             type: 'text',
-                            rows: 2,
+                            rows: 3,
                         }),
                         defineField({
                             name: 'features',
@@ -230,6 +235,31 @@ export const page = defineType({
                                             type: 'string',
                                             description:
                                                 'Lucide icon identifier',
+                                        }),
+                                        defineField({
+                                            name: 'imagePath',
+                                            title: 'Image Path (Optional)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'bullets',
+                                            title: 'Bullet Points (Optional)',
+                                            type: 'array',
+                                            of: [
+                                                defineArrayMember({
+                                                    type: 'string',
+                                                }),
+                                            ],
+                                        }),
+                                        defineField({
+                                            name: 'ctaLabel',
+                                            title: 'CTA Label (Optional)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'ctaLink',
+                                            title: 'CTA Link (Optional)',
+                                            type: 'string',
                                         }),
                                     ],
                                 }),
@@ -324,6 +354,11 @@ export const page = defineType({
                     type: 'object',
                     fields: [
                         defineField({
+                            name: 'tag',
+                            title: 'Section Subtitle / Tag Badge (e.g. "ERP INTEGRATIE")',
+                            type: 'string',
+                        }),
+                        defineField({
                             name: 'title',
                             title: 'Title',
                             type: 'string',
@@ -352,9 +387,20 @@ export const page = defineType({
                     type: 'object',
                     fields: [
                         defineField({
+                            name: 'sectionTag',
+                            title: 'Section Tag (e.g. "ERP INTEGRATIE")',
+                            type: 'string',
+                        }),
+                        defineField({
                             name: 'sectionTitle',
                             title: 'Section Title',
                             type: 'string',
+                        }),
+                        defineField({
+                            name: 'sectionSubtitle',
+                            title: 'Intro Paragraph / Subtitle',
+                            type: 'text',
+                            rows: 3,
                         }),
                         defineField({
                             name: 'integrations',

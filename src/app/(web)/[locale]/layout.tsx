@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import StickyAnnouncement from '@/components/StickyAnnouncement';
 import { client } from '@/sanity/client';
 
 interface WebLayoutProps {
@@ -15,6 +16,10 @@ async function getSiteSettings(locale: string) {
             `*[_id == $id][0] {
                 announcementActive,
                 announcementText,
+                announcementTitle,
+                announcementCtaLabel,
+                announcementPillText,
+                announcementReviews,
                 announcementLink,
                 phone,
                 email,
@@ -41,6 +46,7 @@ export default async function WebLayout({ children, params }: WebLayoutProps) {
             <Header locale={locale} settings={settings} />
             <main className='flex-grow flex flex-col'>{children}</main>
             <Footer locale={locale} settings={settings} />
+            <StickyAnnouncement locale={locale} settings={settings} />
         </>
     );
 }

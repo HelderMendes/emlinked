@@ -3,10 +3,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { client } from '@/sanity/client';
+import { HugeiconsIcon } from '@hugeicons/react';
 import {
-    Check,
-    Shield,
-    Star,
+    AiSecurity01Icon,
+    CheckmarkBadge03Icon,
+    StarAward01Icon,
+} from '@hugeicons/core-free-icons';
+import {
     AlertCircle,
     Info,
     TrendingUp,
@@ -15,9 +18,16 @@ import {
     Calendar,
     Database,
     BarChart3,
+    CheckCircle2,
+    CreditCard,
+    RefreshCw,
+    Zap,
+    ArrowDownRight,
+    Layers,
 } from 'lucide-react';
 import { Metadata } from 'next';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
+import { Box3CalculatorWidget } from '@/components/Box3CalculatorWidget';
 
 interface HomePageProps {
     params: Promise<{ locale: string }>;
@@ -103,17 +113,35 @@ async function getHomepageData(locale: string) {
                         link
                     },
                     // Features list fields
+                    sectionTag,
                     sectionTitle,
                     sectionSubtitle,
                     features[] {
                         _key,
                         title,
                         description,
-                        icon
+                        icon,
+                        imagePath,
+                        bullets,
+                        ctaLabel,
+                        ctaLink
                     },
                     // CTA Banner fields
+                    tag,
+                    title,
+                    subtitle,
                     buttonLabel,
-                    buttonLink
+                    buttonLink,
+                    // Integrations List fields
+                    integrations[] {
+                        _key,
+                        title,
+                        badge,
+                        description,
+                        imagePlaceholder,
+                        bullets,
+                        link
+                    }
                 },
                 seo {
                     structuredData
@@ -130,31 +158,63 @@ async function getHomepageData(locale: string) {
 function getTrustIcon(iconName: string) {
     switch (iconName?.toLowerCase()) {
         case 'check':
-            return <Check className='h-5 w-5 text-amber flex-shrink-0' />;
+            return (
+                <HugeiconsIcon
+                    icon={CheckmarkBadge03Icon}
+                    size={20}
+                    className='shrink-0 transition-colors'
+                />
+            );
         case 'shield':
-            return <Shield className='h-5 w-5 text-amber flex-shrink-0' />;
+            return (
+                <HugeiconsIcon
+                    icon={AiSecurity01Icon}
+                    size={20}
+                    className='shrink-0 transition-colors'
+                />
+            );
         case 'star':
             return (
-                <Star className='h-5 w-5 text-amber fill-amber flex-shrink-0' />
+                <HugeiconsIcon
+                    icon={StarAward01Icon}
+                    size={20}
+                    className='shrink-0 transition-colors'
+                />
             );
         case 'warn':
         case 'alert':
-            return (
-                <AlertCircle className='h-5 w-5 text-red-500 flex-shrink-0' />
-            );
+            return <AlertCircle className='h-5 w-5 text-red-500 shrink-0' />;
         default:
-            return <Info className='h-5 w-5 text-amber flex-shrink-0' />;
+            return <Info className='h-5 w-5 shrink-0' />;
     }
 }
 
 function getIcon(iconName: string) {
     switch (iconName?.toLowerCase()) {
         case 'check':
-            return <Check className='h-6 w-6' />;
+            return (
+                <HugeiconsIcon
+                    icon={CheckmarkBadge03Icon}
+                    size={24}
+                    className='shrink-0 transition-colors'
+                />
+            );
         case 'shield':
-            return <Shield className='h-6 w-6' />;
+            return (
+                <HugeiconsIcon
+                    icon={AiSecurity01Icon}
+                    size={24}
+                    className='shrink-0 transition-colors'
+                />
+            );
         case 'star':
-            return <Star className='h-6 w-6' />;
+            return (
+                <HugeiconsIcon
+                    icon={StarAward01Icon}
+                    size={24}
+                    className='shrink-0 transition-colors'
+                />
+            );
         case 'trending-up':
             return <TrendingUp className='h-6 w-6' />;
         case 'file-text':
@@ -183,7 +243,7 @@ function formatHeroTitle(title: string) {
             return (
                 <span
                     key={index}
-                    className='text-transparent bg-clip-text bg-gradient-to-r from-amber to-amber-light font-extrabold tracking-tight'
+                    className='text-transparent bg-clip-text bg-linear-to-r from-amber to-amber-light font-extrabold tracking-tight'
                 >
                     {part.slice(1, -1)}
                 </span>
@@ -317,105 +377,21 @@ export default async function HomePage({ params }: HomePageProps) {
                         const cardStats = block.cardStats || [];
 
                         return (
+                            // Hero Section –  Frontpage
                             <section
                                 key={block._key}
-                                className='relative px-6 py-14 md:py-26 overflow-hidden bg-[url("/hero/bkg_darkBlue.jpg")] bg-cover bg-center bg-no-repeat text-white dark:bg-gradient-to-br dark:from-[#FFFBEF] dark:via-[#FFFDF9] dark:to-[#FFF3D4] dark:animate-none dark:text-[#060e32] border-b border-white/10 dark:border-amber/10 transition-colors duration-300'
+                                className='relative px-6 py-10 md:py-16 overflow-hidden bg-texture-navy text-white dark:bg-linear-to-br dark:from-[#FFFBEF] dark:via-[#FFFDF9] dark:to-[#FFF3D4] dark:animate-none dark:text-[#060e32] border-b border-white/10 dark:border-amber/10 transition-colors duration-300'
                             >
-                                <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
+                                <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-0 z-999' />
 
                                 {/* Ambient Background Glow */}
                                 <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber/5 rounded-full blur-[120px] pointer-events-none animate-float-glow' />
-
-                                {/* Wave Animation with Orange Glow - Disabled
-                                <div className='absolute bottom-[-5%] left-0 w-full h-[20%] overflow-hidden pointer-events-none z-0 '>
-                                    <svg
-                                        className='absolute w-[200%] h-full'
-                                        viewBox='0 0 2000 120'
-                                        preserveAspectRatio='none'
-                                        xmlns='http://www.w3.org/2000/svg'
-                                    >
-                                        <defs>
-                                            <linearGradient
-                                                id='wave-glow'
-                                                x1='0%'
-                                                y1='0%'
-                                                x2='0%'
-                                                y2='100%'
-                                            >
-                                                <stop
-                                                    offset='0%'
-                                                    stopColor='#ff9400'
-                                                    stopOpacity='0.45'
-                                                />
-                                                <stop
-                                                    offset='15%'
-                                                    stopColor='#ff9400'
-                                                    stopOpacity='0.15'
-                                                />
-                                                <stop
-                                                    offset='60%'
-                                                    stopColor='#ff9400'
-                                                    stopOpacity='0'
-                                                />
-                                            </linearGradient>
-                                            <filter
-                                                id='glow-blur'
-                                                x='-10%'
-                                                y='-10%'
-                                                width='120%'
-                                                height='120%'
-                                            >
-                                                <feGaussianBlur
-                                                    stdDeviation='5'
-                                                    result='blur'
-                                                />
-                                                <feMerge>
-                                                    <feMergeNode in='blur' />
-                                                    <feMergeNode in='SourceGraphic' />
-                                                </feMerge>
-                                            </filter>
-                                        </defs>
-
-                                        {/* Wave 1 }
-                                        <path
-                                            d='M0,60 C250,100 250,20 500,60 C750,100 750,20 1000,60 C1250,100 1250,20 1500,60 C1750,100 1750,20 2000,60 L2000,120 L0,120 Z'
-                                            fill='url(#wave-glow)'
-                                            filter='url(#glow-blur)'
-                                            className='animate-wave-slow'
-                                        />
-
-                                        {/* Wave 2 }
-                                        <path
-                                            d='M0,60 C150,10 350,110 500,60 C650,10 850,110 1000,60 C1150,10 1350,110 1500,60 C1650,10 1850,110 2000,60 L2000,120 L0,120 Z'
-                                            fill='url(#wave-glow)'
-                                            filter='url(#glow-blur)'
-                                            className='animate-wave-mid opacity-40'
-                                        />
-
-                                        {/* Wave 3 }
-                                        <path
-                                            d='M0,60 C200,90 300,30 500,60 C700,90 800,30 1000,60 C1200,90 1300,30 1500,60 C1700,90 1800,30 2000,60 L2000,120 L0,120 Z'
-                                            fill='url(#wave-glow)'
-                                            filter='url(#glow-blur)'
-                                            className='animate-wave-fast opacity-60'
-                                        />
-                                    </svg>
-                                </div>
-                                */}
-
-                                {/* Visual Watermarks */}
-                                {/* <div className='absolute right-[-60px] top-[-60px] w-[520px] h-auto opacity-[0.06] dark:opacity-[0.03] pointer-events-none select-none text-white dark:text-[#060e32] font-display text-[300px] leading-none font-bold'>
-                                    EM
-                                </div>
-                                <div className='absolute left-[-30px] bottom-[-40px] w-[260px] h-auto opacity-[0.04] dark:opacity-[0.02] pointer-events-none select-none text-amber font-display text-[150px] leading-none font-bold'>
-                                    EM
-                                </div> */}
 
                                 <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10'>
                                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
                                         {/* Left Column */}
                                         <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
-                                            <span className='inline-flex items-center gap-1.5 self-start rounded-full bg-amber/15 border border-amber/35 px-3.5 py-1 text-xs font-bold tracking-wide text-amber'>
+                                            <span className='inline-flex items-center gap-3.5 self-start rounded-full bg-amber/15 border border-amber/35 px-4.5 py-1 text-xs font-bold tracking-wide text-amber'>
                                                 <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
                                                 {heroLabel}
                                             </span>
@@ -430,7 +406,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                     href={getPath(
                                                         primaryCtaLink,
                                                     )}
-                                                    className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-white transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
+                                                    className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32]  transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
                                                 >
                                                     {primaryCtaLabel}
                                                 </Link>
@@ -460,7 +436,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                 className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                                             />
                                                             {/* Tooltip */}
-                                                            <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                            <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
                                                                 <div className='text-[12px] font-bold text-amber leading-tight'>
                                                                     Levi Bosboom
                                                                 </div>
@@ -487,7 +463,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                 className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                                             />
                                                             {/* Tooltip */}
-                                                            <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                            <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
                                                                 <div className='text-[12px] font-bold text-amber leading-tight'>
                                                                     Angelique
                                                                     van Doorn
@@ -515,7 +491,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                 className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                                             />
                                                             {/* Tooltip */}
-                                                            <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                            <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
                                                                 <div className='text-[12px] font-bold text-amber leading-tight'>
                                                                     Michel De
                                                                     Waal
@@ -543,7 +519,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                 className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                                             />
                                                             {/* Tooltip */}
-                                                            <div className='absolute top-full left-0 mt-2 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                            <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
                                                                 <div className='text-[12px] font-bold text-amber leading-tight'>
                                                                     Sander Bot
                                                                 </div>
@@ -590,13 +566,13 @@ export default async function HomePage({ params }: HomePageProps) {
                         return (
                             <section
                                 key={block._key}
-                                className='bg-white dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-4 px-6 md:px-10 shadow-sm'
+                                className='bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] animate-none dark:text-[#060e32] dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-2 px-6 md:px-10 shadow-sm'
                             >
                                 <div className='max-w-8xl mx-auto flex items-center justify-center gap-9 flex-wrap'>
                                     {items.map((item: any) => (
                                         <div
                                             key={item._key}
-                                            className='flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-white/75 hover:text-amber dark:hover:text-amber transition-colors'
+                                            className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-amber dark:hover:text-amber transition-colors tracking-wide'
                                         >
                                             {getTrustIcon(item.icon)}
                                             <span>{item.text}</span>
@@ -607,90 +583,463 @@ export default async function HomePage({ params }: HomePageProps) {
                         );
                     }
                     case 'featuresList': {
-                        const sectionTitle = block.sectionTitle || '';
-                        const sectionSubtitle = block.sectionSubtitle || '';
-                        const features = block.features || [];
+                        let sectionTag = block.sectionTag || '';
+                        let sectionSubtitle = block.sectionSubtitle || '';
 
+                        if (!sectionTag && sectionSubtitle.includes(' — ')) {
+                            const parts = sectionSubtitle.split(' — ');
+                            sectionTag = parts[0].trim();
+                            sectionSubtitle = parts.slice(1).join(' — ').trim();
+                        }
+
+                        const sectionTitle = block.sectionTitle || '';
+                        const features = block.features || [];
+                        const isBox3Block =
+                            block._key === 'box3-check-lead-magnet' ||
+                            sectionTag.toUpperCase().includes('BOX 3') ||
+                            sectionTag.toUpperCase().includes('FISCALE') ||
+                            sectionTitle.includes('Box 3');
+
+                        if (isBox3Block) {
+                            return (
+                                <section
+                                    key={block._key}
+                                    className='px-6 py-24 bg-background border-b border-border relative overflow-hidden'
+                                >
+                                    {/* Ambient Glow Orbs */}
+                                    <div className='absolute right-0 top-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-amber/5 rounded-full blur-[140px] pointer-events-none' />
+
+                                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10'>
+                                        <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
+                                            {/* Left Column: Text, Bullets, CTA */}
+                                            <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
+                                                {sectionTag && (
+                                                    <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-4 py-1 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
+                                                        <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                                        {sectionTag}
+                                                    </span>
+                                                )}
+                                                <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem] font-bold tracking-tight text-foreground leading-[1.2]'>
+                                                    {sectionTitle}
+                                                </h2>
+                                                {sectionSubtitle && (
+                                                    <p className='text-muted-foreground text-base md:text-lg leading-relaxed font-light'>
+                                                        {sectionSubtitle}
+                                                    </p>
+                                                )}
+                                                <div className='flex flex-col gap-4 my-2'>
+                                                    {features.map(
+                                                        (feat: any) => (
+                                                            <div
+                                                                key={feat._key}
+                                                                className='flex items-start gap-3.5 group'
+                                                            >
+                                                                <div className='h-7 w-7 rounded-xl bg-amber/15 border border-amber/35 flex items-center justify-center text-amber shrink-0 mt-0.5 shadow-sm group-hover:bg-amber group-hover:text-navy transition-all duration-300'>
+                                                                    <CheckCircle2 className='h-4 w-4' />
+                                                                </div>
+                                                                <span className='text-base font-semibold text-foreground/90 leading-snug pt-0.5'>
+                                                                    {feat.title}
+                                                                </span>
+                                                            </div>
+                                                        ),
+                                                    )}
+                                                </div>
+                                                <div className='pt-3'>
+                                                    <GlowingLink
+                                                        href={getPath(
+                                                            '/kennisbank/box3-check',
+                                                        )}
+                                                        className='h-13 px-8 text-base font-bold inline-flex items-center gap-2 shadow-lg hover:shadow-amber/25'
+                                                    >
+                                                        Start de gratis Box
+                                                        3-check ⚡
+                                                    </GlowingLink>
+                                                </div>
+                                            </div>
+
+                                            {/* Right Column: Fiscale Optimalisatie Illustration Image (Calculator Widget commented out below) */}
+                                            <div className='lg:col-span-5 flex justify-center items-center'>
+                                                <div className='relative w-full max-w-md max-h-[650px] rounded-2xl overflow-hidden group flex items-center justify-center'>
+                                                    <Image
+                                                        src='/emlinked/home/FiscaleOptimalisatie_Box3_Transparent.png'
+                                                        alt={sectionTitle}
+                                                        width={700}
+                                                        height={500}
+                                                        className='w-full max-h-[650px] object-cover object-top rounded-2xl group-hover:scale-105 transition-transform duration-500'
+                                                        priority
+                                                    />
+                                                </div>
+                                                {/* Reusable Box 3 Calculator Widget Component (Commented out for now):
+                                                    <Box3CalculatorWidget />
+                                                */}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            );
+                        }
+
+                        // Render Onze Apps (3-Card Grid Layout)
                         return (
                             <section
                                 key={block._key}
                                 className='px-6 py-20 bg-card border-b border-border'
                             >
                                 <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-12'>
-                                    <div className='max-w-3xl mx-auto flex flex-col gap-4'>
-                                        <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-foreground'>
+                                    <div className='max-w-3xl mx-auto flex flex-col gap-3 text-center'>
+                                        {sectionTag && (
+                                            <div className='flex justify-center mb-1'>
+                                                <span className='inline-flex items-center gap-2 rounded-full border-amber border bg-amber px-8 py-1 text-xs font-bold tracking-wide text-white uppercase'>
+                                                    <span className='w-1.5 h-1.5 bg-white rounded-full animate-ping mr-3' />
+                                                    {sectionTag}
+                                                </span>
+                                            </div>
+                                        )}
+                                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-darkblue'>
                                             {sectionTitle}
                                         </h2>
                                         {sectionSubtitle && (
-                                            <p className='text-muted-foreground leading-relaxed'>
+                                            <p className='text-muted-foreground leading-relaxed text-lg'>
                                                 {sectionSubtitle}
                                             </p>
                                         )}
                                     </div>
 
-                                    <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-left'>
-                                        {features.map((feature: any) => (
-                                            <div
-                                                key={feature._key}
-                                                className='p-8 rounded-2xl border border-border bg-background flex flex-col gap-4 hover:shadow-2xl hover:-translate-y-2 hover:border-amber/30 transition-all duration-300 group cursor-pointer relative overflow-hidden'
-                                            >
-                                                {/* Card Corner Glow */}
-                                                <div className='absolute -right-16 -top-16 w-32 h-32 bg-amber/5 rounded-full blur-2xl group-hover:bg-amber/15 transition-all duration-500' />
+                                    {/* Clean 3-App Responsive Grid Layout */}
+                                    <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 text-left'>
+                                        {features
+                                            .slice(0, 3)
+                                            .map(
+                                                (
+                                                    feature: any,
+                                                    index: number,
+                                                ) => {
+                                                    const imagePath =
+                                                        feature.imagePath &&
+                                                        feature.imagePath !==
+                                                            'payment-flow-animation'
+                                                            ? feature.imagePath
+                                                            : index === 0
+                                                              ? '/emlinked/home/DrieKrachtigeApps_VastgoedbeheerSoftware.png'
+                                                              : index === 1
+                                                                ? '/emlinked/home/Huurdersportaal.png'
+                                                                : '/emlinked/home/DrieKrachtigeApps_PaymentSoftware.png';
 
-                                                <div className='h-10 w-10 rounded-md bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300 z-10'>
-                                                    {getIcon(feature.icon)}
-                                                </div>
-                                                <h3 className='text-lg font-bold text-foreground z-10'>
-                                                    {feature.title}
-                                                </h3>
-                                                <p className='text-sm text-muted-foreground leading-relaxed z-10'>
-                                                    {feature.description}
-                                                </p>
+                                                    return (
+                                                        <div
+                                                            key={
+                                                                feature._key ||
+                                                                index
+                                                            }
+                                                            className='p-6 md:p-8 rounded-2xl border border-black/20 bg-background flex flex-col justify-between gap-6 hover:shadow-2xl hover:-translate-y-1.5 hover:border-amber/40 transition-all duration-300 group cursor-pointer relative'
+                                                        >
+                                                            {/* Circular App Badge - Center placed at top-right of outside card div */}
+                                                            <div className='absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 z-30 w-13 h-13 rounded-full bg-amber/80 text-white shadow-xl border-2 border-white dark:border-[#060e32] flex flex-col items-center justify-center font-extrabold text-[10px] uppercase tracking-tight leading-none group-hover:scale-110 transition-transform duration-300'>
+                                                                <span>APP</span>
+                                                                <span className='text-[20px] font-black text-white mt-0.5'>
+                                                                    0{index + 1}
+                                                                </span>
+                                                            </div>
+
+                                                            <div className='absolute -right-16 -top-16 w-32 h-32 bg-amber/5 rounded-full blur-2xl group-hover:bg-amber/15 transition-all duration-500 overflow-hidden' />
+
+                                                            <div className='flex flex-col gap-4 z-10'>
+                                                                {/* Visual Preview Container */}
+                                                                <div className='relative w-full h-52 rounded-xl overflow-hidden bg-texture-navy/5 border border-border/50 group-hover:border-amber/30 transition-colors'>
+                                                                    {imagePath &&
+                                                                    imagePath !==
+                                                                        'payment-flow-animation' ? (
+                                                                        <Image
+                                                                            src={
+                                                                                imagePath
+                                                                            }
+                                                                            alt={
+                                                                                feature.title
+                                                                            }
+                                                                            fill
+                                                                            priority={
+                                                                                index ===
+                                                                                0
+                                                                            }
+                                                                            className='object-cover group-hover:scale-105 transition-transform duration-500'
+                                                                        />
+                                                                    ) : (
+                                                                        /* App 3 Payment Software Visual Mockup */
+                                                                        <div className='relative w-full h-full bg-texture-navy p-5 flex flex-col justify-between text-white overflow-hidden'>
+                                                                            <div className='absolute -right-12 -bottom-12 w-40 h-40 bg-amber/20 rounded-full blur-2xl' />
+                                                                            <div className='flex items-center justify-between border-b border-white/10 pb-2.5'>
+                                                                                <span className='text-[11px] font-bold text-amber uppercase tracking-wider flex items-center gap-1.5'>
+                                                                                    <CreditCard className='h-3.5 w-3.5' />{' '}
+                                                                                    SEPA
+                                                                                    Incasso
+                                                                                    &
+                                                                                    Banking
+                                                                                </span>
+                                                                                <span className='bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[9px] px-2 py-0.5 rounded-full font-bold uppercase'>
+                                                                                    Realtime
+                                                                                    Sync
+                                                                                </span>
+                                                                            </div>
+                                                                            <div className='flex flex-col gap-2.5 my-1'>
+                                                                                <div className='flex justify-between items-center bg-white/5 p-2 rounded-lg border border-white/10 text-xs'>
+                                                                                    <span className='text-white/80 font-medium'>
+                                                                                        Huurincasso
+                                                                                        SEPA
+                                                                                        Batch
+                                                                                    </span>
+                                                                                    <span className='font-bold text-emerald-400'>
+                                                                                        €
+                                                                                        142.500,-
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div className='flex justify-between items-center bg-white/5 p-2 rounded-lg border border-white/10 text-xs'>
+                                                                                    <span className='text-white/80 font-medium'>
+                                                                                        Automatisch
+                                                                                        Afletteren
+                                                                                    </span>
+                                                                                    <span className='font-bold text-amber'>
+                                                                                        100%
+                                                                                        Match
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className='text-[9px] text-white/50 italic'>
+                                                                                Directe
+                                                                                PSD2
+                                                                                bankkoppeling
+                                                                                met
+                                                                                Business
+                                                                                Central
+                                                                                grootboek.
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+
+                                                                <h3 className='text-xl font-bold text-amber tracking-tight group-hover:text-foreground transition-colors'>
+                                                                    {
+                                                                        feature.title
+                                                                    }
+                                                                </h3>
+                                                                <p className='text-sm text-muted-foreground leading-relaxed font-light'>
+                                                                    {
+                                                                        feature.description
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                },
+                                            )}
+                                    </div>
+                                </div>
+                            </section>
+                        );
+                    }
+                    case 'integrationsList': {
+                        const sectionTag =
+                            block.sectionTag || 'ERP INTEGRATIE';
+                        const sectionTitle =
+                            block.sectionTitle ||
+                            'De directe koppeling met Microsoft Dynamics 365 Business Central';
+                        const sectionSubtitle =
+                            block.sectionSubtitle ||
+                            'Veel platformen beloven een koppeling, maar Emlinked werkt native binnen uw ERP-omgeving. Dit betekent: geen handmatige exports, geen gecompliceerde API-fouten en absolute data-integriteit. Elke operationele mutatie landt direct als gevalideerde journaalpost in uw grootboek.';
+                        const integrations = block.integrations || [];
+
+                        return (
+                            <section
+                                key={block._key}
+                                className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'
+                            >
+                                {/* Ambient Glow Orbs matching Hero */}
+                                <div className='absolute -left-20 top-1/4 w-96 h-96 bg-amber/15 rounded-full blur-[120px] pointer-events-none' />
+                                <div className='absolute -right-20 bottom-10 w-96 h-96 bg-blue-600/15 rounded-full blur-[120px] pointer-events-none' />
+
+                                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-14 relative z-10'>
+                                    <div className='max-w-3xl mx-auto flex flex-col gap-4 text-center'>
+                                        {sectionTag && (
+                                            <div className='flex justify-center mb-1'>
+                                                <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-6 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
+                                                    <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                                    {sectionTag}
+                                                </span>
                                             </div>
-                                        ))}
+                                        )}
+                                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-white'>
+                                            {sectionTitle}
+                                        </h2>
+                                        {sectionSubtitle && (
+                                            <p className='text-white/75 leading-relaxed text-base md:text-lg font-light'>
+                                                {sectionSubtitle}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Connected Enterprise Architecture Diagram Grid */}
+                                    <div className='relative grid grid-cols-1 lg:grid-cols-3 gap-8 text-left'>
+                                        {/* Horizontal Architecture Connecting Line (Desktop) */}
+                                        <div className='hidden lg:block absolute top-[5.2rem] left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-amber/20 via-amber/60 to-amber/20 z-0 pointer-events-none'>
+                                            <div className='absolute top-1/2 left-[30%] -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-amber shadow-[0_0_10px_#f59e0b] animate-ping' />
+                                            <div className='absolute top-1/2 left-[70%] -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-amber shadow-[0_0_10px_#f59e0b] animate-ping' />
+                                        </div>
+
+                                        {integrations.map(
+                                            (item: any, idx: number) => {
+                                                const defaultFooterSpec =
+                                                    idx === 0
+                                                        ? 'Direct DB Schema'
+                                                        : idx === 1
+                                                          ? 'Continia OCR Engine'
+                                                          : 'PSD2 / ISO 20022';
+                                                const defaultStatusText =
+                                                    idx === 0
+                                                        ? 'Core Database'
+                                                        : idx === 1
+                                                          ? 'Auto-Matching'
+                                                          : 'Live Reconciled';
+                                                const footerSpec =
+                                                    item.footerSpec ||
+                                                    defaultFooterSpec;
+                                                const statusText =
+                                                    item.statusText ||
+                                                    defaultStatusText;
+
+                                                const nodeLabel =
+                                                    idx === 0
+                                                        ? '2-Way Sync'
+                                                        : idx === 1
+                                                          ? 'Inbound Feed'
+                                                          : 'Realtime Feed';
+
+                                                return (
+                                                    <div
+                                                        key={item._key || idx}
+                                                        className='p-8 rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xl text-white hover:border-amber/50 hover:bg-white/[0.07] hover:shadow-[0_20px_50px_rgba(245,158,11,0.12)] transition-all duration-300 relative overflow-hidden group flex flex-col justify-between gap-6 z-10'
+                                                    >
+                                                        {/* Glowing background accent */}
+                                                        <div className='absolute -right-16 -top-16 w-36 h-36 bg-amber/10 rounded-full blur-2xl group-hover:bg-amber/20 transition-all duration-500' />
+
+                                                        <div className='flex flex-col gap-4 z-10'>
+                                                            <div className='flex items-center justify-between'>
+                                                                <div className='h-12 w-12 rounded-xl bg-amber/15 border border-amber/35 flex items-center justify-center text-amber font-bold text-lg group-hover:scale-110 transition-transform shadow-md'>
+                                                                    {idx ===
+                                                                    0 ? (
+                                                                        <Database className='h-6 w-6' />
+                                                                    ) : idx ===
+                                                                      1 ? (
+                                                                        <FileText className='h-6 w-6' />
+                                                                    ) : (
+                                                                        <Cpu className='h-6 w-6' />
+                                                                    )}
+                                                                </div>
+
+                                                                {/* Dynamic Node Flow Indicator */}
+                                                                <span className='text-[10px] font-bold text-amber bg-amber/10 border border-amber/30 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5'>
+                                                                    {idx ===
+                                                                    0 ? (
+                                                                        <RefreshCw className='h-3 w-3 animate-spin-slow' />
+                                                                    ) : idx ===
+                                                                      1 ? (
+                                                                        <ArrowDownRight className='h-3 w-3' />
+                                                                    ) : (
+                                                                        <Zap className='h-3 w-3 text-amber' />
+                                                                    )}
+                                                                    {nodeLabel}
+                                                                </span>
+                                                            </div>
+
+                                                            <div className='flex flex-col gap-1 mt-2'>
+                                                                {item.badge && (
+                                                                    <span className='text-[10px] font-bold text-amber/90 uppercase tracking-widest'>
+                                                                        {
+                                                                            item.badge
+                                                                        }
+                                                                    </span>
+                                                                )}
+                                                                <h3 className='text-2xl font-bold text-white tracking-tight'>
+                                                                    {item.title}
+                                                                </h3>
+                                                            </div>
+                                                            <p className='font-normal text-white/75 leading-relaxed text-sm'>
+                                                                {
+                                                                    item.description
+                                                                }
+                                                            </p>
+                                                        </div>
+
+                                                        {/* Differentiated Technical Status Footer */}
+                                                        <div className='pt-4 border-t border-white/10 flex items-center justify-between text-xs z-10'>
+                                                            <span className='text-amber font-mono font-semibold tracking-wide flex items-center gap-1.5'>
+                                                                <Layers className='h-3.5 w-3.5 text-amber/80' />
+                                                                {footerSpec}
+                                                            </span>
+                                                            <span className='text-emerald-400 font-semibold text-[11px] flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-md'>
+                                                                <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse' />
+                                                                {statusText}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            },
+                                        )}
                                     </div>
                                 </div>
                             </section>
                         );
                     }
                     case 'ctaBanner': {
-                        const title = block.title || '';
-                        const subtitle = block.subtitle || '';
-                        const buttonLabel = block.buttonLabel || '';
-                        const buttonLink = block.buttonLink || '';
+                        const tag = block.tag || 'DIGITALISERING';
+                        const title =
+                            block.title ||
+                            'Klaar om uw vastgoedbeheer te digitaliseren?';
+                        const subtitle =
+                            block.subtitle ||
+                            'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd en kiezen voor 100% realtime controle binnen Business Central.';
+                        const buttonLabel =
+                            block.buttonLabel ||
+                            'Vraag een live demonstratie aan';
+                        const buttonLink = block.buttonLink || '/contact';
 
                         return (
                             <section
                                 key={block._key}
-                                className='px-6 py-20 bg-background'
+                                className='px-6 py-24 bg-background relative overflow-hidden'
                             >
-                                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 border border-border/80 rounded-2xl bg-card p-8 md:p-12 hover:shadow-xl transition-all duration-300 relative overflow-hidden group'>
-                                    {/* Ambient Glow Blob */}
-                                    <div className='absolute -left-20 -bottom-20 w-80 h-80 bg-amber/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-amber/15 transition-all duration-500' />
-                                    <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center'>
-                                        <div className='lg:col-span-8 flex flex-col gap-4 text-left'>
-                                            <span className='text-xs font-semibold text-primary uppercase tracking-widest'>
-                                                {locale === 'en'
-                                                    ? 'Product Focus'
-                                                    : 'Platform Focus'}
-                                            </span>
-                                            <h2 className='font-display text-3xl font-bold tracking-tight text-foreground'>
-                                                {title}
-                                            </h2>
-                                            <p className='text-muted-foreground leading-relaxed'>
-                                                {subtitle}
-                                            </p>
-                                        </div>
-                                        {buttonLabel && buttonLink && (
-                                            <div className='lg:col-span-4 flex justify-end'>
-                                                <GlowingLink
-                                                    href={getPath(buttonLink)}
-                                                    className='h-12 text-sm w-full lg:w-auto'
-                                                >
-                                                    {buttonLabel}
-                                                </GlowingLink>
+                                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
+                                    <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+                                        {/* Ambient Glow Orbs matching Hero */}
+                                        <div className='absolute -left-24 -bottom-24 w-96 h-96 bg-amber/20 rounded-full blur-[100px] pointer-events-none group-hover:bg-amber/30 transition-all duration-700' />
+                                        <div className='absolute -right-24 -top-24 w-96 h-96 bg-blue-600/15 rounded-full blur-[100px] pointer-events-none group-hover:bg-blue-600/25 transition-all duration-700' />
+
+                                        <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
+                                            <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
+                                                {tag && (
+                                                    <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
+                                                        <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                                        {tag}
+                                                    </span>
+                                                )}
+                                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                                                    {title}
+                                                </h2>
+                                                <p className='text-white/80 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
+                                                    {subtitle}
+                                                </p>
                                             </div>
-                                        )}
+                                            {buttonLabel && buttonLink && (
+                                                <div className='lg:col-span-4 flex justify-start lg:justify-end'>
+                                                    <GlowingLink
+                                                        href={getPath(
+                                                            buttonLink,
+                                                        )}
+                                                        className='h-14 px-9 text-base w-full lg:w-auto font-bold shadow-xl hover:shadow-amber/30'
+                                                    >
+                                                        {buttonLabel}
+                                                    </GlowingLink>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </section>

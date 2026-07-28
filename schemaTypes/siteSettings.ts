@@ -28,21 +28,75 @@ export const siteSettings = defineType({
         }),
         defineField({
             name: 'announcementActive',
-            title: 'Show Top Announcement Bar',
+            title: 'Show Bottom Announcement Pill',
             type: 'boolean',
             initialValue: true,
         }),
         defineField({
             name: 'announcementText',
-            title: 'Announcement Text',
+            title: 'Announcement Subtitle / Text',
             type: 'string',
-            description: 'Text shown in the top urgency/announcement bar.',
+            description:
+                'Body description text shown inside the announcement card.',
+        }),
+        defineField({
+            name: 'announcementTitle',
+            title: 'Announcement Title',
+            type: 'string',
+            description: 'Main heading title inside the announcement card.',
+        }),
+        defineField({
+            name: 'announcementCtaLabel',
+            title: 'Announcement CTA Button Label',
+            type: 'string',
+            description:
+                'Text shown on the action button (e.g. "Gratis demo aanvragen").',
+        }),
+        defineField({
+            name: 'announcementPillText',
+            title: 'Announcement Collapsed Pill Text',
+            type: 'string',
+            description:
+                'Label shown next to the rating stars when collapsed (e.g. "4.9 van 5").',
+        }),
+        defineField({
+            name: 'announcementReviews',
+            title: 'Announcement Card Reviews',
+            type: 'array',
+            description:
+                'Provide up to 2 stars reviews shown at the bottom of the card.',
+            of: [
+                defineArrayMember({
+                    name: 'review',
+                    title: 'Review Item',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'text',
+                            title: 'Review Quote / Text',
+                            type: 'text',
+                            rows: 2,
+                            validation: (Rule) => Rule.required(),
+                        }),
+                        defineField({
+                            name: 'author',
+                            title: 'Author / Subtitle',
+                            type: 'string',
+                            validation: (Rule) => Rule.required(),
+                        }),
+                    ],
+                    preview: {
+                        select: { title: 'author', subtitle: 'text' },
+                    },
+                }),
+            ],
         }),
         defineField({
             name: 'announcementLink',
-            title: 'Announcement Link',
+            title: 'Announcement Link Target',
             type: 'string',
-            description: 'Optional link destination for the announcement bar.',
+            description:
+                'Optional link destination (use "#demo" to open the demo form).',
         }),
         defineField({
             name: 'phone',

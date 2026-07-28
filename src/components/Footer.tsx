@@ -115,10 +115,10 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
     };
 
     return (
-        <footer className="w-full bg-[url('/hero/bkg_darkBlue.jpg')] bg-cover bg-center bg-no-repeat text-white border-t border-white/10 pt-16 pb-12 transition-all">
+        <footer className='w-full bg-texture-navy text-white border-t border-white/10 pt-16 pb-12 transition-all'>
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
                 {/* 1. Dynamic Callback Callout Banner */}
-                <div className='bg-[#ff9400] text-[#060e32] p-6 md:p-8 rounded-xl flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden'>
+                <div className='bg-[#ff9400] text-[#060e32] p-6 md:p-8 rounded-lg flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden'>
                     {/* Background accents for Schematic-vibe */}
                     <div className='absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#060e32_1px,transparent_1px)] [background-size:16px_16px]'></div>
 
@@ -136,19 +136,19 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             type='text'
                             placeholder={t.placeholderName}
                             required
-                            className='bg-transparent border border-[#060e32]/30 placeholder-[#060e32]/60 px-4 py-2.5 text-xs text-[#060e32] focus:outline-none focus:border-[#060e32] focus:ring-1 focus:ring-[#060e32] rounded transition-all w-full sm:w-40'
+                            className='bg-transparent border border-white placeholder-white/70 px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white rounded transition-all w-full sm:w-40'
                         />
                         <input
                             type='text'
                             placeholder={t.placeholderPhone}
                             required
-                            className='bg-transparent border border-[#060e32]/30 placeholder-[#060e32]/60 px-4 py-2.5 text-xs text-[#060e32] focus:outline-none focus:border-[#060e32] focus:ring-1 focus:ring-[#060e32] rounded transition-all w-full sm:w-40'
+                            className='bg-transparent border border-white placeholder-white/70 px-4 py-2.5 text-xs text-[#060e32] focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white rounded transition-all w-full sm:w-40'
                         />
                         <input
                             type='email'
                             placeholder={t.placeholderEmail}
                             required
-                            className='bg-transparent border border-[#060e32]/30 placeholder-[#060e32]/60 px-4 py-2.5 text-xs text-[#060e32] focus:outline-none focus:border-[#060e32] focus:ring-1 focus:ring-[#060e32] rounded transition-all w-full sm:w-40'
+                            className='bg-transparent border border-white placeholder-white/70 px-4 py-2.5 text-xs text-[#060e32] focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white rounded transition-all w-full sm:w-40'
                         />
                         <button
                             type='submit'
@@ -429,9 +429,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                 {/* 3. Bottom Legal Copyright Bar */}
                 <div className='mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left max-w-7xl mx-auto'>
-                    <p className='text-[10px] text-slate-400'>
-                        {t.rights}
-                    </p>
+                    <p className='text-[10px] text-slate-400'>{t.rights}</p>
                     <div className='flex flex-wrap justify-center gap-4 md:gap-6 text-[10px] text-slate-400'>
                         <Link
                             href={getPath('/privacybeleid')}
@@ -439,9 +437,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                         >
                             {t.disclaimer}
                         </Link>
-                        <span className='text-white/10'>
-                            |
-                        </span>
+                        <span className='text-white/10'>|</span>
                         <Link
                             href={getPath('/algemene-voorwaarden')}
                             className='hover:text-[#ff9400] transition-colors'
