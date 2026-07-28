@@ -414,7 +414,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 </svg>
                                             </button>
                                         )}
-                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-72 origin-top rounded-xl border border-border bg-card p-2 shadow-2xl ring-1 ring-black/5 transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50'>
+                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-72 origin-top rounded-xl border border-border  p-2 shadow-2xl ring-1 ring-black/5 transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50 bg-white'>
                                             <div className='flex flex-col gap-1'>
                                                 {item.links?.map(
                                                     (
