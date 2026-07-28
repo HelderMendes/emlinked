@@ -38,10 +38,10 @@ export default defineConfig({
                                                     .schemaType('page')
                                             ),
                                         S.listItem()
-                                            .title('Oplossingen')
+                                            .title('Onze apps')
                                             .child(
                                                 S.documentList()
-                                                    .title('Oplossingen (NL)')
+                                                    .title('Onze apps (NL)')
                                                     .filter('_type == "solutionPage" && language == "nl"')
                                                     .schemaType('solutionPage')
                                             ),
@@ -71,10 +71,10 @@ export default defineConfig({
                                                     .schemaType('page')
                                             ),
                                         S.listItem()
-                                            .title('Solutions')
+                                            .title('Our Apps')
                                             .child(
                                                 S.documentList()
-                                                    .title('Solutions (EN)')
+                                                    .title('Our Apps (EN)')
                                                     .filter('_type == "solutionPage" && language == "en"')
                                                     .schemaType('solutionPage')
                                             ),

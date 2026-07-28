@@ -115,71 +115,48 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         ? [
               {
                   _type: 'menuDropdown',
-                  title: 'Property Software',
+                  title: 'Our apps',
                   path: '/vastgoedsoftware',
                   links: [
                       {
-                          title: 'Property Management',
+                          title: 'Property management software',
                           path: '/oplossingen/vastgoedbeheer-software',
                           description: 'Core SaaS property management module.',
                       },
                       {
                           title: 'Tenant Portal',
                           path: '/oplossingen/huurdersportaal',
-                          description:
-                              'Self-service portal for support tickets.',
+                          description: 'Self-service portal for support tickets.',
                       },
                       {
-                          title: 'Payment Software',
+                          title: 'Payment software',
                           path: '/oplossingen/payment',
                           description: 'Automated billing transactions.',
                       },
                   ],
               },
               {
-                  _type: 'menuDropdown',
-                  title: 'Features',
-                  path: '/functies',
-                  links: [
-                      {
-                          title: 'CPI Indexation',
-                          path: '/kennisbank/box3-check',
-                          description: 'Automated CBS-based lease adjustments.',
-                      },
-                      {
-                          title: 'Rent Invoicing',
-                          path: '/oplossingen/vastgoedbeheer-software',
-                          description: 'Recurring billing runs.',
-                      },
-                      {
-                          title: 'Accounting Integration',
-                          path: '/integraties',
-                          description:
-                              'Native Dynamics Business Central ledger sync.',
-                      },
-                  ],
+                  _type: 'menuLink',
+                  title: 'Box3-check ⚡',
+                  path: '/kennisbank/box3-check',
               },
               {
                   _type: 'menuLink',
-                  title: 'Integrations',
+                  title: 'Partner software',
                   path: '/integraties',
               },
               { _type: 'menuLink', title: 'Pricing', path: '/prijzen' },
               { _type: 'menuLink', title: 'References', path: '/referenties' },
-              {
-                  _type: 'menuLink',
-                  title: 'Knowledge Base',
-                  path: '/kennisbank/box3-check',
-              },
+              { _type: 'menuLink', title: 'Team', path: '/over-ons' },
           ]
         : [
               {
                   _type: 'menuDropdown',
-                  title: 'Vastgoedsoftware',
+                  title: 'Onze apps',
                   path: '/vastgoedsoftware',
                   links: [
                       {
-                          title: 'Vastgoedbeheer',
+                          title: 'Vastgoedbeheer software',
                           path: '/oplossingen/vastgoedbeheer-software',
                           description:
                               'De core SaaS module voor vastgoedmanagement.',
@@ -191,45 +168,25 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                               'Self-service portaal voor communicatie & meldingen.',
                       },
                       {
-                          title: 'Payment Software',
+                          title: 'Payment software',
                           path: '/oplossingen/payment',
                           description: 'Geautomatiseerde betalingstransacties.',
                       },
                   ],
               },
               {
-                  _type: 'menuDropdown',
-                  title: 'Functies',
-                  path: '/functies',
-                  links: [
-                      {
-                          title: 'CPI Indexatie',
-                          path: '/kennisbank/box3-check',
-                          description:
-                              'Automatische huurverhogingen op basis van CBS-indexen.',
-                      },
-                      {
-                          title: 'Huurprolongatie',
-                          path: '/oplossingen/vastgoedbeheer-software',
-                          description:
-                              'Geautomatiseerde kwartaal- en maandfacturatie.',
-                      },
-                      {
-                          title: 'Boekhouding',
-                          path: '/integraties',
-                          description:
-                              'Native Dynamics Business Central koppeling.',
-                      },
-                  ],
-              },
-              { _type: 'menuLink', title: 'Integraties', path: '/integraties' },
-              { _type: 'menuLink', title: 'Tarieven', path: '/prijzen' },
-              { _type: 'menuLink', title: 'Referenties', path: '/referenties' },
-              {
                   _type: 'menuLink',
-                  title: 'Kennisbank',
+                  title: 'Box3-check ⚡',
                   path: '/kennisbank/box3-check',
               },
+              {
+                  _type: 'menuLink',
+                  title: 'Partners software',
+                  path: '/integraties',
+              },
+              { _type: 'menuLink', title: 'Prijzen', path: '/prijzen' },
+              { _type: 'menuLink', title: 'Referenties', path: '/referenties' },
+              { _type: 'menuLink', title: 'Team', path: '/over-ons' },
           ];
 
     const menuItems = (settings as any)?.navigationMenu || defaultMenu;
