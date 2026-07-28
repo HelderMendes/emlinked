@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '.env.local' });
 const { createClient } = require('@sanity/client');
 
 const client = createClient({
@@ -21,30 +22,7 @@ const nlBlocks = [
         secondaryCtaLink: '/integraties',
         showProof: true,
         proofText: 'Vertrouwd door professionele vastgoedbeheerders en controllers',
-        cardTitle: 'LIVE PORTFOLIO METRICS',
-        cardStats: [
-            {
-                _key: 's1',
-                badgeText: 'Geautomatiseerd',
-                badgeType: 'good',
-                label: 'Foutloze CPI-Indexatie',
-                value: '100%',
-            },
-            {
-                _key: 's2',
-                badgeText: 'Reconciliatie',
-                badgeType: 'blue',
-                label: 'Bankaflettering (PSD2)',
-                value: 'Direct',
-            },
-            {
-                _key: 's3',
-                badgeText: 'Grootboek-synchroon',
-                badgeType: 'good',
-                label: 'Business Central Boekingen',
-                value: 'Native',
-            },
-        ],
+        imagePath: '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
     },
     {
         _key: 'trustbar_nl',
@@ -184,30 +162,7 @@ const enBlocks = [
         secondaryCtaLink: '/integraties',
         showProof: true,
         proofText: 'Trusted by professional real estate managers & controllers',
-        cardTitle: 'LIVE PORTFOLIO METRICS',
-        cardStats: [
-            {
-                _key: 's1',
-                badgeText: 'Automated',
-                badgeType: 'good',
-                label: 'Error-free CPI Indexation',
-                value: '100%',
-            },
-            {
-                _key: 's2',
-                badgeText: 'Reconciled',
-                badgeType: 'blue',
-                label: 'Bank Reconciliation (PSD2)',
-                value: 'Instant',
-            },
-            {
-                _key: 's3',
-                badgeText: 'Ledger-Synced',
-                badgeType: 'good',
-                label: 'Business Central Postings',
-                value: 'Native',
-            },
-        ],
+        imagePath: '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
     },
     {
         _key: 'trustbar_en',

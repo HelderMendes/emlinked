@@ -389,59 +389,10 @@
                 "title": "Social Proof Text"
               },
               {
-                "initialValue": "LIVE PORTFOLIO METRICS",
-                "name": "cardTitle",
+                "description": "Relative path to image (e.g., /hero/vastgoedportfeuille_aangifte-klaar.jpg)",
+                "name": "imagePath",
                 "type": "string",
-                "title": "Dashboard Preview Card Title"
-              },
-              {
-                "of": [
-                  {
-                    "fields": [
-                      {
-                        "name": "label",
-                        "type": "string",
-                        "title": "Stat Label"
-                      },
-                      {
-                        "name": "value",
-                        "type": "string",
-                        "title": "Stat Value"
-                      },
-                      {
-                        "name": "badgeText",
-                        "type": "string",
-                        "title": "Badge Text (Optional)"
-                      },
-                      {
-                        "options": {
-                          "list": [
-                            {
-                              "title": "Amber / Good",
-                              "value": "good"
-                            },
-                            {
-                              "title": "Blue / Neutral",
-                              "value": "blue"
-                            },
-                            {
-                              "title": "Red / Warn",
-                              "value": "warn"
-                            }
-                          ]
-                        },
-                        "initialValue": "good",
-                        "name": "badgeType",
-                        "type": "string",
-                        "title": "Badge Color Theme"
-                      }
-                    ],
-                    "type": "object"
-                  }
-                ],
-                "name": "cardStats",
-                "type": "array",
-                "title": "Dashboard Preview Stats"
+                "title": "Right Column Image Path (Optional)"
               }
             ],
             "type": "object",

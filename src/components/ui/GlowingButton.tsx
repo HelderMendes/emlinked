@@ -54,8 +54,8 @@ export function GlowingButton({
             }
             className={`
                 relative flex h-10 items-center justify-center overflow-hidden rounded-md border border-r-0 px-6 text-xs font-bold transition-all duration-300 select-none cursor-pointer shadow-sm
-                border-[#e36000] bg-linear-to-t text-white
-                from-[#e36000] to-[#ffeb00] hover:opacity-95 active:scale-[0.98]
+                border-[#fc4a1a] bg-linear-to-t text-white
+                from-[#fc4a1a] to-[#f7b733]ver:opacity-95 active:scale-[0.98]
                 after:absolute after:inset-0 after:rounded-[inherit] after:bg-linear-to-r after:from-transparent after:from-40% after:via-(--glow-color-via) after:via-70% after:to-(--glow-color-to)
                 before:absolute before:right-0 before:h-[60%] before:w-[3px] before:rounded-l before:bg-(--glow-color) before:shadow-[-2px_0_10px_var(--glow-color)] before:transition-all before:duration-300 hover:before:translate-x-full
                 ${className}

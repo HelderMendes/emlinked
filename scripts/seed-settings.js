@@ -26,7 +26,8 @@ const nlMenu = [
                 _key: 'link_nl_1_2',
                 title: 'Huurdersportaal',
                 path: '/oplossingen/huurdersportaal',
-                description: 'Self-service portaal voor communicatie & meldingen.',
+                description:
+                    'Self-service portaal voor communicatie & meldingen.',
             },
             {
                 _key: 'link_nl_1_3',
@@ -64,7 +65,7 @@ const nlMenu = [
         _type: 'menuLink',
         _key: 'menu_nl_6',
         title: 'Team',
-        path: '/over-ons',
+        path: '/team',
     },
     {
         _type: 'menuLink',
@@ -129,7 +130,7 @@ const enMenu = [
         _type: 'menuLink',
         _key: 'menu_en_6',
         title: 'Team',
-        path: '/over-ons',
+        path: '/team',
     },
     {
         _type: 'menuLink',
@@ -295,33 +296,35 @@ async function seed() {
             _type: 'page',
             title: 'De brug tussen vastgoed en',
             language: 'nl',
-            slug: { _type: 'slug', current: 'over-ons' },
-            tagline: 'Emlinked is ontstaan vanuit één duidelijke frustratie: het gat tussen operationeel vastgoedbeheer en de financiële administratie. Wij lossen dit op door software native te integreren in uw Microsoft ERP.',
+            slug: { _type: 'slug', current: 'team' },
+            tagline:
+                'Emlinked is ontstaan vanuit één duidelijke frustratie: het gat tussen operationeel vastgoedbeheer en de financiële administratie. Wij lossen dit op door software native te integreren in uw Microsoft ERP.',
             pageBlocks: [
                 {
                     _type: 'teamBlock',
                     _key: 'block_team_nl',
                     sectionTitle: 'Onze Specialisten',
-                    sectionSubtitle: 'De ontwikkelaars en vastgoedexperts die dagelijks bouwen aan de stabiliteit en kracht van Emlinked.',
+                    sectionSubtitle:
+                        'De ontwikkelaars en vastgoedexperts die dagelijks bouwen aan de stabiliteit en kracht van Emlinked.',
                     members: [
                         {
                             name: 'Coen Mendes',
                             role: 'Oprichter & Lead Architect',
-                            bio: 'Met meer dan 15 jaar ervaring in ERP-architecturen richtte Coen Emlinked op om de dagelijkse afletterings- en dubbele boekingsproblemen definitief op te lossen.'
+                            bio: 'Met meer dan 15 jaar ervaring in ERP-architecturen richtte Coen Emlinked op om de dagelijkse afletterings- en dubbele boekingsproblemen definitief op te lossen.',
                         },
                         {
                             name: 'Dynamics & BC Specialist',
                             role: 'Lead Business Central Engineer',
-                            bio: 'Specialist in Microsoft Dynamics AL development en extensies. Verantwoordelijk voor de native werking en databasekoppelingen binnen BC.'
+                            bio: 'Specialist in Microsoft Dynamics AL development en extensies. Verantwoordelijk voor de native werking en databasekoppelingen binnen BC.',
                         },
                         {
                             name: 'Customer Success & Support',
                             role: 'Support Lead',
-                            bio: 'Zorgt voor een soepele onboarding en begeleidt de implementatietrajecten bij professionele vastgoedbeheerders.'
-                        }
-                    ]
-                }
-            ]
+                            bio: 'Zorgt voor een soepele onboarding en begeleidt de implementatietrajecten bij professionele vastgoedbeheerders.',
+                        },
+                    ],
+                },
+            ],
         };
 
         const enOverOnsPage = {
@@ -329,33 +332,35 @@ async function seed() {
             _type: 'page',
             title: 'The Bridge Between Property &',
             language: 'en',
-            slug: { _type: 'slug', current: 'over-ons' },
-            tagline: 'Emlinked was founded to solve the structural disconnect between property operations and financial administrations. We build native extensions that live directly inside Microsoft Dynamics.',
+            slug: { _type: 'slug', current: 'team' },
+            tagline:
+                'Emlinked was founded to solve the structural disconnect between property operations and financial administrations. We build native extensions that live directly inside Microsoft Dynamics.',
             pageBlocks: [
                 {
                     _type: 'teamBlock',
                     _key: 'block_team_en',
                     sectionTitle: 'Meet Our Specialists',
-                    sectionSubtitle: 'The engineers and property software experts building Emlinked every day.',
+                    sectionSubtitle:
+                        'The engineers and property software experts building Emlinked every day.',
                     members: [
                         {
                             name: 'Coen Mendes',
                             role: 'Founder & Lead Architect',
-                            bio: 'With over 15 years of experience in ERP architectures, Coen founded Emlinked to solve the reconciliation bottleneck between property operations and accounting.'
+                            bio: 'With over 15 years of experience in ERP architectures, Coen founded Emlinked to solve the reconciliation bottleneck between property operations and accounting.',
                         },
                         {
                             name: 'Dynamics & BC Specialist',
                             role: 'Lead Business Central Engineer',
-                            bio: 'Expert in Microsoft Dynamics extensions and AL language. Responsible for the native integration and database synchronization.'
+                            bio: 'Expert in Microsoft Dynamics extensions and AL language. Responsible for the native integration and database synchronization.',
                         },
                         {
                             name: 'Customer Success & Support',
                             role: 'Support Lead',
-                            bio: 'Dedicated to ensuring seamless onboarding and providing technical assistance for institutional real estate managers.'
-                        }
-                    ]
-                }
-            ]
+                            bio: 'Dedicated to ensuring seamless onboarding and providing technical assistance for institutional real estate managers.',
+                        },
+                    ],
+                },
+            ],
         };
 
         // Seed references pages

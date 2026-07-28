@@ -99,59 +99,10 @@ export const page = defineType({
                             description: 'Text displayed next to avatars',
                         }),
                         defineField({
-                            name: 'cardTitle',
-                            title: 'Dashboard Preview Card Title',
+                            name: 'imagePath',
+                            title: 'Right Column Image Path (Optional)',
                             type: 'string',
-                            initialValue: 'LIVE PORTFOLIO METRICS',
-                        }),
-                        defineField({
-                            name: 'cardStats',
-                            title: 'Dashboard Preview Stats',
-                            type: 'array',
-                            of: [
-                                defineArrayMember({
-                                    type: 'object',
-                                    fields: [
-                                        defineField({
-                                            name: 'label',
-                                            title: 'Stat Label',
-                                            type: 'string',
-                                        }),
-                                        defineField({
-                                            name: 'value',
-                                            title: 'Stat Value',
-                                            type: 'string',
-                                        }),
-                                        defineField({
-                                            name: 'badgeText',
-                                            title: 'Badge Text (Optional)',
-                                            type: 'string',
-                                        }),
-                                        defineField({
-                                            name: 'badgeType',
-                                            title: 'Badge Color Theme',
-                                            type: 'string',
-                                            options: {
-                                                list: [
-                                                    {
-                                                        title: 'Amber / Good',
-                                                        value: 'good',
-                                                    },
-                                                    {
-                                                        title: 'Blue / Neutral',
-                                                        value: 'blue',
-                                                    },
-                                                    {
-                                                        title: 'Red / Warn',
-                                                        value: 'warn',
-                                                    },
-                                                ],
-                                            },
-                                            initialValue: 'good',
-                                        }),
-                                    ],
-                                }),
-                            ],
+                            description: 'Relative path to image (e.g., /hero/vastgoedportfeuille_aangifte-klaar.jpg)',
                         }),
                     ],
                 }),

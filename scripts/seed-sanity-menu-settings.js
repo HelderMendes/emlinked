@@ -25,7 +25,8 @@ const nlMenu = [
                 _key: 'app-huurdersportaal',
                 title: 'Huurdersportaal',
                 path: '/oplossingen/huurdersportaal',
-                description: 'Self-service portaal voor communicatie & meldingen.',
+                description:
+                    'Self-service portaal voor communicatie & meldingen.',
             },
             {
                 _key: 'app-payment-software',
@@ -63,7 +64,7 @@ const nlMenu = [
         _type: 'menuLink',
         _key: 'menu-team-nl',
         title: 'Team',
-        path: '/over-ons',
+        path: '/team',
     },
 ];
 
@@ -122,7 +123,7 @@ const enMenu = [
         _type: 'menuLink',
         _key: 'menu-team-en',
         title: 'Team',
-        path: '/over-ons',
+        path: '/team',
     },
 ];
 

@@ -126,7 +126,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                       {
                           title: 'Tenant Portal',
                           path: '/oplossingen/huurdersportaal',
-                          description: 'Self-service portal for support tickets.',
+                          description:
+                              'Self-service portal for support tickets.',
                       },
                       {
                           title: 'Payment software',
@@ -147,7 +148,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
               },
               { _type: 'menuLink', title: 'Pricing', path: '/prijzen' },
               { _type: 'menuLink', title: 'References', path: '/referenties' },
-              { _type: 'menuLink', title: 'Team', path: '/over-ons' },
+              { _type: 'menuLink', title: 'Team', path: '/team' },
           ]
         : [
               {
@@ -186,7 +187,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
               },
               { _type: 'menuLink', title: 'Prijzen', path: '/prijzen' },
               { _type: 'menuLink', title: 'Referenties', path: '/referenties' },
-              { _type: 'menuLink', title: 'Team', path: '/over-ons' },
+              { _type: 'menuLink', title: 'Team', path: '/team' },
           ];
 
     const menuItems = (settings as any)?.navigationMenu || defaultMenu;

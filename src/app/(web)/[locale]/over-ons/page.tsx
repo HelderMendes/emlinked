@@ -19,7 +19,7 @@ interface OverOnsPageProps {
 async function getSanityPageData(locale: string) {
     try {
         return await sanityFetch<any>({
-            query: `*[_type == "page" && slug.current == "over-ons" && language == $locale][0] {
+            query: `*[_type == "page" && slug.current == "team" && language == $locale][0] {
                 title,
                 tagline,
                 desc,
@@ -38,7 +38,7 @@ async function getSanityPageData(locale: string) {
             params: { locale },
         });
     } catch (e) {
-        console.error('Failed to fetch over-ons page from Sanity:', e);
+        console.error('Failed to fetch team page from Sanity:', e);
         return null;
     }
 }
@@ -66,7 +66,7 @@ export async function generateMetadata({
         description,
         robots,
         alternates: {
-            canonical: seo?.canonical || (isEn ? '/en/over-ons' : '/over-ons'),
+            canonical: seo?.canonical || (isEn ? '/en/team' : '/team'),
         },
     };
 }

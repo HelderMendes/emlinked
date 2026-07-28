@@ -28,7 +28,6 @@ import {
 import { Metadata } from 'next';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { Box3CalculatorWidget } from '@/components/Box3CalculatorWidget';
-import { HeroSection } from '@/components/blocks/HeroSection';
 
 interface HomePageProps {
     params: Promise<{ locale: string }>;
@@ -359,22 +358,207 @@ export default async function HomePage({ params }: HomePageProps) {
             {blocks.map((block: any) => {
                 switch (block._type) {
                     case 'hero': {
+                        const heroLabel =
+                            block.label ||
+                            'DE STANDAARD VOOR MODERN VASTGOEDBEHEER';
+                        const heroTitle =
+                            block.title ||
+                            'Uw vastgoedportefeuille altijd *automatisch* aangifte-klaar';
+                        const heroSubtitle = block.subtitle || '';
+                        const primaryCtaLabel =
+                            block.ctaLabel || 'Gratis Demo Aanvragen';
+                        const primaryCtaLink = block.ctaLink || '/contact';
+                        const secondaryCtaLabel = block.secondaryCtaLabel || '';
+                        const secondaryCtaLink = block.secondaryCtaLink || '';
+                        const showProof = block.showProof ?? true;
+                        const proofText = block.proofText || '';
+                        const cardTitle =
+                            block.cardTitle || 'LIVE PORTFOLIO METRICS';
+                        const cardStats = block.cardStats || [];
+
                         return (
-                            <HeroSection
+                            // Hero Section –  Frontpage
+                            <section
                                 key={block._key}
-                                label={block.label}
-                                title={block.title || 'Uw vastgoedportefeuille altijd *automatisch* aangifte-klaar'}
-                                subtitle={block.subtitle}
-                                ctaLabel={block.ctaLabel || 'Gratis Demo Aanvragen'}
-                                ctaLink={block.ctaLink || '/contact'}
-                                secondaryCtaLabel={block.secondaryCtaLabel}
-                                secondaryCtaLink={block.secondaryCtaLink}
-                                showProof={block.showProof ?? true}
-                                proofText={block.proofText}
-                                imagePath={block.imagePath || '/hero/vastgoedportfeuille_aangifte-klaar.jpg'}
-                                isHomepage={true}
-                                locale={locale}
-                            />
+                                className='relative px-6 py-10 md:py-16 overflow-hidden bg-texture-navy text-white dark:bg-linear-to-br dark:from-[#FFFBEF] dark:via-[#FFFDF9] dark:to-[#FFF3D4] dark:animate-none dark:text-[#060e32] border-b border-white/10 dark:border-amber/10 transition-colors duration-300'
+                            >
+                                <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-0 z-999' />
+
+                                {/* Ambient Background Glow */}
+                                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber/5 rounded-full blur-[120px] pointer-events-none animate-float-glow' />
+
+                                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10'>
+                                    <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
+                                        {/* Left Column */}
+                                        <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
+                                            <span className='inline-flex items-center gap-3.5 self-start rounded-full bg-amber/15 border border-amber/35 px-4.5 py-1 text-xs font-bold tracking-wide text-amber'>
+                                                <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                                {heroLabel}
+                                            </span>
+                                            <h1 className='font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white dark:text-[#060e32] leading-[1.1]'>
+                                                {formatHeroTitle(heroTitle)}
+                                            </h1>
+                                            <p className='text-lg md:text-xl text-white/65 dark:text-[#060e32]/75 leading-relaxed font-light'>
+                                                {heroSubtitle}
+                                            </p>
+                                            <div className='flex flex-col sm:flex-row gap-4 mt-2'>
+                                                <Link
+                                                    href={getPath(
+                                                        primaryCtaLink,
+                                                    )}
+                                                    className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32]  transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
+                                                >
+                                                    {primaryCtaLabel}
+                                                </Link>
+                                                {secondaryCtaLabel &&
+                                                    secondaryCtaLink && (
+                                                        <Link
+                                                            href={getPath(
+                                                                secondaryCtaLink,
+                                                            )}
+                                                            className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                                                        >
+                                                            {secondaryCtaLabel}
+                                                        </Link>
+                                                    )}
+                                            </div>
+
+                                            {showProof && (
+                                                <div className='flex items-center gap-4 pt-6 border-t border-white/10 dark:border-[#060e32]/10 mt-2'>
+                                                    <div className='flex -space-x-2.5 overflow-visible relative'>
+                                                        {/* Levi Bosboom */}
+                                                        <div className='relative group z-30 hover:z-50'>
+                                                            <Image
+                                                                src='/hero/levi-bosboom.png'
+                                                                alt='Levi Bosboom'
+                                                                width={32}
+                                                                height={32}
+                                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                                            />
+                                                            {/* Tooltip */}
+                                                            <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>
+                                                                    Levi Bosboom
+                                                                </div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
+                                                                    Eigenaar,
+                                                                    Vastgoedbeheer
+                                                                    Rotterdam
+                                                                </div>
+                                                                <div className='text-[10px] text-amber mt-1'>
+                                                                    ★★★★★
+                                                                </div>
+                                                                {/* Arrow */}
+                                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Angelique */}
+                                                        <div className='relative group z-25 hover:z-50'>
+                                                            <Image
+                                                                src='/hero/angelique.png'
+                                                                alt='Angelique van Doorn-Franke'
+                                                                width={32}
+                                                                height={32}
+                                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                                            />
+                                                            {/* Tooltip */}
+                                                            <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>
+                                                                    Angelique
+                                                                    van Doorn
+                                                                </div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
+                                                                    Vastgoedbeheerder,
+                                                                    Van
+                                                                    Overhagen
+                                                                </div>
+                                                                <div className='text-[10px] text-amber mt-1'>
+                                                                    ★★★★★
+                                                                </div>
+                                                                {/* Arrow */}
+                                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Michel */}
+                                                        <div className='relative group z-20 hover:z-50'>
+                                                            <Image
+                                                                src='/hero/MichelDeWaal.jpg'
+                                                                alt='Michel De Waal'
+                                                                width={32}
+                                                                height={32}
+                                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                                            />
+                                                            {/* Tooltip */}
+                                                            <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>
+                                                                    Michel De
+                                                                    Waal
+                                                                </div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
+                                                                    Directeur,
+                                                                    M2 Capital
+                                                                    Real Estate
+                                                                </div>
+                                                                <div className='text-[10px] text-amber mt-1'>
+                                                                    ★★★★★
+                                                                </div>
+                                                                {/* Arrow */}
+                                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Sander */}
+                                                        <div className='relative group z-15 hover:z-50'>
+                                                            <Image
+                                                                src='/hero/sander-bot.png'
+                                                                alt='Sander Bot'
+                                                                width={32}
+                                                                height={32}
+                                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                                            />
+                                                            {/* Tooltip */}
+                                                            <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
+                                                                <div className='text-[12px] font-bold text-amber leading-tight'>
+                                                                    Sander Bot
+                                                                </div>
+                                                                <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
+                                                                    Mede-eigenaar,
+                                                                    Baetland
+                                                                    Vastgoed
+                                                                </div>
+                                                                <div className='text-[10px] text-amber mt-1'>
+                                                                    ★★★★★
+                                                                </div>
+                                                                {/* Arrow */}
+                                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <span className='text-sm text-white/65 dark:text-orange font-light'>
+                                                        {proofText}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Right Column */}
+                                        <div className='lg:col-span-5 hover:scale-[1.01] transition-transform duration-300'>
+                                            <h3>
+                                                <Image
+                                                    src='/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                                                    alt='hero-image'
+                                                    width={500}
+                                                    height={500}
+                                                    className='w-full h-auto rounded-2xl'
+                                                    priority
+                                                />
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         );
                     }
                     case 'trustBar': {
@@ -475,9 +659,9 @@ export default async function HomePage({ params }: HomePageProps) {
 
                                             {/* Right Column: Fiscale Optimalisatie Illustration Image (Calculator Widget commented out below) */}
                                             <div className='lg:col-span-5 flex justify-center items-center'>
-                                                <div className='relative w-full max-w-md max-h-[650px] rounded-2xl overflow-hidden group flex items-center justify-center'>
+                                                <div className='team'>
                                                     <Image
-                                                        src='/emlinked/home/FiscaleOptimalisatie_Box3.jpg'
+                                                        src='/emlinked/home/FiscaleOptimalisatie_Box3_Transparent.png'
                                                         alt={sectionTitle}
                                                         width={700}
                                                         height={500}
