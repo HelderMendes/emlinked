@@ -13,6 +13,7 @@ import {
     CheckCircle2,
 } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
+import { HeroSection } from '@/components/blocks/HeroSection';
 
 interface FunctiesPageProps {
     params: Promise<{ locale: string }>;
@@ -200,30 +201,14 @@ export default async function FunctiesPage({ params }: FunctiesPageProps) {
             />
 
             {/* Hero Section */}
-            <section className='relative px-6 py-20 md:py-28 overflow-hidden bg-[radial-gradient(circle_at_70%_20%,rgba(255,148,0,0.08),transparent_50%)]'>
-                <div className='absolute inset-0 bg-[linear-gradient(to_bottom,rgba(6,14,50,0.8),#060e32)] z-0' />
-                <div className='max-w-7xl mx-auto text-center relative z-10 space-y-6'>
-                    <span className='inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-full bg-primary/10 border border-primary/20 text-primary'>
-                        <Zap className='h-3.5 w-3.5' />
-                        {isEn
-                            ? 'CORE PRODUCT CAPABILITIES'
-                            : 'PRODUCTFUNCTIONALITEITEN'}
-                    </span>
-                    <h1 className='font-display font-extrabold text-4xl md:text-5xl lg:text-6xl tracking-tight max-w-4xl mx-auto leading-tight'>
-                        {isEn
-                            ? 'Enterprise Features for '
-                            : 'Geavanceerde Functies voor '}
-                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-amber to-amber-light'>
-                            Vastgoedbeheerders
-                        </span>
-                    </h1>
-                    <p className='text-muted-foreground text-sm md:text-base max-w-2xl mx-auto leading-relaxed'>
-                        {isEn
-                            ? "Explore Emlinked's robust functional extensions. Built to streamline operational processes and secure full financial integrity."
-                            : 'Ontdek de krachtige functionaliteiten van ons platform. Ontwikkeld om operationele processen te versnellen en de datakwaliteit te borgen.'}
-                    </p>
-                </div>
-            </section>
+            <HeroSection
+                label={isEn ? 'CORE PRODUCT CAPABILITIES' : 'PRODUCTFUNCTIONALITEITEN'}
+                title={isEn ? 'Enterprise Features for *Property Managers*' : 'Geavanceerde Functies voor *Vastgoedbeheerders*'}
+                subtitle={isEn ? 'Automate lease indexations, rent renewals, and service charges natively in Business Central.' : 'Automatisering van huurindexaties, prolongatie en servicekostenafrekening rechtstreeks in Business Central.'}
+                imagePath='/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                isHomepage={false}
+                locale={locale}
+            />
 
             {/* Features List Layout */}
             <section className='px-6 py-12 relative z-10 max-w-7xl mx-auto'>

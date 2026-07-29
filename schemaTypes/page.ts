@@ -105,6 +105,18 @@ export const page = defineType({
                             description: 'Relative path to image (e.g., /hero/vastgoedportfeuille_aangifte-klaar.jpg)',
                         }),
                     ],
+                    preview: {
+                        select: {
+                            title: 'title',
+                            label: 'label',
+                        },
+                        prepare({ title, label }) {
+                            return {
+                                title: `Hero: ${title || label || 'Untitled Hero'}`,
+                                subtitle: label ? `Label: ${label}` : 'Hero Block',
+                            };
+                        },
+                    },
                 }),
                 defineArrayMember({
                     name: 'trustBar',
@@ -139,6 +151,14 @@ export const page = defineType({
                             ],
                         }),
                     ],
+                    preview: {
+                        prepare() {
+                            return {
+                                title: 'Trust Bar',
+                                subtitle: 'Partner & Trust Bar Items',
+                            };
+                        },
+                    },
                 }),
                 defineArrayMember({
                     name: 'featuresList',
@@ -217,6 +237,18 @@ export const page = defineType({
                             ],
                         }),
                     ],
+                    preview: {
+                        select: {
+                            title: 'sectionTitle',
+                            tag: 'sectionTag',
+                        },
+                        prepare({ title, tag }) {
+                            return {
+                                title: `Features: ${title || tag || 'Features Block'}`,
+                                subtitle: tag ? `Tag: ${tag}` : 'Features Block',
+                            };
+                        },
+                    },
                 }),
                 defineArrayMember({
                     name: 'faqSection',
