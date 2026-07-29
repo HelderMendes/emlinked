@@ -53,11 +53,9 @@ export function GlowingButton({
                 } as React.CSSProperties
             }
             className={`
-                relative flex h-10 items-center justify-center overflow-hidden rounded-md border border-r-0 px-6 text-xs font-bold transition-all duration-300 select-none cursor-pointer shadow-sm
-                border-[#ff9400] bg-linear-to-t text-white
-                from-[#fc4a1a] to-[#f48c04] hover:opacity-95 active:scale-[0.98]
-                after:absolute after:inset-0 after:rounded-[inherit] after:bg-linear-to-r after:from-transparent after:from-40% after:via-(--glow-color-via) after:via-70% after:to-(--glow-color-to)
-                before:absolute before:right-0 before:h-[60%] before:w-1 before:rounded-l before:bg-(--glow-color) before:shadow-[-2px_0_10px_var(--glow-color)] before:transition-all before:duration-300 hover:before:translate-x-full
+                relative inline-flex h-11 items-center justify-center overflow-hidden rounded-md border border-r-0 px-6 text-sm font-bold transition-all duration-300 select-none cursor-pointer
+                border-[#ff9400] bg-linear-to-tl text-white
+                from-[#f12711] to-[#f5af19] hover:opacity-95 active:scale-[0.98]
                 ${className}
             `}
             {...props}
@@ -98,11 +96,9 @@ export function GlowingLink({
                 } as React.CSSProperties
             }
             className={`
-                relative inline-flex h-11 items-center justify-center overflow-hidden rounded-md border border-r-0 px-6 text-xs font-bold transition-all duration-300 select-none cursor-pointer shadow-sm
-                border-[#ff9400] bg-linear-to-t text-white
-                from-[#fc4a1a] to-[#f48c04] hover:opacity-95 active:scale-[0.98]
-                after:absolute after:inset-0 after:rounded-[inherit] after:bg-linear-to-r after:from-transparent after:from-40% after:via-(--glow-color-via) after:via-70% after:to-(--glow-color-to)
-                before:absolute before:right-0 before:h-[60%] before:w-1 before:rounded-l before:bg-(--glow-color) before:shadow-[-2px_0_10px_var(--glow-color)] before:transition-all before:duration-300 hover:before:translate-x-full
+                relative inline-flex h-11 items-center justify-center overflow-hidden rounded-md border border-r-0 px-6 text-sm font-bold transition-all duration-300 select-none cursor-pointer
+                border-[#ff9400] bg-linear-to-tl text-white
+                from-[#f12711] to-[#f5af19] hover:opacity-95 active:scale-[0.98]
                 ${className}
             `}
             {...props}

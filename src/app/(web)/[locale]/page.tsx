@@ -465,7 +465,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                         href={getPath(
                                                             '/kennisbank/box3-check',
                                                         )}
-                                                        className='h-13 px-8 text-base font-bold inline-flex items-center gap-2 shadow-lg hover:shadow-amber/25'
+                                                        className='h-13 px-8  inline-flex '
                                                     >
                                                         Start de gratis Box
                                                         3-check ⚡

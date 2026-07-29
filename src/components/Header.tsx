@@ -568,7 +568,10 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             </button>
 
                             {langDropdownOpen && (
-                                <div className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-border bg-card p-0.5 shadow-xl transition-all z-50'>
+                                <div
+                                    className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-border bg-card dark:bg-card-dark p-0.5 shadow-xl transition-all z-50 
+                                '
+                                >
                                     {/* NL Language */}
                                     <Link
                                         href={getLocalePath('nl')}
