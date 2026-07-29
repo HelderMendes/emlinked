@@ -268,12 +268,12 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 15 }}
                         transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-                        className='relative w-full max-w-4xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
+                        className='relative w-full max-w-4xl bg-[#FFFDF9] border border-amber/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
                     >
                         {/* Close button */}
                         <button
                             onClick={handleClose}
-                            className='absolute top-4 right-4 h-8 w-8 rounded-full bg-muted/40 hover:bg-muted/80 flex items-center justify-center text-foreground hover:text-foreground/80 transition-colors z-20 cursor-pointer'
+                            className='absolute top-4 right-4 h-8 w-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-[#060e32] transition-colors z-20 cursor-pointer shadow-sm'
                             aria-label='Sluit modal'
                         >
                             <X className='h-4 w-4' />
@@ -371,24 +371,24 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                         </div>
 
                         {/* Right Column - Form */}
-                        <div className='flex-1 bg-card/40 p-8 flex flex-col justify-center text-left overflow-y-auto max-h-[90vh] md:max-h-none'>
+                        <div className='flex-1 bg-[#FFFDF9] p-8 flex flex-col justify-center text-left overflow-y-auto max-h-[90vh] md:max-h-none text-[#060e32]'>
                             {status === 'success' ? (
                                 <div className='text-center py-12 max-w-md mx-auto space-y-5 animate-scaleIn'>
                                     <div className='h-14 w-14 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto border border-emerald-500/20'>
                                         <Check className='h-6 w-6' />
                                     </div>
                                     <div className='space-y-2'>
-                                        <h4 className='font-display font-bold text-xl text-foreground'>
+                                        <h4 className='font-display font-bold text-xl text-[#060e32]'>
                                             {t.successTitle}
                                         </h4>
-                                        <p className='text-xs text-muted-foreground leading-relaxed'>
+                                        <p className='text-xs text-[#060e32]/75 leading-relaxed'>
                                             {t.successMessage.replace('{name}', `${firstName} ${lastName}`.trim())}
                                         </p>
                                     </div>
                                     <div className='pt-4'>
                                         <button
                                             onClick={handleClose}
-                                            className='h-10 px-6 border border-border hover:bg-muted/50 text-xs font-semibold rounded-lg transition-all cursor-pointer'
+                                            className='h-10 px-6 border border-gray-300 hover:bg-gray-100 text-[#060e32] text-xs font-semibold rounded-lg transition-all cursor-pointer'
                                         >
                                             {t.closeBtn}
                                         </button>
@@ -397,16 +397,16 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                             ) : (
                                 <form onSubmit={handleSubmit} className='space-y-6'>
                                     <div>
-                                        <h4 className='font-display font-extrabold text-xl text-foreground tracking-tight'>
+                                        <h4 className='font-display font-extrabold text-xl text-[#060e32] tracking-tight'>
                                             {t.formTitle}
                                         </h4>
-                                        <p className='text-xs text-muted-foreground mt-1.5 leading-relaxed'>
+                                        <p className='text-xs text-[#060e32]/75 mt-1.5 leading-relaxed'>
                                             {t.formSubtitle}
                                         </p>
                                     </div>
 
                                     {status === 'error' && (
-                                        <div className='p-3 bg-destructive/10 border border-destructive/20 text-destructive rounded-lg flex items-start gap-2 text-xs animate-fadeIn'>
+                                        <div className='p-3 bg-red-500/10 border border-red-500/20 text-red-600 rounded-lg flex items-start gap-2 text-xs animate-fadeIn'>
                                             <AlertCircle className='h-4 w-4 shrink-0 mt-0.5' />
                                             <span>{errorMessage}</span>
                                         </div>
@@ -415,29 +415,29 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                     {/* Name Fields */}
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-bold text-muted-foreground uppercase tracking-wider font-mono'>
-                                                {t.firstNameLabel} <span className='text-primary'>*</span>
+                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                                {t.firstNameLabel} <span className='text-amber'>*</span>
                                             </label>
                                             <input
                                                 type='text'
                                                 value={firstName}
                                                 onChange={(e) => setFirstName(e.target.value)}
                                                 placeholder={t.placeholderFirstName}
-                                                className='w-full h-10 px-3 rounded-lg border border-border bg-background text-xs text-foreground focus:outline-none focus:border-primary'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 required
                                                 disabled={status === 'submitting'}
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-bold text-muted-foreground uppercase tracking-wider font-mono'>
-                                                {t.lastNameLabel} <span className='text-primary'>*</span>
+                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                                {t.lastNameLabel} <span className='text-amber'>*</span>
                                             </label>
                                             <input
                                                 type='text'
                                                 value={lastName}
                                                 onChange={(e) => setLastName(e.target.value)}
                                                 placeholder={t.placeholderLastName}
-                                                className='w-full h-10 px-3 rounded-lg border border-border bg-background text-xs text-foreground focus:outline-none focus:border-primary'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 required
                                                 disabled={status === 'submitting'}
                                             />
@@ -447,29 +447,29 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                     {/* Contact Fields */}
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-bold text-muted-foreground uppercase tracking-wider font-mono'>
-                                                {t.emailLabel} <span className='text-primary'>*</span>
+                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                                {t.emailLabel} <span className='text-amber'>*</span>
                                             </label>
                                             <input
                                                 type='email'
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 placeholder={t.placeholderEmail}
-                                                className='w-full h-10 px-3 rounded-lg border border-border bg-background text-xs text-foreground focus:outline-none focus:border-primary'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 required
                                                 disabled={status === 'submitting'}
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-bold text-muted-foreground uppercase tracking-wider font-mono'>
-                                                {t.phoneLabel} <span className='text-primary'>*</span>
+                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                                {t.phoneLabel} <span className='text-amber'>*</span>
                                             </label>
                                             <input
                                                 type='tel'
                                                 value={phone}
                                                 onChange={(e) => setPhone(e.target.value)}
                                                 placeholder={t.placeholderPhone}
-                                                className='w-full h-10 px-3 rounded-lg border border-border bg-background text-xs text-foreground focus:outline-none focus:border-primary'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 required
                                                 disabled={status === 'submitting'}
                                             />
@@ -479,40 +479,40 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                     {/* Company & Portfolio size */}
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-bold text-muted-foreground uppercase tracking-wider font-mono'>
-                                                {t.companyLabel} <span className='text-primary'>*</span>
+                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                                {t.companyLabel} <span className='text-amber'>*</span>
                                             </label>
                                             <input
                                                 type='text'
                                                 value={company}
                                                 onChange={(e) => setCompany(e.target.value)}
                                                 placeholder={t.placeholderCompany}
-                                                className='w-full h-10 px-3 rounded-lg border border-border bg-background text-xs text-foreground focus:outline-none focus:border-primary'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 required
                                                 disabled={status === 'submitting'}
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-bold text-muted-foreground uppercase tracking-wider font-mono'>
+                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
                                                 {t.portfolioLabel}
                                             </label>
                                             <select
                                                 value={portfolioSize}
                                                 onChange={(e) => setPortfolioSize(e.target.value)}
-                                                className='w-full h-10 px-3 rounded-lg border border-border bg-background text-xs text-foreground focus:outline-none focus:border-primary'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 disabled={status === 'submitting'}
                                             >
-                                                <option value={t.portfolioOption1}>{t.portfolioOption1}</option>
-                                                <option value={t.portfolioOption2}>{t.portfolioOption2}</option>
-                                                <option value={t.portfolioOption3}>{t.portfolioOption3}</option>
-                                                <option value={t.portfolioOption4}>{t.portfolioOption4}</option>
+                                                <option value={t.portfolioOption1} className='bg-white text-[#060e32]'>{t.portfolioOption1}</option>
+                                                <option value={t.portfolioOption2} className='bg-white text-[#060e32]'>{t.portfolioOption2}</option>
+                                                <option value={t.portfolioOption3} className='bg-white text-[#060e32]'>{t.portfolioOption3}</option>
+                                                <option value={t.portfolioOption4} className='bg-white text-[#060e32]'>{t.portfolioOption4}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     {/* Message */}
                                     <div className='flex flex-col gap-1.5'>
-                                        <label className='text-[10px] font-bold text-muted-foreground uppercase tracking-wider font-mono'>
+                                        <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
                                             {t.messageLabel}
                                         </label>
                                         <textarea
@@ -520,7 +520,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                             onChange={(e) => setMessage(e.target.value)}
                                             placeholder={t.placeholderMessage}
                                             rows={3}
-                                            className='w-full p-3 rounded-lg border border-border bg-background text-xs text-foreground focus:outline-none focus:border-primary'
+                                            className='w-full p-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                             disabled={status === 'submitting'}
                                         />
                                     </div>

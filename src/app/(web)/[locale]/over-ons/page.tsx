@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
+import { HeroSection } from '@/components/blocks/HeroSection';
 
 interface OverOnsPageProps {
     params: Promise<{ locale: string }>;
@@ -182,119 +183,29 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     return (
         <main className="flex-1 bg-[url('/hero/bkg_darkBlue.jpg')] bg-cover bg-center bg-no-repeat text-white">
             {/* Hero Section */}
-            <section className="relative px-6 py-20 md:py-28 overflow-hidden bg-[url('/hero/bkg_darkBlue.jpg')] bg-cover bg-center bg-no-repeat text-white border-b border-white/10">
-                <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-10' />
-
-                {/* Ambient Background Glow */}
-                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber/5 rounded-full blur-[120px] pointer-events-none animate-float-glow z-0' />
-
-                {/* Wave Animation with Orange Glow - Disabled
-                <div className='absolute bottom-[-5%] left-0 w-full h-[20%] overflow-hidden pointer-events-none z-0 '>
-                    <svg
-                        className='absolute w-[200%] h-full'
-                        viewBox='0 0 2000 120'
-                        preserveAspectRatio='none'
-                        xmlns='http://www.w3.org/2000/svg'
-                    >
-                        <defs>
-                            <linearGradient
-                                id='wave-glow-overons'
-                                x1='0%'
-                                y1='0%'
-                                x2='0%'
-                                y2='100%'
-                            >
-                                <stop
-                                    offset='0%'
-                                    stopColor='#ff9400'
-                                    stopOpacity='0.45'
-                                />
-                                <stop
-                                    offset='15%'
-                                    stopColor='#ff9400'
-                                    stopOpacity='0.15'
-                                />
-                                <stop
-                                    offset='60%'
-                                    stopColor='#ff9400'
-                                    stopOpacity='0'
-                                />
-                            </linearGradient>
-                            <filter
-                                id='glow-blur-overons'
-                                x='-10%'
-                                y='-10%'
-                                width='120%'
-                                height='120%'
-                            >
-                                <feGaussianBlur
-                                    stdDeviation='5'
-                                    result='blur'
-                                />
-                                <feMerge>
-                                    <feMergeNode in='blur' />
-                                    <feMergeNode in='SourceGraphic' />
-                                </feMerge>
-                            </filter>
-                        </defs>
-
-                        {/* Wave 1 }
-                        <path
-                            d='M0,60 C250,100 250,20 500,60 C750,100 750,20 1000,60 C1250,100 1250,20 1500,60 C1750,100 1750,20 2000,60 L2000,120 L0,120 Z'
-                            fill='url(#wave-glow-overons)'
-                            filter='url(#glow-blur-overons)'
-                            className='animate-wave-slow'
-                        />
-
-                        {/* Wave 2 }
-                        <path
-                            d='M0,60 C150,10 350,110 500,60 C650,10 850,110 1000,60 C1150,10 1350,110 1500,60 C1650,10 1850,110 2000,60 L2000,120 L0,120 Z'
-                            fill='url(#wave-glow-overons)'
-                            filter='url(#glow-blur-overons)'
-                            className='animate-wave-mid opacity-40'
-                        />
-
-                        {/* Wave 3 }
-                        <path
-                            d='M0,60 C200,90 300,30 500,60 C700,90 800,30 1000,60 C1200,90 1300,30 1500,60 C1700,90 1800,30 2000,60 L2000,120 L0,120 Z'
-                            fill='url(#wave-glow-overons)'
-                            filter='url(#glow-blur-overons)'
-                            className='animate-wave-fast opacity-60'
-                        />
-                    </svg>
-                </div>
-                */}
-
-                <div className="max-w-7xl mx-auto text-center relative z-10 space-y-6">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-full bg-primary/10 border border-primary/20 text-primary self-center">
-                        <Sparkles className="h-3.5 w-3.5" />
-                        {isEn ? 'ABOUT EMLINKED' : 'OVER EMLINKED'}
-                    </span>
-                    <h1 className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl tracking-tight max-w-4xl mx-auto leading-tight text-white">
-                        {title} {' '}
-                        {!pageData?.title && (
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber to-amber-light">
-                                {fall.titleHighlight}
-                            </span>
-                        )}
-                    </h1>
-                    <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-                        {tagline}
-                    </p>
-                </div>
-            </section>
+            <HeroSection
+                label={isEn ? 'ABOUT EMLINKED' : 'OVER EMLINKED'}
+                title={
+                    title +
+                    (fall.titleHighlight ? ` *${fall.titleHighlight}*` : '')
+                }
+                subtitle={tagline}
+                locale={locale}
+            />
 
             {/* Our Story & Philosophy */}
-            <section className="px-6 py-12 relative z-10 max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-6 text-left">
-                        <span className="text-xs font-bold text-amber uppercase tracking-wider">
+            <section className='px-6 py-12 relative z-10 max-w-7xl mx-auto'>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
+                    <div className='space-y-6 text-left'>
+                        <span className='text-xs font-bold text-amber uppercase tracking-wider'>
                             {isEn ? 'OUR ORIGIN STORY' : 'ONS VERHAAL'}
                         </span>
-                        <h2 className="font-display font-bold text-3xl md:text-4xl text-white">
-                            {isEn ? 'Eliminating the Double-Entry Tax' : 'Het elimineren van de dubbele invoer'}
+                        <h2 className='font-display font-bold text-3xl md:text-4xl text-white'>
+                            {isEn
+                                ? 'Eliminating the Double-Entry Tax'
+                                : 'Het elimineren van de dubbele invoer'}
                         </h2>
-                        <div className="space-y-4 text-xs text-slate-300 leading-relaxed">
+                        <div className='space-y-4 text-xs text-slate-300 leading-relaxed'>
                             <p>
                                 {isEn
                                     ? 'Traditionally, property managers use separate tools to manage tenants and invoices, while their financial ledger lives inside a heavy ERP. This creates constant manual exporting, bank reconciliation errors, and out-of-sync databases.'
@@ -307,21 +218,21 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                             </p>
                         </div>
                     </div>
-                    
+
                     {/* Visual Card / Philosophy Statement */}
-                    <div className="relative rounded-2xl border border-white/10 bg-white/[0.02] p-8 md:p-12 text-left overflow-hidden">
-                        <div className="absolute top-0 right-0 w-48 h-48 bg-amber/5 rounded-full blur-[80px]" />
-                        <div className="space-y-6 relative z-10">
-                            <div className="h-10 w-10 rounded-lg bg-white/[0.04] flex items-center justify-center border border-white/10 text-amber">
-                                <Target className="h-5 w-5" />
+                    <div className='relative rounded-2xl border border-white/10 bg-white/[0.02] p-8 md:p-12 text-left overflow-hidden'>
+                        <div className='absolute top-0 right-0 w-48 h-48 bg-amber/5 rounded-full blur-[80px]' />
+                        <div className='space-y-6 relative z-10'>
+                            <div className='h-10 w-10 rounded-lg bg-white/[0.04] flex items-center justify-center border border-white/10 text-amber'>
+                                <Target className='h-5 w-5' />
                             </div>
-                            <h3 className="font-display font-bold text-xl text-white">
+                            <h3 className='font-display font-bold text-xl text-white'>
                                 {fall.philosophyTitle}
                             </h3>
-                            <blockquote className="text-xs italic text-slate-300 border-l-2 border-primary pl-4 py-1">
+                            <blockquote className='text-xs italic text-slate-300 border-l-2 border-primary pl-4 py-1'>
                                 {fall.philosophyQuote}
                             </blockquote>
-                            <p className="text-[10px] text-muted-foreground">
+                            <p className='text-[10px] text-muted-foreground'>
                                 — Coen Mendes, Founder & Lead Architect
                             </p>
                         </div>
@@ -330,22 +241,25 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
             </section>
 
             {/* Core Values Section */}
-            <section className="px-6 py-16 relative z-10 max-w-7xl mx-auto border-t border-white/5">
-                <div className="text-center max-w-2xl mx-auto space-y-4 mb-12">
-                    <h2 className="font-display font-bold text-3xl text-white">
+            <section className='px-6 py-16 relative z-10 max-w-7xl mx-auto border-t border-white/5'>
+                <div className='text-center max-w-2xl mx-auto space-y-4 mb-12'>
+                    <h2 className='font-display font-bold text-3xl text-white'>
                         {isEn ? 'What We Stand For' : 'Waar we in geloven'}
                     </h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                     {fall.values.map((val, idx) => (
-                        <div key={idx} className="rounded-xl border border-white/5 bg-white/[0.01] p-6 text-left space-y-4">
-                            <div className="h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center shrink-0">
+                        <div
+                            key={idx}
+                            className='rounded-xl border border-white/5 bg-white/[0.01] p-6 text-left space-y-4'
+                        >
+                            <div className='h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center shrink-0'>
                                 {getValueIcon(idx)}
                             </div>
-                            <h3 className="font-display font-bold text-lg text-white">
+                            <h3 className='font-display font-bold text-lg text-white'>
                                 {val.title}
                             </h3>
-                            <p className="text-xs text-slate-300 leading-relaxed">
+                            <p className='text-xs text-slate-300 leading-relaxed'>
                                 {val.description}
                             </p>
                         </div>
@@ -357,35 +271,43 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
             {blocks.map((block: any, bIdx: number) => {
                 if (block._type === 'teamBlock') {
                     return (
-                        <section key={block._key || bIdx} className="px-6 py-16 relative z-10 max-w-7xl mx-auto border-t border-white/5">
-                            <div className="text-center max-w-2xl mx-auto space-y-4 mb-12">
-                                <h2 className="font-display font-bold text-3xl text-white">
+                        <section
+                            key={block._key || bIdx}
+                            className='px-6 py-16 relative z-10 max-w-7xl mx-auto border-t border-white/5'
+                        >
+                            <div className='text-center max-w-2xl mx-auto space-y-4 mb-12'>
+                                <h2 className='font-display font-bold text-3xl text-white'>
                                     {block.sectionTitle}
                                 </h2>
                                 {block.sectionSubtitle && (
-                                    <p className="text-xs text-muted-foreground leading-relaxed">
+                                    <p className='text-xs text-muted-foreground leading-relaxed'>
                                         {block.sectionSubtitle}
                                     </p>
                                 )}
                             </div>
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                                {block.members?.map((member: any, idx: number) => (
-                                    <div key={idx} className="rounded-xl border border-white/10 bg-white/[0.01] p-8 text-left flex flex-col justify-between hover:border-amber/20 transition-all">
-                                        <div className="space-y-4">
-                                            <div className="space-y-1">
-                                                <h3 className="font-display font-bold text-xl text-white">
-                                                    {member.name}
-                                                </h3>
-                                                <p className="text-xs text-primary font-semibold tracking-wider">
-                                                    {member.role}
+                            <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+                                {block.members?.map(
+                                    (member: any, idx: number) => (
+                                        <div
+                                            key={idx}
+                                            className='rounded-xl border border-white/10 bg-white/[0.01] p-8 text-left flex flex-col justify-between hover:border-amber/20 transition-all'
+                                        >
+                                            <div className='space-y-4'>
+                                                <div className='space-y-1'>
+                                                    <h3 className='font-display font-bold text-xl text-white'>
+                                                        {member.name}
+                                                    </h3>
+                                                    <p className='text-xs text-primary font-semibold tracking-wider'>
+                                                        {member.role}
+                                                    </p>
+                                                </div>
+                                                <p className='text-xs text-slate-300 leading-relaxed pt-2'>
+                                                    {member.bio}
                                                 </p>
                                             </div>
-                                            <p className="text-xs text-slate-300 leading-relaxed pt-2">
-                                                {member.bio}
-                                            </p>
                                         </div>
-                                    </div>
-                                ))}
+                                    ),
+                                )}
                             </div>
                         </section>
                     );
@@ -393,23 +315,28 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
 
                 if (block._type === 'ctaBanner') {
                     return (
-                        <section key={block._key || bIdx} className="px-6 py-16 relative z-10 max-w-7xl mx-auto">
-                            <div className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-transparent p-8 md:p-14 overflow-hidden text-center max-w-4xl mx-auto">
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber/5 rounded-full blur-[100px] pointer-events-none" />
-                                <div className="relative z-10 space-y-6 max-w-2xl mx-auto">
-                                    <h2 className="font-display font-bold text-3xl md:text-4xl text-white">
+                        <section
+                            key={block._key || bIdx}
+                            className='px-6 py-16 relative z-10 max-w-7xl mx-auto'
+                        >
+                            <div className='relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-transparent p-8 md:p-14 overflow-hidden text-center max-w-4xl mx-auto'>
+                                <div className='absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber/5 rounded-full blur-[100px] pointer-events-none' />
+                                <div className='relative z-10 space-y-6 max-w-2xl mx-auto'>
+                                    <h2 className='font-display font-bold text-3xl md:text-4xl text-white'>
                                         {block.title}
                                     </h2>
-                                    <p className="text-xs text-muted-foreground leading-relaxed">
+                                    <p className='text-xs text-muted-foreground leading-relaxed'>
                                         {block.subtitle}
                                     </p>
-                                    <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
+                                    <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-4'>
                                         <Link
-                                            href="#demo"
-                                            className="h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold rounded-lg flex items-center gap-2 transition-all shadow-md"
+                                            href='#demo'
+                                            className='h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold rounded-lg flex items-center gap-2 transition-all shadow-md'
                                         >
-                                            {isEn ? 'Request a Demo' : 'Demo aanvragen'}
-                                            <ArrowRight className="h-4.5 w-4.5" />
+                                            {isEn
+                                                ? 'Request a Demo'
+                                                : 'Demo aanvragen'}
+                                            <ArrowRight className='h-4.5 w-4.5' />
                                         </Link>
                                     </div>
                                 </div>

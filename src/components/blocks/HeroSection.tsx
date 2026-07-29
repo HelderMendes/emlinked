@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 
+import { BorderBeam } from 'border-beam';
+
 export interface HeroSectionProps {
     label?: string;
     title: string;
@@ -46,14 +48,14 @@ export function HeroSection({
     label = 'DE STANDAARD VOOR MODERN VASTGOEDBEHEER',
     title,
     subtitle,
-    ctaLabel = 'Gratis Demo Aanvragen',
+    ctaLabel = 'Gratis demo aanvragen',
     ctaLink = '/contact',
-    secondaryCtaLabel,
-    secondaryCtaLink,
+    secondaryCtaLabel = 'Koppeling ontdekken',
+    secondaryCtaLink = '/integraties',
     showProof = true,
     proofText = 'Vertrouwd door professionele vastgoedbeheerders en controllers',
     imagePath = '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
-    isHomepage = false,
+    isHomepage = true,
     locale = 'nl',
 }: HeroSectionProps) {
     const getPath = (path: string) => {
@@ -64,10 +66,8 @@ export function HeroSection({
 
     return (
         <section className='relative px-6 py-10 md:py-16 overflow-hidden bg-texture-navy text-white dark:bg-linear-to-br dark:from-[#FFFBEF] dark:via-[#FFFDF9] dark:to-[#FFF3D4] dark:animate-none dark:text-[#060e32] border-b border-white/10 dark:border-amber/10 transition-colors duration-300'>
-            <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-0 z-999' />
-
-            {/* Ambient Background Glow */}
-            <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber/5 rounded-full blur-[120px] pointer-events-none animate-float-glow' />
+            {/* Animated Data Grid Canvas overlay */}
+            <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
 
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10'>
                 <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
@@ -90,30 +90,28 @@ export function HeroSection({
                             </p>
                         )}
 
-                        {/* CTAs are rendered ONLY on the homepage */}
-                        {isHomepage && (
-                            <div className='flex flex-col sm:flex-row gap-4 mt-2'>
-                                {ctaLabel && ctaLink && (
-                                    <Link
-                                        href={getPath(ctaLink)}
-                                        className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32] transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
-                                    >
-                                        {ctaLabel}
-                                    </Link>
-                                )}
-                                {secondaryCtaLabel && secondaryCtaLink && (
-                                    <Link
-                                        href={getPath(secondaryCtaLink)}
-                                        className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
-                                    >
-                                        {secondaryCtaLabel}
-                                    </Link>
-                                )}
-                            </div>
-                        )}
+                        {/* CTAs rendered on all Hero sections */}
+                        <div className='flex flex-col sm:flex-row gap-4 mt-2'>
+                            {ctaLabel && ctaLink && (
+                                <Link
+                                    href={getPath(ctaLink)}
+                                    className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32] transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
+                                >
+                                    {ctaLabel}
+                                </Link>
+                            )}
+                            {secondaryCtaLabel && secondaryCtaLink && (
+                                <Link
+                                    href={getPath(secondaryCtaLink)}
+                                    className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                                >
+                                    {secondaryCtaLabel}
+                                </Link>
+                            )}
+                        </div>
 
-                        {/* Social proof bar is rendered ONLY on the homepage when enabled */}
-                        {isHomepage && showProof && (
+                        {/* Social proof bar rendered when enabled */}
+                        {showProof && (
                             <div className='flex items-center gap-4 pt-6 border-t border-white/10 dark:border-[#060e32]/10 mt-2'>
                                 <div className='flex -space-x-2.5 overflow-visible relative'>
                                     {/* Levi Bosboom */}
@@ -125,17 +123,18 @@ export function HeroSection({
                                             height={32}
                                             className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                         />
-                                        <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
-                                            <div className='text-[12px] font-bold text-amber leading-tight'>
+                                        <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                            <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
                                                 Levi Bosboom
                                             </div>
-                                            <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
-                                                Eigenaar, Vastgoedbeheer Rotterdam
+                                            <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
+                                                Eigenaar, Vastgoedbeheer
+                                                Rotterdam
                                             </div>
-                                            <div className='text-[10px] text-amber mt-1'>
+                                            <div className='text-[10px] text-amber mt-1 tracking-widest'>
                                                 ★★★★★
                                             </div>
-                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                         </div>
                                     </div>
 
@@ -148,17 +147,17 @@ export function HeroSection({
                                             height={32}
                                             className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                         />
-                                        <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
-                                            <div className='text-[12px] font-bold text-amber leading-tight'>
+                                        <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                            <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
                                                 Angelique van Doorn
                                             </div>
-                                            <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
+                                            <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
                                                 Vastgoedbeheerder, Van Overhagen
                                             </div>
-                                            <div className='text-[10px] text-amber mt-1'>
+                                            <div className='text-[10px] text-amber mt-1 tracking-widest'>
                                                 ★★★★★
                                             </div>
-                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                         </div>
                                     </div>
 
@@ -171,17 +170,18 @@ export function HeroSection({
                                             height={32}
                                             className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                         />
-                                        <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
-                                            <div className='text-[12px] font-bold text-amber leading-tight'>
+                                        <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                            <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
                                                 Michel De Waal
                                             </div>
-                                            <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
-                                                Directeur, M2 Capital Real Estate
+                                            <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
+                                                Directeur, M2 Capital Real
+                                                Estate
                                             </div>
-                                            <div className='text-[10px] text-amber mt-1'>
+                                            <div className='text-[10px] text-amber mt-1 tracking-widest'>
                                                 ★★★★★
                                             </div>
-                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                         </div>
                                     </div>
 
@@ -194,17 +194,17 @@ export function HeroSection({
                                             height={32}
                                             className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                         />
-                                        <div className='absolute top-full left-0 mt-0.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-1.25 rounded-lg bg-darkBlue/95 dark:bg-white/95 border border-white/10 dark:border-navy/10 shadow-xl text-left'>
-                                            <div className='text-[12px] font-bold text-amber leading-tight'>
+                                        <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                            <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
                                                 Sander Bot
                                             </div>
-                                            <div className='text-[11px] text-white/70 dark:text-navy/70 mt-0.5 leading-tight'>
+                                            <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
                                                 Mede-eigenaar, Baetland Vastgoed
                                             </div>
-                                            <div className='text-[10px] text-amber mt-1'>
+                                            <div className='text-[10px] text-amber mt-1 tracking-widest'>
                                                 ★★★★★
                                             </div>
-                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-darkBlue/95 dark:border-b-white/95' />
+                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                         </div>
                                     </div>
                                 </div>
@@ -216,17 +216,24 @@ export function HeroSection({
                     </div>
 
                     {/* Right Column: Hero Graphic / Image */}
-                    <div className='lg:col-span-5 hover:scale-[1.01] transition-transform duration-300 flex justify-center items-center'>
-                        <div className='relative w-full rounded-2xl overflow-hidden shadow-2xl'>
-                            <Image
-                                src={imagePath}
-                                alt={title}
-                                width={600}
-                                height={500}
-                                className='w-full h-auto object-cover rounded-2xl'
-                                priority
-                            />
-                        </div>
+                    <div className='lg:col-span-5 hover:scale-[1.01] transition-transform duration-300 flex justify-center items-center relative'>
+                        <BorderBeam
+                            size='md'
+                            colorVariant='orange'
+                            strength={1.2}
+                            className='w-full'
+                        >
+                            <div className='relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 dark:border-amber/20'>
+                                <Image
+                                    src={imagePath}
+                                    alt={title}
+                                    width={600}
+                                    height={500}
+                                    className='w-full h-auto object-cover rounded-2xl'
+                                    priority
+                                />
+                            </div>
+                        </BorderBeam>
                     </div>
                 </div>
             </div>

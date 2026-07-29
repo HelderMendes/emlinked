@@ -14,7 +14,7 @@
     --muted-foreground: oklch(0.55 0 0);
 
     --border: oklch(0.922 0 0);
-    --card: oklch(0,08 0 0);
+    --card: oklch(0.99 0.005 85);
     --card-foreground: oklch(0.1846 0.0722 268.08); 
 
     --navy: 230 46% 17%;
@@ -30,7 +30,7 @@
     --font-display: 'General Sans', sans-serif;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
+    --popover: oklch(0.99 0.005 85);
     --popover-foreground: oklch(0.145 0 0);
     --secondary: oklch(0.97 0 0);
     --secondary-foreground: oklch(0.205 0 0);
@@ -113,7 +113,7 @@
     --color-amber-ultra: hsl(var(--amber-ultra));
 
     --color-orange: hsl(var(--amber));
-    --color-darkBlue: hsl(230 78% 10%);
+    --color-darkBlue: hsl(230 78% 20%);
     --color-emlinkedblue: var(--color-darkBlue);
 
     --font-sans: var(--font-sans);

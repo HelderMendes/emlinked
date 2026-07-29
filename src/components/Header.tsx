@@ -415,7 +415,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 </svg>
                                             </button>
                                         )}
-                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-72 origin-top rounded-xl border border-border  p-2 shadow-2xl ring-1 ring-black/5 transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50 bg-white'>
+                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-72 origin-top rounded-xl border border-amber/30 p-2 shadow-2xl transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50 bg-[#FFFDF9] text-[#060e32]'>
                                             <div className='flex flex-col gap-1'>
                                                 {item.links?.map(
                                                     (
@@ -569,7 +569,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
 
                             {langDropdownOpen && (
                                 <div
-                                    className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-border bg-card dark:bg-card-dark p-0.5 shadow-xl transition-all z-50 
+                                    className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-amber/30 bg-[#FFFDF9] text-[#060e32] p-1 shadow-2xl transition-all z-50 
                                 '
                                 >
                                     {/* NL Language */}

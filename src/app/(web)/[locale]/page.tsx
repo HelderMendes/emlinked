@@ -422,9 +422,6 @@ export default async function HomePage({ params }: HomePageProps) {
                                     key={block._key}
                                     className='px-6 py-24 bg-background border-b border-border relative overflow-hidden'
                                 >
-                                    {/* Ambient Glow Orbs */}
-                                    <div className='absolute right-0 top-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-amber/5 rounded-full blur-[140px] pointer-events-none' />
-
                                     <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10'>
                                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
                                             {/* Left Column: Text, Bullets, CTA */}
@@ -668,9 +665,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                 key={block._key}
                                 className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'
                             >
-                                {/* Ambient Glow Orbs matching Hero */}
-                                <div className='absolute -left-20 top-1/4 w-96 h-96 bg-amber/15 rounded-full blur-[120px] pointer-events-none' />
-                                <div className='absolute -right-20 bottom-10 w-96 h-96 bg-blue-600/15 rounded-full blur-[120px] pointer-events-none' />
+
 
                                 <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-14 relative z-10'>
                                     <div className='max-w-3xl mx-auto flex flex-col gap-4 text-center'>
@@ -733,9 +728,6 @@ export default async function HomePage({ params }: HomePageProps) {
                                                         key={item._key || idx}
                                                         className='p-8 rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xl text-white hover:border-amber/50 hover:bg-white/[0.07] hover:shadow-[0_20px_50px_rgba(245,158,11,0.12)] transition-all duration-300 relative overflow-hidden group flex flex-col justify-between gap-6 z-10'
                                                     >
-                                                        {/* Glowing background accent */}
-                                                        <div className='absolute -right-16 -top-16 w-36 h-36 bg-amber/10 rounded-full blur-2xl group-hover:bg-amber/20 transition-all duration-500' />
-
                                                         <div className='flex flex-col gap-4 z-10'>
                                                             <div className='flex items-center justify-between'>
                                                                 <div className='h-12 w-12 rounded-xl bg-amber/15 border border-amber/35 flex items-center justify-center text-amber font-bold text-lg group-hover:scale-110 transition-transform shadow-md'>
@@ -824,10 +816,6 @@ export default async function HomePage({ params }: HomePageProps) {
                             >
                                 <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
                                     <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
-                                        {/* Ambient Glow Orbs matching Hero */}
-                                        <div className='absolute -left-24 -bottom-24 w-96 h-96 bg-amber/20 rounded-full blur-[100px] pointer-events-none group-hover:bg-amber/30 transition-all duration-700' />
-                                        <div className='absolute -right-24 -top-24 w-96 h-96 bg-blue-600/15 rounded-full blur-[100px] pointer-events-none group-hover:bg-blue-600/25 transition-all duration-700' />
-
                                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                                 {tag && (
