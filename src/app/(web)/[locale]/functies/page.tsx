@@ -106,7 +106,7 @@ export default async function FunctiesPage({ params }: FunctiesPageProps) {
             description: isEn
                 ? 'Run automated billing cycles on a monthly, quarterly, or custom schedule. Manage service charges, advances, and dynamic costs seamlessly.'
                 : 'Automatiseer uw maandelijkse of kwartaal-facturatie runs. Genereer prolongaties, boek huurstromen direct en splits servicekosten moeiteloos.',
-            link: '/oplossingen/vastgoedbeheer-software',
+            link: '/apps/vastgoedbeheer-software',
             benefits: isEn
                 ? [
                       'Flexible billing cycles',

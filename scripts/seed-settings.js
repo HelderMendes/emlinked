@@ -14,26 +14,27 @@ const nlMenu = [
         _type: 'menuDropdown',
         _key: 'menu_nl_1',
         title: 'Onze apps',
-        path: '/vastgoedsoftware',
+        path: '/apps',
         links: [
             {
                 _key: 'link_nl_1_1',
                 title: 'Vastgoedbeheer software',
-                path: '/oplossingen/vastgoedbeheer-software',
+                path: '/apps/vastgoedbeheer-software',
                 description: 'De core SaaS module voor vastgoedmanagement.',
             },
             {
                 _key: 'link_nl_1_2',
                 title: 'Huurdersportaal',
-                path: '/oplossingen/huurdersportaal',
+                path: '/apps/huurdersportaal',
                 description:
                     'Self-service portaal voor communicatie & meldingen.',
             },
             {
                 _key: 'link_nl_1_3',
                 title: 'Payment software',
-                path: '/oplossingen/payment',
-                description: 'Geautomatiseerde betalingstransacties.',
+                path: '/apps/payment',
+                description:
+                    'Geautomatiseerde betalingstransacties & bankaflettering.',
             },
         ],
     },
@@ -41,13 +42,13 @@ const nlMenu = [
         _type: 'menuLink',
         _key: 'menu_nl_2',
         title: 'Box3-check ⚡',
-        path: '/kennisbank/box3-check',
+        path: '/box3-check',
     },
     {
         _type: 'menuLink',
         _key: 'menu_nl_3',
         title: 'Partners software',
-        path: '/integraties',
+        path: '/partners-software',
     },
     {
         _type: 'menuLink',
@@ -64,8 +65,8 @@ const nlMenu = [
     {
         _type: 'menuLink',
         _key: 'menu_nl_6',
-        title: 'Team',
-        path: '/team',
+        title: 'Over ons',
+        path: '/over-ons',
     },
     {
         _type: 'menuLink',
@@ -80,24 +81,24 @@ const enMenu = [
         _type: 'menuDropdown',
         _key: 'menu_en_1',
         title: 'Our apps',
-        path: '/vastgoedsoftware',
+        path: '/apps',
         links: [
             {
                 _key: 'link_en_1_1',
                 title: 'Property Management Software',
-                path: '/oplossingen/vastgoedbeheer-software',
+                path: '/apps/vastgoedbeheer-software',
                 description: 'Core SaaS property management module.',
             },
             {
                 _key: 'link_en_1_2',
                 title: 'Tenant Portal',
-                path: '/oplossingen/huurdersportaal',
+                path: '/apps/huurdersportaal',
                 description: 'Self-service portal for support tickets.',
             },
             {
                 _key: 'link_en_1_3',
                 title: 'Payment Software',
-                path: '/oplossingen/payment',
+                path: '/apps/payment',
                 description: 'Automated billing transactions.',
             },
         ],
@@ -105,14 +106,14 @@ const enMenu = [
     {
         _type: 'menuLink',
         _key: 'menu_en_2',
-        title: 'Box3 Check ⚡',
-        path: '/kennisbank/box3-check',
+        title: 'Box3-check ⚡',
+        path: '/box3-check',
     },
     {
         _type: 'menuLink',
         _key: 'menu_en_3',
-        title: 'Partners Software',
-        path: '/integraties',
+        title: 'Partner software',
+        path: '/partners-software',
     },
     {
         _type: 'menuLink',
@@ -129,8 +130,8 @@ const enMenu = [
     {
         _type: 'menuLink',
         _key: 'menu_en_6',
-        title: 'Team',
-        path: '/team',
+        title: 'About us',
+        path: '/over-ons',
     },
     {
         _type: 'menuLink',

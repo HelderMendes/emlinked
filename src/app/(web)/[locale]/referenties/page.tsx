@@ -46,14 +46,14 @@ export async function generateMetadata({
     const title =
         seo?.seoTitle ||
         (isEn
-            ? 'References & B2B Case Studies | Emlinked'
-            : 'Referenties & Klantcases | Emlinked');
+            ? 'References & Customer Cases Real Estate Software | Emlinked'
+            : 'Referenties & Klantcases Vastgoedsoftware | Emlinked');
 
     const description =
         seo?.seoDescription ||
         (isEn
-            ? 'Discover what real estate managers say about Emlinked. Real-world cases on service charge automation and tenant portal speed.'
-            : 'Ontdek de ervaringen van professionele vastgoedbeheerders en beleggers met Emlinked. Concrete klantverhalen en resultaten.');
+            ? 'Read how professional property managers, retail chains, and controllers automate their real estate administration with Emlinked software.'
+            : 'Lees hoe professionele vastgoedbeheerders, retailketens en controllers hun administratie automatiseren met de vastgoedsoftware van Emlinked.');
 
     const robots = seo?.noIndex ? 'noindex, nofollow' : 'index, follow';
 
@@ -70,8 +70,9 @@ export async function generateMetadata({
 
 const fallbackContent = {
     nl: {
-        title: 'Referenties & Klantcases',
-        tagline: 'Wat onze klanten zeggen over Emlinked.',
+        title: 'Klantcases en ervaringen met Emlinked',
+        tagline:
+            'Lees hoe professionele vastgoedbeheerders, retailketens en controllers hun administratie automatiseren.',
         desc: 'Vastgoedbeheerders en beleggers vertrouwen dagelijks op Emlinked om hun operationele en financiële processen te automatiseren.',
         casesTitle: 'Klantverhalen',
         testimonials: [
@@ -83,25 +84,26 @@ const fallbackContent = {
             {
                 quote: 'Ons huurdersportaal van Emlinked neemt dagelijks tientallen telefoontjes weg. Storingen worden direct met de juiste foto’s geregistreerd.',
                 author: 'Operationeel Manager',
-                role: 'Portefeuillebeheer B.V.',
+                role: 'Commercieel Vastgoedbeheerder',
             },
         ],
     },
     en: {
-        title: 'References & Customer Cases',
-        tagline: 'What our clients say about Emlinked.',
-        desc: 'Property managers and investors trust Emlinked daily to run their operational and financial sync loops.',
-        casesTitle: 'Customer Success Stories',
+        title: 'Customer cases and experiences with Emlinked',
+        tagline:
+            'Read how professional property managers, retail chains, and controllers automate their real estate administration.',
+        desc: 'Real estate managers and investors rely on Emlinked every day to automate their operational and financial workflows.',
+        casesTitle: 'Customer Cases',
         testimonials: [
             {
-                quote: 'Emlinked has reduced our processing time for service charge settlements by 80% thanks to its direct integration with Business Central.',
+                quote: 'Emlinked reduced our service charge reconciliation workload by 80% through direct Business Central integration.',
                 author: 'Finance Director',
                 role: 'Real Estate Asset Management',
             },
             {
-                quote: 'Our Emlinked tenant portal eliminates dozens of calls daily. Maintenance requests are logged autonomously with photo uploads.',
+                quote: 'Our tenant portal from Emlinked cuts dozens of daily calls. Maintenance tickets get logged cleanly with photos.',
                 author: 'Operations Manager',
-                role: 'Portefeuillebeheer B.V.',
+                role: 'Commercial Property Manager',
             },
         ],
     },
@@ -113,37 +115,55 @@ export default async function ReferentiesPage({
     const { locale } = await params;
     const isEn = locale === 'en';
     const pageData = await getSanityPageData(locale);
-    const fall = isEn ? fallbackContent.en : fallbackContent.nl;
 
-    const title = pageData?.title || fall.title;
-    const tagline = pageData?.tagline || fall.tagline;
+    const title =
+        pageData?.title ||
+        (isEn ? fallbackContent.en.title : fallbackContent.nl.title);
+    const tagline =
+        pageData?.tagline ||
+        (isEn ? fallbackContent.en.tagline : fallbackContent.nl.tagline);
+    const desc =
+        pageData?.desc ||
+        (isEn ? fallbackContent.en.desc : fallbackContent.nl.desc);
 
-    // Use pageBlocks from Sanity if they exist, otherwise fallback
     const blocks = pageData?.pageBlocks || [
         {
             _type: 'testimonialSection',
-            sectionTitle: fall.casesTitle,
-            testimonials: fall.testimonials,
+            sectionTitle: isEn ? 'Customer Stories' : 'Klantverhalen',
+            testimonials: isEn
+                ? fallbackContent.en.testimonials
+                : fallbackContent.nl.testimonials,
         },
     ];
+
+    const getPath = (path: string) => {
+        if (locale === 'nl') return path;
+        return `/en${path === '/' ? '' : path}`;
+    };
 
     const heroBlock = blocks.find((b: any) => b._type === 'hero');
     const otherBlocks = blocks.filter((b: any) => b._type !== 'hero');
 
     return (
-        <div className="flex flex-col min-h-screen bg-texture-navy text-white">
+        <div className='flex flex-col min-h-screen bg-texture-navy text-white'>
             {heroBlock ? (
                 <HeroSection
-                    label={heroBlock.label || (isEn ? 'CUSTOMER STORIES' : 'KLANTVERHALEN')}
+                    label={
+                        heroBlock.label ||
+                        (isEn ? 'PROVEN RESULTS' : 'BEWEZEN RESULTAAT')
+                    }
                     title={heroBlock.title || title}
                     subtitle={heroBlock.subtitle || tagline}
-                    imagePath={heroBlock.imagePath || '/hero/vastgoedportfeuille_aangifte-klaar.jpg'}
+                    imagePath={
+                        heroBlock.imagePath ||
+                        '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                    }
                     isHomepage={false}
                     locale={locale}
                 />
             ) : (
                 <HeroSection
-                    label={isEn ? 'CUSTOMER STORIES' : 'KLANTVERHALEN'}
+                    label={isEn ? 'PROVEN RESULTS' : 'BEWEZEN RESULTAAT'}
                     title={title}
                     subtitle={tagline}
                     imagePath='/hero/vastgoedportfeuille_aangifte-klaar.jpg'

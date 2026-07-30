@@ -31,8 +31,8 @@ def update_header():
 
     # 4. Desktop Top-level Navigation Links text colors
     content = content.replace(
-        "isActive('/oplossingen/vastgoedbeheer-software') ||\n                                    isActive('/oplossingen/huurdersportaal') ||\n                                    isActive('/oplossingen/payment')\n                                        ? 'text-primary'\n                                        : 'text-muted-foreground hover:text-foreground'",
-        "isActive('/oplossingen/vastgoedbeheer-software') ||\n                                    isActive('/oplossingen/huurdersportaal') ||\n                                    isActive('/oplossingen/payment')\n                                        ? 'text-amber'\n                                        : 'text-white/70 hover:text-white dark:text-slate-600 dark:hover:text-slate-900'"
+        "isActive('/apps/vastgoedbeheer-software') ||\n                                    isActive('/apps/huurdersportaal') ||\n                                    isActive('/apps/payment')\n                                        ? 'text-primary'\n                                        : 'text-muted-foreground hover:text-foreground'",
+        "isActive('/apps/vastgoedbeheer-software') ||\n                                    isActive('/apps/huurdersportaal') ||\n                                    isActive('/apps/payment')\n                                        ? 'text-amber'\n                                        : 'text-white/70 hover:text-white dark:text-slate-600 dark:hover:text-slate-900'"
     )
     content = content.replace(
         "isActive('/integraties') ||\n                                    isActive('/kennisbank/box3-check')\n                                        ? 'text-primary'\n                                        : 'text-muted-foreground hover:text-foreground'",
@@ -73,16 +73,16 @@ def update_header():
 
     # Dropdown text headers (active vs inactive)
     content = content.replace(
-        "className={`text-xs font-bold ${isActive('/oplossingen/vastgoedbeheer-software') ? 'text-primary' : 'text-foreground'}`}",
-        "className={`text-xs font-bold ${isActive('/oplossingen/vastgoedbeheer-software') ? 'text-amber' : 'text-white dark:text-slate-800'}`}"
+        "className={`text-xs font-bold ${isActive('/apps/vastgoedbeheer-software') ? 'text-primary' : 'text-foreground'}`}",
+        "className={`text-xs font-bold ${isActive('/apps/vastgoedbeheer-software') ? 'text-amber' : 'text-white dark:text-slate-800'}`}"
     )
     content = content.replace(
-        "className={`text-xs font-bold ${isActive('/oplossingen/huurdersportaal') ? 'text-primary' : 'text-foreground'}`}",
-        "className={`text-xs font-bold ${isActive('/oplossingen/huurdersportaal') ? 'text-amber' : 'text-white dark:text-slate-800'}`}"
+        "className={`text-xs font-bold ${isActive('/apps/huurdersportaal') ? 'text-primary' : 'text-foreground'}`}",
+        "className={`text-xs font-bold ${isActive('/apps/huurdersportaal') ? 'text-amber' : 'text-white dark:text-slate-800'}`}"
     )
     content = content.replace(
-        "className={`text-xs font-bold ${isActive('/oplossingen/payment') ? 'text-primary' : 'text-foreground'}`}",
-        "className={`text-xs font-bold ${isActive('/oplossingen/payment') ? 'text-amber' : 'text-white dark:text-slate-800'}`}"
+        "className={`text-xs font-bold ${isActive('/apps/payment') ? 'text-primary' : 'text-foreground'}`}",
+        "className={`text-xs font-bold ${isActive('/apps/payment') ? 'text-amber' : 'text-white dark:text-slate-800'}`}"
     )
     content = content.replace(
         "className={`text-xs font-bold ${isActive('/integraties') ? 'text-primary' : 'text-foreground'}`}",

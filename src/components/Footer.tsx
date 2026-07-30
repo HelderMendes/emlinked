@@ -98,18 +98,20 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
         let translatedPath = path;
         translatedPath = translatedPath.replace(
-            '/oplossingen/vastgoedbeheer-software',
+            '/apps/vastgoedbeheer-software',
             '/solutions/property-management-software',
         );
         translatedPath = translatedPath.replace(
-            '/oplossingen/huurdersportaal',
+            '/apps/huurdersportaal',
             '/solutions/tenant-portal',
         );
         translatedPath = translatedPath.replace(
-            '/oplossingen/payment',
+            '/apps/payment',
             '/solutions/payment-software',
         );
-        translatedPath = translatedPath.replace('/oplossingen', '/solutions');
+        translatedPath = translatedPath.replace('/apps', '/solutions');
+        translatedPath = translatedPath.replace('/over-ons', '/about-us');
+        translatedPath = translatedPath.replace('/nieuws', '/news');
 
         return `/en${translatedPath === '/' ? '' : translatedPath}`;
     };
@@ -120,7 +122,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                 {/* 1. Dynamic Callback Callout Banner */}
                 <div className='bg-[#ff9400] text-[#060e32] p-6 md:p-8 rounded-lg flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden'>
                     {/* Background accents for Schematic-vibe */}
-                    <div className='absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#060e32_1px,transparent_1px)] [background-size:16px_16px]'></div>
+                    <div className='absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#060e32_1px,transparent_1px)] bg-size-[16px_16px]'></div>
 
                     <div className='text-center lg:text-left shrink-0 z-10'>
                         <span className='text-[10px] md:text-xs font-bold uppercase tracking-widest block opacity-90 font-mono'>
@@ -249,7 +251,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath(
-                                        '/oplossingen/vastgoedbeheer-software',
+                                        '/apps/vastgoedbeheer-software',
                                     )}
                                     className='hover:text-[#ff9400] transition-colors'
                                 >
@@ -258,9 +260,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             </li>
                             <li>
                                 <Link
-                                    href={getPath(
-                                        '/oplossingen/huurdersportaal',
-                                    )}
+                                    href={getPath('/apps/huurdersportaal')}
                                     className='hover:text-[#ff9400] transition-colors'
                                 >
                                     {t.huurdersportaal}
@@ -268,7 +268,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             </li>
                             <li>
                                 <Link
-                                    href={getPath('/oplossingen/payment')}
+                                    href={getPath('/apps/payment-software')}
                                     className='hover:text-[#ff9400] transition-colors'
                                 >
                                     {t.payment}
@@ -315,7 +315,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             </li>
                             <li>
                                 <Link
-                                    href={getPath('/kennisbank/box3-check')}
+                                    href={getPath('/box3-check')}
                                     className='text-[#ff9400] font-semibold hover:underline'
                                 >
                                     {t.box3}
@@ -332,7 +332,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                         <ul className='flex flex-col gap-2.5 text-xs text-slate-400'>
                             <li>
                                 <Link
-                                    href={getPath('/team')}
+                                    href={getPath('/over-ons')}
                                     className='hover:text-[#ff9400] transition-colors'
                                 >
                                     {t.team}
@@ -348,7 +348,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             </li>
                             <li>
                                 <Link
-                                    href={getPath('/blog')}
+                                    href={getPath('/nieuws')}
                                     className='hover:text-[#ff9400] transition-colors'
                                 >
                                     {t.blog}

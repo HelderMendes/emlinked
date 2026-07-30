@@ -23,6 +23,9 @@ import {
     RefreshCw,
     Zap,
     ArrowDownRight,
+    ArrowRight,
+    Building2,
+    Users,
     Layers,
 } from 'lucide-react';
 import { Metadata } from 'next';
@@ -58,14 +61,14 @@ export async function generateMetadata({
     const title =
         seoData?.seoTitle ||
         (isEn
-            ? 'Property Management Software for Professional Portfolios | Emlinked'
-            : 'Vastgoedbeheer Software voor Professionele Portefeuilles | Emlinked');
+            ? 'emlinked — Professional Real Estate Management for Box 3 & Microsoft BC'
+            : 'emlinked — Professionele Vastgoedbeheer Software voor Box 3 & Microsoft BC');
 
     const description =
         seoData?.seoDescription ||
         (isEn
-            ? 'Emlinked is the first fully integrated platform for commercial and mixed-use real estate management. Natively synced with Microsoft Dynamics 365 Business Central.'
-            : 'Emlinked is het eerste, volledig geïntegreerde platform voor commercieel en mixed-use vastgoedbeheer. Native gekoppeld aan Microsoft Dynamics 365 Business Central.');
+            ? 'Manage your real estate portfolio natively inside Microsoft Dynamics 365 Business Central. No manual exports, automated CPI indexation and bank reconciliation.'
+            : 'Beheer uw vastgoedportefeuille native binnen Microsoft Dynamics 365 Business Central. Geen handmatige exports, wel geautomatiseerde CPI-indexaties en aflettering.');
 
     const robots = seoData?.noIndex ? 'noindex, nofollow' : 'index, follow';
 
@@ -538,25 +541,82 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                 ? '/emlinked/home/Huurdersportaal.png'
                                                                 : '/emlinked/home/DrieKrachtigeApps_PaymentSoftware.png';
 
+                                                    const appUrls = [
+                                                        '/apps/vastgoedbeheer-software',
+                                                        '/apps/huurdersportaal',
+                                                        '/apps/payment-software',
+                                                    ];
+                                                    const appIcons = [
+                                                        Building2,
+                                                        Users,
+                                                        CreditCard,
+                                                    ];
+                                                    const AppIcon =
+                                                        appIcons[index] ||
+                                                        Building2;
+                                                    const appUrl = getPath(
+                                                        feature.ctaLink &&
+                                                            feature.ctaLink.startsWith(
+                                                                '/',
+                                                            )
+                                                            ? feature.ctaLink
+                                                            : appUrls[index] ||
+                                                                  '/apps',
+                                                    );
+
+                                                    let rawTag =
+                                                        feature.bullets?.[0] ||
+                                                        '';
+                                                    if (
+                                                        !rawTag ||
+                                                        rawTag ===
+                                                            'trending-up' ||
+                                                        rawTag ===
+                                                            'file-text' ||
+                                                        rawTag === 'cpu'
+                                                    ) {
+                                                        if (index === 0)
+                                                            rawTag =
+                                                                'Core SaaS Module';
+                                                        if (index === 1)
+                                                            rawTag =
+                                                                'Self-service module';
+                                                        if (index === 2)
+                                                            rawTag =
+                                                                'Primary operational module';
+                                                    }
+                                                    const tagText = rawTag
+                                                        .replace(/\)$/, '')
+                                                        .trim();
+
                                                     return (
                                                         <div
                                                             key={
                                                                 feature._key ||
                                                                 index
                                                             }
-                                                            className='p-6 md:p-8 rounded-2xl border border-black/20 bg-background flex flex-col justify-between gap-6 hover:shadow-2xl hover:-translate-y-1.5 hover:border-amber/40 transition-all duration-300 group cursor-pointer relative'
+                                                            className='px-6 md:px-8 pt-6 md:pt-8 md:pb-6 pb-5 rounded-2xl border border-black/20 bg-background flex flex-col justify-between gap-3.5 hover:shadow-2xl hover:-translate-y-1.5 hover:border-amber/40 transition-all duration-300 group relative'
                                                         >
+                                                            {/* Whole-card overlay link for optimal UX */}
+                                                            <Link
+                                                                href={appUrl}
+                                                                className='absolute inset-0 z-20'
+                                                                aria-label={
+                                                                    feature.title
+                                                                }
+                                                            />
+
                                                             {/* Circular App Badge - Center placed at top-right of outside card div */}
-                                                            <div className='absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 z-30 w-13 h-13 rounded-full bg-amber/80 text-white shadow-xl border-2 border-white dark:border-[#060e32] flex flex-col items-center justify-center font-extrabold text-[10px] uppercase tracking-tight leading-none group-hover:scale-110 transition-transform duration-300'>
+                                                            <div className='absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 z-30 w-13 h-13 rounded-full bg-amber/80 text-white shadow-xl border-2 border-white dark:border-[#060e32] flex flex-col items-center justify-center font-extrabold text-[10px] uppercase tracking-tight leading-none group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
                                                                 <span>APP</span>
                                                                 <span className='text-[20px] font-black text-white mt-0.5'>
                                                                     0{index + 1}
                                                                 </span>
                                                             </div>
 
-                                                            <div className='absolute -right-16 -top-16 w-32 h-32 bg-amber/5 rounded-full blur-2xl group-hover:bg-amber/15 transition-all duration-500 overflow-hidden' />
+                                                            <div className='absolute -right-16 -top-16 w-32 h-32 bg-amber/5 rounded-full blur-2xl group-hover:bg-amber/15 transition-all duration-500 overflow-hidden pointer-events-none' />
 
-                                                            <div className='flex flex-col gap-4 z-10'>
+                                                            <div className='flex flex-col gap-4 z-10 pointer-events-none'>
                                                                 {/* Visual Preview Container */}
                                                                 <div className='relative w-full h-52 rounded-xl overflow-hidden bg-texture-navy/5 border border-border/50 group-hover:border-amber/30 transition-colors'>
                                                                     {imagePath &&
@@ -629,16 +689,46 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                     )}
                                                                 </div>
 
-                                                                <h3 className='text-xl font-bold text-amber tracking-tight group-hover:text-foreground transition-colors'>
-                                                                    {
-                                                                        feature.title
-                                                                    }
-                                                                </h3>
+                                                                <div className='flex items-center gap-3 mt-1'>
+                                                                    {/* <div className='w-9 h-9 rounded-xl bg-amber/10 border border-amber/30 flex items-center justify-center text-amber shrink-0 group-hover:bg-amber group-hover:text-navy transition-all duration-300'>
+                                                                        <AppIcon className='w-5 h-5' />
+                                                                    </div> */}
+                                                                    <h3 className='text-xl font-bold text-amber tracking-tight group-hover:text-foreground transition-colors'>
+                                                                        {
+                                                                            feature.title
+                                                                        }
+                                                                    </h3>
+                                                                </div>
+
                                                                 <p className='text-sm text-muted-foreground leading-relaxed font-light'>
                                                                     {
                                                                         feature.description
                                                                     }
                                                                 </p>
+                                                            </div>
+
+                                                            {/* Single-Line Card Footer: Tag (Left) + Action Link (Right) */}
+                                                            <div className='pt-2 border-t border-border/40 flex items-center justify-between gap-4 z-30 mt-auto pointer-events-none'>
+                                                                <div className='flex items-center gap-2 text-xs font-medium text-muted-foreground truncate'>
+                                                                    <CheckCircle2 className='w-3.5 h-3.5 text-amber shrink-0' />
+                                                                    <span className='truncate'>
+                                                                        {
+                                                                            tagText
+                                                                        }
+                                                                    </span>
+                                                                </div>
+
+                                                                <div className='inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber group-hover:text-foreground group-hover:translate-x-0.5 transition-all duration-200 shrink-0'>
+                                                                    <span>
+                                                                        {feature.ctaLabel &&
+                                                                        feature.ctaLabel.trim()
+                                                                            ? feature.ctaLabel.trim()
+                                                                            : isEn
+                                                                              ? 'Bekijk module'
+                                                                              : 'Bekijk module'}
+                                                                    </span>
+                                                                    <ArrowRight className='w-3.5 h-3.5' />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     );

@@ -18,20 +18,20 @@ const nlMenu = [
             {
                 _key: 'app-vastgoedbeheer',
                 title: 'Vastgoedbeheer software',
-                path: '/oplossingen/vastgoedbeheer-software',
+                path: '/apps/vastgoedbeheer-software',
                 description: 'De core SaaS module voor vastgoedmanagement.',
             },
             {
                 _key: 'app-huurdersportaal',
                 title: 'Huurdersportaal',
-                path: '/oplossingen/huurdersportaal',
+                path: '/apps/huurdersportaal',
                 description:
                     'Self-service portaal voor communicatie & meldingen.',
             },
             {
                 _key: 'app-payment-software',
                 title: 'Payment software',
-                path: '/oplossingen/payment',
+                path: '/apps/payment',
                 description: 'Geautomatiseerde betalingstransacties.',
             },
         ],
@@ -78,19 +78,19 @@ const enMenu = [
             {
                 _key: 'app-property-management-en',
                 title: 'Property management software',
-                path: '/oplossingen/vastgoedbeheer-software',
+                path: '/apps/vastgoedbeheer-software',
                 description: 'Core SaaS property management module.',
             },
             {
                 _key: 'app-tenant-portal-en',
                 title: 'Tenant Portal',
-                path: '/oplossingen/huurdersportaal',
+                path: '/apps/huurdersportaal',
                 description: 'Self-service portal for support tickets.',
             },
             {
                 _key: 'app-payment-software-en',
                 title: 'Payment software',
-                path: '/oplossingen/payment',
+                path: '/apps/payment',
                 description: 'Automated billing transactions.',
             },
         ],

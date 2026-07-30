@@ -116,22 +116,22 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
               {
                   _type: 'menuDropdown',
                   title: 'Our apps',
-                  path: '/vastgoedsoftware',
+                  path: '/apps',
                   links: [
                       {
                           title: 'Property management software',
-                          path: '/oplossingen/vastgoedbeheer-software',
+                          path: '/apps/vastgoedbeheer-software',
                           description: 'Core SaaS property management module.',
                       },
                       {
                           title: 'Tenant Portal',
-                          path: '/oplossingen/huurdersportaal',
+                          path: '/apps/huurdersportaal',
                           description:
                               'Self-service portal for support tickets.',
                       },
                       {
                           title: 'Payment software',
-                          path: '/oplossingen/payment',
+                          path: '/apps/payment-software',
                           description: 'Automated billing transactions.',
                       },
                   ],
@@ -139,55 +139,58 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
               {
                   _type: 'menuLink',
                   title: 'Box3-check ⚡',
-                  path: '/kennisbank/box3-check',
+                  path: '/box3-check',
               },
               {
                   _type: 'menuLink',
                   title: 'Partner software',
-                  path: '/integraties',
+                  path: '/partners-software',
               },
               { _type: 'menuLink', title: 'Pricing', path: '/prijzen' },
               { _type: 'menuLink', title: 'References', path: '/referenties' },
-              { _type: 'menuLink', title: 'Team', path: '/team' },
+              { _type: 'menuLink', title: 'About us', path: '/over-ons' },
+              { _type: 'menuLink', title: 'News', path: '/nieuws' },
           ]
         : [
               {
                   _type: 'menuDropdown',
                   title: 'Onze apps',
-                  path: '/vastgoedsoftware',
+                  path: '/apps',
                   links: [
                       {
                           title: 'Vastgoedbeheer software',
-                          path: '/oplossingen/vastgoedbeheer-software',
+                          path: '/apps/vastgoedbeheer-software',
                           description:
                               'De core SaaS module voor vastgoedmanagement.',
                       },
                       {
                           title: 'Huurdersportaal',
-                          path: '/oplossingen/huurdersportaal',
+                          path: '/apps/huurdersportaal',
                           description:
                               'Self-service portaal voor communicatie & meldingen.',
                       },
                       {
                           title: 'Payment software',
-                          path: '/oplossingen/payment',
-                          description: 'Geautomatiseerde betalingstransacties.',
+                          path: '/apps/payment-software',
+                          description:
+                              'Geautomatiseerde betalingstransacties & bankaflettering.',
                       },
                   ],
               },
               {
                   _type: 'menuLink',
                   title: 'Box3-check ⚡',
-                  path: '/kennisbank/box3-check',
+                  path: '/box3-check',
               },
               {
                   _type: 'menuLink',
                   title: 'Partners software',
-                  path: '/integraties',
+                  path: '/partners-software',
               },
               { _type: 'menuLink', title: 'Prijzen', path: '/prijzen' },
               { _type: 'menuLink', title: 'Referenties', path: '/referenties' },
-              { _type: 'menuLink', title: 'Team', path: '/team' },
+              { _type: 'menuLink', title: 'Over ons', path: '/over-ons' },
+              { _type: 'menuLink', title: 'Nieuws', path: '/nieuws' },
           ];
 
     const menuItems = (settings as any)?.navigationMenu || defaultMenu;
@@ -250,10 +253,25 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         }
         
         let translatedPath = path;
-        translatedPath = translatedPath.replace('/oplossingen/vastgoedbeheer-software', '/solutions/property-management-software');
-        translatedPath = translatedPath.replace('/oplossingen/huurdersportaal', '/solutions/tenant-portal');
-        translatedPath = translatedPath.replace('/oplossingen/payment', '/solutions/payment-software');
-        translatedPath = translatedPath.replace('/oplossingen', '/solutions');
+        translatedPath = translatedPath.replace(
+            '/apps/vastgoedbeheer-software',
+            '/solutions/property-management-software',
+        );
+        translatedPath = translatedPath.replace(
+            '/apps/huurdersportaal',
+            '/solutions/tenant-portal',
+        );
+        translatedPath = translatedPath.replace(
+            '/apps/payment-software',
+            '/solutions/payment-software',
+        );
+        translatedPath = translatedPath.replace(
+            '/apps/payment',
+            '/solutions/payment-software',
+        );
+        translatedPath = translatedPath.replace('/apps', '/solutions');
+        translatedPath = translatedPath.replace('/over-ons', '/about-us');
+        translatedPath = translatedPath.replace('/nieuws', '/news');
         
         return `/en${translatedPath === '/' ? '' : translatedPath}`;
     };
@@ -264,10 +282,22 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         let path = pathname;
         
         if (targetLocale === 'en') {
-            path = path.replace('/oplossingen/vastgoedbeheer-software', '/solutions/property-management-software');
-            path = path.replace('/oplossingen/huurdersportaal', '/solutions/tenant-portal');
-            path = path.replace('/oplossingen/payment', '/solutions/payment-software');
-            path = path.replace('/oplossingen', '/solutions');
+            path = path.replace(
+                '/apps/vastgoedbeheer-software',
+                '/solutions/property-management-software',
+            );
+            path = path.replace(
+                '/apps/huurdersportaal',
+                '/solutions/tenant-portal',
+            );
+            path = path.replace(
+                '/apps/payment-software',
+                '/solutions/payment-software',
+            );
+            path = path.replace('/apps/payment', '/solutions/payment-software');
+            path = path.replace('/apps', '/solutions');
+            path = path.replace('/over-ons', '/about-us');
+            path = path.replace('/nieuws', '/news');
             
             if (!path.startsWith('/en')) {
                 path = `/en${path === '/' ? '' : path}`;
@@ -277,10 +307,18 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             if (path.startsWith('/en')) {
                 path = path.replace('/en', '') || '/';
             }
-            path = path.replace('/solutions/property-management-software', '/oplossingen/vastgoedbeheer-software');
-            path = path.replace('/solutions/tenant-portal', '/oplossingen/huurdersportaal');
-            path = path.replace('/solutions/payment-software', '/oplossingen/payment');
-            path = path.replace('/solutions', '/oplossingen');
+            path = path.replace(
+                '/solutions/property-management-software',
+                '/apps/vastgoedbeheer-software',
+            );
+            path = path.replace(
+                '/solutions/tenant-portal',
+                '/apps/huurdersportaal',
+            );
+            path = path.replace('/solutions/payment-software', '/apps/payment');
+            path = path.replace('/solutions', '/apps');
+            path = path.replace('/about-us', '/over-ons');
+            path = path.replace('/news', '/nieuws');
             return path;
         }
     };

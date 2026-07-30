@@ -57,8 +57,8 @@ export async function generateMetadata({
         : 'Over Emlinked | Onze Visie, Filosofie & Team');
 
     const description = seo?.seoDescription || (isEn
-        ? 'Learn about Emlinked, our mission to automate real estate accounting natively inside Dynamics 365, and the team behind it.'
-        : 'Lees het verhaal van Emlinked, onze missie om vastgoedbeheer native te automatiseren in Microsoft Dynamics 365, en maak kennis met ons team.');
+        ? 'Get to know the team behind Emlinked. We build the smartest native real estate management software solutions for Microsoft Dynamics 365 Business Central.'
+        : 'Maak kennis met het team achter Emlinked. Wij bouwen de slimste, native vastgoedbeheer software-oplossingen voor Microsoft Dynamics 365 Business Central.');
 
     const robots = seo?.noIndex ? 'noindex, nofollow' : 'index, follow';
 
@@ -67,66 +67,64 @@ export async function generateMetadata({
         description,
         robots,
         alternates: {
-            canonical: seo?.canonical || (isEn ? '/en/team' : '/team'),
+            canonical: seo?.canonical || (isEn ? '/en/over-ons' : '/over-ons'),
         },
     };
 }
 
 const fallbackContent = {
     nl: {
-        title: 'De brug tussen vastgoed en',
-        titleHighlight: 'Finance',
-        tagline: 'Emlinked is ontstaan vanuit één duidelijke frustratie: het gat tussen operationeel vastgoedbeheer en de financiële administratie. Wij lossen dit op door software native te integreren in uw Microsoft ERP.',
+        title: 'Over Emlinked: Onze missie, visie & team',
+        tagline: 'Maak kennis met het team achter Emlinked. Wij bouwen de slimste, native vastgoedbeheer software-oplossingen voor Microsoft Dynamics 365 Business Central.',
         philosophyTitle: 'Onze Filosofie',
-        philosophyQuote: '"Vastgoedbeheer is niet alleen operationeel, het is in de kern financieel. De enige manier om datakwaliteit te garanderen, is door het huurcontract en het grootboek in exact dezelfde database te beheren."',
+        philosophyDesc: 'Emlinked is ontstaan vanuit de overtuiging dat operationeel vastgoedbeheer en de financiële boekhouding in één en hetzelfde systeem moeten plaatsvinden.',
         team: [
             {
-                name: 'Coen Mendes',
-                role: 'Oprichter & Lead Architect',
-                bio: 'Met meer dan 15 jaar ervaring in ERP-architecturen richtte Coen Emlinked op om de dagelijkse afletterings- en dubbele boekingsproblemen definitief op te lossen.'
+                name: 'Software Architecture Team',
+                role: 'Dynamics 365 Engineers',
+                bio: 'Gespecialiseerd in native AL-ontwikkeling en de nieuwste Microsoft Dynamics 365 Business Central architectuur.'
             },
             {
-                name: 'Dynamics & BC Specialist',
-                role: 'Lead Business Central Engineer',
-                bio: 'Specialist in Microsoft Dynamics AL development en extensies. Verantwoordelijk voor de native werking en databasekoppelingen binnen BC.'
+                name: 'Real Estate & Finance Consultants',
+                role: 'Vastgoed & Fiscale Specialisten',
+                bio: 'Deskundigen in CPI-indexering, Box 3 regelgeving en geautomatiseerde bankaflettering.'
             },
             {
                 name: 'Customer Success & Support',
                 role: 'Support Lead',
-                bio: 'Zorgt voor een soepele onboarding en begeleidt de implementatietrajecten bij professionele vastgoedbeheerders.'
+                bio: 'Toegewijd aan een vlekkeloze onboarding en ondersteuning van professionele vastgoedbeheerders.'
             }
         ],
         values: [
             {
-                title: '100% Data-integriteit',
-                description: 'Wij geloven in één bron van waarheid. Door rechtstreeks binnen Microsoft Dynamics te bouwen, elimineren we losse databases en synchronisatiefouten.'
+                title: '100% Data Integriteit',
+                description: 'Één centrale waarheid in Business Central zonder losse databases of importfouten.'
             },
             {
-                title: 'Continu Automatiseren',
-                description: 'Handmatig werk zoals CBS-indexering en bankaflettering kost uren tijd. Wij automatiseren deze loops zodat teams zich kunnen richten op groei.'
+                title: 'Continue Automatisering',
+                description: 'Geen handmatige Excel-berekeningen meer voor indexaties en servicekosten.'
             },
             {
                 title: 'Enterprise Kwaliteit',
-                description: 'Onze software voldoet aan de strengste stabiliteits-, beveiligings- en compliance-eisen van grote retail- en woningportefeuilles.'
+                description: 'Robuuste software die voldoet aan de strengste eisen van beheerders en beleggers.'
             }
         ]
     },
     en: {
-        title: 'The Bridge Between Property &',
-        titleHighlight: 'Finance',
-        tagline: 'Emlinked was founded to solve the structural disconnect between property operations and financial administrations. We build native extensions that live directly inside Microsoft Dynamics.',
+        title: 'About Emlinked: Our mission, vision & team',
+        tagline: 'Get to know the team behind Emlinked. We build the smartest native real estate management software solutions for Microsoft Dynamics 365 Business Central.',
         philosophyTitle: 'Our Philosophy',
-        philosophyQuote: '"Property management is not just operational; it is fundamentally financial. The only way to guarantee data integrity is to keep the ledger and the contract in the exact same database."',
+        philosophyDesc: 'Emlinked was founded on the conviction that operational real estate management and financial accounting must take place inside one single system.',
         team: [
             {
-                name: 'Coen Mendes',
-                role: 'Founder & Lead Architect',
-                bio: 'With over 15 years of experience in ERP architectures, Coen founded Emlinked to solve the reconciliation bottleneck between property operations and accounting.'
+                name: 'Software Architecture Team',
+                role: 'Dynamics 365 Engineers',
+                bio: 'Specialized in native AL development and modern Microsoft Dynamics 365 Business Central architecture.'
             },
             {
-                name: 'Dynamics & BC Specialist',
-                role: 'Lead Business Central Engineer',
-                bio: 'Expert in Microsoft Dynamics extensions and AL language. Responsible for the native integration and database synchronization.'
+                name: 'Real Estate & Finance Consultants',
+                role: 'Real Estate & Tax Specialists',
+                bio: 'Experts in CPI indexations, Box 3 regulations, and automated bank reconciliations.'
             },
             {
                 name: 'Customer Success & Support',
@@ -137,15 +135,15 @@ const fallbackContent = {
         values: [
             {
                 title: '100% Data Integrity',
-                description: 'We believe in a single source of truth. By building directly inside Microsoft Dynamics, we eliminate separate databases and data syncing errors.'
+                description: 'We believe in a single source of truth inside Microsoft Dynamics Business Central.'
             },
             {
                 title: 'Continuous Automation',
-                description: 'Manual tasks like CPI indexation and bank reconciliation cost hours of valuable time. We automate them so teams can focus on asset growth.'
+                description: 'Manual tasks like CPI indexation and bank reconciliation cost hours of valuable time. We automate them.'
             },
             {
                 title: 'Enterprise Quality',
-                description: 'We build software that matches the stability and security requirements of large scale retail, commercial, and residential managers.'
+                description: 'We build software that matches the stability and security requirements of commercial and residential managers.'
             }
         ]
     }
@@ -184,11 +182,8 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
         <main className="flex-1 bg-[url('/hero/bkg_darkBlue.jpg')] bg-cover bg-center bg-no-repeat text-white">
             {/* Hero Section */}
             <HeroSection
-                label={isEn ? 'ABOUT EMLINKED' : 'OVER EMLINKED'}
-                title={
-                    title +
-                    (fall.titleHighlight ? ` *${fall.titleHighlight}*` : '')
-                }
+                label={isEn ? 'ORGANIZATION & TEAM' : 'ORGANISATIE & TEAM'}
+                title={title}
                 subtitle={tagline}
                 locale={locale}
             />
@@ -230,7 +225,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                 {fall.philosophyTitle}
                             </h3>
                             <blockquote className='text-xs italic text-slate-300 border-l-2 border-primary pl-4 py-1'>
-                                {fall.philosophyQuote}
+                                {fall.philosophyDesc}
                             </blockquote>
                             <p className='text-[10px] text-muted-foreground'>
                                 — Coen Mendes, Founder & Lead Architect

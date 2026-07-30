@@ -34,26 +34,35 @@ export default defineConfig({
                                             .child(
                                                 S.documentList()
                                                     .title("Pagina's (NL)")
-                                                    .filter('_type == "page" && language == "nl"')
-                                                    .schemaType('page')
+                                                    .filter(
+                                                        '_type == "page" && language == "nl"',
+                                                    )
+                                                    .apiVersion('2024-07-01')
+                                                    .schemaType('page'),
                                             ),
                                         S.listItem()
                                             .title('Onze apps')
                                             .child(
                                                 S.documentList()
                                                     .title('Onze apps (NL)')
-                                                    .filter('_type == "solutionPage" && language == "nl"')
-                                                    .schemaType('solutionPage')
+                                                    .filter(
+                                                        '_type == "solutionPage" && language == "nl"',
+                                                    )
+                                                    .apiVersion('2024-07-01')
+                                                    .schemaType('solutionPage'),
                                             ),
                                         S.listItem()
                                             .title('Blog / Nieuws')
                                             .child(
                                                 S.documentList()
                                                     .title('Artikelen (NL)')
-                                                    .filter('_type == "article" && language == "nl"')
-                                                    .schemaType('article')
+                                                    .filter(
+                                                        '_type == "article" && language == "nl"',
+                                                    )
+                                                    .apiVersion('2024-07-01')
+                                                    .schemaType('article'),
                                             ),
-                                    ])
+                                    ]),
                             ),
                         S.listItem()
                             .title('English Content')
@@ -67,32 +76,41 @@ export default defineConfig({
                                             .child(
                                                 S.documentList()
                                                     .title('Pages (EN)')
-                                                    .filter('_type == "page" && language == "en"')
-                                                    .schemaType('page')
+                                                    .filter(
+                                                        '_type == "page" && language == "en"',
+                                                    )
+                                                    .apiVersion('2024-07-01')
+                                                    .schemaType('page'),
                                             ),
                                         S.listItem()
                                             .title('Our Apps')
                                             .child(
                                                 S.documentList()
                                                     .title('Our Apps (EN)')
-                                                    .filter('_type == "solutionPage" && language == "en"')
-                                                    .schemaType('solutionPage')
+                                                    .filter(
+                                                        '_type == "solutionPage" && language == "en"',
+                                                    )
+                                                    .apiVersion('2024-07-01')
+                                                    .schemaType('solutionPage'),
                                             ),
                                         S.listItem()
                                             .title('Blog / News')
                                             .child(
                                                 S.documentList()
                                                     .title('Articles (EN)')
-                                                    .filter('_type == "article" && language == "en"')
-                                                    .schemaType('article')
+                                                    .filter(
+                                                        '_type == "article" && language == "en"',
+                                                    )
+                                                    .apiVersion('2024-07-01')
+                                                    .schemaType('article'),
                                             ),
-                                    ])
+                                    ]),
                             ),
                         S.divider(),
                         S.listItem()
                             .title('Auteurs / Authors')
                             .child(
-                                S.documentTypeList('author').title('Auteurs')
+                                S.documentTypeList('author').title('Auteurs'),
                             ),
                         S.divider(),
                         S.listItem()
@@ -102,7 +120,7 @@ export default defineConfig({
                                 S.document()
                                     .schemaType('siteSettings')
                                     .documentId('siteSettings-nl')
-                                    .title('Nederlandse Instellingen')
+                                    .title('Nederlandse Instellingen'),
                             ),
                         S.listItem()
                             .title('English Settings')
@@ -111,7 +129,7 @@ export default defineConfig({
                                 S.document()
                                     .schemaType('siteSettings')
                                     .documentId('siteSettings-en')
-                                    .title('English Settings')
+                                    .title('English Settings'),
                             ),
                     ]),
         }),
@@ -123,6 +141,7 @@ export default defineConfig({
                 { id: 'en', title: 'English' },
             ],
             schemaTypes: ['solutionPage', 'page', 'article'],
+            apiVersion: '2024-07-01',
         }),
     ],
 

@@ -75,8 +75,8 @@ def update_header():
     # 4. Revert Top Level Navigation Link colors to use standard theme variables
     # (Since background is now light/dark natively, text-foreground and text-muted-foreground will work perfectly)
     content = content.replace(
-        "isActive('/oplossingen/vastgoedbeheer-software') ||\n                                    isActive('/oplossingen/huurdersportaal') ||\n                                    isActive('/oplossingen/payment')\n                                        ? 'text-amber'\n                                        : 'text-white/70 hover:text-white dark:text-slate-600 dark:hover:text-slate-900'",
-        "isActive('/oplossingen/vastgoedbeheer-software') ||\n                                    isActive('/oplossingen/huurdersportaal') ||\n                                    isActive('/oplossingen/payment')\n                                        ? 'text-amber'\n                                        : 'text-muted-foreground hover:text-foreground'"
+        "isActive('/apps/vastgoedbeheer-software') ||\n                                    isActive('/apps/huurdersportaal') ||\n                                    isActive('/apps/payment')\n                                        ? 'text-amber'\n                                        : 'text-white/70 hover:text-white dark:text-slate-600 dark:hover:text-slate-900'",
+        "isActive('/apps/vastgoedbeheer-software') ||\n                                    isActive('/apps/huurdersportaal') ||\n                                    isActive('/apps/payment')\n                                        ? 'text-amber'\n                                        : 'text-muted-foreground hover:text-foreground'"
     )
     content = content.replace(
         "isActive('/integraties') ||\n                                    isActive('/kennisbank/box3-check')\n                                        ? 'text-amber'\n                                        : 'text-white/70 hover:text-white dark:text-slate-600 dark:hover:text-slate-900'",
@@ -117,16 +117,16 @@ def update_header():
 
     # Dropdown text headers: text-foreground
     content = content.replace(
-        "className={`text-xs font-bold ${isActive('/oplossingen/vastgoedbeheer-software') ? 'text-amber' : 'text-white dark:text-slate-800'}`}",
-        "className={`text-xs font-bold ${isActive('/oplossingen/vastgoedbeheer-software') ? 'text-amber' : 'text-foreground'}`}"
+        "className={`text-xs font-bold ${isActive('/apps/vastgoedbeheer-software') ? 'text-amber' : 'text-white dark:text-slate-800'}`}",
+        "className={`text-xs font-bold ${isActive('/apps/vastgoedbeheer-software') ? 'text-amber' : 'text-foreground'}`}"
     )
     content = content.replace(
-        "className={`text-xs font-bold ${isActive('/oplossingen/huurdersportaal') ? 'text-amber' : 'text-white dark:text-slate-800'}`}",
-        "className={`text-xs font-bold ${isActive('/oplossingen/huurdersportaal') ? 'text-amber' : 'text-foreground'}`}"
+        "className={`text-xs font-bold ${isActive('/apps/huurdersportaal') ? 'text-amber' : 'text-white dark:text-slate-800'}`}",
+        "className={`text-xs font-bold ${isActive('/apps/huurdersportaal') ? 'text-amber' : 'text-foreground'}`}"
     )
     content = content.replace(
-        "className={`text-xs font-bold ${isActive('/oplossingen/payment') ? 'text-amber' : 'text-white dark:text-slate-800'}`}",
-        "className={`text-xs font-bold ${isActive('/oplossingen/payment') ? 'text-amber' : 'text-foreground'}`}"
+        "className={`text-xs font-bold ${isActive('/apps/payment') ? 'text-amber' : 'text-white dark:text-slate-800'}`}",
+        "className={`text-xs font-bold ${isActive('/apps/payment') ? 'text-amber' : 'text-foreground'}`}"
     )
     content = content.replace(
         "className={`text-xs font-bold ${isActive('/integraties') ? 'text-amber' : 'text-white dark:text-slate-800'}`}",

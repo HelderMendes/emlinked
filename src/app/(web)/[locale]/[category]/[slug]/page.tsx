@@ -49,9 +49,19 @@ interface SolutionPageProps {
 type SolutionContent = (typeof solutionsContent.nl)['vastgoedbeheer-software'];
 
 async function getSolutionContent(locale: string, slug: string): Promise<any> {
+    const normalizedSlug = slug === 'payment-software' ? 'payment' : slug;
     try {
-        const query = `*[_type == "solutionPage" && language == $locale && slug.current == $slug][0]`;
-        const doc = await sanityFetch<any>({ query, params: { locale, slug } });
+        const query = `*[_type == "solutionPage" && language == $locale && (slug.current == $slug || slug.current == $normSlug || slug.current == $slashSlug || slug.current == $slashNormSlug)][0]`;
+        const doc = await sanityFetch<any>({
+            query,
+            params: {
+                locale,
+                slug,
+                normSlug: normalizedSlug,
+                slashSlug: `/${slug}`,
+                slashNormSlug: `/${normalizedSlug}`,
+            },
+        });
 
         if (doc) {
             return {
@@ -83,7 +93,8 @@ async function getSolutionContent(locale: string, slug: string): Promise<any> {
                     // map slug to standard icon
                     let modIcon = Link2;
                     if (m.slug === 'huurdersportaal') modIcon = Users;
-                    if (m.slug === 'payment') modIcon = CreditCard;
+                    if (m.slug === 'payment' || m.slug === 'payment-software')
+                        modIcon = CreditCard;
                     if (m.slug === 'vastgoedbeheer-software')
                         modIcon = Building2;
                     return {
@@ -110,7 +121,11 @@ async function getSolutionContent(locale: string, slug: string): Promise<any> {
     // Fallback to static content
     const localeContent =
         solutionsContent[locale as 'nl' | 'en'] || solutionsContent.nl;
-    return localeContent[slug as keyof typeof localeContent] as any;
+    return (
+        (localeContent as any)[slug] ||
+        (localeContent as any)[normalizedSlug] ||
+        null
+    );
 }
 
 export async function generateMetadata({
@@ -119,8 +134,8 @@ export async function generateMetadata({
     const { locale, category, slug } = await params;
 
     // Category routing validation
-    if (locale === 'nl' && category !== 'oplossingen') return {};
-    if (locale === 'en' && category !== 'solutions') return {};
+    const validCategories = ['apps', 'oplossingen', 'solutions'];
+    if (!validCategories.includes(category)) return {};
 
     const content = await getSolutionContent(locale, slug);
 
@@ -131,10 +146,7 @@ export async function generateMetadata({
         description: content.meta.description,
         keywords: content.meta.keywords,
         alternates: {
-            canonical:
-                locale === 'nl'
-                    ? `/oplossingen/${slug}`
-                    : `/en/solutions/${slug}`,
+            canonical: locale === 'nl' ? `/apps/${slug}` : `/en/apps/${slug}`,
         },
     };
 }
@@ -579,8 +591,8 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
     const { locale, category, slug } = await params;
 
     // Category routing validation
-    if (locale === 'nl' && category !== 'oplossingen') notFound();
-    if (locale === 'en' && category !== 'solutions') notFound();
+    const validCategories = ['apps', 'oplossingen', 'solutions'];
+    if (!validCategories.includes(category)) notFound();
 
     const content = await getSolutionContent(locale, slug);
 
