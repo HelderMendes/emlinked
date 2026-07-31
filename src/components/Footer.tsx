@@ -120,7 +120,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
         <footer className='w-full bg-texture-navy text-white border-t border-white/10 pt-16 pb-12 transition-all'>
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
                 {/* 1. Dynamic Callback Callout Banner */}
-                <div className='bg-[#ff9400] text-[#060e32] p-6 md:p-8 rounded-lg flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden'>
+                <div className='bg-[#ff9400] text-white/75 p-6 md:p-8 rounded-lg flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden'>
                     {/* Background accents for Schematic-vibe */}
                     <div className='absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#060e32_1px,transparent_1px)] bg-size-[16px_16px]'></div>
 

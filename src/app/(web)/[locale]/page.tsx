@@ -12,25 +12,18 @@ import {
 import {
     AlertCircle,
     Info,
-    TrendingUp,
     FileText,
     Cpu,
-    Calendar,
     Database,
-    BarChart3,
     CheckCircle2,
     CreditCard,
     RefreshCw,
     Zap,
     ArrowDownRight,
     ArrowRight,
-    Building2,
-    Users,
     Layers,
 } from 'lucide-react';
 import { Metadata } from 'next';
-import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
-import { Box3CalculatorWidget } from '@/components/Box3CalculatorWidget';
 import { HeroSection } from '@/components/blocks/HeroSection';
 
 interface HomePageProps {
@@ -191,70 +184,6 @@ function getTrustIcon(iconName: string) {
         default:
             return <Info className='h-5 w-5 shrink-0' />;
     }
-}
-
-function getIcon(iconName: string) {
-    switch (iconName?.toLowerCase()) {
-        case 'check':
-            return (
-                <HugeiconsIcon
-                    icon={CheckmarkBadge03Icon}
-                    size={24}
-                    className='shrink-0 transition-colors'
-                />
-            );
-        case 'shield':
-            return (
-                <HugeiconsIcon
-                    icon={AiSecurity01Icon}
-                    size={24}
-                    className='shrink-0 transition-colors'
-                />
-            );
-        case 'star':
-            return (
-                <HugeiconsIcon
-                    icon={StarAward01Icon}
-                    size={24}
-                    className='shrink-0 transition-colors'
-                />
-            );
-        case 'trending-up':
-            return <TrendingUp className='h-6 w-6' />;
-        case 'file-text':
-            return <FileText className='h-6 w-6' />;
-        case 'cpu':
-            return <Cpu className='h-6 w-6' />;
-        case 'calendar':
-            return <Calendar className='h-6 w-6' />;
-        case 'database':
-            return <Database className='h-6 w-6' />;
-        case 'bar-chart-3':
-            return <BarChart3 className='h-6 w-6' />;
-        default:
-            return <Info className='h-6 w-6' />;
-    }
-}
-
-function formatHeroTitle(title: string) {
-    let formatted = title;
-    if (!formatted.includes('*')) {
-        formatted = formatted.replace('aangifte-klaar', '*aangifte-klaar*');
-    }
-    const parts = formatted.split(/(\*[^*]+\*)/g);
-    return parts.map((part, index) => {
-        if (part.startsWith('*') && part.endsWith('*')) {
-            return (
-                <span
-                    key={index}
-                    className='text-transparent bg-clip-text bg-linear-to-r from-amber to-amber-light font-extrabold tracking-tight'
-                >
-                    {part.slice(1, -1)}
-                </span>
-            );
-        }
-        return part;
-    });
 }
 
 export default async function HomePage({ params }: HomePageProps) {
@@ -485,9 +414,6 @@ export default async function HomePage({ params }: HomePageProps) {
                                                         priority
                                                     />
                                                 </div>
-                                                {/* Reusable Box 3 Calculator Widget Component (Commented out for now):
-                                                    <Box3CalculatorWidget />
-                                                */}
                                             </div>
                                         </div>
                                     </div>
@@ -546,14 +472,6 @@ export default async function HomePage({ params }: HomePageProps) {
                                                         '/apps/huurdersportaal',
                                                         '/apps/payment-software',
                                                     ];
-                                                    const appIcons = [
-                                                        Building2,
-                                                        Users,
-                                                        CreditCard,
-                                                    ];
-                                                    const AppIcon =
-                                                        appIcons[index] ||
-                                                        Building2;
                                                     const appUrl = getPath(
                                                         feature.ctaLink &&
                                                             feature.ctaLink.startsWith(
@@ -630,6 +548,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                                 feature.title
                                                                             }
                                                                             fill
+                                                                            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                                                                             priority={
                                                                                 index ===
                                                                                 0
@@ -687,18 +606,13 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                             </div>
                                                                         </div>
                                                                     )}
-                                                                </div>
-
-                                                                <div className='flex items-center gap-3 mt-1'>
-                                                                    {/* <div className='w-9 h-9 rounded-xl bg-amber/10 border border-amber/30 flex items-center justify-center text-amber shrink-0 group-hover:bg-amber group-hover:text-navy transition-all duration-300'>
-                                                                        <AppIcon className='w-5 h-5' />
-                                                                    </div> */}
+                                                                                                                        <div className='flex items-center gap-3 mt-1'>
                                                                     <h3 className='text-xl font-bold text-amber tracking-tight group-hover:text-foreground transition-colors'>
                                                                         {
                                                                             feature.title
                                                                         }
                                                                     </h3>
-                                                                </div>
+                                                                </div>           </div>
 
                                                                 <p className='text-sm text-muted-foreground leading-relaxed font-light'>
                                                                     {
@@ -755,8 +669,6 @@ export default async function HomePage({ params }: HomePageProps) {
                                 key={block._key}
                                 className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'
                             >
-
-
                                 <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-14 relative z-10'>
                                     <div className='max-w-3xl mx-auto flex flex-col gap-4 text-center'>
                                         {sectionTag && (
@@ -780,7 +692,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                     {/* Connected Enterprise Architecture Diagram Grid */}
                                     <div className='relative grid grid-cols-1 lg:grid-cols-3 gap-8 text-left'>
                                         {/* Horizontal Architecture Connecting Line (Desktop) */}
-                                        <div className='hidden lg:block absolute top-[5.2rem] left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-amber/20 via-amber/60 to-amber/20 z-0 pointer-events-none'>
+                                        <div className='hidden lg:block absolute top-[5.2rem] left-[15%] right-[15%] h-[2px] bg-linear-to-r from-amber/20 via-amber/60 to-amber/20 z-0 pointer-events-none'>
                                             <div className='absolute top-1/2 left-[30%] -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-amber shadow-[0_0_10px_#f59e0b] animate-ping' />
                                             <div className='absolute top-1/2 left-[70%] -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-amber shadow-[0_0_10px_#f59e0b] animate-ping' />
                                         </div>
@@ -816,7 +728,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                 return (
                                                     <div
                                                         key={item._key || idx}
-                                                        className='p-8 rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xl text-white hover:border-amber/50 hover:bg-white/[0.07] hover:shadow-[0_20px_50px_rgba(245,158,11,0.12)] transition-all duration-300 relative overflow-hidden group flex flex-col justify-between gap-6 z-10'
+                                                        className='p-8 rounded-2xl border border-white/15 bg-white/4 backdrop-blur-xl text-white hover:border-amber/50 hover:bg-white/[0.07] hover:shadow-[0_20px_50px_rgba(245,158,11,0.12)] transition-all duration-300 relative overflow-hidden group flex flex-col justify-between gap-6 z-10'
                                                     >
                                                         <div className='flex flex-col gap-4 z-10'>
                                                             <div className='flex items-center justify-between'>
@@ -920,19 +832,27 @@ export default async function HomePage({ params }: HomePageProps) {
                                                 <p className='text-white/80 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
                                                     {subtitle}
                                                 </p>
-                                            </div>
-                                            {buttonLabel && buttonLink && (
-                                                <div className='lg:col-span-4 flex justify-start lg:justify-end'>
+                                                {buttonLabel && buttonLink && (
                                                     <GlowingLink
                                                         href={getPath(
                                                             buttonLink,
                                                         )}
-                                                        className='h-14 px-9 text-base w-full lg:w-auto font-bold shadow-xl hover:shadow-amber/30'
+                                                        className='h-14 px-12 text-base mr-auto font-bold shadow-xl hover:shadow-amber/30'
                                                     >
                                                         {buttonLabel}
                                                     </GlowingLink>
-                                                </div>
-                                            )}
+                                                )}
+                                            </div>
+                                            <div className='lg:col-span-4 flex justify-start lg:justify-end'>
+                                                <Image
+                                                    src='/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
+                                                    alt={block.title}
+                                                    width={700}
+                                                    height={500}
+                                                    className='w-full max-h-150 object-cover object-top rounded-2xl group-hover:scale-105 transition-transform duration-500'
+                                                    priority
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

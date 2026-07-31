@@ -102,12 +102,14 @@ const translations = {
 export default function Header({ locale = 'nl', settings }: HeaderProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [langDropdownOpen, setLangDropdownOpen] = useState(false);
-    const [mobileSubmenu, setMobileSubmenu] = useState<string | null>(null);
     const [mounted, setMounted] = useState(false);
     const { theme, setTheme } = useTheme();
     const pathname = usePathname();
     const t = translations[locale as 'nl' | 'en'] || translations.nl;
     const isEn = locale === 'en';
+    const [mobileSubmenu, setMobileSubmenu] = useState<string | null>(
+        isEn ? 'Our apps' : 'Onze apps',
+    );
     const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
 
     // Fallback menu structure if Sanity settings are empty
@@ -195,21 +197,37 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
 
     const menuItems = (settings as any)?.navigationMenu || defaultMenu;
 
-    const dropdownRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLElement>(null);
+    const mobileDropdownRef = useRef<HTMLDivElement>(null);
+    const desktopDropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setMounted(true);
 
-        // Close dropdown when clicking outside
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                dropdownRef.current &&
-                !dropdownRef.current.contains(event.target as Node)
-            ) {
+        // Close mobile menu & language dropdown when clicking/tapping outside
+        const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+            const target = event.target as Node;
+            if (headerRef.current && !headerRef.current.contains(target)) {
+                setMobileMenuOpen(false);
+            }
+            const isInsideMobile = mobileDropdownRef.current?.contains(target);
+            const isInsideDesktop =
+                desktopDropdownRef.current?.contains(target);
+            if (!isInsideMobile && !isInsideDesktop) {
                 setLangDropdownOpen(false);
             }
         };
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                setMobileMenuOpen(false);
+                setLangDropdownOpen(false);
+            }
+        };
+
         document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside);
+        window.addEventListener('keydown', handleKeyDown);
 
         // Listen for #demo hash triggers and click events
         const handleHashChange = () => {
@@ -235,23 +253,25 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         document.addEventListener('click', handleDemoClick);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
+            window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('hashchange', handleHashChange);
             document.removeEventListener('click', handleDemoClick);
         };
     }, []);
 
-    // Close mobile menu on path changes
+    // Close mobile menu on path changes & reset default expanded submenu
     useEffect(() => {
         setMobileMenuOpen(false);
-        setMobileSubmenu(null);
-    }, [pathname]);
+        setMobileSubmenu(isEn ? 'Our apps' : 'Onze apps');
+    }, [pathname, isEn]);
 
     // Helper to prepend locale for links and translate categories/slugs
     const getPath = (path: string) => {
         if (locale === 'nl') {
             return path;
         }
-        
+
         let translatedPath = path;
         translatedPath = translatedPath.replace(
             '/apps/vastgoedbeheer-software',
@@ -272,15 +292,15 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         translatedPath = translatedPath.replace('/apps', '/solutions');
         translatedPath = translatedPath.replace('/over-ons', '/about-us');
         translatedPath = translatedPath.replace('/nieuws', '/news');
-        
+
         return `/en${translatedPath === '/' ? '' : translatedPath}`;
     };
 
     const getLocalePath = (targetLocale: string) => {
         if (!pathname) return targetLocale === 'nl' ? '/' : '/en';
-        
+
         let path = pathname;
-        
+
         if (targetLocale === 'en') {
             path = path.replace(
                 '/apps/vastgoedbeheer-software',
@@ -298,7 +318,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             path = path.replace('/apps', '/solutions');
             path = path.replace('/over-ons', '/about-us');
             path = path.replace('/nieuws', '/news');
-            
+
             if (!path.startsWith('/en')) {
                 path = `/en${path === '/' ? '' : path}`;
             }
@@ -346,22 +366,58 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
     };
 
     return (
-        <header className='sticky top-0 z-50 w-full border-t-4 border-amber bg-white/95 backdrop-blur-md transition-all duration-300 shadow-md text-foreground'>
-            {/* Orange Top border line (now border-t-4 on header tag) */}
+        <header
+            ref={headerRef}
+            className='sticky top-0 z-50 w-full xl:border-t-6 border-amber bg-white/95 backdrop-blur-md transition-all duration-300 shadow-md text-foreground'
+        >
+            {/* Row 1: Full-Width 50/50 Top CTA Bar (Only visible on < xl screens) */}
+            <div className='flex xl:hidden w-full border-b border-amber/20 items-stretch font-semibold text-xs sm:text-sm bg-white'>
+                <button
+                    onClick={() => setIsDemoModalOpen(true)}
+                    className='w-1/2 bg-amber text-white hover:bg-amber-hover flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-none transition-colors cursor-pointer font-bold shadow-xs'
+                >
+                    <span>{isEn ? 'Request a Demo' : 'Demo aanvragen'}</span>
+                </button>
+                <Link
+                    href='/docs'
+                    className='w-1/2 bg-darkBlue text-amber hover:bg-navy flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-none border-l border-amber/30 transition-colors cursor-pointer font-semibold'
+                >
+                    <BsRocketTakeoff className='h-3.5 w-3.5 shrink-0 text-amber' />
+                    <span>{t.mijnEmlinked}</span>
+                </Link>
+            </div>
 
+            {/* Row 2 on Mobile/Tablet (< xl) OR Main Header Row on Desktop (>= xl) */}
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                <div className='flex h-20 items-center justify-between gap-4'>
-                    {/* Left: Mobile Hamburger Trigger (Only on Mobile) */}
+                {/* Mobile / Medium Bar (< xl) */}
+                <div className='flex xl:hidden h-16 items-center justify-between gap-2'>
+                    {/* Left: Brand Logo */}
+                    <div className='flex items-center shrink-0'>
+                        <Link
+                            href={getPath('/')}
+                            className='flex items-center'
+                            aria-label='emlinked - Vastgoedsoftware voor Business Central'
+                            title='emlinked - Vastgoedsoftware voor Business Central'
+                        >
+                            <img
+                                src={logoSrc}
+                                alt='emlinked logo'
+                                className='w-auto h-9 transition-all'
+                            />
+                        </Link>
+                    </div>
+
+                    {/* Middle: Centered Mobile Menu Pill Toggle */}
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className='xl:hidden inline-flex items-center justify-center rounded-md p-2 text-foreground hover:bg-muted focus:outline-none cursor-pointer transition-colors'
+                        className='inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber/10 border border-amber/30 text-amber font-semibold text-xs uppercase tracking-wider hover:bg-amber/20 active:scale-95 transition-all cursor-pointer'
                         aria-label='Toggle Menu'
                     >
                         <svg
-                            className='h-6 w-6'
+                            className='h-4 w-4'
                             fill='none'
                             viewBox='0 0 24 24'
-                            strokeWidth='1.5'
+                            strokeWidth='2'
                             stroke='currentColor'
                         >
                             {mobileMenuOpen ? (
@@ -378,9 +434,107 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 />
                             )}
                         </svg>
+                        <span>
+                            {mobileMenuOpen
+                                ? isEn
+                                    ? 'Sluit'
+                                    : 'Sluit'
+                                : 'Menu'}
+                        </span>
                     </button>
 
-                    {/* Logo & Brand Title (Aligned to left column) */}
+                    {/* Right: Language Selector Dropdown */}
+                    <div className='relative shrink-0' ref={mobileDropdownRef}>
+                        <button
+                            onClick={() =>
+                                setLangDropdownOpen(!langDropdownOpen)
+                            }
+                            className='p-1.5 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer'
+                            aria-label='Select Language'
+                        >
+                            <svg
+                                className='size-5 stroke-[1.5]'
+                                fill='none'
+                                viewBox='0 0 24 24'
+                                stroke='currentColor'
+                            >
+                                <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    d='M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-.778.099-1.533.284-2.253'
+                                />
+                            </svg>
+                        </button>
+
+                        {langDropdownOpen && (
+                            <div className='absolute right-0 mt-2 w-44 origin-top-right rounded-lg border border-amber/30 bg-[#FFFDF9] text-[#060e32] p-1 shadow-2xl transition-all z-50'>
+                                <Link
+                                    href={getLocalePath('nl')}
+                                    onClick={() => {
+                                        document.cookie =
+                                            'emlinked_locale=nl; path=/; max-age=31536000; SameSite=Lax';
+                                        setLangDropdownOpen(false);
+                                    }}
+                                    className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
+                                >
+                                    <div className='flex items-center gap-2'>
+                                        <span className='text-lg mr-1'>🇳🇱</span>
+                                        <span>Nederlands</span>
+                                    </div>
+                                    {locale === 'nl' && (
+                                        <svg
+                                            className='size-5 text-primary'
+                                            fill='none'
+                                            viewBox='0 0 24 24'
+                                            stroke='currentColor'
+                                            strokeWidth='3'
+                                        >
+                                            <path
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                                d='M4.5 12.75l6 6 9-13.5'
+                                            />
+                                        </svg>
+                                    )}
+                                </Link>
+
+                                <Link
+                                    href={getLocalePath('en')}
+                                    onClick={() => {
+                                        document.cookie =
+                                            'emlinked_locale=en; path=/; max-age=31536000; SameSite=Lax';
+                                        setLangDropdownOpen(false);
+                                    }}
+                                    className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
+                                >
+                                    <div className='flex items-center gap-2'>
+                                        <span className='text-lg mr-1'>🇬🇧</span>
+                                        <span>English</span>
+                                    </div>
+                                    {locale === 'en' && (
+                                        <svg
+                                            className='size-5 text-primary'
+                                            fill='none'
+                                            viewBox='0 0 24 24'
+                                            stroke='currentColor'
+                                            strokeWidth='3'
+                                        >
+                                            <path
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
+                                                d='M4.5 12.75l6 6 9-13.5'
+                                            />
+                                        </svg>
+                                    )}
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Desktop Bar (>= xl) */}
+                <div className='hidden xl:flex h-20 items-center justify-between gap-4'>
+                    {/* Logo & Brand Title */}
                     <div className='flex items-center shrink-0'>
                         <Link
                             href={getPath('/')}
@@ -396,10 +550,18 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         </Link>
                     </div>
 
-                    {/* Desktop Navigation Links (Mathematically centered) */}
-                    <nav className='hidden xl:flex items-center justify-center gap-2.5 2xl:gap-5 grow mt-3.5'>
+                    {/* Desktop Navigation Links */}
+                    <nav className='hidden xl:flex items-center justify-center gap-1.5 2xl:gap-3 grow mt-1'>
                         {menuItems.map((item: any, idx: number) => {
-                            if (item._type === 'menuDropdown') {
+                            const isDropdown = item._type === 'menuDropdown';
+                            const isDropdownActive =
+                                isDropdown &&
+                                (item.links?.some((l: any) =>
+                                    isActive(l.path),
+                                ) ||
+                                    isActive(item.path));
+
+                            if (isDropdown) {
                                 return (
                                     <div
                                         key={idx}
@@ -408,17 +570,15 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                         {item.path ? (
                                             <Link
                                                 href={getPath(item.path)}
-                                                className={`flex items-center gap-1.5 text-[13px] 2xl:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
-                                                    item.links?.some((l: any) =>
-                                                        isActive(l.path),
-                                                    ) || isActive(item.path)
-                                                        ? 'text-primary'
-                                                        : 'text-muted-foreground hover:text-foreground'
+                                                className={`flex items-center gap-1.5 text-[13px] 2xl:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap px-3 py-1.5 rounded-lg ${
+                                                    isDropdownActive
+                                                        ? 'text-amber bg-amber/10 font-bold shadow-xs'
+                                                        : 'text-foreground/80 hover:text-amber hover:bg-amber/5'
                                                 }`}
                                             >
                                                 {item.title}
                                                 <svg
-                                                    className='h-3.5 w-3.5 transition-transform group-hover:rotate-180'
+                                                    className='h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180 text-amber/80'
                                                     viewBox='0 0 20 20'
                                                     fill='currentColor'
                                                 >
@@ -431,17 +591,15 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                             </Link>
                                         ) : (
                                             <button
-                                                className={`flex items-center gap-1.5 text-[13px] 2xl:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
-                                                    item.links?.some((l: any) =>
-                                                        isActive(l.path),
-                                                    )
-                                                        ? 'text-primary'
-                                                        : 'text-muted-foreground hover:text-foreground'
+                                                className={`flex items-center gap-1.5 text-[13px] 2xl:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap px-3 py-1.5 rounded-lg ${
+                                                    isDropdownActive
+                                                        ? 'text-amber bg-amber/10 font-bold shadow-xs'
+                                                        : 'text-foreground/80 hover:text-amber hover:bg-amber/5'
                                                 }`}
                                             >
                                                 {item.title}
                                                 <svg
-                                                    className='h-3.5 w-3.5 transition-transform group-hover:rotate-180'
+                                                    className='h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180 text-amber/80'
                                                     viewBox='0 0 20 20'
                                                     fill='currentColor'
                                                 >
@@ -453,7 +611,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 </svg>
                                             </button>
                                         )}
-                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-72 origin-top rounded-xl border border-amber/30 p-2 shadow-2xl transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50 bg-[#FFFDF9] text-[#060e32]'>
+                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-80 origin-top rounded-xl border border-amber/30 p-2 shadow-2xl transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50 bg-[#FFFDF9] text-[#060e32]'>
                                             <div className='flex flex-col gap-1'>
                                                 {item.links?.map(
                                                     (
@@ -466,27 +624,38 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                         const active = isActive(
                                                             subLink.path,
                                                         );
+                                                        const SubIcon =
+                                                            getSubIcon(
+                                                                subLink.title,
+                                                            );
+
                                                         const subContent = (
-                                                            <div className='flex flex-col gap-0.5'>
-                                                                <span
-                                                                    className={`block text-[13px] font-bold leading-tight ${active ? 'text-primary' : 'text-foreground'}`}
+                                                            <div className='flex items-start gap-3'>
+                                                                <div
+                                                                    className={`p-2 rounded-lg shrink-0 transition-colors ${active ? 'bg-amber text-white' : 'bg-amber/10 text-amber group-hover/item:bg-amber group-hover/item:text-white'}`}
                                                                 >
-                                                                    {
-                                                                        subLink.title
-                                                                    }
-                                                                </span>
-                                                                {subLink.description && (
-                                                                    <span className='block text-[11px] leading-snug text-muted-foreground'>
+                                                                    <SubIcon className='w-4 h-4' />
+                                                                </div>
+                                                                <div className='flex flex-col gap-0.5'>
+                                                                    <span
+                                                                        className={`block text-[13px] font-bold leading-tight ${active ? 'text-amber' : 'text-foreground group-hover/item:text-amber'}`}
+                                                                    >
                                                                         {
-                                                                            subLink.description
+                                                                            subLink.title
                                                                         }
                                                                     </span>
-                                                                )}
+                                                                    {subLink.description && (
+                                                                        <span className='block text-[11px] leading-snug text-muted-foreground'>
+                                                                            {
+                                                                                subLink.description
+                                                                            }
+                                                                        </span>
+                                                                    )}
+                                                                </div>
                                                             </div>
                                                         );
 
-                                                        const cellClass =
-                                                            'block rounded-lg p-2.5 transition-colors hover:bg-muted/50 text-left w-full';
+                                                        const cellClass = `group/item block rounded-lg p-2.5 transition-all duration-200 text-left w-full ${active ? 'bg-amber/10 border border-amber/20' : 'hover:bg-amber/5'}`;
 
                                                         if (isDemo) {
                                                             return (
@@ -527,12 +696,14 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
 
                             // Single link
                             const isDemo = item.path === '#demo';
+                            const active = isActive(item.path);
+
                             if (isDemo) {
                                 return (
                                     <button
                                         key={idx}
                                         onClick={() => setIsDemoModalOpen(true)}
-                                        className='text-[13px] 2xl:text-sm font-semibold transition-colors text-muted-foreground hover:text-foreground cursor-pointer'
+                                        className='text-[13px] 2xl:text-sm font-semibold transition-all duration-200 text-foreground/80 hover:text-amber hover:bg-amber/5 px-3 py-1.5 rounded-lg cursor-pointer'
                                     >
                                         {item.title}
                                     </button>
@@ -543,10 +714,10 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 <Link
                                     key={idx}
                                     href={getPath(item.path)}
-                                    className={`text-[13px] 2xl:text-sm font-semibold transition-colors ${
-                                        isActive(item.path)
-                                            ? 'text-primary'
-                                            : 'text-muted-foreground hover:text-foreground'
+                                    className={`text-[13px] 2xl:text-sm font-semibold transition-all duration-200 px-3 py-1.5 rounded-lg ${
+                                        active
+                                            ? 'text-amber bg-amber/10 font-bold shadow-xs'
+                                            : 'text-foreground/80 hover:text-amber hover:bg-amber/5'
                                     }`}
                                 >
                                     {item.title}
@@ -555,35 +726,10 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         })}
                     </nav>
 
-                    {/* Right side: Global Actions (Aligned to right column) */}
+                    {/* Right side: Desktop Global Actions */}
                     <div className='flex items-center gap-3 sm:gap-4 shrink-0 justify-end'>
-                        {/* Docs Book Icon - Commented out to reduce header noise
-                        <Link
-                            href='/docs'
-                            className={`p-1 rounded-md hover:bg-muted transition-all ${
-                                pathname?.startsWith('/docs')
-                                    ? 'text-amber bg-muted/40'
-                                    : 'text-muted-foreground hover:text-foreground'
-                            }`}
-                            title={t.docs}
-                        >
-                            <svg
-                                className='size-6 stroke-[1.5]'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                stroke='currentColor'
-                            >
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    d='M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-16.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-16.25v14.25'
-                                />
-                            </svg>
-                        </Link>
-                        */}
-
                         {/* Globe Language Selector Dropdown */}
-                        <div className='relative' ref={dropdownRef}>
+                        <div className='relative' ref={desktopDropdownRef}>
                             <button
                                 onClick={() =>
                                     setLangDropdownOpen(!langDropdownOpen)
@@ -606,11 +752,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             </button>
 
                             {langDropdownOpen && (
-                                <div
-                                    className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-amber/30 bg-[#FFFDF9] text-[#060e32] p-1 shadow-2xl transition-all z-50 
-                                '
-                                >
-                                    {/* NL Language */}
+                                <div className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-amber/30 bg-[#FFFDF9] text-[#060e32] p-1 shadow-2xl transition-all z-50'>
                                     <Link
                                         href={getLocalePath('nl')}
                                         onClick={() => {
@@ -643,7 +785,6 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                         )}
                                     </Link>
 
-                                    {/* EN Language */}
                                     <Link
                                         href={getLocalePath('en')}
                                         onClick={() => {
@@ -679,47 +820,6 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             )}
                         </div>
 
-                        {/* Sun/Moon Theme Toggle Switch - Commented out as light theme is forced
-                        <button
-                            onClick={toggleTheme}
-                            className='p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer mt-2'
-                            aria-label='Switch Theme'
-                        >
-                            {mounted &&
-                            (theme === 'dark' ||
-                                (theme === 'system' &&
-                                    window.matchMedia(
-                                        '(prefers-color-scheme: dark)',
-                                    ).matches)) ? (
-                                <svg
-                                    className='size-6 stroke-[1.5]'
-                                    fill='none'
-                                    viewBox='0 0 24 24'
-                                    stroke='currentColor'
-                                >
-                                    <path
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                        d='M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z'
-                                    />
-                                </svg>
-                            ) : (
-                                <svg
-                                    className='size-6 stroke-[1.5]'
-                                    fill='none'
-                                    viewBox='0 0 24 24'
-                                    stroke='currentColor'
-                                >
-                                    <path
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                        d='M21.752 15.002A9.72 9.72 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z'
-                                    />
-                                </svg>
-                            )}
-                        </button>
-                        */}
-
                         {/* Demo aanvragen Button */}
                         <BorderBeam
                             size='line'
@@ -728,13 +828,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         >
                             <button
                                 onClick={() => setIsDemoModalOpen(true)}
-                                className='inline-flex items-center gap-1.5 px-4 py-2  font-semibold rounded-md border transition-all duration-300 bg-primary border-primary text-primary-foreground hover:bg-primary/90 cursor-pointer shadow-sm text-sm'
+                                className='inline-flex items-center gap-1.5 px-4 py-2 font-semibold rounded-md border transition-all duration-300 bg-orange border-primary text-primary-foreground cursor-pointer shadow-sm text-sm hover:bg-darkBlue hover:border-darkBlue hover:text-orange dark:bg-darkBlue'
                             >
                                 {isEn ? 'Request a Demo' : 'Demo aanvragen'}
                             </button>
                         </BorderBeam>
 
-                        {/* Sign In Button / Portal Access - Restored original Mijn Emlinked Design with Badtz Star Effect */}
+                        {/* Sign In Button / Portal Access */}
                         <Link
                             href='/docs'
                             className='inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-md border transition-all duration-300 bg-orange border-darkBlue text-darkBlue hover:bg-darkBlue hover:border-darkBlue hover:text-orange dark:bg-darkBlue dark:border-orange dark:text-orange dark:hover:bg-orange dark:hover:border-darkBlue dark:hover:text-darkBlue'
@@ -749,49 +849,38 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             {/* Mobile Drawer (Animated with Framer Motion) */}
             <AnimatePresence>
                 {mobileMenuOpen && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25, ease: 'easeInOut' }}
-                        className='xl:hidden border-t border-border bg-card overflow-hidden shadow-inner'
-                    >
-                        <nav className='flex flex-col gap-1 p-4'>
-                            {menuItems.map((item: any, idx: number) => {
-                                const key = `mobile-nav-${idx}`;
-                                if (item._type === 'menuDropdown') {
-                                    const isOpen = mobileSubmenu === item.title;
-                                    return (
-                                        <div
-                                            key={key}
-                                            className='border-b border-border/60 py-2'
-                                        >
-                                            <button
-                                                onClick={() =>
-                                                    toggleMobileSubmenu(
-                                                        item.title,
-                                                    )
-                                                }
-                                                className='flex w-full items-center justify-between text-sm font-semibold text-foreground py-1'
+                    <>
+                        {/* Tap-to-dismiss backdrop overlay (starts below header bar) */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className='fixed inset-x-0 top-[104px] bottom-0 z-40 bg-slate-950/40 xl:hidden cursor-pointer'
+                            aria-hidden='true'
+                        />
+
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: 'easeInOut' }}
+                            className='relative z-50 xl:hidden border-t border-amber/20 bg-white dark:bg-card overflow-hidden shadow-xl'
+                        >
+                            <nav className='flex flex-col p-4 gap-1'>
+                                {menuItems.map((item: any, idx: number) => {
+                                    const key = `mobile-nav-${idx}`;
+                                    if (item._type === 'menuDropdown') {
+                                        const isOpen =
+                                            mobileSubmenu === item.title;
+                                        return (
+                                            <div
+                                                key={key}
+                                                className='border-b border-amber/10 py-3 transition-colors'
                                             >
-                                                <span>{item.title}</span>
-                                                <svg
-                                                    className={`h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180 text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                                    fill='none'
-                                                    viewBox='0 0 24 24'
-                                                    stroke='currentColor'
-                                                    strokeWidth='2.5'
-                                                >
-                                                    <path
-                                                        strokeLinecap='round'
-                                                        strokeLinejoin='round'
-                                                        d='M19.5 8.25l-7.5 7.5-7.5-7.5'
-                                                    />
-                                                </svg>
-                                            </button>
-                                            {isOpen && (
-                                                <div className='pl-4 pr-2 py-2 flex flex-col gap-3.5 bg-muted/20 rounded-md mt-1'>
-                                                    {item.path && (
+                                                <div className='flex w-full items-center justify-between py-1'>
+                                                    {item.path ? (
                                                         <Link
                                                             href={getPath(
                                                                 item.path,
@@ -801,108 +890,178 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                                     false,
                                                                 )
                                                             }
-                                                            className='text-xs font-semibold text-primary hover:text-primary/80 transition-colors pb-1.5 border-b border-border/20'
+                                                            className={`text-sm font-semibold transition-colors cursor-pointer ${
+                                                                isActive(
+                                                                    item.path,
+                                                                )
+                                                                    ? 'text-amber font-bold'
+                                                                    : 'text-foreground hover:text-amber'
+                                                            }`}
                                                         >
-                                                            {isEn
-                                                                ? '→ Overview'
-                                                                : '→ Overzicht'}
+                                                            {item.title}
                                                         </Link>
+                                                    ) : (
+                                                        <span
+                                                            onClick={() =>
+                                                                toggleMobileSubmenu(
+                                                                    item.title,
+                                                                )
+                                                            }
+                                                            className='text-sm font-semibold text-foreground cursor-pointer'
+                                                        >
+                                                            {item.title}
+                                                        </span>
                                                     )}
-                                                    {item.links?.map(
-                                                        (
-                                                            subLink: any,
-                                                            sIdx: number,
-                                                        ) => {
-                                                            const isDemo =
-                                                                subLink.path ===
-                                                                '#demo';
-                                                            if (isDemo) {
+                                                    <button
+                                                        onClick={() =>
+                                                            toggleMobileSubmenu(
+                                                                item.title,
+                                                            )
+                                                        }
+                                                        className='p-1 rounded-md text-foreground/50 hover:text-amber hover:bg-amber/10 active:scale-95 transition-all cursor-pointer'
+                                                        aria-label='Toggle Submenu'
+                                                    >
+                                                        <svg
+                                                            className={`h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-180 text-amber' : 'text-foreground/50'}`}
+                                                            fill='none'
+                                                            viewBox='0 0 24 24'
+                                                            stroke='currentColor'
+                                                            strokeWidth='2.5'
+                                                        >
+                                                            <path
+                                                                strokeLinecap='round'
+                                                                strokeLinejoin='round'
+                                                                d='M19.5 8.25l-7.5 7.5-7.5-7.5'
+                                                            />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                {isOpen && (
+                                                    <div className='pl-5 pr-1 pt-1.5 flex flex-col gap-0.5 mt-1'>
+                                                        {item.links?.map(
+                                                            (
+                                                                subLink: any,
+                                                                sIdx: number,
+                                                            ) => {
+                                                                const isDemo =
+                                                                    subLink.path ===
+                                                                    '#demo';
+                                                                const active =
+                                                                    isActive(
+                                                                        subLink.path,
+                                                                    );
+                                                                const SubIcon =
+                                                                    getSubIcon(
+                                                                        subLink.title,
+                                                                    );
+                                                                const itemClass = `flex items-center gap-3 text-xs transition-all py-2.5 px-2 border-t border-amber/10 rounded-lg w-full text-left cursor-pointer active:scale-[0.98] active:bg-amber/10 ${active ? 'text-amber font-bold bg-amber/5' : 'text-foreground/80 hover:text-amber hover:bg-amber/5'}`;
+
+                                                                if (isDemo) {
+                                                                    return (
+                                                                        <button
+                                                                            key={
+                                                                                sIdx
+                                                                            }
+                                                                            onClick={() => {
+                                                                                setIsDemoModalOpen(
+                                                                                    true,
+                                                                                );
+                                                                                setMobileMenuOpen(
+                                                                                    false,
+                                                                                );
+                                                                            }}
+                                                                            className={
+                                                                                itemClass
+                                                                            }
+                                                                        >
+                                                                            <SubIcon className='w-4 h-4 text-amber shrink-0' />
+                                                                            <span>
+                                                                                {
+                                                                                    subLink.title
+                                                                                }
+                                                                            </span>
+                                                                        </button>
+                                                                    );
+                                                                }
                                                                 return (
-                                                                    <button
+                                                                    <Link
                                                                         key={
                                                                             sIdx
                                                                         }
-                                                                        onClick={() => {
-                                                                            setIsDemoModalOpen(
-                                                                                true,
-                                                                            );
+                                                                        href={getPath(
+                                                                            subLink.path,
+                                                                        )}
+                                                                        onClick={() =>
                                                                             setMobileMenuOpen(
                                                                                 false,
-                                                                            );
-                                                                        }}
-                                                                        className='text-xs font-medium text-left text-white/70 dark:text-slate-500 hover:text-primary transition-colors cursor-pointer'
-                                                                    >
-                                                                        {
-                                                                            subLink.title
+                                                                            )
                                                                         }
-                                                                    </button>
+                                                                        className={
+                                                                            itemClass
+                                                                        }
+                                                                    >
+                                                                        <SubIcon
+                                                                            className={`w-4 h-4 shrink-0 ${active ? 'text-amber' : 'text-amber/70'}`}
+                                                                        />
+                                                                        <span>
+                                                                            {
+                                                                                subLink.title
+                                                                            }
+                                                                        </span>
+                                                                    </Link>
                                                                 );
-                                                            }
-                                                            return (
-                                                                <Link
-                                                                    key={sIdx}
-                                                                    href={getPath(
-                                                                        subLink.path,
-                                                                    )}
-                                                                    onClick={() =>
-                                                                        setMobileMenuOpen(
-                                                                            false,
-                                                                        )
-                                                                    }
-                                                                    className={`text-xs font-medium ${isActive(subLink.path) ? 'text-amber' : 'text-white/70 dark:text-slate-500'}`}
-                                                                >
-                                                                    {
-                                                                        subLink.title
-                                                                    }
-                                                                </Link>
-                                                            );
-                                                        },
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-                                    );
-                                }
+                                                            },
+                                                        )}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    }
 
-                                const isDemo = item.path === '#demo';
-                                if (isDemo) {
+                                    const isDemo = item.path === '#demo';
+                                    if (isDemo) {
+                                        return (
+                                            <div
+                                                key={key}
+                                                className='border-b border-amber/10 py-3'
+                                            >
+                                                <button
+                                                    onClick={() => {
+                                                        setIsDemoModalOpen(
+                                                            true,
+                                                        );
+                                                        setMobileMenuOpen(
+                                                            false,
+                                                        );
+                                                    }}
+                                                    className='text-sm font-semibold block text-left w-full text-foreground hover:text-amber transition-colors cursor-pointer'
+                                                >
+                                                    {item.title}
+                                                </button>
+                                            </div>
+                                        );
+                                    }
+
                                     return (
                                         <div
                                             key={key}
-                                            className='border-b border-border/60 py-2.5'
+                                            className='border-b border-amber/10 py-3'
                                         >
-                                            <button
-                                                onClick={() => {
-                                                    setIsDemoModalOpen(true);
-                                                    setMobileMenuOpen(false);
-                                                }}
-                                                className='text-sm font-semibold block text-left w-full text-foreground hover:text-primary transition-colors cursor-pointer'
+                                            <Link
+                                                href={getPath(item.path)}
+                                                onClick={() =>
+                                                    setMobileMenuOpen(false)
+                                                }
+                                                className={`text-sm font-semibold block transition-colors ${isActive(item.path) ? 'text-amber font-bold' : 'text-foreground hover:text-amber'}`}
                                             >
                                                 {item.title}
-                                            </button>
+                                            </Link>
                                         </div>
                                     );
-                                }
-
-                                return (
-                                    <div
-                                        key={key}
-                                        className='border-b border-border/60 py-2.5'
-                                    >
-                                        <Link
-                                            href={getPath(item.path)}
-                                            onClick={() =>
-                                                setMobileMenuOpen(false)
-                                            }
-                                            className={`text-sm font-semibold block ${isActive(item.path) ? 'text-primary' : 'text-foreground'}`}
-                                        >
-                                            {item.title}
-                                        </Link>
-                                    </div>
-                                );
-                            })}
-                        </nav>
-                    </motion.div>
+                                })}
+                            </nav>
+                        </motion.div>
+                    </>
                 )}
             </AnimatePresence>
 

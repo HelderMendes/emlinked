@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, MapPin, Phone, Check, AlertCircle, Loader2 } from 'lucide-react';
 import { BsLinkedin, BsTwitterX } from 'react-icons/bs';
 import Script from 'next/script';
+import Image from 'next/image';
 
 interface DemoModalProps {
     isOpen: boolean;
@@ -259,7 +260,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={handleClose}
-                        className='fixed inset-0 bg-background/80 backdrop-blur-sm pointer-events-auto'
+                        className='fixed inset-0 bg-white/80 backdrop-blur-sm pointer-events-auto'
                     />
 
                     {/* Modal Box */}
@@ -267,7 +268,11 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                         initial={{ opacity: 0, scale: 0.95, y: 15 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 15 }}
-                        transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+                        transition={{
+                            type: 'spring',
+                            damping: 25,
+                            stiffness: 350,
+                        }}
                         className='relative w-full max-w-4xl bg-[#FFFDF9] border border-amber/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
                     >
                         {/* Close button */}
@@ -303,8 +308,13 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                             <h4 className='text-xs font-bold text-white uppercase tracking-wider font-mono'>
                                                 {t.chatTitle}
                                             </h4>
-                                            <p className='text-[10px] text-slate-400 mt-0.5'>{t.chatDesc}</p>
-                                            <a href={`mailto:${emailDisplay}`} className='text-xs font-semibold text-[#ff9400] hover:underline mt-1 block'>
+                                            <p className='text-[10px] text-slate-400 mt-0.5'>
+                                                {t.chatDesc}
+                                            </p>
+                                            <a
+                                                href={`mailto:${emailDisplay}`}
+                                                className='text-xs font-semibold text-[#ff9400] hover:underline mt-1 block'
+                                            >
                                                 {emailDisplay}
                                             </a>
                                         </div>
@@ -319,7 +329,9 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                             <h4 className='text-xs font-bold text-white uppercase tracking-wider font-mono'>
                                                 {t.officeTitle}
                                             </h4>
-                                            <p className='text-[10px] text-slate-400 mt-0.5'>{t.officeDesc}</p>
+                                            <p className='text-[10px] text-slate-400 mt-0.5'>
+                                                {t.officeDesc}
+                                            </p>
                                             <span className='text-xs font-semibold text-slate-200 mt-1 block leading-snug'>
                                                 {addressDisplay}
                                             </span>
@@ -335,8 +347,13 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                             <h4 className='text-xs font-bold text-white uppercase tracking-wider font-mono'>
                                                 {t.phoneTitle}
                                             </h4>
-                                            <p className='text-[10px] text-slate-400 mt-0.5'>{t.phoneDesc}</p>
-                                            <a href={`tel:${phoneDisplay.replace(/[^\d+]/g, '')}`} className='text-xs font-semibold text-[#ff9400] hover:underline mt-1 block'>
+                                            <p className='text-[10px] text-slate-400 mt-0.5'>
+                                                {t.phoneDesc}
+                                            </p>
+                                            <a
+                                                href={`tel:${phoneDisplay.replace(/[^\d+]/g, '')}`}
+                                                className='text-xs font-semibold text-[#ff9400] hover:underline mt-1 block'
+                                            >
                                                 {phoneDisplay}
                                             </a>
                                         </div>
@@ -348,7 +365,10 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                             <div className='relative z-10 pt-8 border-t border-white/10 flex items-center justify-between mt-8'>
                                 <div className='flex gap-3'>
                                     <a
-                                        href={settings?.linkedinUrl || 'https://linkedin.com'}
+                                        href={
+                                            settings?.linkedinUrl ||
+                                            'https://linkedin.com'
+                                        }
                                         target='_blank'
                                         rel='noopener noreferrer'
                                         className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-[#ff9400] transition-colors'
@@ -357,7 +377,10 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                         <BsLinkedin className='h-3.5 w-3.5' />
                                     </a>
                                     <a
-                                        href={settings?.twitterUrl || 'https://x.com'}
+                                        href={
+                                            settings?.twitterUrl ||
+                                            'https://x.com'
+                                        }
                                         target='_blank'
                                         rel='noopener noreferrer'
                                         className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-[#ff9400] transition-colors'
@@ -366,7 +389,16 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                         <BsTwitterX className='h-3 w-3' />
                                     </a>
                                 </div>
-                                <span className='text-[9px] font-bold text-slate-400 font-mono tracking-widest uppercase'>emlinked</span>
+                                <span className='text-[9px] font-bold text-slate-400 font-mono tracking-widest uppercase'>
+                                    <Image
+                                        src='/emlinked/Emlinked_logo__liggend_white.png'
+                                        alt='emlinked - Vastgoedbeheer software homepage'
+                                        className='w-auto h-7 transition-opacity hover:opacity-90'
+                                        width={128}
+                                        height={32}
+                                        priority
+                                    />
+                                </span>
                             </div>
                         </div>
 
@@ -382,7 +414,10 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                             {t.successTitle}
                                         </h4>
                                         <p className='text-xs text-[#060e32]/75 leading-relaxed'>
-                                            {t.successMessage.replace('{name}', `${firstName} ${lastName}`.trim())}
+                                            {t.successMessage.replace(
+                                                '{name}',
+                                                `${firstName} ${lastName}`.trim(),
+                                            )}
                                         </p>
                                     </div>
                                     <div className='pt-4'>
@@ -395,7 +430,10 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                     </div>
                                 </div>
                             ) : (
-                                <form onSubmit={handleSubmit} className='space-y-6'>
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className='space-y-6'
+                                >
                                     <div>
                                         <h4 className='font-display font-extrabold text-xl text-[#060e32] tracking-tight'>
                                             {t.formTitle}
@@ -416,30 +454,48 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
-                                                {t.firstNameLabel} <span className='text-amber'>*</span>
+                                                {t.firstNameLabel}{' '}
+                                                <span className='text-amber'>
+                                                    *
+                                                </span>
                                             </label>
                                             <input
                                                 type='text'
                                                 value={firstName}
-                                                onChange={(e) => setFirstName(e.target.value)}
-                                                placeholder={t.placeholderFirstName}
+                                                onChange={(e) =>
+                                                    setFirstName(e.target.value)
+                                                }
+                                                placeholder={
+                                                    t.placeholderFirstName
+                                                }
                                                 className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 required
-                                                disabled={status === 'submitting'}
+                                                disabled={
+                                                    status === 'submitting'
+                                                }
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
-                                                {t.lastNameLabel} <span className='text-amber'>*</span>
+                                                {t.lastNameLabel}{' '}
+                                                <span className='text-amber'>
+                                                    *
+                                                </span>
                                             </label>
                                             <input
                                                 type='text'
                                                 value={lastName}
-                                                onChange={(e) => setLastName(e.target.value)}
-                                                placeholder={t.placeholderLastName}
+                                                onChange={(e) =>
+                                                    setLastName(e.target.value)
+                                                }
+                                                placeholder={
+                                                    t.placeholderLastName
+                                                }
                                                 className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 required
-                                                disabled={status === 'submitting'}
+                                                disabled={
+                                                    status === 'submitting'
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -448,30 +504,44 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
-                                                {t.emailLabel} <span className='text-amber'>*</span>
+                                                {t.emailLabel}{' '}
+                                                <span className='text-amber'>
+                                                    *
+                                                </span>
                                             </label>
                                             <input
                                                 type='email'
                                                 value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
+                                                onChange={(e) =>
+                                                    setEmail(e.target.value)
+                                                }
                                                 placeholder={t.placeholderEmail}
                                                 className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 required
-                                                disabled={status === 'submitting'}
+                                                disabled={
+                                                    status === 'submitting'
+                                                }
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
-                                                {t.phoneLabel} <span className='text-amber'>*</span>
+                                                {t.phoneLabel}{' '}
+                                                <span className='text-amber'>
+                                                    *
+                                                </span>
                                             </label>
                                             <input
                                                 type='tel'
                                                 value={phone}
-                                                onChange={(e) => setPhone(e.target.value)}
+                                                onChange={(e) =>
+                                                    setPhone(e.target.value)
+                                                }
                                                 placeholder={t.placeholderPhone}
                                                 className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 required
-                                                disabled={status === 'submitting'}
+                                                disabled={
+                                                    status === 'submitting'
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -480,16 +550,25 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
-                                                {t.companyLabel} <span className='text-amber'>*</span>
+                                                {t.companyLabel}{' '}
+                                                <span className='text-amber'>
+                                                    *
+                                                </span>
                                             </label>
                                             <input
                                                 type='text'
                                                 value={company}
-                                                onChange={(e) => setCompany(e.target.value)}
-                                                placeholder={t.placeholderCompany}
+                                                onChange={(e) =>
+                                                    setCompany(e.target.value)
+                                                }
+                                                placeholder={
+                                                    t.placeholderCompany
+                                                }
                                                 className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
                                                 required
-                                                disabled={status === 'submitting'}
+                                                disabled={
+                                                    status === 'submitting'
+                                                }
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
@@ -498,14 +577,40 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                             </label>
                                             <select
                                                 value={portfolioSize}
-                                                onChange={(e) => setPortfolioSize(e.target.value)}
+                                                onChange={(e) =>
+                                                    setPortfolioSize(
+                                                        e.target.value,
+                                                    )
+                                                }
                                                 className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
-                                                disabled={status === 'submitting'}
+                                                disabled={
+                                                    status === 'submitting'
+                                                }
                                             >
-                                                <option value={t.portfolioOption1} className='bg-white text-[#060e32]'>{t.portfolioOption1}</option>
-                                                <option value={t.portfolioOption2} className='bg-white text-[#060e32]'>{t.portfolioOption2}</option>
-                                                <option value={t.portfolioOption3} className='bg-white text-[#060e32]'>{t.portfolioOption3}</option>
-                                                <option value={t.portfolioOption4} className='bg-white text-[#060e32]'>{t.portfolioOption4}</option>
+                                                <option
+                                                    value={t.portfolioOption1}
+                                                    className='bg-white text-[#060e32]'
+                                                >
+                                                    {t.portfolioOption1}
+                                                </option>
+                                                <option
+                                                    value={t.portfolioOption2}
+                                                    className='bg-white text-[#060e32]'
+                                                >
+                                                    {t.portfolioOption2}
+                                                </option>
+                                                <option
+                                                    value={t.portfolioOption3}
+                                                    className='bg-white text-[#060e32]'
+                                                >
+                                                    {t.portfolioOption3}
+                                                </option>
+                                                <option
+                                                    value={t.portfolioOption4}
+                                                    className='bg-white text-[#060e32]'
+                                                >
+                                                    {t.portfolioOption4}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -517,7 +622,9 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                         </label>
                                         <textarea
                                             value={message}
-                                            onChange={(e) => setMessage(e.target.value)}
+                                            onChange={(e) =>
+                                                setMessage(e.target.value)
+                                            }
                                             placeholder={t.placeholderMessage}
                                             rows={3}
                                             className='w-full p-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
@@ -528,7 +635,10 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                     {/* reCAPTCHA Checkbox Element */}
                                     {siteKey && (
                                         <div className='py-1.5'>
-                                            <div ref={recaptchaContainerRef} className='g-recaptcha' />
+                                            <div
+                                                ref={recaptchaContainerRef}
+                                                className='g-recaptcha'
+                                            />
                                         </div>
                                     )}
 
@@ -553,7 +663,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                     </motion.div>
                 </div>
             )}
-            
+
             {/* reCAPTCHA script loader callback config */}
             {siteKey && isOpen && (
                 <>
@@ -565,7 +675,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                 window.onRecaptchaLoad = function() {
                                     window.dispatchEvent(new Event('recaptcha-ready'));
                                 };
-                            `
+                            `,
                         }}
                     />
                     <Script
@@ -578,6 +688,6 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                 </>
             )}
         </AnimatePresence>,
-        document.body
+        document.body,
     );
 }
