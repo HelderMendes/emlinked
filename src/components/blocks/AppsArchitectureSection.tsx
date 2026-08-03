@@ -1,285 +1,166 @@
 'use client';
 
-import React, { useState } from 'react';
-import {
-    Database,
-    ShieldCheck,
-    Zap,
-    Building2,
-    Users,
-    CreditCard,
-    ArrowDown,
-    FileText,
-    Receipt,
-    Landmark,
-    CheckCircle2,
-    Layers,
-    Activity,
-} from 'lucide-react';
+import React from 'react';
+import Image from 'next/image';
+import { CheckCircle2 } from 'lucide-react';
 
 interface AppsArchitectureSectionProps {
     locale?: string;
+    tag?: string;
+    title?: string;
+    subtitle?: string;
+    sectionTag?: string;
+    sectionTitle?: string;
+    sectionSubtitle?: string;
+    bullets?: Array<{ bold?: string; text: string }>;
+    bgImagePath?: string;
 }
 
 export function AppsArchitectureSection({
     locale = 'nl',
+    tag,
+    title,
+    subtitle,
+    sectionTag,
+    sectionTitle,
+    sectionSubtitle,
+    bullets: customBullets,
+    bgImagePath = '/emlinked/apps/bg_naadloze_integratie_section.jpg',
 }: AppsArchitectureSectionProps) {
     const isEn = locale === 'en';
-    const [activeModule, setActiveModule] = useState<string | null>(null);
 
-    const apps = [
+    const defaultBullets = [
         {
-            id: 'vastgoedbeheer',
-            title: isEn ? 'Property Management' : 'Vastgoedbeheer',
-            icon: <Building2 className='h-5 w-5 text-amber' />,
-            flows: ['grootboek', 'debiteuren', 'document-capture'],
-            desc: isEn
-                ? 'Automated CPI indexation, contract management & ledger posting'
-                : 'Automatische CPI-indexering, contractbeheer & journaalposten',
+            bold: isEn
+                ? 'Één centrale bron van waarheid:'
+                : 'Één centrale bron van waarheid:',
+            text: isEn
+                ? 'No separate databases or fragile API sync scripts.'
+                : 'Geen losse databases, Excel-sheets of gevaarlijke API-koppelingen.',
         },
         {
-            id: 'huurdersportaal',
-            title: isEn ? 'Tenant Portal' : 'Huurdersportaal',
-            icon: <Users className='h-5 w-5 text-amber' />,
-            flows: ['debiteuren', 'document-capture'],
-            desc: isEn
-                ? 'Tenant maintenance tickets & live invoice accessibility'
-                : 'Onderhoudsmeldingen, huurfacturen & 24/7 self-service',
+            bold: isEn ? 'Nul dubbele invoer:' : 'Nul dubbele invoer:',
+            text: isEn
+                ? 'Indexations and invoices post straight into GL ledger journals.'
+                : 'Huurovereenkomsten, indexaties en facturen landen direct als gevalideerde journaalposten in je grootboek.',
         },
         {
-            id: 'payment',
-            title: isEn ? 'Payment Engine' : 'Payment Engine',
-            icon: <CreditCard className='h-5 w-5 text-amber' />,
-            flows: ['debiteuren', 'direct-banking', 'grootboek'],
-            desc: isEn
-                ? 'Automated SEPA Direct Debit & instant bank reconciliation'
-                : 'Geautomatiseerde SEPA-incasso & directe bankaflettering',
+            bold: isEn
+                ? '100% Realtime data-integriteit:'
+                : '100% Realtime data-integriteit:',
+            text: isEn
+                ? 'Instant reliable insights for auditors, executives, and property managers.'
+                : 'Direct betrouwbaar inzicht voor accountant, directie en beheerteam.',
         },
     ];
 
-    const bcModules = [
-        {
-            id: 'grootboek',
-            title: isEn ? 'General Ledger' : 'Grootboek',
-            icon: <FileText className='h-4 w-4 text-amber' />,
-            desc: isEn
-                ? 'Real-time journal entries'
-                : 'Realtime journaalposten',
-        },
-        {
-            id: 'debiteuren',
-            title: isEn ? 'Accounts Receivable' : 'Debiteuren',
-            icon: <Receipt className='h-4 w-4 text-amber' />,
-            desc: isEn
-                ? 'Rent invoicing & matching'
-                : 'Huurfacturatie & aflettering',
-        },
-        {
-            id: 'inkoop',
-            title: isEn ? 'Purchasing' : 'Inkoop',
-            icon: <Layers className='h-4 w-4 text-amber' />,
-            desc: isEn
-                ? 'Vendor invoices & expenses'
-                : 'Leveranciersfacturen & onderhoud',
-        },
-        {
-            id: 'document-capture',
-            title: isEn ? 'Document Capture' : 'Document Capture',
-            icon: <Database className='h-4 w-4 text-amber' />,
-            desc: isEn
-                ? 'OCR digital invoice storage'
-                : 'OCR digitale contracten',
-        },
-        {
-            id: 'direct-banking',
-            title: isEn ? 'Direct Banking' : 'Direct Banking',
-            icon: <Landmark className='h-4 w-4 text-amber' />,
-            desc: isEn
-                ? 'PSD2 live bank feed matching'
-                : 'PSD2 bankaflettering',
-        },
-    ];
+    const activeBullets = customBullets || defaultBullets;
+    const activeTag = tag || (isEn ? 'SEAMLESS INTEGRATION' : 'NAADLOZE INTEGRATIE');
+    const activeTitle = title || (isEn ? 'How our applications work together inside your ERP' : 'Hoe onze applicaties samenwerken binnen uw ERP');
+    const activeSubtitle = subtitle || (isEn ? 'Unlike traditional real estate software that relies on complex API integrations and periodic batch imports, Emlinked software runs native inside Microsoft Dynamics 365 Business Central. That means: one central source of truth, zero duplicate data entry, and 100% realtime data integrity.' : 'In tegenstelling tot traditionele vastgoedsoftware die werkt met ingewikkelde API-koppelingen en periodieke batch-imports, draait de software van Emlinked native binnen Microsoft Dynamics 365 Business Central. Dat betekent: één centrale bron van waarheid, nul dubbele invoer en 100% realtime data-integriteit.');
+
+    const activeSectionTag = sectionTag || (isEn ? 'MICROSOFT BUSINESS CENTRAL' : 'MICROSOFT BUSINESS CENTRAL INTEGRATIE');
+    const activeSectionTitle = sectionTitle || (isEn ? '100% Realtime Control & Automatic Posting' : '100% Realtime controle en automatische aflettering');
+    const activeSectionSubtitle = sectionSubtitle || (isEn ? 'Manage all your real estate operations natively inside Business Central with zero latency or shadow file risks.' : 'Beheer al je vastgoedprocessen native in Microsoft Dynamics 365 Business Central zonder vertraging of risico van schaduwbestanden.');
 
     return (
-        <section className='px-6 py-20 bg-background border-b border-border relative overflow-hidden'>
-            <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 space-y-12 relative z-10'>
-                {/* Section Header matching homepage */}
-                <div className='max-w-3xl mx-auto flex flex-col gap-3 text-center'>
-                    <div className='flex justify-center mb-1'>
-                        <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                            <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
-                            {isEn
-                                ? 'SEAMLESS NATIVE INTEGRATION'
-                                : 'NAADLOZE INTEGRATIE'}
-                        </span>
-                    </div>
-                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-darkblue'>
-                        {isEn
-                            ? 'How our applications work inside your ERP'
-                            : 'Hoe onze applicaties samenwerken binnen je ERP'}
+        <section className='relative px-6 py-20 text-white border-b border-white/10 overflow-hidden min-h-screen bg-[#02030A] bg-[radial-gradient(circle_at_18%_-5%,rgba(79,70,229,.18),transparent_24%),radial-gradient(circle_at_22%_60%,rgba(79,70,229,.12),transparent_20%),radial-gradient(circle_at_74%_40%,rgba(79,70,229,.16),transparent_18%),radial-gradient(circle_at_72%_105%,rgba(79,70,229,.14),transparent_20%),linear-gradient(to_right,transparent_49.95%,rgba(255,255,255,.03)_50%,transparent_50.05%)]'>
+            {/* Custom Section Background Image - 100% Full Cover */}
+            <Image
+                src={bgImagePath}
+                alt={activeTitle}
+                fill
+                priority
+                sizes='100vw'
+                className='object-cover object-center opacity-35 pointer-events-none'
+            />
+            <div className='absolute inset-0 bg-slate-900 pointer-events-none opacity-40' />
+            <div className='absolute inset-0 bg-linear-to-b from-[#060e32]/8 via-[#060e32]/70 to-[#060e32]/90 pointer-events-none' />
+
+            {/* Ambient Background Radial Glows */}
+            <div className='absolute top-0 right-1/4 w-200 h-200 bg-slate-900 blur-3xl pointer-events-none rounded-full opacity-90' />
+            <div className='absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-black blur-3xl pointer-events-none rounded-full opacity-40' />
+
+            <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16 relative z-10'>
+                {/* ── 1. TOP PART: CENTERED HEADER & SMALLER TOP PNG DIAGRAM ── */}
+                <div className='max-w-4xl mx-auto flex flex-col items-center text-center space-y-6'>
+                    <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                        {activeTag}
+                    </span>
+
+                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-white'>
+                        {activeTitle}
                     </h2>
-                    <p className='text-muted-foreground leading-relaxed text-base md:text-lg font-light'>
-                        {isEn
-                            ? 'Unlike traditional real estate software that relies on complex API integrations and periodic batch imports, Emlinked runs 100% native inside Microsoft Dynamics 365 Business Central.'
-                            : 'In tegenstelling tot traditionele vastgoedsoftware die werkt met ingewikkelde API-koppelingen en periodieke batch-imports, draait de software van Emlinked native binnen Microsoft Dynamics 365 Business Central.'}
+
+                    <p className='text-white/80 leading-relaxed text-base md:text-lg font-light max-w-3xl'>
+                        {activeSubtitle}
                     </p>
+
+                    {/* Centered Transparent PNG Architecture Diagram on Dark Background */}
+                    <div className='relative w-full max-w-90 h-90 items-center justify-center mx-auto transition-all duration-300 mb-2'>
+                        <Image
+                            src='/emlinked/apps/naadloze-intergratie.png'
+                            alt={activeTitle}
+                            fill
+                            sizes='360px'
+                            className='object-contain hover:scale-105 transition-transform duration-500 drop-shadow-[0_15px_35px_rgba(0,0,0,0.25)] bg-transparent rounded-full'
+                            priority
+                        />
+                    </div>
                 </div>
 
-                {/* Sleek Ecosystem Card */}
-                <div className='rounded-2xl border border-white/10 bg-[#060e32] text-white p-6 md:p-10 shadow-2xl space-y-8 relative overflow-hidden'>
-                    <div className='absolute top-0 right-0 w-96 h-96 bg-amber/10 blur-3xl pointer-events-none rounded-full' />
-
-                    {/* Top status bar */}
-                    <div className='flex items-center justify-between pb-4 border-b border-white/10 text-xs font-mono text-white/70'>
-                        <div className='flex items-center gap-2'>
-                            <Activity className='h-4 w-4 text-emerald-400 animate-pulse' />
-                            <span className='font-bold text-white'>
-                                EMLINKED NATIVE ECOSYSTEM
-                            </span>
-                        </div>
-                        <span className='text-amber font-semibold'>
-                            Zero API Latency • 100% Realtime
+                {/* ── 2. BOTTOM PART: BOX 3 STYLE BULLETS & 3D VISUAL ──────── */}
+                <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-4 border-t border-white/10'>
+                    {/* Left Column: Title, Subtitle & Bullets matching Box 3 check styling */}
+                    <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
+                        <span className='inline-flex items-center justify-center self-start rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                            {activeSectionTag}
                         </span>
-                    </div>
 
-                    {/* Top Tier: 3 Modules */}
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-                        {apps.map((app) => {
-                            const isSelected = activeModule === app.id;
-                            return (
+                        <h3 className='font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight'>
+                            {activeSectionTitle}
+                        </h3>
+
+                        <p className='text-white/80 text-base md:text-lg leading-relaxed font-light'>
+                            {activeSectionSubtitle}
+                        </p>
+
+                        {/* Bullets matching Frontpage Box 3 check styling on Dark Theme */}
+                        <div className='flex flex-col gap-4 my-1'>
+                            {activeBullets.map((b, idx) => (
                                 <div
-                                    key={app.id}
-                                    onMouseEnter={() => setActiveModule(app.id)}
-                                    onMouseLeave={() => setActiveModule(null)}
-                                    className={`p-5 rounded-xl border transition-all duration-300 cursor-pointer ${
-                                        isSelected
-                                            ? 'border-amber bg-amber/15 shadow-lg scale-[1.02]'
-                                            : 'border-white/10 bg-white/5 hover:border-amber/40 hover:bg-white/[0.08]'
-                                    }`}
+                                    key={idx}
+                                    className='flex items-start gap-3.5 group'
                                 >
-                                    <div className='flex items-center justify-between mb-3'>
-                                        <div className='p-2 rounded-lg bg-amber/20 border border-amber/30'>
-                                            {app.icon}
-                                        </div>
-                                        <span className='text-[10px] font-mono font-bold text-amber uppercase tracking-wider px-2 py-0.5 rounded bg-amber/10 border border-amber/20'>
-                                            Native Module
+                                    <div className='h-7 w-7 rounded-xl bg-amber/20 border border-amber/40 flex items-center justify-center text-amber shrink-0 mt-0.5 shadow-sm group-hover:bg-amber group-hover:text-[#060e32] transition-all duration-300'>
+                                        <CheckCircle2 className='h-4 w-4' />
+                                    </div>
+                                    <div className='text-sm sm:text-base leading-relaxed text-white/90 pt-0.5'>
+                                        {b.bold && (
+                                            <strong className='text-white font-semibold mr-1.5'>
+                                                {b.bold}
+                                            </strong>
+                                        )}
+                                        <span className='font-light text-white/80'>
+                                            {b.text}
                                         </span>
                                     </div>
-                                    <h4 className='font-bold text-base text-white mb-1'>
-                                        {app.title}
-                                    </h4>
-                                    <p className='text-xs text-white/70 leading-relaxed font-light'>
-                                        {app.desc}
-                                    </p>
                                 </div>
-                            );
-                        })}
-                    </div>
-
-                    {/* Data Bus Pipeline Divider */}
-                    <div className='relative py-2 flex items-center justify-center'>
-                        <div className='w-full h-px bg-gradient-to-r from-transparent via-amber/50 to-transparent' />
-                        <div className='absolute px-4 py-1 rounded-full bg-[#060e32] border border-amber/40 text-[11px] font-mono text-amber font-bold flex items-center gap-2 shadow-lg'>
-                            <Zap className='h-3.5 w-3.5 text-amber animate-spin' />
-                            <span>LIVE NATIVE AL DATA BUS</span>
-                            <ArrowDown className='h-3.5 w-3.5 text-amber' />
+                            ))}
                         </div>
                     </div>
 
-                    {/* Central ERP Hub */}
-                    <div className='p-6 rounded-xl border border-white/10 bg-white/[0.03] space-y-5'>
-                        <div className='flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4'>
-                            <div className='flex items-center gap-3'>
-                                <div className='p-2.5 rounded-lg bg-amber/20 border border-amber/30 text-amber'>
-                                    <Database className='h-6 w-6' />
-                                </div>
-                                <div>
-                                    <span className='text-[10px] font-mono font-bold text-amber uppercase tracking-wider block'>
-                                        Core Financial ERP System
-                                    </span>
-                                    <h3 className='font-bold text-lg text-white'>
-                                        Microsoft Dynamics 365 Business Central
-                                    </h3>
-                                </div>
-                            </div>
-                            <span className='px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold'>
-                                100% Single Source of Truth
-                            </span>
-                        </div>
-
-                        {/* BC Sub-modules */}
-                        <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3'>
-                            {bcModules.map((mod) => {
-                                const isHighlighted =
-                                    activeModule &&
-                                    apps
-                                        .find((a) => a.id === activeModule)
-                                        ?.flows.includes(mod.id);
-
-                                return (
-                                    <div
-                                        key={mod.id}
-                                        className={`p-3 rounded-lg border text-left transition-all ${
-                                            isHighlighted
-                                                ? 'border-amber bg-amber/20 text-white shadow-md'
-                                                : 'border-white/10 bg-white/5 text-white/80'
-                                        }`}
-                                    >
-                                        <div className='flex items-center gap-2 mb-1'>
-                                            {mod.icon}
-                                            <span className='font-bold text-xs text-white truncate'>
-                                                {mod.title}
-                                            </span>
-                                        </div>
-                                        <p className='text-[10px] text-white/60 line-clamp-1'>
-                                            {mod.desc}
-                                        </p>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    {/* Architecture Bullet Highlights */}
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-6 pt-2 border-t border-white/10 text-left'>
-                        <div className='flex items-start gap-3'>
-                            <CheckCircle2 className='h-5 w-5 text-amber shrink-0 mt-0.5' />
-                            <div>
-                                <h5 className='font-bold text-xs text-white mb-0.5'>
-                                    Geen API Latency of Batch Sync
-                                </h5>
-                                <p className='text-xs text-white/70 leading-relaxed font-light'>
-                                    Data is direct beschikbaar in het financieel
-                                    grootboek zonder te wachten op nachtelijke
-                                    synchronisaties.
-                                </p>
-                            </div>
-                        </div>
-                        <div className='flex items-start gap-3'>
-                            <CheckCircle2 className='h-5 w-5 text-amber shrink-0 mt-0.5' />
-                            <div>
-                                <h5 className='font-bold text-xs text-white mb-0.5'>
-                                    Ingebouwde Audittrail & Compliance
-                                </h5>
-                                <p className='text-xs text-white/70 leading-relaxed font-light'>
-                                    Volledige administratieve verantwoording
-                                    volgens de normen van accountant en
-                                    belastingdienst.
-                                </p>
-                            </div>
-                        </div>
-                        <div className='flex items-start gap-3'>
-                            <CheckCircle2 className='h-5 w-5 text-amber shrink-0 mt-0.5' />
-                            <div>
-                                <h5 className='font-bold text-xs text-white mb-0.5'>
-                                    Naadloos Uitbreidbaar
-                                </h5>
-                                <p className='text-xs text-white/70 leading-relaxed font-light'>
-                                    Start met Vastgoedbeheer en voeg
-                                    Huurdersportaal of Payment Engine toe
-                                    wanneer je organisatie groeit.
-                                </p>
-                            </div>
+                    {/* Right Column: 3D Visual Workspace Image */}
+                    <div className='lg:col-span-5 flex justify-center items-center'>
+                        <div className='relative w-full max-w-md aspect-4/3 sm:aspect-square rounded-2xl overflow-hidden border border-white/20 shadow-2xl group flex items-center justify-center hover:border-amber/60 transition-all duration-500'>
+                            <Image
+                                src='/emlinked/apps/samenwerken-binnen-ERP.jpg'
+                                alt='Samenwerken binnen Business Central ERP'
+                                fill
+                                sizes='(max-width: 1024px) 100vw, 40vw'
+                                className='object-cover object-center group-hover:scale-105 transition-transform duration-700'
+                            />
+                            <div className='absolute inset-0 bg-linear-to-t from-[#060e32]/50 via-transparent to-transparent pointer-events-none' />
                         </div>
                     </div>
                 </div>

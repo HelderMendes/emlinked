@@ -1,17 +1,14 @@
-import React from 'react';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import {
-    CheckCircle2,
-    Quote,
-    ArrowUpRight,
-    ArrowRight,
-    Zap,
-} from 'lucide-react';
+import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
+import { TestimonialSlider } from '@/components/TestimonialSlider';
 
 interface AppsPageProps {
     params: Promise<{ locale: string }>;
@@ -29,9 +26,6 @@ async function getSanityPageData(locale: string) {
                     features[] {
                         ...,
                         bullets
-                    },
-                    testimonials[] {
-                        ...
                     }
                 },
                 seo {
@@ -113,11 +107,6 @@ export default async function AppsPage({ params }: AppsPageProps) {
     const featuresBlock = pageBlocks.find(
         (b: any) => b._type === 'featuresList',
     );
-    const testimonialBlock = pageBlocks.find(
-        (b: any) =>
-            b._type === 'testimonialSection' ||
-            b._type === 'testimonialsSection',
-    );
     const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBanner');
 
     // PNG Icon paths for the 3 apps
@@ -135,7 +124,6 @@ export default async function AppsPage({ params }: AppsPageProps) {
     ];
 
     const rawFeatures = featuresBlock?.features || [];
-    const quoteItem = testimonialBlock?.testimonials?.[0];
 
     // Structured JSON-LD Data
     const jsonLd = {
@@ -271,7 +259,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
             {/* SECTION 2: THE THREE CORE APPS (Refined Product Module Cards) */}
             {featuresBlock && (
                 <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] dark:bg-navy-dark border-b border-amber/10 relative z-10'>
-                    <div className='max-w-7xl mx-auto space-y-8'>
+                    <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8'>
                         {/* Section Header */}
                         <div className='text-center max-w-3xl mx-auto space-y-4'>
                             {(featuresBlock.sectionTag ||
@@ -363,7 +351,10 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                             <Link
                                                 href={getPath(appUrl)}
                                                 className='absolute inset-0 z-20'
-                                                aria-label={feature.title || 'App Module'}
+                                                aria-label={
+                                                    feature.title ||
+                                                    'App Module'
+                                                }
                                             />
 
                                             <div className='space-y-5'>
@@ -459,118 +450,77 @@ export default async function AppsPage({ params }: AppsPageProps) {
             {/* SECTION 3: SYSTEM ARCHITECTURE */}
             <AppsArchitectureSection locale={locale} />
 
-            {/* SECTION 4: TRUST & SCALE QUALIFIER */}
-            {testimonialBlock && (
-                <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] dark:bg-navy-dark relative z-10'>
-                    <div className='max-w-6xl mx-auto'>
-                        <div className='p-8 md:p-12 rounded-3xl border border-amber/20 bg-white dark:bg-slate-900/90 shadow-xl space-y-8 relative overflow-hidden'>
-                            <div className='space-y-3 max-w-3xl text-left'>
-                                {(testimonialBlock.sectionTag ||
-                                    testimonialBlock.tag) && (
-                                    <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                                        <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
-                                        {testimonialBlock.sectionTag ||
-                                            testimonialBlock.tag}
-                                    </span>
-                                )}
-                                {testimonialBlock.sectionTitle && (
-                                    <h2 className='font-display font-bold text-2xl md:text-4xl text-[#060e32] dark:text-white tracking-tight'>
-                                        {testimonialBlock.sectionTitle}
-                                    </h2>
-                                )}
-                                {(testimonialBlock.sectionSubtitle ||
-                                    testimonialBlock.subtitle) && (
-                                    <p className='text-sm md:text-base text-[#060e32]/75 dark:text-slate-300 leading-relaxed font-light'>
-                                        {testimonialBlock.sectionSubtitle ||
-                                            testimonialBlock.subtitle}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Quote Card */}
-                            {quoteItem && (
-                                <div className='p-6 md:p-8 rounded-2xl border border-amber/30 bg-[#FFFBEF] dark:bg-amber/5 relative space-y-4 text-left shadow-sm'>
-                                    <Quote className='h-8 w-8 text-amber/40 absolute top-4 right-4 pointer-events-none' />
-                                    <p className='text-base md:text-lg italic text-[#060e32] dark:text-slate-200 leading-relaxed font-serif'>
-                                        “{quoteItem.quote}”
-                                    </p>
-                                    <div className='flex items-center gap-3 pt-2 border-t border-amber/20'>
-                                        <div className='h-10 w-10 rounded-full bg-amber/20 border border-amber/40 flex items-center justify-center text-amber font-bold text-sm'>
-                                            {quoteItem.author
-                                                ? quoteItem.author
-                                                      .split(' ')
-                                                      .map((n: string) => n[0])
-                                                      .join('')
-                                                      .slice(0, 2)
-                                                : 'OD'}
-                                        </div>
-                                        <div>
-                                            <h4 className='font-bold text-xs text-[#060e32] dark:text-white'>
-                                                {quoteItem.author}
-                                            </h4>
-                                            {quoteItem.role && (
-                                                <span className='text-[11px] text-amber font-mono font-semibold block'>
-                                                    {quoteItem.role}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </section>
-            )}
+            {/* SECTION 4: TRUST & SCALE REVIEWS SLIDER */}
+            <TestimonialSlider locale={locale} />
 
             {/* SECTION 5: FINAL PRE-FOOTER CONVERSION CTA */}
             {ctaBlock && (
-                <section className='px-6 py-20 bg-background max-w-5xl mx-auto text-center'>
-                    <div className='p-10 md:p-16 rounded-3xl border border-white/10 bg-texture-navy text-white space-y-8 relative overflow-hidden shadow-2xl'>
-                        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-amber/15 blur-3xl pointer-events-none rounded-full' />
-
-                        <div className='space-y-4 max-w-2xl mx-auto relative z-10'>
-                            {ctaBlock.tag && (
-                                <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
-                                    {ctaBlock.tag}
-                                </span>
-                            )}
-                            {ctaBlock.title && (
-                                <h2 className='font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight'>
-                                    {ctaBlock.title}
-                                </h2>
-                            )}
-                            {ctaBlock.subtitle && (
-                                <p className='text-sm sm:text-base text-white/80 leading-relaxed font-light'>
-                                    {ctaBlock.subtitle}
-                                </p>
-                            )}
-                        </div>
-
-                        {/* Primary & Secondary Buttons */}
-                        <div className='flex flex-wrap items-center justify-center gap-4 relative z-10 pt-2'>
-                            {ctaBlock.buttonLabel && (
-                                <Link
-                                    href={getPath(
-                                        ctaBlock.buttonLink || '#demo',
+                <section className='px-6 py-24 bg-background relative overflow-hidden'>
+                    <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+                        <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+                            <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
+                                {/* Left Column: Copy & Actions */}
+                                <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
+                                    {ctaBlock.tag && (
+                                        <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
+                                            <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                            {ctaBlock.tag}
+                                        </span>
                                     )}
-                                    className='px-8 py-4 rounded-xl bg-amber hover:bg-amber-hover text-[#060e32] font-bold text-sm flex items-center gap-2 transition-all shadow-xl hover:scale-105'
-                                >
-                                    <span>{ctaBlock.buttonLabel}</span>
-                                    <ArrowRight className='h-4 w-4' />
-                                </Link>
-                            )}
+                                    <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                                        {ctaBlock.title ||
+                                            'Klaar om uw vastgoedbeheer te digitaliseren?'}
+                                    </h2>
+                                    <p className='text-white/80 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
+                                        {ctaBlock.subtitle ||
+                                            'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd en kiezen voor 100% realtime controle binnen Business Central.'}
+                                    </p>
 
-                            {ctaBlock.secondaryButtonLabel && (
-                                <Link
-                                    href={getPath(
-                                        ctaBlock.secondaryButtonLink ||
-                                            '/prijzen',
-                                    )}
-                                    className='px-7 py-4 rounded-xl bg-transparent border border-white/20 hover:bg-white/10 text-white font-semibold text-sm flex items-center gap-2 transition-all hover:border-amber/40'
-                                >
-                                    <span>{ctaBlock.secondaryButtonLabel}</span>
-                                </Link>
-                            )}
+                                    {/* Primary & Secondary Buttons */}
+                                    <div className='flex flex-col sm:flex-row gap-4 pt-2'>
+                                        {ctaBlock.buttonLabel && (
+                                            <Link
+                                                href={getPath(
+                                                    ctaBlock.buttonLink ||
+                                                        '/contact',
+                                                )}
+                                                className='inline-flex h-14 items-center justify-center rounded-xl bg-amber hover:bg-amber-hover px-8 text-base font-bold text-[#060e32] transition-all duration-200 shadow-xl hover:scale-105 active:scale-95'
+                                            >
+                                                <span>
+                                                    {ctaBlock.buttonLabel}
+                                                </span>
+                                                <ArrowRight className='h-5 w-5 ml-2' />
+                                            </Link>
+                                        )}
+
+                                        {ctaBlock.secondaryButtonLabel && (
+                                            <Link
+                                                href={getPath(
+                                                    ctaBlock.secondaryButtonLink ||
+                                                        '/integraties',
+                                                )}
+                                                className='inline-flex h-14 items-center justify-center rounded-xl border border-white/20 hover:border-amber/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm'
+                                            >
+                                                <span>
+                                                    {ctaBlock.secondaryButtonLabel}
+                                                </span>
+                                            </Link>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Right Column: Visual Image */}
+                                <div className='lg:col-span-4 flex justify-start lg:justify-end'>
+                                    <Image
+                                        src='/emlinked/apps/bewezen_resultaat.jpg'
+                                        alt={ctaBlock.title || 'Bewezen resultaat'}
+                                        width={700}
+                                        height={500}
+                                        className='w-full max-h-150 object-cover object-top rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
+                                        priority
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

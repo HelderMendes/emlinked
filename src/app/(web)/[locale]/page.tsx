@@ -427,7 +427,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                 key={block._key}
                                 className='px-6 py-20 bg-card border-b border-border'
                             >
-                                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-12'>
+                                <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-12'>
                                     <div className='max-w-3xl mx-auto flex flex-col gap-3 text-center'>
                                         {sectionTag && (
                                             <div className='flex justify-center mb-1'>

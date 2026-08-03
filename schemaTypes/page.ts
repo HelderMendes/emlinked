@@ -59,6 +59,8 @@ export const page = defineType({
                             name: 'title',
                             title: 'Hero Title',
                             type: 'string',
+                            description:
+                                'tekst tussen *deze text is emlinked orange*',
                         }),
                         defineField({
                             name: 'subtitle',
@@ -102,7 +104,8 @@ export const page = defineType({
                             name: 'imagePath',
                             title: 'Right Column Image Path (Optional)',
                             type: 'string',
-                            description: 'Relative path to image (e.g., /hero/vastgoedportfeuille_aangifte-klaar.jpg)',
+                            description:
+                                'Relative path to image (e.g., /hero/vastgoedportfeuille_aangifte-klaar.jpg)',
                         }),
                     ],
                     preview: {
@@ -113,7 +116,9 @@ export const page = defineType({
                         prepare({ title, label }) {
                             return {
                                 title: `Hero: ${title || label || 'Untitled Hero'}`,
-                                subtitle: label ? `Label: ${label}` : 'Hero Block',
+                                subtitle: label
+                                    ? `Label: ${label}`
+                                    : 'Hero Block',
                             };
                         },
                     },
@@ -261,7 +266,9 @@ export const page = defineType({
                         prepare({ title, tag }) {
                             return {
                                 title: `Features: ${title || tag || 'Features Block'}`,
-                                subtitle: tag ? `Tag: ${tag}` : 'Features Block',
+                                subtitle: tag
+                                    ? `Tag: ${tag}`
+                                    : 'Features Block',
                             };
                         },
                     },
