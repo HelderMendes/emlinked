@@ -190,6 +190,13 @@ export const page = defineType({
                                     type: 'object',
                                     fields: [
                                         defineField({
+                                            name: 'badge',
+                                            title: 'Category Badge / Label (e.g. "Core Operatie & Admin")',
+                                            type: 'string',
+                                            description:
+                                                'Pill badge overlayed on top-left of the module image',
+                                        }),
+                                        defineField({
                                             name: 'title',
                                             title: 'Feature Title',
                                             type: 'string',
@@ -209,8 +216,17 @@ export const page = defineType({
                                         }),
                                         defineField({
                                             name: 'imagePath',
-                                            title: 'Image Path (Optional)',
+                                            title: 'Main Module Image Path (Grote Afbeelding)',
                                             type: 'string',
+                                            description:
+                                                'Pad naar de grote preview afbeelding (bijv. "/emlinked/apps/vastgoedbeheer-sopftware_modules.jpg")',
+                                        }),
+                                        defineField({
+                                            name: 'iconPath',
+                                            title: 'Top-Right PNG Icon Badge Path (Icoontje)',
+                                            type: 'string',
+                                            description:
+                                                'Pad naar het PNG-icoontje rechtsboven op de kaart (bijv. "/emlinked/apps/vastgoedbeheer.png")',
                                         }),
                                         defineField({
                                             name: 'bullets',

@@ -20,6 +20,8 @@ export interface HeroSectionProps {
     imagePath?: string;
     isHomepage?: boolean;
     locale?: string;
+    titleClassName?: string;
+    customGraphic?: React.ReactNode;
 }
 
 function formatHeroTitle(titleText: string) {
@@ -34,7 +36,7 @@ function formatHeroTitle(titleText: string) {
             return (
                 <span
                     key={index}
-                    className='text-transparent bg-clip-text bg-linear-to-r from-amber to-amber-light font-extrabold tracking-tight'
+                    className='text-transparent bg-clip-text bg-gradient-to-r from-amber via-amber-light to-amber font-extrabold tracking-tight inline'
                 >
                     {part.slice(1, -1)}
                 </span>
@@ -57,6 +59,8 @@ export function HeroSection({
     imagePath = '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
     isHomepage = true,
     locale = 'nl',
+    titleClassName,
+    customGraphic,
 }: HeroSectionProps) {
     const getPath = (path: string) => {
         if (!path) return '/';
@@ -80,7 +84,7 @@ export function HeroSection({
                             </span>
                         )}
 
-                        <h1 className='font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white dark:text-[#060e32] leading-[1.1]'>
+                        <h1 className={`font-display font-bold tracking-tight text-white dark:text-[#060e32] leading-[1.1] ${titleClassName || 'text-4xl sm:text-5xl lg:text-6xl'}`}>
                             {formatHeroTitle(title)}
                         </h1>
 
@@ -90,25 +94,27 @@ export function HeroSection({
                             </p>
                         )}
 
-                        {/* CTAs rendered on all Hero sections */}
-                        <div className='flex flex-col sm:flex-row gap-4 mt-2'>
-                            {ctaLabel && ctaLink && (
-                                <Link
-                                    href={getPath(ctaLink)}
-                                    className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32] transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
-                                >
-                                    {ctaLabel}
-                                </Link>
-                            )}
-                            {secondaryCtaLabel && secondaryCtaLink && (
-                                <Link
-                                    href={getPath(secondaryCtaLink)}
-                                    className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
-                                >
-                                    {secondaryCtaLabel}
-                                </Link>
-                            )}
-                        </div>
+                        {/* CTAs rendered dynamically (0, 1, or 2 buttons based on Sanity) */}
+                        {(ctaLabel || secondaryCtaLabel) && (
+                            <div className='flex flex-col sm:flex-row gap-4 mt-2'>
+                                {ctaLabel && ctaLink && (
+                                    <Link
+                                        href={getPath(ctaLink)}
+                                        className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32] transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
+                                    >
+                                        {ctaLabel}
+                                    </Link>
+                                )}
+                                {secondaryCtaLabel && secondaryCtaLink && (
+                                    <Link
+                                        href={getPath(secondaryCtaLink)}
+                                        className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                                    >
+                                        {secondaryCtaLabel}
+                                    </Link>
+                                )}
+                            </div>
+                        )}
 
                         {/* Social proof bar rendered when enabled */}
                         {showProof && (
@@ -224,14 +230,18 @@ export function HeroSection({
                             className='w-full'
                         >
                             <div className='relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 dark:border-amber/20'>
-                                <Image
-                                    src={imagePath}
-                                    alt={title}
-                                    width={600}
-                                    height={500}
-                                    className='w-full h-auto object-cover rounded-2xl'
-                                    priority
-                                />
+                                {customGraphic ? (
+                                    customGraphic
+                                ) : (
+                                    <Image
+                                        src={imagePath}
+                                        alt={title}
+                                        width={600}
+                                        height={500}
+                                        className='w-full h-auto object-cover rounded-2xl'
+                                        priority
+                                    />
+                                )}
                             </div>
                         </BorderBeam>
                     </div>
