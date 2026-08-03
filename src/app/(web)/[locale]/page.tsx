@@ -406,11 +406,11 @@ export default async function HomePage({ params }: HomePageProps) {
                                             <div className='lg:col-span-5 flex justify-center items-center'>
                                                 <div className='relative w-full max-w-md max-h-[650px] rounded-2xl overflow-hidden group flex items-center justify-center'>
                                                     <Image
-                                                        src='/emlinked/home/FiscaleOptimalisatie_Box3.jpg'
+                                                        src='/emlinked/home/zekerheid-over-je-vastgoedportefeuille.jpg'
                                                         alt={sectionTitle}
-                                                        width={700}
-                                                        height={500}
-                                                        className='w-full max-h-[650px] object-cover object-top rounded-2xl group-hover:scale-105 transition-transform duration-500'
+                                                        width={800}
+                                                        height={1000}
+                                                        className='w-full max-h-[700px] object-cover object-bottom rounded-2xl group-hover:scale-105 transition-transform duration-500'
                                                         priority
                                                     />
                                                 </div>

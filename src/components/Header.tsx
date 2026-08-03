@@ -396,13 +396,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         <Link
                             href={getPath('/')}
                             className='flex items-center'
-                            aria-label='emlinked - Vastgoedsoftware voor Business Central'
-                            title='emlinked - Vastgoedsoftware voor Business Central'
+                            aria-label='emlinked - Vastgoedbeheer Software'
+                            title='emlinked - Vastgoedbeheer Software'
                         >
                             <img
                                 src={logoSrc}
-                                alt='emlinked logo'
-                                className='w-auto h-9 transition-all'
+                                alt='emlinked - Vastgoedbeheer Software'
+                                className='w-auto h-8 transition-all'
                             />
                         </Link>
                     </div>
@@ -533,25 +533,25 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                 </div>
 
                 {/* Desktop Bar (>= xl) */}
-                <div className='hidden xl:flex h-20 items-center justify-between gap-4'>
+                <div className='hidden xl:flex h-16 items-center justify-between gap-4'>
                     {/* Logo & Brand Title */}
                     <div className='flex items-center shrink-0'>
                         <Link
                             href={getPath('/')}
                             className='flex items-center'
-                            aria-label='emlinked - Vastgoedsoftware voor Business Central'
-                            title='emlinked - Vastgoedsoftware voor Business Central'
+                            aria-label='emlinked - Vastgoedbeheer Software'
+                            title='emlinked - Vastgoedbeheer Software'
                         >
                             <img
                                 src={logoSrc}
-                                alt='emlinked logo'
-                                className='w-auto h-11 transition-all'
+                                alt='emlinked - Vastgoedbeheer Software'
+                                className='w-auto h-9 transition-all'
                             />
                         </Link>
                     </div>
 
                     {/* Desktop Navigation Links */}
-                    <nav className='hidden xl:flex items-center justify-center gap-1.5 2xl:gap-3 grow mt-1'>
+                    <nav className='hidden xl:flex items-center justify-center gap-1.5 2xl:gap-2 grow mt-1'>
                         {menuItems.map((item: any, idx: number) => {
                             const isDropdown = item._type === 'menuDropdown';
                             const isDropdownActive =
@@ -734,7 +734,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 onClick={() =>
                                     setLangDropdownOpen(!langDropdownOpen)
                                 }
-                                className='p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer mt-2'
+                                className='p-1.5 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer flex items-center justify-center'
                                 aria-label='Select Language'
                             >
                                 <svg
