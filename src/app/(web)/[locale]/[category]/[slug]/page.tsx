@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import {
@@ -798,80 +799,184 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                 <SolutionSimulators locale={locale} slug={slug} />
             </section>
 
-            {/* ── Related Modules ──────────────────────────────────────── */}
-            {'relatedModules' in content && (
-                <section className='px-6 py-16 bg-card border-b border-border'>
-                    <div className='mx-auto max-w-5xl'>
-                        <h2 className='text-lg font-bold text-foreground mb-1 text-center'>
+            {/* ── Related Modules / 3-Apps Suite Grid ─────────────────────── */}
+            <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] dark:bg-navy-dark border-t border-b border-amber/15 relative z-10'>
+                <div className='max-w-7xl mx-auto space-y-10'>
+                    <div className='text-center max-w-3xl mx-auto space-y-3'>
+                        <div className='flex justify-center mb-1'>
+                            <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                                <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
+                                {isEn ? 'DE MODULAIRE SUITE' : 'DE MODULAIRE SUITE'}
+                            </span>
+                        </div>
+                        <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.5rem]/12 tracking-tight text-[#060e32] dark:text-white'>
                             {isEn
-                                ? 'Complete the picture'
-                                : 'Combineer met andere modules'}
+                                ? 'Discover all 3 integrated property apps'
+                                : 'Ontdek de 3 geïntegreerde vastgoedbeheer apps'}
                         </h2>
-                        <p className='text-sm text-muted-foreground text-center mb-10'>
+                        <p className='text-sm sm:text-base text-[#060e32]/75 dark:text-slate-300 leading-relaxed font-light'>
                             {isEn
-                                ? 'Emlinked works best as an integrated suite.'
-                                : 'Emlinked werkt het krachtigst als geïntegreerde suite.'}
+                                ? 'Emlinked delivers maximum efficiency when combining our specialized core apps for Microsoft Business Central.'
+                                : 'Emlinked werkt het krachtigst als gecombineerde suite. Schakel de modules in die jouw vastgoedorganisatie versterken.'}
                         </p>
-                        <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
-                            {(
-                                content as unknown as {
-                                    relatedModules: {
-                                        slug: string;
-                                        icon: React.ElementType;
-                                        title: string;
-                                        desc: string;
-                                    }[];
-                                }
-                            ).relatedModules.map((mod) => {
-                                const ModIcon = mod.icon;
-                                return (
-                                    <Link
-                                        key={mod.slug}
-                                        href={`/${locale}/${category}/${mod.slug}`}
-                                        className='group flex items-start gap-5 p-6 rounded-xl border border-border bg-background hover:border-primary/40 hover:shadow-md transition-all'
-                                    >
-                                        <div className='h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary/15 transition-colors'>
-                                            <ModIcon className='h-5 w-5' />
-                                        </div>
-                                        <div className='flex-1 text-left'>
-                                            <div className='font-bold text-sm text-foreground mb-1 flex items-center gap-1.5'>
-                                                {mod.title}
-                                                <ArrowRight className='h-3 w-3 text-primary opacity-0 group-hover:opacity-100 transition-opacity' />
+                    </div>
+
+                    <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 text-left pt-2'>
+                        {[
+                            {
+                                appSlug: 'vastgoedbeheer-software',
+                                normSlug: 'vastgoedbeheer-software',
+                                title: isEn ? 'Property Management' : 'Vastgoedbeheer Software',
+                                badge: isEn ? 'Core Operations' : 'Core Operatie & Admin',
+                                desc: isEn
+                                    ? 'Automated CPI indexations, contract management & ledger posting in Business Central.'
+                                    : 'De operationele motor voor je vastgoedportefeuille. Automatiseer contracten en indexaties.',
+                                imagePath: '/emlinked/home/DrieKrachtigeApps_VastgoedbeheerSoftware.png',
+                                iconPath: '/emlinked/apps/vastgoedbeheer_negatief.png',
+                                appNo: '01',
+                            },
+                            {
+                                appSlug: 'huurdersportaal',
+                                normSlug: 'huurdersportaal',
+                                title: isEn ? 'Tenant Portal' : 'Huurdersportaal',
+                                badge: isEn ? 'Tenant Self-Service' : 'Self-Service & Communicatie',
+                                desc: isEn
+                                    ? '24/7 digital tenant self-service for maintenance requests, invoices & communications.'
+                                    : 'Verlaag de werkdruk op je beheerteam. 24/7 inzicht in huurfacturen en storingsmeldingen.',
+                                imagePath: '/emlinked/home/Huurdersportaal.png',
+                                iconPath: '/emlinked/apps/huurdersportaal_negatief.png',
+                                appNo: '02',
+                            },
+                            {
+                                appSlug: 'payment-software',
+                                normSlug: 'payment',
+                                title: isEn ? 'Payment Software' : 'Payment Software',
+                                badge: isEn ? 'Financial Automation' : 'Financiële Automatisering',
+                                desc: isEn
+                                    ? 'Automated SEPA Direct Debit collection & real-time PSD2 bank reconciliation.'
+                                    : 'Geen handmatige aflettering meer. SEPA-incasso\'s & bankaflettering direct in ERP.',
+                                imagePath: '/emlinked/home/DrieKrachtigeApps_PaymentSoftware.png',
+                                iconPath: '/emlinked/apps/payment_engine_negatief.png',
+                                appNo: '03',
+                            },
+                        ].map((appItem) => {
+                            const normalizedCurrentSlug = slug === 'payment' ? 'payment-software' : slug;
+                            const isCurrentApp = normalizedCurrentSlug === appItem.appSlug || slug === appItem.normSlug;
+                            const targetPath = `/${locale}/apps/${appItem.appSlug}`;
+
+                            return (
+                                <div
+                                    key={appItem.appSlug}
+                                    className={`relative p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between space-y-5 ${
+                                        isCurrentApp
+                                            ? 'border-amber bg-white dark:bg-slate-900 shadow-xl ring-2 ring-amber/30 scale-[1.01]'
+                                            : 'border-black/15 bg-white dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:border-amber/50'
+                                    }`}
+                                >
+                                    {/* App Badge circle top right */}
+                                    <div className='absolute -top-4 -right-4 z-30 w-11 h-11 rounded-full bg-[#060e32] border-2 border-amber text-amber font-mono font-extrabold text-xs flex items-center justify-center shadow-lg'>
+                                        {appItem.appNo}
+                                    </div>
+
+                                    {/* Whole-card overlay link when not current app */}
+                                    {!isCurrentApp && (
+                                        <Link
+                                            href={targetPath}
+                                            className='absolute inset-0 z-20'
+                                            aria-label={appItem.title}
+                                        />
+                                    )}
+
+                                    <div className='space-y-4'>
+                                        <div className='relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-slate-950 border border-gray-200 dark:border-white/10'>
+                                            <Image
+                                                src={appItem.imagePath}
+                                                alt={appItem.title}
+                                                fill
+                                                sizes='(max-width: 768px) 100vw, 33vw'
+                                                className='object-cover opacity-95 group-hover:scale-105 transition-transform duration-500'
+                                            />
+                                            <div className='absolute top-3 left-3 z-20 pointer-events-none'>
+                                                <span className='px-3 py-1 text-[10px] font-bold rounded-full bg-slate-900/90 border border-amber/30 text-amber shadow-lg backdrop-blur-md uppercase tracking-wider'>
+                                                    {appItem.badge}
+                                                </span>
                                             </div>
-                                            <p className='text-xs text-muted-foreground leading-relaxed'>
-                                                {mod.desc}
+                                        </div>
+
+                                        <div className='space-y-2 pt-1'>
+                                            <h3 className='text-xl font-bold font-display text-[#060e32] dark:text-white flex items-center justify-between'>
+                                                <span>{appItem.title}</span>
+                                                {isCurrentApp && (
+                                                    <span className='text-[10px] font-mono font-bold bg-amber/20 text-amber px-2 py-0.5 rounded uppercase border border-amber/30'>
+                                                        {isEn ? 'Active' : 'Huidige module'}
+                                                    </span>
+                                                )}
+                                            </h3>
+                                            <p className='text-xs text-[#060e32]/75 dark:text-slate-300 leading-relaxed font-light'>
+                                                {appItem.desc}
                                             </p>
                                         </div>
-                                    </Link>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </section>
-            )}
+                                    </div>
 
-            {/* ── CTA Footer ───────────────────────────────────────────── */}
-            <section className='px-6 py-20 bg-card'>
-                <div className='mx-auto max-w-3xl text-center flex flex-col gap-6'>
-                    <h2 className='text-2xl sm:text-3xl font-bold text-foreground'>
-                        {content.cta.title}
-                    </h2>
-                    <p className='text-base text-muted-foreground leading-relaxed'>
-                        {content.cta.desc}
-                    </p>
-                    <div className='flex flex-wrap justify-center gap-4'>
+                                    {/* Single-Line Card Footer matching frontpage screenshot */}
+                                    <div className='pt-3 border-t border-black/15 dark:border-white/10 flex items-center justify-between gap-4 z-30 mt-auto pointer-events-none'>
+                                        <div className='flex items-center gap-2 text-xs font-semibold text-[#060e32]/85 dark:text-slate-200 truncate'>
+                                            <CheckCircle2 className='w-4 h-4 text-amber shrink-0' />
+                                            <span className='truncate'>
+                                                {appItem.appSlug === 'huurdersportaal'
+                                                    ? 'Self-service'
+                                                    : 'Primary operational'}
+                                            </span>
+                                        </div>
+
+                                        {isCurrentApp ? (
+                                            <span className='text-[10px] font-mono font-bold text-amber uppercase tracking-wider bg-amber/10 border border-amber/20 px-2.5 py-1 rounded-md'>
+                                                {isEn ? 'Active' : 'Actief'}
+                                            </span>
+                                        ) : (
+                                            <div className='inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber group-hover:text-[#060e32] dark:group-hover:text-white group-hover:translate-x-0.5 transition-all duration-200 shrink-0'>
+                                                <span>MODULE</span>
+                                                <ArrowRight className='w-3.5 h-3.5' />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── Rich Frontpage-style Pre-Footer Conversion CTA Banner ───── */}
+            <section className='px-6 py-20 bg-background max-w-5xl mx-auto text-center'>
+                <div className='p-10 md:p-16 rounded-3xl border border-white/10 bg-texture-navy text-white space-y-8 relative overflow-hidden shadow-2xl'>
+                    <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-amber/15 blur-3xl pointer-events-none rounded-full' />
+
+                    <div className='space-y-4 max-w-2xl mx-auto relative z-10'>
+                        <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                            {isEn ? 'START AUTOMATING TODAY' : 'START MET AUTOMATISEREN'}
+                        </span>
+                        <h2 className='font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight'>
+                            {content.cta.title || (isEn ? 'Ready to modernize your property software?' : 'Klaar om je vastgoedbeheer te moderniseren?')}
+                        </h2>
+                        <p className='text-sm sm:text-base text-white/80 leading-relaxed font-light'>
+                            {content.cta.desc || (isEn ? 'Experience how Emlinked halves administrative workloads and boosts financial control directly inside Business Central.' : 'Ervaar zelf hoe Emlinked je administratieve lasten halveren en je financiële controle vergroten.')}
+                        </p>
+                    </div>
+
+                    <div className='flex flex-wrap items-center justify-center gap-4 relative z-10 pt-2'>
                         <Link
                             href={`/${locale}/contact`}
-                            className='inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow hover:bg-primary/95 transition-all'
+                            className='px-8 py-4 rounded-xl bg-amber hover:bg-amber-hover text-[#060e32] font-bold text-sm flex items-center gap-2 transition-all shadow-xl hover:scale-105'
                         >
-                            {content.cta.primary}
-                            <ArrowRight className='ml-2 h-4 w-4' />
+                            <span>{content.cta.primary || (isEn ? 'Request a Demo' : 'Gratis demo aanvragen')}</span>
+                            <ArrowRight className='h-4 w-4' />
                         </Link>
                         <Link
-                            href={`/${locale}/${category}`}
-                            className='inline-flex h-11 items-center justify-center rounded-md border border-border px-8 text-sm font-medium text-foreground hover:bg-muted/50 transition-all'
+                            href={`/${locale}/apps`}
+                            className='px-7 py-4 rounded-xl bg-transparent border border-white/20 hover:bg-white/10 text-white font-semibold text-sm flex items-center gap-2 transition-all hover:border-amber/40'
                         >
-                            {content.cta.secondary}
+                            <span>{content.cta.secondary || (isEn ? 'View all 3 apps' : 'Bekijk alle 3 de apps')}</span>
                         </Link>
                     </div>
                 </div>

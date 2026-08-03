@@ -106,8 +106,8 @@ export function AppsArchitectureSection({
                 {/* Section Header matching homepage */}
                 <div className='max-w-3xl mx-auto flex flex-col gap-3 text-center'>
                     <div className='flex justify-center mb-1'>
-                        <span className='inline-flex items-center gap-2 rounded-full border-amber border bg-amber px-6 py-1 text-xs font-bold tracking-wide text-white uppercase'>
-                            <span className='w-1.5 h-1.5 bg-white rounded-full animate-ping mr-2' />
+                        <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                            <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
                             {isEn
                                 ? 'SEAMLESS NATIVE INTEGRATION'
                                 : 'NAADLOZE INTEGRATIE'}

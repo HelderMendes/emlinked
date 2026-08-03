@@ -359,8 +359,8 @@ export default async function HomePage({ params }: HomePageProps) {
                                             {/* Left Column: Text, Bullets, CTA */}
                                             <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
                                                 {sectionTag && (
-                                                    <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-4 py-1 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
-                                                        <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                                    <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/40 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                                                        <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
                                                         {sectionTag}
                                                     </span>
                                                 )}
@@ -431,8 +431,8 @@ export default async function HomePage({ params }: HomePageProps) {
                                     <div className='max-w-3xl mx-auto flex flex-col gap-3 text-center'>
                                         {sectionTag && (
                                             <div className='flex justify-center mb-1'>
-                                                <span className='inline-flex items-center gap-2 rounded-full border-amber border bg-amber px-8 py-1 text-xs font-bold tracking-wide text-white uppercase'>
-                                                    <span className='w-1.5 h-1.5 bg-white rounded-full animate-ping mr-3' />
+                                                <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                                                    <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
                                                     {sectionTag}
                                                 </span>
                                             </div>
@@ -673,8 +673,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                     <div className='max-w-3xl mx-auto flex flex-col gap-4 text-center'>
                                         {sectionTag && (
                                             <div className='flex justify-center mb-1'>
-                                                <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-6 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
-                                                    <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                                <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
                                                     {sectionTag}
                                                 </span>
                                             </div>

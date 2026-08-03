@@ -277,8 +277,8 @@ export default async function AppsPage({ params }: AppsPageProps) {
                             {(featuresBlock.sectionTag ||
                                 featuresBlock.tag) && (
                                 <div className='flex justify-center mb-1'>
-                                    <span className='inline-flex items-center gap-2 rounded-full border-amber/35 border bg-amber/15 px-5 py-1 text-xs font-mono font-bold tracking-wider text-amber uppercase'>
-                                        <Zap className='h-3.5 w-3.5 text-amber' />
+                                    <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                                        <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
                                         {featuresBlock.sectionTag ||
                                             featuresBlock.tag}
                                     </span>
@@ -359,6 +359,13 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                 </div>
                                             </div>
 
+                                            {/* Whole-card overlay link for optimal UX */}
+                                            <Link
+                                                href={getPath(appUrl)}
+                                                className='absolute inset-0 z-20'
+                                                aria-label={feature.title || 'App Module'}
+                                            />
+
                                             <div className='space-y-5'>
                                                 {/* 1. TOP IMAGE PREVIEW CONTAINER WITH TOP-LEFT OVERLAY CATEGORY BADGE */}
                                                 {imagePath && (
@@ -423,14 +430,24 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                 )}
                                             </div>
 
-                                            {/* 4. ACTION BUTTON AT BOTTOM */}
-                                            <Link
-                                                href={getPath(appUrl)}
-                                                className='mt-4 px-5 py-3.5 rounded-xl bg-amber hover:bg-amber-hover text-[#060e32] font-bold text-xs flex items-center justify-between transition-all duration-200 shadow-sm hover:scale-[1.02] group/btn'
-                                            >
-                                                <span>{ctaLabel}</span>
-                                                <ArrowUpRight className='h-4 w-4 text-[#060e32] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform' />
-                                            </Link>
+                                            {/* 4. SINGLE-LINE CARD FOOTER MATCHING FRONTPAGE & IMAGE */}
+                                            <div className='pt-3 border-t border-black/15 dark:border-white/10 flex items-center justify-between gap-4 z-30 mt-auto pointer-events-none'>
+                                                <div className='flex items-center gap-2 text-xs font-semibold text-[#060e32]/85 dark:text-slate-200 truncate'>
+                                                    <CheckCircle2 className='w-4 h-4 text-amber shrink-0' />
+                                                    <span className='truncate'>
+                                                        {index === 0
+                                                            ? 'Primary operational'
+                                                            : index === 1
+                                                              ? 'Self-service'
+                                                              : 'Primary operational'}
+                                                    </span>
+                                                </div>
+
+                                                <div className='inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber group-hover:text-[#060e32] dark:group-hover:text-white group-hover:translate-x-0.5 transition-all duration-200 shrink-0'>
+                                                    <span>MODULE</span>
+                                                    <ArrowRight className='w-3.5 h-3.5' />
+                                                </div>
+                                            </div>
                                         </div>
                                     );
                                 })}
@@ -450,7 +467,8 @@ export default async function AppsPage({ params }: AppsPageProps) {
                             <div className='space-y-3 max-w-3xl text-left'>
                                 {(testimonialBlock.sectionTag ||
                                     testimonialBlock.tag) && (
-                                    <span className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber/15 border border-amber/35 text-amber text-xs font-mono font-bold uppercase tracking-wider'>
+                                    <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                                        <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
                                         {testimonialBlock.sectionTag ||
                                             testimonialBlock.tag}
                                     </span>
@@ -512,7 +530,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
 
                         <div className='space-y-4 max-w-2xl mx-auto relative z-10'>
                             {ctaBlock.tag && (
-                                <span className='inline-block px-3.5 py-1 rounded-full bg-amber/15 border border-amber/35 text-amber text-xs font-mono font-bold uppercase tracking-wider'>
+                                <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
                                     {ctaBlock.tag}
                                 </span>
                             )}
