@@ -652,15 +652,16 @@ export function VastgoedbeheerSoftwareModule({
                                     <p className='text-[#060e32]/80 leading-relaxed text-base font-light'>
                                         {doc?.features?.[0]?.text || (
                                             <>
-                                                Vergeet handmatige berekeningen op de
-                                                eerste van de maand. Onze{' '}
+                                                Vergeet handmatige berekeningen
+                                                op de eerste van de maand. Onze{' '}
                                                 <strong className='text-[#060e32] font-semibold'>
                                                     software voor vastgoedbeheer
                                                 </strong>{' '}
-                                                haalt automatisch de nieuwste CBS
-                                                CPI-indexcijfers op, berekent de nieuwe
-                                                huursommen en past deze direct toe op al
-                                                je lopende huurovereenkomsten.
+                                                haalt automatisch de nieuwste
+                                                CBS CPI-indexcijfers op,
+                                                berekent de nieuwe huursommen en
+                                                past deze direct toe op al je
+                                                lopende huurovereenkomsten.
                                             </>
                                         )}
                                     </p>
@@ -722,13 +723,15 @@ export function VastgoedbeheerSoftwareModule({
                                     <p className='text-[#060e32]/80 leading-relaxed text-base font-light'>
                                         {doc?.features?.[1]?.text || (
                                             <>
-                                                Speciaal ingericht voor de uitdagingen
-                                                van retailketens en commercieel
-                                                vastgoed. Beheer wisselende
-                                                winkelindelingen, verschillende
-                                                metrage-types, omzethuurafspraken en
-                                                locatiespecifieke onderhoudscontracten
-                                                centraal in één dashboard.
+                                                Speciaal ingericht voor de
+                                                uitdagingen van retailketens en
+                                                commercieel vastgoed. Beheer
+                                                wisselende winkelindelingen,
+                                                verschillende metrage-types,
+                                                omzethuurafspraken en
+                                                locatiespecifieke
+                                                onderhoudscontracten centraal in
+                                                één dashboard.
                                             </>
                                         )}
                                     </p>
@@ -792,11 +795,12 @@ export function VastgoedbeheerSoftwareModule({
                                         {doc?.features?.[2]?.text || (
                                             <>
                                                 Bepaal, voorschot en verreken
-                                                servicekosten transparant voor je
-                                                huurders of woningcorporatie. Alle
-                                                voorschotten en werkelijke gemaakte
-                                                kosten worden direct gematcht met
-                                                inkoopfacturen via Document Capture.
+                                                servicekosten transparant voor
+                                                je huurders of woningcorporatie.
+                                                Alle voorschotten en werkelijke
+                                                gemaakte kosten worden direct
+                                                gematcht met inkoopfacturen via
+                                                Document Capture.
                                             </>
                                         )}
                                     </p>
@@ -987,7 +991,7 @@ export function VastgoedbeheerSoftwareModule({
                             {/* Right Column: Exact Homepage Illustration Image */}
                             <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                 <Image
-                                    src='/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
+                                    src='/emlinked/apps/vastgoedbeheer-software/DrieKrachtigeApps_VastgoedbeheerSoftware01.png'
                                     alt={
                                         doc?.cta?.title ||
                                         'Klaar om je vastgoedbeheer software te moderniseren?'
