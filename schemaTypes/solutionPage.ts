@@ -321,32 +321,7 @@ export const solutionPage = defineType({
         defineField({
             name: 'seo',
             title: 'SEO Settings',
-            type: 'object',
-            fields: [
-                defineField({
-                    name: 'title',
-                    title: 'SEO Title',
-                    type: 'string',
-                    description: 'Max 60 characters',
-                    validation: (Rule) =>
-                        Rule.max(60).warning('Keep under 60 characters'),
-                }),
-                defineField({
-                    name: 'description',
-                    title: 'SEO Description',
-                    type: 'text',
-                    rows: 2,
-                    description: 'Max 160 characters',
-                    validation: (Rule) =>
-                        Rule.max(160).warning('Keep under 160 characters'),
-                }),
-                defineField({
-                    name: 'keywords',
-                    title: 'Keywords',
-                    type: 'string',
-                    description: 'Comma-separated keywords',
-                }),
-            ],
+            type: 'seoFields',
         }),
     ],
 

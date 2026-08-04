@@ -25,6 +25,8 @@ import { SolutionSimulators } from '@/components/SolutionSimulators';
 import { sanityFetch } from '@/lib/sanity';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { HeroSection } from '@/components/blocks/HeroSection';
+import { buildMetadata } from '@/lib/seo';
+import { VastgoedbeheerSoftwareModule } from '@/components/blocks/VastgoedbeheerSoftwareModule';
 
 const IconMap: Record<string, React.ElementType> = {
     Building2,
@@ -67,17 +69,24 @@ async function getSolutionContent(locale: string, slug: string): Promise<any> {
         if (doc) {
             return {
                 meta: {
-                    title: doc.seo?.title || doc.title,
-                    description: doc.seo?.description || '',
-                    keywords: doc.seo?.keywords || '',
+                    seoTitle: doc.seo?.seoTitle || doc.seo?.title || doc.title,
+                    seoDescription:
+                        doc.seo?.seoDescription ||
+                        doc.seo?.description ||
+                        doc.tagline ||
+                        '',
+                    canonical: doc.seo?.canonical,
+                    ogImage: doc.seo?.ogImage,
+                    noIndex: doc.seo?.noIndex,
                 },
                 badge: doc.badge,
-                heroIcon: IconMap[doc.heroIcon] || Building2,
+                heroIcon: typeof doc.heroIcon === 'string' ? doc.heroIcon : 'Building2',
                 title: doc.title,
                 tagline: doc.tagline,
                 desc: doc.description,
                 benefits: doc.benefits || [],
                 features: (doc.features || []).map((f: any) => ({
+                    iconName: typeof f.icon === 'string' ? f.icon : 'Zap',
                     icon: IconMap[f.icon] || FileText,
                     title: f.title,
                     text: f.text,
@@ -85,22 +94,23 @@ async function getSolutionContent(locale: string, slug: string): Promise<any> {
                 proof: doc.proof || [],
                 workflow: (doc.workflow || []).map((w: any) => ({
                     step: w.step,
+                    iconName: typeof w.icon === 'string' ? w.icon : 'CheckCircle2',
                     icon: IconMap[w.icon] || CheckCircle2,
                     title: w.title,
                     desc: w.desc,
                 })),
                 faq: doc.faq || [],
                 relatedModules: (doc.relatedModules || []).map((m: any) => {
-                    // map slug to standard icon
-                    let modIcon = Link2;
-                    if (m.slug === 'huurdersportaal') modIcon = Users;
+                    let modIconName = 'Link2';
+                    if (m.slug === 'huurdersportaal') modIconName = 'Users';
                     if (m.slug === 'payment' || m.slug === 'payment-software')
-                        modIcon = CreditCard;
+                        modIconName = 'CreditCard';
                     if (m.slug === 'vastgoedbeheer-software')
-                        modIcon = Building2;
+                        modIconName = 'Building2';
                     return {
                         slug: m.slug,
-                        icon: modIcon,
+                        iconName: modIconName,
+                        icon: IconMap[modIconName] || Link2,
                         title: m.title,
                         desc: m.desc,
                     };
@@ -142,14 +152,22 @@ export async function generateMetadata({
 
     if (!content) return {};
 
-    return {
-        title: `${content.meta.title} | Emlinked`,
-        description: content.meta.description,
-        keywords: content.meta.keywords,
-        alternates: {
-            canonical: locale === 'nl' ? `/apps/${slug}` : `/en/apps/${slug}`,
-        },
-    };
+    const fallbackTitle = content.title
+        ? `${content.title} — Emlinked`
+        : 'Emlinked Vastgoedbeheer Software';
+    const fallbackDesc =
+        content.desc ||
+        content.tagline ||
+        'Professionele vastgoedbeheer software native in Microsoft Business Central.';
+    const canonicalUrl = `https://emlinked.nl${locale === 'en' ? `/en/apps/${slug}` : `/apps/${slug}`}`;
+
+    return buildMetadata({
+        seo: content.meta,
+        fallbackTitle,
+        fallbackDescription: fallbackDesc,
+        canonicalUrl,
+        locale,
+    });
 }
 
 const solutionsContent = {
@@ -602,6 +620,15 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
     }
 
     const isEn = locale === 'en';
+
+    if (slug === 'vastgoedbeheer-software') {
+        const safeDoc = JSON.parse(
+            JSON.stringify(content, (key, value) =>
+                typeof value === 'function' ? undefined : value,
+            ),
+        );
+        return <VastgoedbeheerSoftwareModule doc={safeDoc} locale={locale} />;
+    }
 
     return (
         <div className='flex flex-col min-h-screen'>

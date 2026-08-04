@@ -10,6 +10,8 @@ import { HeroSection } from '@/components/blocks/HeroSection';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
 import { TestimonialSlider } from '@/components/TestimonialSlider';
 
+import { buildMetadata } from '@/lib/seo';
+
 interface AppsPageProps {
     params: Promise<{ locale: string }>;
 }
@@ -32,6 +34,7 @@ async function getSanityPageData(locale: string) {
                     seoTitle,
                     seoDescription,
                     canonical,
+                    ogImage { asset-> { url } },
                     noIndex
                 }
             }`,
@@ -49,44 +52,22 @@ export async function generateMetadata({
     const { locale } = await params;
     const isEn = locale === 'en';
     const pageData = await getSanityPageData(locale);
-    const seo = pageData?.seo;
 
-    const title = seo?.seoTitle;
-    const description = seo?.seoDescription;
-    const canonical =
-        seo?.canonical || `https://emlinked.nl${isEn ? '/en/apps' : '/apps'}`;
-    const robots = seo?.noIndex ? 'noindex, nofollow' : 'index, follow';
+    const fallbackTitle = isEn
+        ? 'Emlinked Modular Property Software Suite'
+        : 'Emlinked Modulaire Vastgoed Software Suite';
+    const fallbackDesc = isEn
+        ? 'Explore the modular ERP software suite for Microsoft Dynamics 365 Business Central.'
+        : 'Ontdek de modulaire ERP software suite voor Microsoft Dynamics 365 Business Central.';
+    const canonicalUrl = `https://emlinked.nl${isEn ? '/en/apps' : '/apps'}`;
 
-    return {
-        title,
-        description,
-        robots,
-        alternates: {
-            canonical,
-        },
-        openGraph: {
-            title,
-            description,
-            url: canonical,
-            siteName: 'Emlinked',
-            images: [
-                {
-                    url: '/assets/og/emlinked-apps-suite.jpg',
-                    width: 1200,
-                    height: 630,
-                    alt: 'Emlinked Modular Property Software Suite',
-                },
-            ],
-            locale: isEn ? 'en_US' : 'nl_NL',
-            type: 'website',
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title,
-            description,
-            images: ['/assets/og/emlinked-apps-suite.jpg'],
-        },
-    };
+    return buildMetadata({
+        seo: pageData?.seo,
+        fallbackTitle,
+        fallbackDescription: fallbackDesc,
+        canonicalUrl,
+        locale,
+    });
 }
 
 export default async function AppsPage({ params }: AppsPageProps) {
