@@ -352,7 +352,7 @@ export default async function HomePage({ params }: HomePageProps) {
                             return (
                                 <section
                                     key={block._key}
-                                    className='px-6 py-24 bg-background border-b border-border relative overflow-hidden'
+                                    className='px-6 py-24 bg-background border-b border-slate-300 relative overflow-hidden'
                                 >
                                     <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10'>
                                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
@@ -606,13 +606,16 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                             </div>
                                                                         </div>
                                                                     )}
-                                                                                                                        <div className='flex items-center gap-3 mt-1'>
-                                                                    <h3 className='text-xl font-bold text-amber tracking-tight group-hover:text-foreground transition-colors'>
+                                                                </div>
+
+                                                                {/* App Card Title (Placed AFTER the Image Container) */}
+                                                                <div className='flex items-center gap-3 mt-1'>
+                                                                    <h3 className='text-xl font-bold text-[#060e32] dark:text-white group-hover:text-amber transition-colors'>
                                                                         {
                                                                             feature.title
                                                                         }
                                                                     </h3>
-                                                                </div>           </div>
+                                                                </div>
 
                                                                 <p className='text-sm text-muted-foreground leading-relaxed font-light'>
                                                                     {

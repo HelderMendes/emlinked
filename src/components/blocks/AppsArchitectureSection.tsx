@@ -64,7 +64,7 @@ export function AppsArchitectureSection({
     const activeSectionSubtitle = sectionSubtitle || (isEn ? 'Manage all your real estate operations natively inside Business Central with zero latency or shadow file risks.' : 'Beheer al je vastgoedprocessen native in Microsoft Dynamics 365 Business Central zonder vertraging of risico van schaduwbestanden.');
 
     return (
-        <section className='relative px-6 py-20 text-white border-b border-white/10 overflow-hidden min-h-screen bg-[#02030A] bg-[radial-gradient(circle_at_18%_-5%,rgba(79,70,229,.18),transparent_24%),radial-gradient(circle_at_22%_60%,rgba(79,70,229,.12),transparent_20%),radial-gradient(circle_at_74%_40%,rgba(79,70,229,.16),transparent_18%),radial-gradient(circle_at_72%_105%,rgba(79,70,229,.14),transparent_20%),linear-gradient(to_right,transparent_49.95%,rgba(255,255,255,.03)_50%,transparent_50.05%)]'>
+        <section className='relative px-6 py-20 mb-8 text-white border-b border-white/10 overflow-hidden bg-[#02030A] bg-[radial-gradient(circle_at_18%_-5%,rgba(79,70,229,.18),transparent_24%),radial-gradient(circle_at_22%_60%,rgba(79,70,229,.12),transparent_20%),radial-gradient(circle_at_74%_40%,rgba(79,70,229,.16),transparent_18%),radial-gradient(circle_at_72%_105%,rgba(79,70,229,.14),transparent_20%),linear-gradient(to_right,transparent_49.95%,rgba(255,255,255,.03)_50%,transparent_50.05%)]'>
             {/* Custom Section Background Image - 100% Full Cover */}
             <Image
                 src={bgImagePath}
@@ -81,7 +81,7 @@ export function AppsArchitectureSection({
             <div className='absolute top-0 right-1/4 w-200 h-200 bg-slate-900 blur-3xl pointer-events-none rounded-full opacity-90' />
             <div className='absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-black blur-3xl pointer-events-none rounded-full opacity-40' />
 
-            <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16 relative z-10'>
+            <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative z-10'>
                 {/* ── 1. TOP PART: CENTERED HEADER & SMALLER TOP PNG DIAGRAM ── */}
                 <div className='max-w-4xl mx-auto flex flex-col items-center text-center space-y-6'>
                     <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>

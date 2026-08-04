@@ -341,7 +341,7 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
                     return (
                         <section
                             key={blockKey}
-                            className='px-6 py-24 bg-background border-b border-border relative overflow-hidden'
+                            className='px-6 py-24 bg-background border-b border-slate-300 relative overflow-hidden'
                         >
                             <div className='absolute inset-0 pointer-events-none'>
                                 <div className='absolute bottom-0 left-1/4 w-[350px] h-[350px] bg-primary/5 rounded-full blur-3xl' />

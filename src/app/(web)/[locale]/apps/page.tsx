@@ -9,6 +9,7 @@ import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
 import { TestimonialSlider } from '@/components/TestimonialSlider';
+import { GlowingLink } from '@/components/ui/GlowingButton';
 
 import { buildMetadata } from '@/lib/seo';
 
@@ -313,9 +314,9 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                             key={feature._key || index}
                                             className='relative p-6 rounded-2xl border border-black/20 bg-white dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:border-amber/50 space-y-5 flex flex-col justify-between transition-all duration-300 group'
                                         >
-                                            {/* Floating PNG Icon Badge on top-right corner */}
-                                            <div className='absolute -top-5 -right-5 sm:-top-7 sm:-right-6 z-30 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-300 border-2 border-amber dark:border-slate-900 shadow-xl flex items-center justify-center p-2.5 group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
-                                                <div className='relative w-6 h-6 sm:w-7 sm:h-7'>
+                                            {/* Floating PNG Icon Badge on top-right corner (Enlarged) */}
+                                            <div className='absolute -top-6 -right-6 sm:-top-7 sm:-right-7 z-30 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200/95 dark:bg-slate-800 border-2 sm:border-3 border-amber shadow-2xl flex items-center justify-center p-2 group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
+                                                <div className='relative w-10 h-10 sm:w-13 sm:h-13'>
                                                     <Image
                                                         src={cardIcon}
                                                         alt={
@@ -434,33 +435,31 @@ export default async function AppsPage({ params }: AppsPageProps) {
             {/* SECTION 4: TRUST & SCALE REVIEWS SLIDER */}
             <TestimonialSlider locale={locale} />
 
-            {/* SECTION 5: FINAL PRE-FOOTER CONVERSION CTA */}
+            {/* SECTION 5: FINAL PRE-FOOTER CONVERSION CTA (Exact Homepage Layout Parity) */}
             {ctaBlock && (
-                <section className='px-6 py-24 bg-background relative overflow-hidden'>
-                    <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+                <section className='py-20 px-6 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative overflow-hidden z-10'>
+                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
                         <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                             <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
-                                {/* Left Column: Copy & Actions */}
+                                {/* Left Column: Copy & Action Triggers */}
                                 <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
-                                    {ctaBlock.tag && (
-                                        <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
-                                            <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
-                                            {ctaBlock.tag}
-                                        </span>
-                                    )}
+                                    <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
+                                        <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                        {ctaBlock.tag || 'START MET AUTOMATISEREN'}
+                                    </span>
                                     <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
                                         {ctaBlock.title ||
-                                            'Klaar om uw vastgoedbeheer te digitaliseren?'}
+                                            'Klaar om je vastgoedbeheer te digitaliseren?'}
                                     </h2>
                                     <p className='text-white/80 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
                                         {ctaBlock.subtitle ||
                                             'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd en kiezen voor 100% realtime controle binnen Business Central.'}
                                     </p>
 
-                                    {/* Primary & Secondary Buttons */}
+                                    {/* Primary & Secondary Action Buttons */}
                                     <div className='flex flex-col sm:flex-row gap-4 pt-2'>
                                         {ctaBlock.buttonLabel && (
-                                            <Link
+                                            <GlowingLink
                                                 href={getPath(
                                                     ctaBlock.buttonLink ||
                                                         '/contact',
@@ -471,7 +470,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                     {ctaBlock.buttonLabel}
                                                 </span>
                                                 <ArrowRight className='h-5 w-5 ml-2' />
-                                            </Link>
+                                            </GlowingLink>
                                         )}
 
                                         {ctaBlock.secondaryButtonLabel && (
@@ -490,7 +489,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                     </div>
                                 </div>
 
-                                {/* Right Column: Visual Image */}
+                                {/* Right Column: Preserved Apps Image Asset */}
                                 <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                     <Image
                                         src='/emlinked/apps/bewezen_resultaat.jpg'

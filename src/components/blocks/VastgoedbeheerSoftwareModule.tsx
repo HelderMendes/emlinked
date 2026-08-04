@@ -5,21 +5,46 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
     Zap,
-    FileText,
     BarChart3,
-    CheckCircle2,
-    XCircle,
     ArrowRight,
     Building2,
-    ShieldCheck,
-    Database,
-    Sparkles,
     Check,
-    Cpu,
-    ArrowUpRight,
+    CheckCircle2,
+    XCircle,
 } from 'lucide-react';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
+import { formatHeroTitle } from '@/components/blocks/HeroSection';
+import { BorderBeam } from 'border-beam';
+
+function CardBadge({
+    imageSrc,
+    alt,
+    isLegacy = false,
+}: {
+    imageSrc: string;
+    alt: string;
+    isLegacy?: boolean;
+}) {
+    return (
+        <div
+            className={`absolute -top-6 -right-6 sm:-top-7 sm:-right-7 z-30 w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 sm:border-3 ${
+                isLegacy
+                    ? 'border-slate-300 bg-slate-200/95 shadow-xl'
+                    : 'border-amber bg-slate-200/95 shadow-xl'
+            } flex items-center justify-center p-2 group-hover:scale-110 transition-transform duration-300 pointer-events-none`}
+        >
+            <div className='relative w-10 h-10 sm:w-13 sm:h-13 rounded-full overflow-hidden'>
+                <Image
+                    src={imageSrc}
+                    alt={alt}
+                    fill
+                    className='object-cover object-center scale-105'
+                />
+            </div>
+        </div>
+    );
+}
 
 interface VastgoedbeheerSoftwareModuleProps {
     doc?: any;
@@ -44,9 +69,9 @@ export function VastgoedbeheerSoftwareModule({
                       '@type': 'WebPage',
                       '@id': 'https://emlinked.nl/vastgoedbeheer-software#webpage',
                       url: 'https://emlinked.nl/vastgoedbeheer-software',
-                      name: 'Vastgoedbeheer Software — Automatiseer uw Portefeuillebeheer | Emlinked',
+                      name: 'Vastgoedbeheer Software — Automatiseer je Portefeuillebeheer | Emlinked',
                       description:
-                          'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Business Central.',
+                          'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Microsoft Dynamics 365 Business Central.',
                       inLanguage: 'nl-NL',
                       isPartOf: {
                           '@type': 'WebSite',
@@ -94,6 +119,28 @@ export function VastgoedbeheerSoftwareModule({
                           url: 'https://emlinked.nl',
                       },
                   },
+                  {
+                      '@type': 'FAQPage',
+                      '@id': 'https://emlinked.nl/vastgoedbeheer-software#faq',
+                      mainEntity: [
+                          {
+                              '@type': 'Question',
+                              name: 'Hoe werkt de koppeling met Microsoft Dynamics 365 Business Central?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: "Emlinked draait 100% native binnen Business Central. Dat betekent dat er geen losse API-koppeling of schaduwdatabase nodig is. Alle journaalposten, huurincasso's en indexaties ontstaan direct in je ERP-grootboek.",
+                              },
+                          },
+                          {
+                              '@type': 'Question',
+                              name: 'Hoe worden CBS CPI-indexaties geautomatiseerd?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'De software leest automatisch de nieuwste indexcijfers in van het Centraal Bureau voor de Statistiek (CBS), herberekent de huurtermijnen en verstuurt desgewenst automatisch de indexatiebrieven per e-mail en huurdersportaal.',
+                              },
+                          },
+                      ],
+                  },
               ],
           });
 
@@ -102,7 +149,7 @@ export function VastgoedbeheerSoftwareModule({
     >('indexation');
 
     return (
-        <div className='flex flex-col min-h-screen bg-[#060e32] text-white selection:bg-amber/30 selection:text-amber'>
+        <>
             {/* Inject JSON-LD Structured Data for AIO / GEO / Search Engines */}
             {jsonLdData && (
                 <script
@@ -116,9 +163,6 @@ export function VastgoedbeheerSoftwareModule({
                 {/* DataGridCanvas Overlay matching Frontpage & Apps */}
                 <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
 
-                {/* Ambient Radial Glows */}
-                <div className='absolute top-0 right-1/4 w-[600px] h-[600px] bg-amber/10 blur-3xl pointer-events-none rounded-full opacity-70' />
-
                 <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10'>
                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
                         {/* Left Copy */}
@@ -129,49 +173,51 @@ export function VastgoedbeheerSoftwareModule({
                                 {doc?.badge ||
                                     'CORE SAAS MODULE VOOR VASTGOEDMANAGEMENT'}
                             </span>
-
                             {/* H1 Title dynamically bound to Sanity doc.tagline */}
                             <h1 className='font-display font-bold tracking-tight text-white leading-[1.1] text-3xl sm:text-4xl lg:text-[2.75rem] text-balance'>
-                                {doc?.tagline || doc?.title || (
+                                {doc?.tagline || doc?.title ? (
+                                    formatHeroTitle(doc?.tagline || doc?.title)
+                                ) : (
                                     <>
                                         Professionele{' '}
-                                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-amber via-amber-light to-amber font-extrabold'>
+                                        <span className='text-amber bg-linear-to-r from-amber via-amber-light to-amber bg-clip-text  font-extrabold'>
                                             vastgoedbeheer software
                                         </span>{' '}
-                                        voor uw complete portefeuille
+                                        voor je complete portefeuille
                                     </>
                                 )}
                             </h1>
-
                             {/* Subtitle dynamically bound to Sanity doc.description */}
                             <p className='text-lg md:text-xl text-white/70 leading-relaxed font-light max-w-2xl'>
                                 {doc?.description || (
                                     <>
-                                        Schaal uw vastgoedoperatie zonder
+                                        Schaal je vastgoedoperatie zonder
                                         administratieve chaos. Onze{' '}
                                         <strong className='text-white font-medium'>
                                             vastgoedbeheer software
                                         </strong>{' '}
-                                        automatiseert uw huurovereenkomsten, periodieke{' '}
+                                        automatiseert je huurovereenkomsten,
+                                        periodieke{' '}
                                         <strong className='text-amber font-medium'>
                                             CPI-indexaties
                                         </strong>
                                         , wisselende winkelmetrages en
                                         servicekostenafrekeningen native binnen{' '}
                                         <strong className='text-white font-medium'>
-                                            Microsoft Dynamics 365 Business Central
+                                            Microsoft Dynamics 365 Business
+                                            Central
                                         </strong>
-                                        . Speciaal ontwikkeld voor portefeuilles vanaf
-                                        50 verhuureenheden.
+                                        . Speciaal ontwikkeld voor portefeuilles
+                                        vanaf 50 verhuureenheden.
                                     </>
                                 )}
                             </p>
 
                             {/* Primary & Secondary Action Buttons (Equal Height h-14) */}
-                            <div className='flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mt-2'>
+                            <div className='flex flex-col sm:flex-row gap-4 mt-2'>
                                 <GlowingLink
-                                    href='/contact'
-                                    className='h-14 px-8 bg-amber hover:bg-amber-light text-[#060e32] font-extrabold rounded-xl shadow-lg shadow-amber/25 transition-all duration-200 hover:scale-[1.02] flex items-center justify-center text-center'
+                                    href='#demo'
+                                    className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32] transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
                                 >
                                     <span className='flex items-center justify-center gap-2'>
                                         <span>Gratis live demo aanvragen</span>
@@ -181,36 +227,20 @@ export function VastgoedbeheerSoftwareModule({
 
                                 <Link
                                     href='/box3-check'
-                                    className='h-14 px-6 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold transition-all duration-200 backdrop-blur-md flex items-center justify-center gap-2 group text-center'
+                                    className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
                                 >
-                                    <span>Bereken uw Box 3-impact ⚡</span>
-                                    <ArrowRight className='w-4 h-4 text-white/70 group-hover:translate-x-1 transition-transform' />
-                                </Link>
-                            </div>
-
-                            {/* Trust Signals (Single Full-Width Line) */}
-                            <div className='pt-6 border-t border-white/10 flex items-center justify-between gap-2 text-xs sm:text-sm text-white/75 font-mono w-full whitespace-nowrap overflow-x-auto'>
-                                <div className='flex items-center gap-2 shrink-0'>
-                                    <CheckCircle2 className='w-4 h-4 text-emerald-400 shrink-0' />
-                                    <span>
-                                        Portefeuilles &gt; 50 verhuureenheden
+                                    Bereken je Box 3-impact
+                                    <span className='ml-2 w-5 h-5 text-white/70 group-hover:translate-x-1 transition-transform'>
+                                        ⚡
                                     </span>
-                                </div>
-                                <div className='flex items-center gap-2 shrink-0'>
-                                    <CheckCircle2 className='w-4 h-4 text-emerald-400 shrink-0' />
-                                    <span>100% Business Central Native</span>
-                                </div>
-                                <div className='flex items-center gap-2 shrink-0'>
-                                    <CheckCircle2 className='w-4 h-4 text-emerald-400 shrink-0' />
-                                    <span>Geen schaduwbestanden</span>
-                                </div>
+                                </Link>
                             </div>
                         </div>
 
                         {/* Right Column: High-Tech Graphic Card (Higher & No Outer Padding/Inner Image Border) */}
                         <div className='lg:col-span-5 relative flex items-center h-full'>
                             <div className='relative w-full rounded-2xl bg-slate-950/90 backdrop-blur-xl shadow-2xl group overflow-hidden border border-white/15'>
-                                <div className='absolute -inset-1 bg-gradient-to-r from-amber/30 via-indigo-500/20 to-amber/30 blur-xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none' />
+                                <div className='absolute -inset-1 bg-linear-to-r from-amber/30 via-indigo-500/20 to-amber/30 blur-xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none' />
 
                                 {/* Mockup Top Navigation */}
                                 <div className='relative z-10 flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-slate-950/90 text-xs text-white/70 font-mono'>
@@ -229,12 +259,12 @@ export function VastgoedbeheerSoftwareModule({
                                 </div>
 
                                 {/* Showcase Image (Flush Edge-to-Edge, Borderless & Higher Aspect Ratio) */}
-                                <div className='relative aspect-16/11 w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
+                                <div className='relative aspect-square w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
                                     <Image
                                         src='/emlinked/apps/vastgoedbeheer-software/apps_vastgoedbeheer-hero.jpg'
                                         alt='Emlinked Core Vastgoedbeheer Dashboard Mockup'
-                                        width={1400}
-                                        height={950}
+                                        width={1200}
+                                        height={1500}
                                         className='w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500'
                                         priority
                                     />
@@ -273,6 +303,24 @@ export function VastgoedbeheerSoftwareModule({
                 </div>
             </section>
 
+            {/* Trust Signals (Single Full-Width Line) */}
+            <section className='bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] animate-none dark:text-[#060e32] dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-2 px-6 md:px-10 shadow-sm'>
+                <div className='max-w-8xl mx-auto flex items-center justify-center gap-9 flex-wrap'>
+                    <div className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-amber dark:hover:text-amber transition-colors tracking-wide'>
+                        <CheckCircle2 className='w-4 h-4 shrink-0' />
+                        <span>Portefeuilles &gt; 50 verhuureenheden</span>
+                    </div>
+                    <div className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-amber dark:hover:text-amber transition-colors tracking-wide'>
+                        <CheckCircle2 className='w-4 h-4 shrink-0' />
+                        <span>100% Business Central Native</span>
+                    </div>
+                    <div className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-amber dark:hover:text-amber transition-colors tracking-wide'>
+                        <CheckCircle2 className='w-4 h-4 shrink-0' />
+                        <span>Geen schaduwbestanden</span>
+                    </div>
+                </div>
+            </section>
+
             {/* ── BLOCK 2: OPERATIONAL BOTTLENECKS (Light Warm Cream Background matching Frontpage & Apps) ── */}
             <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-16'>
@@ -295,22 +343,24 @@ export function VastgoedbeheerSoftwareModule({
                             aan het handmatig synchroniseren van
                             vastgoedgegevens met hun financiële administratie.
                             Emlinked sluit het gat tussen de dagelijkse operatie
-                            en uw grootboek.
+                            en je grootboek.
                         </p>
                     </div>
-
                     {/* Side-by-Side Comparison Matrix */}
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch'>
                         {/* Left Card: Legacy Pain */}
-                        <div className='rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
+                        <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
+                            <CardBadge
+                                imageSrc='/emlinked/apps/vastgoedbeheer-software/traditionele_vastgoedsoftware.jpg'
+                                alt='Traditionele Vastgoedsoftware'
+                                isLegacy={true}
+                            />
+
                             <div className='space-y-6'>
-                                <div className='flex items-center justify-between border-b border-black/10 pb-4'>
+                                <div className='border-b border-black/10 pb-4 pr-16'>
                                     <h3 className='text-lg font-bold text-amber'>
                                         TRADITIONELE VASTGOEDSOFTWARE
                                     </h3>
-                                    <span className='text-xs font-mono px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 font-bold border border-black/10'>
-                                        Verouderd
-                                    </span>
                                 </div>
 
                                 <ul className='space-y-4 text-sm text-[#060e32]/80'>
@@ -378,15 +428,18 @@ export function VastgoedbeheerSoftwareModule({
                         </div>
 
                         {/* Right Card: Emlinked Solution */}
-                        <div className='rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between relative'>
+                        <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
+                            <CardBadge
+                                imageSrc='/emlinked/apps/vastgoedbeheer-software/native_vastgoedsoftware.jpg'
+                                alt='Emlinked Native Vastgoedsoftware'
+                                isLegacy={false}
+                            />
+
                             <div className='space-y-6'>
-                                <div className='flex items-center justify-between border-b border-black/10 pb-4'>
+                                <div className='border-b border-black/10 pb-4 pr-16'>
                                     <h3 className='text-lg font-bold text-amber'>
                                         EMLINKED NATIVE DYNAMICS MODULE
                                     </h3>
-                                    <span className='text-xs font-mono px-3 py-1 rounded-full bg-amber/10 text-amber-900 font-bold border border-amber/30'>
-                                        100% Geautomatiseerd
-                                    </span>
                                 </div>
 
                                 <ul className='space-y-4 text-sm text-[#060e32]'>
@@ -400,7 +453,7 @@ export function VastgoedbeheerSoftwareModule({
                                             <span className='text-slate-600 text-xs leading-relaxed block'>
                                                 CBS-data wordt automatisch
                                                 ingelezen en rechtstreeks
-                                                toegepast op uw
+                                                toegepast op je
                                                 huurovereenkomsten.
                                             </span>
                                         </div>
@@ -438,7 +491,7 @@ export function VastgoedbeheerSoftwareModule({
                                         <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
                                         <div className='space-y-0.5'>
                                             <strong className='text-[#060e32] block font-semibold text-sm'>
-                                                Realtime inzicht in uw totale
+                                                Realtime inzicht in je totale
                                                 portefeuille
                                             </strong>
                                             <span className='text-slate-600 text-xs leading-relaxed block'>
@@ -452,42 +505,98 @@ export function VastgoedbeheerSoftwareModule({
                             </div>
                         </div>
                     </div>
-
-                    {/* Split-Screen Visual Showcase */}
-                    <div className='rounded-2xl border border-slate-200 bg-white p-4 shadow-xl overflow-hidden'>
-                        <div className='text-xs font-mono text-slate-500 mb-3 px-2 flex items-center justify-between'>
-                            <span>
-                                ARCHITECTUUR VISUALISATIE: TRADITIONEEL VS
-                                NATIVE ERP
-                            </span>
-                            <span className='text-amber font-bold'>
-                                Nieuwe Standaard
-                            </span>
-                        </div>
-                        <Image
-                            src='https://placehold.co/1000x600/0f172a/f59e0b?text=Split-Screen+Comparison:+Legacy+Excel+vs+Emlinked+Native+ERP'
-                            alt='Split-screen vergelijking tussen handmatige vastgoedadministratie en Emlinked native ERP'
-                            width={1000}
-                            height={600}
-                            className='w-full h-auto object-cover rounded-xl border border-slate-100'
-                        />
-                    </div>
                 </div>
             </section>
 
-            {/* ── BLOCK 3: KEY MODULE FEATURES (FOR RETAIL & COOPERATIVES) (Dark Navy Background) ── */}
-            <section className='py-20 px-6 bg-[#060e32] text-white border-b border-white/10 relative overflow-hidden'>
-                <div className='max-w-7xl mx-auto space-y-16 relative z-10'>
+            {/* Split-Screen Visual Showcase */}
+            <section className='relative px-6 py-20 mb-8 text-white border-b border-white/10 overflow-hidden bg-[#02030A] bg-[radial-gradient(circle_at_18%_-5%,rgba(79,70,229,.18),transparent_24%),radial-gradient(circle_at_22%_60%,rgba(79,70,229,.12),transparent_20%),radial-gradient(circle_at_74%_40%,rgba(79,70,229,.16),transparent_18%),radial-gradient(circle_at_72%_105%,rgba(79,70,229,.14),transparent_20%),linear-gradient(to_right,transparent_49.95%,rgba(255,255,255,.03)_50%,transparent_50.05%)]'>
+                {/* Custom Section Background Image - 100% Full Cover */}
+                <Image
+                    src='/emlinked/apps/bg_naadloze_integratie_section.jpg'
+                    alt='background image for this section'
+                    fill
+                    priority
+                    sizes='100vw'
+                    className='object-cover object-center opacity-35 pointer-events-none'
+                />
+                <div className='absolute inset-0 bg-slate-900 pointer-events-none opacity-40' />
+                <div className='absolute inset-0 bg-linear-to-b from-[#060e32]/8 via-[#060e32]/70 to-[#060e32]/90 pointer-events-none' />
+
+                {/* Ambient Background Radial Glows */}
+                <div className='absolute top-0 right-1/4 w-200 h-200 bg-slate-900 blur-3xl pointer-events-none rounded-full opacity-90' />
+                <div className='absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-black blur-3xl pointer-events-none rounded-full opacity-40' />
+
+                <div className='mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-8 relative z-10'>
+                    {/* ── 1. TOP PART: CENTERED HEADER & SMALLER TOP PNG DIAGRAM ── */}
+                    <div className='max-w-4xl mx-auto flex flex-col items-center text-center space-y-6'>
+                        <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                            ERP ARCHITECTUUR VERGELIJKING
+                        </span>
+
+                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-white'>
+                            100% Realtime controle & automatische{' '}
+                            <span className='text-amber'>
+                                aflettering in Business Central
+                            </span>
+                        </h2>
+
+                        <p className='text-white/80 leading-relaxed text-base md:text-lg font-light max-w-3xl'>
+                            Elimineer ingewikkelde API-koppelingen en
+                            risicovolle schaduwbestanden. Emlinked draait{' '}
+                            <strong className='text-white font-medium'>
+                                100% native in Microsoft Dynamics 365 Business
+                                Central
+                            </strong>
+                            , waardoor al je vastgoedmutaties, huurincasso's en
+                            afletteringen direct in je ERP-grootboek worden
+                            verwerkt zonder vertraging.
+                        </p>
+                    </div>
+                    <BorderBeam
+                        size='md'
+                        colorVariant='orange'
+                        strength={1.2}
+                        className='w-full max-w-4xl mx-auto'
+                    >
+                        <div className='relative w-full rounded-2xl overflow-hidden border border-amber/30 shadow-2xl group bg-slate-950'>
+                            <Image
+                                src='/emlinked/apps/vastgoedbeheer-software/Traditioneel-vs-native_ERP.jpg'
+                                alt='Architectuur vergelijking: Traditionele vastgoedsoftware met API-koppelingen vs Emlinked Native ERP in Business Central'
+                                width={1200}
+                                height={675}
+                                className='w-full h-auto object-cover rounded-2xl group-hover:scale-[1.01] transition-transform duration-500'
+                            />
+                            {/* 2-Column Grid Overlay: Mathematically Centered over Left & Right Image Halves */}
+                            <div className='absolute top-2 inset-x-0 z-10 grid grid-cols-2 px-6 pointer-events-none 5'>
+                                <div className='flex justify-center'>
+                                    <span className='px-6 py-1 rounded-lg bg-slate-950/90 backdrop-blur-md text-white text-xs font-mono font-bold border border-white/60 shadow-xl uppercase tracking-wider pointer-events-auto  '>
+                                        Traditioneel
+                                    </span>
+                                </div>
+                                <div className='flex justify-center'>
+                                    <span className='px-6 py-1 rounded-lg bg-amber backdrop-blur-md text-white text-xs font-mono font-bold border border-white/60 shadow-xl uppercase tracking-wider pointer-events-auto'>
+                                        Native ERP
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </BorderBeam>
+                </div>
+            </section>
+
+            {/* ── BLOCK 3: KEY MODULE FEATURES (Light Mode Canvas matching Frontpage & Apps) ── */}
+            <section className='py-20 px-6 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative overflow-hidden'>
+                <div className='max-w-7xl mx-auto space-y-8 relative z-10'>
                     {/* Header */}
                     <div className='text-center max-w-3xl mx-auto space-y-4 flex flex-col items-center'>
-                        <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                        <span className='inline-flex items-center justify-center rounded-full border border-amber/40 bg-amber/15 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-xs'>
                             FUNCTIONALITEITEN
                         </span>
-                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-white'>
+                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-[#060e32]'>
                             Krachtige functionaliteiten voor modern{' '}
                             <span className='text-amber'>vastgoedbeheer</span>
                         </h2>
-                        <p className='text-white/70 text-base md:text-lg font-light'>
+                        <p className='text-[#060e32]/75 text-base md:text-lg font-light'>
                             Ontwikkeld om ingewikkelde contractvormen,
                             retailketen-metrages en corporatie-afrekeningen
                             moeiteloos te stroomlijnen.
@@ -495,13 +604,13 @@ export function VastgoedbeheerSoftwareModule({
                     </div>
 
                     {/* Feature Tabs */}
-                    <div className='flex justify-center border-b border-white/10 gap-2 sm:gap-4 overflow-x-auto pb-px'>
+                    <div className='flex justify-center border-b border-black/10 gap-2 sm:gap-4 overflow-x-auto pb-px'>
                         <button
                             onClick={() => setActiveTab('indexation')}
                             className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
                                 activeTab === 'indexation'
-                                    ? 'border-amber text-amber bg-amber/10'
-                                    : 'border-transparent text-white/60 hover:text-white'
+                                    ? 'border-amber text-amber bg-amber/15 rounded-t-lg'
+                                    : 'border-transparent text-[#060e32]/60 hover:text-[#060e32]'
                             }`}
                         >
                             <Zap className='w-4 h-4' />
@@ -511,8 +620,8 @@ export function VastgoedbeheerSoftwareModule({
                             onClick={() => setActiveTab('retail')}
                             className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
                                 activeTab === 'retail'
-                                    ? 'border-amber text-amber bg-amber/10'
-                                    : 'border-transparent text-white/60 hover:text-white'
+                                    ? 'border-amber text-amber bg-amber/15 rounded-t-lg'
+                                    : 'border-transparent text-[#060e32]/60 hover:text-[#060e32]'
                             }`}
                         >
                             <Building2 className='w-4 h-4' />
@@ -522,8 +631,8 @@ export function VastgoedbeheerSoftwareModule({
                             onClick={() => setActiveTab('service')}
                             className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
                                 activeTab === 'service'
-                                    ? 'border-amber text-amber bg-amber/10'
-                                    : 'border-transparent text-white/60 hover:text-white'
+                                    ? 'border-amber text-amber bg-amber/15 rounded-t-lg'
+                                    : 'border-transparent text-[#060e32]/60 hover:text-[#060e32]'
                             }`}
                         >
                             <BarChart3 className='w-4 h-4' />
@@ -531,30 +640,31 @@ export function VastgoedbeheerSoftwareModule({
                         </button>
                     </div>
 
-                    {/* Tab Content Cards */}
-                    <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/70 p-8 rounded-2xl border border-white/10 backdrop-blur-xl shadow-2xl'>
+                    {/* Tab Content (Direct Grid Layout with Top-Right Image Badge) */}
+                    <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center'>
                         {activeTab === 'indexation' && (
                             <>
                                 <div className='lg:col-span-6 space-y-6'>
-                                    <span className='inline-flex items-center gap-2 text-xs font-mono text-amber uppercase tracking-widest bg-amber/15 px-3 py-1 rounded-full border border-amber/30'>
-                                        FEATURE 01
-                                    </span>
-                                    <h3 className='text-2xl sm:text-3xl font-bold text-white'>
-                                        Geautomatiseerde CPI-Indexaties &
-                                        Contractbeheer
+                                    <h3 className='text-2xl sm:text-3xl font-bold text-[#060e32]'>
+                                        {doc?.features?.[0]?.title ||
+                                            'Geautomatiseerde CPI-Indexaties & Contractbeheer'}
                                     </h3>
-                                    <p className='text-white/75 leading-relaxed text-base font-light'>
-                                        Vergeet handmatige berekeningen op de
-                                        eerste van de maand. Onze{' '}
-                                        <strong className='text-white font-medium'>
-                                            software voor vastgoedbeheer
-                                        </strong>{' '}
-                                        haalt automatisch de nieuwste CBS
-                                        CPI-indexcijfers op, berekent de nieuwe
-                                        huursommen en past deze direct toe op al
-                                        uw lopende huurovereenkomsten.
+                                    <p className='text-[#060e32]/80 leading-relaxed text-base font-light'>
+                                        {doc?.features?.[0]?.text || (
+                                            <>
+                                                Vergeet handmatige berekeningen op de
+                                                eerste van de maand. Onze{' '}
+                                                <strong className='text-[#060e32] font-semibold'>
+                                                    software voor vastgoedbeheer
+                                                </strong>{' '}
+                                                haalt automatisch de nieuwste CBS
+                                                CPI-indexcijfers op, berekent de nieuwe
+                                                huursommen en past deze direct toe op al
+                                                je lopende huurovereenkomsten.
+                                            </>
+                                        )}
                                     </p>
-                                    <ul className='space-y-2.5 text-sm text-white/80'>
+                                    <ul className='space-y-2.5 text-sm text-[#060e32]/85'>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
@@ -578,13 +688,23 @@ export function VastgoedbeheerSoftwareModule({
                                         </li>
                                     </ul>
                                 </div>
-                                <div className='lg:col-span-6'>
-                                    <div className='rounded-xl border border-white/15 bg-slate-950 p-2 overflow-hidden shadow-2xl'>
+                                <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
+                                    {/* Circular Top-Right Floating Badge */}
+                                    <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
+                                        <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
+                                            FEATURE
+                                        </span>
+                                        <span className='text-xl sm:text-2xl font-black leading-none'>
+                                            01
+                                        </span>
+                                    </div>
+
+                                    <div className='rounded-xl overflow-hidden shadow-2xl'>
                                         <Image
-                                            src='https://placehold.co/800x450/0f172a/10b981?text=Indexation+Log+Card+(CBS+CPI+Sync)'
+                                            src='/emlinked/apps/vastgoedbeheer-software/tab01-indexaties.jpg'
                                             alt='CPI Indexatie log UI card preview'
-                                            width={800}
-                                            height={450}
+                                            width={1200}
+                                            height={675}
                                             className='w-full h-auto rounded-lg border border-white/10'
                                         />
                                     </div>
@@ -595,22 +715,24 @@ export function VastgoedbeheerSoftwareModule({
                         {activeTab === 'retail' && (
                             <>
                                 <div className='lg:col-span-6 space-y-6'>
-                                    <span className='inline-flex items-center gap-2 text-xs font-mono text-amber uppercase tracking-widest bg-amber/15 px-3 py-1 rounded-full border border-amber/30'>
-                                        FEATURE 02
-                                    </span>
-                                    <h3 className='text-2xl sm:text-3xl font-bold text-white'>
-                                        Dynamisch Metrage- & Retailbeheer
+                                    <h3 className='text-2xl sm:text-3xl font-bold text-[#060e32]'>
+                                        {doc?.features?.[1]?.title ||
+                                            'Dynamisch Metrage- & Retailbeheer'}
                                     </h3>
-                                    <p className='text-white/75 leading-relaxed text-base font-light'>
-                                        Speciaal ingericht voor de uitdagingen
-                                        van retailketens en commercieel
-                                        vastgoed. Beheer wisselende
-                                        winkelindelingen, verschillende
-                                        metrage-types, omzethuurafspraken en
-                                        locatiespecifieke onderhoudscontracten
-                                        centraal in één dashboard.
+                                    <p className='text-[#060e32]/80 leading-relaxed text-base font-light'>
+                                        {doc?.features?.[1]?.text || (
+                                            <>
+                                                Speciaal ingericht voor de uitdagingen
+                                                van retailketens en commercieel
+                                                vastgoed. Beheer wisselende
+                                                winkelindelingen, verschillende
+                                                metrage-types, omzethuurafspraken en
+                                                locatiespecifieke onderhoudscontracten
+                                                centraal in één dashboard.
+                                            </>
+                                        )}
                                     </p>
-                                    <ul className='space-y-2.5 text-sm text-white/80'>
+                                    <ul className='space-y-2.5 text-sm text-[#060e32]/85'>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
@@ -635,13 +757,23 @@ export function VastgoedbeheerSoftwareModule({
                                         </li>
                                     </ul>
                                 </div>
-                                <div className='lg:col-span-6'>
-                                    <div className='rounded-xl border border-white/15 bg-slate-950 p-2 overflow-hidden shadow-2xl'>
+                                <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
+                                    {/* Circular Top-Right Floating Badge */}
+                                    <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
+                                        <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
+                                            FEATURE
+                                        </span>
+                                        <span className='text-xl sm:text-2xl font-black leading-none'>
+                                            02
+                                        </span>
+                                    </div>
+
+                                    <div className='rounded-xl overflow-hidden shadow-2xl'>
                                         <Image
-                                            src='https://placehold.co/800x450/0f172a/3b82f6?text=Retail+Metrage+%26+Unit+Indeling+Blueprint'
+                                            src='/emlinked/apps/vastgoedbeheer-software/tab02-dynamisch.jpg'
                                             alt='Retail Metrage en Unit Indeling Blueprint UI'
-                                            width={800}
-                                            height={450}
+                                            width={1200}
+                                            height={675}
                                             className='w-full h-auto rounded-lg border border-white/10'
                                         />
                                     </div>
@@ -652,21 +784,23 @@ export function VastgoedbeheerSoftwareModule({
                         {activeTab === 'service' && (
                             <>
                                 <div className='lg:col-span-6 space-y-6'>
-                                    <span className='inline-flex items-center gap-2 text-xs font-mono text-amber uppercase tracking-widest bg-amber/15 px-3 py-1 rounded-full border border-amber/30'>
-                                        FEATURE 03
-                                    </span>
-                                    <h3 className='text-2xl sm:text-3xl font-bold text-white'>
-                                        Servicekosten & Subsidieafrekeningen
+                                    <h3 className='text-2xl sm:text-3xl font-bold text-[#060e32]'>
+                                        {doc?.features?.[2]?.title ||
+                                            'Servicekosten & Subsidieafrekeningen'}
                                     </h3>
-                                    <p className='text-white/75 leading-relaxed text-base font-light'>
-                                        Bepaal, voorschot en verreken
-                                        servicekosten transparant voor uw
-                                        huurders of woningcorporatie. Alle
-                                        voorschotten en werkelijke gemaakte
-                                        kosten worden direct gematcht met
-                                        inkoopfacturen via Document Capture.
+                                    <p className='text-[#060e32]/80 leading-relaxed text-base font-light'>
+                                        {doc?.features?.[2]?.text || (
+                                            <>
+                                                Bepaal, voorschot en verreken
+                                                servicekosten transparant voor je
+                                                huurders of woningcorporatie. Alle
+                                                voorschotten en werkelijke gemaakte
+                                                kosten worden direct gematcht met
+                                                inkoopfacturen via Document Capture.
+                                            </>
+                                        )}
                                     </p>
-                                    <ul className='space-y-2.5 text-sm text-white/80'>
+                                    <ul className='space-y-2.5 text-sm text-[#060e32]/85'>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
@@ -693,13 +827,23 @@ export function VastgoedbeheerSoftwareModule({
                                         </li>
                                     </ul>
                                 </div>
-                                <div className='lg:col-span-6'>
-                                    <div className='rounded-xl border border-white/15 bg-slate-950 p-2 overflow-hidden shadow-2xl'>
+                                <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
+                                    {/* Circular Top-Right Floating Badge */}
+                                    <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
+                                        <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
+                                            FEATURE
+                                        </span>
+                                        <span className='text-xl sm:text-2xl font-black leading-none'>
+                                            03
+                                        </span>
+                                    </div>
+
+                                    <div className='rounded-xl overflow-hidden shadow-2xl'>
                                         <Image
-                                            src='https://placehold.co/800x450/0f172a/8b5cf6?text=Service+Charge+Distribution+Chart'
+                                            src='/emlinked/apps/vastgoedbeheer-software/tab03_servicekosten.jpg'
                                             alt='Service Charge Distribution Chart UI'
-                                            width={800}
-                                            height={450}
+                                            width={1200}
+                                            height={675}
                                             className='w-full h-auto rounded-lg border border-white/10'
                                         />
                                     </div>
@@ -710,147 +854,154 @@ export function VastgoedbeheerSoftwareModule({
                 </div>
             </section>
 
-            {/* ── BLOCK 4: NATIVE BUSINESS CENTRAL INTEGRATION (Dark Section) ── */}
-            <section className='py-20 px-6 bg-[#02030A] text-white border-b border-white/10 relative overflow-hidden'>
-                <div className='max-w-7xl mx-auto space-y-12 relative z-10'>
-                    <div className='text-center max-w-3xl mx-auto space-y-4 flex flex-col items-center'>
-                        <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
-                            NATIVE DYNAMICS 365
-                        </span>
-                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-white'>
-                            Volledig geïntegreerd in uw{' '}
-                            <span className='text-amber'>
-                                Microsoft ERP-omgeving
+            {/* ── BLOCK 4: NATIVE BUSINESS CENTRAL INTEGRATION (Dark Section - Matching Screenshot Layout) ── */}
+            <section className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
+                <div className='max-w-7xl mx-auto relative z-10'>
+                    <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
+                        {/* Left Column: Copy & Bullets */}
+                        <div className='lg:col-span-6 flex flex-col gap-6 text-left'>
+                            <span className='inline-flex items-center justify-center self-start rounded-full border border-amber/50 bg-[#251b14]/90 px-5 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                                MICROSOFT BUSINESS CENTRAL INTEGRATIE
                             </span>
-                        </h2>
-                        <p className='text-white/70 text-base md:text-lg font-light leading-relaxed'>
-                            Waarom kiezen voor een losstaand pakket als u uw{' '}
-                            <strong className='text-white font-medium'>
-                                vastgoed beheer software
-                            </strong>{' '}
-                            rechtstreeks in Business Central kunt laten draaien?
-                            Elke mutatie, contractwijziging of huurincasso wordt
-                            direct verwerkt als gevalideerde journaalpost.
-                        </p>
-                    </div>
 
-                    {/* Architecture Graphic */}
-                    <div className='relative rounded-2xl border border-white/15 bg-slate-950 p-4 backdrop-blur-xl shadow-2xl overflow-hidden'>
-                        <Image
-                            src='https://placehold.co/1200x500/020617/6366f1?text=Native+ERP+Link+Diagram:+Business+Central+%2b+Emlinked+Modules'
-                            alt='Native ERP Koppeling diagram van Emlinked met Microsoft Dynamics 365 Business Central'
-                            width={1200}
-                            height={500}
-                            className='w-full h-auto object-cover rounded-xl border border-white/10'
-                        />
+                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                                100% Realtime controle en automatische
+                                aflettering
+                            </h2>
 
-                        <div className='grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-white/10 mt-4 text-xs text-white/70'>
-                            <div className='flex items-center gap-3 p-3.5 rounded-xl bg-slate-900/80 border border-white/10'>
-                                <Database className='w-5 h-5 text-amber shrink-0' />
-                                <div>
-                                    <strong className='text-white block font-semibold'>
-                                        Geen Schaduwbestanden
-                                    </strong>
-                                    <span className='text-white/60 text-xs'>
-                                        Alle stamdata leeft in uw centrale
-                                        Business Central database.
-                                    </span>
+                            <p className='text-white/75 text-base md:text-lg font-light leading-relaxed'>
+                                Beheer al je vastgoedprocessen native in
+                                Microsoft Dynamics 365 Business Central zonder
+                                vertraging of risico van schaduwbestanden.
+                            </p>
+
+                            <div className='space-y-4 pt-2'>
+                                <div className='flex items-start gap-3.5'>
+                                    <div className='w-6 h-6 rounded-full border border-amber/60 bg-amber/15 flex items-center justify-center shrink-0 mt-0.5 shadow-sm'>
+                                        <Check className='w-3.5 h-3.5 text-amber' />
+                                    </div>
+                                    <div className='text-sm text-white/80 leading-relaxed'>
+                                        <strong className='text-white font-semibold'>
+                                            Één centrale bron van waarheid:
+                                        </strong>{' '}
+                                        Geen losse databases, Excel-sheets of
+                                        gevaarlijke API-koppelingen.
+                                    </div>
+                                </div>
+
+                                <div className='flex items-start gap-3.5'>
+                                    <div className='w-6 h-6 rounded-full border border-amber/60 bg-amber/15 flex items-center justify-center shrink-0 mt-0.5 shadow-sm'>
+                                        <Check className='w-3.5 h-3.5 text-amber' />
+                                    </div>
+                                    <div className='text-sm text-white/80 leading-relaxed'>
+                                        <strong className='text-white font-semibold'>
+                                            Nul dubbele invoer:
+                                        </strong>{' '}
+                                        Huurovereenkomsten, indexaties en
+                                        facturen landen direct als gevalideerde
+                                        journaalposten in je grootboek.
+                                    </div>
+                                </div>
+
+                                <div className='flex items-start gap-3.5'>
+                                    <div className='w-6 h-6 rounded-full border border-amber/60 bg-amber/15 flex items-center justify-center shrink-0 mt-0.5 shadow-sm'>
+                                        <Check className='w-3.5 h-3.5 text-amber' />
+                                    </div>
+                                    <div className='text-sm text-white/80 leading-relaxed'>
+                                        <strong className='text-white font-semibold'>
+                                            100% Realtime data-integriteit:
+                                        </strong>{' '}
+                                        Direct betrouwbaar inzicht voor
+                                        accountant, directie en beheerteam.
+                                    </div>
                                 </div>
                             </div>
-                            <div className='flex items-center gap-3 p-3.5 rounded-xl bg-slate-900/80 border border-white/10'>
-                                <Cpu className='w-5 h-5 text-amber shrink-0' />
-                                <div>
-                                    <strong className='text-white block font-semibold'>
-                                        Zero API-Latency
-                                    </strong>
-                                    <span className='text-white/60 text-xs'>
-                                        Directe verwerking zonder externe
-                                        sync-tunnels of wachttijden.
-                                    </span>
-                                </div>
-                            </div>
-                            <div className='flex items-center gap-3 p-3.5 rounded-xl bg-slate-900/80 border border-white/10'>
-                                <ShieldCheck className='w-5 h-5 text-amber shrink-0' />
-                                <div>
-                                    <strong className='text-white block font-semibold'>
-                                        Accountant Proof
-                                    </strong>
-                                    <span className='text-white/60 text-xs'>
-                                        100% audit-trail conform Nederlandse
-                                        accountancy richtlijnen.
-                                    </span>
-                                </div>
+                        </div>
+
+                        {/* Right Column: Requested Image Asset */}
+                        <div className='lg:col-span-6 flex justify-center lg:justify-end'>
+                            <div className='relative w-full rounded-2xl overflow-hidden border border-amber/30 shadow-2xl group bg-slate-950'>
+                                <Image
+                                    src='/emlinked/apps/vastgoedbeheer-software/native-dynamics-365.jpg'
+                                    alt='Microsoft Business Central Integratie: 100% Realtime controle'
+                                    width={1200}
+                                    height={800}
+                                    className='w-full h-auto object-cover rounded-2xl group-hover:scale-[1.01] transition-transform duration-500'
+                                    priority
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* ── BLOCK 5: CALL TO ACTION BANNER (Dark Navy Floating Card on Light Warm Canvas matching Screenshots) ── */}
+            {/* ── BLOCK 5: CALL TO ACTION BANNER (Exact Homepage Layout & Image Parity) ── */}
             <section className='py-20 px-6 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
-                <div className='max-w-6xl mx-auto'>
-                    <div className='relative rounded-3xl bg-[#060e32] border border-white/10 p-10 sm:p-14 text-white shadow-2xl overflow-hidden'>
-                        {/* Background Glows */}
-                        <div className='absolute -right-20 -top-20 w-80 h-80 bg-amber/15 rounded-full blur-3xl pointer-events-none' />
-
+                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
+                    <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
-                            <div className='lg:col-span-8 space-y-6 text-left flex flex-col items-start'>
-                                <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
-                                    DEMO AANVRAGEN
+                            {/* Left Column: Copy & Action Triggers */}
+                            <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
+                                <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
+                                    <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                    {doc?.cta?.tag || 'START MET AUTOMATISEREN'}
                                 </span>
 
-                                <h2 className='font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
                                     {doc?.cta?.title ||
-                                        'Ervaar de kracht van geautomatiseerd vastgoedbeheer'}
+                                        'Klaar om je vastgoedbeheer software te moderniseren?'}
                                 </h2>
 
-                                <p className='text-white/75 text-base sm:text-lg font-light leading-relaxed max-w-2xl'>
+                                <p className='text-white/80 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
                                     {doc?.cta?.desc ||
-                                        'Sluit aan bij professionele beheerders en controllers die hun administratieve lasten halveren met Emlinked. Vraag vandaag nog een vrijblijvende demonstratie aan en ontdek de voordelen voor uw portefeuille.'}
+                                        'Ervaar zelf hoe de modulaire apps van Emlinked je administratieve lasten halveren en je financiële controle vergroten.'}
                                 </p>
 
-                                <div className='flex flex-wrap items-center gap-4 pt-2'>
+                                {/* Primary & Secondary Action Buttons */}
+                                <div className='flex flex-col sm:flex-row gap-4 pt-2'>
                                     <GlowingLink
                                         href='/contact'
-                                        className='px-8 py-4 bg-amber hover:bg-amber-light text-[#060e32] font-extrabold rounded-xl shadow-lg shadow-amber/25 transition-all duration-200 hover:scale-[1.02] text-center'
+                                        className='inline-flex h-14 items-center justify-center rounded-xl bg-amber hover:bg-amber-hover px-8 text-base font-bold text-[#060e32] transition-all duration-200 shadow-xl hover:scale-105 active:scale-95'
                                     >
                                         <span className='flex items-center justify-center gap-2'>
                                             <span>
                                                 {doc?.cta?.primary ||
-                                                    'Vastgoedbeheer software demo aanvragen'}
+                                                    'Gratis live demo aanvragen'}
                                             </span>
-                                            <ArrowRight className='w-5 h-5' />
+                                            <ArrowRight className='h-5 w-5' />
                                         </span>
                                     </GlowingLink>
 
                                     <Link
                                         href='/prijzen'
-                                        className='px-6 py-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold transition-all duration-200 backdrop-blur-md flex items-center justify-center gap-2 text-center'
+                                        className='inline-flex h-14 items-center justify-center rounded-xl border border-white/20 hover:border-amber/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm'
                                     >
                                         <span>
                                             {doc?.cta?.secondary ||
-                                                'Bekijk onze tarieven & prijzen ➔'}
+                                                'Bekijk tarieven & prijzen →'}
                                         </span>
                                     </Link>
                                 </div>
                             </div>
 
-                            {/* Right Image Graphic */}
-                            <div className='lg:col-span-4 relative flex justify-center'>
-                                <div className='relative w-full aspect-4/3 rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-slate-900/80 p-1'>
-                                    <Image
-                                        src='https://placehold.co/600x450/0f172a/f59e0b?text=Business+Central+Core+Engine'
-                                        alt='Emlinked Business Central Integration'
-                                        width={600}
-                                        height={450}
-                                        className='w-full h-full object-cover rounded-xl'
-                                    />
-                                </div>
+                            {/* Right Column: Exact Homepage Illustration Image */}
+                            <div className='lg:col-span-4 flex justify-start lg:justify-end'>
+                                <Image
+                                    src='/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
+                                    alt={
+                                        doc?.cta?.title ||
+                                        'Klaar om je vastgoedbeheer software te moderniseren?'
+                                    }
+                                    width={700}
+                                    height={500}
+                                    className='w-full max-h-150 object-cover object-top rounded-2xl group-hover:scale-105 transition-transform duration-500'
+                                    priority
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-        </div>
+        </>
     );
 }

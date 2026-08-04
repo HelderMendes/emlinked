@@ -24,19 +24,20 @@ export interface HeroSectionProps {
     customGraphic?: React.ReactNode;
 }
 
-function formatHeroTitle(titleText: string) {
+export function formatHeroTitle(titleText?: string | React.ReactNode) {
     if (!titleText) return null;
+    if (typeof titleText !== 'string') return titleText;
     let formatted = titleText;
     if (!formatted.includes('*')) {
         formatted = formatted.replace('aangifte-klaar', '*aangifte-klaar*');
     }
     const parts = formatted.split(/(\*[^*]+\*)/g);
     return parts.map((part, index) => {
-        if (part.startsWith('*') && part.endsWith('*')) {
+        if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
             return (
                 <span
                     key={index}
-                    className='text-transparent bg-clip-text bg-gradient-to-r from-amber via-amber-light to-amber font-extrabold tracking-tight inline'
+                    className='text-amber bg-linear-to-r from-amber via-amber-light to-amber bg-clip-text font-extrabold tracking-tight inline'
                 >
                     {part.slice(1, -1)}
                 </span>
