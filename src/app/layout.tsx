@@ -12,10 +12,28 @@ const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 //     description: 'Premium software voor het beheer van vastgoedportefeuilles.',
 // };
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+    ? process.env.NEXT_PUBLIC_SITE_URL
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'https://emlinked.com';
+
 export const metadata: Metadata = {
-    title: 'Emlinked | Vastgoedsoftware voor Business Central',
+    metadataBase: new URL(baseUrl),
+    title: {
+        default: 'Emlinked | Vastgoedsoftware voor Business Central',
+        template: '%s | Emlinked',
+    },
     description:
         'Emlinked helpt vastgoedprofessionals met software voor commercieel portefeuillebeheer in Microsoft Business Central.',
+    alternates: {
+        canonical: './',
+    },
+    openGraph: {
+        siteName: 'Emlinked',
+        locale: 'nl_NL',
+        type: 'website',
+    },
 };
 
 export default function RootLayout({

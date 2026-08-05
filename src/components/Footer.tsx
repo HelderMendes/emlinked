@@ -119,16 +119,16 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
     return (
         <footer className='w-full bg-texture-navy text-white border-t border-white/10 pt-16 pb-12 transition-all'>
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                {/* 1. Dynamic Callback Callout Banner */}
-                <div className='bg-[#ff9400] text-white/75 p-6 md:p-8 rounded-lg flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden'>
+                {/* 1. Dynamic Callback Callout Banner with Horizontally Inverted Glowing Gradient Background */}
+                <div className='bg-linear-to-tl from-[#f12711] via-[#ff9400] to-[#d88a04] text-white p-6 md:p-8 rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden border border-white/20'>
                     {/* Background accents for Schematic-vibe */}
-                    <div className='absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#060e32_1px,transparent_1px)] bg-size-[16px_16px]'></div>
+                    <div className='absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-size-[16px_16px]'></div>
 
-                    <div className='text-center lg:text-left shrink-0 z-10'>
-                        <span className='text-[10px] md:text-xs font-bold uppercase tracking-widest block opacity-90 font-mono'>
+                    <div className='text-center lg:text-left shrink-0 z-10 space-y-0.5'>
+                        <span className='text-[10px] md:text-xs font-bold uppercase tracking-widest block text-white/95 font-mono drop-shadow-xs'>
                             {t.demoLabel}
                         </span>
-                        <span className='font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase leading-none block mt-1'>
+                        <span className='font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase leading-none block text-white drop-shadow-sm'>
                             {t.contactLabel}
                         </span>
                     </div>
@@ -138,23 +138,23 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             type='text'
                             placeholder={t.placeholderName}
                             required
-                            className='bg-transparent border border-white placeholder-white/70 px-4 py-2.5 text-sm text-white focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white rounded transition-all w-full sm:w-40'
+                            className='bg-white/10 border border-white/40 placeholder-white/80 px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white rounded-xl transition-all w-full sm:w-40 backdrop-blur-xs'
                         />
                         <input
                             type='text'
                             placeholder={t.placeholderPhone}
                             required
-                            className='bg-transparent border border-white placeholder-white/70 px-4 py-2.5 text-xs text-[#060e32] focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white rounded transition-all w-full sm:w-40'
+                            className='bg-white/10 border border-white/40 placeholder-white/80 px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white rounded-xl transition-all w-full sm:w-40 backdrop-blur-xs'
                         />
                         <input
                             type='email'
                             placeholder={t.placeholderEmail}
                             required
-                            className='bg-transparent border border-white placeholder-white/70 px-4 py-2.5 text-xs text-[#060e32] focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white rounded transition-all w-full sm:w-40'
+                            className='bg-white/10 border border-white/40 placeholder-white/80 px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white rounded-xl transition-all w-full sm:w-40 backdrop-blur-xs'
                         />
                         <button
                             type='submit'
-                            className='bg-[#060e32] text-white hover:bg-[#060e32]/95 hover:scale-[1.02] active:scale-[0.98] font-bold text-[10px] uppercase tracking-wider px-6 py-2.5 rounded shadow transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0'
+                            className='bg-[#060e32] text-white hover:bg-[#091548] hover:scale-[1.02] active:scale-[0.98] font-bold text-[10px] uppercase tracking-wider px-6 py-2.5 rounded-xl shadow-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0 border border-white/15'
                         >
                             <span>{t.sendButton}</span>
                             <svg

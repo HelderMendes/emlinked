@@ -29,13 +29,6 @@ export const seoFields = defineType({
                 ),
         }),
         defineField({
-            name: 'canonical',
-            title: 'Canonical URL',
-            type: 'url',
-            description:
-                'Override the canonical URL. Leave empty to fallback to the default page URL.',
-        }),
-        defineField({
             name: 'ogImage',
             title: 'Open Graph Image',
             type: 'image',
@@ -51,23 +44,6 @@ export const seoFields = defineType({
             type: 'boolean',
             description: 'Instruct search engines NOT to index this page.',
             initialValue: false,
-        }),
-        defineField({
-            name: 'structuredData',
-            title: 'Custom Structured Data (JSON-LD)',
-            type: 'text',
-            rows: 5,
-            description: 'Optional raw JSON-LD markup to embed on this page.',
-            validation: (Rule) =>
-                Rule.custom((value) => {
-                    if (!value) return true;
-                    try {
-                        JSON.parse(value);
-                        return true;
-                    } catch (e) {
-                        return 'Invalid JSON format. Please ensure the value is valid JSON.';
-                    }
-                }),
         }),
     ],
 });

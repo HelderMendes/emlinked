@@ -35,8 +35,8 @@ def update_header():
         "isActive('/apps/vastgoedbeheer-software') ||\n                                    isActive('/apps/huurdersportaal') ||\n                                    isActive('/apps/payment')\n                                        ? 'text-amber'\n                                        : 'text-white/70 hover:text-white dark:text-slate-600 dark:hover:text-slate-900'"
     )
     content = content.replace(
-        "isActive('/integraties') ||\n                                    isActive('/kennisbank/box3-check')\n                                        ? 'text-primary'\n                                        : 'text-muted-foreground hover:text-foreground'",
-        "isActive('/integraties') ||\n                                    isActive('/kennisbank/box3-check')\n                                        ? 'text-amber'\n                                        : 'text-white/70 hover:text-white dark:text-slate-600 dark:hover:text-slate-900'"
+        "isActive('/integraties') ||\n                                    isActive('/box3-check')\n                                        ? 'text-primary'\n                                        : 'text-muted-foreground hover:text-foreground'",
+        "isActive('/integraties') ||\n                                    isActive('/box3-check')\n                                        ? 'text-amber'\n                                        : 'text-white/70 hover:text-white dark:text-slate-600 dark:hover:text-slate-900'"
     )
     content = content.replace(
         "isActive('/referenties')\n                                        ? 'text-primary'\n                                        : 'text-muted-foreground hover:text-foreground'",
@@ -89,8 +89,8 @@ def update_header():
         "className={`text-xs font-bold ${isActive('/integraties') ? 'text-amber' : 'text-white dark:text-slate-800'}`}"
     )
     content = content.replace(
-        "className={`text-xs font-bold ${isActive('/kennisbank/box3-check') ? 'text-primary' : 'text-foreground'}`}",
-        "className={`text-xs font-bold ${isActive('/kennisbank/box3-check') ? 'text-amber' : 'text-white dark:text-slate-800'}`}"
+        "className={`text-xs font-bold ${isActive('/box3-check') ? 'text-primary' : 'text-foreground'}`}",
+        "className={`text-xs font-bold ${isActive('/box3-check') ? 'text-amber' : 'text-white dark:text-slate-800'}`}"
     )
     content = content.replace(
         "className={`text-xs font-bold ${isActive('/referenties') ? 'text-primary' : 'text-foreground'}`}",

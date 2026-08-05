@@ -25,8 +25,10 @@ import { SolutionSimulators } from '@/components/SolutionSimulators';
 import { sanityFetch } from '@/lib/sanity';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { HeroSection } from '@/components/blocks/HeroSection';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { VastgoedbeheerSoftwareModule } from '@/components/blocks/VastgoedbeheerSoftwareModule';
+import { HuurdersportaalModule } from '@/components/blocks/HuurdersportaalModule';
+import { PaymentSoftwareModule } from '@/components/blocks/PaymentSoftwareModule';
 
 const IconMap: Record<string, React.ElementType> = {
     Building2,
@@ -54,7 +56,14 @@ type SolutionContent = (typeof solutionsContent.nl)['vastgoedbeheer-software'];
 async function getSolutionContent(locale: string, slug: string): Promise<any> {
     const normalizedSlug = slug === 'payment-software' ? 'payment' : slug;
     try {
-        const query = `*[_type == "solutionPage" && language == $locale && (slug.current == $slug || slug.current == $normSlug || slug.current == $slashSlug || slug.current == $slashNormSlug)][0]`;
+        const query = `*[_type == "solutionPage" && language == $locale && (
+            slug.current == $slug || 
+            slug.current == $normSlug || 
+            slug.current == $slashSlug || 
+            slug.current == $slashNormSlug ||
+            slug.current == $appsSlug ||
+            slug.current == $slashAppsSlug
+        )][0]`;
         const doc = await sanityFetch<any>({
             query,
             params: {
@@ -63,11 +72,14 @@ async function getSolutionContent(locale: string, slug: string): Promise<any> {
                 normSlug: normalizedSlug,
                 slashSlug: `/${slug}`,
                 slashNormSlug: `/${normalizedSlug}`,
+                appsSlug: `apps/${slug}`,
+                slashAppsSlug: `/apps/${slug}`,
             },
         });
 
         if (doc) {
             return {
+                ...doc,
                 meta: {
                     seoTitle: doc.seo?.seoTitle || doc.seo?.title || doc.title,
                     seoDescription:
@@ -83,6 +95,7 @@ async function getSolutionContent(locale: string, slug: string): Promise<any> {
                 heroIcon: typeof doc.heroIcon === 'string' ? doc.heroIcon : 'Building2',
                 title: doc.title,
                 tagline: doc.tagline,
+                description: doc.description,
                 desc: doc.description,
                 benefits: doc.benefits || [],
                 features: (doc.features || []).map((f: any) => ({
@@ -159,7 +172,7 @@ export async function generateMetadata({
         content.desc ||
         content.tagline ||
         'Professionele vastgoedbeheer software native in Microsoft Business Central.';
-    const canonicalUrl = `https://emlinked.nl${locale === 'en' ? `/en/apps/${slug}` : `/apps/${slug}`}`;
+    const canonicalUrl = `${DEFAULT_DOMAIN}${locale === 'en' ? `/en/apps/${slug}` : `/apps/${slug}`}`;
 
     return buildMetadata({
         seo: content.meta,
@@ -621,13 +634,22 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
 
     const isEn = locale === 'en';
 
+    const safeDoc = JSON.parse(
+        JSON.stringify(content, (key, value) =>
+            typeof value === 'function' ? undefined : value,
+        ),
+    );
+
     if (slug === 'vastgoedbeheer-software') {
-        const safeDoc = JSON.parse(
-            JSON.stringify(content, (key, value) =>
-                typeof value === 'function' ? undefined : value,
-            ),
-        );
         return <VastgoedbeheerSoftwareModule doc={safeDoc} locale={locale} />;
+    }
+
+    if (slug === 'huurdersportaal' || slug === '/apps/huurdersportaal') {
+        return <HuurdersportaalModule doc={safeDoc} locale={locale} />;
+    }
+
+    if (slug === 'payment-software' || slug === '/apps/payment-software') {
+        return <PaymentSoftwareModule doc={safeDoc} locale={locale} />;
     }
 
     return (

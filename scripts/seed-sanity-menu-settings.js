@@ -40,7 +40,7 @@ const nlMenu = [
         _type: 'menuLink',
         _key: 'menu-box3-nl',
         title: 'Box3-check ⚡',
-        path: '/kennisbank/box3-check',
+        path: '/box3-check',
     },
     {
         _type: 'menuLink',
@@ -99,7 +99,7 @@ const enMenu = [
         _type: 'menuLink',
         _key: 'menu-box3-en',
         title: 'Box3-check ⚡',
-        path: '/kennisbank/box3-check',
+        path: '/box3-check',
     },
     {
         _type: 'menuLink',

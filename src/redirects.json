@@ -83,7 +83,7 @@
         "destination": "/apps",
         "status": 301
     },
-    "/kennisbank/box3-check": {
+    "/box3-check": {
         "destination": "/box3-check",
         "status": 301
     },

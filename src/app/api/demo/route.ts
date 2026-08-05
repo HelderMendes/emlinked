@@ -84,15 +84,19 @@ export async function POST(request: Request) {
                     </tr>
                 </table>
                 
-                ${message ? `
+                ${
+                    message
+                        ? `
                 <div style="margin-top: 20px; padding: 15px; background-color: #f8fafc; border-left: 4px solid #ff9400; border-radius: 4px;">
                     <p style="margin: 0 0 8px 0; font-weight: bold; color: #475569;">Bericht:</p>
                     <p style="margin: 0; color: #0f172a; white-space: pre-wrap; font-size: 14px; line-height: 1.5;">${message}</p>
                 </div>
-                ` : ''}
+                `
+                        : ''
+                }
                 
                 <div style="margin-top: 30px; font-size: 11px; color: #94a3b8; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 15px;">
-                    Deze e-mail is automatisch verzonden vanaf het demo formulier op emlinked.nl.
+                    Deze e-mail is automatisch verzonden vanaf het demo formulier op emlinked.com.
                 </div>
             </div>
         `;

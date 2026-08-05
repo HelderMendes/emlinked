@@ -392,7 +392,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                 <div className='pt-3'>
                                                     <GlowingLink
                                                         href={getPath(
-                                                            '/kennisbank/box3-check',
+                                                            '/box3-check',
                                                         )}
                                                         className='h-13 px-8  inline-flex '
                                                     >
@@ -851,7 +851,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                     alt={block.title}
                                                     width={700}
                                                     height={500}
-                                                    className='w-full max-h-150 object-cover object-top rounded-2xl group-hover:scale-105 transition-transform duration-500'
+                                                    className='w-full h-[350px] max-h-[350px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
                                                     priority
                                                 />
                                             </div>

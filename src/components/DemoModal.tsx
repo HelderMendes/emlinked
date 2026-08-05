@@ -246,7 +246,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
 
     if (!mounted) return null;
 
-    const emailDisplay = settings?.email || 'info@emlinked.nl';
+    const emailDisplay = settings?.email || 'info@emlinked.com';
     const phoneDisplay = settings?.phone || '+31 (0) 88 707 7000';
     const addressDisplay = settings?.address || 'Gooimeer 12, 1411 DE Naarden';
 

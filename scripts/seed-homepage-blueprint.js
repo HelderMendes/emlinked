@@ -23,9 +23,10 @@ async function seedHomepageBlueprint() {
             ctaLabel: 'Gratis demo aanvragen',
             ctaLink: '#demo',
             secondaryCtaLabel: 'Bereken uw Box 3-impact',
-            secondaryCtaLink: '/kennisbank/box3-check',
+            secondaryCtaLink: '/box3-check',
             showProof: true,
-            proofText: 'Vertrouwd door professionele vastgoedbeheerders en controllers',
+            proofText:
+                'Vertrouwd door professionele vastgoedbeheerders en controllers',
             cardTitle: 'LIVE PORTFOLIO METRICS',
             cardStats: [
                 {

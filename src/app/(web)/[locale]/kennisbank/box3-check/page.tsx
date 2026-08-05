@@ -71,8 +71,7 @@ export async function generateMetadata({
         robots,
         alternates: {
             canonical:
-                seo?.canonical ||
-                (isEn ? '/en/kennisbank/box3-check' : '/kennisbank/box3-check'),
+                seo?.canonical || (isEn ? '/en/box3-check' : '/box3-check'),
         },
     };
 }

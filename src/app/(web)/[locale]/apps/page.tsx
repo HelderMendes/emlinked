@@ -11,7 +11,7 @@ import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSec
 import { TestimonialSlider } from '@/components/TestimonialSlider';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 
 interface AppsPageProps {
     params: Promise<{ locale: string }>;
@@ -60,7 +60,7 @@ export async function generateMetadata({
     const fallbackDesc = isEn
         ? 'Explore the modular ERP software suite for Microsoft Dynamics 365 Business Central.'
         : 'Ontdek de modulaire ERP software suite voor Microsoft Dynamics 365 Business Central.';
-    const canonicalUrl = `https://emlinked.nl${isEn ? '/en/apps' : '/apps'}`;
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/apps' : '/apps'}`;
 
     return buildMetadata({
         seo: pageData?.seo,
@@ -126,7 +126,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
         publisher: {
             '@type': 'Organization',
             name: 'Emlinked',
-            url: 'https://emlinked.nl',
+            url: DEFAULT_DOMAIN,
         },
     };
 
@@ -445,7 +445,8 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                 <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                     <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
                                         <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
-                                        {ctaBlock.tag || 'START MET AUTOMATISEREN'}
+                                        {ctaBlock.tag ||
+                                            'START MET AUTOMATISEREN'}
                                     </span>
                                     <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
                                         {ctaBlock.title ||
@@ -482,7 +483,9 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                 className='inline-flex h-14 items-center justify-center rounded-xl border border-white/20 hover:border-amber/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm'
                                             >
                                                 <span>
-                                                    {ctaBlock.secondaryButtonLabel}
+                                                    {
+                                                        ctaBlock.secondaryButtonLabel
+                                                    }
                                                 </span>
                                             </Link>
                                         )}
@@ -492,11 +495,14 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                 {/* Right Column: Preserved Apps Image Asset */}
                                 <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                     <Image
-                                        src='/emlinked/apps/bewezen_resultaat.jpg'
-                                        alt={ctaBlock.title || 'Bewezen resultaat'}
+                                        src='/emlinked/apps/bewezen_resultaat.png'
+                                        alt={
+                                            ctaBlock.title ||
+                                            'Bewezen resultaat'
+                                        }
                                         width={700}
                                         height={500}
-                                        className='w-full max-h-150 object-cover object-top rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
+                                        className='w-full h-[350px] max-h-[350px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
                                         priority
                                     />
                                 </div>

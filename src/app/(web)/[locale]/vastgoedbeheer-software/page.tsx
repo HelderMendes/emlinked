@@ -1,7 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { sanityFetch } from '@/lib/sanity';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { VastgoedbeheerSoftwareModule } from '@/components/blocks/VastgoedbeheerSoftwareModule';
 
 export const dynamic = 'force-dynamic';
@@ -47,7 +47,7 @@ export async function generateMetadata({
         ? 'Advanced real estate management software for property managers, retail chains, and housing corporations. 100% native Business Central integration.'
         : 'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Business Central.';
     
-    const canonicalUrl = `https://emlinked.nl${isEn ? '/en/vastgoedbeheer-software' : '/vastgoedbeheer-software'}`;
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/apps/vastgoedbeheer-software' : '/apps/vastgoedbeheer-software'}`;
 
     return buildMetadata({
         seo: doc?.seo,

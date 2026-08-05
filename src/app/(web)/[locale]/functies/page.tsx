@@ -87,7 +87,7 @@ export default async function FunctiesPage({ params }: FunctiesPageProps) {
             description: isEn
                 ? 'Automatically fetch official CBS inflation rates, calculate adjusted rents, and generate communication templates without Excel mistakes.'
                 : 'Haal automatisch de actuele CBS-indexcijfers op, bereken de nieuwe huurprijzen en genereer indexatiebrieven zonder handmatige invoerfouten.',
-            link: '/kennisbank/box3-check',
+            link: '/box3-check',
             benefits: isEn
                 ? [
                       'Real-time CBS sync',
@@ -146,7 +146,7 @@ export default async function FunctiesPage({ params }: FunctiesPageProps) {
             description: isEn
                 ? 'Access real-time reports on rent status, lease expiries, vacancies, and asset yields to optimize portfolio values.'
                 : 'Krijg direct inzicht in openstaande posten, contractverlooftermijnen, leegstandscijfers en de netto rendementen per object.',
-            link: '/kennisbank/box3-check',
+            link: '/box3-check',
             benefits: isEn
                 ? [
                       'Interactive yield charts',

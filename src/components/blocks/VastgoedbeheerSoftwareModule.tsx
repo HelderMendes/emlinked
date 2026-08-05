@@ -16,6 +16,7 @@ import { GlowingLink } from '@/components/ui/GlowingButton';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { formatHeroTitle } from '@/components/blocks/HeroSection';
 import { BorderBeam } from 'border-beam';
+import { DEFAULT_DOMAIN } from '@/lib/seo';
 
 function CardBadge({
     imageSrc,
@@ -67,44 +68,44 @@ export function VastgoedbeheerSoftwareModule({
               '@graph': [
                   {
                       '@type': 'WebPage',
-                      '@id': 'https://emlinked.nl/vastgoedbeheer-software#webpage',
-                      url: 'https://emlinked.nl/vastgoedbeheer-software',
+                      '@id': `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software#webpage`,
+                      url: `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software`,
                       name: 'Vastgoedbeheer Software — Automatiseer je Portefeuillebeheer | Emlinked',
                       description:
                           'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Microsoft Dynamics 365 Business Central.',
                       inLanguage: 'nl-NL',
                       isPartOf: {
                           '@type': 'WebSite',
-                          '@id': 'https://emlinked.nl/#website',
+                          '@id': `${DEFAULT_DOMAIN}/#website`,
                       },
                   },
                   {
                       '@type': 'BreadcrumbList',
-                      '@id': 'https://emlinked.nl/vastgoedbeheer-software#breadcrumb',
+                      '@id': `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software#breadcrumb`,
                       itemListElement: [
                           {
                               '@type': 'ListItem',
                               position: 1,
                               name: 'Home',
-                              item: 'https://emlinked.nl',
+                              item: DEFAULT_DOMAIN,
                           },
                           {
                               '@type': 'ListItem',
                               position: 2,
                               name: 'Onze apps',
-                              item: 'https://emlinked.nl/apps',
+                              item: `${DEFAULT_DOMAIN}/apps`,
                           },
                           {
                               '@type': 'ListItem',
                               position: 3,
                               name: 'Vastgoedbeheer software',
-                              item: 'https://emlinked.nl/vastgoedbeheer-software',
+                              item: `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software`,
                           },
                       ],
                   },
                   {
                       '@type': 'SoftwareApplication',
-                      '@id': 'https://emlinked.nl/vastgoedbeheer-software#software',
+                      '@id': `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software#software`,
                       name: 'Emlinked Vastgoedbeheer Software',
                       applicationCategory: 'BusinessApplication',
                       operatingSystem:
@@ -116,12 +117,12 @@ export function VastgoedbeheerSoftwareModule({
                       publisher: {
                           '@type': 'Organization',
                           name: 'Emlinked',
-                          url: 'https://emlinked.nl',
+                          url: DEFAULT_DOMAIN,
                       },
                   },
                   {
                       '@type': 'FAQPage',
-                      '@id': 'https://emlinked.nl/vastgoedbeheer-software#faq',
+                      '@id': `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software#faq`,
                       mainEntity: [
                           {
                               '@type': 'Question',
@@ -509,7 +510,7 @@ export function VastgoedbeheerSoftwareModule({
             </section>
 
             {/* Split-Screen Visual Showcase */}
-            <section className='relative px-6 py-20 mb-8 text-white border-b border-white/10 overflow-hidden bg-[#02030A] bg-[radial-gradient(circle_at_18%_-5%,rgba(79,70,229,.18),transparent_24%),radial-gradient(circle_at_22%_60%,rgba(79,70,229,.12),transparent_20%),radial-gradient(circle_at_74%_40%,rgba(79,70,229,.16),transparent_18%),radial-gradient(circle_at_72%_105%,rgba(79,70,229,.14),transparent_20%),linear-gradient(to_right,transparent_49.95%,rgba(255,255,255,.03)_50%,transparent_50.05%)]'>
+            <section className='relative px-6 py-20 text-white border-b border-white/10 overflow-hidden bg-[#02030A] bg-[radial-gradient(circle_at_18%_-5%,rgba(79,70,229,.18),transparent_24%),radial-gradient(circle_at_22%_60%,rgba(79,70,229,.12),transparent_20%),radial-gradient(circle_at_74%_40%,rgba(79,70,229,.16),transparent_18%),radial-gradient(circle_at_72%_105%,rgba(79,70,229,.14),transparent_20%),linear-gradient(to_right,transparent_49.95%,rgba(255,255,255,.03)_50%,transparent_50.05%)]'>
                 {/* Custom Section Background Image - 100% Full Cover */}
                 <Image
                     src='/emlinked/apps/bg_naadloze_integratie_section.jpg'
@@ -991,14 +992,14 @@ export function VastgoedbeheerSoftwareModule({
                             {/* Right Column: Exact Homepage Illustration Image */}
                             <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                 <Image
-                                    src='/emlinked/apps/vastgoedbeheer-software/DrieKrachtigeApps_VastgoedbeheerSoftware01.png'
+                                    src='/emlinked/apps/vastgoedbeheer-software/automatiseren_vastgoedbehher.jpg'
                                     alt={
                                         doc?.cta?.title ||
                                         'Klaar om je vastgoedbeheer software te moderniseren?'
                                     }
                                     width={700}
                                     height={500}
-                                    className='w-full max-h-150 object-cover object-top rounded-2xl group-hover:scale-105 transition-transform duration-500'
+                                    className='w-full h-[350px] max-h-[350px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
                                     priority
                                 />
                             </div>

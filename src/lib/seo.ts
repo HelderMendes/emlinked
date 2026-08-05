@@ -26,7 +26,8 @@ export interface BuildMetadataOptions {
 }
 
 const DEFAULT_SITE_NAME = 'Emlinked';
-const DEFAULT_DOMAIN = 'https://emlinked.nl';
+export const DEFAULT_DOMAIN =
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://emlinked.com';
 const DEFAULT_OG_IMAGE = `${DEFAULT_DOMAIN}/og-image.png`;
 
 /**

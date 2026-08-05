@@ -2,13 +2,16 @@ import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export const solutionPage = defineType({
     name: 'solutionPage',
-    title: 'Solution Page',
+    title: 'Onze Apps Page',
     type: 'document',
     fields: [
+        // ── Core Document Metadata ─────────────────────────────────────
         defineField({
             name: 'title',
             title: 'Page Title',
             type: 'string',
+            description:
+                'Internal title for Sanity Studio (e.g. Vastgoedbeheer Software)',
             validation: (Rule) => Rule.required(),
         }),
         defineField({
@@ -19,6 +22,8 @@ export const solutionPage = defineType({
                 list: [
                     { title: 'Nederlands', value: 'nl' },
                     { title: 'English', value: 'en' },
+                    { title: 'Deutsch', value: 'de' },
+                    { title: 'Français', value: 'fr' },
                 ],
             },
             initialValue: 'nl',
@@ -29,295 +34,394 @@ export const solutionPage = defineType({
             title: 'URL Slug',
             type: 'slug',
             description:
-                'The URL path for this page (e.g. property-management-software)',
+                'The URL path for this page (e.g. apps/huurdersportaal or apps/vastgoedbeheer-software)',
             options: { source: 'title', maxLength: 96 },
             validation: (Rule) => Rule.required(),
         }),
 
-        // ── Meta ────────────────────────────────────────────────────────
+        // ── Page Blocks (Modular Layout Builder) ─────────────────────────
         defineField({
-            name: 'badge',
-            title: 'Badge Text',
-            type: 'string',
-            description:
-                'Short pill label shown above the hero title (e.g. "Core SaaS Module")',
-        }),
-        defineField({
-            name: 'heroIcon',
-            title: 'Hero Icon',
-            type: 'string',
-            description: 'Lucide icon name (e.g. Building2, Users, CreditCard)',
-            options: {
-                list: [
-                    { title: 'Building2 (Vastgoedbeheer)', value: 'Building2' },
-                    { title: 'Users (Huurdersportaal)', value: 'Users' },
-                    { title: 'CreditCard (Payment)', value: 'CreditCard' },
-                ],
-            },
-        }),
-
-        // ── Hero ─────────────────────────────────────────────────────────
-        defineField({
-            name: 'tagline',
-            title: 'Hero Tagline',
-            type: 'string',
-            description: 'Large subtitle below the page title',
-            validation: (Rule) => Rule.required(),
-        }),
-        defineField({
-            name: 'description',
-            title: 'Hero Description',
-            type: 'text',
-            rows: 3,
-            description: 'Paragraph below the tagline',
-        }),
-
-        // ── Proof Stats ──────────────────────────────────────────────────
-        defineField({
-            name: 'proof',
-            title: 'Social Proof Stats',
+            name: 'pageBlocks',
+            title: 'Page Blocks (Modular Layout Builder)',
             type: 'array',
-            description: 'Up to 3 key statistics shown in the stats band',
-            validation: (Rule) => Rule.max(3),
+            description:
+                'Assemble your page layout using modular content blocks so that we can reuse them whenever necessary.',
             of: [
+                // 1. Hero Block
                 defineArrayMember({
+                    name: 'heroBlock',
+                    title: 'Hero Section Block',
                     type: 'object',
                     fields: [
                         defineField({
-                            name: 'stat',
-                            title: 'Statistic',
-                            type: 'string',
-                            description: 'e.g. 87% or < 2 min',
-                        }),
-                        defineField({
-                            name: 'label',
-                            title: 'Label',
-                            type: 'string',
-                            description: 'e.g. Tijdsbesparing bij indexaties',
-                        }),
-                    ],
-                    preview: {
-                        select: { title: 'stat', subtitle: 'label' },
-                    },
-                }),
-            ],
-        }),
-
-        // ── Benefits Checklist ───────────────────────────────────────────
-        defineField({
-            name: 'benefits',
-            title: 'Benefits Checklist',
-            type: 'array',
-            description:
-                'Bullet points shown in the "Alles inbegrepen" section',
-            of: [defineArrayMember({ type: 'string' })],
-        }),
-
-        // ── Feature Cards ────────────────────────────────────────────────
-        defineField({
-            name: 'features',
-            title: 'Feature Cards',
-            type: 'array',
-            description:
-                '3 core feature cards with icon, title and description',
-            of: [
-                defineArrayMember({
-                    type: 'object',
-                    fields: [
-                        defineField({
-                            name: 'icon',
-                            title: 'Icon Name',
-                            type: 'string',
-                            description:
-                                'Lucide icon name (e.g. Zap, FileText, BarChart3)',
-                        }),
-                        defineField({
-                            name: 'title',
-                            title: 'Feature Title',
+                            name: 'badge',
+                            title: 'Pill Badge Text',
                             type: 'string',
                         }),
                         defineField({
-                            name: 'text',
-                            title: 'Feature Description',
+                            name: 'tagline',
+                            title: 'Hero Tagline (H1 Title)',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'description',
+                            title: 'Hero Subtitle Description',
                             type: 'text',
                             rows: 3,
                         }),
+                        defineField({
+                            name: 'heroImage',
+                            title: 'Hero Image Path',
+                            type: 'string',
+                        }),
                     ],
                     preview: {
-                        select: { title: 'title', subtitle: 'text' },
+                        select: { title: 'tagline', subtitle: 'badge' },
+                        prepare({ title, subtitle }) {
+                            return {
+                                title: `Hero Block: ${title || 'Untitled Tagline'}`,
+                                subtitle: subtitle || 'Hero Section Banner',
+                            };
+                        },
                     },
                 }),
-            ],
-        }),
 
-        // ── Workflow Steps ───────────────────────────────────────────────
-        defineField({
-            name: 'workflow',
-            title: 'Workflow Steps',
-            type: 'array',
-            description:
-                '"Hoe werkt het?" — 3-step process shown with icons and connector line',
-            validation: (Rule) => Rule.max(3),
-            of: [
+                // 2. Comparison Matrix Block (Pain vs Solution)
                 defineArrayMember({
+                    name: 'comparisonBlock',
+                    title: 'Comparison Matrix Block (Pain vs Solution)',
                     type: 'object',
                     fields: [
                         defineField({
-                            name: 'step',
-                            title: 'Step Number',
+                            name: 'badge',
+                            title: 'Pill Badge Text',
                             type: 'string',
-                            description: 'e.g. 01, 02, 03',
-                        }),
-                        defineField({
-                            name: 'icon',
-                            title: 'Icon Name',
-                            type: 'string',
-                            description:
-                                'Lucide icon name (e.g. Link2, CalendarCheck, Database)',
                         }),
                         defineField({
                             name: 'title',
-                            title: 'Step Title',
+                            title: 'Section Title',
                             type: 'string',
                         }),
                         defineField({
                             name: 'desc',
-                            title: 'Step Description',
+                            title: 'Section Description',
                             type: 'text',
                             rows: 3,
                         }),
-                    ],
-                    preview: {
-                        select: { title: 'step', subtitle: 'title' },
-                    },
-                }),
-            ],
-        }),
-
-        // ── FAQ ──────────────────────────────────────────────────────────
-        defineField({
-            name: 'faq',
-            title: 'FAQ',
-            type: 'array',
-            description:
-                'Accordion FAQ items — eligible for Google Featured Snippets',
-            of: [
-                defineArrayMember({
-                    type: 'object',
-                    fields: [
                         defineField({
-                            name: 'q',
-                            title: 'Question',
+                            name: 'leftTitle',
+                            title: 'Left Card Title (Legacy)',
                             type: 'string',
                         }),
                         defineField({
-                            name: 'a',
-                            title: 'Answer',
-                            type: 'text',
-                            rows: 4,
+                            name: 'leftItems',
+                            title: 'Left Card Items (Pain Points)',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'desc',
+                                            type: 'text',
+                                            rows: 2,
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                        defineField({
+                            name: 'rightTitle',
+                            title: 'Right Card Title (Emlinked)',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'rightItems',
+                            title: 'Right Card Items (Solutions/Benefits)',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'desc',
+                                            type: 'text',
+                                            rows: 2,
+                                        }),
+                                    ],
+                                }),
+                            ],
                         }),
                     ],
                     preview: {
-                        select: { title: 'q', subtitle: 'a' },
+                        select: { title: 'title', subtitle: 'badge' },
+                        prepare({ title, subtitle }) {
+                            return {
+                                title: `Comparison Block: ${title || 'Pain vs Solution'}`,
+                                subtitle: subtitle || 'Section 2 Matrix',
+                            };
+                        },
                     },
                 }),
-            ],
-        }),
 
-        // ── Simulator ────────────────────────────────────────────────────
-        defineField({
-            name: 'simulatorTitle',
-            title: 'Simulator Section Title',
-            type: 'string',
-        }),
-        defineField({
-            name: 'simulatorDesc',
-            title: 'Simulator Section Description',
-            type: 'text',
-            rows: 2,
-        }),
-
-        // ── Related Modules ──────────────────────────────────────────────
-        defineField({
-            name: 'relatedModules',
-            title: 'Related Modules (Cross-sell)',
-            type: 'array',
-            description: 'Links to other solution pages shown at the bottom',
-            of: [
+                // 3. Feature Tabs Block
                 defineArrayMember({
+                    name: 'featureTabsBlock',
+                    title: 'Feature Tabs Block',
                     type: 'object',
                     fields: [
                         defineField({
-                            name: 'slug',
-                            title: 'Target Slug',
+                            name: 'badge',
+                            title: 'Pill Badge Text',
                             type: 'string',
-                            description: 'e.g. huurdersportaal or payment',
-                            options: {
-                                list: [
-                                    {
-                                        title: 'Huurdersportaal',
-                                        value: 'huurdersportaal',
-                                    },
-                                    {
-                                        title: 'Payment Software',
-                                        value: 'payment',
-                                    },
-                                    {
-                                        title: 'Vastgoedbeheer Software',
-                                        value: 'vastgoedbeheer-software',
-                                    },
-                                ],
-                            },
                         }),
                         defineField({
                             name: 'title',
-                            title: 'Card Title',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'tabs',
+                            title: 'Feature Tabs',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'tabId',
+                                            title: 'Tab ID',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'tabTitle',
+                                            title: 'Tab Navigation Title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Feature Heading',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'text',
+                                            title: 'Feature Description',
+                                            type: 'text',
+                                            rows: 3,
+                                        }),
+                                        defineField({
+                                            name: 'bullets',
+                                            title: 'Bullet Points',
+                                            type: 'array',
+                                            of: [
+                                                defineArrayMember({
+                                                    type: 'string',
+                                                }),
+                                            ],
+                                        }),
+                                        defineField({
+                                            name: 'imagePath',
+                                            title: 'Feature Image Path',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
+                    preview: {
+                        select: { title: 'title', subtitle: 'badge' },
+                        prepare({ title, subtitle }) {
+                            return {
+                                title: `Feature Tabs Block: ${title || 'Interactive Tabs'}`,
+                                subtitle: subtitle || 'Section 3 Features',
+                            };
+                        },
+                    },
+                }),
+
+                // 4. Stats / Social Proof Block
+                defineArrayMember({
+                    name: 'statsBlock',
+                    title: 'Social Proof Stats Block',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'stats',
+                            title: 'Key Statistics',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'stat',
+                                            title: 'Value (e.g. 87% or < 2 min)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'label',
+                                            title: 'Label Description',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
+                    preview: {
+                        prepare() {
+                            return {
+                                title: 'Stats Block: Social Proof Band',
+                            };
+                        },
+                    },
+                }),
+
+                // 5. Workflow Block (3-Step Process)
+                defineArrayMember({
+                    name: 'workflowBlock',
+                    title: 'Workflow Block (3-Step Process)',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'title',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'steps',
+                            title: 'Workflow Steps',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'step',
+                                            title: 'Step Number (01, 02, 03)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Step Title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'desc',
+                                            title: 'Step Description',
+                                            type: 'text',
+                                            rows: 2,
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
+                    preview: {
+                        select: { title: 'title' },
+                        prepare({ title }) {
+                            return {
+                                title: `Workflow Block: ${title || '3-Step Process'}`,
+                            };
+                        },
+                    },
+                }),
+
+                // 6. FAQ Accordion Block
+                defineArrayMember({
+                    name: 'faqBlock',
+                    title: 'FAQ Accordion Block',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'title',
+                            title: 'FAQ Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'items',
+                            title: 'FAQ Question & Answer Items',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'q',
+                                            title: 'Question',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'a',
+                                            title: 'Answer',
+                                            type: 'text',
+                                            rows: 3,
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
+                    preview: {
+                        select: { title: 'title' },
+                        prepare({ title }) {
+                            return {
+                                title: `FAQ Block: ${title || 'Frequently Asked Questions'}`,
+                            };
+                        },
+                    },
+                }),
+
+                // 7. CTA Banner Block
+                defineArrayMember({
+                    name: 'ctaBlock',
+                    title: 'CTA Banner Block',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'title',
+                            title: 'CTA Title',
                             type: 'string',
                         }),
                         defineField({
                             name: 'desc',
-                            title: 'Card Description',
+                            title: 'CTA Description',
+                            type: 'text',
+                            rows: 2,
+                        }),
+                        defineField({
+                            name: 'primaryButtonText',
+                            title: 'Primary Button Label',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'secondaryButtonText',
+                            title: 'Secondary Button Label',
                             type: 'string',
                         }),
                     ],
                     preview: {
-                        select: { title: 'title', subtitle: 'slug' },
+                        select: { title: 'title' },
+                        prepare({ title }) {
+                            return {
+                                title: `CTA Banner Block: ${title || 'Call to Action'}`,
+                            };
+                        },
                     },
                 }),
             ],
         }),
 
-        // ── CTA ──────────────────────────────────────────────────────────
-        defineField({
-            name: 'cta',
-            title: 'CTA Footer Section',
-            type: 'object',
-            fields: [
-                defineField({
-                    name: 'title',
-                    title: 'CTA Title',
-                    type: 'string',
-                }),
-                defineField({
-                    name: 'desc',
-                    title: 'CTA Description',
-                    type: 'text',
-                    rows: 2,
-                }),
-                defineField({
-                    name: 'primary',
-                    title: 'Primary Button Label',
-                    type: 'string',
-                }),
-                defineField({
-                    name: 'secondary',
-                    title: 'Secondary Button Label',
-                    type: 'string',
-                }),
-            ],
-        }),
-
-        // ── SEO ──────────────────────────────────────────────────────────
+        // ── SEO Settings ──────────────────────────────────────────────────
         defineField({
             name: 'seo',
             title: 'SEO Settings',
@@ -333,7 +437,7 @@ export const solutionPage = defineType({
         prepare({ title, subtitle }) {
             return {
                 title,
-                subtitle: `/${subtitle === 'nl' ? '' : subtitle + '/'}oplossingen/...`,
+                subtitle: `Oplossingen app (${subtitle ? subtitle.toUpperCase() : 'NL'})`,
             };
         },
     },

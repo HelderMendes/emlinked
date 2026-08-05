@@ -533,7 +533,7 @@ const pagesToSeed = [
         _type: 'page',
         language: 'nl',
         title: 'Box 3 Rendement Calculator & Fiscale Optimalisatie',
-        slug: { _type: 'slug', current: 'kennisbank/box3-check' },
+        slug: { _type: 'slug', current: 'box3-check' },
         pageBlocks: [
             {
                 _type: 'hero',
@@ -555,7 +555,7 @@ const pagesToSeed = [
         _type: 'page',
         language: 'en',
         title: 'Box 3 Yield Calculator & Tax Optimization',
-        slug: { _type: 'slug', current: 'kennisbank/box3-check' },
+        slug: { _type: 'slug', current: 'box3-check' },
         pageBlocks: [
             {
                 _type: 'hero',
