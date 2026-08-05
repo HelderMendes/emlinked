@@ -334,7 +334,7 @@ export function HuurdersportaalModule({
                         </div>
 
                         {/* Right Card: Emlinked Native Solution */}
-                        <div className='relative rounded-2xl border border-amber/40 bg-white p-8 space-y-6 shadow-xl flex flex-col justify-between'>
+                        <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                             <CardBadge
                                 imageSrc='/emlinked/apps/huurdersportaal/automatiseren_huurdersportaal.jpg'
                                 alt='Emlinked Digitaal Huurdersportaal'

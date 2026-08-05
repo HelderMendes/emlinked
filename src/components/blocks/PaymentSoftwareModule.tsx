@@ -21,6 +21,35 @@ import { formatHeroTitle } from '@/components/blocks/HeroSection';
 import { BorderBeam } from 'border-beam';
 import { DEFAULT_DOMAIN } from '@/lib/seo';
 
+function CardBadge({
+    imageSrc,
+    alt,
+    isLegacy = false,
+}: {
+    imageSrc: string;
+    alt: string;
+    isLegacy?: boolean;
+}) {
+    return (
+        <div
+            className={`absolute -top-6 -right-6 sm:-top-7 sm:-right-7 z-30 w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 sm:border-3 ${
+                isLegacy
+                    ? 'border-slate-300 bg-slate-200/95 shadow-xl'
+                    : 'border-amber bg-slate-200/95 shadow-xl'
+            } flex items-center justify-center p-2 group-hover:scale-110 transition-transform duration-300 pointer-events-none`}
+        >
+            <div className='relative w-10 h-10 sm:w-13 sm:h-13 rounded-full overflow-hidden'>
+                <Image
+                    src={imageSrc}
+                    alt={alt}
+                    fill
+                    className='object-cover object-center scale-105'
+                />
+            </div>
+        </div>
+    );
+}
+
 interface PaymentSoftwareModuleProps {
     doc?: any;
     locale?: string;
@@ -187,12 +216,12 @@ export function PaymentSoftwareModule({
                                         </div>
                                     </div>
 
-                                    <div className='relative aspect-16/10 w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
+                                    <div className='relative aspect-16/12 w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
                                         <Image
-                                            src='/emlinked/apps/vastgoedbeheer-software/Gemini_Generated_Image_6drkgy6drkgy6drk.jpg'
-                                            alt='Payment Software Automated Bank Reconciliation Graphic'
+                                            src='/emlinked/apps/payment/payment_hero.jpg'
+                                            alt='Payment Software Hero Mockup'
                                             width={1400}
-                                            height={875}
+                                            height={1100}
                                             className='w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500'
                                             priority
                                         />
@@ -204,99 +233,180 @@ export function PaymentSoftwareModule({
                 </div>
             </section>
 
-            {/* ── BLOCK 2: OPERATIONAL PAIN VS SOLUTION ── */}
-            <section className='py-20 px-6 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
-                <div className='max-w-7xl mx-auto space-y-12 relative z-10'>
-                    <div className='text-center max-w-3xl mx-auto space-y-4 flex flex-col items-center'>
-                        <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
-                            100% RECONCILIATIE ZONDER MENSELIJKE FOUTEN
-                        </span>
-                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-white'>
-                            Waarom handmatige verwerking van huurbetalingen{' '}
-                            <span className='text-amber'>je afremt</span>
+            {/* ── BLOCK 2: OPERATIONAL BOTTLENECKS (Light Warm Cream Background matching Vastgoedbeheer Software & Huurdersportaal) ── */}
+            <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative z-10'>
+                <div className='max-w-7xl mx-auto space-y-16'>
+                    {/* Header */}
+                    <div className='text-center max-w-3xl mx-auto space-y-4'>
+                        <div className='flex justify-center mb-1'>
+                            <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                                <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
+                                {doc?.comparisonSection?.badge ||
+                                    '100% RECONCILIATIE ZONDER MENSELIJKE FOUTEN'}
+                            </span>
+                        </div>
+
+                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-[#060e32]'>
+                            {doc?.comparisonSection?.title || (
+                                <>
+                                    Waarom handmatige verwerking van
+                                    huurbetalingen{' '}
+                                    <span className='text-amber'>
+                                        je afremt
+                                    </span>
+                                </>
+                            )}
                         </h2>
-                        <p className='text-white/70 text-base md:text-lg font-light leading-relaxed'>
-                            Bij groeiende portefeuilles kost het handmatig
-                            controleren van bankafschriften en versturen van
-                            aanmaningen veel tijd. Onze vastgoed betaalsoftware
-                            verwerkt transacties automatisch en geeft realtime
-                            inzicht in betalingsachterstanden.
+
+                        <p className='text-[#060e32]/75 text-base md:text-lg leading-relaxed font-light'>
+                            {doc?.comparisonSection?.desc ||
+                                'Bij groeiende portefeuilles kost het handmatig controleren van bankafschriften en versturen van aanmaningen veel tijd. Onze vastgoed betaalsoftware verwerkt transacties automatisch en geeft realtime inzicht in betalingsachterstanden.'}
                         </p>
                     </div>
 
-                    <div className='grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch'>
-                        {/* Legacy Column */}
-                        <div className='rounded-2xl border border-white/10 bg-slate-950/60 p-8 flex flex-col gap-6 backdrop-blur-xl'>
-                            <div className='flex items-center justify-between border-b border-white/10 pb-4'>
-                                <span className='text-xs font-mono font-bold tracking-widest text-slate-400 uppercase'>
-                                    HANDMATIGE BANKAFLETTERING
-                                </span>
-                                <span className='px-3 py-1 rounded-full bg-rose-500/10 text-rose-400 text-xs font-semibold border border-rose-500/20'>
-                                    Tijdrovend & Foutgevoelig
-                                </span>
+                    {/* Side-by-Side Comparison Matrix */}
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch'>
+                        {/* Left Card: Legacy Pain */}
+                        <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
+                            <CardBadge
+                                imageSrc='/emlinked/apps/vastgoedbeheer-software/traditionele_vastgoedsoftware.jpg'
+                                alt='Handmatige Bankaflettering'
+                                isLegacy={true}
+                            />
+
+                            <div className='space-y-6'>
+                                <div className='border-b border-black/10 pb-4 pr-16'>
+                                    <h3 className='text-lg font-bold text-amber uppercase'>
+                                        {doc?.comparisonSection?.leftTitle ||
+                                            'HANDMATIGE BANKAFLETTERING'}
+                                    </h3>
+                                </div>
+
+                                <ul className='space-y-4 text-sm text-[#060e32]/80'>
+                                    {(doc?.comparisonSection?.leftItems &&
+                                    doc.comparisonSection.leftItems.length > 0
+                                        ? doc.comparisonSection.leftItems
+                                        : [
+                                              {
+                                                  title: 'Uren per maand kwijt aan het handmatig afletteren',
+                                                  desc: 'Handmatig matchen van bankafschriften en grootboekrekeningen kost beheerders wekelijks veel tijd.',
+                                              },
+                                              {
+                                                  title: 'Mislukte incasso’s en storno’s handmatig opsporen',
+                                                  desc: 'Storneringen en geweigerde SEPA-opdrachten worden te laat opgemerkt in losse systemen.',
+                                              },
+                                              {
+                                                  title: 'Vertraagde herinneringen bij betalingsachterstand',
+                                                  desc: 'Geen automatische triggers waardoor herinneringen en aanmaningen pas na weken verstuurd worden.',
+                                              },
+                                              {
+                                                  title: 'Risico op foutieve journaalposten in het ERP',
+                                                  desc: 'Handmatig overtypen leidt tot dataverschillen en correctieboekingen aan het einde van de maand.',
+                                              },
+                                          ]
+                                    ).map((item: any, idx: number) => {
+                                        const isObj =
+                                            typeof item === 'object' &&
+                                            item !== null;
+                                        const titleText = isObj
+                                            ? item.title
+                                            : item;
+                                        const descText = isObj ? item.desc : '';
+                                        return (
+                                            <li
+                                                key={idx}
+                                                className='flex items-start gap-3'
+                                            >
+                                                <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                                <div className='space-y-0.5'>
+                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                        {titleText}
+                                                    </strong>
+                                                    {descText && (
+                                                        <span className='text-slate-600 text-xs leading-relaxed block'>
+                                                            {descText}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
                             </div>
-                            <ul className='space-y-4 text-sm text-white/70'>
-                                <li className='flex items-start gap-3'>
-                                    <XCircle className='w-5 h-5 text-rose-500 shrink-0 mt-0.5' />
-                                    <span>
-                                        Uren per maand kwijt aan het handmatig
-                                        afletteren van bankafschriften
-                                    </span>
-                                </li>
-                                <li className='flex items-start gap-3'>
-                                    <XCircle className='w-5 h-5 text-rose-500 shrink-0 mt-0.5' />
-                                    <span>
-                                        Mislukte incasso’s en storno’s handmatig
-                                        moeten opsporen
-                                    </span>
-                                </li>
-                                <li className='flex items-start gap-3'>
-                                    <XCircle className='w-5 h-5 text-rose-500 shrink-0 mt-0.5' />
-                                    <span>
-                                        Vertraagde herinneringen bij
-                                        betalingsachterstand
-                                    </span>
-                                </li>
-                                <li className='flex items-start gap-3'>
-                                    <XCircle className='w-5 h-5 text-rose-500 shrink-0 mt-0.5' />
-                                    <span>
-                                        Risico op foutieve journaalposten in het
-                                        ERP-grootboek
-                                    </span>
-                                </li>
-                            </ul>
                         </div>
 
-                        {/* Emlinked Column */}
-                        <div className='rounded-2xl border border-amber/40 bg-[#0d163d] p-8 flex flex-col gap-6 shadow-2xl backdrop-blur-xl relative overflow-hidden'>
-                            <div className='absolute -top-12 -right-12 w-40 h-40 bg-amber/10 rounded-full blur-2xl pointer-events-none' />
-                            <div className='flex items-center justify-between border-b border-white/10 pb-4 relative z-10'>
-                                <span className='text-xs font-mono font-bold tracking-widest text-amber uppercase'>
-                                    EMLINKED PAYMENT ENGINE
-                                </span>
-                                <span className='px-3 py-1 rounded-full bg-amber/20 text-amber text-xs font-semibold border border-amber/40'>
-                                    Automatische Reconciliatie
-                                </span>
+                        {/* Right Card: Emlinked Native Solution */}
+                        <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
+                            <CardBadge
+                                imageSrc='/emlinked/apps/payment/automatiseren_payment.jpg'
+                                alt='Emlinked Payment Engine'
+                                isLegacy={false}
+                            />
+
+                            <div className='space-y-6'>
+                                <div className='border-b border-black/10 pb-4 pr-16'>
+                                    <h3 className='text-lg font-bold text-amber uppercase'>
+                                        {doc?.comparisonSection?.rightTitle ||
+                                            'EMLINKED PAYMENT ENGINE'}
+                                    </h3>
+                                </div>
+
+                                <ul className='space-y-4 text-sm text-[#060e32]/80'>
+                                    {(doc?.comparisonSection?.rightItems &&
+                                    doc.comparisonSection.rightItems.length > 0
+                                        ? doc.comparisonSection.rightItems
+                                        : doc?.benefits &&
+                                            doc.benefits.length > 0
+                                          ? doc.benefits
+                                          : [
+                                                {
+                                                    title: 'Automatische bankreconciliatie via PSD2 & Direct Banking',
+                                                    desc: 'Inkomende betalingen worden realtime gekoppeld aan de juiste openstaande huurfacturen.',
+                                                },
+                                                {
+                                                    title: 'Geautomatiseerde SEPA-heraanbiedingen',
+                                                    desc: "Mislukte incasso's worden automatisch opnieuw ingediend met storneeropvolging.",
+                                                },
+                                                {
+                                                    title: 'Directe triggers voor herinneringstrajecten',
+                                                    desc: 'Aanmaningen en herinneringen worden exact op tijd verzonden volgens vooraf ingestelde schema’s.',
+                                                },
+                                                {
+                                                    title: '100% accurate journaalposten native in Business Central',
+                                                    desc: 'Direct bijgewerkt in je ERP-grootboek zonder handmatige tussenkomst of schaduwbestanden.',
+                                                },
+                                            ]
+                                    ).map((item: any, idx: number) => {
+                                        const isObj =
+                                            typeof item === 'object' &&
+                                            item !== null;
+                                        const titleText = isObj
+                                            ? item.title || item.benefit
+                                            : item;
+                                        const descText = isObj
+                                            ? item.desc || item.description
+                                            : '';
+                                        return (
+                                            <li
+                                                key={idx}
+                                                className='flex items-start gap-3'
+                                            >
+                                                <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                                <div className='space-y-0.5'>
+                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                        {titleText}
+                                                    </strong>
+                                                    {descText && (
+                                                        <span className='text-slate-600 text-xs leading-relaxed block'>
+                                                            {descText}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
                             </div>
-                            <ul className='space-y-4 text-sm text-white/90 relative z-10'>
-                                {(doc?.benefits && doc.benefits.length > 0
-                                    ? doc.benefits
-                                    : [
-                                          'Automatische bankreconciliatie via PSD2 & Direct Banking',
-                                          'Geautomatiseerde SEPA-heraanbiedingen en storneeropvolging',
-                                          'Directe triggers voor herinnerings- en aanmaningstrajecten',
-                                          '100% accurate journaalposten native in Business Central',
-                                      ]
-                                ).map((benefit: string, idx: number) => (
-                                    <li
-                                        key={idx}
-                                        className='flex items-start gap-3'
-                                    >
-                                        <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
-                                        <span>{benefit}</span>
-                                    </li>
-                                ))}
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -409,7 +519,7 @@ export function PaymentSoftwareModule({
                                     </div>
                                     <div className='rounded-xl overflow-hidden shadow-2xl'>
                                         <Image
-                                            src='/emlinked/apps/vastgoedbeheer-software/native_vastgoedsoftware.jpg'
+                                            src='/emlinked/apps/payment/tab01_SEPA-direct-debit-Incasso.jpg'
                                             alt='SEPA Direct Debit Incasso UI Preview'
                                             width={1200}
                                             height={675}
@@ -467,7 +577,7 @@ export function PaymentSoftwareModule({
                                     </div>
                                     <div className='rounded-xl overflow-hidden shadow-2xl'>
                                         <Image
-                                            src='/emlinked/apps/vastgoedbeheer-software/tab03_servicekosten.jpg'
+                                            src='/emlinked/apps/payment/tab02_realtime-ankreconciliatie.jpg'
                                             alt='Realtime Bankreconciliatie UI Preview'
                                             width={1200}
                                             height={675}
@@ -524,7 +634,7 @@ export function PaymentSoftwareModule({
                                     </div>
                                     <div className='rounded-xl overflow-hidden shadow-2xl'>
                                         <Image
-                                            src='/emlinked/apps/vastgoedbeheer-software/tab01-indexaties.jpg'
+                                            src='/emlinked/apps/payment/tab03_storneer-aanmaningsbeheer.jpg'
                                             alt='Geautomatiseerd Debiteurenbeheer UI Preview'
                                             width={1200}
                                             height={675}

@@ -118,14 +118,14 @@ export default async function PartnersSoftwarePage({
                     {partners.map((partner, idx) => (
                         <div
                             key={idx}
-                            className='p-8 rounded-2xl border border-white/10 bg-white/[0.02] space-y-6 hover:border-amber/30 transition-all flex flex-col justify-between'
+                            className='p-8 rounded-2xl border border-white/10 bg-white/2 space-y-6 hover:border-amber/30 transition-all flex flex-col justify-between'
                         >
                             <div className='space-y-4'>
                                 <div className='flex justify-between items-start'>
-                                    <div className='p-3 rounded-xl bg-white/[0.04] border border-white/10'>
+                                    <div className='p-3 rounded-xl bg-white/4 border border-white/10'>
                                         {partner.icon}
                                     </div>
-                                    <span className='px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-white/[0.06] border border-white/10 text-amber'>
+                                    <span className='px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-white/6 border border-white/10 text-amber'>
                                         {partner.badge}
                                     </span>
                                 </div>
@@ -140,7 +140,7 @@ export default async function PartnersSoftwarePage({
                     ))}
                 </div>
 
-                <div className='p-10 rounded-2xl bg-gradient-to-r from-amber/10 to-amber/5 border border-amber/20 text-center flex flex-col items-center gap-6'>
+                <div className='p-10 rounded-2xl bg-linear-to-r from-amber/10 to-amber/5 border border-amber/20 text-center flex flex-col items-center gap-6'>
                     <h2 className='text-2xl md:text-3xl font-extrabold text-white'>
                         {isEn
                             ? 'Looking for a custom ERP integration?'
