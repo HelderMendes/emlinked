@@ -51,10 +51,6 @@
         "destination": "https://www.emlinked.com/contact",
         "status": 301
     },
-    "/contact": {
-        "destination": "https://www.emlinked.com/contact",
-        "status": 301
-    },
     "https://www.emlinked.nl/search?q=erp": {
         "destination": "https://www.emlinked.com/kennisbank/",
         "status": 301
@@ -81,10 +77,6 @@
     },
     "/vastgoedsoftware": {
         "destination": "/apps",
-        "status": 301
-    },
-    "/box3-check": {
-        "destination": "/box3-check",
         "status": 301
     },
     "/integraties": {

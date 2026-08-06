@@ -190,6 +190,52 @@ export function HuurdersportaalModule({
                                     Bekijk alle apps
                                 </Link>
                             </div>
+
+                            {/* Social Proof Avatar Cluster Bar */}
+                            <div className='flex items-center gap-4 pt-4 border-t border-white/10 mt-1'>
+                                <div className='flex -space-x-2.5 overflow-visible relative shrink-0'>
+                                    <div className='relative group z-30 hover:z-50'>
+                                        <Image
+                                            src='/hero/levi-bosboom.png'
+                                            alt='Levi Bosboom'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                    <div className='relative group z-25 hover:z-50'>
+                                        <Image
+                                            src='/hero/angelique.png'
+                                            alt='Angelique van Doorn'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                    <div className='relative group z-20 hover:z-50'>
+                                        <Image
+                                            src='/hero/MichelDeWaal.jpg'
+                                            alt='Michel De Waal'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                    <div className='relative group z-15 hover:z-50'>
+                                        <Image
+                                            src='/hero/sander-bot.png'
+                                            alt='Sander Bot'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                </div>
+                                <span className='text-xs text-white/70 font-light leading-snug'>
+                                    Vertrouwd door professionele
+                                    vastgoedbeheerders en beleggers in Nederland
+                                </span>
+                            </div>
                         </div>
 
                         {/* Right Hero Graphic Mockup */}
@@ -217,7 +263,7 @@ export function HuurdersportaalModule({
 
                                     <div className='relative aspect-12/11 w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
                                         <Image
-                                            src='/emlinked/apps/huurdersportaal/huurderesportaal_hero.png'
+                                            src='/emlinked/home/Huurdersportaal.png'
                                             alt='Huurdersportaal Software UI Self-Service Mockup'
                                             width={1400}
                                             height={875}
@@ -694,7 +740,7 @@ export function HuurdersportaalModule({
 
                             <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                 <Image
-                                    src='/emlinked/apps/huurdersportaal/automatiseren_huurdersportaal.jpg'
+                                    src='/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
                                     alt='Huurdersportaal Illustratie'
                                     width={700}
                                     height={500}

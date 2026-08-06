@@ -2,7 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Quote, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import {
+    Quote,
+    ChevronLeft,
+    ChevronRight,
+    ArrowRight,
+    MessageSquareQuote,
+} from 'lucide-react';
 
 export interface TestimonialItem {
     id: string;
@@ -130,11 +136,11 @@ export function TestimonialSlider({ locale = 'nl' }: TestimonialSliderProps) {
                 {/* Active Review Quote Card (Whole card links to /referenties page) */}
                 <Link
                     href={getPath('/referenties')}
-                    className='block p-6 md:p-8 rounded-2xl border border-neutral-300 hover:border-amber/50 bg-transparent dark:bg-amber/5 relative space-y-6 text-center shadow-sm hover:shadow-md transition-all duration-300 max-w-4xl mx-auto flex flex-col items-center cursor-pointer group'
+                    className=' p-6 md:p-8 rounded-2xl border border-neutral-300 hover:border-amber/50 bg-transparent dark:bg-amber/5 relative space-y-6 text-center shadow-sm hover:shadow-md transition-all duration-300 max-w-4xl mx-auto flex flex-col items-center cursor-pointer group'
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => setIsPaused(false)}
                 >
-                    <Quote className='h-8 w-8 text-amber/40 absolute top-4 right-4 pointer-events-none group-hover:text-amber/70 transition-colors' />
+                    <MessageSquareQuote className='h-8 w-8 text-amber  absolute top-2 right-2 pointer-events-none group-hover:text-amber/70 transition-colors' />
 
                     <div className='space-y-2 max-w-3xl mx-auto text-center'>
                         <h3 className='font-extrabold font-display text-lg sm:text-xl text-amber tracking-tight group-hover:underline decoration-amber/40 underline-offset-4'>
@@ -147,16 +153,16 @@ export function TestimonialSlider({ locale = 'nl' }: TestimonialSliderProps) {
                     </div>
 
                     {/* Author info & Navigation controls bar */}
-                    <div className='flex items-center justify-between pt-4 border-t border-amber/20 flex-wrap gap-4 w-full'>
+                    <div className='flex items-center justify-between pt-4 border-t border-black/20 flex-wrap gap-4 w-full'>
                         <div className='flex items-center gap-3 text-left'>
                             <div className='h-10 w-10 rounded-full bg-amber/20 border border-amber/40 flex items-center justify-center text-amber font-bold text-xs font-mono shadow-sm shrink-0 group-hover:bg-amber group-hover:text-[#060e32] transition-colors'>
                                 {current.initials}
                             </div>
                             <div>
-                                <h4 className='font-bold text-sm text-[#060e32] dark:text-white'>
+                                <h4 className='font-bold text-sm text-amber dark:text-white'>
                                     {current.author}
                                 </h4>
-                                <span className='text-xs text-amber font-mono font-semibold block'>
+                                <span className='text-xs text-darkBlue font-mono font-semibold block'>
                                     {current.role} — {current.company}
                                 </span>
                             </div>
@@ -170,7 +176,7 @@ export function TestimonialSlider({ locale = 'nl' }: TestimonialSliderProps) {
                             <button
                                 onClick={handlePrev}
                                 aria-label='Vorige referentie'
-                                className='p-2 rounded-full border border-amber/30 bg-amber/10 hover:bg-amber hover:text-[#060e32] text-amber transition-all duration-200 shadow-sm cursor-pointer'
+                                className='p-2 rounded-full border border-white bg-black/20 hover:bg-amber text-white transition-all duration-200 shadow-sm cursor-pointer'
                             >
                                 <ChevronLeft className='h-4 w-4' />
                             </button>
@@ -183,8 +189,8 @@ export function TestimonialSlider({ locale = 'nl' }: TestimonialSliderProps) {
                                         aria-label={`Referentie ${idx + 1}`}
                                         className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                                             idx === currentIndex
-                                                ? 'w-6 bg-amber'
-                                                : 'w-2 bg-amber/30 hover:bg-amber/60'
+                                                ? 'w-6 bg-amber/40'
+                                                : 'w-2 bg-black/20 hover:bg-amber'
                                         }`}
                                     />
                                 ))}
@@ -193,7 +199,7 @@ export function TestimonialSlider({ locale = 'nl' }: TestimonialSliderProps) {
                             <button
                                 onClick={handleNext}
                                 aria-label='Volgende referentie'
-                                className='p-2 rounded-full border border-amber/30 bg-amber/10 hover:bg-amber hover:text-[#060e32] text-amber transition-all duration-200 shadow-sm cursor-pointer'
+                                className='p-2 rounded-full border border-white bg-black/20 hover:bg-amber text-white transition-all duration-200 shadow-sm cursor-pointer'
                             >
                                 <ChevronRight className='h-4 w-4' />
                             </button>

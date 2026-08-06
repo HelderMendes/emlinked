@@ -236,6 +236,52 @@ export function VastgoedbeheerSoftwareModule({
                                     </span>
                                 </Link>
                             </div>
+
+                            {/* Social Proof Avatar Cluster Bar */}
+                            <div className='flex items-center gap-4 pt-4 border-t border-white/10 mt-1'>
+                                <div className='flex -space-x-2.5 overflow-visible relative shrink-0'>
+                                    <div className='relative group z-30 hover:z-50'>
+                                        <Image
+                                            src='/hero/levi-bosboom.png'
+                                            alt='Levi Bosboom'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                    <div className='relative group z-25 hover:z-50'>
+                                        <Image
+                                            src='/hero/angelique.png'
+                                            alt='Angelique van Doorn'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                    <div className='relative group z-20 hover:z-50'>
+                                        <Image
+                                            src='/hero/MichelDeWaal.jpg'
+                                            alt='Michel De Waal'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                    <div className='relative group z-15 hover:z-50'>
+                                        <Image
+                                            src='/hero/sander-bot.png'
+                                            alt='Sander Bot'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                </div>
+                                <span className='text-xs text-white/70 font-light leading-snug'>
+                                    Vertrouwd door professionele
+                                    vastgoedbeheerders en beleggers in Nederland
+                                </span>
+                            </div>
                         </div>
 
                         {/* Right Column: High-Tech Graphic Card (Higher & No Outer Padding/Inner Image Border) */}
@@ -262,7 +308,7 @@ export function VastgoedbeheerSoftwareModule({
                                 {/* Showcase Image (Flush Edge-to-Edge, Borderless & Higher Aspect Ratio) */}
                                 <div className='relative aspect-square w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
                                     <Image
-                                        src='/emlinked/apps/vastgoedbeheer-software/apps_vastgoedbeheer-hero.jpg'
+                                        src='/emlinked/home/DrieKrachtigeApps_VastgoedbeheerSoftware.png'
                                         alt='Emlinked Core Vastgoedbeheer Dashboard Mockup'
                                         width={1200}
                                         height={1500}
@@ -916,7 +962,7 @@ export function VastgoedbeheerSoftwareModule({
                             {/* Right Column: Exact Homepage Illustration Image */}
                             <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                 <Image
-                                    src='/emlinked/apps/vastgoedbeheer-software/automatiseren_vastgoedbehher.jpg'
+                                    src='/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
                                     alt={
                                         doc?.cta?.title ||
                                         'Klaar om je vastgoedbeheer software te moderniseren?'

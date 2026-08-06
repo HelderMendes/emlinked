@@ -36,8 +36,15 @@ export function proxy(request: NextRequest) {
 
     let redirect: { destination: string; status: number } | undefined =
         redirectsMap[legacyAbsoluteUrl] ||
-        redirectsMap[legacyAbsoluteUrlNoSearch] ||
-        redirectsMap[normalizedPathname];
+        redirectsMap[legacyAbsoluteUrlNoSearch];
+
+    // Only apply relative path redirects if on legacy domain or if destination is a local relative route
+    if (!redirect && redirectsMap[normalizedPathname]) {
+        const potentialRedirect = redirectsMap[normalizedPathname];
+        if (isLegacyDomain || potentialRedirect.destination.startsWith('/')) {
+            redirect = potentialRedirect;
+        }
+    }
 
     // Bypass root homepage redirects from relative paths unless on legacy domain
     if (normalizedPathname === '/' && !isLegacyDomain) {

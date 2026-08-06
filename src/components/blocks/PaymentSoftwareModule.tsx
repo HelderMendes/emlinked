@@ -189,6 +189,52 @@ export function PaymentSoftwareModule({
                                     Bekijk onze tarieven
                                 </Link>
                             </div>
+
+                            {/* Social Proof Avatar Cluster Bar */}
+                            <div className='flex items-center gap-4 pt-4 border-t border-white/10 mt-1'>
+                                <div className='flex -space-x-2.5 overflow-visible relative shrink-0'>
+                                    <div className='relative group z-30 hover:z-50'>
+                                        <Image
+                                            src='/hero/levi-bosboom.png'
+                                            alt='Levi Bosboom'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                    <div className='relative group z-25 hover:z-50'>
+                                        <Image
+                                            src='/hero/angelique.png'
+                                            alt='Angelique van Doorn'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                    <div className='relative group z-20 hover:z-50'>
+                                        <Image
+                                            src='/hero/MichelDeWaal.jpg'
+                                            alt='Michel De Waal'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                    <div className='relative group z-15 hover:z-50'>
+                                        <Image
+                                            src='/hero/sander-bot.png'
+                                            alt='Sander Bot'
+                                            width={32}
+                                            height={32}
+                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                        />
+                                    </div>
+                                </div>
+                                <span className='text-xs text-white/70 font-light leading-snug'>
+                                    Vertrouwd door professionele
+                                    vastgoedbeheerders en beleggers in Nederland
+                                </span>
+                            </div>
                         </div>
 
                         {/* Right Hero Graphic Mockup */}
@@ -218,7 +264,7 @@ export function PaymentSoftwareModule({
 
                                     <div className='relative aspect-16/12 w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
                                         <Image
-                                            src='/emlinked/apps/payment/payment_hero.jpg'
+                                            src='/emlinked/home/DrieKrachtigeApps_PaymentSoftware.png'
                                             alt='Payment Software Hero Mockup'
                                             width={1400}
                                             height={1100}
@@ -697,7 +743,7 @@ export function PaymentSoftwareModule({
 
                             <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                 <Image
-                                    src='/emlinked/apps/payment/automatiseren_payment.jpg'
+                                    src='/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
                                     alt='Payment Software Illustratie'
                                     width={700}
                                     height={500}
