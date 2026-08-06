@@ -167,8 +167,37 @@ export function proxy(request: NextRequest) {
 
     // If they explicitly visit an /en/ route, make sure their cookie gets synced to 'en'
     if (firstPathSegment === 'en') {
-        const response = NextResponse.next();
+        let internalPath = normalizedPathname;
+
+        // Translate English URL slugs to filesystem folder names under /en/
+        if (internalPath === '/en/about-us') internalPath = '/en/over-ons';
+        if (internalPath === '/en/news') internalPath = '/en/nieuws';
+        if (internalPath === '/en/apps/property-management-software')
+            internalPath = '/en/apps/vastgoedbeheer-software';
+        if (internalPath === '/en/apps/tenant-portal')
+            internalPath = '/en/apps/huurdersportaal';
+        if (internalPath.startsWith('/en/docs'))
+            internalPath = internalPath.replace('/en/docs', '/docs');
+
         const localeCookie = request.cookies.get('emlinked_locale')?.value;
+
+        if (internalPath !== normalizedPathname) {
+            const rewriteUrl = new URL(
+                `${internalPath}${url.search}`,
+                request.url,
+            );
+            const response = NextResponse.rewrite(rewriteUrl);
+            if (localeCookie !== 'en') {
+                response.cookies.set('emlinked_locale', 'en', {
+                    path: '/',
+                    maxAge: 31536000,
+                    sameSite: 'lax',
+                });
+            }
+            return response;
+        }
+
+        const response = NextResponse.next();
         if (localeCookie !== 'en') {
             response.cookies.set('emlinked_locale', 'en', { path: '/', maxAge: 31536000, sameSite: 'lax' });
         }

@@ -144,7 +144,7 @@ export function HuurdersportaalModule({
             <section className='relative px-6 py-12 md:py-20 overflow-hidden bg-texture-navy text-white border-b border-white/10'>
                 <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
 
-                <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10'>
+                <div className='mx-auto max-w-7xl relative z-10'>
                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
                         {/* Left Copy */}
                         <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
@@ -692,9 +692,9 @@ export function HuurdersportaalModule({
             </section>
 
             {/* ── BLOCK 4: CALL TO ACTION BANNER ── */}
-            <section className='py-20 px-6 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
-                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                    <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+            <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
+                <div className='mx-auto max-w-8xl px-0'>
+                    <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                 <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
@@ -740,7 +740,7 @@ export function HuurdersportaalModule({
 
                             <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                 <Image
-                                    src='/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
+                                    src='/emlinked/apps/huurdersportaal/automatiseren_huurdersportaal.jpg'
                                     alt='Huurdersportaal Illustratie'
                                     width={700}
                                     height={500}

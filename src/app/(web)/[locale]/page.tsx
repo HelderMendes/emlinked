@@ -314,9 +314,9 @@ export default async function HomePage({ params }: HomePageProps) {
                         return (
                             <section
                                 key={block._key}
-                                className='bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] animate-none dark:text-[#060e32] dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-2 px-6 md:px-10 shadow-sm'
+                                className='bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] animate-none dark:text-[#060e32] dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-3 px-4 sm:px-6 lg:px-8 shadow-sm'
                             >
-                                <div className='max-w-8xl mx-auto flex items-center justify-center gap-9 flex-wrap'>
+                                <div className='max-w-7xl mx-auto flex items-center justify-center gap-6 sm:gap-9 flex-wrap'>
                                     {items.map((item: any) => (
                                         <div
                                             key={item._key}
@@ -352,9 +352,9 @@ export default async function HomePage({ params }: HomePageProps) {
                             return (
                                 <section
                                     key={block._key}
-                                    className='px-6 py-24 bg-background border-b border-slate-300 relative overflow-hidden'
+                                    className='px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-20 bg-background border-b border-slate-300 relative overflow-hidden'
                                 >
-                                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10'>
+                                    <div className='mx-auto max-w-7xl relative z-10'>
                                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
                                             {/* Left Column: Text, Bullets, CTA */}
                                             <div className='lg:col-span-7 flex flex-col gap-6 text-left'>

@@ -74,7 +74,7 @@ export function HeroSection({
             {/* Animated Data Grid Canvas overlay */}
             <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
 
-            <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10'>
+            <div className='mx-auto max-w-7xl relative z-10'>
                 <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
                     {/* Left Column: Copy & Actions */}
                     <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
@@ -85,7 +85,9 @@ export function HeroSection({
                             </span>
                         )}
 
-                        <h1 className={`font-display font-bold tracking-tight text-white dark:text-[#060e32] leading-[1.1] ${titleClassName || 'text-4xl sm:text-5xl lg:text-6xl'}`}>
+                        <h1
+                            className={`font-display font-bold tracking-tight text-white dark:text-[#060e32] leading-[1.1] ${titleClassName || 'text-4xl sm:text-5xl lg:text-6xl'}`}
+                        >
                             {formatHeroTitle(title)}
                         </h1>
 

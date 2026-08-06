@@ -275,21 +275,23 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         let translatedPath = path;
         translatedPath = translatedPath.replace(
             '/apps/vastgoedbeheer-software',
-            '/solutions/property-management-software',
+            '/apps/property-management-software',
         );
         translatedPath = translatedPath.replace(
             '/apps/huurdersportaal',
-            '/solutions/tenant-portal',
+            '/apps/tenant-portal',
         );
-        translatedPath = translatedPath.replace(
-            '/apps/payment-software',
-            '/solutions/payment-software',
-        );
-        translatedPath = translatedPath.replace(
-            '/apps/payment',
-            '/solutions/payment-software',
-        );
-        translatedPath = translatedPath.replace('/apps', '/solutions');
+        if (
+            translatedPath === '/apps/payment' ||
+            translatedPath === '/apps/payment-software'
+        ) {
+            translatedPath = '/apps/payment-software';
+        } else {
+            translatedPath = translatedPath.replace(
+                '/apps/payment',
+                '/apps/payment-software',
+            );
+        }
         translatedPath = translatedPath.replace('/over-ons', '/about-us');
         translatedPath = translatedPath.replace('/nieuws', '/news');
 
@@ -304,18 +306,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         if (targetLocale === 'en') {
             path = path.replace(
                 '/apps/vastgoedbeheer-software',
-                '/solutions/property-management-software',
+                '/apps/property-management-software',
             );
-            path = path.replace(
-                '/apps/huurdersportaal',
-                '/solutions/tenant-portal',
-            );
-            path = path.replace(
-                '/apps/payment-software',
-                '/solutions/payment-software',
-            );
-            path = path.replace('/apps/payment', '/solutions/payment-software');
-            path = path.replace('/apps', '/solutions');
+            path = path.replace('/apps/huurdersportaal', '/apps/tenant-portal');
+            if (path === '/apps/payment' || path === '/apps/payment-software') {
+                path = '/apps/payment-software';
+            }
+            path = path.replace('/solutions/', '/apps/');
             path = path.replace('/over-ons', '/about-us');
             path = path.replace('/nieuws', '/news');
 
@@ -328,14 +325,22 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                 path = path.replace('/en', '') || '/';
             }
             path = path.replace(
+                '/apps/property-management-software',
+                '/apps/vastgoedbeheer-software',
+            );
+            path = path.replace(
                 '/solutions/property-management-software',
                 '/apps/vastgoedbeheer-software',
             );
+            path = path.replace('/apps/tenant-portal', '/apps/huurdersportaal');
             path = path.replace(
                 '/solutions/tenant-portal',
                 '/apps/huurdersportaal',
             );
-            path = path.replace('/solutions/payment-software', '/apps/payment');
+            path = path.replace(
+                '/solutions/payment-software',
+                '/apps/payment-software',
+            );
             path = path.replace('/solutions', '/apps');
             path = path.replace('/about-us', '/over-ons');
             path = path.replace('/news', '/nieuws');

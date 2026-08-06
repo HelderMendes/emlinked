@@ -352,7 +352,7 @@ export function VastgoedbeheerSoftwareModule({
 
             {/* Trust Signals (Single Full-Width Line) */}
             <section className='bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] animate-none dark:text-[#060e32] dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-2 px-6 md:px-10 shadow-sm'>
-                <div className='max-w-8xl mx-auto flex items-center justify-center gap-9 flex-wrap'>
+                <div className='max-w-7xl mx-auto flex items-center justify-center gap-9 flex-wrap'>
                     <div className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-amber dark:hover:text-amber transition-colors tracking-wide'>
                         <CheckCircle2 className='w-4 h-4 shrink-0' />
                         <span>Portefeuilles &gt; 50 verhuureenheden</span>
@@ -911,9 +911,9 @@ export function VastgoedbeheerSoftwareModule({
             </section>
 
             {/* ── BLOCK 5: CALL TO ACTION BANNER (Exact Homepage Layout & Image Parity) ── */}
-            <section className='py-20 px-6 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
-                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                    <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+            <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
+                <div className='mx-auto max-w-8xl px-0'>
+                    <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                             {/* Left Column: Copy & Action Triggers */}
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
@@ -962,7 +962,7 @@ export function VastgoedbeheerSoftwareModule({
                             {/* Right Column: Exact Homepage Illustration Image */}
                             <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                 <Image
-                                    src='/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
+                                    src='/emlinked/apps/vastgoedbeheer-software/automatiseren_vastgoedbehher.jpg'
                                     alt={
                                         doc?.cta?.title ||
                                         'Klaar om je vastgoedbeheer software te moderniseren?'

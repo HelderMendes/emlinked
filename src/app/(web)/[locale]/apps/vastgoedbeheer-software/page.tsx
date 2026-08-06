@@ -28,7 +28,10 @@ async function getVastgoedbeheerPageData(locale: string) {
             params: { locale },
         });
     } catch (e) {
-        console.error('Failed to fetch vastgoedbeheer-software page from Sanity:', e);
+        console.error(
+            'Failed to fetch vastgoedbeheer-software page from Sanity:',
+            e,
+        );
         return null;
     }
 }
@@ -46,7 +49,7 @@ export async function generateMetadata({
     const fallbackDesc = isEn
         ? 'Advanced real estate management software for property managers, retail chains, and housing corporations. 100% native Business Central integration.'
         : 'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Business Central.';
-    
+
     const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/apps/vastgoedbeheer-software' : '/apps/vastgoedbeheer-software'}`;
 
     return buildMetadata({

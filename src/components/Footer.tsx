@@ -99,17 +99,23 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
         let translatedPath = path;
         translatedPath = translatedPath.replace(
             '/apps/vastgoedbeheer-software',
-            '/solutions/property-management-software',
+            '/apps/property-management-software',
         );
         translatedPath = translatedPath.replace(
             '/apps/huurdersportaal',
-            '/solutions/tenant-portal',
+            '/apps/tenant-portal',
         );
-        translatedPath = translatedPath.replace(
-            '/apps/payment',
-            '/solutions/payment-software',
-        );
-        translatedPath = translatedPath.replace('/apps', '/solutions');
+        if (
+            translatedPath === '/apps/payment' ||
+            translatedPath === '/apps/payment-software'
+        ) {
+            translatedPath = '/apps/payment-software';
+        } else {
+            translatedPath = translatedPath.replace(
+                '/apps/payment',
+                '/apps/payment-software',
+            );
+        }
         translatedPath = translatedPath.replace('/over-ons', '/about-us');
         translatedPath = translatedPath.replace('/nieuws', '/news');
 

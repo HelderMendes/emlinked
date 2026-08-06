@@ -114,7 +114,7 @@ export function TestimonialSlider({ locale = 'nl' }: TestimonialSliderProps) {
 
     return (
         <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] dark:bg-navy-dark relative z-10'>
-            <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8'>
+            <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 space-y-8'>
                 {/* Header (Centered) */}
                 <div className='space-y-3 max-w-3xl mx-auto text-center flex flex-col items-center'>
                     <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>

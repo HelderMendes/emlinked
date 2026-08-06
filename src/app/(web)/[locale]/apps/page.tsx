@@ -437,9 +437,9 @@ export default async function AppsPage({ params }: AppsPageProps) {
 
             {/* SECTION 5: FINAL PRE-FOOTER CONVERSION CTA (Exact Homepage Layout Parity) */}
             {ctaBlock && (
-                <section className='py-20 px-6 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative overflow-hidden z-10'>
-                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                        <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+                <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative overflow-hidden z-10'>
+                    <div className='mx-auto max-w-8xl px-0'>
+                        <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                             <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                                 {/* Left Column: Copy & Action Triggers */}
                                 <div className='lg:col-span-8 flex flex-col gap-5 text-left'>

@@ -47,6 +47,8 @@ const content = {
     },
 } as const;
 
+import { usePathname } from 'next/navigation';
+
 export default function StickyAnnouncement({
     locale = 'nl',
     settings,
@@ -54,6 +56,7 @@ export default function StickyAnnouncement({
     const [isOpen, setIsOpen] = useState(false);
     const [isDemoOpen, setIsDemoOpen] = useState(false);
     const [shouldShow, setShouldShow] = useState(false);
+    const pathname = usePathname();
 
     const activeLocale = locale === 'en' ? 'en' : 'nl';
     const t = content[activeLocale];
@@ -65,6 +68,10 @@ export default function StickyAnnouncement({
         }, 1200);
         return () => clearTimeout(timer);
     }, []);
+
+    // Hide sticky announcement widget on box3-check route to avoid floating box clutter
+    const isBox3Page = pathname?.includes('box3-check');
+    if (isBox3Page) return null;
 
     // Only render if announcement is active in settings
     if (!shouldShow || settings?.announcementActive === false) return null;
