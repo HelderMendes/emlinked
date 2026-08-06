@@ -13,6 +13,7 @@ import {
     FileSpreadsheet,
     ShieldCheck,
 } from 'lucide-react';
+import { Box3CalculatorCard } from '@/components/blocks/box3/Box3CalculatorCard';
 
 export type VerhuurStatus = 100 | 50 | 0;
 
@@ -135,13 +136,29 @@ export function useBox3Calculator(initialInputs?: Partial<Box3Inputs>) {
     return { inputs, updateField, results };
 }
 
-export function Box3Calculator({ isEn = false }: { isEn?: boolean }) {
+interface Box3CalculatorProps {
+    isEn?: boolean;
+    badge?: string;
+    title?: string;
+    subtitle?: string;
+    featureTitle?: string;
+    featureItems?: string[];
+}
+
+export function Box3Calculator({
+    isEn = false,
+    badge,
+    title,
+    subtitle,
+    featureTitle,
+    featureItems,
+}: Box3CalculatorProps) {
     const { inputs, updateField, results } = useBox3Calculator();
 
     const formatCurrency = (val: number) =>
         `€ ${Math.round(Math.abs(val)).toLocaleString(isEn ? 'en-US' : 'nl-NL')}`;
 
-    const featureList = isEn
+    const defaultFeatureList = isEn
         ? [
               'Net rental return per property per year',
               'Maintenance & service costs with invoice OCR matching',
@@ -157,51 +174,65 @@ export function Box3Calculator({ isEn = false }: { isEn?: boolean }) {
               'Exporteerbaar voor uw accountant',
           ];
 
+    const featureList = featureItems?.length ? featureItems : defaultFeatureList;
+    const sectionBadge =
+        badge ||
+        (isEn
+            ? 'Free Tool · No registration required'
+            : 'Gratis Tool · Geen registratie vereist');
+    const sectionTitle =
+        title ||
+        (isEn
+            ? 'Will your real estate remain profitable after 2028?'
+            : 'Blijft uw vastgoed rendabel na 2028?');
+    const sectionSubtitle =
+        subtitle ||
+        (isEn
+            ? 'Enter your figures below. See instantly whether you are better or worse off under the new Box 3 actual yield regulations.'
+            : 'Vul uw cijfers in. U ziet direct of u beter of slechter af bent onder de nieuwe box 3-regels voor werkelijk rendement.');
+    const leftFeatureTitle =
+        featureTitle ||
+        (isEn
+            ? 'What Emlinked automatically tracks'
+            : 'Wat emlinked automatisch bijhoudt');
+
     return (
         <section
             id='calculator'
-            className='w-full bg-texture-navy py-16 px-4 md:px-8 text-white border-y border-white/10 relative overflow-hidden'
+            className='w-full bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] py-16 px-4 md:px-8 text-[#060e32] border-y border-amber/20 relative overflow-hidden'
         >
             {/* Ambient Background Glows */}
-            <div className='absolute top-0 right-1/4 w-96 h-96 bg-amber/10 rounded-full blur-3xl pointer-events-none' />
-            <div className='absolute bottom-0 left-10 w-80 h-80 bg-amber-light/5 rounded-full blur-3xl pointer-events-none' />
+            <div className='absolute top-0 right-1/4 w-96 h-96 bg-amber/15 rounded-full blur-3xl pointer-events-none' />
+            <div className='absolute bottom-0 left-10 w-80 h-80 bg-amber-light/10 rounded-full blur-3xl pointer-events-none' />
 
             <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10'>
                 {/* Left Information Column */}
                 <div className='lg:col-span-5 flex flex-col justify-between space-y-8'>
                     <div>
-                        <span className='inline-flex items-center gap-2 text-xs font-bold text-amber uppercase tracking-widest bg-amber/15 border border-amber/30 px-3.5 py-1 rounded-full mb-4'>
+                        <span className='inline-flex items-center gap-2 text-xs font-bold text-amber uppercase tracking-widest bg-amber/15 border border-amber/35 px-3.5 py-1 rounded-full mb-4 shadow-xs backdrop-blur-md'>
                             <Sparkles className='w-3.5 h-3.5' />
-                            {isEn
-                                ? 'Free Tool · No registration required'
-                                : 'Gratis Tool · Geen registratie vereist'}
+                            {sectionBadge}
                         </span>
-                        <h2 className='font-display text-3xl md:text-4xl font-extrabold text-white leading-tight mt-2 mb-4'>
-                            {isEn
-                                ? 'Will your real estate remain profitable after 2028?'
-                                : 'Blijft uw vastgoed rendabel na 2028?'}
+                        <h2 className='font-display text-3xl md:text-4xl font-extrabold text-[#060e32] leading-tight mt-2 mb-4'>
+                            {sectionTitle}
                         </h2>
-                        <p className='text-white/75 text-base md:text-lg font-light leading-relaxed mb-6'>
-                            {isEn
-                                ? 'Enter your figures below. See instantly whether you are better or worse off under the new Box 3 actual yield regulations.'
-                                : 'Vul uw cijfers in. U ziet direct of u beter of slechter af bent onder de nieuwe box 3-regels voor werkelijk rendement.'}
+                        <p className='text-[#060e32]/80 text-base md:text-lg font-light leading-relaxed mb-6'>
+                            {sectionSubtitle}
                         </p>
                     </div>
 
-                    <div className='p-6 bg-slate-900/80 border border-white/10 rounded-2xl space-y-4 backdrop-blur-xl shadow-xl'>
-                        <h3 className='text-xs font-bold text-amber uppercase tracking-wider mb-2 flex items-center gap-2'>
-                            <ShieldCheck className='w-4 h-4 text-amber' />
-                            {isEn
-                                ? 'What Emlinked automatically tracks'
-                                : 'Wat emlinked automatisch bijhoudt'}
+                    <div className='space-y-4 pt-2'>
+                        <h3 className='text-lg md:text-xl mb-5 font-bold text-amber flex items-center gap-2.5'>
+                            <ShieldCheck className='w-6 h-6 text-amber shrink-0' />
+                            <span>{leftFeatureTitle}</span>
                         </h3>
-                        <div className='space-y-3'>
-                            {featureList.map((item, idx) => (
+                        <div className='space-y-3.5'>
+                            {featureList.map((item: string, idx: number) => (
                                 <div
                                     key={idx}
-                                    className='flex items-center gap-3 text-xs md:text-sm text-white/85'
+                                    className='flex items-center gap-3 text-sm md:text-base text-[#060e32]/90 font-medium'
                                 >
-                                    <span className='w-5 h-5 rounded-full bg-amber/20 text-amber flex items-center justify-center text-xs font-bold shrink-0'>
+                                    <span className='w-5 h-5 rounded-full bg-amber/15 text-amber border border-amber/40 flex items-center justify-center text-xs font-bold shrink-0 shadow-xs'>
                                         ✓
                                     </span>
                                     <span>{item}</span>
@@ -212,289 +243,13 @@ export function Box3Calculator({ isEn = false }: { isEn?: boolean }) {
                 </div>
 
                 {/* Right Form & Results Interactive Card */}
-                <div className='lg:col-span-7 bg-slate-900/90 border border-amber/30 rounded-3xl p-6 md:p-8 backdrop-blur-2xl shadow-2xl relative overflow-hidden'>
-                    <div className='flex items-center justify-between border-b border-white/10 pb-4 mb-6'>
-                        <div className='flex items-center gap-3'>
-                            <div className='p-2.5 rounded-xl bg-amber/15 border border-amber/30 text-amber'>
-                                <Calculator className='w-5 h-5' />
-                            </div>
-                            <div>
-                                <h3 className='text-base font-bold text-white'>
-                                    {isEn
-                                        ? 'Box 3 Yield Calculator 2028'
-                                        : 'Box 3-rendement berekenen · 2028'}
-                                </h3>
-                                <p className='text-xs text-white/60'>
-                                    {isEn
-                                        ? 'Simulate your tax shift in real time'
-                                        : 'Simuleer direct uw fiscale verschuiving'}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Inputs Grid */}
-                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
-                        {/* WOZ Value */}
-                        <div>
-                            <label className='block text-xs font-semibold text-white/70 mb-1.5 uppercase tracking-wider'>
-                                {isEn
-                                    ? 'WOZ Property Value'
-                                    : 'WOZ-waarde pand (€)'}
-                            </label>
-                            <div className='flex items-center bg-slate-950/80 border border-white/20 rounded-xl overflow-hidden focus-within:border-amber transition-colors'>
-                                <span className='px-3 text-sm text-white/40 border-r border-white/10'>
-                                    €
-                                </span>
-                                <input
-                                    type='number'
-                                    className='w-full bg-transparent px-3.5 py-2.5 text-sm font-semibold text-white focus:outline-none'
-                                    value={inputs.woz}
-                                    onChange={(e) =>
-                                        updateField(
-                                            'woz',
-                                            Number(e.target.value),
-                                        )
-                                    }
-                                    step={10000}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Gross Rent */}
-                        <div>
-                            <label className='block text-xs font-semibold text-white/70 mb-1.5 uppercase tracking-wider'>
-                                {isEn
-                                    ? 'Gross Rent / year'
-                                    : 'Bruto huurinkomsten / jr (€)'}
-                            </label>
-                            <div className='flex items-center bg-slate-950/80 border border-white/20 rounded-xl overflow-hidden focus-within:border-amber transition-colors'>
-                                <span className='px-3 text-sm text-white/40 border-r border-white/10'>
-                                    €
-                                </span>
-                                <input
-                                    type='number'
-                                    className='w-full bg-transparent px-3.5 py-2.5 text-sm font-semibold text-white focus:outline-none'
-                                    value={inputs.huur}
-                                    onChange={(e) =>
-                                        updateField(
-                                            'huur',
-                                            Number(e.target.value),
-                                        )
-                                    }
-                                    step={500}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Maintenance Costs */}
-                        <div>
-                            <label className='block text-xs font-semibold text-white/70 mb-1.5 uppercase tracking-wider'>
-                                {isEn
-                                    ? 'Maintenance Costs / year'
-                                    : 'Onderhoudskosten / jr (€)'}
-                            </label>
-                            <div className='flex items-center bg-slate-950/80 border border-white/20 rounded-xl overflow-hidden focus-within:border-amber transition-colors'>
-                                <span className='px-3 text-sm text-white/40 border-r border-white/10'>
-                                    €
-                                </span>
-                                <input
-                                    type='number'
-                                    className='w-full bg-transparent px-3.5 py-2.5 text-sm font-semibold text-white focus:outline-none'
-                                    value={inputs.kosten}
-                                    onChange={(e) =>
-                                        updateField(
-                                            'kosten',
-                                            Number(e.target.value),
-                                        )
-                                    }
-                                    step={500}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Mortgage Interest */}
-                        <div>
-                            <label className='block text-xs font-semibold text-white/70 mb-1.5 uppercase tracking-wider'>
-                                {isEn
-                                    ? 'Mortgage Interest / year'
-                                    : 'Hypotheekrente / jr (€)'}
-                            </label>
-                            <div className='flex items-center bg-slate-950/80 border border-white/20 rounded-xl overflow-hidden focus-within:border-amber transition-colors'>
-                                <span className='px-3 text-sm text-white/40 border-r border-white/10'>
-                                    €
-                                </span>
-                                <input
-                                    type='number'
-                                    className='w-full bg-transparent px-3.5 py-2.5 text-sm font-semibold text-white focus:outline-none'
-                                    value={inputs.rente}
-                                    onChange={(e) =>
-                                        updateField(
-                                            'rente',
-                                            Number(e.target.value),
-                                        )
-                                    }
-                                    step={500}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Total Mortgage Debt */}
-                        <div>
-                            <label className='block text-xs font-semibold text-white/70 mb-1.5 uppercase tracking-wider'>
-                                {isEn
-                                    ? 'Mortgage Debt Total'
-                                    : 'Hypotheekschuld totaal (€)'}
-                            </label>
-                            <div className='flex items-center bg-slate-950/80 border border-white/20 rounded-xl overflow-hidden focus-within:border-amber transition-colors'>
-                                <span className='px-3 text-sm text-white/40 border-r border-white/10'>
-                                    €
-                                </span>
-                                <input
-                                    type='number'
-                                    className='w-full bg-transparent px-3.5 py-2.5 text-sm font-semibold text-white focus:outline-none'
-                                    value={inputs.schuld}
-                                    onChange={(e) =>
-                                        updateField(
-                                            'schuld',
-                                            Number(e.target.value),
-                                        )
-                                    }
-                                    step={5000}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Capital Value Appreciation */}
-                        <div>
-                            <label className='block text-xs font-semibold text-white/70 mb-1.5 uppercase tracking-wider'>
-                                {isEn
-                                    ? 'Value Growth (%/yr)'
-                                    : 'Waardestijging (%/jr)'}
-                            </label>
-                            <div className='flex items-center bg-slate-950/80 border border-white/20 rounded-xl overflow-hidden focus-within:border-amber transition-colors'>
-                                <span className='px-3 text-sm text-white/40 border-r border-white/10'>
-                                    %
-                                </span>
-                                <input
-                                    type='number'
-                                    className='w-full bg-transparent px-3.5 py-2.5 text-sm font-semibold text-white focus:outline-none'
-                                    value={inputs.waardeStijgingPct}
-                                    onChange={(e) =>
-                                        updateField(
-                                            'waardeStijgingPct',
-                                            Number(e.target.value),
-                                        )
-                                    }
-                                    step={0.5}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Rental Occupancy Status */}
-                        <div className='sm:col-span-2 mt-1'>
-                            <label className='block text-xs font-semibold text-white/70 mb-2 uppercase tracking-wider'>
-                                {isEn ? 'Rental Status' : 'Verhuurstatus'}
-                            </label>
-                            <div className='grid grid-cols-3 gap-2'>
-                                {[
-                                    {
-                                        label: isEn
-                                            ? 'Full (≥90%)'
-                                            : 'Volledig (≥90%)',
-                                        val: 100,
-                                    },
-                                    {
-                                        label: isEn
-                                            ? 'Partial (<90%)'
-                                            : 'Deels (<90%)',
-                                        val: 50,
-                                    },
-                                    {
-                                        label: isEn
-                                            ? 'Not rented'
-                                            : 'Niet verhuurd',
-                                        val: 0,
-                                    },
-                                ].map((option) => (
-                                    <button
-                                        key={option.val}
-                                        type='button'
-                                        onClick={() =>
-                                            updateField(
-                                                'verhuurPct',
-                                                option.val as VerhuurStatus,
-                                            )
-                                        }
-                                        className={`py-2.5 px-3 text-xs rounded-xl border transition-all duration-200 text-center font-medium ${
-                                            inputs.verhuurPct === option.val
-                                                ? 'border-amber bg-amber/20 text-amber font-bold shadow-sm'
-                                                : 'border-white/15 text-white/60 hover:border-white/30 hover:text-white'
-                                        }`}
-                                    >
-                                        {option.label}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Results Output Section */}
-                    <div
-                        className={`mt-6 p-5 rounded-2xl border transition-all duration-300 ${
-                            results.verdictType === 'good'
-                                ? 'bg-amber/15 border-amber/40 text-amber'
-                                : results.verdictType === 'neutral'
-                                  ? 'bg-slate-800/80 border-white/20 text-white'
-                                  : 'bg-red-500/15 border-red-500/30 text-red-200'
-                        }`}
-                    >
-                        <div className='font-bold text-base flex items-center gap-2 mb-3'>
-                            {results.verdictType === 'good' && (
-                                <CheckCircle2 className='w-5 h-5 shrink-0' />
-                            )}
-                            {results.verdictType === 'neutral' && (
-                                <Info className='w-5 h-5 shrink-0 text-amber' />
-                            )}
-                            {results.verdictType === 'bad' && (
-                                <AlertTriangle className='w-5 h-5 shrink-0 text-red-400' />
-                            )}
-                            <span>{results.verdictTitle}</span>
-                        </div>
-
-                        <div className='grid grid-cols-2 gap-3 my-4'>
-                            <div className='bg-slate-950/60 p-3.5 rounded-xl text-center border border-white/5'>
-                                <div className='text-[11px] text-white/50 uppercase tracking-wider font-medium'>
-                                    {isEn
-                                        ? 'Tax Current (Forfait)'
-                                        : 'Belasting nu (forfait)'}
-                                </div>
-                                <div className='text-lg md:text-xl font-extrabold text-white mt-1'>
-                                    {formatCurrency(results.belastingNu)}
-                                </div>
-                            </div>
-                            <div className='bg-slate-950/60 p-3.5 rounded-xl text-center border border-white/5'>
-                                <div className='text-[11px] text-white/50 uppercase tracking-wider font-medium'>
-                                    {isEn
-                                        ? 'Tax 2028 (Actual Yield)'
-                                        : 'Belasting 2028 (werkelijk)'}
-                                </div>
-                                <div className='text-lg md:text-xl font-extrabold text-amber mt-1'>
-                                    {formatCurrency(results.belastingNieuw)}
-                                </div>
-                            </div>
-                        </div>
-
-                        <p className='text-xs text-white/80 leading-relaxed font-medium'>
-                            {results.verdictDetail}
-                        </p>
-                    </div>
-
-                    <p className='text-center text-[11px] text-white/40 mt-4'>
-                        {isEn
-                            ? 'Indicative calculation · High Court guidelines · No formal tax advice'
-                            : 'Indicatief · Eerste Kamer akkoord in behandeling · Geen formeel belastingadvies'}
-                    </p>
+                <div className='lg:col-span-7'>
+                    <Box3CalculatorCard
+                        isEn={isEn}
+                        inputs={inputs}
+                        updateField={updateField}
+                        results={results}
+                    />
                 </div>
             </div>
         </section>

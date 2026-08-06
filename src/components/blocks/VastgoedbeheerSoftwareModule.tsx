@@ -214,21 +214,21 @@ export function VastgoedbeheerSoftwareModule({
                                 )}
                             </p>
 
-                            {/* Primary & Secondary Action Buttons (Equal Height h-14) */}
+                            {/* Primary & Secondary Action Buttons */}
                             <div className='flex flex-col sm:flex-row gap-4 mt-2'>
                                 <GlowingLink
                                     href='#demo'
-                                    className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32] transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
+                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
                                 >
-                                    <span className='flex items-center justify-center gap-2'>
+                                    <span className='flex items-center justify-center gap-2 text-white'>
                                         <span>Gratis live demo aanvragen</span>
-                                        <ArrowRight className='w-5 h-5' />
+                                        <ArrowRight className='w-5 h-5 text-white' />
                                     </span>
                                 </GlowingLink>
 
                                 <Link
                                     href='/box3-check'
-                                    className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                                    className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
                                 >
                                     Bereken je Box 3-impact
                                     <span className='ml-2 w-5 h-5 text-white/70 group-hover:translate-x-1 transition-transform'>
@@ -664,7 +664,7 @@ export function VastgoedbeheerSoftwareModule({
                                     {/* Circular Top-Right Floating Badge */}
                                     <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
                                         <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                            FEATURE
+                                            APP
                                         </span>
                                         <span className='text-xl sm:text-2xl font-black leading-none'>
                                             01
@@ -735,7 +735,7 @@ export function VastgoedbeheerSoftwareModule({
                                     {/* Circular Top-Right Floating Badge */}
                                     <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
                                         <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                            FEATURE
+                                            APP
                                         </span>
                                         <span className='text-xl sm:text-2xl font-black leading-none'>
                                             02
@@ -806,7 +806,7 @@ export function VastgoedbeheerSoftwareModule({
                                     {/* Circular Top-Right Floating Badge */}
                                     <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
                                         <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                            FEATURE
+                                            APP
                                         </span>
                                         <span className='text-xl sm:text-2xl font-black leading-none'>
                                             03
@@ -935,21 +935,21 @@ export function VastgoedbeheerSoftwareModule({
                                 {/* Primary & Secondary Action Buttons */}
                                 <div className='flex flex-col sm:flex-row gap-4 pt-2'>
                                     <GlowingLink
-                                        href='/contact'
-                                        className='inline-flex h-14 items-center justify-center rounded-xl bg-amber hover:bg-amber-hover px-8 text-base font-bold text-[#060e32] transition-all duration-200 shadow-xl hover:scale-105 active:scale-95'
+                                        href='#demo'
+                                        className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98]'
                                     >
-                                        <span className='flex items-center justify-center gap-2'>
+                                        <span className='flex items-center justify-center gap-2 text-white'>
                                             <span>
                                                 {doc?.cta?.primary ||
                                                     'Gratis live demo aanvragen'}
                                             </span>
-                                            <ArrowRight className='h-5 w-5' />
+                                            <ArrowRight className='h-5 w-5 text-white' />
                                         </span>
                                     </GlowingLink>
 
                                     <Link
                                         href='/prijzen'
-                                        className='inline-flex h-14 items-center justify-center rounded-xl border border-white/20 hover:border-amber/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm'
+                                        className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 hover:border-white/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
                                     >
                                         <span>
                                             {doc?.cta?.secondary ||

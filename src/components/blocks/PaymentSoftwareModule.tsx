@@ -174,19 +174,19 @@ export function PaymentSoftwareModule({
                             <div className='flex flex-col sm:flex-row gap-4 mt-2'>
                                 <GlowingLink
                                     href='#demo'
-                                    className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32] transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
+                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
                                 >
-                                    <span className='flex items-center justify-center gap-2'>
+                                    <span className='flex items-center justify-center gap-2 text-white'>
                                         <span>Vraag een demonstratie aan</span>
-                                        <ArrowRight className='w-5 h-5' />
+                                        <ArrowRight className='w-5 h-5 text-white' />
                                     </span>
                                 </GlowingLink>
 
                                 <Link
                                     href='/prijzen'
-                                    className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 bg-transparent px-6 text-sm font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                                    className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
                                 >
-                                    Bekijk onze tarieven
+                                    Bekijk onze tarieven →
                                 </Link>
                             </div>
 
@@ -557,7 +557,7 @@ export function PaymentSoftwareModule({
                                 <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
                                     <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
                                         <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                            FEATURE
+                                            APP
                                         </span>
                                         <span className='text-xl sm:text-2xl font-black leading-none'>
                                             01
@@ -615,7 +615,7 @@ export function PaymentSoftwareModule({
                                 <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
                                     <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
                                         <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                            FEATURE
+                                            APP
                                         </span>
                                         <span className='text-xl sm:text-2xl font-black leading-none'>
                                             02
@@ -672,7 +672,7 @@ export function PaymentSoftwareModule({
                                 <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
                                     <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
                                         <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                            FEATURE
+                                            APP
                                         </span>
                                         <span className='text-xl sm:text-2xl font-black leading-none'>
                                             03
@@ -718,20 +718,20 @@ export function PaymentSoftwareModule({
                                 <div className='flex flex-col sm:flex-row gap-4 pt-4'>
                                     <GlowingLink
                                         href='#demo'
-                                        className='inline-flex h-14 items-center justify-center rounded-xl bg-amber hover:bg-amber-hover px-8 text-base font-semibold text-[#060e32] transition-all duration-200 shadow-md hover:scale-[1.02] active:scale-[0.98]'
+                                        className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98]'
                                     >
-                                        <span className='flex items-center justify-center gap-2'>
+                                        <span className='flex items-center justify-center gap-2 text-white'>
                                             <span>
                                                 {doc?.cta?.primary ||
                                                     'Live demo aanvragen'}
                                             </span>
-                                            <ArrowRight className='h-5 w-5' />
+                                            <ArrowRight className='h-5 w-5 text-white' />
                                         </span>
                                     </GlowingLink>
 
                                     <Link
                                         href='/prijzen'
-                                        className='inline-flex h-14 items-center justify-center rounded-xl border border-white/20 hover:border-amber/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm'
+                                        className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 hover:border-white/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
                                     >
                                         <span>
                                             {doc?.cta?.secondary ||

@@ -101,6 +101,28 @@ export const page = defineType({
                             description: 'Text displayed next to avatars',
                         }),
                         defineField({
+                            name: 'heroCard',
+                            title: 'Right Column Hero Preview Card',
+                            type: 'object',
+                            fields: [
+                                defineField({
+                                    name: 'badge',
+                                    title: 'Badge Tag',
+                                    type: 'string',
+                                }),
+                                defineField({
+                                    name: 'title',
+                                    title: 'Card Title',
+                                    type: 'string',
+                                }),
+                                defineField({
+                                    name: 'status',
+                                    title: 'Sync Status Text',
+                                    type: 'string',
+                                }),
+                            ],
+                        }),
+                        defineField({
                             name: 'imagePath',
                             title: 'Right Column Image Path (Optional)',
                             type: 'string',
@@ -119,6 +141,107 @@ export const page = defineType({
                                 subtitle: label
                                     ? `Label: ${label}`
                                     : 'Hero Block',
+                            };
+                        },
+                    },
+                }),
+                defineArrayMember({
+                    name: 'announcement',
+                    title: 'Urgency Announcement Bar',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'badge',
+                            title: 'Badge Text',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'text',
+                            title: 'Announcement Text',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'ctaLabel',
+                            title: 'CTA Label',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'ctaLink',
+                            title: 'CTA Link',
+                            type: 'string',
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            badge: 'badge',
+                            text: 'text',
+                        },
+                        prepare({ badge, text }) {
+                            return {
+                                title: `Announcement: ${badge || text || 'Notification Bar'}`,
+                                subtitle: text || 'Urgency Notification Bar',
+                            };
+                        },
+                    },
+                }),
+                defineArrayMember({
+                    name: 'workflow',
+                    title: 'Solution Workflow Steps',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'badge',
+                            title: 'Section Badge',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'title',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'items',
+                            title: 'Workflow Steps',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'step',
+                                            title: 'Step Number (e.g. 01)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Step Title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'text',
+                                            title: 'Step Text / Description',
+                                            type: 'text',
+                                            rows: 2,
+                                        }),
+                                        defineField({
+                                            name: 'feature',
+                                            title: 'Feature Tagline',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            title: 'title',
+                            badge: 'badge',
+                        },
+                        prepare({ title, badge }) {
+                            return {
+                                title: `Workflow: ${title || badge || 'Solution Steps'}`,
+                                subtitle: badge || 'Workflow Steps Block',
                             };
                         },
                     },
@@ -170,6 +293,47 @@ export const page = defineType({
                     title: 'Features List',
                     type: 'object',
                     fields: [
+                        defineField({
+                            name: 'badge',
+                            title: 'Section Badge (e.g. "Voor Wie")',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'title',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'subtitle',
+                            title: 'Section Subtitle',
+                            type: 'text',
+                            rows: 3,
+                        }),
+                        defineField({
+                            name: 'fiscalContext',
+                            title: 'Fiscale Context Callout Box',
+                            type: 'object',
+                            fields: [
+                                defineField({ name: 'badge', title: 'Badge', type: 'string' }),
+                                defineField({ name: 'title', title: 'Title', type: 'string' }),
+                                defineField({ name: 'text', title: 'Text Description', type: 'text', rows: 3 }),
+                                defineField({ name: 'image', title: 'Image Path', type: 'string' }),
+                            ],
+                        }),
+                        defineField({
+                            name: 'items',
+                            title: 'Feature Items / Pain Points',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({ name: 'title', title: 'Item Title', type: 'string' }),
+                                        defineField({ name: 'text', title: 'Item Description', type: 'text', rows: 2 }),
+                                    ],
+                                }),
+                            ],
+                        }),
                         defineField({
                             name: 'sectionTag',
                             title: 'Section Subtitle / Tag (e.g. "MODULAIR EN FLEXIBEL")',
@@ -260,15 +424,20 @@ export const page = defineType({
                     ],
                     preview: {
                         select: {
-                            title: 'sectionTitle',
+                            title: 'title',
+                            sectionTitle: 'sectionTitle',
+                            badge: 'badge',
                             tag: 'sectionTag',
                         },
-                        prepare({ title, tag }) {
+                        prepare({ title, sectionTitle, badge, tag }) {
+                            const mainTitle =
+                                title || sectionTitle || badge || tag || 'Features Block';
                             return {
-                                title: `Features: ${title || tag || 'Features Block'}`,
-                                subtitle: tag
-                                    ? `Tag: ${tag}`
-                                    : 'Features Block',
+                                title: `Features: ${mainTitle}`,
+                                subtitle:
+                                    badge || tag
+                                        ? `Badge: ${badge || tag}`
+                                        : 'Features Block',
                             };
                         },
                     },
@@ -360,8 +529,13 @@ export const page = defineType({
                     type: 'object',
                     fields: [
                         defineField({
+                            name: 'badge',
+                            title: 'Section Badge (e.g. "Klaar voor 2028?")',
+                            type: 'string',
+                        }),
+                        defineField({
                             name: 'tag',
-                            title: 'Section Subtitle / Tag Badge (e.g. "ERP INTEGRATIE")',
+                            title: 'Alternative Tag Badge',
                             type: 'string',
                         }),
                         defineField({
@@ -376,8 +550,13 @@ export const page = defineType({
                             rows: 2,
                         }),
                         defineField({
+                            name: 'buttonText',
+                            title: 'Primary Button Text',
+                            type: 'string',
+                        }),
+                        defineField({
                             name: 'buttonLabel',
-                            title: 'Button Label',
+                            title: 'Alternative Button Label',
                             type: 'string',
                         }),
                         defineField({
@@ -385,7 +564,92 @@ export const page = defineType({
                             title: 'Button Link',
                             type: 'string',
                         }),
+                        defineField({
+                            name: 'imagePath',
+                            title: 'Right Column Image Path (Optional)',
+                            type: 'string',
+                            description:
+                                'Relative path to image (e.g. /emlinked/box3/box3-automatiseren.jpg)',
+                        }),
                     ],
+                }),
+                defineArrayMember({
+                    name: 'ecosystemSection',
+                    title: 'Microsoft Ecosystem Platform Section',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'badge',
+                            title: 'Section Tag / Badge',
+                            type: 'string',
+                            description: 'Top pill tag (e.g. "MICROSOFT ECOSYSTEM")',
+                        }),
+                        defineField({
+                            name: 'title',
+                            title: 'Headline Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'subtitle',
+                            title: 'Body Text / Subtitle',
+                            type: 'text',
+                            rows: 3,
+                        }),
+                        defineField({
+                            name: 'cardTitle',
+                            title: 'Right Card Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'cardSubtitle',
+                            title: 'Right Card Subtitle',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'cardPoints',
+                            title: 'Right Card Check Bullet Points',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'string',
+                                }),
+                            ],
+                        }),
+                        defineField({
+                            name: 'trustItems',
+                            title: 'Bottom Trust Grid Items',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Item Title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'desc',
+                                            title: 'Item Description',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            title: 'title',
+                            badge: 'badge',
+                        },
+                        prepare({ title, badge }) {
+                            return {
+                                title: `Ecosystem: ${title || badge || 'Microsoft Ecosystem'}`,
+                                subtitle: badge || 'Ecosystem Platform Block',
+                            };
+                        },
+                    },
                 }),
                 defineArrayMember({
                     name: 'integrationsList',
@@ -466,6 +730,22 @@ export const page = defineType({
                     type: 'object',
                     fields: [
                         defineField({
+                            name: 'badge',
+                            title: 'Section Badge',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'title',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'subtitle',
+                            title: 'Section Subtitle',
+                            type: 'text',
+                            rows: 2,
+                        }),
+                        defineField({
                             name: 'calculatorType',
                             title: 'Calculator Type',
                             type: 'string',
@@ -479,7 +759,38 @@ export const page = defineType({
                             },
                             initialValue: 'box3',
                         }),
+                        defineField({
+                            name: 'featureTitle',
+                            title: 'Left Column Feature List Title',
+                            type: 'string',
+                            description:
+                                'Headline above feature list (e.g. "Wat emlinked automatisch bijhoudt")',
+                        }),
+                        defineField({
+                            name: 'featureItems',
+                            title: 'Left Column Feature List Items',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'string',
+                                }),
+                            ],
+                            description:
+                                'List of bullet features displayed on the left side of the calculator',
+                        }),
                     ],
+                    preview: {
+                        select: {
+                            title: 'title',
+                            badge: 'badge',
+                        },
+                        prepare({ title, badge }) {
+                            return {
+                                title: `Calculator: ${title || badge || 'Box 3 Calculator'}`,
+                                subtitle: badge || 'Calculator Widget Block',
+                            };
+                        },
+                    },
                 }),
                 defineArrayMember({
                     name: 'richText',

@@ -112,7 +112,7 @@ export default function StickyAnnouncement({
                                 damping: 20,
                                 stiffness: 300,
                             }}
-                            className='pointer-events-auto flex items-center gap-3 bg-white dark:bg-[#060e32] border border-border/60 shadow-xl rounded-full pl-4 pr-1.5 py-1.5 cursor-pointer hover:shadow-2xl hover:scale-102 hover:border-amber/40 transition-all duration-200 group text-left'
+                            className='pointer-events-auto flex items-center gap-3 bg-white dark:bg-[#060e32] border border-border/60 shadow-xl rounded-full pl-4 pr-1.5 py-1.5 cursor-pointer hover:shadow-xl hover:scale-102 hover:border-amber/40 transition-all duration-200 group text-left'
                         >
                             <div className='flex items-center gap-2'>
                                 <span className='relative flex h-2 w-2'>

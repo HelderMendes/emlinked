@@ -461,16 +461,15 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                     <div className='flex flex-col sm:flex-row gap-4 pt-2'>
                                         {ctaBlock.buttonLabel && (
                                             <GlowingLink
-                                                href={getPath(
-                                                    ctaBlock.buttonLink ||
-                                                        '/contact',
-                                                )}
-                                                className='inline-flex h-14 items-center justify-center rounded-xl bg-amber hover:bg-amber-hover px-8 text-base font-bold text-[#060e32] transition-all duration-200 shadow-xl hover:scale-105 active:scale-95'
+                                                href='#demo'
+                                                className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98]'
                                             >
-                                                <span>
-                                                    {ctaBlock.buttonLabel}
+                                                <span className='flex items-center justify-center gap-2 text-white'>
+                                                    <span>
+                                                        {ctaBlock.buttonLabel}
+                                                    </span>
+                                                    <ArrowRight className='h-5 w-5 text-white' />
                                                 </span>
-                                                <ArrowRight className='h-5 w-5 ml-2' />
                                             </GlowingLink>
                                         )}
 
@@ -480,7 +479,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                     ctaBlock.secondaryButtonLink ||
                                                         '/integraties',
                                                 )}
-                                                className='inline-flex h-14 items-center justify-center rounded-xl border border-white/20 hover:border-amber/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm'
+                                                className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 hover:border-white/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
                                             >
                                                 <span>
                                                     {

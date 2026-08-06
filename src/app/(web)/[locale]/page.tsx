@@ -513,7 +513,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                 feature._key ||
                                                                 index
                                                             }
-                                                            className='px-6 md:px-8 pt-6 md:pt-8 md:pb-6 pb-5 rounded-2xl border border-black/20 bg-background flex flex-col justify-between gap-3.5 hover:shadow-2xl hover:-translate-y-1.5 hover:border-amber/40 transition-all duration-300 group relative'
+                                                            className='px-6 md:px-8 pt-6 md:pt-8 md:pb-6 pb-5 rounded-2xl border border-black/20 bg-background flex flex-col justify-between gap-3.5 hover:shadow-xl hover:-translate-y-1.5 hover:border-amber/40 transition-all duration-300 group relative'
                                                         >
                                                             {/* Whole-card overlay link for optimal UX */}
                                                             <Link

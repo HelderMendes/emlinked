@@ -16,6 +16,7 @@ export interface HeroSectionProps {
     secondaryCtaLabel?: string;
     secondaryCtaLink?: string;
     showProof?: boolean;
+    showProofAvatars?: boolean;
     proofText?: string;
     imagePath?: string;
     isHomepage?: boolean;
@@ -56,6 +57,7 @@ export function HeroSection({
     secondaryCtaLabel = 'Koppeling ontdekken',
     secondaryCtaLink = '/integraties',
     showProof = true,
+    showProofAvatars = true,
     proofText = 'Vertrouwd door professionele vastgoedbeheerders en controllers',
     imagePath = '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
     isHomepage = true,
@@ -122,101 +124,103 @@ export function HeroSection({
                         {/* Social proof bar rendered when enabled */}
                         {showProof && (
                             <div className='flex items-center gap-4 pt-6 border-t border-white/10 dark:border-[#060e32]/10 mt-2'>
-                                <div className='flex -space-x-2.5 overflow-visible relative'>
-                                    {/* Levi Bosboom */}
-                                    <div className='relative group z-30 hover:z-50'>
-                                        <Image
-                                            src='/hero/levi-bosboom.png'
-                                            alt='Levi Bosboom'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
-                                        />
-                                        <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
-                                            <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
-                                                Levi Bosboom
+                                {showProofAvatars && (
+                                    <div className='flex -space-x-2.5 overflow-visible relative'>
+                                        {/* Levi Bosboom */}
+                                        <div className='relative group z-30 hover:z-50'>
+                                            <Image
+                                                src='/hero/levi-bosboom.png'
+                                                alt='Levi Bosboom'
+                                                width={32}
+                                                height={32}
+                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                            />
+                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                                <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
+                                                    Levi Bosboom
+                                                </div>
+                                                <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
+                                                    Eigenaar, Vastgoedbeheer
+                                                    Rotterdam
+                                                </div>
+                                                <div className='text-[10px] text-amber mt-1 tracking-widest'>
+                                                    ★★★★★
+                                                </div>
+                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                             </div>
-                                            <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
-                                                Eigenaar, Vastgoedbeheer
-                                                Rotterdam
-                                            </div>
-                                            <div className='text-[10px] text-amber mt-1 tracking-widest'>
-                                                ★★★★★
-                                            </div>
-                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                         </div>
-                                    </div>
 
-                                    {/* Angelique */}
-                                    <div className='relative group z-25 hover:z-50'>
-                                        <Image
-                                            src='/hero/angelique.png'
-                                            alt='Angelique van Doorn-Franke'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
-                                        />
-                                        <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
-                                            <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
-                                                Angelique van Doorn
+                                        {/* Angelique */}
+                                        <div className='relative group z-25 hover:z-50'>
+                                            <Image
+                                                src='/hero/angelique.png'
+                                                alt='Angelique van Doorn-Franke'
+                                                width={32}
+                                                height={32}
+                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                            />
+                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                                <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
+                                                    Angelique van Doorn
+                                                </div>
+                                                <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
+                                                    Vastgoedbeheerder, Van Overhagen
+                                                </div>
+                                                <div className='text-[10px] text-amber mt-1 tracking-widest'>
+                                                    ★★★★★
+                                                </div>
+                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                             </div>
-                                            <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
-                                                Vastgoedbeheerder, Van Overhagen
-                                            </div>
-                                            <div className='text-[10px] text-amber mt-1 tracking-widest'>
-                                                ★★★★★
-                                            </div>
-                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                         </div>
-                                    </div>
 
-                                    {/* Michel */}
-                                    <div className='relative group z-20 hover:z-50'>
-                                        <Image
-                                            src='/hero/MichelDeWaal.jpg'
-                                            alt='Michel De Waal'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
-                                        />
-                                        <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
-                                            <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
-                                                Michel De Waal
+                                        {/* Michel */}
+                                        <div className='relative group z-20 hover:z-50'>
+                                            <Image
+                                                src='/hero/MichelDeWaal.jpg'
+                                                alt='Michel De Waal'
+                                                width={32}
+                                                height={32}
+                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                            />
+                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                                <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
+                                                    Michel De Waal
+                                                </div>
+                                                <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
+                                                    Directeur, M2 Capital Real
+                                                    Estate
+                                                </div>
+                                                <div className='text-[10px] text-amber mt-1 tracking-widest'>
+                                                    ★★★★★
+                                                </div>
+                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                             </div>
-                                            <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
-                                                Directeur, M2 Capital Real
-                                                Estate
-                                            </div>
-                                            <div className='text-[10px] text-amber mt-1 tracking-widest'>
-                                                ★★★★★
-                                            </div>
-                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                         </div>
-                                    </div>
 
-                                    {/* Sander */}
-                                    <div className='relative group z-15 hover:z-50'>
-                                        <Image
-                                            src='/hero/sander-bot.png'
-                                            alt='Sander Bot'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
-                                        />
-                                        <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
-                                            <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
-                                                Sander Bot
+                                        {/* Sander */}
+                                        <div className='relative group z-15 hover:z-50'>
+                                            <Image
+                                                src='/hero/sander-bot.png'
+                                                alt='Sander Bot'
+                                                width={32}
+                                                height={32}
+                                                className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                            />
+                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                                <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
+                                                    Sander Bot
+                                                </div>
+                                                <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
+                                                    Mede-eigenaar, Baetland Vastgoed
+                                                </div>
+                                                <div className='text-[10px] text-amber mt-1 tracking-widest'>
+                                                    ★★★★★
+                                                </div>
+                                                <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                             </div>
-                                            <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
-                                                Mede-eigenaar, Baetland Vastgoed
-                                            </div>
-                                            <div className='text-[10px] text-amber mt-1 tracking-widest'>
-                                                ★★★★★
-                                            </div>
-                                            <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
                                         </div>
                                     </div>
-                                </div>
+                                )}
                                 <span className='text-sm text-white/65 dark:text-orange font-light'>
                                     {proofText}
                                 </span>

@@ -378,8 +378,8 @@ def update_homepage():
 
     # Swap Metrics Card styles in page.tsx
     content = content.replace(
-        "className='bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-2xl p-7 backdrop-blur-md relative overflow-hidden shadow-xl dark:shadow-2xl hover:shadow-2xl dark:hover:border-white/20 transition-all duration-300'",
-        "className='bg-white/[0.03] dark:bg-card border border-white/10 dark:border-border rounded-2xl p-7 backdrop-blur-md relative overflow-hidden shadow-2xl dark:shadow-xl hover:shadow-2xl dark:hover:border-border/80 transition-all duration-300'"
+        "className='bg-card dark:bg-white/[0.03] border border-border dark:border-white/10 rounded-2xl p-7 backdrop-blur-md relative overflow-hidden shadow-xl dark:shadow-2xl hover:shadow-xl dark:hover:border-white/20 transition-all duration-300'",
+        "className='bg-white/[0.03] dark:bg-card border border-white/10 dark:border-border rounded-2xl p-7 backdrop-blur-md relative overflow-hidden shadow-2xl dark:shadow-xl hover:shadow-xl dark:hover:border-border/80 transition-all duration-300'"
     )
     content = content.replace(
         "className='absolute right-[-20px] top-[-20px] w-28 h-28 opacity-[0.02] dark:opacity-[0.03] pointer-events-none select-none text-foreground dark:text-white font-bold text-8xl'",
