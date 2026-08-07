@@ -418,6 +418,9 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
                 ctaButtonText={ctaButtonText}
                 ctaButtonLink={ctaButtonLink}
                 isEn={isEn}
+                imagePath={
+                    ctaBlock?.imagePath || '/emlinked/box3/box3-automatiseren.jpg'
+                }
             />
         </main>
     );

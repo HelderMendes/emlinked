@@ -10,6 +10,7 @@ interface Box3CtaBannerProps {
     ctaButtonText: string;
     ctaButtonLink: string;
     isEn: boolean;
+    imagePath?: string;
 }
 
 export function Box3CtaBanner({
@@ -19,7 +20,10 @@ export function Box3CtaBanner({
     ctaButtonText,
     ctaButtonLink,
     isEn,
+    imagePath,
 }: Box3CtaBannerProps) {
+    const bannerImg = imagePath || '/emlinked/box3/box3-automatiseren.jpg';
+
     return (
         <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
             <div className='mx-auto max-w-8xl px-0'>
@@ -64,8 +68,8 @@ export function Box3CtaBanner({
                         {/* Right Column: CTA Illustration Image */}
                         <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                             <Image
-                                src='/emlinked/box3/box3-automatiseren.jpg'
-                                alt='Maak uw vastgoedportefeuille 100% aangifte-klaar'
+                                src={bannerImg}
+                                alt={ctaTitle || 'emlinked CTA'}
                                 width={700}
                                 height={500}
                                 className='w-full h-[350px] max-h-[350px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'

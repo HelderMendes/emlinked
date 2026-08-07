@@ -46,7 +46,7 @@ export function Box3VoorWieSection({
                 </div>
 
                 {/* Unified Hero Feature Card: Fiscale Context (Left) + 3D Illustration (Right) */}
-                <div className='rounded-3xl bg-linear-to-br from-white via-[#FFFDF9] to-[#FFF5DE] border-2 border-amber/30 shadow-[0_16px_45px_rgba(245,158,11,0.12)] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-stretch group hover:border-amber/50 transition-all duration-300 max-w-7xl mx-auto'>
+                <div className='rounded-2xl bg-white/80 border border-black/10 grid grid-cols-1 lg:grid-cols-12 items-stretch group hover:border-amber/50 shadow-sm  overflow-hidden transition-all duration-300 max-w-7xl mx-auto'>
                     {/* Left: Fiscale Context Info */}
                     <div className='lg:col-span-6 p-8 md:p-10 flex flex-col justify-center gap-5 text-left relative z-10'>
                         <div className='flex items-center justify-between w-full'>
@@ -80,7 +80,7 @@ export function Box3VoorWieSection({
                 </div>
 
                 {/* 4 Pain Points: Single Outer Box Container with Vertical Dividers */}
-                <div className='bg-white rounded-3xl border border-black/10 shadow-sm p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
+                <div className='bg-white/80 rounded-2xl border border-black/10 shadow-sm p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
                     {voorWieItems.map((item: any, idx: number) => (
                         <div
                             key={idx}

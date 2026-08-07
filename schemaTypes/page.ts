@@ -314,10 +314,27 @@ export const page = defineType({
                             title: 'Fiscale Context Callout Box',
                             type: 'object',
                             fields: [
-                                defineField({ name: 'badge', title: 'Badge', type: 'string' }),
-                                defineField({ name: 'title', title: 'Title', type: 'string' }),
-                                defineField({ name: 'text', title: 'Text Description', type: 'text', rows: 3 }),
-                                defineField({ name: 'image', title: 'Image Path', type: 'string' }),
+                                defineField({
+                                    name: 'badge',
+                                    title: 'Badge',
+                                    type: 'string',
+                                }),
+                                defineField({
+                                    name: 'title',
+                                    title: 'Title',
+                                    type: 'string',
+                                }),
+                                defineField({
+                                    name: 'text',
+                                    title: 'Text Description',
+                                    type: 'text',
+                                    rows: 3,
+                                }),
+                                defineField({
+                                    name: 'image',
+                                    title: 'Image Path',
+                                    type: 'string',
+                                }),
                             ],
                         }),
                         defineField({
@@ -328,8 +345,17 @@ export const page = defineType({
                                 defineArrayMember({
                                     type: 'object',
                                     fields: [
-                                        defineField({ name: 'title', title: 'Item Title', type: 'string' }),
-                                        defineField({ name: 'text', title: 'Item Description', type: 'text', rows: 2 }),
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Item Title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'text',
+                                            title: 'Item Description',
+                                            type: 'text',
+                                            rows: 2,
+                                        }),
                                     ],
                                 }),
                             ],
@@ -431,7 +457,11 @@ export const page = defineType({
                         },
                         prepare({ title, sectionTitle, badge, tag }) {
                             const mainTitle =
-                                title || sectionTitle || badge || tag || 'Features Block';
+                                title ||
+                                sectionTitle ||
+                                badge ||
+                                tag ||
+                                'Features Block';
                             return {
                                 title: `Features: ${mainTitle}`,
                                 subtitle:
@@ -582,7 +612,8 @@ export const page = defineType({
                             name: 'badge',
                             title: 'Section Tag / Badge',
                             type: 'string',
-                            description: 'Top pill tag (e.g. "MICROSOFT ECOSYSTEM")',
+                            description:
+                                'Top pill tag (e.g. "MICROSOFT ECOSYSTEM")',
                         }),
                         defineField({
                             name: 'title',
@@ -647,6 +678,93 @@ export const page = defineType({
                             return {
                                 title: `Ecosystem: ${title || badge || 'Microsoft Ecosystem'}`,
                                 subtitle: badge || 'Ecosystem Platform Block',
+                            };
+                        },
+                    },
+                }),
+                defineArrayMember({
+                    name: 'partnersSection',
+                    title: 'Partners & Software Integrations Section',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'badge',
+                            title: 'Section Tag / Badge',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'title',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'subtitle',
+                            title: 'Section Subtitle / Intro Paragraph',
+                            type: 'text',
+                            rows: 3,
+                        }),
+                        defineField({
+                            name: 'partners',
+                            title: 'Partners List',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'name',
+                                            title: 'Partner Name',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'badge',
+                                            title: 'Partner Category Badge (e.g. "Native ERP")',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'logoUrl',
+                                            title: 'Logo Image Path',
+                                            type: 'string',
+                                            description:
+                                                'Relative path in public directory (e.g. /emlinked/partners/Continia-e1670413209950.png)',
+                                        }),
+                                        defineField({
+                                            name: 'description',
+                                            title: 'Partner Description',
+                                            type: 'text',
+                                            rows: 3,
+                                        }),
+                                        defineField({
+                                            name: 'featureTitle',
+                                            title: 'Feature Highlight Title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'featureText',
+                                            title: 'Feature Highlight Text',
+                                            type: 'text',
+                                            rows: 3,
+                                        }),
+                                        defineField({
+                                            name: 'websiteUrl',
+                                            title: 'Partner Website Link',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            title: 'title',
+                            badge: 'badge',
+                        },
+                        prepare({ title, badge }) {
+                            return {
+                                title: `Partners: ${title || badge || 'Partners Section'}`,
+                                subtitle:
+                                    badge || 'Partners & Integrations Block',
                             };
                         },
                     },

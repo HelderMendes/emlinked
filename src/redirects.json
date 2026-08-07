@@ -83,6 +83,10 @@
         "destination": "/partners-software",
         "status": 301
     },
+    "/over-emlinked/partners": {
+        "destination": "/partners-software",
+        "status": 301
+    },
     "/team": {
         "destination": "/over-ons",
         "status": 301
