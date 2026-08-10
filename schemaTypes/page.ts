@@ -1162,6 +1162,41 @@ export const page = defineType({
                     ],
                 }),
                 defineArrayMember({
+                    name: 'pricingCalculator',
+                    title: 'Interactive Pricing Calculator',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'sectionTag',
+                            title: 'Section Badge Tag',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'sectionTitle',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'sectionSubtitle',
+                            title: 'Section Subtitle',
+                            type: 'text',
+                            rows: 2,
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            title: 'sectionTitle',
+                            tag: 'sectionTag',
+                        },
+                        prepare({ title, tag }) {
+                            return {
+                                title: `Calculator: ${title || 'Interactive Pricing Calculator'}`,
+                                subtitle: tag || 'Pricing Calculator Block',
+                            };
+                        },
+                    },
+                }),
+                defineArrayMember({
                     name: 'teamBlock',
                     title: 'Team Block',
                     type: 'object',

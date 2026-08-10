@@ -45,7 +45,7 @@ export default function LoginPage({ params }: LoginPageProps) {
     };
 
     return (
-        <div className='flex-grow flex items-center justify-center py-20 px-6 bg-radial from-card via-background to-background'>
+        <div className='grow flex items-center justify-center py-20 px-6 bg-radial from-card via-background to-background'>
             <div className='w-full max-w-md p-8 rounded-xl border border-border bg-card shadow-2xl flex flex-col gap-6'>
                 {/* Header */}
                 <div className='text-center space-y-2'>

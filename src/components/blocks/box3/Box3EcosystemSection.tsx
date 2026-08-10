@@ -127,7 +127,7 @@ export function Box3EcosystemSection({
                 {trustGrid.map((item, idx) => (
                     <div
                         key={idx}
-                        className='px-4 py-3 sm:py-0 flex flex-col items-center justify-center text-center space-y-1'
+                        className='px-4 py-6sm:py-0 flex flex-col items-center justify-center text-center space-y-1'
                     >
                         <h4 className='text-sm font-bold text-amber text-center'>
                             {item.title}

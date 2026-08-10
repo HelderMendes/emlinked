@@ -45,7 +45,7 @@ export default async function WebLayout({ children, params }: WebLayoutProps) {
     return (
         <>
             <Header locale={locale} settings={settings} />
-            <main className='flex-grow flex flex-col'>{children}</main>
+            <main className='grow flex flex-col'>{children}</main>
             <Footer locale={locale} settings={settings} />
             <StickyAnnouncement locale={locale} settings={settings} />
             <CookieConsentBanner locale={locale} />

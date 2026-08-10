@@ -1,9 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Metadata } from 'next';
-import { sanityFetch } from '@/lib/sanity';
-import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
+import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
+import { PricingCalculator } from '@/components/PricingCalculator';
+import { GlowingLink } from '@/components/ui/GlowingButton';
+import { CheckCircle2, Clock, ShieldCheck, Zap, ArrowRight } from 'lucide-react';
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 
 interface PricingPageProps {
     params: Promise<{ locale: string }>;
@@ -11,15 +15,19 @@ interface PricingPageProps {
 
 async function getSanityPageData(locale: string) {
     try {
-        return await sanityFetch<any>({
-            query: `*[_type == "page" && slug.current == "prijzen" && language == $locale][0] {
+        return await client.fetch(
+            `*[_type == "page" && (slug.current == "/prijzen" || slug.current == "prijzen") && language == $locale][0] {
                 title,
-                tagline,
-                desc,
                 pageBlocks[] {
                     ...,
                     _type,
-                    _key
+                    _key,
+                    features[] {
+                        _key,
+                        title,
+                        description,
+                        icon
+                    }
                 },
                 seo {
                     seoTitle,
@@ -28,15 +36,14 @@ async function getSanityPageData(locale: string) {
                     noIndex
                 }
             }`,
-            params: { locale },
-        });
+            { locale },
+            { cache: 'no-store' }
+        );
     } catch (e) {
         console.error('Failed to fetch pricing page from Sanity:', e);
         return null;
     }
 }
-
-import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 
 export async function generateMetadata({
     params,
@@ -46,11 +53,11 @@ export async function generateMetadata({
     const isEn = locale === 'en';
 
     const fallbackTitle = isEn
-        ? 'Property Management Software Rates & Pricing'
-        : 'Vastgoedbeheer Software Tarieven & Prijzen';
+        ? 'Transparent Pricing & Rates | emlinked'
+        : 'Transparante Prijzen & Tarieven | emlinked';
     const fallbackDescription = isEn
-        ? 'Transparent pricing and flexible subscriptions for our real estate management software. Directly calculate your investment based on your units.'
-        : 'Transparante tarieven en flexibele abonnementen voor onze vastgoedbeheer software. Bereken direct uw investering op basis van het aantal verhuureenheden.';
+        ? 'Easily calculate the monthly costs for your property management. Transparent subscription based on contract count, with flexible scaling.'
+        : 'Bereken eenvoudig de maandelijkse kosten voor jouw vastgoedbeheer. Transparant abonnement gebaseerd op het aantal contracten, met flexibele opschaling.';
     const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/prijzen' : '/prijzen'}`;
 
     return buildMetadata({
@@ -62,304 +69,262 @@ export async function generateMetadata({
     });
 }
 
-const fallbackContent = {
-    nl: {
-        title: 'Transparante tarieven voor uw vastgoedbeheer',
-        tagline:
-            'Transparante tarieven en flexibele abonnementen voor onze vastgoedbeheer software.',
-        desc: 'Of u nu een groeiende particuliere belegger bent of een grote corporatie met duizenden verhuureenheden (VHE), emlinked groeit met u mee. Neem contact op voor een offerte op maat.',
-        tiers: [
-            {
-                title: 'Professional',
-                subtitle: 'Voor middelgrote portefeuilles',
-                price: 'Vanaf € 299',
-                unit: 'per maand',
-                badge: 'Populair',
-                features: [
-                    'Tot 250 verhuureenheden (VHE)',
-                    'Native Business Central Sync',
-                    'Automatische indexaties & facturatie',
-                    'Koppeling met 1 bankrekening (PSD2)',
-                    'Standaard Helpdesk support',
-                ],
-                ctaLabel: 'Demo aanvragen',
-                ctaLink: '/contact',
-            },
-            {
-                title: 'Enterprise',
-                subtitle: 'Voor grootschalig beheer & corporaties',
-                price: 'Op aanvraag',
-                unit: 'maatwerk',
-                badge: 'Custom',
-                features: [
-                    'Onbeperkt aantal verhuureenheden',
-                    'Multi-entity administratie support',
-                    'Meerdere bankrekeningen gekoppeld',
-                    'Continia & Idyn add-ons integratie',
-                    'Dedicated accountmanager & SLA',
-                ],
-                ctaLabel: 'Offerte aanvragen',
-                ctaLink: '/contact',
-            },
-        ],
-    },
-    en: {
-        title: 'Transparent pricing for your property management',
-        tagline:
-            'Transparent pricing and flexible subscriptions for our real estate management software.',
-        desc: 'Whether you are a growing private investor or a large enterprise managing thousands of units, emlinked scales with you. Contact us for a custom proposal.',
-        tiers: [
-            {
-                title: 'Professional',
-                subtitle: 'For mid-sized portfolios',
-                price: 'From € 299',
-                unit: 'per month',
-                badge: 'Popular',
-                features: [
-                    'Up to 250 units (VHE)',
-                    'Native Business Central Sync',
-                    'Automated rent indexation & billing',
-                    'Single bank account link (PSD2)',
-                    'Standard support desk access',
-                ],
-                ctaLabel: 'Request a Demo',
-                ctaLink: '/contact',
-            },
-            {
-                title: 'Enterprise',
-                subtitle: 'For institutional portfolios & funds',
-                price: 'On request',
-                unit: 'custom terms',
-                badge: 'Custom',
-                features: [
-                    'Unlimited units',
-                    'Multi-entity company setups',
-                    'Multiple bank account syncs',
-                    'Full Continia & Idyn integrations',
-                    'Dedicated Account Manager & SLA',
-                ],
-                ctaLabel: 'Request Quote',
-                ctaLink: '/contact',
-            },
-        ],
-    },
-} as const;
-
 export default async function PricingPage({ params }: PricingPageProps) {
     const { locale } = await params;
     const isEn = locale === 'en';
     const pageData = await getSanityPageData(locale);
 
-    const title = pageData?.title || (isEn ? fallbackContent.en.title : fallbackContent.nl.title);
-    const tagline = pageData?.tagline || (isEn ? fallbackContent.en.tagline : fallbackContent.nl.tagline);
-    const desc = pageData?.desc || (isEn ? fallbackContent.en.desc : fallbackContent.nl.desc);
-
-    // If blocks are defined in Sanity, we map over them. If not, we fallback to default tiers layout.
-    const blocks = pageData?.pageBlocks || [
-        {
-            _type: 'pricingBlock',
-            sectionTitle: isEn ? 'Pricing Plans' : 'Tarieven',
-            tiers: isEn ? fallbackContent.en.tiers : fallbackContent.nl.tiers
-        }
-    ];
-
     const getPath = (path: string) => {
-        if (locale === 'nl') return path;
-        return `/en${path === '/' ? '' : path}`;
+        if (!path) return isEn ? '/en' : '/';
+        if (path.startsWith('#')) return path;
+        if (isEn) {
+            if (path.startsWith('/en')) return path;
+            return `/en${path === '/' ? '' : path}`;
+        }
+        return path;
     };
 
+    const blocks = pageData?.pageBlocks || [];
     const heroBlock = blocks.find((b: any) => b._type === 'hero');
-    const otherBlocks = blocks.filter((b: any) => b._type !== 'hero');
+    const calcBlock = blocks.find((b: any) => b._type === 'pricingCalculator');
+    const strippenBlock = blocks.find((b: any) => b._type === 'featuresList');
+    const ctaBlock = blocks.find((b: any) => b._type === 'ctaBanner');
 
     return (
-        <div className='flex flex-col min-h-screen bg-texture-navy text-white'>
-            {heroBlock ? (
-                <HeroSection
-                    label={
-                        heroBlock.label ||
-                        (isEn ? 'PLANS & PRICING' : 'ABONNEMENTEN & TARIEVEN')
-                    }
-                    title={heroBlock.title || title}
-                    subtitle={heroBlock.subtitle || tagline}
-                    imagePath={
-                        heroBlock.imagePath ||
-                        '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
-                    }
-                    isHomepage={false}
-                    locale={locale}
-                />
-            ) : (
-                <HeroSection
-                    label={isEn ? 'PLANS & PRICING' : 'ABONNEMENTEN & TARIEVEN'}
-                    title={title}
-                    subtitle={tagline}
-                    imagePath='/hero/vastgoedportfeuille_aangifte-klaar.jpg'
-                    isHomepage={false}
-                    locale={locale}
-                />
-            )}
+        <div className='flex flex-col min-h-screen bg-background text-foreground'>
+            {/* ── SECTION 1: HERO HEADER ── */}
+            <HeroSection
+                label={
+                    heroBlock?.label ||
+                    (isEn ? 'TRANSPARENT PRICING, SCALED EASILY' : 'HELDERE PRIJZEN, EENVOUDIG OPGESCHAALD')
+                }
+                title={
+                    heroBlock?.title ||
+                    (isEn
+                        ? 'A subscription tailored to your real estate portfolio'
+                        : 'Een abonnement dat past bij jouw vastgoedportefeuille')
+                }
+                subtitle={
+                    heroBlock?.subtitle ||
+                    (isEn
+                        ? 'emlinked offers a transparent subscription model that grows with your property management. Subscriptions start at €173.76 per month for 100 contracts (just €1.74 per contract), with lower rates per contract as your portfolio expands.'
+                        : 'emlinked werkt met een transparant abonnement dat meegroeit met je vastgoedbeheer. Zo start het abonnement bij € 173,76 per maand voor 100 contracten (slechts € 1,74 per contract) en daalt de prijs per contract naarmate je portefeuille groeit.')
+                }
+                ctaLabel={
+                    heroBlock?.ctaLabel ||
+                    (isEn ? 'Calculate your subscription ↓' : 'Bereken je abonnement ↓')
+                }
+                ctaLink={heroBlock?.ctaLink || '#calculator'}
+                secondaryCtaLabel={
+                    heroBlock?.secondaryCtaLabel ||
+                    (isEn ? 'Talk to us' : 'Spreek met ons')
+                }
+                secondaryCtaLink={heroBlock?.secondaryCtaLink || (isEn ? '/en/contact' : '/contact')}
+                showProof={true}
+                proofText={
+                    isEn
+                        ? 'Trusted by professional real estate managers & controllers'
+                        : 'Vertrouwd door professionele vastgoedbeheerders en controllers'
+                }
+                imagePath='/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                isHomepage={false}
+                locale={locale}
+                titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
+            />
 
-            {/* Dynamic blocks rendering */}
-            {otherBlocks.map((block: any, bIdx: number) => {
-                if (block._type === 'pricingBlock') {
-                    return (
-                        <section
-                            key={block._key || bIdx}
-                            className='px-6 py-16 bg-white/[0.01] border-b border-white/5'
-                        >
-                            <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8'>
-                                {block.sectionTitle && (
-                                    <div className='text-center max-w-2xl mx-auto space-y-4 mb-12'>
-                                        <h2 className='font-display font-bold text-3xl text-white'>
-                                            {block.sectionTitle}
-                                        </h2>
-                                        {block.sectionSubtitle && (
-                                            <p className='text-xs text-muted-foreground leading-relaxed'>
-                                                {block.sectionSubtitle}
-                                            </p>
-                                        )}
-                                    </div>
-                                )}
-                                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch max-w-4xl mx-auto'>
-                                    {block.tiers?.map(
-                                        (tier: any, idx: number) => {
-                                            const isCustom =
-                                                tier.badge === 'Custom' ||
-                                                tier.badge === 'maatwerk';
-                                            return (
-                                                <div
-                                                    key={idx}
-                                                    className={`p-8 rounded-xl bg-white/[0.01] flex flex-col justify-between hover:shadow-lg hover:shadow-amber/5 transition-all border ${
-                                                        isCustom
-                                                            ? 'border-2 border-primary relative'
-                                                            : 'border-white/5'
-                                                    }`}
-                                                >
-                                                    {tier.badge && isCustom && (
-                                                        <div className='absolute top-0 right-8 -translate-y-1/2 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full'>
-                                                            {tier.badge}
-                                                        </div>
-                                                    )}
-                                                    <div className='flex flex-col gap-4'>
-                                                        <div className='flex justify-between items-start'>
-                                                            <div>
-                                                                <h3 className='text-xl font-bold text-white'>
-                                                                    {tier.title}
-                                                                </h3>
-                                                                <p className='text-[11px] text-muted-foreground pt-1'>
-                                                                    {
-                                                                        tier.subtitle
-                                                                    }
-                                                                </p>
-                                                            </div>
-                                                            {tier.badge &&
-                                                                !isCustom && (
-                                                                    <span className='px-2 py-0.5 text-[9px] font-bold rounded-full bg-white/[0.06] border border-white/10 text-amber uppercase tracking-wider'>
-                                                                        {
-                                                                            tier.badge
-                                                                        }
-                                                                    </span>
-                                                                )}
-                                                        </div>
-                                                        <div className='flex items-baseline gap-1.5 mt-2'>
-                                                            <span className='text-3xl font-extrabold text-white'>
-                                                                {tier.price}
-                                                            </span>
-                                                            <span className='text-xs text-slate-400'>
-                                                                {tier.unit}
-                                                            </span>
-                                                        </div>
-                                                        <div className='border-t border-white/5 my-2'></div>
-                                                        <ul className='space-y-3'>
-                                                            {tier.features?.map(
-                                                                (
-                                                                    feat: string,
-                                                                    fIdx: number,
-                                                                ) => (
-                                                                    <li
-                                                                        key={
-                                                                            fIdx
-                                                                        }
-                                                                        className='flex items-center gap-2 text-xs text-slate-300'
-                                                                    >
-                                                                        <svg
-                                                                            className='h-4 w-4 text-primary shrink-0'
-                                                                            fill='none'
-                                                                            viewBox='0 0 24 24'
-                                                                            strokeWidth='2.5'
-                                                                            stroke='currentColor'
-                                                                        >
-                                                                            <path
-                                                                                strokeLinecap='round'
-                                                                                strokeLinejoin='round'
-                                                                                d='M4.5 12.75l6 6 9-13.5'
-                                                                            />
-                                                                        </svg>
-                                                                        {feat}
-                                                                    </li>
-                                                                ),
-                                                            )}
-                                                        </ul>
-                                                    </div>
-                                                    <Link
-                                                        href={getPath(
-                                                            tier.ctaLink ||
-                                                                '/contact',
-                                                        )}
-                                                        className={`inline-flex h-11 items-center justify-center rounded-md px-6 text-xs font-bold transition-all text-center mt-8 w-full ${
-                                                            isCustom
-                                                                ? 'bg-primary hover:bg-primary/90 text-primary-foreground shadow-md'
-                                                                : 'bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] text-white'
-                                                        }`}
-                                                    >
-                                                        {tier.ctaLabel}
-                                                    </Link>
-                                                </div>
-                                            );
-                                        },
-                                    )}
+            {/* ── SECTION 2: INTERACTIVE PRICING CALCULATOR (#calculator) ── */}
+            <PricingCalculator
+                locale={locale}
+                sectionTag={calcBlock?.sectionTag}
+                sectionTitle={calcBlock?.sectionTitle}
+                sectionSubtitle={calcBlock?.sectionSubtitle}
+            />
+
+            {/* ── SECTION 3: STRIPPENKAARTEN & SUPPORT ── */}
+            <section className='px-6 py-20 bg-card border-b border-border text-foreground relative z-10'>
+                <div className='max-w-7xl mx-auto space-y-16'>
+                    <div className='text-center max-w-3xl mx-auto space-y-4'>
+                        <div className='flex justify-center mb-1'>
+                            <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                                <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
+                                {strippenBlock?.sectionTag ||
+                                    (isEn ? 'FLEXIBLE SUPPORT' : 'FLEXIBELE ONDERSTEUNING')}
+                            </span>
+                        </div>
+
+                        <h2 className='font-display text-2xl md:text-3xl lg:text-3.5xl font-bold tracking-tight text-darkblue'>
+                            {strippenBlock?.sectionTitle ||
+                                (isEn
+                                    ? 'Prepaid Support Packs: The most cost-effective support'
+                                    : 'Strippenkaarten: De voordeligste oplossing voor de beste support')}
+                        </h2>
+
+                        <p className='text-muted-foreground text-base md:text-lg leading-relaxed font-light'>
+                            {strippenBlock?.sectionSubtitle ||
+                                (isEn
+                                    ? 'All emlinked services and support can easily be paid using our prepaid support packs. Available in 5-hour, 10-hour, and 20-hour packs. The larger the pack, the higher the hourly discount.'
+                                    : 'Alle diensten en ondersteuning van emlinked kunnen eenvoudig betaald worden met onze strippenkaart. Onze strippenkaarten zijn verkrijgbaar in 5 uur, 10 uur en 20 uur. Hoe groter de strippenkaart, hoe hoger de korting op het uurtarief.')}
+                        </p>
+                    </div>
+
+                    {/* 3 Strippenkaart Cards */}
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch'>
+                        {/* 5 Hours */}
+                        <div className='rounded-2xl border border-black/20 bg-background p-8 space-y-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group'>
+                            <div className='space-y-4'>
+                                <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber/15 text-amber text-xs font-mono font-bold uppercase'>
+                                    <Clock className='w-3.5 h-3.5' />
+                                    <span>5 {isEn ? 'Hours' : 'Uur'}</span>
+                                </div>
+                                <h3 className='text-2xl font-bold text-[#060e32] dark:text-white'>
+                                    {isEn ? '5 Hour Support Pack' : '5 Uur Strippenkaart'}
+                                </h3>
+                                <div className='flex items-baseline gap-1.5'>
+                                    <span className='text-4xl font-extrabold text-[#060e32] dark:text-white'>
+                                        € 550,-
+                                    </span>
+                                    <span className='text-xs text-muted-foreground'>
+                                        (€ 110,- / uur)
+                                    </span>
+                                </div>
+                                <p className='text-sm text-muted-foreground font-light leading-relaxed pt-2 border-t border-border/40'>
+                                    {isEn
+                                        ? 'Ideal for short questions, quick configurations, and light support.'
+                                        : 'Ideaal voor korte vragen, snelle instellingen en lichte ondersteuning.'}
+                                </p>
+                            </div>
+                            <Link
+                                href={getPath('/contact')}
+                                className='inline-flex h-12 items-center justify-center rounded-xl border border-black/20 dark:border-white/20 bg-transparent px-6 text-sm font-semibold text-[#060e32] dark:text-white hover:bg-amber hover:text-[#060e32] hover:border-amber transition-all duration-200 text-center'
+                            >
+                                {isEn ? 'Order Support Pack' : 'Bestel strippenkaart'}
+                            </Link>
+                        </div>
+
+                        {/* 10 Hours */}
+                        <div className='rounded-2xl border-2 border-amber/50 bg-background p-8 space-y-6 flex flex-col justify-between shadow-xl relative overflow-hidden group hover:-translate-y-1 transition-all duration-300'>
+                            <div className='absolute top-0 right-0 bg-amber text-[#060e32] font-mono text-[10px] font-extrabold uppercase px-3 py-1 rounded-bl-xl tracking-wider'>
+                                {isEn ? 'Popular Choice' : 'Meest gekozen'}
+                            </div>
+                            <div className='space-y-4'>
+                                <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber/15 text-amber text-xs font-mono font-bold uppercase'>
+                                    <Clock className='w-3.5 h-3.5' />
+                                    <span>10 {isEn ? 'Hours' : 'Uur'}</span>
+                                </div>
+                                <h3 className='text-2xl font-bold text-[#060e32] dark:text-white'>
+                                    {isEn ? '10 Hour Support Pack' : '10 Uur Strippenkaart'}
+                                </h3>
+                                <div className='flex items-baseline gap-1.5'>
+                                    <span className='text-4xl font-extrabold text-[#060e32] dark:text-white'>
+                                        € 899,-
+                                    </span>
+                                    <span className='text-xs text-muted-foreground'>
+                                        (€ 89,90 / uur)
+                                    </span>
+                                </div>
+                                <p className='text-sm text-muted-foreground font-light leading-relaxed pt-2 border-t border-border/40'>
+                                    {isEn
+                                        ? 'Perfect for periodic guidance, custom setup, and ongoing operational support.'
+                                        : 'Perfect voor periodieke begeleiding en aanvullende inrichting.'}
+                                </p>
+                            </div>
+                            <GlowingLink
+                                href={getPath('/contact')}
+                                className='inline-flex h-12 items-center justify-center rounded-xl bg-amber px-6 text-sm font-bold text-[#060e32] transition-all duration-200 text-center shadow-md'
+                            >
+                                {isEn ? 'Order Support Pack' : 'Bestel strippenkaart'}
+                            </GlowingLink>
+                        </div>
+
+                        {/* 20 Hours */}
+                        <div className='rounded-2xl border border-black/20 bg-background p-8 space-y-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group'>
+                            <div className='space-y-4'>
+                                <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber/15 text-amber text-xs font-mono font-bold uppercase'>
+                                    <Clock className='w-3.5 h-3.5' />
+                                    <span>20 {isEn ? 'Hours' : 'Uur'}</span>
+                                </div>
+                                <h3 className='text-2xl font-bold text-[#060e32] dark:text-white'>
+                                    {isEn ? '20 Hour Support Pack' : '20 Uur Strippenkaart'}
+                                </h3>
+                                <div className='flex items-baseline gap-1.5'>
+                                    <span className='text-4xl font-extrabold text-[#060e32] dark:text-white'>
+                                        € 1.599,-
+                                    </span>
+                                    <span className='text-xs text-muted-foreground'>
+                                        (€ 79,95 / uur)
+                                    </span>
+                                </div>
+                                <p className='text-sm text-muted-foreground font-light leading-relaxed pt-2 border-t border-border/40'>
+                                    {isEn
+                                        ? 'Best value for extensive project support, team onboarding, and custom training.'
+                                        : 'De meest voordelige optie voor uitgebreide ondersteuning, projecten en trainingen op maat.'}
+                                </p>
+                            </div>
+                            <Link
+                                href={getPath('/contact')}
+                                className='inline-flex h-12 items-center justify-center rounded-xl border border-black/20 dark:border-white/20 bg-transparent px-6 text-sm font-semibold text-[#060e32] dark:text-white hover:bg-amber hover:text-[#060e32] hover:border-amber transition-all duration-200 text-center'
+                            >
+                                {isEn ? 'Order Support Pack' : 'Bestel strippenkaart'}
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ── SECTION 4: PRE-FOOTER CTA ── */}
+            <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
+                <div className='mx-auto max-w-8xl px-0'>
+                    <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+                        <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
+                            <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
+                                <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
+                                    <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                    {ctaBlock?.tag || (isEn ? 'CONSULTATION' : 'ADVIESGESPREK')}
+                                </span>
+
+                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                                    {ctaBlock?.title ||
+                                        (isEn
+                                            ? 'Questions about rates or a specific portfolio?'
+                                            : 'Vragen over de tarieven of een specifieke portefeuille?')}
+                                </h2>
+
+                                <p className='text-white/75 text-base md:text-lg font-light leading-relaxed max-w-2xl'>
+                                    {ctaBlock?.subtitle ||
+                                        (isEn
+                                            ? 'Our property management specialists are happy to advise you on the best setup for your organization.'
+                                            : 'Onze vastgoedbeheerspecialisten denken graag met je mee over de beste inrichting voor jouw organisatie.')}
+                                </p>
+
+                                <div className='pt-4'>
+                                    <GlowingLink
+                                        href={getPath(ctaBlock?.buttonLink || '/contact')}
+                                        className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98]'
+                                    >
+                                        <span className='flex items-center justify-center gap-2 text-white'>
+                                            <span>
+                                                {ctaBlock?.buttonLabel ||
+                                                    (isEn ? 'Schedule a consultation' : 'Plan een vrijblijvend adviesgesprek')}
+                                            </span>
+                                            <ArrowRight className='h-5 w-5 text-white' />
+                                        </span>
+                                    </GlowingLink>
                                 </div>
                             </div>
-                        </section>
-                    );
-                }
 
-                if (block._type === 'ctaBanner') {
-                    return (
-                        <section
-                            key={block._key || bIdx}
-                            className='px-6 py-16 bg-background'
-                        >
-                            <div className='relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-transparent p-8 md:p-14 overflow-hidden text-center max-w-4xl mx-auto'>
-                                <div className='absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber/5 rounded-full blur-[100px] pointer-events-none' />
-                                <div className='relative z-10 space-y-6 max-w-2xl mx-auto'>
-                                    <h2 className='font-display font-bold text-3xl text-white'>
-                                        {block.title}
-                                    </h2>
-                                    <p className='text-xs text-muted-foreground leading-relaxed'>
-                                        {block.subtitle}
-                                    </p>
-                                    {block.buttonLabel && (
-                                        <div className='pt-4'>
-                                            <Link
-                                                href={getPath(
-                                                    block.buttonLink ||
-                                                        '/contact',
-                                                )}
-                                                className='inline-flex h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold rounded-lg items-center transition-all shadow-md'
-                                            >
-                                                {block.buttonLabel}
-                                            </Link>
-                                        </div>
-                                    )}
-                                </div>
+                            <div className='lg:col-span-4 flex justify-start lg:justify-end'>
+                                <Image
+                                    src='/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                                    alt='Emlinked Pricing Consultation'
+                                    width={700}
+                                    height={500}
+                                    className='w-full h-[320px] max-h-[320px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
+                                />
                             </div>
-                        </section>
-                    );
-                }
-
-                return null;
-            })}
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }

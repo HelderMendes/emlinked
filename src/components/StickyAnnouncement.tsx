@@ -69,9 +69,10 @@ export default function StickyAnnouncement({
         return () => clearTimeout(timer);
     }, []);
 
-    // Hide sticky announcement widget on box3-check route to avoid floating box clutter
+    // Hide sticky announcement widget on box3-check and pricing routes to avoid clutter
     const isBox3Page = pathname?.includes('box3-check');
-    if (isBox3Page) return null;
+    const isPricingPage = pathname?.includes('prijzen') || pathname?.includes('pricing');
+    if (isBox3Page || isPricingPage) return null;
 
     // Only render if announcement is active in settings
     if (!shouldShow || settings?.announcementActive === false) return null;

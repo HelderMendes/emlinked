@@ -55,61 +55,84 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
     };
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto mt-12 px-4">
+        <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto mt-12 px-4'>
             {/* Input Form Card */}
-            <div className="lg:col-span-5 bg-card border border-border rounded-xl p-6 shadow-sm">
-                <div className="flex items-center gap-2 mb-4">
-                    <div className="p-1.5 rounded-lg bg-amber/15 text-amber">
-                        <TrendingUp className="h-5 w-5" />
+            <div className='lg:col-span-5 bg-card border border-border rounded-xl p-6 shadow-sm'>
+                <div className='flex items-center gap-2 mb-4'>
+                    <div className='p-1.5 rounded-lg bg-amber/15 text-amber'>
+                        <TrendingUp className='h-5 w-5' />
                     </div>
-                    <h3 className="font-bold text-foreground">
-                        {isEn ? 'CPI Indexation Simulator' : 'CPI Indexatie Simulator'}
+                    <h3 className='font-bold text-foreground'>
+                        {isEn
+                            ? 'CPI Indexation Simulator'
+                            : 'CPI Indexatie Simulator'}
                     </h3>
                 </div>
-                <p className="text-xs text-muted-foreground mb-6">
-                    {isEn 
-                        ? 'Simulate rent indexation based on annual CPI adjustments.' 
+                <p className='text-xs text-muted-foreground mb-6'>
+                    {isEn
+                        ? 'Simulate rent indexation based on annual CPI adjustments.'
                         : 'Simuleer de huurindexatie op basis van de jaarlijkse CPI-wijzigingen.'}
                 </p>
-                <form onSubmit={handleCalculate} className="flex flex-col gap-4">
+                <form
+                    onSubmit={handleCalculate}
+                    className='flex flex-col gap-4'
+                >
                     <div>
-                        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                            {isEn ? 'Current Monthly Rent (€)' : 'Huidige maandhuur (€)'}
+                        <label className='block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2'>
+                            {isEn
+                                ? 'Current Monthly Rent (€)'
+                                : 'Huidige maandhuur (€)'}
                         </label>
                         <input
-                            type="number"
+                            type='number'
                             value={baseRent}
-                            onChange={(e) => setBaseRent(Math.max(0, parseFloat(e.target.value) || 0))}
-                            className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber"
+                            onChange={(e) =>
+                                setBaseRent(
+                                    Math.max(
+                                        0,
+                                        parseFloat(e.target.value) || 0,
+                                    ),
+                                )
+                            }
+                            className='w-full h-10 px-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
                             required
                         />
                     </div>
                     <div>
-                        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                        <label className='block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2'>
                             {isEn ? 'CPI Indexation (%)' : 'CPI Indexatie (%)'}
                         </label>
                         <input
-                            type="number"
-                            step="0.1"
+                            type='number'
+                            step='0.1'
                             value={cpiValue}
-                            onChange={(e) => setCpiValue(Math.max(0, parseFloat(e.target.value) || 0))}
-                            className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber"
+                            onChange={(e) =>
+                                setCpiValue(
+                                    Math.max(
+                                        0,
+                                        parseFloat(e.target.value) || 0,
+                                    ),
+                                )
+                            }
+                            className='w-full h-10 px-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
                             required
                         />
                     </div>
                     <button
-                        type="submit"
+                        type='submit'
                         disabled={isCalculating}
-                        className="mt-2 w-full h-11 bg-amber hover:bg-amber-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
+                        className='mt-2 w-full h-11 bg-amber hover:bg-amber-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50'
                     >
                         {isCalculating ? (
                             <>
-                                <Loader2 className="h-4 w-4 animate-spin" />
+                                <Loader2 className='h-4 w-4 animate-spin' />
                                 {isEn ? 'Calculating...' : 'Berekenen...'}
                             </>
                         ) : (
                             <>
-                                {isEn ? 'Calculate Indexation' : 'Bereken indexatie'}
+                                {isEn
+                                    ? 'Calculate Indexation'
+                                    : 'Bereken indexatie'}
                             </>
                         )}
                     </button>
@@ -117,79 +140,136 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
             </div>
 
             {/* Simulated Email / Result Preview Card */}
-            <div className="lg:col-span-7 flex flex-col gap-6">
+            <div className='lg:col-span-7 flex flex-col gap-6'>
                 {result ? (
-                    <div className="flex flex-col gap-6 animate-fadeIn">
+                    <div className='flex flex-col gap-6 animate-fadeIn'>
                         {/* Highlights Grid */}
-                        <div className="grid grid-cols-3 gap-4">
-                            <div className="bg-muted/30 border border-border/60 rounded-xl p-4 text-center">
-                                <span className="text-[10px] uppercase font-semibold text-muted-foreground block mb-1">
+                        <div className='grid grid-cols-3 gap-4'>
+                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                                <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
                                     {isEn ? 'New Rent' : 'Nieuwe huur'}
                                 </span>
-                                <span className="text-lg font-bold text-foreground">
-                                    €{result.newRent.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                <span className='text-lg font-bold text-foreground'>
+                                    €
+                                    {result.newRent.toLocaleString(locale, {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    })}
                                 </span>
                             </div>
-                            <div className="bg-muted/30 border border-border/60 rounded-xl p-4 text-center">
-                                <span className="text-[10px] uppercase font-semibold text-muted-foreground block mb-1">
+                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                                <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
                                     {isEn ? 'Monthly Delta' : 'Verschil p.m.'}
                                 </span>
-                                <span className="text-lg font-bold text-amber">
-                                    +€{result.increase.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                <span className='text-lg font-bold text-amber'>
+                                    +€
+                                    {result.increase.toLocaleString(locale, {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    })}
                                 </span>
                             </div>
-                            <div className="bg-muted/30 border border-border/60 rounded-xl p-4 text-center">
-                                <span className="text-[10px] uppercase font-semibold text-muted-foreground block mb-1">
-                                    {isEn ? 'Yearly Gain' : 'Extra opbrengst p.j.'}
+                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                                <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
+                                    {isEn
+                                        ? 'Yearly Gain'
+                                        : 'Extra opbrengst p.j.'}
                                 </span>
-                                <span className="text-lg font-bold text-emerald-500">
-                                    +€{result.yearlyExtra.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                <span className='text-lg font-bold text-emerald-500'>
+                                    +€
+                                    {result.yearlyExtra.toLocaleString(locale, {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    })}
                                 </span>
                             </div>
                         </div>
 
                         {/* Email Preview */}
                         {showEmail && (
-                            <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-card">
-                                <div className="bg-muted/50 border-b border-border px-4 py-3 flex items-center justify-between">
-                                    <div className="flex items-center gap-2">
-                                        <Mail className="h-4 w-4 text-muted-foreground" />
-                                        <span className="text-xs font-semibold text-foreground">
-                                            {isEn ? 'Simulated Tenant Email' : 'Gegenereerde e-mail notificatie'}
+                            <div className='border border-border rounded-xl overflow-hidden shadow-sm bg-card'>
+                                <div className='bg-muted/50 border-b border-border px-4 py-6flex items-center justify-between'>
+                                    <div className='flex items-center gap-2'>
+                                        <Mail className='h-4 w-4 text-muted-foreground' />
+                                        <span className='text-xs font-semibold text-foreground'>
+                                            {isEn
+                                                ? 'Simulated Tenant Email'
+                                                : 'Gegenereerde e-mail notificatie'}
                                         </span>
                                     </div>
-                                    <span className="text-[10px] bg-emerald-500/10 text-emerald-500 font-semibold px-2 py-0.5 rounded">
-                                        {isEn ? 'Ready to Send' : 'Gereed voor verzending'}
+                                    <span className='text-[10px] bg-emerald-500/10 text-emerald-500 font-semibold px-2 py-0.5 rounded'>
+                                        {isEn
+                                            ? 'Ready to Send'
+                                            : 'Gereed voor verzending'}
                                     </span>
                                 </div>
-                                <div className="p-5 text-left font-sans text-xs text-foreground/80 space-y-4">
-                                    <div className="border-b border-border/60 pb-3 space-y-1 text-[11px]">
-                                        <div><strong className="text-muted-foreground">To:</strong> huurder@portefeuille.nl</div>
-                                        <div><strong className="text-muted-foreground">Subject:</strong> {isEn ? 'Indexation notice for your rental contract' : 'Indexatie huurovereenkomst'}</div>
+                                <div className='p-5 text-left font-sans text-xs text-foreground/80 space-y-4'>
+                                    <div className='border-b border-border/60 pb-3 space-y-1 text-[11px]'>
+                                        <div>
+                                            <strong className='text-muted-foreground'>
+                                                To:
+                                            </strong>{' '}
+                                            huurder@portefeuille.nl
+                                        </div>
+                                        <div>
+                                            <strong className='text-muted-foreground'>
+                                                Subject:
+                                            </strong>{' '}
+                                            {isEn
+                                                ? 'Indexation notice for your rental contract'
+                                                : 'Indexatie huurovereenkomst'}
+                                        </div>
                                     </div>
                                     <p>Beste huurder,</p>
                                     <p>
-                                        Conform de afspraken in je huurovereenkomst indexeren we per de eerstvolgende vervaldatum de huurprijs met het CPI-percentage van <strong>{cpiValue}%</strong>.
+                                        Conform de afspraken in je
+                                        huurovereenkomst indexeren we per de
+                                        eerstvolgende vervaldatum de huurprijs
+                                        met het CPI-percentage van{' '}
+                                        <strong>{cpiValue}%</strong>.
                                     </p>
-                                    <div className="bg-muted/30 border border-border/60 rounded-lg p-3 space-y-1 font-mono text-[11px]">
-                                        <div>• Oude huurprijs: €{baseRent.toFixed(2)}</div>
-                                        <div>• Indexatie ({cpiValue}%): €{result.increase.toFixed(2)}</div>
-                                        <div>• <strong>Nieuwe huurprijs: €{result.newRent.toFixed(2)}</strong></div>
+                                    <div className='bg-muted/30 border border-border/60 rounded-lg p-3 space-y-1 font-mono text-[11px]'>
+                                        <div>
+                                            • Oude huurprijs: €
+                                            {baseRent.toFixed(2)}
+                                        </div>
+                                        <div>
+                                            • Indexatie ({cpiValue}%): €
+                                            {result.increase.toFixed(2)}
+                                        </div>
+                                        <div>
+                                            •{' '}
+                                            <strong>
+                                                Nieuwe huurprijs: €
+                                                {result.newRent.toFixed(2)}
+                                            </strong>
+                                        </div>
                                     </div>
-                                    <p>De nieuwe facturen worden automatisch aangepast in het systeem.</p>
-                                    <p>Met vriendelijke groet,<br /><strong>Emlinked Vastgoed Management</strong></p>
+                                    <p>
+                                        De nieuwe facturen worden automatisch
+                                        aangepast in het systeem.
+                                    </p>
+                                    <p>
+                                        Met vriendelijke groet,
+                                        <br />
+                                        <strong>
+                                            Emlinked Vastgoed Management
+                                        </strong>
+                                    </p>
                                 </div>
                             </div>
                         )}
                     </div>
                 ) : (
-                    <div className="border border-dashed border-border rounded-xl h-full min-h-[300px] flex flex-col items-center justify-center text-center p-6 bg-muted/5">
-                        <TrendingUp className="h-10 w-10 text-muted-foreground/30 mb-3" />
-                        <h4 className="font-bold text-foreground/50 text-sm">
-                            {isEn ? 'Simulation results will appear here' : 'Berekeningsresultaten verschijnen hier'}
+                    <div className='border border-dashed border-border rounded-xl h-full min-h-[300px] flex flex-col items-center justify-center text-center p-6 bg-muted/5'>
+                        <TrendingUp className='h-10 w-10 text-muted-foreground/30 mb-3' />
+                        <h4 className='font-bold text-foreground/50 text-sm'>
+                            {isEn
+                                ? 'Simulation results will appear here'
+                                : 'Berekeningsresultaten verschijnen hier'}
                         </h4>
-                        <p className="text-xs text-muted-foreground max-w-xs mt-1">
-                            {isEn 
+                        <p className='text-xs text-muted-foreground max-w-xs mt-1'>
+                            {isEn
                                 ? 'Adjust the rent and CPI parameters and click calculate to generate the notification.'
                                 : 'Pas de parameters aan en klik op berekenen om de berekening en brief te tonen.'}
                         </p>
@@ -392,86 +472,120 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
     };
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto mt-12 px-4">
+        <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto mt-12 px-4'>
             {/* Inputs Card */}
-            <div className="lg:col-span-5 bg-card border border-border rounded-xl p-6 shadow-sm">
-                <div className="flex items-center gap-2 mb-4">
-                    <div className="p-1.5 rounded-lg bg-amber/15 text-amber">
-                        <DollarSign className="h-5 w-5" />
+            <div className='lg:col-span-5 bg-card border border-border rounded-xl p-6 shadow-sm'>
+                <div className='flex items-center gap-2 mb-4'>
+                    <div className='p-1.5 rounded-lg bg-amber/15 text-amber'>
+                        <DollarSign className='h-5 w-5' />
                     </div>
-                    <h3 className="font-bold text-foreground">
-                        {isEn ? 'Split Payments Simulator' : 'Split Payments Simulator'}
+                    <h3 className='font-bold text-foreground'>
+                        {isEn
+                            ? 'Split Payments Simulator'
+                            : 'Split Payments Simulator'}
                     </h3>
                 </div>
-                <p className="text-xs text-muted-foreground mb-6">
-                    {isEn 
-                        ? 'Simulate splits between building owners and management fees.' 
+                <p className='text-xs text-muted-foreground mb-6'>
+                    {isEn
+                        ? 'Simulate splits between building owners and management fees.'
                         : 'Simuleer hoe ontvangen betalingen automatisch verdeeld en geboekt worden.'}
                 </p>
-                <form onSubmit={handleSimulate} className="flex flex-col gap-4">
+                <form onSubmit={handleSimulate} className='flex flex-col gap-4'>
                     <div>
-                        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                            {isEn ? 'Received Rent Payment (€)' : 'Ontvangen huursom (€)'}
+                        <label className='block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2'>
+                            {isEn
+                                ? 'Received Rent Payment (€)'
+                                : 'Ontvangen huursom (€)'}
                         </label>
                         <input
-                            type="number"
+                            type='number'
                             value={amount}
-                            onChange={(e) => setAmount(Math.max(0, parseFloat(e.target.value) || 0))}
-                            className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber"
+                            onChange={(e) =>
+                                setAmount(
+                                    Math.max(
+                                        0,
+                                        parseFloat(e.target.value) || 0,
+                                    ),
+                                )
+                            }
+                            className='w-full h-10 px-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
                             required
                         />
                     </div>
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className='grid grid-cols-3 gap-2'>
                         <div>
-                            <label className="block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+                            <label className='block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1'>
                                 {isEn ? 'Owner A %' : 'Eigenaar A %'}
                             </label>
                             <input
-                                type="number"
+                                type='number'
                                 value={ownerAPct}
-                                onChange={(e) => setOwnerAPct(Math.max(0, parseInt(e.target.value) || 0))}
-                                className="w-full h-10 px-2 rounded-md border border-border bg-background text-xs text-foreground focus:outline-none focus:border-amber"
+                                onChange={(e) =>
+                                    setOwnerAPct(
+                                        Math.max(
+                                            0,
+                                            parseInt(e.target.value) || 0,
+                                        ),
+                                    )
+                                }
+                                className='w-full h-10 px-2 rounded-md border border-border bg-background text-xs text-foreground focus:outline-none focus:border-amber'
                                 required
                             />
                         </div>
                         <div>
-                            <label className="block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+                            <label className='block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1'>
                                 {isEn ? 'Owner B %' : 'Eigenaar B %'}
                             </label>
                             <input
-                                type="number"
+                                type='number'
                                 value={ownerBPct}
-                                onChange={(e) => setOwnerBPct(Math.max(0, parseInt(e.target.value) || 0))}
-                                className="w-full h-10 px-2 rounded-md border border-border bg-background text-xs text-foreground focus:outline-none focus:border-amber"
+                                onChange={(e) =>
+                                    setOwnerBPct(
+                                        Math.max(
+                                            0,
+                                            parseInt(e.target.value) || 0,
+                                        ),
+                                    )
+                                }
+                                className='w-full h-10 px-2 rounded-md border border-border bg-background text-xs text-foreground focus:outline-none focus:border-amber'
                                 required
                             />
                         </div>
                         <div>
-                            <label className="block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+                            <label className='block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1'>
                                 {isEn ? 'Fee %' : 'Beheer fee %'}
                             </label>
                             <input
-                                type="number"
+                                type='number'
                                 value={feePct}
-                                onChange={(e) => setFeePct(Math.max(0, parseInt(e.target.value) || 0))}
-                                className="w-full h-10 px-2 rounded-md border border-border bg-background text-xs text-foreground focus:outline-none focus:border-amber"
+                                onChange={(e) =>
+                                    setFeePct(
+                                        Math.max(
+                                            0,
+                                            parseInt(e.target.value) || 0,
+                                        ),
+                                    )
+                                }
+                                className='w-full h-10 px-2 rounded-md border border-border bg-background text-xs text-foreground focus:outline-none focus:border-amber'
                                 required
                             />
                         </div>
                     </div>
                     <button
-                        type="submit"
+                        type='submit'
                         disabled={isReconciling}
-                        className="mt-2 w-full h-11 bg-amber hover:bg-amber-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
+                        className='mt-2 w-full h-11 bg-amber hover:bg-amber-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50'
                     >
                         {isReconciling ? (
                             <>
-                                <Loader2 className="h-4 w-4 animate-spin" />
+                                <Loader2 className='h-4 w-4 animate-spin' />
                                 {isEn ? 'Processing...' : 'Verwerken...'}
                             </>
                         ) : (
                             <>
-                                {isEn ? 'Simulate Split' : 'Simuleer verdeelsleutel'}
+                                {isEn
+                                    ? 'Simulate Split'
+                                    : 'Simuleer verdeelsleutel'}
                             </>
                         )}
                     </button>
@@ -479,97 +593,140 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
             </div>
 
             {/* Reconciliation Flow Card */}
-            <div className="lg:col-span-7 flex flex-col gap-6">
+            <div className='lg:col-span-7 flex flex-col gap-6'>
                 {result ? (
-                    <div className="flex flex-col gap-6 animate-fadeIn">
+                    <div className='flex flex-col gap-6 animate-fadeIn'>
                         {/* Highlights Grid */}
-                        <div className="grid grid-cols-3 gap-4">
-                            <div className="bg-muted/30 border border-border/60 rounded-xl p-4 text-center">
-                                <span className="text-[10px] uppercase font-semibold text-muted-foreground block mb-1">
-                                    {isEn ? 'Owner A Yield' : 'Uitkering Eigenaar A'}
+                        <div className='grid grid-cols-3 gap-4'>
+                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                                <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
+                                    {isEn
+                                        ? 'Owner A Yield'
+                                        : 'Uitkering Eigenaar A'}
                                 </span>
-                                <span className="text-base font-bold text-foreground">
-                                    €{result.ownerA.toLocaleString(locale, { minimumFractionDigits: 2 })}
+                                <span className='text-base font-bold text-foreground'>
+                                    €
+                                    {result.ownerA.toLocaleString(locale, {
+                                        minimumFractionDigits: 2,
+                                    })}
                                 </span>
-                                <span className="text-[9px] text-muted-foreground block">
+                                <span className='text-[9px] text-muted-foreground block'>
                                     ({ownerAPct}%)
                                 </span>
                             </div>
-                            <div className="bg-muted/30 border border-border/60 rounded-xl p-4 text-center">
-                                <span className="text-[10px] uppercase font-semibold text-muted-foreground block mb-1">
-                                    {isEn ? 'Owner B Yield' : 'Uitkering Eigenaar B'}
+                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                                <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
+                                    {isEn
+                                        ? 'Owner B Yield'
+                                        : 'Uitkering Eigenaar B'}
                                 </span>
-                                <span className="text-base font-bold text-foreground">
-                                    €{result.ownerB.toLocaleString(locale, { minimumFractionDigits: 2 })}
+                                <span className='text-base font-bold text-foreground'>
+                                    €
+                                    {result.ownerB.toLocaleString(locale, {
+                                        minimumFractionDigits: 2,
+                                    })}
                                 </span>
-                                <span className="text-[9px] text-muted-foreground block">
+                                <span className='text-[9px] text-muted-foreground block'>
                                     ({ownerBPct}%)
                                 </span>
                             </div>
-                            <div className="bg-muted/30 border border-border/60 rounded-xl p-4 text-center">
-                                <span className="text-[10px] uppercase font-semibold text-muted-foreground block mb-1">
-                                    {isEn ? 'Management Fee' : 'Beheervergoeding'}
+                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                                <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
+                                    {isEn
+                                        ? 'Management Fee'
+                                        : 'Beheervergoeding'}
                                 </span>
-                                <span className="text-base font-bold text-amber">
-                                    €{result.fee.toLocaleString(locale, { minimumFractionDigits: 2 })}
+                                <span className='text-base font-bold text-amber'>
+                                    €
+                                    {result.fee.toLocaleString(locale, {
+                                        minimumFractionDigits: 2,
+                                    })}
                                 </span>
-                                <span className="text-[9px] text-amber block font-medium">
+                                <span className='text-[9px] text-amber block font-medium'>
                                     ({feePct}%)
                                 </span>
                             </div>
                         </div>
 
                         {/* Audit Trail / Reconciliation Box */}
-                        <div className="border border-border rounded-xl overflow-hidden shadow-sm bg-card">
-                            <div className="bg-muted/50 border-b border-border px-4 py-3 flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <FileText className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-xs font-semibold text-foreground">
-                                        {isEn ? 'Automated Ledger Postings' : 'Grootboek Boekingen (Business Central)'}
+                        <div className='border border-border rounded-xl overflow-hidden shadow-sm bg-card'>
+                            <div className='bg-muted/50 border-b border-border px-4 py-6flex items-center justify-between'>
+                                <div className='flex items-center gap-2'>
+                                    <FileText className='h-4 w-4 text-muted-foreground' />
+                                    <span className='text-xs font-semibold text-foreground'>
+                                        {isEn
+                                            ? 'Automated Ledger Postings'
+                                            : 'Grootboek Boekingen (Business Central)'}
                                     </span>
                                 </div>
-                                <span className="text-[10px] bg-emerald-500/10 text-emerald-500 font-semibold px-2 py-0.5 rounded flex items-center gap-1">
-                                    <CheckCircle2 className="h-3 w-3" />
-                                    {isEn ? 'Auto-Reconciled' : 'Automatisch Afgeletterd'}
+                                <span className='text-[10px] bg-emerald-500/10 text-emerald-500 font-semibold px-2 py-0.5 rounded flex items-center gap-1'>
+                                    <CheckCircle2 className='h-3 w-3' />
+                                    {isEn
+                                        ? 'Auto-Reconciled'
+                                        : 'Automatisch Afgeletterd'}
                                 </span>
                             </div>
-                            <div className="p-4 space-y-3 font-mono text-[10px] text-left text-foreground/80">
-                                <div className="border-b border-border/40 pb-2 flex justify-between text-muted-foreground font-semibold">
-                                    <span>{isEn ? 'G/L Account Description' : 'Grootboekrekening Omschrijving'}</span>
-                                    <div className="flex gap-8">
+                            <div className='p-4 space-y-3 font-mono text-[10px] text-left text-foreground/80'>
+                                <div className='border-b border-border/40 pb-2 flex justify-between text-muted-foreground font-semibold'>
+                                    <span>
+                                        {isEn
+                                            ? 'G/L Account Description'
+                                            : 'Grootboekrekening Omschrijving'}
+                                    </span>
+                                    <div className='flex gap-8'>
                                         <span>Debet</span>
                                         <span>Credit</span>
                                     </div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <span>1100 - Bank / Bank Rekeningcourant</span>
-                                    <div className="flex gap-4">
-                                        <span className="w-14 text-right">€{amount.toFixed(2)}</span>
-                                        <span className="w-14 text-right">-</span>
+                                <div className='flex justify-between'>
+                                    <span>
+                                        1100 - Bank / Bank Rekeningcourant
+                                    </span>
+                                    <div className='flex gap-4'>
+                                        <span className='w-14 text-right'>
+                                            €{amount.toFixed(2)}
+                                        </span>
+                                        <span className='w-14 text-right'>
+                                            -
+                                        </span>
                                     </div>
                                 </div>
-                                <div className="flex justify-between text-emerald-500 font-medium">
-                                    <span>1300 - Debiteuren / Huurdersafrekening</span>
-                                    <div className="flex gap-4">
-                                        <span className="w-14 text-right">-</span>
-                                        <span className="w-14 text-right">€{amount.toFixed(2)}</span>
+                                <div className='flex justify-between text-emerald-500 font-medium'>
+                                    <span>
+                                        1300 - Debiteuren / Huurdersafrekening
+                                    </span>
+                                    <div className='flex gap-4'>
+                                        <span className='w-14 text-right'>
+                                            -
+                                        </span>
+                                        <span className='w-14 text-right'>
+                                            €{amount.toFixed(2)}
+                                        </span>
                                     </div>
                                 </div>
-                                <div className="border-t border-dashed border-border/60 pt-2 flex justify-between font-semibold text-foreground">
-                                    <span>{isEn ? 'Bank Reconciliation Matching Factor' : 'Afletter matching percentage'}</span>
-                                    <span className="text-emerald-500">100% (Perfect Match)</span>
+                                <div className='border-t border-dashed border-border/60 pt-2 flex justify-between font-semibold text-foreground'>
+                                    <span>
+                                        {isEn
+                                            ? 'Bank Reconciliation Matching Factor'
+                                            : 'Afletter matching percentage'}
+                                    </span>
+                                    <span className='text-emerald-500'>
+                                        100% (Perfect Match)
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 ) : (
-                    <div className="border border-dashed border-border rounded-xl h-full min-h-[300px] flex flex-col items-center justify-center text-center p-6 bg-muted/5">
-                        <DollarSign className="h-10 w-10 text-muted-foreground/30 mb-3" />
-                        <h4 className="font-bold text-foreground/50 text-sm">
-                            {isEn ? 'Ledger simulation results will appear here' : 'Verwerkingstraject verschijnt hier'}
+                    <div className='border border-dashed border-border rounded-xl h-full min-h-[300px] flex flex-col items-center justify-center text-center p-6 bg-muted/5'>
+                        <DollarSign className='h-10 w-10 text-muted-foreground/30 mb-3' />
+                        <h4 className='font-bold text-foreground/50 text-sm'>
+                            {isEn
+                                ? 'Ledger simulation results will appear here'
+                                : 'Verwerkingstraject verschijnt hier'}
                         </h4>
-                        <p className="text-xs text-muted-foreground max-w-xs mt-1">
-                            {isEn 
+                        <p className='text-xs text-muted-foreground max-w-xs mt-1'>
+                            {isEn
                                 ? 'Adjust the split metrics and click simulate to trigger the auto-reconciliation log.'
                                 : 'Configureer de verdeling en klik op simuleer om de automatische aflettering te bekijken.'}
                         </p>

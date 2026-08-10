@@ -160,7 +160,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
                 </div>
 
                 {/* Sidebar Content (Scrollable Categories) */}
-                <nav className='flex-grow overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-border'>
+                <nav className='grow overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-border'>
                     {sections.map((section, idx) => (
                         <div key={idx} className='space-y-2'>
                             <h4 className='text-xs font-bold uppercase tracking-wider text-muted-foreground/80'>
@@ -184,7 +184,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
             </aside>
 
             {/* Main Content Area */}
-            <div className='flex-grow flex flex-col h-full overflow-hidden'>
+            <div className='grow flex flex-col h-full overflow-hidden'>
                 {/* Top Navbar */}
                 <header className='h-16 border-b border-border bg-card px-8 flex items-center justify-between shrink-0'>
                     <div className='w-96 relative'>
@@ -224,7 +224,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
                 </header>
 
                 {/* Scrollable Document Container */}
-                <main className='flex-grow overflow-y-auto bg-background/50 p-12 scrollbar-thin'>
+                <main className='grow overflow-y-auto bg-background/50 p-12 scrollbar-thin'>
                     <div className='max-w-3xl mx-auto'>{children}</div>
                 </main>
             </div>
