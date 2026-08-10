@@ -640,11 +640,18 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
         ),
     );
 
-    if (slug === 'vastgoedbeheer-software') {
+    if (
+        slug === 'vastgoedbeheer-software' ||
+        slug === 'property-management-software'
+    ) {
         return <VastgoedbeheerSoftwareModule doc={safeDoc} locale={locale} />;
     }
 
-    if (slug === 'huurdersportaal' || slug === '/apps/huurdersportaal') {
+    if (
+        slug === 'huurdersportaal' ||
+        slug === 'tenant-portal' ||
+        slug === '/apps/huurdersportaal'
+    ) {
         return <HuurdersportaalModule doc={safeDoc} locale={locale} />;
     }
 

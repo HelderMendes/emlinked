@@ -39,13 +39,14 @@ export async function generateMetadata({
     let seoData: any = null;
     try {
         seoData = await client.fetch(
-            `*[_type == "page" && (slug.current == "home" || slug.current == "/" || slug.current == "/en/") && language == $locale][0].seo {
+            `*[_type == "page" && (slug.current == "home" || slug.current == "/" || slug.current == "/en/" || slug.current == "/en") && language == $locale][0].seo {
                 seoTitle,
                 seoDescription,
                 canonical,
                 noIndex
             }`,
             { locale },
+            { cache: 'no-store' },
         );
     } catch (e) {
         console.error('Error fetching homepage metadata from Sanity:', e);
@@ -81,7 +82,7 @@ export async function generateMetadata({
 async function getHomepageData(locale: string) {
     try {
         return await client.fetch(
-            `*[_type == "page" && (slug.current == "home" || slug.current == "/" || slug.current == "/en/") && language == $locale][0] {
+            `*[_type == "page" && (slug.current == "home" || slug.current == "/" || slug.current == "/en/" || slug.current == "/en") && language == $locale][0] {
                 title,
                 pageBlocks[] {
                     _type,
@@ -147,6 +148,7 @@ async function getHomepageData(locale: string) {
                 }
             }`,
             { locale },
+            { cache: 'no-store' },
         );
     } catch (e) {
         console.error('Error fetching homepage data from Sanity:', e);
@@ -192,6 +194,7 @@ export default async function HomePage({ params }: HomePageProps) {
     const { locale } = await params;
     const isEn = locale === 'en';
     const pageData = await getHomepageData(locale);
+    console.log('🔍 [HomePage Debug] locale:', locale, 'fetched document _id:', pageData?._id, 'title:', pageData?.title, 'blocks count:', pageData?.pageBlocks?.length);
 
     const getPath = (path: string) => {
         if (locale === 'nl') return path;
@@ -218,9 +221,9 @@ export default async function HomePage({ params }: HomePageProps) {
                             <HeroSection
                                 key={block._key}
                                 label={block.label}
-                                title={block.title || 'Uw vastgoedportefeuille altijd *automatisch* aangifte-klaar'}
+                                title={block.title || (isEn ? 'Your real estate portfolio always *automatically* tax & audit ready' : 'Uw vastgoedportefeuille altijd *automatisch* aangifte-klaar')}
                                 subtitle={block.subtitle}
-                                ctaLabel={block.ctaLabel || 'Gratis Demo Aanvragen'}
+                                ctaLabel={block.ctaLabel || (isEn ? 'Request Free Demo' : 'Gratis Demo Aanvragen')}
                                 ctaLink={block.ctaLink || '/contact'}
                                 secondaryCtaLabel={block.secondaryCtaLabel}
                                 secondaryCtaLink={block.secondaryCtaLink}
@@ -319,8 +322,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                         )}
                                                         className='h-13 px-8  inline-flex '
                                                     >
-                                                        Start de gratis Box
-                                                        3-check ⚡
+                                                        {isEn ? 'Start free Box 3 check ⚡' : 'Start de gratis Box 3-check ⚡'}
                                                     </GlowingLink>
                                                 </div>
                                             </div>
@@ -564,7 +566,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                         feature.ctaLabel.trim()
                                                                             ? feature.ctaLabel.trim()
                                                                             : isEn
-                                                                              ? 'Bekijk module'
+                                                                              ? 'View module'
                                                                               : 'Bekijk module'}
                                                                     </span>
                                                                     <ArrowRight className='w-3.5 h-3.5' />
@@ -581,13 +583,13 @@ export default async function HomePage({ params }: HomePageProps) {
                     }
                     case 'integrationsList': {
                         const sectionTag =
-                            block.sectionTag || 'ERP INTEGRATIE';
+                            block.sectionTag || (isEn ? 'ERP INTEGRATION' : 'ERP INTEGRATIE');
                         const sectionTitle =
                             block.sectionTitle ||
-                            'De directe koppeling met Microsoft Dynamics 365 Business Central';
+                            (isEn ? 'Native connection with Microsoft Dynamics 365 Business Central' : 'De directe koppeling met Microsoft Dynamics 365 Business Central');
                         const sectionSubtitle =
                             block.sectionSubtitle ||
-                            'Veel platformen beloven een koppeling, maar emlinked werkt native binnen uw ERP-omgeving. Dit betekent: geen handmatige exports, geen gecompliceerde API-fouten en absolute data-integriteit. Elke operationele mutatie landt direct als gevalideerde journaalpost in uw grootboek.';
+                            (isEn ? 'Many platforms promise an integration, but emlinked runs natively inside your ERP environment. That means zero manual CSV exports, no complex API sync errors, and absolute data integrity. Every operational entry lands directly as a validated journal post in your ledger.' : 'Veel platformen beloven een koppeling, maar emlinked werkt native binnen uw ERP-omgeving. Dit betekent: geen handmatige exports, geen gecompliceerde API-fouten en absolute data-integriteit. Elke operationele mutatie landt direct als gevalideerde journaalpost in uw grootboek.');
                         const integrations = block.integrations || [];
 
                         return (
@@ -724,16 +726,16 @@ export default async function HomePage({ params }: HomePageProps) {
                         );
                     }
                     case 'ctaBanner': {
-                        const tag = block.tag || 'DIGITALISERING';
+                        const tag = block.tag || (isEn ? 'DIGITALIZATION' : 'DIGITALISERING');
                         const title =
                             block.title ||
-                            'Klaar om uw vastgoedbeheer te digitaliseren?';
+                            (isEn ? 'Ready to digitize your property management?' : 'Klaar om uw vastgoedbeheer te digitaliseren?');
                         const subtitle =
                             block.subtitle ||
-                            'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd en kiezen voor 100% realtime controle binnen Business Central.';
+                            (isEn ? 'Join leading property managers who eliminated manual tasks and chose 100% real-time control within Business Central.' : 'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd en kiezen voor 100% realtime controle binnen Business Central.');
                         const buttonLabel =
                             block.buttonLabel ||
-                            'Vraag een live demonstratie aan';
+                            (isEn ? 'Request a free demo' : 'Vraag een live demonstratie aan');
                         const buttonLink = block.buttonLink || '/contact';
 
                         return (

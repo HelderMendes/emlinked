@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StickyAnnouncement from '@/components/StickyAnnouncement';
+import CookieConsentBanner from '@/components/CookieConsentBanner';
 import { client } from '@/sanity/client';
 
 interface WebLayoutProps {
@@ -47,6 +48,7 @@ export default async function WebLayout({ children, params }: WebLayoutProps) {
             <main className='flex-grow flex flex-col'>{children}</main>
             <Footer locale={locale} settings={settings} />
             <StickyAnnouncement locale={locale} settings={settings} />
+            <CookieConsentBanner locale={locale} />
         </>
     );
 }

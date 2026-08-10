@@ -25,7 +25,7 @@ export function Box3CalculatorCard({
     updateField: externalUpdateField,
     results: externalResults,
 }: Box3CalculatorCardProps) {
-    const internalCalc = useBox3Calculator();
+    const internalCalc = useBox3Calculator(undefined, isEn);
 
     const inputs = externalInputs || internalCalc.inputs;
     const updateField = externalUpdateField || internalCalc.updateField;

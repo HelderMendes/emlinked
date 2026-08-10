@@ -58,6 +58,18 @@ export function VastgoedbeheerSoftwareModule({
 }: VastgoedbeheerSoftwareModuleProps) {
     const isEn = locale === 'en';
 
+    // Extract Sanity modular pageBlocks
+    const pageBlocks = doc?.pageBlocks || [];
+    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock');
+    const featureTabsBlock = pageBlocks.find((b: any) => b._type === 'featureTabsBlock');
+    const comparisonBlock = pageBlocks.find((b: any) => b._type === 'comparisonBlock');
+    const architectureBlock = pageBlocks.find((b: any) => b._type === 'architectureBlock');
+    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock');
+
+    const heroBadge = heroBlock?.badge || doc?.badge || (isEn ? 'MICROSOFT DYNAMICS 365 NATIVE' : 'CORE SAAS MODULE VOOR VASTGOEDMANAGEMENT');
+    const heroTagline = heroBlock?.tagline || doc?.tagline || doc?.title;
+    const heroDescription = heroBlock?.description || doc?.description;
+
     // Structured JSON-LD from Sanity or default blueprint fallback
     const jsonLdData = doc?.seo?.structuredData
         ? typeof doc.seo.structuredData === 'string'
@@ -171,26 +183,25 @@ export function VastgoedbeheerSoftwareModule({
                             {/* Pill Badge dynamically bound to Sanity doc.badge */}
                             <span className='inline-flex items-center gap-3.5 self-start rounded-full bg-amber/15 border border-amber/35 px-4.5 py-1 text-xs font-bold tracking-wide text-amber'>
                                 <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping'></span>
-                                {doc?.badge ||
-                                    'CORE SAAS MODULE VOOR VASTGOEDMANAGEMENT'}
+                                {heroBadge}
                             </span>
-                            {/* H1 Title dynamically bound to Sanity doc.tagline */}
+                            {/* H1 Title dynamically bound to Sanity */}
                             <h1 className='font-display font-bold tracking-tight text-white leading-[1.1] text-3xl sm:text-4xl lg:text-[2.75rem] text-balance'>
-                                {doc?.tagline || doc?.title ? (
-                                    formatHeroTitle(doc?.tagline || doc?.title)
+                                {heroTagline ? (
+                                    formatHeroTitle(heroTagline)
                                 ) : (
                                     <>
                                         Professionele{' '}
-                                        <span className='text-amber bg-linear-to-r from-amber via-amber-light to-amber bg-clip-text  font-extrabold'>
+                                        <span className='text-amber bg-linear-to-r from-amber via-amber-light to-amber bg-clip-text font-extrabold'>
                                             vastgoedbeheer software
                                         </span>{' '}
                                         voor je complete portefeuille
                                     </>
                                 )}
                             </h1>
-                            {/* Subtitle dynamically bound to Sanity doc.description */}
+                            {/* Subtitle dynamically bound to Sanity */}
                             <p className='text-lg md:text-xl text-white/70 leading-relaxed font-light max-w-2xl'>
-                                {doc?.description || (
+                                {heroDescription || (
                                     <>
                                         Schaal je vastgoedoperatie zonder
                                         administratieve chaos. Onze{' '}
@@ -221,7 +232,9 @@ export function VastgoedbeheerSoftwareModule({
                                     className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
                                 >
                                     <span className='flex items-center justify-center gap-2 text-white'>
-                                        <span>Gratis live demo aanvragen</span>
+                                        <span>
+                                            {heroBlock?.ctaLabel || (isEn ? 'Request a free live demo' : 'Gratis live demo aanvragen')}
+                                        </span>
                                         <ArrowRight className='w-5 h-5 text-white' />
                                     </span>
                                 </GlowingLink>
@@ -230,7 +243,7 @@ export function VastgoedbeheerSoftwareModule({
                                     href='/box3-check'
                                     className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
                                 >
-                                    Bereken je Box 3-impact
+                                    {heroBlock?.secondaryCtaLabel || (isEn ? 'Check Box 3 impact' : 'Bereken je Box 3-impact')}
                                     <span className='ml-2 w-5 h-5 text-white/70 group-hover:translate-x-1 transition-transform'>
                                         ⚡
                                     </span>
@@ -374,23 +387,24 @@ export function VastgoedbeheerSoftwareModule({
                     {/* Header */}
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
                         <div className='flex justify-center mb-1'>
-                            <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                                <span className='w-2 h-2 rounded-full bg-amber shrink-0'></span>
-                                GEEN HANDMATIG WERK MEER
-                            </span>
+                            <div className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1 text-xs font-bold tracking-wide text-amber uppercase backdrop-blur-md'>
+                                <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                <span>
+                                    {comparisonBlock?.badge || (isEn ? 'NO MORE MANUAL WORK' : 'GEEN HANDMATIG WERK MEER')}
+                                </span>
+                            </div>
                         </div>
 
                         <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-[#060e32]'>
-                            Waarom traditionele vastgoed administratie software
-                            tekortschiet
+                            {comparisonBlock?.title || (isEn
+                                ? 'Why traditional real estate management software falls short'
+                                : 'Waarom traditionele vastgoed administratie software tekortschiet')}
                         </h2>
 
                         <p className='text-[#060e32]/75 text-base md:text-lg leading-relaxed font-light'>
-                            Veel beheerders verliezen wekelijks kostbare uren
-                            aan het handmatig synchroniseren van
-                            vastgoedgegevens met hun financiële administratie.
-                            Emlinked sluit het gat tussen de dagelijkse operatie
-                            en je grootboek.
+                            {comparisonBlock?.desc || (isEn
+                                ? 'Many property managers waste precious hours weekly manually syncing property data with accounting ledgers. Emlinked bridges the gap between daily operations and your GL.'
+                                : 'Veel beheerders verliezen wekelijks kostbare uren aan het handmatig synchroniseren van vastgoedgegevens met hun financiële administratie. Emlinked sluit het gat tussen de dagelijkse operatie en je grootboek.')}
                         </p>
                     </div>
                     {/* Side-by-Side Comparison Matrix */}
@@ -406,70 +420,62 @@ export function VastgoedbeheerSoftwareModule({
                             <div className='space-y-6'>
                                 <div className='border-b border-black/10 pb-4 pr-16'>
                                     <h3 className='text-lg font-bold text-amber'>
-                                        TRADITIONELE VASTGOEDSOFTWARE
+                                        {comparisonBlock?.leftTitle || (isEn ? 'TRADITIONAL PROPERTY SOFTWARE' : 'TRADITIONELE VASTGOEDSOFTWARE')}
                                     </h3>
                                 </div>
 
                                 <ul className='space-y-4 text-sm text-[#060e32]/80'>
-                                    <li className='flex items-start gap-3'>
-                                        <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
-                                        <div className='space-y-0.5'>
-                                            <strong className='text-[#060e32] block font-semibold text-sm'>
-                                                Handmatige Excel-imports voor
-                                                indexaties
-                                            </strong>
-                                            <span className='text-slate-600 text-xs leading-relaxed block'>
-                                                Foutgevoelig knippen en plakken
-                                                van CBS-indexcijfers en
-                                                contractregels op de 1e van de
-                                                maand.
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li className='flex items-start gap-3'>
-                                        <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
-                                        <div className='space-y-0.5'>
-                                            <strong className='text-[#060e32] block font-semibold text-sm'>
-                                                API-fouten tussen losse tools en
-                                                ERP
-                                            </strong>
-                                            <span className='text-slate-600 text-xs leading-relaxed block'>
-                                                Externe synchronisatiekanalen
-                                                vallen regelmatig stil, met
-                                                ontbrekende debiteurenposten als
-                                                gevolg.
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li className='flex items-start gap-3'>
-                                        <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
-                                        <div className='space-y-0.5'>
-                                            <strong className='text-[#060e32] block font-semibold text-sm'>
-                                                Foutgevoelige herberekeningen
-                                                van servicekosten
-                                            </strong>
-                                            <span className='text-slate-600 text-xs leading-relaxed block'>
-                                                Onduidelijke
-                                                voorschotberekeningen en
-                                                moeizame afrekeningen aan het
-                                                einde van het boekjaar.
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li className='flex items-start gap-3'>
-                                        <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
-                                        <div className='space-y-0.5'>
-                                            <strong className='text-[#060e32] block font-semibold text-sm'>
-                                                Vertraagde financiële
-                                                rapportages
-                                            </strong>
-                                            <span className='text-slate-600 text-xs leading-relaxed block'>
-                                                Rapportages over leegstand en
-                                                bruto/netto rendementen moeten
-                                                handmatig worden geconsolideerd.
-                                            </span>
-                                        </div>
-                                    </li>
+                                    {(comparisonBlock?.leftItems && comparisonBlock.leftItems.length > 0) ? (
+                                        comparisonBlock.leftItems.map((item: any, idx: number) => (
+                                            <li key={idx} className='flex items-start gap-3'>
+                                                <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                                <div className='space-y-0.5'>
+                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                        {item.title}
+                                                    </strong>
+                                                    <span className='text-slate-600 text-xs leading-relaxed block'>
+                                                        {item.desc}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <>
+                                            <li className='flex items-start gap-3'>
+                                                <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                                <div className='space-y-0.5'>
+                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                        {isEn ? 'Manual Excel indexation imports' : 'Handmatige Excel-imports voor indexaties'}
+                                                    </strong>
+                                                    <span className='text-slate-600 text-xs leading-relaxed block'>
+                                                        {isEn ? 'Error-prone copy-pasting of index numbers and contract lines.' : 'Foutgevoelig knippen en plakken van CBS-indexcijfers en contractregels op de 1e van de maand.'}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            <li className='flex items-start gap-3'>
+                                                <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                                <div className='space-y-0.5'>
+                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                        {isEn ? 'API sync errors between tools and ERP' : 'API-fouten tussen losse tools en ERP'}
+                                                    </strong>
+                                                    <span className='text-slate-600 text-xs leading-relaxed block'>
+                                                        {isEn ? 'External sync channels stall regularly, resulting in missing ledger entries.' : 'Externe synchronisatiekanalen vallen regelmatig stil, met ontbrekende debiteurenposten als gevolg.'}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            <li className='flex items-start gap-3'>
+                                                <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                                <div className='space-y-0.5'>
+                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                        {isEn ? 'Delayed financial reporting' : 'Vertraagde financiële rapportages'}
+                                                    </strong>
+                                                    <span className='text-slate-600 text-xs leading-relaxed block'>
+                                                        {isEn ? 'Yield and vacancy reports must be manually consolidated.' : 'Rapportages over leegstand en bruto/netto rendementen moeten handmatig worden geconsolideerd.'}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        </>
+                                    )}
                                 </ul>
                             </div>
                         </div>
@@ -485,69 +491,62 @@ export function VastgoedbeheerSoftwareModule({
                             <div className='space-y-6'>
                                 <div className='border-b border-black/10 pb-4 pr-16'>
                                     <h3 className='text-lg font-bold text-amber'>
-                                        EMLINKED NATIVE DYNAMICS MODULE
+                                        {comparisonBlock?.rightTitle || (isEn ? 'EMLINKED NATIVE DYNAMICS MODULE' : 'EMLINKED NATIVE DYNAMICS MODULE')}
                                     </h3>
                                 </div>
 
                                 <ul className='space-y-4 text-sm text-[#060e32]'>
-                                    <li className='flex items-start gap-3'>
-                                        <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
-                                        <div className='space-y-0.5'>
-                                            <strong className='text-[#060e32] block font-semibold text-sm'>
-                                                Automatische CPI-indexatie &
-                                                huurprolongatie
-                                            </strong>
-                                            <span className='text-slate-600 text-xs leading-relaxed block'>
-                                                CBS-data wordt automatisch
-                                                ingelezen en rechtstreeks
-                                                toegepast op je
-                                                huurovereenkomsten.
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li className='flex items-start gap-3'>
-                                        <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
-                                        <div className='space-y-0.5'>
-                                            <strong className='text-[#060e32] block font-semibold text-sm'>
-                                                100% native verwerking in
-                                                Business Central
-                                            </strong>
-                                            <span className='text-slate-600 text-xs leading-relaxed block'>
-                                                Geen externe koppelingen;
-                                                journaalposten en facturen
-                                                ontstaan direct in de
-                                                ERP-database.
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li className='flex items-start gap-3'>
-                                        <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
-                                        <div className='space-y-0.5'>
-                                            <strong className='text-[#060e32] block font-semibold text-sm'>
-                                                Geautomatiseerde en
-                                                wet-compliant afrekening
-                                            </strong>
-                                            <span className='text-slate-600 text-xs leading-relaxed block'>
-                                                Matching van werkelijk gemaakte
-                                                inkoopfacturen met voorschotten
-                                                via Document Capture.
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li className='flex items-start gap-3'>
-                                        <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
-                                        <div className='space-y-0.5'>
-                                            <strong className='text-[#060e32] block font-semibold text-sm'>
-                                                Realtime inzicht in je totale
-                                                portefeuille
-                                            </strong>
-                                            <span className='text-slate-600 text-xs leading-relaxed block'>
-                                                Executive dashboards voor
-                                                controllers en vastgoeddirecties
-                                                met één druk op de knop.
-                                            </span>
-                                        </div>
-                                    </li>
+                                    {(comparisonBlock?.rightItems && comparisonBlock.rightItems.length > 0) ? (
+                                        comparisonBlock.rightItems.map((item: any, idx: number) => (
+                                            <li key={idx} className='flex items-start gap-3'>
+                                                <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                                <div className='space-y-0.5'>
+                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                        {item.title}
+                                                    </strong>
+                                                    <span className='text-slate-600 text-xs leading-relaxed block'>
+                                                        {item.desc}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <>
+                                            <li className='flex items-start gap-3'>
+                                                <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                                <div className='space-y-0.5'>
+                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                        {isEn ? 'Automated CPI indexations & rent invoicing' : 'Automatische CPI-indexatie & huurprolongatie'}
+                                                    </strong>
+                                                    <span className='text-slate-600 text-xs leading-relaxed block'>
+                                                        {isEn ? 'Indexation data calculated and posted directly to lease contracts.' : 'CBS-data wordt automatisch ingelezen en rechtstreeks toegepast op je huurovereenkomsten.'}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            <li className='flex items-start gap-3'>
+                                                <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                                <div className='space-y-0.5'>
+                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                        {isEn ? '100% Native Business Central processing' : '100% native verwerking in Business Central'}
+                                                    </strong>
+                                                    <span className='text-slate-600 text-xs leading-relaxed block'>
+                                                        {isEn ? 'Zero external API sync scripts; journal entries post natively in your ERP.' : 'Geen externe koppelingen; journaalposten en facturen ontstaan direct in de ERP-database.'}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            <li className='flex items-start gap-3'>
+                                                <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                                <div className='space-y-0.5'>
+                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                        {isEn ? 'Real-time portfolio visibility' : 'Realtime inzicht in je totale portefeuille'}
+                                                    </strong>
+                                                    <span className='text-slate-600 text-xs leading-relaxed block'>
+                                                        {isEn ? 'Executive dashboards for controllers and directors at the click of a button.' : 'Executive dashboards voor controllers en vastgoeddirecties met één druk op de knop.'}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        </>
+                                    )}
                                 </ul>
                             </div>
                         </div>
@@ -919,17 +918,21 @@ export function VastgoedbeheerSoftwareModule({
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                 <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
                                     <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
-                                    {doc?.cta?.tag || 'START MET AUTOMATISEREN'}
+                                    {ctaBlock?.tag || doc?.cta?.tag || (isEn ? 'START AUTOMATING TODAY' : 'START MET AUTOMATISEREN')}
                                 </span>
 
                                 <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
-                                    {doc?.cta?.title ||
-                                        'Klaar om je vastgoedbeheer software te moderniseren?'}
+                                    {ctaBlock?.title || doc?.cta?.title ||
+                                        (isEn
+                                            ? 'Ready to modernize your real estate management software?'
+                                            : 'Klaar om je vastgoedbeheer software te moderniseren?')}
                                 </h2>
 
                                 <p className='text-white/80 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
-                                    {doc?.cta?.desc ||
-                                        'Ervaar zelf hoe de modulaire apps van Emlinked je administratieve lasten halveren en je financiële controle vergroten.'}
+                                    {ctaBlock?.desc || doc?.cta?.desc ||
+                                        (isEn
+                                            ? 'Experience how emlinked modular apps cut administrative burden in half and maximize financial control.'
+                                            : 'Ervaar zelf hoe de modulaire apps van Emlinked je administratieve lasten halveren en je financiële controle vergroten.')}
                                 </p>
 
                                 {/* Primary & Secondary Action Buttons */}
@@ -940,20 +943,21 @@ export function VastgoedbeheerSoftwareModule({
                                     >
                                         <span className='flex items-center justify-center gap-2 text-white'>
                                             <span>
-                                                {doc?.cta?.primary ||
-                                                    'Gratis live demo aanvragen'}
+                                                {ctaBlock?.primaryButtonText || doc?.cta?.primary ||
+                                                    (isEn ? 'Request a free live demo' : 'Gratis live demo aanvragen')}
                                             </span>
                                             <ArrowRight className='h-5 w-5 text-white' />
                                         </span>
                                     </GlowingLink>
 
                                     <Link
-                                        href='/prijzen'
+                                        href={isEn ? '/en/apps' : '/apps'}
                                         className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 hover:border-white/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
                                     >
                                         <span>
-                                            {doc?.cta?.secondary ||
-                                                'Bekijk tarieven & prijzen →'}
+                                            {isEn
+                                                ? 'All Apps →'
+                                                : 'Alle apps →'}
                                         </span>
                                     </Link>
                                 </div>

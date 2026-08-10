@@ -58,17 +58,28 @@ export function HeroSection({
     secondaryCtaLink = '/integraties',
     showProof = true,
     showProofAvatars = true,
-    proofText = 'Vertrouwd door professionele vastgoedbeheerders en controllers',
+    proofText,
     imagePath = '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
     isHomepage = true,
     locale = 'nl',
     titleClassName,
     customGraphic,
 }: HeroSectionProps) {
+    const isEn = locale === 'en';
+    const effectiveProofText =
+        proofText ||
+        (isEn
+            ? 'Trusted by professional real estate managers & controllers'
+            : 'Vertrouwd door professionele vastgoedbeheerders en controllers');
+
     const getPath = (path: string) => {
-        if (!path) return '/';
-        if (locale === 'nl') return path;
-        return `/en${path === '/' ? '' : path}`;
+        if (!path) return isEn ? '/en' : '/';
+        if (path === '#demo' || path.startsWith('#')) return path;
+        if (isEn) {
+            if (path.startsWith('/en')) return path;
+            return `/en${path === '/' ? '' : path}`;
+        }
+        return path;
     };
 
     return (
@@ -164,7 +175,8 @@ export function HeroSection({
                                                     Angelique van Doorn
                                                 </div>
                                                 <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
-                                                    Vastgoedbeheerder, Van Overhagen
+                                                    Vastgoedbeheerder, Van
+                                                    Overhagen
                                                 </div>
                                                 <div className='text-[10px] text-amber mt-1 tracking-widest'>
                                                     ★★★★★
@@ -211,7 +223,8 @@ export function HeroSection({
                                                     Sander Bot
                                                 </div>
                                                 <div className='text-[11px] text-[#060e32]/80 mt-0.5 leading-tight font-medium'>
-                                                    Mede-eigenaar, Baetland Vastgoed
+                                                    Mede-eigenaar, Baetland
+                                                    Vastgoed
                                                 </div>
                                                 <div className='text-[10px] text-amber mt-1 tracking-widest'>
                                                     ★★★★★
@@ -222,7 +235,7 @@ export function HeroSection({
                                     </div>
                                 )}
                                 <span className='text-sm text-white/65 dark:text-orange font-light'>
-                                    {proofText}
+                                    {effectiveProofText}
                                 </span>
                             </div>
                         )}

@@ -14,7 +14,7 @@ interface HuurdersportaalPageProps {
 async function getHuurdersportaalPageData(locale: string) {
     try {
         return await sanityFetch<any>({
-            query: `*[_type == "solutionPage" && (slug.current == "huurdersportaal" || slug.current == "/apps/huurdersportaal" || slug.current == "/huurdersportaal") && language == $locale][0] {
+            query: `*[_type == "solutionPage" && (slug.current == "huurdersportaal" || slug.current == "tenant-portal" || slug.current == "/apps/huurdersportaal" || slug.current == "/huurdersportaal") && language == $locale][0] {
                 ...,
                 seo {
                     seoTitle,

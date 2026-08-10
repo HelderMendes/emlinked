@@ -418,6 +418,55 @@ export const solutionPage = defineType({
                         },
                     },
                 }),
+
+                // 8. Architecture & Integration Callout Block
+                defineArrayMember({
+                    name: 'architectureBlock',
+                    title: 'Architecture & ERP Integration Block',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'tag',
+                            title: 'Pill Badge Tag',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'title',
+                            title: 'Main Heading Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'desc',
+                            title: 'Description Text',
+                            type: 'text',
+                            rows: 3,
+                        }),
+                        defineField({
+                            name: 'bullets',
+                            title: 'Key Integration Bullets',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'string',
+                                }),
+                            ],
+                        }),
+                        defineField({
+                            name: 'imagePath',
+                            title: 'Illustration Image Path',
+                            type: 'string',
+                        }),
+                    ],
+                    preview: {
+                        select: { title: 'title', tag: 'tag' },
+                        prepare({ title, tag }) {
+                            return {
+                                title: `Architecture Block: ${title || 'ERP Integration'}`,
+                                subtitle: tag || 'Native Integration Callout',
+                            };
+                        },
+                    },
+                }),
             ],
         }),
 

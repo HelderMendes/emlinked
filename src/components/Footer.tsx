@@ -436,7 +436,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                 {/* 3. Bottom Legal Copyright Bar */}
                 <div className='mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left max-w-7xl mx-auto'>
                     <p className='text-[10px] text-slate-400'>{t.rights}</p>
-                    <div className='flex flex-wrap justify-center gap-4 md:gap-6 text-[10px] text-slate-400'>
+                    <div className='flex flex-wrap justify-center gap-4 md:gap-6 text-[10px] text-slate-400 items-center'>
                         <Link
                             href={getPath('/privacybeleid')}
                             className='hover:text-[#ff9400] transition-colors'
@@ -450,6 +450,20 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                         >
                             {t.terms}
                         </Link>
+                        <span className='text-white/10'>|</span>
+                        <button
+                            type='button'
+                            onClick={() => {
+                                window.dispatchEvent(
+                                    new CustomEvent('open_cookie_preferences'),
+                                );
+                            }}
+                            className='hover:text-[#ff9400] transition-colors bg-transparent border-0 p-0 text-[10px] cursor-pointer text-slate-400'
+                        >
+                            {locale === 'en'
+                                ? 'Cookie settings'
+                                : 'Cookie-instellingen'}
+                        </button>
                     </div>
                 </div>
             </div>

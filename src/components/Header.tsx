@@ -473,12 +473,14 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
 
                         {langDropdownOpen && (
                             <div className='absolute right-0 mt-2 w-44 origin-top-right rounded-lg border border-amber/30 bg-[#FFFDF9] text-[#060e32] p-1 shadow-2xl transition-all z-50'>
-                                <Link
+                                <a
                                     href={getLocalePath('nl')}
-                                    onClick={() => {
+                                    onClick={(e) => {
+                                        e.preventDefault();
                                         document.cookie =
                                             'emlinked_locale=nl; path=/; max-age=31536000; SameSite=Lax';
                                         setLangDropdownOpen(false);
+                                        window.location.href = getLocalePath('nl');
                                     }}
                                     className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
                                 >
@@ -501,14 +503,16 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                             />
                                         </svg>
                                     )}
-                                </Link>
+                                </a>
 
-                                <Link
+                                <a
                                     href={getLocalePath('en')}
-                                    onClick={() => {
+                                    onClick={(e) => {
+                                        e.preventDefault();
                                         document.cookie =
                                             'emlinked_locale=en; path=/; max-age=31536000; SameSite=Lax';
                                         setLangDropdownOpen(false);
+                                        window.location.href = getLocalePath('en');
                                     }}
                                     className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
                                 >
@@ -531,7 +535,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                             />
                                         </svg>
                                     )}
-                                </Link>
+                                </a>
                             </div>
                         )}
                     </div>
@@ -758,12 +762,14 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
 
                             {langDropdownOpen && (
                                 <div className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-amber/30 bg-[#FFFDF9] text-[#060e32] p-1 shadow-2xl transition-all z-50'>
-                                    <Link
+                                    <a
                                         href={getLocalePath('nl')}
-                                        onClick={() => {
+                                        onClick={(e) => {
+                                            e.preventDefault();
                                             document.cookie =
                                                 'emlinked_locale=nl; path=/; max-age=31536000; SameSite=Lax';
                                             setLangDropdownOpen(false);
+                                            window.location.href = getLocalePath('nl');
                                         }}
                                         className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
                                     >
@@ -788,14 +794,16 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 />
                                             </svg>
                                         )}
-                                    </Link>
+                                    </a>
 
-                                    <Link
+                                    <a
                                         href={getLocalePath('en')}
-                                        onClick={() => {
+                                        onClick={(e) => {
+                                            e.preventDefault();
                                             document.cookie =
                                                 'emlinked_locale=en; path=/; max-age=31536000; SameSite=Lax';
                                             setLangDropdownOpen(false);
+                                            window.location.href = getLocalePath('en');
                                         }}
                                         className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
                                     >
@@ -820,7 +828,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 />
                                             </svg>
                                         )}
-                                    </Link>
+                                    </a>
                                 </div>
                             )}
                         </div>

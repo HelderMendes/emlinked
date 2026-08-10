@@ -44,7 +44,10 @@ const FORFAIT_RENDEMENT = 0.0588;
 const SCHULD_RENDEMENT = 0.026;
 const BIJTELLING_EIGEN_GEBRUIK = 0.0335;
 
-export function useBox3Calculator(initialInputs?: Partial<Box3Inputs>) {
+export function useBox3Calculator(
+    initialInputs?: Partial<Box3Inputs>,
+    isEn: boolean = false,
+) {
     const [inputs, setInputs] = useState<Box3Inputs>({
         woz: initialInputs?.woz ?? 400000,
         huur: initialInputs?.huur ?? 20000,
@@ -102,23 +105,42 @@ export function useBox3Calculator(initialInputs?: Partial<Box3Inputs>) {
         const nettoCashflow = huur - kosten - rente - belastingNieuw;
         const totaalRendement = nettoCashflow + woz * (waardeStijgingPct / 100);
 
+        const localeCode = isEn ? 'en-US' : 'nl-NL';
+        const numFmt = (val: number) =>
+            Math.round(Math.abs(val)).toLocaleString(localeCode);
+
         let verdictType: 'good' | 'neutral' | 'bad' = 'good';
-        let verdictTitle = '✓ Uw vastgoed blijft rendabel na 2028';
-        let verdictDetail = `Netto cashflow: € ${Math.round(nettoCashflow).toLocaleString('nl-NL')}/jaar. Totaalrendement: € ${Math.round(totaalRendement).toLocaleString('nl-NL')}/jaar.`;
+        let verdictTitle = isEn
+            ? '✓ Your real estate remains profitable after 2028'
+            : '✓ Uw vastgoed blijft rendabel na 2028';
+        let verdictDetail = isEn
+            ? `Net cash flow: € ${numFmt(nettoCashflow)}/year. Total yield: € ${numFmt(totaalRendement)}/year.`
+            : `Netto cashflow: € ${numFmt(nettoCashflow)}/jaar. Totaalrendement: € ${numFmt(totaalRendement)}/jaar.`;
 
         if (totaalRendement > 0 && belastingVerschil < -200) {
             verdictType = 'good';
-            verdictTitle = '✓ Goed nieuws — uw belastingdruk daalt';
-            verdictDetail = `U bespaart € ${Math.round(Math.abs(belastingVerschil)).toLocaleString('nl-NL')}/jaar ten opzichte van het forfaitaire stelsel!`;
+            verdictTitle = isEn
+                ? '✓ Good news — your tax burden decreases'
+                : '✓ Goed nieuws — uw belastingdruk daalt';
+            verdictDetail = isEn
+                ? `You save € ${numFmt(belastingVerschil)}/year compared to the current system!`
+                : `U bespaart € ${numFmt(belastingVerschil)}/jaar ten opzichte van het forfaitaire stelsel!`;
         } else if (totaalRendement > 0 && belastingVerschil > 200) {
             verdictType = 'neutral';
-            verdictTitle = '→ Rendabel — kostendocumentatie is cruciaal';
-            verdictDetail = `U betaalt € ${Math.round(belastingVerschil).toLocaleString('nl-NL')} meer belasting. Elke aftrekbare euro telt. emlinked registreert dit automatisch.`;
+            verdictTitle = isEn
+                ? '→ Profitable — cost documentation is crucial'
+                : '→ Rendabel — kostendocumentatie is cruciaal';
+            verdictDetail = isEn
+                ? `You pay € ${numFmt(belastingVerschil)} more in tax. Every deductible euro counts. emlinked registers this automatically.`
+                : `U betaalt € ${numFmt(belastingVerschil)} meer belasting. Elke aftrekbare euro telt. emlinked registreert dit automatisch.`;
         } else if (totaalRendement <= 0) {
             verdictType = 'bad';
-            verdictTitle =
-                '⚠ Negatief totaalrendement — heroverweeg uw aannames';
-            verdictDetail = `Totaalrendement: € ${Math.round(totaalRendement).toLocaleString('nl-NL')}/jaar. Bespreek uw opties met een fiscaal adviseur.`;
+            verdictTitle = isEn
+                ? '⚠ Negative total yield — reconsider your assumptions'
+                : '⚠ Negatief totaalrendement — heroverweeg uw aannames';
+            verdictDetail = isEn
+                ? `Total yield: € ${numFmt(totaalRendement)}/year. Discuss your options with a tax advisor.`
+                : `Totaalrendement: € ${numFmt(totaalRendement)}/jaar. Bespreek uw opties met een fiscaal adviseur.`;
         }
 
         return {
@@ -131,7 +153,7 @@ export function useBox3Calculator(initialInputs?: Partial<Box3Inputs>) {
             verdictTitle,
             verdictDetail,
         };
-    }, [inputs]);
+    }, [inputs, isEn]);
 
     return { inputs, updateField, results };
 }
@@ -153,7 +175,7 @@ export function Box3Calculator({
     featureTitle,
     featureItems,
 }: Box3CalculatorProps) {
-    const { inputs, updateField, results } = useBox3Calculator();
+    const { inputs, updateField, results } = useBox3Calculator(undefined, isEn);
 
     const formatCurrency = (val: number) =>
         `€ ${Math.round(Math.abs(val)).toLocaleString(isEn ? 'en-US' : 'nl-NL')}`;

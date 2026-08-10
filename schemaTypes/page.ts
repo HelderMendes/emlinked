@@ -289,30 +289,129 @@ export const page = defineType({
                     },
                 }),
                 defineArrayMember({
+                    name: 'architectureSection',
+                    title: 'System Architecture (Seamless Integration)',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'tag',
+                            title: 'Pill Badge Tag (e.g. "NAADLOZE INTEGRATIE")',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'title',
+                            title: 'Main Heading',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'subtitle',
+                            title: 'Description Text',
+                            type: 'text',
+                            rows: 3,
+                        }),
+                        defineField({
+                            name: 'sectionTag',
+                            title: 'Secondary ERP Badge',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'sectionTitle',
+                            title: 'Secondary Heading',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'sectionSubtitle',
+                            title: 'Secondary Subtitle',
+                            type: 'text',
+                            rows: 2,
+                        }),
+                        defineField({
+                            name: 'bullets',
+                            title: 'Architecture Key Benefits',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'bold',
+                                            title: 'Bold Prefix',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'text',
+                                            title: 'Bullet Text',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                        defineField({
+                            name: 'bgImagePath',
+                            title: 'Background Image Path',
+                            type: 'string',
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            title: 'title',
+                            tag: 'tag',
+                        },
+                        prepare({ title, tag }) {
+                            return {
+                                title: `Architecture: ${title || 'Seamless Integration'}`,
+                                subtitle: tag || 'System Architecture Block',
+                            };
+                        },
+                    },
+                }),
+                defineArrayMember({
                     name: 'featuresList',
                     title: 'Features List',
                     type: 'object',
                     fields: [
+                        // --- Box 3 Layout Specific Fields (Hidden when using Apps Grid layout) ---
                         defineField({
                             name: 'badge',
                             title: 'Section Badge (e.g. "Voor Wie")',
                             type: 'string',
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.features &&
+                                        parent.features.length > 0,
+                                ),
                         }),
                         defineField({
                             name: 'title',
                             title: 'Section Title',
                             type: 'string',
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.features &&
+                                        parent.features.length > 0,
+                                ),
                         }),
                         defineField({
                             name: 'subtitle',
                             title: 'Section Subtitle',
                             type: 'text',
                             rows: 3,
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.features &&
+                                        parent.features.length > 0,
+                                ),
                         }),
                         defineField({
                             name: 'fiscalContext',
                             title: 'Fiscale Context Callout Box',
                             type: 'object',
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.features &&
+                                        parent.features.length > 0,
+                                ),
                             fields: [
                                 defineField({
                                     name: 'badge',
@@ -341,6 +440,11 @@ export const page = defineType({
                             name: 'items',
                             title: 'Feature Items / Pain Points',
                             type: 'array',
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.features &&
+                                        parent.features.length > 0,
+                                ),
                             of: [
                                 defineArrayMember({
                                     type: 'object',
@@ -360,21 +464,41 @@ export const page = defineType({
                                 }),
                             ],
                         }),
+
+                        // --- Apps / Homepage Grid Specific Fields (Hidden when using Box 3 Callout layout) ---
                         defineField({
                             name: 'sectionTag',
                             title: 'Section Subtitle / Tag (e.g. "MODULAIR EN FLEXIBEL")',
                             type: 'string',
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.fiscalContext ||
+                                        (parent?.items &&
+                                            parent.items.length > 0),
+                                ),
                         }),
                         defineField({
                             name: 'sectionTitle',
                             title: 'Section Title',
                             type: 'string',
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.fiscalContext ||
+                                        (parent?.items &&
+                                            parent.items.length > 0),
+                                ),
                         }),
                         defineField({
                             name: 'sectionSubtitle',
                             title: 'Intro Paragraph / Subtitle',
                             type: 'text',
                             rows: 3,
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.fiscalContext ||
+                                        (parent?.items &&
+                                            parent.items.length > 0),
+                                ),
                         }),
                         defineField({
                             name: 'features',
@@ -514,9 +638,20 @@ export const page = defineType({
                     type: 'object',
                     fields: [
                         defineField({
+                            name: 'sectionTag',
+                            title: 'Pill Badge Tag (e.g. "KLANTEN & REFERENTIES")',
+                            type: 'string',
+                        }),
+                        defineField({
                             name: 'sectionTitle',
                             title: 'Section Title',
                             type: 'string',
+                        }),
+                        defineField({
+                            name: 'sectionSubtitle',
+                            title: 'Section Subtitle / Description Body',
+                            type: 'text',
+                            rows: 2,
                         }),
                         defineField({
                             name: 'testimonials',

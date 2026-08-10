@@ -14,7 +14,7 @@ interface PaymentSoftwarePageProps {
 async function getPaymentSoftwarePageData(locale: string) {
     try {
         return await sanityFetch<any>({
-            query: `*[_type == "solutionPage" && (slug.current == "payment-software" || slug.current == "/apps/payment-software" || slug.current == "/payment-software") && language == $locale][0] {
+            query: `*[_type == "solutionPage" && (slug.current == "payment-software" || slug.current == "payment" || slug.current == "/apps/payment-software" || slug.current == "/payment-software") && language == $locale][0] {
                 ...,
                 seo {
                     seoTitle,

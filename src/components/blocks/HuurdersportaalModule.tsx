@@ -62,6 +62,18 @@ export function HuurdersportaalModule({
 }: HuurdersportaalModuleProps) {
     const isEn = locale === 'en';
 
+    // Extract Sanity modular pageBlocks
+    const pageBlocks = doc?.pageBlocks || [];
+    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock');
+    const featureTabsBlock = pageBlocks.find((b: any) => b._type === 'featureTabsBlock');
+    const comparisonBlock = pageBlocks.find((b: any) => b._type === 'comparisonBlock');
+    const architectureBlock = pageBlocks.find((b: any) => b._type === 'architectureBlock');
+    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock');
+
+    const heroBadge = heroBlock?.badge || doc?.badge || (isEn ? 'SELF-SERVICE & TENANT COMMUNICATION' : 'SELF-SERVICE & HUURDERCOMMUNICATIE');
+    const heroTagline = heroBlock?.tagline || doc?.tagline || doc?.title;
+    const heroDescription = heroBlock?.description || doc?.description;
+
     // Structured JSON-LD from Sanity or user-provided blueprint
     const jsonLdData = doc?.seo?.structuredData
         ? typeof doc.seo.structuredData === 'string'
@@ -150,13 +162,12 @@ export function HuurdersportaalModule({
                         <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
                             <span className='inline-flex items-center gap-3.5 self-start rounded-full bg-amber/15 border border-amber/35 px-4.5 py-1 text-xs font-bold tracking-wide text-amber uppercase'>
                                 <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
-                                {doc?.badge ||
-                                    'SELF-SERVICE & HUURDERCOMMUNICATIE'}
+                                {heroBadge}
                             </span>
 
                             <h1 className='font-display font-bold tracking-tight text-white leading-[1.1] text-3xl sm:text-4xl lg:text-[2.75rem] text-balance'>
-                                {doc?.tagline ? (
-                                    formatHeroTitle(doc.tagline)
+                                {heroTagline ? (
+                                    formatHeroTitle(heroTagline)
                                 ) : (
                                     <>
                                         Digitaal huurdersportaal voor{' '}
@@ -168,7 +179,7 @@ export function HuurdersportaalModule({
                             </h1>
 
                             <p className='text-lg md:text-xl text-white/70 leading-relaxed font-light max-w-2xl'>
-                                {doc?.description ||
+                                {heroDescription ||
                                     'Verlaag de telefoondruk op je beheerteam en verhoog de tevredenheid van je huurders. Met onze huurdersportaal software regelen je bewoners en zakelijke huurders 24/7 zelf hun reparatieverzoeken, inzien van huurfacturen en communicatie. Volledig gesynchroniseerd met je centrale vastgoedadministratie.'}
                             </p>
 
@@ -178,16 +189,18 @@ export function HuurdersportaalModule({
                                     className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
                                 >
                                     <span className='flex items-center justify-center gap-2 text-white'>
-                                        <span>Vraag een demonstratie aan</span>
+                                        <span>
+                                            {heroBlock?.ctaLabel || (isEn ? 'Request a demo' : 'Vraag een demonstratie aan')}
+                                        </span>
                                         <ArrowRight className='w-5 h-5 text-white' />
                                     </span>
                                 </GlowingLink>
 
                                 <Link
-                                    href='/apps'
+                                    href={isEn ? '/en/apps' : '/apps'}
                                     className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
                                 >
-                                    Bekijk alle apps →
+                                    {heroBlock?.secondaryCtaLabel || (isEn ? 'All Apps →' : 'Alle apps →')}
                                 </Link>
                             </div>
 
@@ -232,8 +245,9 @@ export function HuurdersportaalModule({
                                     </div>
                                 </div>
                                 <span className='text-xs text-white/70 font-light leading-snug'>
-                                    Vertrouwd door professionele
-                                    vastgoedbeheerders en beleggers in Nederland
+                                    {isEn
+                                        ? 'Trusted by professional real estate managers and investors in Europe'
+                                        : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland'}
                                 </span>
                             </div>
                         </div>
@@ -278,7 +292,7 @@ export function HuurdersportaalModule({
                 </div>
             </section>
 
-            {/* ── BLOCK 2: OPERATIONAL BOTTLENECKS (Light Warm Cream Background matching Vastgoedbeheer Software) ── */}
+            {/* ── BLOCK 2: OPERATIONAL BOTTLENECKS ── */}
             <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-16'>
                     {/* Header */}
@@ -286,25 +300,23 @@ export function HuurdersportaalModule({
                         <div className='flex justify-center mb-1'>
                             <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
                                 <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
-                                {doc?.comparisonSection?.badge ||
-                                    'MINDER TELEFOONTJES, MEER OVERZICHT'}
+                                {comparisonBlock?.badge || doc?.comparisonSection?.badge ||
+                                    (isEn ? 'FEWER CALLS, MORE OVERVIEW' : 'MINDER TELEFOONTJES, MEER OVERZICHT')}
                             </span>
                         </div>
 
                         <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-[#060e32]'>
-                            {doc?.comparisonSection?.title || (
-                                <>
-                                    Waarom een verouderde communicatiestroom{' '}
-                                    <span className='text-amber'>
-                                        tijd en geld kost
-                                    </span>
-                                </>
-                            )}
+                            {comparisonBlock?.title || doc?.comparisonSection?.title ||
+                                (isEn
+                                    ? 'Why outdated communication workflows cost time and money'
+                                    : 'Waarom een verouderde communicatiestroom tijd en geld kost')}
                         </h2>
 
                         <p className='text-[#060e32]/75 text-base md:text-lg leading-relaxed font-light'>
-                            {doc?.comparisonSection?.desc ||
-                                'Losse e-mails, WhatsApp-berichten en telefonische meldingen leiden tot zoekgeraakte onderhoudsverzoeken en gefrustreerde huurders. Een online huurder zelfservice portaal centraliseert alle interacties op één plek.'}
+                            {comparisonBlock?.desc || doc?.comparisonSection?.desc ||
+                                (isEn
+                                    ? 'Scattered emails, WhatsApp messages, and phone calls lead to lost maintenance requests and frustrated tenants. An online tenant self-service portal centralises all interactions in one place.'
+                                    : 'Losse e-mails, WhatsApp-berichten en telefonische meldingen leiden tot zoekgeraakte onderhoudsverzoeken en gefrustreerde huurders. Een online huurder zelfservice portaal centraliseert alle interacties op één plek.')}
                         </p>
                     </div>
 
@@ -321,46 +333,56 @@ export function HuurdersportaalModule({
                             <div className='space-y-6'>
                                 <div className='border-b border-black/10 pb-4 pr-16'>
                                     <h3 className='text-lg font-bold text-amber uppercase'>
-                                        {doc?.comparisonSection?.leftTitle ||
-                                            'HANDMATIGE HUURDERCOMMUNICATIE'}
+                                        {comparisonBlock?.leftTitle || doc?.comparisonSection?.leftTitle ||
+                                            (isEn ? 'MANUAL TENANT COMMUNICATION' : 'HANDMATIGE HUURDERCOMMUNICATIE')}
                                     </h3>
                                 </div>
 
                                 <ul className='space-y-4 text-sm text-[#060e32]/80'>
-                                    {(doc?.comparisonSection?.leftItems &&
-                                    doc.comparisonSection.leftItems.length > 0
-                                        ? doc.comparisonSection.leftItems
-                                        : [
-                                              {
-                                                  title: 'Eindeloze e-mails en telefoontjes over simpele vragen',
-                                                  desc: 'Beheerders besteden dagelijks uren aan het beantwoorden van herhalende vragen over facturen en contracten.',
-                                              },
-                                              {
-                                                  title: 'Niet-geregistreerde telefonische storingsmeldingen',
-                                                  desc: 'Onderhoudsverzoeken gaan verloren of worden te laat opgepakt door gebrek aan centrale ticketing.',
-                                              },
-                                              {
-                                                  title: 'Onduidelijkheid bij huurders over status van onderhoud',
-                                                  desc: 'Huurders blijven bellen voor updates omdat er geen transparante realtime voortgangs-timeline is.',
-                                              },
-                                              {
-                                                  title: 'Foutgevoelige handmatige verwerking in losse systemen',
-                                                  desc: 'Geen directe integratie met het centrale ERP of de financiële administratie.',
-                                              },
-                                          ]
+                                    {(comparisonBlock?.leftItems || doc?.comparisonSection?.leftItems ||
+                                        (isEn
+                                            ? [
+                                                  {
+                                                      title: 'Endless emails and phone calls for simple questions',
+                                                      desc: 'Property managers spend hours daily answering repetitive questions about invoices and lease terms.',
+                                                  },
+                                                  {
+                                                      title: 'Unregistered phone calls for repair requests',
+                                                      desc: 'Maintenance requests get lost or delayed due to a lack of central ticketing.',
+                                                  },
+                                                  {
+                                                      title: 'Tenant uncertainty regarding maintenance status',
+                                                      desc: 'Tenants call continuously for status updates without a transparent real-time timeline.',
+                                                  },
+                                                  {
+                                                      title: 'Error-prone manual entry in separate tools',
+                                                      desc: 'No direct synchronization with the core ERP or accounting ledger.',
+                                                  },
+                                              ]
+                                            : [
+                                                  {
+                                                      title: 'Eindeloze e-mails en telefoontjes over simpele vragen',
+                                                      desc: 'Beheerders besteden dagelijks uren aan het beantwoorden van herhalende vragen over facturen en contracten.',
+                                                  },
+                                                  {
+                                                      title: 'Niet-geregistreerde telefonische storingsmeldingen',
+                                                      desc: 'Onderhoudsverzoeken gaan verloren of worden te laat opgepakt door gebrek aan centrale ticketing.',
+                                                  },
+                                                  {
+                                                      title: 'Onduidelijkheid bij huurders over status van onderhoud',
+                                                      desc: 'Huurders blijven bellen voor updates omdat er geen transparante realtime voortgangs-timeline is.',
+                                                  },
+                                                  {
+                                                      title: 'Foutgevoelige handmatige verwerking in losse systemen',
+                                                      desc: 'Geen directe integratie met het centrale ERP of de financiële administratie.',
+                                                  },
+                                              ])
                                     ).map((item: any, idx: number) => {
-                                        const isObj =
-                                            typeof item === 'object' &&
-                                            item !== null;
-                                        const titleText = isObj
-                                            ? item.title
-                                            : item;
+                                        const isObj = typeof item === 'object' && item !== null;
+                                        const titleText = isObj ? item.title : item;
                                         const descText = isObj ? item.desc : '';
                                         return (
-                                            <li
-                                                key={idx}
-                                                className='flex items-start gap-3'
-                                            >
+                                            <li key={idx} className='flex items-start gap-3'>
                                                 <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
                                                 <div className='space-y-0.5'>
                                                     <strong className='text-[#060e32] block font-semibold text-sm'>
@@ -390,51 +412,56 @@ export function HuurdersportaalModule({
                             <div className='space-y-6'>
                                 <div className='border-b border-black/10 pb-4 pr-16'>
                                     <h3 className='text-lg font-bold text-amber uppercase'>
-                                        {doc?.comparisonSection?.rightTitle ||
-                                            'EMLINKED DIGITAAL HUURDERSPORTAAL'}
+                                        {comparisonBlock?.rightTitle || doc?.comparisonSection?.rightTitle ||
+                                            (isEn ? 'EMLINKED DIGITAL TENANT PORTAL' : 'EMLINKED DIGITAAL HUURDERSPORTAAL')}
                                     </h3>
                                 </div>
 
                                 <ul className='space-y-4 text-sm text-[#060e32]/80'>
-                                    {(doc?.comparisonSection?.rightItems &&
-                                    doc.comparisonSection.rightItems.length > 0
-                                        ? doc.comparisonSection.rightItems
-                                        : doc?.benefits &&
-                                            doc.benefits.length > 0
-                                          ? doc.benefits
-                                          : [
-                                                {
-                                                    title: '24/7 Self-service voor huurders',
-                                                    desc: 'Direct digitaal inzien van contracten, specificaties en servicekosten zonder beheerder.',
-                                                },
-                                                {
-                                                    title: 'Gecentraliseerd reparatie- & onderhoudsbeheer',
-                                                    desc: "Storingsmeldingen met foto's direct in het dashboard inclusief realtime status updates.",
-                                                },
-                                                {
-                                                    title: 'Automatische status-updates via e-mail & SMS',
-                                                    desc: 'Voorkomt opvolg-telefoontjes door automatische statusnotificaties per herstelverzoek.',
-                                                },
-                                                {
-                                                    title: 'Directe koppeling met je centrale vastgoedsoftware',
-                                                    desc: '100% gesynchroniseerd met Microsoft Dynamics 365 Business Central en je grootboek.',
-                                                },
-                                            ]
+                                    {(comparisonBlock?.rightItems || doc?.comparisonSection?.rightItems || doc?.benefits ||
+                                        (isEn
+                                            ? [
+                                                  {
+                                                      title: '24/7 Self-service for tenants',
+                                                      desc: 'Instant digital access to contracts, specifications, and service costs without manager intervention.',
+                                                  },
+                                                  {
+                                                      title: 'Centralized repair & maintenance management',
+                                                      desc: 'Maintenance tickets with photos delivered directly into the dashboard with real-time status tracking.',
+                                                  },
+                                                  {
+                                                      title: 'Automatic status updates via email & SMS',
+                                                      desc: 'Prevents follow-up calls through automated notifications per repair request.',
+                                                  },
+                                                  {
+                                                      title: 'Direct connection to central property ERP',
+                                                      desc: '100% synchronized with Microsoft Dynamics 365 Business Central and your general ledger.',
+                                                  },
+                                              ]
+                                            : [
+                                                  {
+                                                      title: '24/7 Self-service voor huurders',
+                                                      desc: 'Direct digitaal inzien van contracten, specificaties en servicekosten zonder beheerder.',
+                                                  },
+                                                  {
+                                                      title: 'Gecentraliseerd reparatie- & onderhoudsbeheer',
+                                                      desc: "Storingsmeldingen met foto's direct in het dashboard inclusief realtime status updates.",
+                                                  },
+                                                  {
+                                                      title: 'Automatische status-updates via e-mail & SMS',
+                                                      desc: 'Voorkomt opvolg-telefoontjes door automatische statusnotificaties per herstelverzoek.',
+                                                  },
+                                                  {
+                                                      title: 'Directe koppeling met je centrale vastgoedsoftware',
+                                                      desc: '100% gesynchroniseerd met Microsoft Dynamics 365 Business Central en je grootboek.',
+                                                  },
+                                              ])
                                     ).map((item: any, idx: number) => {
-                                        const isObj =
-                                            typeof item === 'object' &&
-                                            item !== null;
-                                        const titleText = isObj
-                                            ? item.title || item.benefit
-                                            : item;
-                                        const descText = isObj
-                                            ? item.desc || item.description
-                                            : '';
+                                        const isObj = typeof item === 'object' && item !== null;
+                                        const titleText = isObj ? item.title || item.benefit : item;
+                                        const descText = isObj ? item.desc || item.description : '';
                                         return (
-                                            <li
-                                                key={idx}
-                                                className='flex items-start gap-3'
-                                            >
+                                            <li key={idx} className='flex items-start gap-3'>
                                                 <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
                                                 <div className='space-y-0.5'>
                                                     <strong className='text-[#060e32] block font-semibold text-sm'>
@@ -456,7 +483,7 @@ export function HuurdersportaalModule({
                 </div>
             </section>
 
-            {/* ── BLOCK 3: CORE FUNCTIONALITIES (Dark Navy Canvas matching alternating theme rhythm) ── */}
+            {/* ── BLOCK 3: CORE FUNCTIONALITIES ── */}
             <section className='py-20 px-6 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
                 <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
 
@@ -464,17 +491,18 @@ export function HuurdersportaalModule({
                     <div className='text-center max-w-3xl mx-auto space-y-4 flex flex-col items-center'>
                         <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
                             <span className='w-2 h-2 rounded-full bg-amber shrink-0 animate-ping' />
-                            FUNCTIONALITEITEN
+                            {featureTabsBlock?.badge || (isEn ? 'CAPABILITIES' : 'FUNCTIONALITEITEN')}
                         </span>
                         <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-white'>
-                            Alles wat je huurder verwacht in{' '}
-                            <span className='text-amber'>
-                                één online omgeving
-                            </span>
+                            {featureTabsBlock?.title || (isEn
+                                ? 'Everything your tenants expect in one digital portal'
+                                : 'Alles wat je huurder verwacht in één online omgeving')}
                         </h2>
                         <p className='text-white/80 leading-relaxed text-base md:text-lg font-light max-w-3xl'>
-                            {doc?.featuresSectionDesc ||
-                                'Ontwikkeld om 24/7 self-service, storingsmeldingen, factuurinzicht en documentenbeheer voor huurders moeiteloos te stroomlijnen.'}
+                            {featureTabsBlock?.desc || doc?.featuresSectionDesc ||
+                                (isEn
+                                    ? 'Designed to streamline 24/7 self-service, maintenance requests, invoice access, and document management for tenants.'
+                                    : 'Ontwikkeld om 24/7 self-service, storingsmeldingen, factuurinzicht en documentenbeheer voor huurders moeiteloos te stroomlijnen.')}
                         </p>
                     </div>
 
@@ -489,7 +517,7 @@ export function HuurdersportaalModule({
                             }`}
                         >
                             <Wrench className='w-4 h-4' />
-                            <span>1. Reparatie- & Onderhoudsbeheer</span>
+                            <span>{isEn ? '1. Repair & Maintenance' : '1. Reparatie- & Onderhoudsbeheer'}</span>
                         </button>
                         <button
                             onClick={() => setActiveTab('invoices')}
@@ -500,7 +528,7 @@ export function HuurdersportaalModule({
                             }`}
                         >
                             <FileText className='w-4 h-4' />
-                            <span>2. Facturen & Betalingshistorie</span>
+                            <span>{isEn ? '2. Invoices & Payment History' : '2. Facturen & Betalingshistorie'}</span>
                         </button>
                         <button
                             onClick={() => setActiveTab('documents')}
@@ -511,7 +539,7 @@ export function HuurdersportaalModule({
                             }`}
                         >
                             <MessageSquare className='w-4 h-4' />
-                            <span>3. Centraal Documentenarchief</span>
+                            <span>{isEn ? '3. Central Document Vault' : '3. Centraal Documentenarchief'}</span>
                         </button>
                     </div>
 
@@ -522,32 +550,31 @@ export function HuurdersportaalModule({
                                 <div className='lg:col-span-6 space-y-6'>
                                     <h3 className='text-2xl sm:text-3xl font-bold text-white'>
                                         {doc?.features?.[0]?.title ||
-                                            'Digitaal Reparatie- & Onderhoudsbeheer'}
+                                            (isEn ? 'Digital Repair & Maintenance Management' : 'Digitaal Reparatie- & Onderhoudsbeheer')}
                                     </h3>
                                     <p className='text-white/70 leading-relaxed text-base font-light'>
                                         {doc?.features?.[0]?.text ||
-                                            'Huurders melden 24/7 schade of onderhoud via hun smartphone. Ze selecteren de categorie, voegen foto’s toe en volgen de status van de ingeschakelde aannemer live in het portaal.'}
+                                            (isEn
+                                                ? 'Tenants report damage or maintenance requests 24/7 via their smartphone. They select the category, attach photos, and track contractor progress live in the portal.'
+                                                : 'Huurders melden 24/7 schade of onderhoud via hun smartphone. Ze selecteren de categorie, voegen foto’s toe en volgen de status van de ingeschakelde aannemer live in het portaal.')}
                                     </p>
                                     <ul className='space-y-2.5 text-sm text-white/80'>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                Storingsmeldingen indienen
-                                                inclusief fotobijlagen
+                                                {isEn ? 'Submit maintenance tickets with photo attachments' : 'Storingsmeldingen indienen inclusief fotobijlagen'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                Realtime voortgangs-timeline per
-                                                herstelverzoek
+                                                {isEn ? 'Real-time progress timeline per repair ticket' : 'Realtime voortgangs-timeline per herstelverzoek'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                Directe koppeling met aannemers
-                                                & onderhoudsplanning
+                                                {isEn ? 'Direct integration with contractors & maintenance planning' : 'Directe koppeling met aannemers & onderhoudsplanning'}
                                             </span>
                                         </li>
                                     </ul>
@@ -579,32 +606,31 @@ export function HuurdersportaalModule({
                                 <div className='lg:col-span-6 space-y-6'>
                                     <h3 className='text-2xl sm:text-3xl font-bold text-white'>
                                         {doc?.features?.[1]?.title ||
-                                            'Inzicht in Facturen & Betalingshistorie'}
+                                            (isEn ? 'Insight into Invoices & Payment History' : 'Inzicht in Facturen & Betalingshistorie')}
                                     </h3>
                                     <p className='text-white/70 leading-relaxed text-base font-light'>
                                         {doc?.features?.[1]?.text ||
-                                            'Geef huurders direct inzicht in hun actuele huurfacturen, specificaties van de servicekosten en betalingsstatus. Dit voorkomt onnodige vragen aan de financiële afdeling.'}
+                                            (isEn
+                                                ? 'Provide tenants instant visibility into their current rent invoices, service cost breakdowns, and payment statuses. This prevents unnecessary inquiries to finance teams.'
+                                                : 'Geef huurders direct inzicht in hun actuele huurfacturen, specificaties van de servicekosten en betalingsstatus. Dit voorkomt onnodige vragen aan de financiële afdeling.')}
                                     </p>
                                     <ul className='space-y-2.5 text-sm text-white/80'>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                Maandelijkse huurspecificaties &
-                                                servicekostenoverzichten
+                                                {isEn ? 'Monthly rent specifications & service cost overviews' : 'Maandelijkse huurspecificaties & servicekostenoverzichten'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                Betalingsstatus (Voldaan / In
-                                                afwachting) direct zichtbaar
+                                                {isEn ? 'Payment status (Paid / Pending) instantly visible' : 'Betalingsstatus (Voldaan / In afwachting) direct zichtbaar'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                Downloadbare PDF-facturen voor
-                                                administratie
+                                                {isEn ? 'Downloadable PDF invoices for accounting' : 'Downloadbare PDF-facturen voor administratie'}
                                             </span>
                                         </li>
                                     </ul>
@@ -636,32 +662,31 @@ export function HuurdersportaalModule({
                                 <div className='lg:col-span-6 space-y-6'>
                                     <h3 className='text-2xl sm:text-3xl font-bold text-white'>
                                         {doc?.features?.[2]?.title ||
-                                            'Centraal Documentenarchief'}
+                                            (isEn ? 'Central Document Archive' : 'Centraal Documentenarchief')}
                                     </h3>
                                     <p className='text-white/70 leading-relaxed text-base font-light'>
                                         {doc?.features?.[2]?.text ||
-                                            'Van huurovereenkomsten en opleverrapporten tot algemene voorwaarden en huisregels: alle relevante documenten staan veilig opgeslagen in een persoonlijk digitaal dossier.'}
+                                            (isEn
+                                                ? 'From lease agreements and handover reports to general terms and house rules: all relevant documents stored securely in a personal digital file.'
+                                                : 'Van huurovereenkomsten en opleverrapporten tot algemene voorwaarden en huisregels: alle relevante documenten staan veilig opgeslagen in een persoonlijk digitaal dossier.')}
                                     </p>
                                     <ul className='space-y-2.5 text-sm text-white/80'>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                Veilige 24/7 versleutelde opslag
-                                                van contracten
+                                                {isEn ? 'Secure 24/7 encrypted storage of contracts' : 'Veilige 24/7 versleutelde opslag van contracten'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                Opleverrapporten,
-                                                splitsingsakten en huisregels
+                                                {isEn ? 'Handover reports, deed documents, and house rules' : 'Opleverrapporten, splitsingsakten en huisregels'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                Geen handmatige e-mailverzoeken
-                                                meer voor documenten
+                                                {isEn ? 'No more manual email requests for documents' : 'Geen handmatige e-mailverzoeken meer voor documenten'}
                                             </span>
                                         </li>
                                     </ul>
@@ -699,17 +724,21 @@ export function HuurdersportaalModule({
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                 <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
                                     <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
-                                    {doc?.cta?.tag || 'DEMO AANVRAGEN'}
+                                    {ctaBlock?.tag || doc?.cta?.tag || (isEn ? 'REQUEST DEMO' : 'DEMO AANVRAGEN')}
                                 </span>
 
                                 <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
-                                    {doc?.cta?.title ||
-                                        'Klaar om je huurdercommunicatie te digitaliseren?'}
+                                    {ctaBlock?.title || doc?.cta?.title ||
+                                        (isEn
+                                            ? 'Ready to digitalise your tenant communication?'
+                                            : 'Klaar om je huurdercommunicatie te digitaliseren?')}
                                 </h2>
 
                                 <p className='text-white/75 text-base md:text-lg font-light leading-relaxed max-w-2xl'>
-                                    {doc?.cta?.desc ||
-                                        'Ontdek hoe ons huurdersportaal de communicatie stroomlijnt en je beheerders uren handmatig werk bespaart.'}
+                                    {ctaBlock?.desc || doc?.cta?.desc ||
+                                        (isEn
+                                            ? 'Discover how our tenant portal streamlines communication and saves your property managers hours of manual work.'
+                                            : 'Ontdek hoe ons huurdersportaal de communicatie stroomlijnt en je beheerders uren handmatig werk bespaart.')}
                                 </p>
 
                                 <div className='flex flex-col sm:flex-row gap-4 pt-4'>
@@ -719,20 +748,21 @@ export function HuurdersportaalModule({
                                     >
                                         <span className='flex items-center justify-center gap-2 text-white'>
                                             <span>
-                                                {doc?.cta?.primary ||
-                                                    'Demo aanvragen'}
+                                                {ctaBlock?.primaryButtonText || doc?.cta?.primary ||
+                                                    (isEn ? 'Request Demo' : 'Demo aanvragen')}
                                             </span>
                                             <ArrowRight className='h-5 w-5 text-white' />
                                         </span>
                                     </GlowingLink>
 
                                     <Link
-                                        href='/vastgoedbeheer-software'
+                                        href={isEn ? '/en/apps' : '/apps'}
                                         className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 hover:border-white/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
                                     >
                                         <span>
-                                            {doc?.cta?.secondary ||
-                                                'Bekijk vastgoedbeheer software →'}
+                                            {isEn
+                                                ? 'All Apps →'
+                                                : 'Alle apps →'}
                                         </span>
                                     </Link>
                                 </div>

@@ -218,10 +218,6 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
                 ctaSubtitle={ctaBlock?.subtitle}
                 ctaButtonText={ctaBlock?.buttonText}
                 ctaButtonLink={ctaBlock?.buttonLink}
-                secondaryButtonText={
-                    isEn ? 'Calculate your yield →' : 'Bereken uw situatie →'
-                }
-                secondaryButtonLink='#calculator'
                 isEn={isEn}
                 imagePath={ctaBlock?.imagePath}
             />

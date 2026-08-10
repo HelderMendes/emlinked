@@ -23,6 +23,10 @@ export interface TestimonialItem {
 
 interface TestimonialSliderProps {
     locale?: string;
+    tag?: string;
+    title?: string;
+    subtitle?: string;
+    customTestimonials?: any[];
 }
 
 export const defaultTestimonials: TestimonialItem[] = [
@@ -65,12 +69,51 @@ export const defaultTestimonials: TestimonialItem[] = [
     },
 ];
 
-export function TestimonialSlider({ locale = 'nl' }: TestimonialSliderProps) {
+export function TestimonialSlider({
+    locale = 'nl',
+    tag,
+    title,
+    subtitle,
+    customTestimonials,
+}: TestimonialSliderProps) {
     const isEn = locale === 'en';
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
 
-    const testimonials = defaultTestimonials;
+    const testimonials =
+        customTestimonials && customTestimonials.length > 0
+            ? customTestimonials.map((t, idx) => ({
+                  id: t._key || String(idx),
+                  headline:
+                      t.headline ||
+                      t.title ||
+                      (isEn ? 'Client Experience' : 'Klantervaring'),
+                  quote: t.quote || '',
+                  author: t.author || 'Vastgoedbeheerder',
+                  role: t.role || 'Commercial Real Estate Management',
+                  company: t.company || '',
+                  initials: t.author
+                      ? t.author
+                            .split(' ')
+                            .map((n: string) => n[0])
+                            .join('')
+                            .slice(0, 2)
+                      : 'EM',
+              }))
+            : defaultTestimonials;
+
+    const activeTag =
+        tag || (isEn ? 'CLIENT REVIEWS' : 'KLANTEN & REFERENTIES');
+    const activeTitle =
+        title ||
+        (isEn
+            ? 'Trusted by leading real estate managers'
+            : 'Vertrouwd door toonaangevende vastgoedbeheerders');
+    const activeSubtitle =
+        subtitle ||
+        (isEn
+            ? 'Discover how professional property managers and controllers automate operations daily with Emlinked.'
+            : 'Ontdek hoe professionele beheerders en controllers dagelijks tijd besparen en geautomatiseerd werken met Emlinked.');
 
     const getPath = (path: string) => {
         if (locale === 'nl') return path;
@@ -119,17 +162,13 @@ export function TestimonialSlider({ locale = 'nl' }: TestimonialSliderProps) {
                 <div className='space-y-3 max-w-3xl mx-auto text-center flex flex-col items-center'>
                     <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
                         <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
-                        {isEn ? 'CLIENT REVIEWS' : 'KLANTEN & REFERENTIES'}
+                        {activeTag}
                     </span>
                     <h2 className='font-display font-bold text-2xl md:text-4xl text-[#060e32] dark:text-white tracking-tight'>
-                        {isEn
-                            ? 'Trusted by leading real estate managers'
-                            : 'Vertrouwd door toonaangevende vastgoedbeheerders'}
+                        {activeTitle}
                     </h2>
                     <p className='text-sm md:text-base text-[#060e32]/75 dark:text-slate-300 leading-relaxed font-light max-w-2xl'>
-                        {isEn
-                            ? 'Discover how professional property managers and controllers automate operations daily with Emlinked.'
-                            : 'Ontdek hoe professionele beheerders en controllers dagelijks tijd besparen en geautomatiseerd werken met Emlinked.'}
+                        {activeSubtitle}
                     </p>
                 </div>
 

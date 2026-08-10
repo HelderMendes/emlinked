@@ -80,8 +80,11 @@ export default async function AppsPage({ params }: AppsPageProps) {
     const getPath = (path: string) => {
         if (!path) return '/';
         if (path === '#demo' || path.startsWith('#')) return path;
-        if (locale === 'nl') return path;
-        return `/en${path === '/' ? '' : path}`;
+        let cleanPath = path;
+        if (cleanPath.startsWith('/en/')) {
+            cleanPath = cleanPath.replace(/^\/en/, '');
+        }
+        return cleanPath || '/';
     };
 
     // Extract dynamic blocks from Sanity (100% dynamic CMS content)
@@ -89,6 +92,12 @@ export default async function AppsPage({ params }: AppsPageProps) {
     const heroBlock = pageBlocks.find((b: any) => b._type === 'hero');
     const featuresBlock = pageBlocks.find(
         (b: any) => b._type === 'featuresList',
+    );
+    const architectureBlock = pageBlocks.find(
+        (b: any) => b._type === 'architectureSection',
+    );
+    const testimonialBlock = pageBlocks.find(
+        (b: any) => b._type === 'testimonialSection',
     );
     const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBanner');
 
@@ -431,10 +440,26 @@ export default async function AppsPage({ params }: AppsPageProps) {
             )}
 
             {/* SECTION 3: SYSTEM ARCHITECTURE */}
-            <AppsArchitectureSection locale={locale} />
+            <AppsArchitectureSection
+                locale={locale}
+                tag={architectureBlock?.tag}
+                title={architectureBlock?.title}
+                subtitle={architectureBlock?.subtitle}
+                sectionTag={architectureBlock?.sectionTag}
+                sectionTitle={architectureBlock?.sectionTitle}
+                sectionSubtitle={architectureBlock?.sectionSubtitle}
+                bullets={architectureBlock?.bullets}
+                bgImagePath={architectureBlock?.bgImagePath}
+            />
 
             {/* SECTION 4: TRUST & SCALE REVIEWS SLIDER */}
-            <TestimonialSlider locale={locale} />
+            <TestimonialSlider
+                locale={locale}
+                tag={testimonialBlock?.sectionTag}
+                title={testimonialBlock?.sectionTitle}
+                subtitle={testimonialBlock?.sectionSubtitle}
+                customTestimonials={testimonialBlock?.testimonials}
+            />
 
             {/* SECTION 5: FINAL PRE-FOOTER CONVERSION CTA (Exact Homepage Layout Parity) */}
             {ctaBlock && (

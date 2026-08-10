@@ -14,7 +14,7 @@ interface VastgoedbeheerPageProps {
 async function getVastgoedbeheerPageData(locale: string) {
     try {
         return await sanityFetch<any>({
-            query: `*[_type == "solutionPage" && (slug.current == "vastgoedbeheer-software" || slug.current == "/apps/vastgoedbeheer-software" || slug.current == "/vastgoedbeheer-software") && language == $locale][0] {
+            query: `*[_type == "solutionPage" && (slug.current == "vastgoedbeheer-software" || slug.current == "property-management-software" || slug.current == "/apps/vastgoedbeheer-software" || slug.current == "/vastgoedbeheer-software") && language == $locale][0] {
                 ...,
                 seo {
                     seoTitle,
