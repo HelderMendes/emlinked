@@ -26,6 +26,7 @@ export interface PartnersSectionProps {
     badge?: string;
     title?: string;
     subtitle?: string;
+    valueTags?: string[];
     partners?: PartnerItem[];
     isEn?: boolean;
 }
@@ -34,6 +35,7 @@ export function PartnersSectionComponent({
     badge,
     title,
     subtitle,
+    valueTags,
     partners,
     isEn = false,
 }: PartnersSectionProps) {
@@ -59,13 +61,13 @@ export function PartnersSectionComponent({
                 '/emlinked/partners/Microsoft_Dynamics_Business-e1670413242458-2048x613.png',
             description: isEn
                 ? 'The foundation of emlinked is Microsoft Dynamics 365 Business Central, a premier business management solution for SMBs. With Business Central, companies manage their entire operations — including financial accounting, lease agreements, project management, purchasing, and services.'
-                : 'Het fundament van emlinked is Microsoft Dynamics 365 Business Central, een oplossing voor bedrijfsbeheer voor kleine en middelgrote organisaties. Met Business Central beheren bedrijven hun volledige bedrijfsvoering — waaronder financiële administratie, contractbeheer, projectmanagement, inkoop en services. Emlinked maakt gebruik van deze schitterende Microsoft-mogelijkheid om Business Central volledig geschikt te maken voor vastgoedbeheer.',
+                : 'Het fundament van emlinked is Microsoft Dynamics 365 Business Central, een oplossing voor bedrijfsbeheer voor kleine en middelgrote organisaties. Met Business Central beheren bedrijven hun volledige bedrijfsvoering — waaronder financiële administratie, contractbeheer, projectmanagement, inkoop en services. emlinked maakt gebruik van deze schitterende Microsoft-mogelijkheid om Business Central volledig geschikt te maken voor vastgoedbeheer.',
             featureTitle: isEn
                 ? 'Fast implementation & ease of use'
                 : 'Snel te implementeren & eenvoudig in gebruik',
             featureText: isEn
                 ? 'emlinked is fast to deploy, easy to configure, and simplicity is the guiding principle behind our product design, engineering, and usability.'
-                : 'Emlinked is snel te implementeren, gemakkelijk te configureren en eenvoud is het leidende principe achter de innovatie van ons productontwerp, de ontwikkeling en de bruikbaarheid.',
+                : 'emlinked is snel te implementeren, gemakkelijk te configureren en eenvoud is het leidende principe achter de innovatie van ons productontwerp, de ontwikkeling en de bruikbaarheid.',
             websiteUrl:
                 'https://dynamics.microsoft.com/nl-nl/business-central/overview/',
         },
@@ -129,18 +131,26 @@ export function PartnersSectionComponent({
 
                     {/* Subtitle Solution: Strategic Value Tags */}
                     <div className='flex flex-wrap items-center justify-center gap-2.5 pt-1 text-xs md:text-sm text-[#060e32]/90 font-medium'>
-                        <span className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/5 border border-black/10'>
-                            <CheckCircle2 className='w-3.5 h-3.5 text-amber' />
-                            {isEn ? '100% Cloud-Native ERP' : '100% Cloud-Native ERP'}
-                        </span>
-                        <span className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/5 border border-black/10'>
-                            <CheckCircle2 className='w-3.5 h-3.5 text-amber' />
-                            {isEn ? 'Certified ISV Integrations' : 'Gecertificeerde ISV Integraties'}
-                        </span>
-                        <span className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/5 border border-black/10'>
-                            <CheckCircle2 className='w-3.5 h-3.5 text-amber' />
-                            {isEn ? 'Automated Backups & Updates' : 'Automatische Updates & Backups'}
-                        </span>
+                        {(valueTags && valueTags.length > 0
+                            ? valueTags
+                            : [
+                                  '100% Cloud-Native ERP',
+                                  isEn
+                                      ? 'Certified ISV Integrations'
+                                      : 'Gecertificeerde ISV Integraties',
+                                  isEn
+                                      ? 'Automated Backups & Updates'
+                                      : 'Automatische Updates & Backups',
+                              ]
+                        ).map((tag, idx) => (
+                            <span
+                                key={idx}
+                                className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/5 border border-black/10'
+                            >
+                                <CheckCircle2 className='w-3.5 h-3.5 text-amber' />
+                                {tag}
+                            </span>
+                        ))}
                     </div>
                 </div>
 

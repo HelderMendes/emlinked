@@ -74,7 +74,7 @@ export function HuurdersportaalModule({
                       '@type': 'WebPage',
                       '@id': `${DEFAULT_DOMAIN}/apps/huurdersportaal#webpage`,
                       url: `${DEFAULT_DOMAIN}/apps/huurdersportaal`,
-                      name: 'Huurdersportaal Software — Self-Service voor uw Huurders | Emlinked',
+                      name: 'Huurdersportaal Software — Self-Service voor uw Huurders | emlinked',
                       description:
                           'Verlaag de administratieve druk op uw beheerteam met ons digitale huurdersportaal.',
                       inLanguage: 'nl-NL',

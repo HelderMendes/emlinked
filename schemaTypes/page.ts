@@ -704,6 +704,14 @@ export const page = defineType({
                             rows: 3,
                         }),
                         defineField({
+                            name: 'valueTags',
+                            title: 'Strategic Value Tags (Pills under subtitle)',
+                            type: 'array',
+                            of: [{ type: 'string' }],
+                            description:
+                                'Optional tag pills displayed below subtitle (e.g. "100% Cloud-Native ERP", "Gecertificeerde ISV Integraties")',
+                        }),
+                        defineField({
                             name: 'partners',
                             title: 'Partners List',
                             type: 'array',

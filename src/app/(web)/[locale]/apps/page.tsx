@@ -1,3 +1,4 @@
+// Force Next.js HMR recompile for metadata
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
@@ -55,8 +56,8 @@ export async function generateMetadata({
     const pageData = await getSanityPageData(locale);
 
     const fallbackTitle = isEn
-        ? 'Emlinked Modular Property Software Suite'
-        : 'Emlinked Modulaire Vastgoed Software Suite';
+        ? 'emlinked Modular Property Software Suite'
+        : 'emlinked Modulaire Vastgoed Software Suite';
     const fallbackDesc = isEn
         ? 'Explore the modular ERP software suite for Microsoft Dynamics 365 Business Central.'
         : 'Ontdek de modulaire ERP software suite voor Microsoft Dynamics 365 Business Central.';
@@ -111,7 +112,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
-        name: pageData?.title || 'Emlinked Modulaire Vastgoedsoftware Suite',
+        name: pageData?.title || 'emlinked Modulaire Vastgoedsoftware Suite',
         operatingSystem: 'Microsoft Dynamics 365 Business Central Cloud',
         applicationCategory: 'BusinessApplication',
         description:
@@ -125,7 +126,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
         },
         publisher: {
             '@type': 'Organization',
-            name: 'Emlinked',
+            name: 'emlinked',
             url: DEFAULT_DOMAIN,
         },
     };
@@ -162,7 +163,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                 }
                                 alt={
                                     heroBlock.title ||
-                                    'Emlinked Modular Apps Platform'
+                                    'emlinked Modular Apps Platform'
                                 }
                                 width={600}
                                 height={400}

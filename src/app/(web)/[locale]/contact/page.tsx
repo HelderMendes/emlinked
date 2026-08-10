@@ -8,7 +8,7 @@ interface ContactPageProps {
 const content = {
     nl: {
         title: 'Vraag een Demo aan',
-        tagline: 'Ontdek hoe Emlinked uw vastgoedbeheer kan automatiseren.',
+        tagline: 'Ontdek hoe emlinked uw vastgoedbeheer kan automatiseren.',
         formTitle: 'Demo Aanvragen',
         nameLabel: 'Naam',
         emailLabel: 'E-mailadres',
@@ -21,7 +21,7 @@ const content = {
     en: {
         title: 'Request a Demo',
         tagline:
-            'Discover how Emlinked can automate your real estate operations.',
+            'Discover how emlinked can automate your real estate operations.',
         formTitle: 'Demo Request',
         nameLabel: 'Full Name',
         emailLabel: 'Email Address',
@@ -32,6 +32,32 @@ const content = {
             'Thank you for your request. We will contact you within 24 hours.',
     },
 } as const;
+
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({
+    params,
+}: ContactPageProps): Promise<Metadata> {
+    const { locale } = await params;
+    const isEn = locale === 'en';
+
+    const fallbackTitle = isEn
+        ? 'Contact & Request Free Demo'
+        : 'Contact & Vrijblijvende Demo Aanvragen';
+    const fallbackDescription = isEn
+        ? 'Get in touch with emlinked or request a free demo of our real estate software for Business Central.'
+        : 'Neem contact op met emlinked of vraag een vrijblijvende demo aan van onze vastgoedsoftware voor Business Central.';
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/contact' : '/contact'}`;
+
+    return buildMetadata({
+        seo: null,
+        fallbackTitle,
+        fallbackDescription,
+        canonicalUrl,
+        locale,
+    });
+}
 
 export default async function ContactPage({ params }: ContactPageProps) {
     const { locale } = await params;

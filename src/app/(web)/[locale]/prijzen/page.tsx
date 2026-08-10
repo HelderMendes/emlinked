@@ -36,36 +36,30 @@ async function getSanityPageData(locale: string) {
     }
 }
 
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+
 export async function generateMetadata({
     params,
 }: PricingPageProps): Promise<Metadata> {
     const { locale } = await params;
     const pageData = await getSanityPageData(locale);
-    const seo = pageData?.seo;
     const isEn = locale === 'en';
 
-    const title =
-        seo?.seoTitle ||
-        (isEn
-            ? 'Property Management Software Rates & Pricing | Emlinked'
-            : 'Vastgoedbeheer Software Tarieven & Prijzen | Emlinked');
+    const fallbackTitle = isEn
+        ? 'Property Management Software Rates & Pricing'
+        : 'Vastgoedbeheer Software Tarieven & Prijzen';
+    const fallbackDescription = isEn
+        ? 'Transparent pricing and flexible subscriptions for our real estate management software. Directly calculate your investment based on your units.'
+        : 'Transparante tarieven en flexibele abonnementen voor onze vastgoedbeheer software. Bereken direct uw investering op basis van het aantal verhuureenheden.';
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/prijzen' : '/prijzen'}`;
 
-    const description =
-        seo?.seoDescription ||
-        (isEn
-            ? 'Transparent pricing and flexible subscriptions for our real estate management software. Directly calculate your investment based on your units.'
-            : 'Transparante tarieven en flexibele abonnementen voor onze vastgoedbeheer software. Bereken direct uw investering op basis van het aantal verhuureenheden.');
-
-    const robots = seo?.noIndex ? 'noindex, nofollow' : 'index, follow';
-
-    return {
-        title,
-        description,
-        robots,
-        alternates: {
-            canonical: seo?.canonical || (isEn ? '/en/prijzen' : '/prijzen'),
-        },
-    };
+    return buildMetadata({
+        seo: pageData?.seo,
+        fallbackTitle,
+        fallbackDescription,
+        canonicalUrl,
+        locale,
+    });
 }
 
 const fallbackContent = {
@@ -73,7 +67,7 @@ const fallbackContent = {
         title: 'Transparante tarieven voor uw vastgoedbeheer',
         tagline:
             'Transparante tarieven en flexibele abonnementen voor onze vastgoedbeheer software.',
-        desc: 'Of u nu een groeiende particuliere belegger bent of een grote corporatie met duizenden verhuureenheden (VHE), Emlinked groeit met u mee. Neem contact op voor een offerte op maat.',
+        desc: 'Of u nu een groeiende particuliere belegger bent of een grote corporatie met duizenden verhuureenheden (VHE), emlinked groeit met u mee. Neem contact op voor een offerte op maat.',
         tiers: [
             {
                 title: 'Professional',
@@ -113,7 +107,7 @@ const fallbackContent = {
         title: 'Transparent pricing for your property management',
         tagline:
             'Transparent pricing and flexible subscriptions for our real estate management software.',
-        desc: 'Whether you are a growing private investor or a large enterprise managing thousands of units, Emlinked scales with you. Contact us for a custom proposal.',
+        desc: 'Whether you are a growing private investor or a large enterprise managing thousands of units, emlinked scales with you. Contact us for a custom proposal.',
         tiers: [
             {
                 title: 'Professional',

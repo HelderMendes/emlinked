@@ -73,7 +73,7 @@ export function PaymentSoftwareModule({
                       '@type': 'WebPage',
                       '@id': `${DEFAULT_DOMAIN}/apps/payment-software#webpage`,
                       url: `${DEFAULT_DOMAIN}/apps/payment-software`,
-                      name: 'Payment Software — Automatische Huurincasso & Bankaflettering | Emlinked',
+                      name: 'Payment Software — Automatische Huurincasso & Bankaflettering | emlinked',
                       description:
                           'Geautomatiseerde incasso van huurpenningen en automatische aflettering van bankafschriften direct in uw Microsoft Business Central administratie.',
                       inLanguage: 'nl-NL',

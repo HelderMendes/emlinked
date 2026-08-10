@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { PartnersSectionComponent } from '@/components/blocks/partners/PartnersSectionComponent';
@@ -7,7 +8,7 @@ import { Box3CtaBanner } from '@/components/blocks/box3/Box3CtaBanner';
 async function getSanityPageData(locale: string) {
     try {
         return await sanityFetch({
-            query: `*[_type == "page" && slug.current == "partners-software" && language == $locale][0]`,
+            query: `*[_type == "page" && (slug.current == "partners-software" || slug.current == "/partners-software") && language == $locale][0]`,
             params: { locale },
         });
     } catch {
@@ -27,27 +28,22 @@ export async function generateMetadata({
     const { locale } = await params;
     const isEn = locale === 'en';
     const pageData: any = await getSanityPageData(locale);
-    const seo = pageData?.seo;
 
-    const defaultTitle = isEn
-        ? 'Partners & Software Integrations | emlinked'
-        : 'Partners & Software Integraties (Business Central) | emlinked';
-    const defaultDesc = isEn
+    const fallbackTitle = isEn
+        ? 'Partners & Software Integrations (Business Central)'
+        : 'Partners & Software Integraties (Business Central)';
+    const fallbackDesc = isEn
         ? 'Explore all strategic software partners of emlinked. Seamless, certified integrations with Microsoft Business Central, Continia Document Capture, and Idyn Direct Banking.'
         : 'Ontdek alle strategische software-partners van emlinked. Naadloze, gecertificeerde integraties met Microsoft Business Central, Continia Document Capture en Idyn Direct Banking.';
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/partners-software' : '/partners-software'}`;
 
-    return {
-        title: seo?.seoTitle || defaultTitle,
-        description: seo?.seoDescription || defaultDesc,
-        alternates: {
-            canonical:
-                seo?.canonical ||
-                `https://www.emlinked.nl${isEn ? '/en' : ''}/partners-software`,
-        },
-        robots: seo?.noIndex
-            ? { index: false, follow: false }
-            : { index: true, follow: true },
-    };
+    return buildMetadata({
+        seo: pageData?.seo,
+        fallbackTitle,
+        fallbackDescription: fallbackDesc,
+        canonicalUrl,
+        locale,
+    });
 }
 
 export default async function PartnersSoftwarePage({
@@ -90,7 +86,9 @@ export default async function PartnersSoftwarePage({
                 }
                 ctaLabel={
                     heroBlock?.ctaLabel ||
-                    (isEn ? 'Explore integrations ↓' : 'Ontdek de integraties ↓')
+                    (isEn
+                        ? 'Explore integrations ↓'
+                        : 'Ontdek de integraties ↓')
                 }
                 ctaLink={heroBlock?.ctaLink || (isEn ? '/en/apps' : '/apps')}
                 secondaryCtaLabel={
@@ -121,6 +119,7 @@ export default async function PartnersSoftwarePage({
                 badge={partnersBlock?.badge}
                 title={partnersBlock?.title}
                 subtitle={partnersBlock?.subtitle}
+                valueTags={partnersBlock?.valueTags}
                 partners={partnersBlock?.partners}
                 isEn={isEn}
             />

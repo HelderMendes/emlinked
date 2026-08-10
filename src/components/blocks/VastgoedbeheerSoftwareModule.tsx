@@ -70,7 +70,7 @@ export function VastgoedbeheerSoftwareModule({
                       '@type': 'WebPage',
                       '@id': `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software#webpage`,
                       url: `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software`,
-                      name: 'Vastgoedbeheer Software — Automatiseer je Portefeuillebeheer | Emlinked',
+                      name: 'Vastgoedbeheer Software — Automatiseer je Portefeuillebeheer | emlinked',
                       description:
                           'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Microsoft Dynamics 365 Business Central.',
                       inLanguage: 'nl-NL',

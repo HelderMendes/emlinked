@@ -41,8 +41,8 @@ export async function generateMetadata({
     const isEn = locale === 'en';
 
     const fallbackTitle = isEn
-        ? 'Tenant Portal Software — Self-Service for Tenants | Emlinked'
-        : 'Huurdersportaal Software — Self-Service voor uw Huurders | Emlinked';
+        ? 'Tenant Portal Software — Self-Service for Tenants | emlinked'
+        : 'Huurdersportaal Software — Self-Service voor uw Huurders | emlinked';
     const fallbackDesc = isEn
         ? 'Reduce administrative pressure on your management team with our digital tenant portal. Real-time synced with Business Central.'
         : 'Verlaag de administratieve druk op uw beheerteam met ons digitale huurdersportaal. Laat huurders zelf reparatieverzoeken en documenten inzien. Realtime gesynchroniseerd.';

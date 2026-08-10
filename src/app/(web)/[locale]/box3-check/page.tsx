@@ -51,47 +51,30 @@ async function getSanityPageData(locale: string) {
     }
 }
 
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+
 export async function generateMetadata({
     params,
 }: Box3PageProps): Promise<Metadata> {
     const { locale } = await params;
     const isEn = locale === 'en';
     const pageData = await getSanityPageData(locale);
-    const seo = pageData?.seo;
 
-    const title =
-        seo?.seoTitle ||
-        (isEn
-            ? 'Box 3 Real Estate Check | Calculate Actual Yield | emlinked'
-            : 'Box 3 Vastgoed Check | Bereken Werkelijk Rendement | emlinked');
+    const fallbackTitle = isEn
+        ? 'Box 3 Real Estate Check | Calculate Actual Yield'
+        : 'Box 3 Vastgoed Check | Bereken Werkelijk Rendement';
+    const fallbackDescription = isEn
+        ? 'Calculate the impact of changing Box 3 legislation on your real estate portfolio for free. Discover your fiscal position and keep your yields audit-proof.'
+        : 'Bereken gratis de impact van de Wet werkelijk rendement box 3 op uw vastgoedportefeuille. Ontdek uw fiscale positie en houd uw rendement op orde.';
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/box3-check' : '/box3-check'}`;
 
-    const description =
-        seo?.seoDescription ||
-        (isEn
-            ? 'Calculate the impact of changing Box 3 legislation on your real estate portfolio for free. Discover your fiscal position and keep your yields audit-proof.'
-            : 'Bereken gratis de impact van de Wet werkelijk rendement box 3 op uw vastgoedportefeuille. Ontdek uw fiscale positie en houd uw rendement op orde.');
-
-    const robots = seo?.noIndex ? 'noindex, nofollow' : 'index, follow';
-
-    return {
-        title,
-        description,
-        robots,
-        alternates: {
-            canonical:
-                seo?.canonical || (isEn ? '/en/box3-check' : '/box3-check'),
-        },
-        openGraph: {
-            title,
-            description,
-            url: isEn
-                ? 'https://www.emlinked.com/en/box3-check'
-                : 'https://www.emlinked.com/box3-check',
-            siteName: 'emlinked',
-            locale: isEn ? 'en_US' : 'nl_NL',
-            type: 'website',
-        },
-    };
+    return buildMetadata({
+        seo: pageData?.seo,
+        fallbackTitle,
+        fallbackDescription,
+        canonicalUrl,
+        locale,
+    });
 }
 
 export default async function Box3CheckPage({ params }: Box3PageProps) {

@@ -79,10 +79,6 @@
         "destination": "/apps",
         "status": 301
     },
-    "/integraties": {
-        "destination": "/partners-software",
-        "status": 301
-    },
     "/over-emlinked/partners": {
         "destination": "/partners-software",
         "status": 301

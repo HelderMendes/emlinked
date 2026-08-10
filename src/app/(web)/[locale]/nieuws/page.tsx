@@ -34,27 +34,29 @@ async function getSanityArticles(locale: string) {
     }
 }
 
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+
 export async function generateMetadata({
     params,
 }: NieuwsPageProps): Promise<Metadata> {
     const { locale } = await params;
     const isEn = locale === 'en';
 
-    const title = isEn
-        ? 'News & Knowledge Base Real Estate Management | Emlinked'
-        : 'Nieuws & Kennisbank Vastgoedbeheer | Emlinked';
-
-    const description = isEn
+    const fallbackTitle = isEn
+        ? 'News & Knowledge Base Real Estate Management'
+        : 'Nieuws & Kennisbank Vastgoedbeheer';
+    const fallbackDescription = isEn
         ? 'Stay informed with the latest news on real estate software, Box 3 legislation updates, and Microsoft Dynamics 365 developments.'
         : 'Blijf op de hoogte van het laatste nieuws rondom vastgoedbeheer software, wetgeving, Box 3-ontwikkelingen en Microsoft Dynamics updates.';
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/nieuws' : '/nieuws'}`;
 
-    return {
-        title,
-        description,
-        alternates: {
-            canonical: isEn ? '/en/nieuws' : '/nieuws',
-        },
-    };
+    return buildMetadata({
+        seo: null,
+        fallbackTitle,
+        fallbackDescription,
+        canonicalUrl,
+        locale,
+    });
 }
 
 export default async function NieuwsPage({ params }: NieuwsPageProps) {
@@ -170,7 +172,7 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
                     </h2>
                     <p className='text-slate-300 max-w-2xl text-sm md:text-base'>
                         {isEn
-                            ? 'Contact our team for advisory notes or request a live demonstration of Emlinked.'
+                            ? 'Contact our team for advisory notes or request a live demonstration of emlinked.'
                             : 'Neem contact op met ons team voor persoonlijk advies over vastgoedbeheer software en wetgeving.'}
                     </p>
                     <Link

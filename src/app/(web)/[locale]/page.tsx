@@ -66,7 +66,9 @@ export async function generateMetadata({
     const robots = seoData?.noIndex ? 'noindex, nofollow' : 'index, follow';
 
     return {
-        title,
+        title: {
+            absolute: title,
+        },
         description,
         robots,
         alternates: {
@@ -208,8 +210,8 @@ export default async function HomePage({ params }: HomePageProps) {
                 ? 'Property management and financial accounting *native* in one system'
                 : 'Vastgoedbeheer en financiële administratie *native* in één systeem',
             subtitle: isEn
-                ? 'Emlinked automates leases, CPI indexations, and bank reconciliation directly within Microsoft Dynamics. No separate databases, no manual exports, but 100% real-time control.'
-                : 'Emlinked automatiseert huurovereenkomsten, CPI-indexaties en bankreconciliatie rechtstreeks binnen Microsoft Dynamics. Geen losse databases, geen handmatige exports, maar 100% realtime controle.',
+                ? 'emlinked automates leases, CPI indexations, and bank reconciliation directly within Microsoft Dynamics. No separate databases, no manual exports, but 100% real-time control.'
+                : 'emlinked automatiseert huurovereenkomsten, CPI-indexaties en bankreconciliatie rechtstreeks binnen Microsoft Dynamics. Geen losse databases, geen handmatige exports, maar 100% realtime controle.',
             ctaLabel: isEn ? 'Request a Demo' : 'Demo aanvragen',
             ctaLink: '#demo',
             secondaryCtaLabel: isEn
@@ -664,7 +666,7 @@ export default async function HomePage({ params }: HomePageProps) {
                             'De directe koppeling met Microsoft Dynamics 365 Business Central';
                         const sectionSubtitle =
                             block.sectionSubtitle ||
-                            'Veel platformen beloven een koppeling, maar Emlinked werkt native binnen uw ERP-omgeving. Dit betekent: geen handmatige exports, geen gecompliceerde API-fouten en absolute data-integriteit. Elke operationele mutatie landt direct als gevalideerde journaalpost in uw grootboek.';
+                            'Veel platformen beloven een koppeling, maar emlinked werkt native binnen uw ERP-omgeving. Dit betekent: geen handmatige exports, geen gecompliceerde API-fouten en absolute data-integriteit. Elke operationele mutatie landt direct als gevalideerde journaalpost in uw grootboek.';
                         const integrations = block.integrations || [];
 
                         return (

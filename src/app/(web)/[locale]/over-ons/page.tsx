@@ -44,109 +44,117 @@ async function getSanityPageData(locale: string) {
     }
 }
 
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+
 export async function generateMetadata({
     params,
 }: OverOnsPageProps): Promise<Metadata> {
     const { locale } = await params;
     const pageData = await getSanityPageData(locale);
-    const seo = pageData?.seo;
     const isEn = locale === 'en';
 
-    const title = seo?.seoTitle || (isEn
-        ? 'About Emlinked | Our Vision, Philosophy & Team'
-        : 'Over Emlinked | Onze Visie, Filosofie & Team');
+    const fallbackTitle = isEn
+        ? 'About emlinked | Our Vision, Philosophy & Team'
+        : 'Over emlinked | Onze Visie, Filosofie & Team';
+    const fallbackDescription = isEn
+        ? 'Get to know the team behind emlinked. We build the smartest native real estate management software solutions for Microsoft Dynamics 365 Business Central.'
+        : 'Maak kennis met het team achter emlinked. Wij bouwen de slimste, native vastgoedbeheer software-oplossingen voor Microsoft Dynamics 365 Business Central.';
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/over-ons' : '/over-ons'}`;
 
-    const description = seo?.seoDescription || (isEn
-        ? 'Get to know the team behind Emlinked. We build the smartest native real estate management software solutions for Microsoft Dynamics 365 Business Central.'
-        : 'Maak kennis met het team achter Emlinked. Wij bouwen de slimste, native vastgoedbeheer software-oplossingen voor Microsoft Dynamics 365 Business Central.');
-
-    const robots = seo?.noIndex ? 'noindex, nofollow' : 'index, follow';
-
-    return {
-        title,
-        description,
-        robots,
-        alternates: {
-            canonical: seo?.canonical || (isEn ? '/en/over-ons' : '/over-ons'),
-        },
-    };
+    return buildMetadata({
+        seo: pageData?.seo,
+        fallbackTitle,
+        fallbackDescription,
+        canonicalUrl,
+        locale,
+    });
 }
 
 const fallbackContent = {
     nl: {
-        title: 'Over Emlinked: Onze missie, visie & team',
-        tagline: 'Maak kennis met het team achter Emlinked. Wij bouwen de slimste, native vastgoedbeheer software-oplossingen voor Microsoft Dynamics 365 Business Central.',
+        title: 'Over emlinked: Onze missie, visie & team',
+        tagline:
+            'Maak kennis met het team achter emlinked. Wij bouwen de slimste, native vastgoedbeheer software-oplossingen voor Microsoft Dynamics 365 Business Central.',
         philosophyTitle: 'Onze Filosofie',
-        philosophyDesc: 'Emlinked is ontstaan vanuit de overtuiging dat operationeel vastgoedbeheer en de financiële boekhouding in één en hetzelfde systeem moeten plaatsvinden.',
+        philosophyDesc:
+            'emlinked is ontstaan vanuit de overtuiging dat operationeel vastgoedbeheer en de financiële boekhouding in één en hetzelfde systeem moeten plaatsvinden.',
         team: [
             {
                 name: 'Software Architecture Team',
                 role: 'Dynamics 365 Engineers',
-                bio: 'Gespecialiseerd in native AL-ontwikkeling en de nieuwste Microsoft Dynamics 365 Business Central architectuur.'
+                bio: 'Gespecialiseerd in native AL-ontwikkeling en de nieuwste Microsoft Dynamics 365 Business Central architectuur.',
             },
             {
                 name: 'Real Estate & Finance Consultants',
                 role: 'Vastgoed & Fiscale Specialisten',
-                bio: 'Deskundigen in CPI-indexering, Box 3 regelgeving en geautomatiseerde bankaflettering.'
+                bio: 'Deskundigen in CPI-indexering, Box 3 regelgeving en geautomatiseerde bankaflettering.',
             },
             {
                 name: 'Customer Success & Support',
                 role: 'Support Lead',
-                bio: 'Toegewijd aan een vlekkeloze onboarding en ondersteuning van professionele vastgoedbeheerders.'
-            }
+                bio: 'Toegewijd aan een vlekkeloze onboarding en ondersteuning van professionele vastgoedbeheerders.',
+            },
         ],
         values: [
             {
                 title: '100% Data Integriteit',
-                description: 'Één centrale waarheid in Business Central zonder losse databases of importfouten.'
+                description:
+                    'Één centrale waarheid in Business Central zonder losse databases of importfouten.',
             },
             {
                 title: 'Continue Automatisering',
-                description: 'Geen handmatige Excel-berekeningen meer voor indexaties en servicekosten.'
+                description:
+                    'Geen handmatige Excel-berekeningen meer voor indexaties en servicekosten.',
             },
             {
                 title: 'Enterprise Kwaliteit',
-                description: 'Robuuste software die voldoet aan de strengste eisen van beheerders en beleggers.'
-            }
-        ]
+                description:
+                    'Robuuste software die voldoet aan de strengste eisen van beheerders en beleggers.',
+            },
+        ],
     },
     en: {
-        title: 'About Emlinked: Our mission, vision & team',
-        tagline: 'Get to know the team behind Emlinked. We build the smartest native real estate management software solutions for Microsoft Dynamics 365 Business Central.',
+        title: 'About emlinked: Our mission, vision & team',
+        tagline:
+            'Get to know the team behind emlinked. We build the smartest native real estate management software solutions for Microsoft Dynamics 365 Business Central.',
         philosophyTitle: 'Our Philosophy',
-        philosophyDesc: 'Emlinked was founded on the conviction that operational real estate management and financial accounting must take place inside one single system.',
+        philosophyDesc:
+            'emlinked was founded on the conviction that operational real estate management and financial accounting must take place inside one single system.',
         team: [
             {
                 name: 'Software Architecture Team',
                 role: 'Dynamics 365 Engineers',
-                bio: 'Specialized in native AL development and modern Microsoft Dynamics 365 Business Central architecture.'
+                bio: 'Specialized in native AL development and modern Microsoft Dynamics 365 Business Central architecture.',
             },
             {
                 name: 'Real Estate & Finance Consultants',
                 role: 'Real Estate & Tax Specialists',
-                bio: 'Experts in CPI indexations, Box 3 regulations, and automated bank reconciliations.'
+                bio: 'Experts in CPI indexations, Box 3 regulations, and automated bank reconciliations.',
             },
             {
                 name: 'Customer Success & Support',
                 role: 'Support Lead',
-                bio: 'Dedicated to ensuring seamless onboarding and providing technical assistance for institutional real estate managers.'
-            }
+                bio: 'Dedicated to ensuring seamless onboarding and providing technical assistance for institutional real estate managers.',
+            },
         ],
         values: [
             {
                 title: '100% Data Integrity',
-                description: 'We believe in a single source of truth inside Microsoft Dynamics Business Central.'
+                description:
+                    'We believe in a single source of truth inside Microsoft Dynamics Business Central.',
             },
             {
                 title: 'Continuous Automation',
-                description: 'Manual tasks like CPI indexation and bank reconciliation cost hours of valuable time. We automate them.'
+                description:
+                    'Manual tasks like CPI indexation and bank reconciliation cost hours of valuable time. We automate them.',
             },
             {
                 title: 'Enterprise Quality',
-                description: 'We build software that matches the stability and security requirements of commercial and residential managers.'
-            }
-        ]
-    }
+                description:
+                    'We build software that matches the stability and security requirements of commercial and residential managers.',
+            },
+        ],
+    },
 } as const;
 
 export default async function OverOnsPage({ params }: OverOnsPageProps) {
@@ -208,8 +216,8 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                             </p>
                             <p>
                                 {isEn
-                                    ? 'We built Emlinked to bridge this gap. By developing directly inside Dynamics 365 Business Central, property management functions become native ERP features. Huurprolongatie, bankaflettering, and CPI indexation happen where the transactions belong: in the general ledger.'
-                                    : 'We hebben Emlinked gebouwd om deze kloof te dichten. Door software direct binnen Dynamics 365 Business Central te ontwikkelen, worden vastgoedfunctionaliteiten onderdeel van het ERP. Huurprolongatie, bankaflettering en CPI-indexatie gebeuren direct in de boekhouding.'}
+                                    ? 'We built emlinked to bridge this gap. By developing directly inside Dynamics 365 Business Central, property management functions become native ERP features. Huurprolongatie, bankaflettering, and CPI indexation happen where the transactions belong: in the general ledger.'
+                                    : 'We hebben emlinked gebouwd om deze kloof te dichten. Door software direct binnen Dynamics 365 Business Central te ontwikkelen, worden vastgoedfunctionaliteiten onderdeel van het ERP. Huurprolongatie, bankaflettering en CPI-indexatie gebeuren direct in de boekhouding.'}
                             </p>
                         </div>
                     </div>

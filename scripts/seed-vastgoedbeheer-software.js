@@ -17,7 +17,7 @@ const structuredDataJSON = JSON.stringify(
                 '@type': 'WebPage',
                 '@id': 'https://emlinked.nl/vastgoedbeheer-software#webpage',
                 url: 'https://emlinked.nl/vastgoedbeheer-software',
-                name: 'Vastgoedbeheer Software — Automatiseer uw Portefeuillebeheer | Emlinked',
+                name: 'Vastgoedbeheer Software — Automatiseer uw Portefeuillebeheer | emlinked',
                 description:
                     'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Business Central.',
                 inLanguage: 'nl-NL',
@@ -57,8 +57,7 @@ const structuredDataJSON = JSON.stringify(
                 applicationCategory: 'BusinessApplication',
                 operatingSystem:
                     'Web-based, Microsoft Dynamics 365 Business Central',
-                softwareRequirements:
-                    'Microsoft Dynamics 365 Business Central',
+                softwareRequirements: 'Microsoft Dynamics 365 Business Central',
                 description:
                     'De core SaaS module voor vastgoedbeheer. Automatiseer contracten, CPI-indexaties, servicekosten en metragebeheer native in Business Central.',
                 publisher: {
@@ -79,12 +78,13 @@ const vastgoedbeheerDoc = {
     language: 'nl',
     slug: { _type: 'slug', current: 'vastgoedbeheer-software' },
     badge: 'CORE SAAS MODULE VOOR VASTGOEDMANAGEMENT',
-    tagline: 'Professionele vastgoedbeheer software voor uw complete portefeuille',
+    tagline:
+        'Professionele vastgoedbeheer software voor uw complete portefeuille',
     description:
         'Schaal uw vastgoedoperatie zonder administratieve chaos. Onze vastgoedbeheer software automatiseert uw huurovereenkomsten, periodieke CPI-indexaties, wisselende winkelmetrages en servicekostenafrekeningen native binnen Microsoft Dynamics 365 Business Central. Speciaal ontwikkeld voor portefeuilles vanaf 50 verhuureenheden.',
     seo: {
         seoTitle:
-            'Vastgoedbeheer Software — Automatiseer uw Portefeuillebeheer | Emlinked',
+            'Vastgoedbeheer Software — Automatiseer uw Portefeuillebeheer | emlinked',
         seoDescription:
             'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Business Central.',
         canonical: 'https://emlinked.nl/vastgoedbeheer-software',

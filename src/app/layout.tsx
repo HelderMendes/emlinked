@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     metadataBase: new URL(baseUrl),
     title: {
         default: 'Emlinked | Vastgoedsoftware voor Business Central',
-        template: '%s | Emlinked',
+        template: '%s | emlinked',
     },
     description:
         'Emlinked helpt vastgoedprofessionals met software voor commercieel portefeuillebeheer in Microsoft Business Central.',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         canonical: './',
     },
     openGraph: {
-        siteName: 'Emlinked',
+        siteName: 'emlinked',
         locale: 'nl_NL',
         type: 'website',
     },

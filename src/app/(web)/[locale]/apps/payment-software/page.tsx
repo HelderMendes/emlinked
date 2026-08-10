@@ -41,8 +41,8 @@ export async function generateMetadata({
     const isEn = locale === 'en';
 
     const fallbackTitle = isEn
-        ? 'Payment Software — Automated Rent Collection & Reconciliation | Emlinked'
-        : 'Payment Software — Automatische Huurincasso & Bankaflettering | Emlinked';
+        ? 'Payment Software — Automated Rent Collection & Reconciliation | emlinked'
+        : 'Payment Software — Automatische Huurincasso & Bankaflettering | emlinked';
     const fallbackDesc = isEn
         ? 'Automated rent collection and automatic bank statement reconciliation directly in your Microsoft Business Central ERP.'
         : 'Geautomatiseerde incasso van huurpenningen en automatische aflettering van bankafschriften direct in uw Microsoft Business Central administratie.';

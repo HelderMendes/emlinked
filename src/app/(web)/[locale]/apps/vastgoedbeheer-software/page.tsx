@@ -44,8 +44,8 @@ export async function generateMetadata({
     const isEn = locale === 'en';
 
     const fallbackTitle = isEn
-        ? 'Vastgoedbeheer Software — Automate your Portfolio Management | Emlinked'
-        : 'Vastgoedbeheer Software — Automatiseer uw Portefeuillebeheer | Emlinked';
+        ? 'Vastgoedbeheer Software — Automate your Portfolio Management | emlinked'
+        : 'Vastgoedbeheer Software — Automatiseer uw Portefeuillebeheer | emlinked';
     const fallbackDesc = isEn
         ? 'Advanced real estate management software for property managers, retail chains, and housing corporations. 100% native Business Central integration.'
         : 'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Business Central.';

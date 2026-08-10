@@ -54,7 +54,7 @@ export async function generateMetadata({
     const title =
         seo?.seoTitle ||
         (isEn
-            ? 'Box 3 Tax Calculator for Real Estate Investors | Emlinked'
+            ? 'Box 3 Tax Calculator for Real Estate Investors | emlinked'
             : 'Box 3 Check: Bereken de Fiscale Impact op je Vastgoedportefeuille | emlinked');
 
     const description =

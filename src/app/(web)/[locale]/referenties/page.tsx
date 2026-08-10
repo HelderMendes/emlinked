@@ -35,73 +35,66 @@ async function getSanityPageData(locale: string) {
     }
 }
 
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+
 export async function generateMetadata({
     params,
 }: ReferentiesPageProps): Promise<Metadata> {
     const { locale } = await params;
     const pageData = await getSanityPageData(locale);
-    const seo = pageData?.seo;
     const isEn = locale === 'en';
 
-    const title =
-        seo?.seoTitle ||
-        (isEn
-            ? 'References & Customer Cases Real Estate Software | Emlinked'
-            : 'Referenties & Klantcases Vastgoedsoftware | Emlinked');
+    const fallbackTitle = isEn
+        ? 'References & Customer Cases Real Estate Software'
+        : 'Referenties & Klantcases Vastgoedsoftware';
+    const fallbackDescription = isEn
+        ? 'Read how professional property managers, retail chains, and controllers automate their real estate administration with emlinked software.'
+        : 'Lees hoe professionele vastgoedbeheerders, retailketens en controllers hun administratie automatiseren met de vastgoedsoftware van emlinked.';
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/referenties' : '/referenties'}`;
 
-    const description =
-        seo?.seoDescription ||
-        (isEn
-            ? 'Read how professional property managers, retail chains, and controllers automate their real estate administration with Emlinked software.'
-            : 'Lees hoe professionele vastgoedbeheerders, retailketens en controllers hun administratie automatiseren met de vastgoedsoftware van Emlinked.');
-
-    const robots = seo?.noIndex ? 'noindex, nofollow' : 'index, follow';
-
-    return {
-        title,
-        description,
-        robots,
-        alternates: {
-            canonical:
-                seo?.canonical || (isEn ? '/en/referenties' : '/referenties'),
-        },
-    };
+    return buildMetadata({
+        seo: pageData?.seo,
+        fallbackTitle,
+        fallbackDescription,
+        canonicalUrl,
+        locale,
+    });
 }
 
 const fallbackContent = {
     nl: {
-        title: 'Klantcases en ervaringen met Emlinked',
+        title: 'Klantcases en ervaringen met emlinked',
         tagline:
             'Lees hoe professionele vastgoedbeheerders, retailketens en controllers hun administratie automatiseren.',
-        desc: 'Vastgoedbeheerders en beleggers vertrouwen dagelijks op Emlinked om hun operationele en financiële processen te automatiseren.',
+        desc: 'Vastgoedbeheerders en beleggers vertrouwen dagelijks op emlinked om hun operationele en financiële processen te automatiseren.',
         casesTitle: 'Klantverhalen',
         testimonials: [
             {
-                quote: 'Emlinked heeft onze verwerkingstijd voor servicekostenafrekeningen met 80% verminderd dankzij de directe koppeling met Business Central.',
+                quote: 'emlinked heeft onze verwerkingstijd voor servicekostenafrekeningen met 80% verminderd dankzij de directe koppeling met Business Central.',
                 author: 'Financieel Directeur',
                 role: 'Real Estate Asset Management',
             },
             {
-                quote: 'Ons huurdersportaal van Emlinked neemt dagelijks tientallen telefoontjes weg. Storingen worden direct met de juiste foto’s geregistreerd.',
+                quote: 'Ons huurdersportaal van emlinked neemt dagelijks tientallen telefoontjes weg. Storingen worden direct met de juiste foto’s geregistreerd.',
                 author: 'Operationeel Manager',
                 role: 'Commercieel Vastgoedbeheerder',
             },
         ],
     },
     en: {
-        title: 'Customer cases and experiences with Emlinked',
+        title: 'Customer cases and experiences with emlinked',
         tagline:
             'Read how professional property managers, retail chains, and controllers automate their real estate administration.',
-        desc: 'Real estate managers and investors rely on Emlinked every day to automate their operational and financial workflows.',
+        desc: 'Real estate managers and investors rely on emlinked every day to automate their operational and financial workflows.',
         casesTitle: 'Customer Cases',
         testimonials: [
             {
-                quote: 'Emlinked reduced our service charge reconciliation workload by 80% through direct Business Central integration.',
+                quote: 'emlinked reduced our service charge reconciliation workload by 80% through direct Business Central integration.',
                 author: 'Finance Director',
                 role: 'Real Estate Asset Management',
             },
             {
-                quote: 'Our tenant portal from Emlinked cuts dozens of daily calls. Maintenance tickets get logged cleanly with photos.',
+                quote: 'Our tenant portal from emlinked cuts dozens of daily calls. Maintenance tickets get logged cleanly with photos.',
                 author: 'Operations Manager',
                 role: 'Commercial Property Manager',
             },

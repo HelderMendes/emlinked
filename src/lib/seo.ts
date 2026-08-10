@@ -25,7 +25,7 @@ export interface BuildMetadataOptions {
     path?: string;
 }
 
-const DEFAULT_SITE_NAME = 'Emlinked';
+const DEFAULT_SITE_NAME = 'emlinked';
 export const DEFAULT_DOMAIN =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://emlinked.com';
 const DEFAULT_OG_IMAGE = `${DEFAULT_DOMAIN}/og-image.png`;
@@ -42,7 +42,13 @@ export function buildMetadata({
 }: BuildMetadataOptions): Metadata {
     const isEn = locale === 'en';
 
-    const title = seo?.seoTitle || seo?.title || fallbackTitle;
+    let rawTitle = (seo?.seoTitle || seo?.title || fallbackTitle).trim();
+    // Unescape HTML entities if present
+    rawTitle = rawTitle.replace(/&amp;/g, '&');
+
+    // Split on brand separator (| emlinked, - emlinked, etc.) and take the core title
+    let title = rawTitle.split(/\s*(?:\||-|—|–)\s*emlinked/i)[0].trim();
+
     const description =
         seo?.seoDescription || seo?.description || fallbackDescription;
     const canonical = seo?.canonical || canonicalUrl;
@@ -53,17 +59,19 @@ export function buildMetadata({
             ? seo.ogImage
             : seo?.ogImage?.asset?.url || DEFAULT_OG_IMAGE;
 
+    const titleWithBrand = `${title} | ${DEFAULT_SITE_NAME}`;
+
     return {
-        title: title.includes('Emlinked')
-            ? title
-            : `${title} | ${DEFAULT_SITE_NAME}`,
+        title: {
+            absolute: titleWithBrand,
+        },
         description,
         robots,
         alternates: {
             canonical,
         },
         openGraph: {
-            title,
+            title: titleWithBrand,
             description,
             url: canonical,
             siteName: DEFAULT_SITE_NAME,
@@ -80,7 +88,7 @@ export function buildMetadata({
         },
         twitter: {
             card: 'summary_large_image',
-            title,
+            title: titleWithBrand,
             description,
             images: [ogImageUrl],
         },
