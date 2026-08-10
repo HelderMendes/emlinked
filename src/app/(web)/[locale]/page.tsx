@@ -198,87 +198,8 @@ export default async function HomePage({ params }: HomePageProps) {
         return `/en${path === '/' ? '' : path}`;
     };
 
-    // Extract dynamic blocks or fall back to translated blueprint Defaults
-    const blocks = pageData?.pageBlocks || [
-        {
-            _type: 'hero',
-            _key: 'fallback-hero',
-            label: isEn
-                ? 'NATIVE PROPERTY MODULE FOR DYNAMICS 365 BUSINESS CENTRAL'
-                : 'NATIVE VASTGOEDMODULE VOOR DYNAMICS 365 BUSINESS CENTRAL',
-            title: isEn
-                ? 'Property management and financial accounting *native* in one system'
-                : 'Vastgoedbeheer en financiële administratie *native* in één systeem',
-            subtitle: isEn
-                ? 'emlinked automates leases, CPI indexations, and bank reconciliation directly within Microsoft Dynamics. No separate databases, no manual exports, but 100% real-time control.'
-                : 'emlinked automatiseert huurovereenkomsten, CPI-indexaties en bankreconciliatie rechtstreeks binnen Microsoft Dynamics. Geen losse databases, geen handmatige exports, maar 100% realtime controle.',
-            ctaLabel: isEn ? 'Request a Demo' : 'Demo aanvragen',
-            ctaLink: '#demo',
-            secondaryCtaLabel: isEn
-                ? 'Discover Integration'
-                : 'Koppeling ontdekken',
-            secondaryCtaLink: '/integraties',
-            showProof: true,
-            proofText: isEn
-                ? 'Trusted by professional real estate managers'
-                : 'Vertrouwd door professionele vastgoedbeheerders',
-            cardTitle: 'LIVE PORTFOLIO METRICS',
-            cardStats: [
-                {
-                    _key: 's1',
-                    label: isEn
-                        ? 'Error-free CPI Indexation'
-                        : 'Foutloze CPI-Indexatie',
-                    value: '100%',
-                    badgeText: isEn ? 'Automated' : 'Geautomatiseerd',
-                    badgeType: 'good',
-                },
-                {
-                    _key: 's2',
-                    label: isEn
-                        ? 'Bank Reconciliation (PSD2)'
-                        : 'Bankaflettering (PSD2)',
-                    value: 'Direct',
-                    badgeText: isEn ? 'Reconciled' : 'Reconciliatie',
-                    badgeType: 'blue',
-                },
-                {
-                    _key: 's3',
-                    label: isEn
-                        ? 'Business Central Postings'
-                        : 'Business Central Boekingen',
-                    value: 'Native',
-                    badgeText: isEn ? 'Ledger Sync' : 'Grootboek-synchroon',
-                    badgeType: 'warn',
-                },
-            ],
-        },
-        {
-            _type: 'trustBar',
-            _key: 'fallback-trustbar',
-            items: [
-                {
-                    _key: 't1',
-                    text: 'Native Dynamics 365 Module',
-                    icon: 'shield',
-                },
-                {
-                    _key: 't2',
-                    text: isEn
-                        ? 'Real-time Bank Reconciliation'
-                        : 'Realtime Bankreconciliatie',
-                    icon: 'check',
-                },
-                {
-                    _key: 't3',
-                    text: isEn
-                        ? '100% Data Integrity'
-                        : '100% Data-integriteit',
-                    icon: 'star',
-                },
-            ],
-        },
-    ];
+    // Extract dynamic blocks 100% from Sanity CMS
+    const blocks = pageData?.pageBlocks || [];
 
     const structuredData = pageData?.seo?.structuredData;
 

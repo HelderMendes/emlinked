@@ -80,26 +80,28 @@ export function Box3VoorWieSection({
                 </div>
 
                 {/* 4 Pain Points: Single Outer Box Container with Vertical Dividers */}
-                <div className='bg-white/80 rounded-2xl border border-black/10 shadow-sm p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
-                    {voorWieItems.map((item: any, idx: number) => (
-                        <div
-                            key={idx}
-                            className='px-4 py-5 lg:py-2 flex flex-col items-start justify-start text-left space-y-3 group'
-                        >
-                            <div className='flex items-center gap-3 w-full'>
-                                <div className='w-10 h-10 rounded-full border-2 border-amber bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-amber-hover transition-all duration-300'>
-                                    {item.icon}
+                {voorWieItems && voorWieItems.length > 0 && (
+                    <div className='bg-white/80 rounded-2xl border border-black/10 shadow-sm p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
+                        {voorWieItems.map((item: any, idx: number) => (
+                            <div
+                                key={idx}
+                                className='px-4 py-5 lg:py-2 flex flex-col items-start justify-start text-left space-y-3 group'
+                            >
+                                <div className='flex items-center gap-3 w-full'>
+                                    <div className='w-10 h-10 rounded-full border-2 border-amber bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-amber-hover transition-all duration-300'>
+                                        {item.icon}
+                                    </div>
+                                    <h3 className='text-sm md:text-base font-bold text-[#060e32] text-left leading-tight'>
+                                        {item.title}
+                                    </h3>
                                 </div>
-                                <h3 className='text-sm md:text-base font-bold text-[#060e32] text-left leading-tight'>
-                                    {item.title}
-                                </h3>
+                                <p className='text-xs text-[#060e32]/75 leading-relaxed font-light text-left'>
+                                    {item.text}
+                                </p>
                             </div>
-                            <p className='text-xs text-[#060e32]/75 leading-relaxed font-light text-left'>
-                                {item.text}
-                            </p>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );

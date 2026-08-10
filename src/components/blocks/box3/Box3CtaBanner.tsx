@@ -9,6 +9,8 @@ interface Box3CtaBannerProps {
     ctaSubtitle: string;
     ctaButtonText: string;
     ctaButtonLink: string;
+    secondaryButtonText?: string;
+    secondaryButtonLink?: string;
     isEn: boolean;
     imagePath?: string;
 }
@@ -19,6 +21,8 @@ export function Box3CtaBanner({
     ctaSubtitle,
     ctaButtonText,
     ctaButtonLink,
+    secondaryButtonText,
+    secondaryButtonLink,
     isEn,
     imagePath,
 }: Box3CtaBannerProps) {
@@ -52,16 +56,14 @@ export function Box3CtaBanner({
                                         <ArrowRight className='h-5 w-5 text-white' />
                                     </span>
                                 </Link>
-                                <a
-                                    href='#calculator'
-                                    className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 hover:border-white/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
-                                >
-                                    <span>
-                                        {isEn
-                                            ? 'Calculate your yield →'
-                                            : 'Bereken uw situatie →'}
-                                    </span>
-                                </a>
+                                {secondaryButtonText && secondaryButtonLink && (
+                                    <a
+                                        href={secondaryButtonLink}
+                                        className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 hover:border-white/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
+                                    >
+                                        <span>{secondaryButtonText}</span>
+                                    </a>
+                                )}
                             </div>
                         </div>
 

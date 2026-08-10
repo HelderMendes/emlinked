@@ -66,51 +66,18 @@ export default async function PartnersSoftwarePage({
         <main className='flex-1 text-white bg-slate-950'>
             {/* HERO SECTION - 100% Sanity CMS Driven */}
             <HeroSection
-                label={
-                    heroBlock?.label ||
-                    (isEn
-                        ? 'STRATEGIC ECOSYSTEM PARTNERS'
-                        : 'STRATEGISCHE ECOSYSTEEM PARTNERS')
-                }
-                title={
-                    heroBlock?.title ||
-                    (isEn
-                        ? 'Software Partners & *Direct Integrations* with Your Favorite Software'
-                        : 'Softwarepartners & *directe koppelingen* met je favoriete software')
-                }
-                subtitle={
-                    heroBlock?.subtitle ||
-                    (isEn
-                        ? 'emlinked is engineered in close collaboration between DRVM real estate specialists and Microsoft partner faect. Built 100% natively in the cloud.'
-                        : 'emlinked is het resultaat van een unieke samenwerking tussen de vastgoedspecialisten van DRVM en Microsoft-partner faect. 100% cloud-native vastgoedsoftware.')
-                }
-                ctaLabel={
-                    heroBlock?.ctaLabel ||
-                    (isEn
-                        ? 'Explore integrations ↓'
-                        : 'Ontdek de integraties ↓')
-                }
-                ctaLink={heroBlock?.ctaLink || (isEn ? '/en/apps' : '/apps')}
-                secondaryCtaLabel={
-                    heroBlock?.secondaryCtaLabel ||
-                    (isEn ? 'Speak with us' : 'Spreek met ons')
-                }
-                secondaryCtaLink={
-                    heroBlock?.secondaryCtaLink ||
-                    (isEn ? '/en/contact' : '/contact')
-                }
+                label={heroBlock?.label}
+                title={heroBlock?.title}
+                subtitle={heroBlock?.subtitle}
+                ctaLabel={heroBlock?.ctaLabel}
+                ctaLink={heroBlock?.ctaLink}
+                secondaryCtaLabel={heroBlock?.secondaryCtaLabel}
+                secondaryCtaLink={heroBlock?.secondaryCtaLink}
                 showProof={true}
                 showProofAvatars={false}
-                proofText={
-                    isEn
-                        ? 'Certified ISV Partners & Native Extensions'
-                        : 'Gecertificeerde ISV-partners & Native Extensies'
-                }
+                proofText={heroBlock?.proofText}
                 titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
-                imagePath={
-                    heroBlock?.imagePath ||
-                    '/emlinked/partners/partners_hero.jpg'
-                }
+                imagePath={heroBlock?.imagePath}
                 locale={locale}
             />
 
@@ -126,36 +93,13 @@ export default async function PartnersSoftwarePage({
 
             {/* PRE-FOOTER CONVERSION CTA - 100% Sanity CMS Driven */}
             <Box3CtaBanner
-                ctaBadge={
-                    ctaBlock?.badge ||
-                    (isEn
-                        ? 'Ready for streamlined real estate management?'
-                        : 'Klaar voor gestroomlijnd vastgoedbeheer?')
-                }
-                ctaTitle={
-                    ctaBlock?.title ||
-                    (isEn
-                        ? 'Experience the power of emlinked and our software partners'
-                        : 'Ervaar de kracht van emlinked en onze software-partners')
-                }
-                ctaSubtitle={
-                    ctaBlock?.subtitle ||
-                    (isEn
-                        ? 'emlinked unifies commercial, technical, and administrative real estate management into one clear platform.'
-                        : 'emlinked brengt commercieel, technisch en administratief vastgoedbeheer samen in één overzichtelijk platform.')
-                }
-                ctaButtonText={
-                    ctaBlock?.buttonText ||
-                    (isEn
-                        ? 'Request a free demo'
-                        : 'Vraag vrijblijvend een demo aan')
-                }
-                ctaButtonLink={ctaBlock?.buttonLink || '/contact'}
+                ctaBadge={ctaBlock?.badge}
+                ctaTitle={ctaBlock?.title}
+                ctaSubtitle={ctaBlock?.subtitle}
+                ctaButtonText={ctaBlock?.buttonText}
+                ctaButtonLink={ctaBlock?.buttonLink}
                 isEn={isEn}
-                imagePath={
-                    ctaBlock?.imagePath ||
-                    '/emlinked/partners/klaar-voor-gestroomlijnd.jpg'
-                }
+                imagePath={ctaBlock?.imagePath}
             />
         </main>
     );

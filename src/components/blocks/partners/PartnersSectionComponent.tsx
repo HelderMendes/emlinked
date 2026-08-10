@@ -180,6 +180,7 @@ export function PartnersSectionComponent({
                                                 alt={partner.name}
                                                 width={620}
                                                 height={300}
+                                                sizes='(max-width: 1024px) 100vw, 33vw'
                                                 className='w-full object-contain transition-transform duration-300 group-hover:scale-105'
                                             />
                                         </div>
