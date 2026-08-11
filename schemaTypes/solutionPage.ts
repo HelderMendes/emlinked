@@ -70,6 +70,36 @@ export const solutionPage = defineType({
                             rows: 3,
                         }),
                         defineField({
+                            name: 'primaryCtaLabel',
+                            title: 'Primary CTA Button Label',
+                            type: 'string',
+                            description: 'Label for primary action button (e.g. "Gratis live demo aanvragen")',
+                        }),
+                        defineField({
+                            name: 'primaryCtaUrl',
+                            title: 'Primary CTA Button URL',
+                            type: 'string',
+                            description: 'URL target (e.g. "#demo" or "/demo")',
+                        }),
+                        defineField({
+                            name: 'secondaryCtaLabel',
+                            title: 'Secondary CTA Button Label',
+                            type: 'string',
+                            description: 'Label for secondary action button (e.g. "Bereken je Box 3-impact")',
+                        }),
+                        defineField({
+                            name: 'secondaryCtaUrl',
+                            title: 'Secondary CTA Button URL',
+                            type: 'string',
+                            description: 'URL target (e.g. "/box3-check")',
+                        }),
+                        defineField({
+                            name: 'proofText',
+                            title: 'Social Proof Text',
+                            type: 'string',
+                            description: 'Social proof message (e.g. "Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland")',
+                        }),
+                        defineField({
                             name: 'heroImage',
                             title: 'Hero Image Path',
                             type: 'string',

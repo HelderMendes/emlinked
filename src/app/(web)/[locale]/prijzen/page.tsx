@@ -6,7 +6,7 @@ import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { PricingCalculator } from '@/components/PricingCalculator';
 import { GlowingLink } from '@/components/ui/GlowingButton';
-import { CheckCircle2, Clock, ShieldCheck, Zap, ArrowRight } from 'lucide-react';
+import { Clock, ArrowRight } from 'lucide-react';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 
 interface PricingPageProps {

@@ -228,19 +228,19 @@ export function VastgoedbeheerSoftwareModule({
                             {/* Primary & Secondary Action Buttons */}
                             <div className='flex flex-col sm:flex-row gap-4 mt-2'>
                                 <GlowingLink
-                                    href='#demo'
+                                    href={heroBlock?.primaryCtaUrl || heroBlock?.ctaLink || '#demo'}
                                     className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
                                 >
                                     <span className='flex items-center justify-center gap-2 text-white'>
                                         <span>
-                                            {heroBlock?.ctaLabel || (isEn ? 'Request a free live demo' : 'Gratis live demo aanvragen')}
+                                            {heroBlock?.primaryCtaLabel || heroBlock?.ctaLabel || (isEn ? 'Request a free live demo' : 'Gratis live demo aanvragen')}
                                         </span>
                                         <ArrowRight className='w-5 h-5 text-white' />
                                     </span>
                                 </GlowingLink>
 
                                 <Link
-                                    href='/box3-check'
+                                    href={heroBlock?.secondaryCtaUrl || heroBlock?.secondaryCtaLink || '/box3-check'}
                                     className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
                                 >
                                     {heroBlock?.secondaryCtaLabel || (isEn ? 'Check Box 3 impact' : 'Bereken je Box 3-impact')}
@@ -250,49 +250,13 @@ export function VastgoedbeheerSoftwareModule({
                                 </Link>
                             </div>
 
-                            {/* Social Proof Avatar Cluster Bar */}
-                            <div className='flex items-center gap-4 pt-4 border-t border-white/10 mt-1'>
-                                <div className='flex -space-x-2.5 overflow-visible relative shrink-0'>
-                                    <div className='relative group z-30 hover:z-50'>
-                                        <Image
-                                            src='/hero/levi-bosboom.png'
-                                            alt='Levi Bosboom'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
-                                        />
-                                    </div>
-                                    <div className='relative group z-25 hover:z-50'>
-                                        <Image
-                                            src='/hero/angelique.png'
-                                            alt='Angelique van Doorn'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
-                                        />
-                                    </div>
-                                    <div className='relative group z-20 hover:z-50'>
-                                        <Image
-                                            src='/hero/MichelDeWaal.jpg'
-                                            alt='Michel De Waal'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
-                                        />
-                                    </div>
-                                    <div className='relative group z-15 hover:z-50'>
-                                        <Image
-                                            src='/hero/sander-bot.png'
-                                            alt='Sander Bot'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-slate-900 object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
-                                        />
-                                    </div>
-                                </div>
-                                <span className='text-xs text-white/70 font-light leading-snug'>
-                                    Vertrouwd door professionele
-                                    vastgoedbeheerders en beleggers in Nederland
+                            {/* Social Proof Text Bar (Clean Text Only) */}
+                            <div className='flex items-center gap-3 pt-4 border-t border-white/10 mt-1'>
+                                <span className='w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0' />
+                                <span className='text-xs sm:text-sm text-white/80 font-light leading-snug'>
+                                    {heroBlock?.proofText || doc?.proofText || (isEn
+                                        ? 'Trusted by professional real estate managers and investors in Europe'
+                                        : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')}
                                 </span>
                             </div>
                         </div>

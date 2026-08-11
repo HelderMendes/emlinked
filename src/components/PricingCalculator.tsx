@@ -607,7 +607,10 @@ export function PricingCalculator({
                                                 Number(e.target.value),
                                             )
                                         }
-                                        className='w-full accent-amber h-2 bg-slate-200 rounded-lg cursor-pointer'
+                                        style={{
+                                            background: `linear-gradient(to right, #ff9400 0%, #ff9400 ${(extraUsers / 20) * 100}%, rgba(0, 0, 0, 0.15) ${(extraUsers / 20) * 100}%, rgba(0, 0, 0, 0.15) 100%)`,
+                                        }}
+                                        className='w-full accent-amber h-2 rounded-lg cursor-pointer appearance-none'
                                     />
                                     <input
                                         type='number'
@@ -653,7 +656,10 @@ export function PricingCalculator({
                                         onChange={(e) =>
                                             setTeamUsers(Number(e.target.value))
                                         }
-                                        className='w-full accent-amber h-2 bg-slate-200 rounded-lg cursor-pointer'
+                                        style={{
+                                            background: `linear-gradient(to right, #ff9400 0%, #ff9400 ${(teamUsers / 50) * 100}%, rgba(0, 0, 0, 0.15) ${(teamUsers / 50) * 100}%, rgba(0, 0, 0, 0.15) 100%)`,
+                                        }}
+                                        className='w-full accent-amber h-2 rounded-lg cursor-pointer appearance-none'
                                     />
                                     <input
                                         type='number'
@@ -2092,7 +2098,9 @@ export function PricingCalculator({
                                     <div className='space-y-4 text-left'>
                                         <div>
                                             <label className='block text-[10px] font-bold uppercase tracking-wider text-[#060e32]/80 mb-1'>
-                                                {isEn ? 'Full Name *' : 'Naam *'}
+                                                {isEn
+                                                    ? 'Full Name *'
+                                                    : 'Naam *'}
                                             </label>
                                             <div className='relative'>
                                                 <User className='w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400' />
@@ -2103,7 +2111,8 @@ export function PricingCalculator({
                                                     onChange={(e) =>
                                                         setFormData({
                                                             ...formData,
-                                                            name: e.target.value,
+                                                            name: e.target
+                                                                .value,
                                                         })
                                                     }
                                                     placeholder={

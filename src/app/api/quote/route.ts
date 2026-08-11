@@ -65,6 +65,9 @@ export async function POST(request: Request) {
         // ── 1. EMAIL TO ADMINISTRATION ──
         const adminEmailHtml = `
             <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff;">
+                <div style="text-align: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                    <img src="https://emlinked.com/emlinked/Emlinked_logo__liggend.svg" alt="emlinked" width="250" style="width: 250px; height: auto; max-width: 100%; display: inline-block;" />
+                </div>
                 <div style="border-bottom: 3px solid #ff9400; padding-bottom: 12px; margin-bottom: 20px;">
                     <h2 style="color: #060e32; margin: 0; font-size: 22px;">⚡ Nieuwe Offerte Berekening Ontvangen</h2>
                     <p style="color: #64748b; font-size: 13px; margin: 4px 0 0 0;">Aanvraag via de emlinked prijzen calculator</p>
@@ -140,6 +143,9 @@ export async function POST(request: Request) {
 
         const prospectEmailHtml = `
             <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff;">
+                <div style="text-align: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                    <img src="https://emlinked.com/emlinked/Emlinked_logo__liggend.svg" alt="emlinked" width="250" style="width: 250px; height: auto; max-width: 100%; display: inline-block;" />
+                </div>
                 <div style="text-align: center; border-bottom: 3px solid #ff9400; padding-bottom: 16px; margin-bottom: 24px;">
                     <h2 style="color: #060e32; margin: 0; font-size: 24px;">
                         ${isEn ? 'Your Personal emlinked Quote' : 'Je Persoonlijke emlinked Offerte'}
