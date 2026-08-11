@@ -159,7 +159,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                     ctaLink={heroBlock.ctaLink}
                     secondaryCtaLabel={heroBlock.secondaryCtaLabel}
                     secondaryCtaLink={heroBlock.secondaryCtaLink}
-                    showProof={false}
+                    showProof={heroBlock.showProof ?? false}
                     imagePath={
                         heroBlock.imagePath || '/emlinked/apps/hero-apps.jpg'
                     }

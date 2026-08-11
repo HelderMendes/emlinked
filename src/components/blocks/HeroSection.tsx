@@ -132,11 +132,11 @@ export function HeroSection({
                             </div>
                         )}
 
-                        {/* Social proof bar rendered when enabled */}
-                        {showProof && (
-                            <div className='flex items-center gap-4 pt-6 border-t border-white/10 dark:border-[#060e32]/10 mt-2'>
-                                {showProofAvatars && (
-                                    <div className='flex -space-x-2.5 overflow-visible relative'>
+                        {/* Social proof bar: Text always renders when present; showProof controls avatar cluster vs clean dot */}
+                        {effectiveProofText && (
+                            <div className='flex items-center gap-3 pt-6 border-t border-white/10 dark:border-[#060e32]/10 mt-2'>
+                                {showProof && showProofAvatars ? (
+                                    <div className='flex -space-x-2.5 overflow-visible relative shrink-0'>
                                         {/* Levi Bosboom */}
                                         <div className='relative group z-30 hover:z-50'>
                                             <Image
@@ -233,8 +233,10 @@ export function HeroSection({
                                             </div>
                                         </div>
                                     </div>
+                                ) : (
+                                    <span className='w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0' />
                                 )}
-                                <span className='text-sm text-white/65 dark:text-orange font-light'>
+                                <span className='text-xs sm:text-sm text-white/80 dark:text-orange font-light leading-snug'>
                                     {effectiveProofText}
                                 </span>
                             </div>

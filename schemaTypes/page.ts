@@ -124,10 +124,18 @@ export const page = defineType({
                         }),
                         defineField({
                             name: 'imagePath',
-                            title: 'Right Column Image Path (Optional)',
+                            title: 'Right Column Image Path (Optional String)',
                             type: 'string',
                             description:
                                 'Relative path to image (e.g., /hero/vastgoedportfeuille_aangifte-klaar.jpg)',
+                        }),
+                        defineField({
+                            name: 'image',
+                            title: 'Right Column Image (Sanity Asset Upload)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description:
+                                'Upload custom graphic directly to Sanity CDN',
                         }),
                     ],
                     preview: {
@@ -379,7 +387,7 @@ export const page = defineType({
                             hidden: ({ parent }) =>
                                 Boolean(
                                     parent?.features &&
-                                        parent.features.length > 0,
+                                    parent.features.length > 0,
                                 ),
                         }),
                         defineField({
@@ -389,7 +397,7 @@ export const page = defineType({
                             hidden: ({ parent }) =>
                                 Boolean(
                                     parent?.features &&
-                                        parent.features.length > 0,
+                                    parent.features.length > 0,
                                 ),
                         }),
                         defineField({
@@ -400,7 +408,7 @@ export const page = defineType({
                             hidden: ({ parent }) =>
                                 Boolean(
                                     parent?.features &&
-                                        parent.features.length > 0,
+                                    parent.features.length > 0,
                                 ),
                         }),
                         defineField({
@@ -410,7 +418,7 @@ export const page = defineType({
                             hidden: ({ parent }) =>
                                 Boolean(
                                     parent?.features &&
-                                        parent.features.length > 0,
+                                    parent.features.length > 0,
                                 ),
                             fields: [
                                 defineField({
@@ -443,7 +451,7 @@ export const page = defineType({
                             hidden: ({ parent }) =>
                                 Boolean(
                                     parent?.features &&
-                                        parent.features.length > 0,
+                                    parent.features.length > 0,
                                 ),
                             of: [
                                 defineArrayMember({
@@ -473,8 +481,7 @@ export const page = defineType({
                             hidden: ({ parent }) =>
                                 Boolean(
                                     parent?.fiscalContext ||
-                                        (parent?.items &&
-                                            parent.items.length > 0),
+                                    (parent?.items && parent.items.length > 0),
                                 ),
                         }),
                         defineField({
@@ -484,8 +491,7 @@ export const page = defineType({
                             hidden: ({ parent }) =>
                                 Boolean(
                                     parent?.fiscalContext ||
-                                        (parent?.items &&
-                                            parent.items.length > 0),
+                                    (parent?.items && parent.items.length > 0),
                                 ),
                         }),
                         defineField({
@@ -496,8 +502,7 @@ export const page = defineType({
                             hidden: ({ parent }) =>
                                 Boolean(
                                     parent?.fiscalContext ||
-                                        (parent?.items &&
-                                            parent.items.length > 0),
+                                    (parent?.items && parent.items.length > 0),
                                 ),
                         }),
                         defineField({
@@ -731,10 +736,18 @@ export const page = defineType({
                         }),
                         defineField({
                             name: 'imagePath',
-                            title: 'Right Column Image Path (Optional)',
+                            title: 'Right Column Image Path (Optional String)',
                             type: 'string',
                             description:
                                 'Relative path to image (e.g. /emlinked/box3/box3-automatiseren.jpg)',
+                        }),
+                        defineField({
+                            name: 'image',
+                            title: 'Right Column Image (Sanity Asset Upload)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description:
+                                'Upload banner graphic directly to Sanity CDN',
                         }),
                     ],
                 }),

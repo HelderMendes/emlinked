@@ -8,6 +8,7 @@ import { PricingCalculator } from '@/components/PricingCalculator';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { Clock, ArrowRight } from 'lucide-react';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+import { getImageUrl } from '@/sanity/image';
 
 interface PricingPageProps {
     params: Promise<{ locale: string }>;
@@ -90,13 +91,25 @@ export default async function PricingPage({ params }: PricingPageProps) {
     const strippenBlock = blocks.find((b: any) => b._type === 'featuresList');
     const ctaBlock = blocks.find((b: any) => b._type === 'ctaBanner');
 
+    const heroImageUrl = getImageUrl(
+        heroBlock?.image || heroBlock?.heroImage,
+        heroBlock?.imagePath || '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+    );
+
+    const ctaImageUrl = getImageUrl(
+        ctaBlock?.image,
+        ctaBlock?.imagePath || '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+    );
+
     return (
         <div className='flex flex-col min-h-screen bg-background text-foreground'>
             {/* ── SECTION 1: HERO HEADER ── */}
             <HeroSection
                 label={
                     heroBlock?.label ||
-                    (isEn ? 'TRANSPARENT PRICING, SCALED EASILY' : 'HELDERE PRIJZEN, EENVOUDIG OPGESCHAALD')
+                    (isEn
+                        ? 'TRANSPARENT PRICING, SCALED EASILY'
+                        : 'HELDERE PRIJZEN, EENVOUDIG OPGESCHAALD')
                 }
                 title={
                     heroBlock?.title ||
@@ -112,21 +125,27 @@ export default async function PricingPage({ params }: PricingPageProps) {
                 }
                 ctaLabel={
                     heroBlock?.ctaLabel ||
-                    (isEn ? 'Calculate your subscription ↓' : 'Bereken je abonnement ↓')
+                    (isEn
+                        ? 'Calculate your subscription ↓'
+                        : 'Bereken je abonnement ↓')
                 }
                 ctaLink={heroBlock?.ctaLink || '#calculator'}
                 secondaryCtaLabel={
                     heroBlock?.secondaryCtaLabel ||
                     (isEn ? 'Talk to us' : 'Spreek met ons')
                 }
-                secondaryCtaLink={heroBlock?.secondaryCtaLink || (isEn ? '/en/contact' : '/contact')}
-                showProof={true}
-                proofText={
-                    isEn
-                        ? 'Trusted by professional real estate managers & controllers'
-                        : 'Vertrouwd door professionele vastgoedbeheerders en controllers'
+                secondaryCtaLink={
+                    heroBlock?.secondaryCtaLink ||
+                    (isEn ? '/en/contact' : '/contact')
                 }
-                imagePath='/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                showProof={heroBlock?.showProof ?? true}
+                proofText={
+                    heroBlock?.proofText ||
+                    (isEn
+                        ? 'Trusted by professional real estate managers & controllers'
+                        : 'Vertrouwd door professionele vastgoedbeheerders en controllers')
+                }
+                imagePath={heroImageUrl}
                 isHomepage={false}
                 locale={locale}
                 titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
@@ -148,7 +167,9 @@ export default async function PricingPage({ params }: PricingPageProps) {
                             <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
                                 <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
                                 {strippenBlock?.sectionTag ||
-                                    (isEn ? 'FLEXIBLE SUPPORT' : 'FLEXIBELE ONDERSTEUNING')}
+                                    (isEn
+                                        ? 'FLEXIBLE SUPPORT'
+                                        : 'FLEXIBELE ONDERSTEUNING')}
                             </span>
                         </div>
 
@@ -177,7 +198,9 @@ export default async function PricingPage({ params }: PricingPageProps) {
                                     <span>5 {isEn ? 'Hours' : 'Uur'}</span>
                                 </div>
                                 <h3 className='text-2xl font-bold text-[#060e32] dark:text-white'>
-                                    {isEn ? '5 Hour Support Pack' : '5 Uur Strippenkaart'}
+                                    {isEn
+                                        ? '5 Hour Support Pack'
+                                        : '5 Uur Strippenkaart'}
                                 </h3>
                                 <div className='flex items-baseline gap-1.5'>
                                     <span className='text-4xl font-extrabold text-[#060e32] dark:text-white'>
@@ -197,7 +220,9 @@ export default async function PricingPage({ params }: PricingPageProps) {
                                 href={getPath('/contact')}
                                 className='inline-flex h-12 items-center justify-center rounded-xl border border-black/20 dark:border-white/20 bg-transparent px-6 text-sm font-semibold text-[#060e32] dark:text-white hover:bg-amber hover:text-[#060e32] hover:border-amber transition-all duration-200 text-center'
                             >
-                                {isEn ? 'Order Support Pack' : 'Bestel strippenkaart'}
+                                {isEn
+                                    ? 'Order Support Pack'
+                                    : 'Bestel strippenkaart'}
                             </Link>
                         </div>
 
@@ -212,7 +237,9 @@ export default async function PricingPage({ params }: PricingPageProps) {
                                     <span>10 {isEn ? 'Hours' : 'Uur'}</span>
                                 </div>
                                 <h3 className='text-2xl font-bold text-[#060e32] dark:text-white'>
-                                    {isEn ? '10 Hour Support Pack' : '10 Uur Strippenkaart'}
+                                    {isEn
+                                        ? '10 Hour Support Pack'
+                                        : '10 Uur Strippenkaart'}
                                 </h3>
                                 <div className='flex items-baseline gap-1.5'>
                                     <span className='text-4xl font-extrabold text-[#060e32] dark:text-white'>
@@ -232,7 +259,9 @@ export default async function PricingPage({ params }: PricingPageProps) {
                                 href={getPath('/contact')}
                                 className='inline-flex h-12 items-center justify-center rounded-xl bg-amber px-6 text-sm font-bold text-[#060e32] transition-all duration-200 text-center shadow-md'
                             >
-                                {isEn ? 'Order Support Pack' : 'Bestel strippenkaart'}
+                                {isEn
+                                    ? 'Order Support Pack'
+                                    : 'Bestel strippenkaart'}
                             </GlowingLink>
                         </div>
 
@@ -244,7 +273,9 @@ export default async function PricingPage({ params }: PricingPageProps) {
                                     <span>20 {isEn ? 'Hours' : 'Uur'}</span>
                                 </div>
                                 <h3 className='text-2xl font-bold text-[#060e32] dark:text-white'>
-                                    {isEn ? '20 Hour Support Pack' : '20 Uur Strippenkaart'}
+                                    {isEn
+                                        ? '20 Hour Support Pack'
+                                        : '20 Uur Strippenkaart'}
                                 </h3>
                                 <div className='flex items-baseline gap-1.5'>
                                     <span className='text-4xl font-extrabold text-[#060e32] dark:text-white'>
@@ -264,7 +295,9 @@ export default async function PricingPage({ params }: PricingPageProps) {
                                 href={getPath('/contact')}
                                 className='inline-flex h-12 items-center justify-center rounded-xl border border-black/20 dark:border-white/20 bg-transparent px-6 text-sm font-semibold text-[#060e32] dark:text-white hover:bg-amber hover:text-[#060e32] hover:border-amber transition-all duration-200 text-center'
                             >
-                                {isEn ? 'Order Support Pack' : 'Bestel strippenkaart'}
+                                {isEn
+                                    ? 'Order Support Pack'
+                                    : 'Bestel strippenkaart'}
                             </Link>
                         </div>
                     </div>
@@ -279,7 +312,10 @@ export default async function PricingPage({ params }: PricingPageProps) {
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                 <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
                                     <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
-                                    {ctaBlock?.tag || (isEn ? 'CONSULTATION' : 'ADVIESGESPREK')}
+                                    {ctaBlock?.tag ||
+                                        (isEn
+                                            ? 'CONSULTATION'
+                                            : 'ADVIESGESPREK')}
                                 </span>
 
                                 <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
@@ -298,13 +334,17 @@ export default async function PricingPage({ params }: PricingPageProps) {
 
                                 <div className='pt-4'>
                                     <GlowingLink
-                                        href={getPath(ctaBlock?.buttonLink || '/contact')}
+                                        href={getPath(
+                                            ctaBlock?.buttonLink || '/contact',
+                                        )}
                                         className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98]'
                                     >
                                         <span className='flex items-center justify-center gap-2 text-white'>
                                             <span>
                                                 {ctaBlock?.buttonLabel ||
-                                                    (isEn ? 'Schedule a consultation' : 'Plan een vrijblijvend adviesgesprek')}
+                                                    (isEn
+                                                        ? 'Schedule a consultation'
+                                                        : 'Plan een vrijblijvend adviesgesprek')}
                                             </span>
                                             <ArrowRight className='h-5 w-5 text-white' />
                                         </span>
@@ -314,7 +354,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
 
                             <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                 <Image
-                                    src='/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                                    src={ctaImageUrl}
                                     alt='Emlinked Pricing Consultation'
                                     width={700}
                                     height={500}

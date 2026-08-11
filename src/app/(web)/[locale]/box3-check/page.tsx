@@ -149,7 +149,7 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
                 ctaLink={heroBlock?.ctaLink}
                 secondaryCtaLabel={heroBlock?.secondaryCtaLabel}
                 secondaryCtaLink={heroBlock?.secondaryCtaLink}
-                showProof={true}
+                showProof={heroBlock?.showProof ?? true}
                 showProofAvatars={false}
                 proofText={heroBlock?.proofText}
                 customGraphic={
@@ -174,7 +174,9 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
             <Box3VoorWieSection
                 voorWieBadge={voorWieBlock?.badge}
                 voorWieTitle={voorWieBlock?.title}
-                voorWieSubtitle={voorWieBlock?.subtitle || voorWieBlock?.description}
+                voorWieSubtitle={
+                    voorWieBlock?.subtitle || voorWieBlock?.description
+                }
                 fiscalContextBadge={voorWieBlock?.fiscalContext?.badge}
                 fiscalContextTitle={voorWieBlock?.fiscalContext?.title}
                 fiscalContextText={voorWieBlock?.fiscalContext?.text}
