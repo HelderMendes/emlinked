@@ -17,6 +17,7 @@ import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { formatHeroTitle } from '@/components/blocks/HeroSection';
 import { BorderBeam } from 'border-beam';
 import { DEFAULT_DOMAIN } from '@/lib/seo';
+import { getImageUrl } from '@/sanity/image';
 
 function CardBadge({
     imageSrc,
@@ -69,6 +70,11 @@ export function VastgoedbeheerSoftwareModule({
     const heroBadge = heroBlock?.badge || doc?.badge || (isEn ? 'MICROSOFT DYNAMICS 365 NATIVE' : 'CORE SAAS MODULE VOOR VASTGOEDMANAGEMENT');
     const heroTagline = heroBlock?.tagline || doc?.tagline || doc?.title;
     const heroDescription = heroBlock?.description || doc?.description;
+
+    const heroImageUrl = getImageUrl(
+        heroBlock?.image || heroBlock?.heroImage || doc?.image || doc?.heroImage,
+        heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || '/emlinked/home/DrieKrachtigeApps_VastgoedbeheerSoftware.png',
+    );
 
     // Structured JSON-LD from Sanity or default blueprint fallback
     const jsonLdData = doc?.seo?.structuredData
@@ -285,8 +291,8 @@ export function VastgoedbeheerSoftwareModule({
                                 {/* Showcase Image (Flush Edge-to-Edge, Borderless & Higher Aspect Ratio) */}
                                 <div className='relative aspect-square w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
                                     <Image
-                                        src='/emlinked/home/DrieKrachtigeApps_VastgoedbeheerSoftware.png'
-                                        alt='Emlinked Core Vastgoedbeheer Dashboard Mockup'
+                                        src={heroImageUrl}
+                                        alt={heroBlock?.title || 'Emlinked Core Vastgoedbeheer Dashboard Mockup'}
                                         width={1200}
                                         height={1500}
                                         className='w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500'

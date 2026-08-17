@@ -16,6 +16,11 @@ async function getHuurdersportaalPageData(locale: string) {
         return await sanityFetch<any>({
             query: `*[_type == "solutionPage" && (slug.current == "huurdersportaal" || slug.current == "tenant-portal" || slug.current == "/apps/huurdersportaal" || slug.current == "/huurdersportaal") && language == $locale][0] {
                 ...,
+                pageBlocks[] {
+                    ...,
+                    image { asset-> { url } },
+                    heroImage { asset-> { url } }
+                },
                 seo {
                     seoTitle,
                     seoDescription,

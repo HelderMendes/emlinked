@@ -16,6 +16,11 @@ async function getVastgoedbeheerPageData(locale: string) {
         return await sanityFetch<any>({
             query: `*[_type == "solutionPage" && (slug.current == "vastgoedbeheer-software" || slug.current == "property-management-software" || slug.current == "/apps/vastgoedbeheer-software" || slug.current == "/vastgoedbeheer-software") && language == $locale][0] {
                 ...,
+                pageBlocks[] {
+                    ...,
+                    image { asset-> { url } },
+                    heroImage { asset-> { url } }
+                },
                 seo {
                     seoTitle,
                     seoDescription,

@@ -21,6 +21,7 @@ import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { formatHeroTitle } from '@/components/blocks/HeroSection';
 import { BorderBeam } from 'border-beam';
 import { DEFAULT_DOMAIN } from '@/lib/seo';
+import { getImageUrl } from '@/sanity/image';
 
 function CardBadge({
     imageSrc,
@@ -73,6 +74,11 @@ export function HuurdersportaalModule({
     const heroBadge = heroBlock?.badge || doc?.badge || (isEn ? 'SELF-SERVICE & TENANT COMMUNICATION' : 'SELF-SERVICE & HUURDERCOMMUNICATIE');
     const heroTagline = heroBlock?.tagline || doc?.tagline || doc?.title;
     const heroDescription = heroBlock?.description || doc?.description;
+
+    const heroImageUrl = getImageUrl(
+        heroBlock?.image || heroBlock?.heroImage || doc?.image || doc?.heroImage,
+        heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || '/emlinked/home/Huurdersportaal.png',
+    );
 
     // Structured JSON-LD from Sanity or user-provided blueprint
     const jsonLdData = doc?.seo?.structuredData
@@ -240,8 +246,8 @@ export function HuurdersportaalModule({
 
                                     <div className='relative aspect-12/11 w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
                                         <Image
-                                            src='/emlinked/home/Huurdersportaal.png'
-                                            alt='Huurdersportaal Software UI Self-Service Mockup'
+                                            src={heroImageUrl}
+                                            alt={heroBlock?.title || 'Huurdersportaal Software UI Self-Service Mockup'}
                                             width={1400}
                                             height={875}
                                             className='w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500'

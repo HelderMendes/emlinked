@@ -20,6 +20,7 @@ import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { formatHeroTitle } from '@/components/blocks/HeroSection';
 import { BorderBeam } from 'border-beam';
 import { DEFAULT_DOMAIN } from '@/lib/seo';
+import { getImageUrl } from '@/sanity/image';
 
 function CardBadge({
     imageSrc,
@@ -71,6 +72,11 @@ export function PaymentSoftwareModule({
     const heroBadge = heroBlock?.badge || doc?.badge || (isEn ? 'AUTOMATED COLLECTION & RECONCILIATION' : 'FINANCIËLE AUTOMATISERING & INCASSO');
     const heroTagline = heroBlock?.tagline || doc?.tagline || doc?.title;
     const heroDescription = heroBlock?.description || doc?.description;
+
+    const heroImageUrl = getImageUrl(
+        heroBlock?.image || heroBlock?.heroImage || doc?.image || doc?.heroImage,
+        heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || '/emlinked/apps/payment/payment-software-her0.webp',
+    );
 
     // Structured JSON-LD from Sanity or user blueprint
     const jsonLdData = doc?.seo?.structuredData
@@ -240,8 +246,8 @@ export function PaymentSoftwareModule({
 
                                     <div className='relative aspect-16/12 w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
                                         <Image
-                                            src='/emlinked/home/DrieKrachtigeApps_PaymentSoftware.png'
-                                            alt='Payment Software Hero Mockup'
+                                            src={heroImageUrl}
+                                            alt={heroBlock?.title || 'Payment Software Hero Mockup'}
                                             width={1400}
                                             height={1100}
                                             className='w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500'

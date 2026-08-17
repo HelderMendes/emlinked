@@ -16,6 +16,11 @@ async function getPaymentSoftwarePageData(locale: string) {
         return await sanityFetch<any>({
             query: `*[_type == "solutionPage" && (slug.current == "payment-software" || slug.current == "payment" || slug.current == "/apps/payment-software" || slug.current == "/payment-software") && language == $locale][0] {
                 ...,
+                pageBlocks[] {
+                    ...,
+                    image { asset-> { url } },
+                    heroImage { asset-> { url } }
+                },
                 seo {
                     seoTitle,
                     seoDescription,
