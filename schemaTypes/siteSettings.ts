@@ -114,7 +114,7 @@ export const siteSettings = defineType({
             name: 'address',
             title: 'Corporate Address',
             type: 'string',
-            initialValue: 'Keizersgracht 241, 1016 EA Amsterdam',
+            initialValue: 'Gooimeer 12,1411 DE Naarden',
         }),
         defineField({
             name: 'linkedinUrl',

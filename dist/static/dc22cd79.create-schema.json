@@ -2264,10 +2264,10 @@
         "title": "Corporate Email"
       },
       {
-        "initialValue": "Keizersgracht 241, 1016 EA Amsterdam",
-        "name": "address",
-        "type": "string",
-        "title": "Corporate Address"
+          "initialValue": "Gooimeer 12,1411 DE Naarden",
+          "name": "address",
+          "type": "string",
+          "title": "Corporate Address"
       },
       {
         "initialValue": "https://linkedin.com",
