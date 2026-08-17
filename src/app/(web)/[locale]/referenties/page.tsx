@@ -2,6 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { GlowingLink } from '@/components/ui/GlowingButton';
@@ -148,7 +151,7 @@ export default async function ReferentiesPage({
     const heroImageUrl = getImageUrl(
         heroBlock?.image || heroBlock?.heroImage,
         heroBlock?.imagePath ||
-            '/emlinked/referenties/Levi-Bosboom01-e1670425220983.png',
+            '/emlinked/referenties/beheerders_referencties.jpg',
     );
 
     const ctaImageUrl = getImageUrl(
