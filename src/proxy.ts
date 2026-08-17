@@ -169,9 +169,21 @@ export function proxy(request: NextRequest) {
     if (firstPathSegment === 'en') {
         let internalPath = normalizedPathname;
 
-        // Translate English URL slugs to filesystem folder names under /en/
+        // 301 redirect legacy / unvetted English URLs to official English URLs
+        if (normalizedPathname === '/en/referenties' || normalizedPathname === '/en/customer-cases') {
+            const targetUrl = new URL(`/en/references${url.search}`, request.url);
+            return NextResponse.redirect(targetUrl, 301);
+        }
+        if (normalizedPathname === '/en/prijzen') {
+            const targetUrl = new URL(`/en/pricing${url.search}`, request.url);
+            return NextResponse.redirect(targetUrl, 301);
+        }
+
+        // Translate English URL slugs in browser to internal filesystem folder names
         if (internalPath === '/en/about-us') internalPath = '/en/over-ons';
         if (internalPath === '/en/news') internalPath = '/en/nieuws';
+        if (internalPath === '/en/references') internalPath = '/en/referenties';
+        if (internalPath === '/en/pricing') internalPath = '/en/prijzen';
         if (internalPath === '/en/apps/property-management-software')
             internalPath = '/en/apps/vastgoedbeheer-software';
         if (internalPath === '/en/apps/tenant-portal')

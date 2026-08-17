@@ -96,8 +96,9 @@ async function syncPrijzenPage() {
         seo: {
             _type: 'seoFields',
             seoTitle: 'Transparent Pricing & Rates | emlinked',
-            seoDescription: 'Easily calculate the monthly costs for your property management. Transparent subscription based on contract count, with flexible scaling.',
-            canonical: 'https://www.emlinked.com/en/prijzen'
+            seoDescription:
+                'Easily calculate the monthly costs for your property management. Transparent subscription based on contract count, with flexible scaling.',
+            canonical: 'https://www.emlinked.com/en/pricing',
         },
         pageBlocks: [
             {
@@ -105,59 +106,68 @@ async function syncPrijzenPage() {
                 _type: 'hero',
                 label: 'TRANSPARENT PRICING, SCALED EASILY',
                 title: 'A subscription tailored to your real estate portfolio',
-                subtitle: 'emlinked offers a transparent subscription model that grows with your property management. Subscriptions start at €173.76 per month for 100 contracts (just €1.74 per contract), with lower rates per contract as your portfolio expands.',
+                subtitle:
+                    'emlinked offers a transparent subscription model that grows with your property management. Subscriptions start at €173.76 per month for 100 contracts (just €1.74 per contract), with lower rates per contract as your portfolio expands.',
                 ctaLabel: 'Calculate your subscription ↓',
                 ctaLink: '#calculator',
                 secondaryCtaLabel: 'Talk to us',
                 secondaryCtaLink: '/en/contact',
                 showProof: true,
-                proofText: 'Trusted by professional real estate managers & controllers',
-                imagePath: '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                proofText:
+                    'Trusted by professional real estate managers & controllers',
+                imagePath: '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
             },
             {
                 _key: 'calc_section_en',
                 _type: 'pricingCalculator',
                 sectionTag: 'CALCULATE YOUR SUBSCRIPTION',
                 sectionTitle: 'Calculate your subscription',
-                sectionSubtitle: 'Manage up to 100 contracts from €173.76 per month (includes 1 user).'
+                sectionSubtitle:
+                    'Manage up to 100 contracts from €173.76 per month (includes 1 user).',
             },
             {
                 _key: 'strippenkaarten_section_en',
                 _type: 'featuresList',
                 sectionTag: 'FLEXIBLE SUPPORT',
-                sectionTitle: 'Prepaid Support Packs: The most cost-effective support',
-                sectionSubtitle: 'All emlinked services and support can easily be paid using our prepaid support packs. Available in 5-hour, 10-hour, and 20-hour packs. The larger the pack, the higher the hourly discount.',
+                sectionTitle:
+                    'Prepaid Support Packs: The most cost-effective support',
+                sectionSubtitle:
+                    'All emlinked services and support can easily be paid using our prepaid support packs. Available in 5-hour, 10-hour, and 20-hour packs. The larger the pack, the higher the hourly discount.',
                 features: [
                     {
                         _key: 'sk_5u_en',
                         title: '5 Hour Support Pack (€ 550,-)',
-                        description: 'Ideal for quick questions, fast configuration, and light support.',
-                        icon: 'check'
+                        description:
+                            'Ideal for quick questions, fast configuration, and light support.',
+                        icon: 'check',
                     },
                     {
                         _key: 'sk_10u_en',
                         title: '10 Hour Support Pack (€ 899,-)',
-                        description: 'Perfect for periodic guidance and ongoing setup assistance.',
-                        icon: 'check'
+                        description:
+                            'Perfect for periodic guidance and ongoing setup assistance.',
+                        icon: 'check',
                     },
                     {
                         _key: 'sk_20u_en',
                         title: '20 Hour Support Pack (€ 1.599,-)',
-                        description: 'The most cost-effective option for comprehensive support, projects, and tailored training.',
-                        icon: 'check'
-                    }
-                ]
+                        description:
+                            'The most cost-effective option for comprehensive support, projects, and tailored training.',
+                        icon: 'check',
+                    },
+                ],
             },
             {
                 _key: 'cta_prijzen_en',
                 _type: 'ctaBanner',
                 tag: 'CONSULTATION',
                 title: 'Questions about rates or a specific portfolio?',
-                subtitle: 'Our property management specialists are happy to advise you on the best setup for your organization.',
+                subtitle:
+                    'Our property management specialists are happy to advise you on the best setup for your organization.',
                 buttonLabel: 'Schedule a consultation',
-                buttonLink: '/en/contact'
-            }
-        ]
+                buttonLink: '/en/contact',
+            },
+        ],
     };
 
     try {

@@ -118,6 +118,8 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
         }
         translatedPath = translatedPath.replace('/over-ons', '/about-us');
         translatedPath = translatedPath.replace('/nieuws', '/news');
+        translatedPath = translatedPath.replace('/referenties', '/references');
+        translatedPath = translatedPath.replace('/prijzen', '/pricing');
 
         return `/en${translatedPath === '/' ? '' : translatedPath}`;
     };

@@ -148,8 +148,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                   title: 'Partner software',
                   path: '/partners-software',
               },
-              { _type: 'menuLink', title: 'Pricing', path: '/prijzen' },
-              { _type: 'menuLink', title: 'References', path: '/referenties' },
+              { _type: 'menuLink', title: 'Pricing', path: '/pricing' },
+              { _type: 'menuLink', title: 'References', path: '/references' },
               { _type: 'menuLink', title: 'About us', path: '/over-ons' },
               { _type: 'menuLink', title: 'News', path: '/nieuws' },
           ]
@@ -294,6 +294,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         }
         translatedPath = translatedPath.replace('/over-ons', '/about-us');
         translatedPath = translatedPath.replace('/nieuws', '/news');
+        translatedPath = translatedPath.replace('/referenties', '/references');
+        translatedPath = translatedPath.replace('/prijzen', '/pricing');
 
         return `/en${translatedPath === '/' ? '' : translatedPath}`;
     };
@@ -315,6 +317,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             path = path.replace('/solutions/', '/apps/');
             path = path.replace('/over-ons', '/about-us');
             path = path.replace('/nieuws', '/news');
+            path = path.replace('/referenties', '/references');
+            path = path.replace('/prijzen', '/pricing');
 
             if (!path.startsWith('/en')) {
                 path = `/en${path === '/' ? '' : path}`;
@@ -344,6 +348,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             path = path.replace('/solutions', '/apps');
             path = path.replace('/about-us', '/over-ons');
             path = path.replace('/news', '/nieuws');
+            path = path.replace('/references', '/referenties');
+            path = path.replace('/pricing', '/prijzen');
             return path;
         }
     };

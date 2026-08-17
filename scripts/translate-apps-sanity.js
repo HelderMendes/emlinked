@@ -118,7 +118,7 @@ async function translateAppsPage() {
             buttonText: 'Request a free live demo',
             buttonLink: '#demo',
             secondaryButtonText: 'View pricing & plans ➔',
-            secondaryButtonLink: '/en/prijzen',
+            secondaryButtonLink: '/en/pricing',
         },
     ];
 

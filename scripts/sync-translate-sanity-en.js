@@ -141,7 +141,7 @@ function updateHref(url) {
     if (!url || typeof url !== 'string') return url;
     if (url === '/contact') return '/en/contact';
     if (url === '/apps') return '/en/apps';
-    if (url === '/prijzen') return '/en/prijzen';
+    if (url === '/prijzen') return '/en/pricing';
     if (url === '/referenties') return '/en/referenties';
     if (url === '/over-ons') return '/en/over-ons';
     if (url === '/box3-check') return '/en/box3-check';

@@ -59,7 +59,7 @@ export async function generateMetadata({
     const fallbackDescription = isEn
         ? 'Easily calculate the monthly costs for your property management. Transparent subscription based on contract count, with flexible scaling.'
         : 'Bereken eenvoudig de maandelijkse kosten voor jouw vastgoedbeheer. Transparant abonnement gebaseerd op het aantal contracten, met flexibele opschaling.';
-    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/prijzen' : '/prijzen'}`;
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/pricing' : '/prijzen'}`;
 
     return buildMetadata({
         seo: pageData?.seo,

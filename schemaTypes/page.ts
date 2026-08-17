@@ -217,24 +217,78 @@ export const page = defineType({
                                     fields: [
                                         defineField({
                                             name: 'step',
-                                            title: 'Step Number (e.g. 01)',
+                                            title: 'Case Label / Step (e.g. CASE 1: VASTGOEDBEHEER ROTTERDAM)',
                                             type: 'string',
                                         }),
                                         defineField({
                                             name: 'title',
-                                            title: 'Step Title',
+                                            title: 'Headline Title',
                                             type: 'string',
                                         }),
                                         defineField({
                                             name: 'text',
-                                            title: 'Step Text / Description',
+                                            title: 'Main Description Paragraph',
                                             type: 'text',
-                                            rows: 2,
+                                            rows: 3,
                                         }),
                                         defineField({
                                             name: 'feature',
-                                            title: 'Feature Tagline',
+                                            title: 'Metric Value / Highlight Title (e.g. 5 werkdagen → 4 uur)',
                                             type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'metricLabel',
+                                            title: 'Metric Label / Subtitle (e.g. Maandafsluiting Verkort)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'quote',
+                                            title: 'Customer Testimonial Quote',
+                                            type: 'text',
+                                            rows: 3,
+                                        }),
+                                        defineField({
+                                            name: 'author',
+                                            title: 'Author Name (e.g. Levi Bosboom)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'role',
+                                            title: 'Author Role / Function (e.g. Eigenaar - Vastgoedbeheer Rotterdam)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'company',
+                                            title: 'Company Name (e.g. Vastgoedbeheer Rotterdam)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'photo',
+                                            title: 'Author Photo Avatar (Sanity Image)',
+                                            type: 'image',
+                                            options: { hotspot: true },
+                                        }),
+                                        defineField({
+                                            name: 'photoPath',
+                                            title: 'Author Photo Image Path (Fallback string)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'logo',
+                                            title: 'Company Logo Image (Sanity Image)',
+                                            type: 'image',
+                                            options: { hotspot: true },
+                                        }),
+                                        defineField({
+                                            name: 'logoPath',
+                                            title: 'Company Logo Image Path (Fallback string)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'tags',
+                                            title: 'Technical Specification Tags',
+                                            type: 'array',
+                                            of: [{ type: 'string' }],
                                         }),
                                     ],
                                 }),

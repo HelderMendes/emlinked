@@ -1,20 +1,18 @@
 import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
 import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl } from '@/sanity/image';
 import {
-    CheckCircle2,
     ArrowRight,
     Building2,
-    TrendingUp,
     ShieldCheck,
     Check,
     Layers,
@@ -22,6 +20,7 @@ import {
     Quote,
     Award,
     Sparkles,
+    TrendingUp,
 } from 'lucide-react';
 
 interface ReferentiesPageProps {
@@ -31,7 +30,7 @@ interface ReferentiesPageProps {
 async function getSanityPageData(locale: string) {
     try {
         return await client.fetch(
-            `*[_type == "page" && (slug.current == "/referenties" || slug.current == "referenties") && language == $locale][0] {
+            `*[_type == "page" && (slug.current == "/referenties" || slug.current == "referenties" || slug.current == "/references" || slug.current == "references" || slug.current == "customer-cases") && language == $locale][0] {
                 title,
                 pageBlocks[] {
                     ...,
@@ -110,7 +109,7 @@ export async function generateMetadata({
     const fallbackDescription = isEn
         ? 'Discover what customers say about emlinked: Vastgoedbeheer Rotterdam, Van Overhagen Vastgoed, M2 Capital, and Baetland Vastgoed. Read all 5 case studies.'
         : 'Ontdek wat klanten zeggen over emlinked: Vastgoedbeheer Rotterdam, Van Overhagen Vastgoed, M2 Capital en Baetland Vastgoed. Lees alle 5 klantcases.';
-    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/referenties' : '/referenties'}`;
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/references' : '/referenties'}`;
 
     return buildMetadata({
         seo: pageData?.seo,
@@ -159,24 +158,21 @@ export default async function ReferentiesPage({
         ctaBlock?.imagePath || '/emlinked/referenties/adviesgesprek.jpg',
     );
 
-    // Dynamic case items from Sanity or fallback
+    // Dynamic case items directly from Sanity CMS
     const caseItems = casesBlock?.items || [];
 
-    // Partner Integration Logos (dynamically sourced from Sanity CMS ecosystemBlock)
-    const partnerLogos = ecosystemBlock?.items?.length
-        ? ecosystemBlock.items.map((item: any) => ({
-              name: item.name || item.title || item.partnerName,
-              tag: item.tag || item.badge || item.category || 'Integration',
-          }))
-        : [
-              { name: 'Microsoft Business Central', tag: 'ERP Native' },
-              { name: 'Exact Software', tag: 'Financieel' },
-              { name: 'Twinfield', tag: 'Boekhouding' },
-              { name: 'AFAS Software', tag: 'ERP Integration' },
-              { name: 'Mollie Payments', tag: 'Betalingen' },
-          ];
+    // Partner Ecosystem Items from Sanity CMS
+    const partnerItems = ecosystemBlock?.items || [];
 
-    // Structured JSON-LD Data for CollectionPage & Reviews
+    // Why Choose Us Bullets from Sanity CMS
+    const whyBullets = whyBlock?.bullets || [];
+    const whyIcons = [
+        <Building2 key='b' className='w-5 h-5' />,
+        <Check key='c' className='w-5 h-5' />,
+        <ShieldCheck key='s' className='w-5 h-5' />,
+    ];
+
+    // Structured JSON-LD Data for CollectionPage
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
@@ -190,53 +186,13 @@ export default async function ReferentiesPage({
             (isEn
                 ? 'Discover what customers say about emlinked in 5 real estate case studies.'
                 : 'Ontdek wat klanten zeggen over emlinked in 5 praktijkcases.'),
-        url: `${DEFAULT_DOMAIN}${isEn ? '/en/referenties' : '/referenties'}`,
+        url: `${DEFAULT_DOMAIN}${isEn ? '/en/references' : '/referenties'}`,
         publisher: {
             '@type': 'Organization',
             name: 'emlinked',
             url: DEFAULT_DOMAIN,
         },
     };
-
-    const defaultWhyBullets = [
-        {
-            icon: <Building2 className='w-5 h-5' />,
-            title: isEn ? 'Sector-Specific Depth' : 'Sectorspecifieke diepgang',
-            text: isEn
-                ? 'Not generic accounting software with a real estate label, but solutions engineered from line one for complex real estate challenges.'
-                : 'Geen generieke administratiesoftware met een vastgoedlabel, maar oplossingen die vanaf de eerste regel code zijn ontworpen voor complexe vastgoedvraagstukken.',
-        },
-        {
-            icon: <Check className='w-5 h-5' />,
-            title: isEn
-                ? 'Transparent Implementation'
-                : 'Transparante implementatie',
-            text: isEn
-                ? 'Predictable timelines and pragmatic guidance by consultants who understand both IT and real estate accounting.'
-                : 'Voorspelbare doorlooptijden en pragmatische begeleiding door consultants die zowel IT als vastgoedboekhouding begrijpen.',
-        },
-        {
-            icon: <ShieldCheck className='w-5 h-5' />,
-            title: isEn
-                ? 'Future-Proof Architecture'
-                : 'Toekomstvaste architectuur',
-            text: isEn
-                ? 'Continuous compliance with regulations around rental management, CPI indexation, and fiscal reporting.'
-                : 'Continue compliance met wet- en regelgeving rondom verhuur, CPI-indexering en fiscale verantwoording.',
-        },
-    ];
-
-    const whyBulletsToRender = whyBlock?.bullets?.length
-        ? whyBlock.bullets.map((b: any, idx: number) => ({
-              icon: defaultWhyBullets[idx % defaultWhyBullets.length].icon,
-              title: b.bold
-                  ? b.bold.replace(':', '')
-                  : defaultWhyBullets[idx % defaultWhyBullets.length].title,
-              text:
-                  b.text ||
-                  defaultWhyBullets[idx % defaultWhyBullets.length].text,
-          }))
-        : defaultWhyBullets;
 
     return (
         <div className='flex flex-col min-h-screen bg-background text-foreground'>
@@ -325,8 +281,8 @@ export default async function ReferentiesPage({
                 </div>
             </HeroSection>
 
-            {/* ── SECTION 3: ALL 5 KLANTCASES & SUCCESVERHALEN ── */}
-            <section className='px-6 py-20 bg-background text-foreground border-b border-black/10 relative z-10'>
+            {/* ── SECTION 2: ALL 5 KLANTCASES & SUCCESVERHALEN ── */}
+            <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-foreground border-b border-black/10 relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-16'>
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
                         <div className='flex justify-center mb-1'>
@@ -349,98 +305,23 @@ export default async function ReferentiesPage({
 
                     <div className='space-y-12'>
                         {caseItems.map((c: any, index: number) => {
-                            const isEven = index % 2 === 0;
-
-                            // Fallback data mapping per case study index
-                            const defaultCaseDetails = [
-                                {
-                                    photo: '/emlinked/referenties/Levi-Bosboom.png',
-                                    logo: '/emlinked/referenties/uitvoeringlogoVGBRgrootdefkopie-1920w.jpg-q18f9wtaq1lzgm2gwkdj3ckc22h78mokvvl2hegfmo.webp',
-                                    company: 'Vastgoedbeheer Rotterdam',
-                                    metric: '5 werkdagen → 4 uur',
-                                    metricLabel: 'Maandafsluiting',
-                                    tags: [
-                                        'CPI Indexatie Automation',
-                                        'Business Central Native',
-                                        'Facturatie Geautomatiseerd',
-                                        '100% Audit-Proof',
-                                    ],
-                                },
-                                {
-                                    photo: '/emlinked/referenties/Angelique.png',
-                                    logo: '/emlinked/referenties/van-overhagen_logo.jpg',
-                                    company: 'Van Overhagen Vastgoed B.V.',
-                                    metric: '99,4% Geautomatiseerd',
-                                    metricLabel: 'Proactief Contractbeheer',
-                                    tags: [
-                                        'Geen Schaduwbestanden',
-                                        'Bankafschriften Sync',
-                                        'Direct Boekhoudkundig Inzicht',
-                                        'Support Responstijd < 1 uur',
-                                    ],
-                                },
-                                {
-                                    photo: '/hero/MichelDeWaal.jpg',
-                                    logo: '/emlinked/referenties/M2-Capital-scaled-q18f9yozgvbbg98kmfueb0zrfvy5vs9ejmm8ohkbo8.jpg',
-                                    company: 'M2 Capital Real Estate B.V.',
-                                    metric: '100% Realtime Portefeuille-Grip',
-                                    metricLabel: 'Commercieel Beheer',
-                                    tags: [
-                                        'Multi-Entity Beheer',
-                                        'Rendementsrapportages',
-                                        'Huurindexatie Automation',
-                                        'Snel & Meedenkende Support',
-                                    ],
-                                },
-                                {
-                                    photo: '/emlinked/referenties/Sander-Bot.png',
-                                    logo: '/emlinked/referenties/Unknown-q18f9r675burerlhe91bxaavcb3tp2dlbvom61e9ds.png',
-                                    company: 'Baetland Vastgoed B.V.',
-                                    metric: '0 Spijt Choice Guarantee',
-                                    metricLabel: 'Native Cloud Architecture',
-                                    tags: [
-                                        'Device-Onafhankelijk',
-                                        'Grootboek Synchronisatie',
-                                        'Geen Handmatige Exports',
-                                        'Microsoft Ecosystem',
-                                    ],
-                                },
-                                {
-                                    photo: '/emlinked/referenties/beheerders_referencties_hero-illustration.jpg',
-                                    logo: '/emlinked/referenties/avatar_partners.png',
-                                    company: 'Asset Management & Controlling',
-                                    metric: 'Duizenden Contracten / Maand',
-                                    metricLabel:
-                                        'Continuous Auditing Compliance',
-                                    tags: [
-                                        'SOX & VAT Compliance',
-                                        'Multi-Currency Subledgers',
-                                        'Automated Cashflow Sync',
-                                        'Enterprise Security',
-                                    ],
-                                },
-                            ];
-
-                            const details =
-                                defaultCaseDetails[
-                                    index % defaultCaseDetails.length
-                                ];
                             const photoUrl = getImageUrl(
                                 c.photo || c.image,
-                                c.imagePath || details.photo,
+                                c.photoPath || c.imagePath,
                             );
                             const logoUrl = getImageUrl(
                                 c.logo,
-                                c.logoPath || details.logo,
+                                c.logoPath,
                             );
-                            const companyName = c.company || details.company;
-                            const metricVal = c.feature || details.metric;
-                            const tags = c.tags || details.tags;
+                            const companyName = c.company || c.step || `Case ${index + 1}`;
+                            const metricVal = c.feature;
+                            const metricLbl = c.metricLabel || (isEn ? 'Key Result' : 'Kernresultaat');
+                            const tags = c.tags || [];
 
                             return (
                                 <div
                                     key={c._key || index}
-                                    className='rounded-xl border border-black/10 bg-card p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-amber/40 transition-all duration-300'
+                                    className='rounded-xl border border-black/10 bg-white/80 p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-amber/40 transition-all duration-300'
                                 >
                                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 items-center'>
                                         <div className='lg:col-span-7 space-y-6'>
@@ -450,7 +331,7 @@ export default async function ReferentiesPage({
                                                         src={photoUrl}
                                                         alt={
                                                             c.author ||
-                                                            'Emlinked Customer Case'
+                                                            companyName
                                                         }
                                                         width={80}
                                                         height={80}
@@ -478,9 +359,7 @@ export default async function ReferentiesPage({
                                                     <Zap className='w-7 h-7 text-amber shrink-0' />
                                                     <div>
                                                         <span className='text-[11px] font-mono font-bold text-amber uppercase block mb-1'>
-                                                            {
-                                                                details.metricLabel
-                                                            }
+                                                            {metricLbl}
                                                         </span>
                                                         <span className='text-sm font-bold'>
                                                             {metricVal}
@@ -496,8 +375,8 @@ export default async function ReferentiesPage({
                                                     {c.quote}
                                                     {c.author && (
                                                         <footer className='text-xs font-bold text-amber not-italic mt-2'>
-                                                            — {c.author},{' '}
-                                                            {c.role}
+                                                            — {c.author}
+                                                            {c.role ? `, ${c.role}` : ''}
                                                         </footer>
                                                     )}
                                                 </blockquote>
@@ -514,14 +393,14 @@ export default async function ReferentiesPage({
                                                     </span>
                                                     <span className='px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold uppercase flex items-center gap-1.5 shrink-0'>
                                                         <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse' />
-                                                        Geverifieerd
+                                                        {isEn ? 'Verified' : 'Geverifieerd'}
                                                     </span>
                                                 </div>
 
                                                 {/* Logo */}
                                                 <div className='flex flex-col items-center justify-center -mt-6'>
                                                     {logoUrl ? (
-                                                        <div className='relative my-3 w-full bg-transparent rounded-xl my-0.5-2 flex items-center justify-center shadow-lg group-hover:bg-transparent transition-all duration-300'>
+                                                        <div className='relative my-3 w-full bg-transparent rounded-xl flex items-center justify-center shadow-lg group-hover:bg-transparent transition-all duration-300'>
                                                             <Image
                                                                 src={logoUrl}
                                                                 alt={
@@ -533,14 +412,14 @@ export default async function ReferentiesPage({
                                                             />
                                                         </div>
                                                     ) : (
-                                                        <div className='text-xl font-bold text-amber font-mono text-center bg-red-600'>
+                                                        <div className='text-xl font-bold text-amber font-mono text-center py-6'>
                                                             {companyName}
                                                         </div>
                                                     )}
                                                     <div className='flex items-center justify-between w-full text-[11px] font-mono'>
                                                         <span className='text-slate-300 font-semibold truncate'>
                                                             {c.author ||
-                                                                'Geverifieerde Klant'}
+                                                                (isEn ? 'Verified Customer' : 'Geverifieerde Klant')}
                                                         </span>
                                                         <span className='text-amber font-bold shrink-0 ml-2'>
                                                             ERP Native
@@ -549,34 +428,36 @@ export default async function ReferentiesPage({
                                                 </div>
 
                                                 {/* Case-Specific Technical Highlights */}
-                                                <div className='space-y-2 pt-1'>
-                                                    <div className='text-[11px] font-mono text-white/60 uppercase tracking-wider flex items-center justify-between'>
-                                                        <span>
-                                                            Specificaties & Tags
-                                                        </span>
-                                                        <span className='text-amber font-bold'>
-                                                            Business Central
-                                                        </span>
+                                                {tags.length > 0 && (
+                                                    <div className='space-y-2 pt-1'>
+                                                        <div className='text-[11px] font-mono text-white/60 uppercase tracking-wider flex items-center justify-between'>
+                                                            <span>
+                                                                {isEn ? 'Specifications & Tags' : 'Specificaties & Tags'}
+                                                            </span>
+                                                            <span className='text-amber font-bold'>
+                                                                Business Central
+                                                            </span>
+                                                        </div>
+                                                        <div className='grid grid-cols-2 gap-2 text-xs font-medium text-white/90'>
+                                                            {tags.map(
+                                                                (
+                                                                    tag: string,
+                                                                    tIdx: number,
+                                                                ) => (
+                                                                    <div
+                                                                        key={tIdx}
+                                                                        className='flex items-center gap-1.5 bg-white/5 px-2.5 py-1.5 rounded-lg border border-white/10 hover:border-amber/30 transition-colors'
+                                                                    >
+                                                                        <Check className='w-3.5 h-3.5 text-amber shrink-0' />
+                                                                        <span className='truncate text-[11px]'>
+                                                                            {tag}
+                                                                        </span>
+                                                                    </div>
+                                                                ),
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                    <div className='grid grid-cols-2 gap-2 text-xs font-medium text-white/90'>
-                                                        {tags.map(
-                                                            (
-                                                                tag: string,
-                                                                tIdx: number,
-                                                            ) => (
-                                                                <div
-                                                                    key={tIdx}
-                                                                    className='flex items-center gap-1.5 bg-white/5 px-2.5 py-1.5 rounded-lg border border-white/10 hover:border-amber/30 transition-colors'
-                                                                >
-                                                                    <Check className='w-3.5 h-3.5 text-amber shrink-0' />
-                                                                    <span className='truncate text-[11px]'>
-                                                                        {tag}
-                                                                    </span>
-                                                                </div>
-                                                            ),
-                                                        )}
-                                                    </div>
-                                                </div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -587,7 +468,7 @@ export default async function ReferentiesPage({
                 </div>
             </section>
 
-            {/* ── SECTION 4: ONZE PARTNERS & ECOSYSTEEM (Dark Navy Section) ── */}
+            {/* ── SECTION 3: ONZE PARTNERS & ECOSYSTEEM (Dark Navy Section) ── */}
             <section className='px-6 py-20 bg-texture-navy text-white border-b border-white/10 relative z-10 overflow-hidden'>
                 <div className='max-w-7xl mx-auto space-y-12 text-center relative z-10'>
                     <div className='max-w-3xl mx-auto space-y-4'>
@@ -595,14 +476,14 @@ export default async function ReferentiesPage({
                             <Layers className='w-3.5 h-3.5 text-amber' />
                             {ecosystemBlock?.badge ||
                                 (isEn
-                                    ? 'PARTNER ECOSYSTEM & INTEGRATIONS'
+                                    ? 'OUR PARTNERS & ECOSYSTEM'
                                     : 'ONZE PARTNERS & ECOSYSTEEM')}
                         </span>
 
                         <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-white'>
                             {ecosystemBlock?.title ||
                                 (isEn
-                                    ? 'Certified Integrations & Technological Synergy'
+                                    ? 'Certified Integrations & Tech Synergies'
                                     : 'Gecertificeerde integraties & technologische synergie')}
                         </h2>
 
@@ -615,25 +496,27 @@ export default async function ReferentiesPage({
                     </div>
 
                     {/* Single Horizontal Card Container with Vertical Dividers (Dark Theme Negative Pattern) */}
-                    <div className='bg-slate-900/80 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-md overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 divide-y sm:divide-y-0 md:divide-x divide-white/10 text-center max-w-7xl mx-auto py-6'>
-                        {partnerLogos.map((p: any, idx: number) => (
-                            <div
-                                key={idx}
-                                className='px-6 flex flex-col items-center justify-center gap-2 group hover:bg-white/5 transition-colors duration-300'
-                            >
-                                <span className='text-xs font-mono font-bold text-amber uppercase tracking-wider'>
-                                    {p.tag}
-                                </span>
-                                <span className='text-sm md:text-base text-white/80 text-center group-hover:text-amber transition-colors leading-snug'>
-                                    {p.name}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
+                    {partnerItems.length > 0 && (
+                        <div className='bg-slate-900/80 rounded-2xl border border-white/10 shadow-xl backdrop-blur-md overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 divide-y sm:divide-y-0 md:divide-x divide-white/10 text-center max-w-7xl mx-auto py-6'>
+                            {partnerItems.map((p: any, idx: number) => (
+                                <div
+                                    key={p._key || idx}
+                                    className='px-6 flex flex-col items-center justify-center gap-2 group hover:bg-white/5 transition-colors duration-300'
+                                >
+                                    <span className='text-xs font-mono font-bold text-amber uppercase tracking-wider'>
+                                        {p.tag || p.category || 'Integration'}
+                                    </span>
+                                    <span className='text-sm md:text-base text-white/80 text-center group-hover:text-amber transition-colors leading-snug'>
+                                        {p.name || p.title}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </section>
 
-            {/* ── SECTION 5: WAAROM MARKTLEIDERS KIEZEN VOOR EMLINKED ── */}
+            {/* ── SECTION 4: WAAROM MARKTLEIDERS KIEZEN VOOR EMLINKED ── */}
             <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] border-b border-black/10 text-foreground relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-12'>
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
@@ -641,43 +524,50 @@ export default async function ReferentiesPage({
                             <TrendingUp className='w-3.5 h-3.5 text-amber' />
                             {whyBlock?.tag ||
                                 (isEn
-                                    ? 'WHY MARKET LEADERS CHOOSE EMLINKED'
+                                    ? 'WHY LEADERS CHOOSE EMLINKED'
                                     : 'WAAROM MARKTLEIDERS KIEZEN VOOR EMLINKED')}
                         </span>
 
                         <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-darkblue dark:text-white'>
                             {whyBlock?.title ||
                                 (isEn
-                                    ? 'Designed Specifically for Complex Real Estate Portfolios'
+                                    ? 'Designed for Complex Portfolios'
                                     : 'Ontworpen voor complexe vastgoedportefeuilles')}
                         </h2>
                     </div>
 
                     {/* Single Horizontal Card Container with Vertical Dividers (Box3 Style) */}
-                    <div className='bg-white/80 rounded-xl border border-black/10 shadow-sm p-5 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
-                        {whyBulletsToRender.map((bItem: any, idx: number) => (
-                            <div
-                                key={idx}
-                                className='px-4 py-5 md:py-2 md:px-6 flex flex-col items-start justify-start text-left space-y-2 group'
-                            >
-                                <div className='flex items-center gap-3 w-full'>
-                                    <div className='w-10 h-10 rounded-full border-2 border-amber bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-amber-hover transition-all duration-300 text-black'>
-                                        {bItem.icon}
+                    {whyBullets.length > 0 && (
+                        <div className='bg-white/80 rounded-xl border border-black/10 shadow-sm p-5 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
+                            {whyBullets.map((bItem: any, idx: number) => {
+                                const titleStr = bItem.bold
+                                    ? bItem.bold.replace(/:$/, '')
+                                    : bItem.title || '';
+                                return (
+                                    <div
+                                        key={bItem._key || idx}
+                                        className='px-4 py-5 md:py-2 md:px-6 flex flex-col items-start justify-start text-left space-y-2 group'
+                                    >
+                                        <div className='flex items-center gap-3 w-full'>
+                                            <div className='w-10 h-10 rounded-full border-2 border-amber bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-amber-hover transition-all duration-300 text-black'>
+                                                {whyIcons[idx % whyIcons.length]}
+                                            </div>
+                                            <h3 className='text-sm md:text-base font-bold text-[#060e32] dark:text-white text-left leading-tight'>
+                                                {titleStr}
+                                            </h3>
+                                        </div>
+                                        <p className='text-xs md:text-sm text-[#060e32]/75 dark:text-muted-foreground leading-relaxed font-light text-left'>
+                                            {bItem.text}
+                                        </p>
                                     </div>
-                                    <h3 className='text-sm md:text-base font-bold text-[#060e32] dark:text-white text-left leading-tight'>
-                                        {bItem.title}
-                                    </h3>
-                                </div>
-                                <p className='text-xs md:text-sm text-[#060e32]/75 dark:text-muted-foreground leading-relaxed font-light text-left'>
-                                    {bItem.text}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
                 </div>
             </section>
 
-            {/* ── SECTION 6: PRE-FOOTER CTA (Informal Tone) ── */}
+            {/* ── SECTION 5: PRE-FOOTER CTA ── */}
             <section
                 className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'
                 id='contact'
