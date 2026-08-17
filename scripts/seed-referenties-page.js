@@ -40,8 +40,7 @@ async function seedReferentiesPage() {
                     'Ontdek hoe vastgoedbeheerders, beleggers en administratiekantoren hun operationele efficiëntie verhogen met de gespecialiseerde oplossingen van emlinked native in Microsoft Business Central.',
                 ctaLabel: 'Plan een adviesgesprek',
                 ctaLink: '#contact',
-                imagePath:
-                    '/emlinked/referenties/Levi-Bosboom01-e1670425220983.png',
+                imagePath: '/emlinked/referenties/Levi-Bosboom.png',
             },
             {
                 _key: 'trust-bar-referenties-nl',
@@ -77,8 +76,7 @@ async function seedReferentiesPage() {
                         quote: '“Emlinked is de schakel tussen de beheerder en het vastgoed. Wij zijn zeer enthousiast over emlinked en raden dit ook zeker aan andere partijen aan.”',
                         author: 'Levi Bosboom',
                         role: 'Eigenaar - Vastgoedbeheer Rotterdam',
-                        imagePath:
-                            '/emlinked/referenties/Levi-Bosboom01-e1670425220983.png',
+                        imagePath: '/emlinked/referenties/Levi-Bosboom.png',
                         logoPath:
                             '/emlinked/referenties/uitvoeringlogoVGBRgrootdefkopie-1920w.jpg-q18f9wtaq1lzgm2gwkdj3ckc22h78mokvvl2hegfmo.webp',
                     },
@@ -94,7 +92,7 @@ async function seedReferentiesPage() {
                         role: 'Vastgoedbeheerder - Van Overhagen Vastgoed B.V.',
                         imagePath: '/emlinked/referenties/Angelique.png',
                         logoPath:
-                            '/emlinked/referenties/Logo-van-overhagen-lr-maart-300x106-1-1-q18f7dmyb4566fqwoyypvhkmfoylhzmm7cayxk7mbg.jpg',
+                            '/emlinked/referenties/van-overhagen_logo.jpg',
                     },
                     {
                         _key: 'case-3-michel',
@@ -225,8 +223,7 @@ async function seedReferentiesPage() {
                     'Discover how property managers, investors, and accounting firms scale operational efficiency with specialized emlinked solutions native in Microsoft Business Central.',
                 ctaLabel: 'Schedule a consultation',
                 ctaLink: '#contact',
-                imagePath:
-                    '/emlinked/referenties/Levi-Bosboom01-e1670425220983.png',
+                imagePath: '/emlinked/referenties/Levi-Bosboom.png',
             },
             {
                 _key: 'trust-bar-referenties-en',
@@ -262,8 +259,7 @@ async function seedReferentiesPage() {
                         quote: '“Emlinked is the bridge between property managers and real estate. We are highly enthusiastic about emlinked.”',
                         author: 'Levi Bosboom',
                         role: 'Owner - Vastgoedbeheer Rotterdam',
-                        imagePath:
-                            '/emlinked/referenties/Levi-Bosboom01-e1670425220983.png',
+                        imagePath: '/emlinked/referenties/Levi-Bosboom.png',
                         logoPath:
                             '/emlinked/referenties/uitvoeringlogoVGBRgrootdefkopie-1920w.jpg-q18f9wtaq1lzgm2gwkdj3ckc22h78mokvvl2hegfmo.webp',
                     },
@@ -279,7 +275,7 @@ async function seedReferentiesPage() {
                         role: 'Property Manager - Van Overhagen Vastgoed B.V.',
                         imagePath: '/emlinked/referenties/Angelique.png',
                         logoPath:
-                            '/emlinked/referenties/Logo-van-overhagen-lr-maart-300x106-1-1-q18f7dmyb4566fqwoyypvhkmfoylhzmm7cayxk7mbg.jpg',
+                            '/emlinked/referenties/van-overhagen_logo.jpg',
                     },
                     {
                         _key: 'case-3-michel-en',

@@ -39,8 +39,7 @@ async function run() {
     console.log('Fetched hero block:', heroBlock);
     const heroImageUrl = getImageUrl(
         heroBlock?.image || heroBlock?.heroImage,
-        heroBlock?.imagePath ||
-            '/emlinked/referenties/Levi-Bosboom01-e1670425220983.png',
+        heroBlock?.imagePath || '/emlinked/referenties/Levi-Bosboom.png',
     );
     console.log('Resolved heroImageUrl:', heroImageUrl);
 }

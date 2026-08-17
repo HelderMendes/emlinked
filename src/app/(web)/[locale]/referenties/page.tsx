@@ -156,7 +156,7 @@ export default async function ReferentiesPage({
 
     const ctaImageUrl = getImageUrl(
         ctaBlock?.image,
-        ctaBlock?.imagePath || '/emlinked/referenties/Angelique.png',
+        ctaBlock?.imagePath || '/emlinked/referenties/adviesgesprek.jpg',
     );
 
     // Dynamic case items from Sanity or fallback
@@ -354,7 +354,7 @@ export default async function ReferentiesPage({
                             // Fallback data mapping per case study index
                             const defaultCaseDetails = [
                                 {
-                                    photo: '/emlinked/referenties/Levi-Bosboom01-e1670425220983.png',
+                                    photo: '/emlinked/referenties/Levi-Bosboom.png',
                                     logo: '/emlinked/referenties/uitvoeringlogoVGBRgrootdefkopie-1920w.jpg-q18f9wtaq1lzgm2gwkdj3ckc22h78mokvvl2hegfmo.webp',
                                     company: 'Vastgoedbeheer Rotterdam',
                                     metric: '5 werkdagen → 4 uur',
@@ -368,7 +368,7 @@ export default async function ReferentiesPage({
                                 },
                                 {
                                     photo: '/emlinked/referenties/Angelique.png',
-                                    logo: '/emlinked/referenties/Logo-van-overhagen-lr-maart-300x106-1-1-q18f7dmyb4566fqwoyypvhkmfoylhzmm7cayxk7mbg.jpg',
+                                    logo: '/emlinked/referenties/van-overhagen_logo.jpg',
                                     company: 'Van Overhagen Vastgoed B.V.',
                                     metric: '99,4% Geautomatiseerd',
                                     metricLabel: 'Proactief Contractbeheer',
@@ -407,7 +407,7 @@ export default async function ReferentiesPage({
                                 },
                                 {
                                     photo: '/emlinked/referenties/beheerders_referencties_hero-illustration.jpg',
-                                    logo: '/emlinked/referenties/avatar_partners-e1670846473101.png',
+                                    logo: '/emlinked/referenties/avatar_partners.png',
                                     company: 'Asset Management & Controlling',
                                     metric: 'Duizenden Contracten / Maand',
                                     metricLabel:
