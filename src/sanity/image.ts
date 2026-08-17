@@ -3,7 +3,18 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 
 export function getImageUrl(image: any, fallback: string = ''): string {
     if (!image) return fallback;
-    if (typeof image === 'string') return image;
+    if (typeof image === 'string') {
+        if (image.includes('DrieKrachtigeApps_VastgoedbeheerSoftware.png')) {
+            return '/emlinked/apps/vastgoedbeheer.png';
+        }
+        if (image.includes('DrieKrachtigeApps_PaymentSoftware.png')) {
+            return '/emlinked/apps/payment/payment-software-her0.webp';
+        }
+        if (image.includes('/emlinked/home/Huurdersportaal.png')) {
+            return '/emlinked/apps/huurdersportaal.png';
+        }
+        return image;
+    }
 
     // Direct URL if populated via asset->url GROQ query
     if (image?.asset?.url && typeof image.asset.url === 'string') {

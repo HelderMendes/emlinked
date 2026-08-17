@@ -73,7 +73,7 @@ export function VastgoedbeheerSoftwareModule({
 
     const heroImageUrl = getImageUrl(
         heroBlock?.image || heroBlock?.heroImage || doc?.image || doc?.heroImage,
-        heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || '/emlinked/home/DrieKrachtigeApps_VastgoedbeheerSoftware.png',
+        heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || '/emlinked/apps/vastgoedbeheer.png',
     );
 
     // Structured JSON-LD from Sanity or default blueprint fallback
