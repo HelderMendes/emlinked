@@ -795,6 +795,33 @@ export const page = defineType({
                             ],
                         }),
                         defineField({
+                            name: 'items',
+                            title: 'Partner / Ecosystem Items (5 Boxes)',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'name',
+                                            title: 'Partner / Software Name',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'tag',
+                                            title: 'Category Tag (e.g. ERP Native, Financieel)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'badge',
+                                            title: 'Alternative Badge (Optional)',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                        }),
+                        defineField({
                             name: 'trustItems',
                             title: 'Bottom Trust Grid Items',
                             type: 'array',

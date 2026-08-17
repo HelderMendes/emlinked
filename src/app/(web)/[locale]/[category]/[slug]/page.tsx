@@ -92,7 +92,10 @@ async function getSolutionContent(locale: string, slug: string): Promise<any> {
                     noIndex: doc.seo?.noIndex,
                 },
                 badge: doc.badge,
-                heroIcon: typeof doc.heroIcon === 'string' ? doc.heroIcon : 'Building2',
+                heroIcon:
+                    typeof doc.heroIcon === 'string'
+                        ? doc.heroIcon
+                        : 'Building2',
                 title: doc.title,
                 tagline: doc.tagline,
                 description: doc.description,
@@ -107,7 +110,8 @@ async function getSolutionContent(locale: string, slug: string): Promise<any> {
                 proof: doc.proof || [],
                 workflow: (doc.workflow || []).map((w: any) => ({
                     step: w.step,
-                    iconName: typeof w.icon === 'string' ? w.icon : 'CheckCircle2',
+                    iconName:
+                        typeof w.icon === 'string' ? w.icon : 'CheckCircle2',
                     icon: IconMap[w.icon] || CheckCircle2,
                     title: w.title,
                     desc: w.desc,
@@ -674,7 +678,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
             />
 
             {/* ── Social Proof Stats Band ──────────────────────────────── */}
-            <section className='border-b border-border bg-muted/30'>
+            <section className='border-b border-black/20 bg-muted/30'>
                 <div className='mx-auto max-w-5xl px-6 py-10'>
                     <div className='grid grid-cols-3 divide-x divide-border'>
                         {content.proof.map((item: any, idx: number) => (
@@ -692,7 +696,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
             </section>
 
             {/* ── Benefits Checklist ───────────────────────────────────── */}
-            <section className='px-6 py-16 bg-background border-b border-border'>
+            <section className='px-6 py-16 bg-background border-b border-black/20'>
                 <div className='mx-auto max-w-5xl'>
                     <h2 className='text-2xl font-bold text-foreground mb-8 text-center'>
                         {isEn
@@ -713,7 +717,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
             </section>
 
             {/* ── Feature Cards ────────────────────────────────────────── */}
-            <section className='px-6 py-20 bg-card border-b border-border'>
+            <section className='px-6 py-20 bg-card border-b border-black/20'>
                 <div className='mx-auto max-w-5xl'>
                     <h2 className='text-2xl font-bold text-foreground mb-2 text-center'>
                         {isEn ? 'Core features' : 'Kernfunctionaliteiten'}
@@ -729,7 +733,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                             return (
                                 <div
                                     key={idx}
-                                    className='p-6 rounded-xl border border-border bg-background flex flex-col gap-4 hover:shadow-md hover:border-primary/30 transition-all group'
+                                    className='p-6 rounded-xl border border-black/20 bg-background flex flex-col gap-4 hover:shadow-md hover:border-primary/30 transition-all group'
                                 >
                                     <div className='h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/15 transition-colors'>
                                         <Icon className='h-5 w-5' />
@@ -749,7 +753,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
 
             {/* ── How It Works (Workflow) ───────────────────────────────── */}
             {'workflow' in content && (
-                <section className='px-6 py-20 bg-background border-b border-border'>
+                <section className='px-6 py-20 bg-background border-b border-black/20'>
                     <div className='mx-auto max-w-5xl'>
                         <h2 className='text-2xl font-bold text-foreground mb-2 text-center'>
                             {isEn ? 'How it works' : 'Hoe werkt het?'}
@@ -802,7 +806,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
 
             {/* ── FAQ ──────────────────────────────────────────────────── */}
             {'faq' in content && (
-                <section className='px-6 py-20 bg-card border-b border-border'>
+                <section className='px-6 py-20 bg-card border-b border-black/20'>
                     <div className='mx-auto max-w-3xl'>
                         <h2 className='text-2xl font-bold text-foreground mb-2 text-center'>
                             {isEn
@@ -839,7 +843,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
             )}
 
             {/* ── Interactive Simulator ────────────────────────────────── */}
-            <section className='px-6 py-20 bg-background border-b border-border'>
+            <section className='px-6 py-20 bg-background border-b border-black/20'>
                 <div className='mx-auto max-w-5xl text-center mb-4'>
                     <span className='inline-flex items-center gap-1.5 rounded-full bg-amber/10 px-3 py-1 text-xs font-semibold tracking-wide text-amber mb-4'>
                         <Star className='h-3 w-3' />
@@ -862,7 +866,9 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                         <div className='flex justify-center mb-1'>
                             <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
                                 <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
-                                {isEn ? 'DE MODULAIRE SUITE' : 'DE MODULAIRE SUITE'}
+                                {isEn
+                                    ? 'DE MODULAIRE SUITE'
+                                    : 'DE MODULAIRE SUITE'}
                             </span>
                         </div>
                         <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.5rem]/12 tracking-tight text-[#060e32] dark:text-white'>
@@ -882,42 +888,62 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                             {
                                 appSlug: 'vastgoedbeheer-software',
                                 normSlug: 'vastgoedbeheer-software',
-                                title: isEn ? 'Property Management' : 'Vastgoedbeheer Software',
-                                badge: isEn ? 'Core Operations' : 'Core Operatie & Admin',
+                                title: isEn
+                                    ? 'Property Management'
+                                    : 'Vastgoedbeheer Software',
+                                badge: isEn
+                                    ? 'Core Operations'
+                                    : 'Core Operatie & Admin',
                                 desc: isEn
                                     ? 'Automated CPI indexations, contract management & ledger posting in Business Central.'
                                     : 'De operationele motor voor je vastgoedportefeuille. Automatiseer contracten en indexaties.',
-                                imagePath: '/emlinked/home/DrieKrachtigeApps_VastgoedbeheerSoftware.png',
-                                iconPath: '/emlinked/apps/vastgoedbeheer_negatief.png',
+                                imagePath:
+                                    '/emlinked/home/DrieKrachtigeApps_VastgoedbeheerSoftware.png',
+                                iconPath:
+                                    '/emlinked/apps/vastgoedbeheer_negatief.png',
                                 appNo: '01',
                             },
                             {
                                 appSlug: 'huurdersportaal',
                                 normSlug: 'huurdersportaal',
-                                title: isEn ? 'Tenant Portal' : 'Huurdersportaal',
-                                badge: isEn ? 'Tenant Self-Service' : 'Self-Service & Communicatie',
+                                title: isEn
+                                    ? 'Tenant Portal'
+                                    : 'Huurdersportaal',
+                                badge: isEn
+                                    ? 'Tenant Self-Service'
+                                    : 'Self-Service & Communicatie',
                                 desc: isEn
                                     ? '24/7 digital tenant self-service for maintenance requests, invoices & communications.'
                                     : 'Verlaag de werkdruk op je beheerteam. 24/7 inzicht in huurfacturen en storingsmeldingen.',
                                 imagePath: '/emlinked/home/Huurdersportaal.png',
-                                iconPath: '/emlinked/apps/huurdersportaal_negatief.png',
+                                iconPath:
+                                    '/emlinked/apps/huurdersportaal_negatief.png',
                                 appNo: '02',
                             },
                             {
                                 appSlug: 'payment-software',
                                 normSlug: 'payment',
-                                title: isEn ? 'Payment Software' : 'Payment Software',
-                                badge: isEn ? 'Financial Automation' : 'Financiële Automatisering',
+                                title: isEn
+                                    ? 'Payment Software'
+                                    : 'Payment Software',
+                                badge: isEn
+                                    ? 'Financial Automation'
+                                    : 'Financiële Automatisering',
                                 desc: isEn
                                     ? 'Automated SEPA Direct Debit collection & real-time PSD2 bank reconciliation.'
-                                    : 'Geen handmatige aflettering meer. SEPA-incasso\'s & bankaflettering direct in ERP.',
-                                imagePath: '/emlinked/home/DrieKrachtigeApps_PaymentSoftware.png',
-                                iconPath: '/emlinked/apps/payment_engine_negatief.png',
+                                    : "Geen handmatige aflettering meer. SEPA-incasso's & bankaflettering direct in ERP.",
+                                imagePath:
+                                    '/emlinked/home/DrieKrachtigeApps_PaymentSoftware.png',
+                                iconPath:
+                                    '/emlinked/apps/payment_engine_negatief.png',
                                 appNo: '03',
                             },
                         ].map((appItem) => {
-                            const normalizedCurrentSlug = slug === 'payment' ? 'payment-software' : slug;
-                            const isCurrentApp = normalizedCurrentSlug === appItem.appSlug || slug === appItem.normSlug;
+                            const normalizedCurrentSlug =
+                                slug === 'payment' ? 'payment-software' : slug;
+                            const isCurrentApp =
+                                normalizedCurrentSlug === appItem.appSlug ||
+                                slug === appItem.normSlug;
                             const targetPath = `/${locale}/apps/${appItem.appSlug}`;
 
                             return (
@@ -964,7 +990,9 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                                                 <span>{appItem.title}</span>
                                                 {isCurrentApp && (
                                                     <span className='text-[10px] font-mono font-bold bg-amber/20 text-amber px-2 py-0.5 rounded uppercase border border-amber/30'>
-                                                        {isEn ? 'Active' : 'Huidige module'}
+                                                        {isEn
+                                                            ? 'Active'
+                                                            : 'Huidige module'}
                                                     </span>
                                                 )}
                                             </h3>
@@ -979,7 +1007,8 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                                         <div className='flex items-center gap-2 text-xs font-semibold text-[#060e32]/85 dark:text-slate-200 truncate'>
                                             <CheckCircle2 className='w-4 h-4 text-amber shrink-0' />
                                             <span className='truncate'>
-                                                {appItem.appSlug === 'huurdersportaal'
+                                                {appItem.appSlug ===
+                                                'huurdersportaal'
                                                     ? 'Self-service'
                                                     : 'Primary operational'}
                                             </span>
@@ -1010,13 +1039,21 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
 
                     <div className='space-y-4 max-w-2xl mx-auto relative z-10'>
                         <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
-                            {isEn ? 'START AUTOMATING TODAY' : 'START MET AUTOMATISEREN'}
+                            {isEn
+                                ? 'START AUTOMATING TODAY'
+                                : 'START MET AUTOMATISEREN'}
                         </span>
                         <h2 className='font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight'>
-                            {content.cta.title || (isEn ? 'Ready to modernize your property software?' : 'Klaar om je vastgoedbeheer te moderniseren?')}
+                            {content.cta.title ||
+                                (isEn
+                                    ? 'Ready to modernize your property software?'
+                                    : 'Klaar om je vastgoedbeheer te moderniseren?')}
                         </h2>
                         <p className='text-sm sm:text-base text-white/80 leading-relaxed font-light'>
-                            {content.cta.desc || (isEn ? 'Experience how Emlinked halves administrative workloads and boosts financial control directly inside Business Central.' : 'Ervaar zelf hoe Emlinked je administratieve lasten halveren en je financiële controle vergroten.')}
+                            {content.cta.desc ||
+                                (isEn
+                                    ? 'Experience how Emlinked halves administrative workloads and boosts financial control directly inside Business Central.'
+                                    : 'Ervaar zelf hoe Emlinked je administratieve lasten halveren en je financiële controle vergroten.')}
                         </p>
                     </div>
 
@@ -1025,14 +1062,24 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                             href={`/${locale}/contact`}
                             className='px-8 py-4 rounded-xl bg-amber hover:bg-amber-hover text-[#060e32] font-bold text-sm flex items-center gap-2 transition-all shadow-xl hover:scale-105'
                         >
-                            <span>{content.cta.primary || (isEn ? 'Request a Demo' : 'Gratis demo aanvragen')}</span>
+                            <span>
+                                {content.cta.primary ||
+                                    (isEn
+                                        ? 'Request a Demo'
+                                        : 'Gratis demo aanvragen')}
+                            </span>
                             <ArrowRight className='h-4 w-4' />
                         </Link>
                         <Link
                             href={`/${locale}/apps`}
                             className='px-7 py-4 rounded-xl bg-transparent border border-white/20 hover:bg-white/10 text-white font-semibold text-sm flex items-center gap-2 transition-all hover:border-amber/40'
                         >
-                            <span>{content.cta.secondary || (isEn ? 'View all 3 apps' : 'Bekijk alle 3 de apps')}</span>
+                            <span>
+                                {content.cta.secondary ||
+                                    (isEn
+                                        ? 'View all 3 apps'
+                                        : 'Bekijk alle 3 de apps')}
+                            </span>
                         </Link>
                     </div>
                 </div>

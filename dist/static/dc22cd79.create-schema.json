@@ -1,7 +1,7 @@
 [
   {
     "options": {
-      "apiVersion": "2025-02-19",
+      "apiVersion": "2024-07-01",
       "languages": [
         {
           "id": "nl",
@@ -97,7 +97,7 @@
     "fields": [
       {
         "options": {
-          "apiVersion": "2025-02-19",
+          "apiVersion": "2024-07-01",
           "languages": [
             {
               "id": "nl",
@@ -185,33 +185,6 @@
         "title": "SEO Description"
       },
       {
-        "validation": [
-          {
-            "level": "error",
-            "rules": [
-              {
-                "flag": "uri",
-                "constraint": {
-                  "options": {
-                    "scheme": [
-                      "/^http$/",
-                      "/^https$/"
-                    ],
-                    "allowRelative": false,
-                    "relativeOnly": false,
-                    "allowCredentials": false
-                  }
-                }
-              }
-            ]
-          }
-        ],
-        "description": "Override the canonical URL. Leave empty to fallback to the default page URL.",
-        "name": "canonical",
-        "type": "url",
-        "title": "Canonical URL"
-      },
-      {
         "options": {
           "hotspot": true
         },
@@ -226,23 +199,6 @@
         "name": "noIndex",
         "type": "boolean",
         "title": "No-Index"
-      },
-      {
-        "rows": 5,
-        "validation": [
-          {
-            "level": "error",
-            "rules": [
-              {
-                "flag": "custom"
-              }
-            ]
-          }
-        ],
-        "description": "Optional raw JSON-LD markup to embed on this page.",
-        "name": "structuredData",
-        "type": "text",
-        "title": "Custom Structured Data (JSON-LD)"
       }
     ],
     "name": "seoFields",
@@ -346,6 +302,7 @@
                 "title": "Urgency Label / Badge"
               },
               {
+                "description": "tekst tussen *deze text is emlinked orange*",
                 "name": "title",
                 "type": "string",
                 "title": "Hero Title"
@@ -389,15 +346,123 @@
                 "title": "Social Proof Text"
               },
               {
+                "fields": [
+                  {
+                    "name": "badge",
+                    "type": "string",
+                    "title": "Badge Tag"
+                  },
+                  {
+                    "name": "title",
+                    "type": "string",
+                    "title": "Card Title"
+                  },
+                  {
+                    "name": "status",
+                    "type": "string",
+                    "title": "Sync Status Text"
+                  }
+                ],
+                "name": "heroCard",
+                "type": "object",
+                "title": "Right Column Hero Preview Card"
+              },
+              {
                 "description": "Relative path to image (e.g., /hero/vastgoedportfeuille_aangifte-klaar.jpg)",
                 "name": "imagePath",
                 "type": "string",
-                "title": "Right Column Image Path (Optional)"
+                "title": "Right Column Image Path (Optional String)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "description": "Upload custom graphic directly to Sanity CDN",
+                "name": "image",
+                "type": "image",
+                "title": "Right Column Image (Sanity Asset Upload)"
               }
             ],
             "type": "object",
             "name": "hero",
             "title": "Hero Block (Client Specs)"
+          },
+          {
+            "fields": [
+              {
+                "name": "badge",
+                "type": "string",
+                "title": "Badge Text"
+              },
+              {
+                "name": "text",
+                "type": "string",
+                "title": "Announcement Text"
+              },
+              {
+                "name": "ctaLabel",
+                "type": "string",
+                "title": "CTA Label"
+              },
+              {
+                "name": "ctaLink",
+                "type": "string",
+                "title": "CTA Link"
+              }
+            ],
+            "type": "object",
+            "name": "announcement",
+            "title": "Urgency Announcement Bar"
+          },
+          {
+            "fields": [
+              {
+                "name": "badge",
+                "type": "string",
+                "title": "Section Badge"
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "title": "Section Title"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "step",
+                        "type": "string",
+                        "title": "Step Number (e.g. 01)"
+                      },
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "title": "Step Title"
+                      },
+                      {
+                        "rows": 2,
+                        "name": "text",
+                        "type": "text",
+                        "title": "Step Text / Description"
+                      },
+                      {
+                        "name": "feature",
+                        "type": "string",
+                        "title": "Feature Tagline"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "items",
+                "type": "array",
+                "title": "Workflow Steps"
+              }
+            ],
+            "type": "object",
+            "name": "workflow",
+            "title": "Solution Workflow Steps"
           },
           {
             "fields": [
@@ -434,16 +499,155 @@
           {
             "fields": [
               {
+                "name": "tag",
+                "type": "string",
+                "title": "Pill Badge Tag (e.g. \"NAADLOZE INTEGRATIE\")"
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "title": "Main Heading"
+              },
+              {
+                "rows": 3,
+                "name": "subtitle",
+                "type": "text",
+                "title": "Description Text"
+              },
+              {
+                "name": "sectionTag",
+                "type": "string",
+                "title": "Secondary ERP Badge"
+              },
+              {
+                "name": "sectionTitle",
+                "type": "string",
+                "title": "Secondary Heading"
+              },
+              {
+                "rows": 2,
+                "name": "sectionSubtitle",
+                "type": "text",
+                "title": "Secondary Subtitle"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "bold",
+                        "type": "string",
+                        "title": "Bold Prefix"
+                      },
+                      {
+                        "name": "text",
+                        "type": "string",
+                        "title": "Bullet Text"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "bullets",
+                "type": "array",
+                "title": "Architecture Key Benefits"
+              },
+              {
+                "name": "bgImagePath",
+                "type": "string",
+                "title": "Background Image Path"
+              }
+            ],
+            "type": "object",
+            "name": "architectureSection",
+            "title": "System Architecture (Seamless Integration)"
+          },
+          {
+            "fields": [
+              {
+                "hidden": "conditional",
+                "name": "badge",
+                "type": "string",
+                "title": "Section Badge (e.g. \"Voor Wie\")"
+              },
+              {
+                "hidden": "conditional",
+                "name": "title",
+                "type": "string",
+                "title": "Section Title"
+              },
+              {
+                "rows": 3,
+                "hidden": "conditional",
+                "name": "subtitle",
+                "type": "text",
+                "title": "Section Subtitle"
+              },
+              {
+                "fields": [
+                  {
+                    "name": "badge",
+                    "type": "string"
+                  },
+                  {
+                    "name": "title",
+                    "type": "string"
+                  },
+                  {
+                    "rows": 3,
+                    "name": "text",
+                    "type": "text",
+                    "title": "Text Description"
+                  },
+                  {
+                    "name": "image",
+                    "type": "string",
+                    "title": "Image Path"
+                  }
+                ],
+                "hidden": "conditional",
+                "name": "fiscalContext",
+                "type": "object",
+                "title": "Fiscale Context Callout Box"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "title": "Item Title"
+                      },
+                      {
+                        "rows": 2,
+                        "name": "text",
+                        "type": "text",
+                        "title": "Item Description"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "hidden": "conditional",
+                "name": "items",
+                "type": "array",
+                "title": "Feature Items / Pain Points"
+              },
+              {
+                "hidden": "conditional",
                 "name": "sectionTag",
                 "type": "string",
                 "title": "Section Subtitle / Tag (e.g. \"MODULAIR EN FLEXIBEL\")"
               },
               {
+                "hidden": "conditional",
                 "name": "sectionTitle",
                 "type": "string"
               },
               {
                 "rows": 3,
+                "hidden": "conditional",
                 "name": "sectionSubtitle",
                 "type": "text",
                 "title": "Intro Paragraph / Subtitle"
@@ -452,6 +656,12 @@
                 "of": [
                   {
                     "fields": [
+                      {
+                        "description": "Pill badge overlayed on top-left of the module image",
+                        "name": "badge",
+                        "type": "string",
+                        "title": "Category Badge / Label (e.g. \"Core Operatie & Admin\")"
+                      },
                       {
                         "name": "title",
                         "type": "string",
@@ -470,9 +680,16 @@
                         "title": "Feature Icon"
                       },
                       {
+                        "description": "Pad naar de grote preview afbeelding (bijv. \"/emlinked/apps/vastgoedbeheer-sopftware_modules.jpg\")",
                         "name": "imagePath",
                         "type": "string",
-                        "title": "Image Path (Optional)"
+                        "title": "Main Module Image Path (Grote Afbeelding)"
+                      },
+                      {
+                        "description": "Pad naar het PNG-icoontje rechtsboven op de kaart (bijv. \"/emlinked/apps/vastgoedbeheer.png\")",
+                        "name": "iconPath",
+                        "type": "string",
+                        "title": "Top-Right PNG Icon Badge Path (Icoontje)"
                       },
                       {
                         "of": [
@@ -541,8 +758,19 @@
           {
             "fields": [
               {
+                "name": "sectionTag",
+                "type": "string",
+                "title": "Pill Badge Tag (e.g. \"KLANTEN & REFERENTIES\")"
+              },
+              {
                 "name": "sectionTitle",
                 "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "sectionSubtitle",
+                "type": "text",
+                "title": "Section Subtitle / Description Body"
               },
               {
                 "of": [
@@ -582,9 +810,14 @@
           {
             "fields": [
               {
+                "name": "badge",
+                "type": "string",
+                "title": "Section Badge (e.g. \"Klaar voor 2028?\")"
+              },
+              {
                 "name": "tag",
                 "type": "string",
-                "title": "Section Subtitle / Tag Badge (e.g. \"ERP INTEGRATIE\")"
+                "title": "Alternative Tag Badge"
               },
               {
                 "name": "title",
@@ -596,17 +829,188 @@
                 "type": "text"
               },
               {
+                "name": "buttonText",
+                "type": "string",
+                "title": "Primary Button Text"
+              },
+              {
                 "name": "buttonLabel",
-                "type": "string"
+                "type": "string",
+                "title": "Alternative Button Label"
               },
               {
                 "name": "buttonLink",
                 "type": "string"
+              },
+              {
+                "description": "Relative path to image (e.g. /emlinked/box3/box3-automatiseren.jpg)",
+                "name": "imagePath",
+                "type": "string",
+                "title": "Right Column Image Path (Optional String)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "description": "Upload banner graphic directly to Sanity CDN",
+                "name": "image",
+                "type": "image",
+                "title": "Right Column Image (Sanity Asset Upload)"
               }
             ],
             "type": "object",
             "name": "ctaBanner",
             "title": "CTA Banner"
+          },
+          {
+            "fields": [
+              {
+                "description": "Top pill tag (e.g. \"MICROSOFT ECOSYSTEM\")",
+                "name": "badge",
+                "type": "string",
+                "title": "Section Tag / Badge"
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "title": "Headline Title"
+              },
+              {
+                "rows": 3,
+                "name": "subtitle",
+                "type": "text",
+                "title": "Body Text / Subtitle"
+              },
+              {
+                "name": "cardTitle",
+                "type": "string",
+                "title": "Right Card Title"
+              },
+              {
+                "name": "cardSubtitle",
+                "type": "string",
+                "title": "Right Card Subtitle"
+              },
+              {
+                "of": [
+                  {
+                    "type": "string"
+                  }
+                ],
+                "name": "cardPoints",
+                "type": "array",
+                "title": "Right Card Check Bullet Points"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "title": "Item Title"
+                      },
+                      {
+                        "name": "desc",
+                        "type": "string",
+                        "title": "Item Description"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "trustItems",
+                "type": "array",
+                "title": "Bottom Trust Grid Items"
+              }
+            ],
+            "type": "object",
+            "name": "ecosystemSection",
+            "title": "Microsoft Ecosystem Platform Section"
+          },
+          {
+            "fields": [
+              {
+                "name": "badge",
+                "type": "string",
+                "title": "Section Tag / Badge"
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "title": "Section Title"
+              },
+              {
+                "rows": 3,
+                "name": "subtitle",
+                "type": "text",
+                "title": "Section Subtitle / Intro Paragraph"
+              },
+              {
+                "description": "Optional tag pills displayed below subtitle (e.g. \"100% Cloud-Native ERP\", \"Gecertificeerde ISV Integraties\")",
+                "of": [
+                  {
+                    "type": "string"
+                  }
+                ],
+                "name": "valueTags",
+                "type": "array",
+                "title": "Strategic Value Tags (Pills under subtitle)"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "name",
+                        "type": "string",
+                        "title": "Partner Name"
+                      },
+                      {
+                        "name": "badge",
+                        "type": "string",
+                        "title": "Partner Category Badge (e.g. \"Native ERP\")"
+                      },
+                      {
+                        "description": "Relative path in public directory (e.g. /emlinked/partners/Continia-e1670413209950.png)",
+                        "name": "logoUrl",
+                        "type": "string",
+                        "title": "Logo Image Path"
+                      },
+                      {
+                        "rows": 3,
+                        "name": "description",
+                        "type": "text",
+                        "title": "Partner Description"
+                      },
+                      {
+                        "name": "featureTitle",
+                        "type": "string",
+                        "title": "Feature Highlight Title"
+                      },
+                      {
+                        "rows": 3,
+                        "name": "featureText",
+                        "type": "text",
+                        "title": "Feature Highlight Text"
+                      },
+                      {
+                        "name": "websiteUrl",
+                        "type": "string",
+                        "title": "Partner Website Link"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "partners",
+                "type": "array",
+                "title": "Partners List"
+              }
+            ],
+            "type": "object",
+            "name": "partnersSection",
+            "title": "Partners & Software Integrations Section"
           },
           {
             "fields": [
@@ -679,6 +1083,22 @@
           {
             "fields": [
               {
+                "name": "badge",
+                "type": "string",
+                "title": "Section Badge"
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "title": "Section Title"
+              },
+              {
+                "rows": 2,
+                "name": "subtitle",
+                "type": "text",
+                "title": "Section Subtitle"
+              },
+              {
                 "options": {
                   "list": [
                     {
@@ -690,6 +1110,23 @@
                 "initialValue": "box3",
                 "name": "calculatorType",
                 "type": "string"
+              },
+              {
+                "description": "Headline above feature list (e.g. \"Wat emlinked automatisch bijhoudt\")",
+                "name": "featureTitle",
+                "type": "string",
+                "title": "Left Column Feature List Title"
+              },
+              {
+                "description": "List of bullet features displayed on the left side of the calculator",
+                "of": [
+                  {
+                    "type": "string"
+                  }
+                ],
+                "name": "featureItems",
+                "type": "array",
+                "title": "Left Column Feature List Items"
               }
             ],
             "type": "object",
@@ -920,6 +1357,27 @@
             ],
             "type": "object",
             "name": "pricingBlock"
+          },
+          {
+            "fields": [
+              {
+                "name": "sectionTag",
+                "type": "string",
+                "title": "Section Badge Tag"
+              },
+              {
+                "name": "sectionTitle",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "sectionSubtitle",
+                "type": "text"
+              }
+            ],
+            "type": "object",
+            "name": "pricingCalculator",
+            "title": "Interactive Pricing Calculator"
           },
           {
             "fields": [
@@ -2036,6 +2494,7 @@
             ]
           }
         ],
+        "description": "Internal title for Sanity Studio (e.g. Vastgoedbeheer Software)",
         "name": "title",
         "type": "string",
         "title": "Page Title"
@@ -2050,6 +2509,14 @@
             {
               "title": "English",
               "value": "en"
+            },
+            {
+              "title": "Deutsch",
+              "value": "de"
+            },
+            {
+              "title": "Français",
+              "value": "fr"
             }
           ]
         },
@@ -2062,7 +2529,9 @@
                 "flag": "valid",
                 "constraint": [
                   "nl",
-                  "en"
+                  "en",
+                  "de",
+                  "fr"
                 ]
               },
               {
@@ -2094,344 +2563,394 @@
             ]
           }
         ],
-        "description": "The URL path for this page (e.g. property-management-software)",
+        "description": "The URL path for this page (e.g. apps/huurdersportaal or apps/vastgoedbeheer-software)",
         "name": "slug",
         "type": "slug",
         "title": "URL Slug"
       },
       {
-        "description": "Short pill label shown above the hero title (e.g. \"Core SaaS Module\")",
-        "name": "badge",
-        "type": "string",
-        "title": "Badge Text"
-      },
-      {
-        "options": {
-          "list": [
-            {
-              "title": "Building2 (Vastgoedbeheer)",
-              "value": "Building2"
-            },
-            {
-              "title": "Users (Huurdersportaal)",
-              "value": "Users"
-            },
-            {
-              "title": "CreditCard (Payment)",
-              "value": "CreditCard"
-            }
-          ]
-        },
-        "description": "Lucide icon name (e.g. Building2, Users, CreditCard)",
-        "name": "heroIcon",
-        "type": "string"
-      },
-      {
-        "validation": [
-          {
-            "level": "error",
-            "rules": [
-              {
-                "flag": "presence",
-                "constraint": "required"
-              }
-            ]
-          }
-        ],
-        "description": "Large subtitle below the page title",
-        "name": "tagline",
-        "type": "string",
-        "title": "Hero Tagline"
-      },
-      {
-        "rows": 3,
-        "description": "Paragraph below the tagline",
-        "name": "description",
-        "type": "text",
-        "title": "Hero Description"
-      },
-      {
-        "validation": [
-          {
-            "level": "error",
-            "rules": [
-              {
-                "flag": "max",
-                "constraint": 3
-              }
-            ]
-          }
-        ],
-        "description": "Up to 3 key statistics shown in the stats band",
+        "description": "Assemble your page layout using modular content blocks so that we can reuse them whenever necessary.",
         "of": [
           {
             "fields": [
               {
-                "description": "e.g. 87% or < 2 min",
-                "name": "stat",
+                "name": "badge",
                 "type": "string",
-                "title": "Statistic"
+                "title": "Pill Badge Text"
               },
               {
-                "description": "e.g. Tijdsbesparing bij indexaties",
-                "name": "label",
-                "type": "string"
-              }
-            ],
-            "type": "object"
-          }
-        ],
-        "name": "proof",
-        "type": "array",
-        "title": "Social Proof Stats"
-      },
-      {
-        "description": "Bullet points shown in the \"Alles inbegrepen\" section",
-        "of": [
-          {
-            "type": "string"
-          }
-        ],
-        "name": "benefits",
-        "type": "array",
-        "title": "Benefits Checklist"
-      },
-      {
-        "description": "3 core feature cards with icon, title and description",
-        "of": [
-          {
-            "fields": [
-              {
-                "description": "Lucide icon name (e.g. Zap, FileText, BarChart3)",
-                "name": "icon",
+                "name": "tagline",
                 "type": "string",
-                "title": "Icon Name"
-              },
-              {
-                "name": "title",
-                "type": "string",
-                "title": "Feature Title"
+                "title": "Hero Tagline (H1 Title)"
               },
               {
                 "rows": 3,
-                "name": "text",
+                "name": "description",
                 "type": "text",
-                "title": "Feature Description"
+                "title": "Hero Subtitle Description"
+              },
+              {
+                "description": "Label for primary action button (e.g. \"Gratis live demo aanvragen\")",
+                "name": "primaryCtaLabel",
+                "type": "string",
+                "title": "Primary CTA Button Label"
+              },
+              {
+                "description": "URL target (e.g. \"#demo\" or \"/demo\")",
+                "name": "primaryCtaUrl",
+                "type": "string",
+                "title": "Primary CTA Button URL"
+              },
+              {
+                "description": "Label for secondary action button (e.g. \"Bereken je Box 3-impact\")",
+                "name": "secondaryCtaLabel",
+                "type": "string",
+                "title": "Secondary CTA Button Label"
+              },
+              {
+                "description": "URL target (e.g. \"/box3-check\")",
+                "name": "secondaryCtaUrl",
+                "type": "string",
+                "title": "Secondary CTA Button URL"
+              },
+              {
+                "description": "Social proof message (e.g. \"Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland\")",
+                "name": "proofText",
+                "type": "string",
+                "title": "Social Proof Text"
+              },
+              {
+                "name": "heroImage",
+                "type": "string",
+                "title": "Hero Image Path"
               }
             ],
-            "type": "object"
-          }
-        ],
-        "name": "features",
-        "type": "array",
-        "title": "Feature Cards"
-      },
-      {
-        "validation": [
-          {
-            "level": "error",
-            "rules": [
-              {
-                "flag": "max",
-                "constraint": 3
-              }
-            ]
-          }
-        ],
-        "description": "\"Hoe werkt het?\" — 3-step process shown with icons and connector line",
-        "of": [
+            "type": "object",
+            "name": "heroBlock",
+            "title": "Hero Section Block"
+          },
           {
             "fields": [
               {
-                "description": "e.g. 01, 02, 03",
-                "name": "step",
+                "name": "badge",
                 "type": "string",
-                "title": "Step Number"
-              },
-              {
-                "description": "Lucide icon name (e.g. Link2, CalendarCheck, Database)",
-                "name": "icon",
-                "type": "string",
-                "title": "Icon Name"
+                "title": "Pill Badge Text"
               },
               {
                 "name": "title",
                 "type": "string",
-                "title": "Step Title"
+                "title": "Section Title"
               },
               {
                 "rows": 3,
                 "name": "desc",
                 "type": "text",
-                "title": "Step Description"
-              }
-            ],
-            "type": "object"
-          }
-        ],
-        "name": "workflow",
-        "type": "array",
-        "title": "Workflow Steps"
-      },
-      {
-        "description": "Accordion FAQ items — eligible for Google Featured Snippets",
-        "of": [
-          {
-            "fields": [
-              {
-                "name": "q",
-                "type": "string",
-                "title": "Question"
+                "title": "Section Description"
               },
               {
-                "rows": 4,
-                "name": "a",
-                "type": "text",
-                "title": "Answer"
+                "name": "leftTitle",
+                "type": "string",
+                "title": "Left Card Title (Legacy)"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string"
+                      },
+                      {
+                        "rows": 2,
+                        "name": "desc",
+                        "type": "text"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "leftItems",
+                "type": "array",
+                "title": "Left Card Items (Pain Points)"
+              },
+              {
+                "name": "rightTitle",
+                "type": "string",
+                "title": "Right Card Title (Emlinked)"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string"
+                      },
+                      {
+                        "rows": 2,
+                        "name": "desc",
+                        "type": "text"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "rightItems",
+                "type": "array",
+                "title": "Right Card Items (Solutions/Benefits)"
               }
             ],
-            "type": "object"
-          }
-        ],
-        "name": "faq",
-        "type": "array",
-        "title": "FAQ"
-      },
-      {
-        "name": "simulatorTitle",
-        "type": "string",
-        "title": "Simulator Section Title"
-      },
-      {
-        "rows": 2,
-        "name": "simulatorDesc",
-        "type": "text",
-        "title": "Simulator Section Description"
-      },
-      {
-        "description": "Links to other solution pages shown at the bottom",
-        "of": [
+            "type": "object",
+            "name": "comparisonBlock",
+            "title": "Comparison Matrix Block (Pain vs Solution)"
+          },
           {
             "fields": [
               {
-                "options": {
-                  "list": [
-                    {
-                      "title": "Huurdersportaal",
-                      "value": "huurdersportaal"
-                    },
-                    {
-                      "title": "Payment Software",
-                      "value": "payment"
-                    },
-                    {
-                      "title": "Vastgoedbeheer Software",
-                      "value": "vastgoedbeheer-software"
-                    }
-                  ]
-                },
-                "description": "e.g. huurdersportaal or payment",
-                "name": "slug",
+                "name": "badge",
                 "type": "string",
-                "title": "Target Slug"
+                "title": "Pill Badge Text"
               },
               {
                 "name": "title",
                 "type": "string",
-                "title": "Card Title"
+                "title": "Section Title"
               },
               {
-                "name": "desc",
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "tabId",
+                        "type": "string",
+                        "title": "Tab ID"
+                      },
+                      {
+                        "name": "tabTitle",
+                        "type": "string",
+                        "title": "Tab Navigation Title"
+                      },
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "title": "Feature Heading"
+                      },
+                      {
+                        "rows": 3,
+                        "name": "text",
+                        "type": "text",
+                        "title": "Feature Description"
+                      },
+                      {
+                        "of": [
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "name": "bullets",
+                        "type": "array",
+                        "title": "Bullet Points"
+                      },
+                      {
+                        "name": "imagePath",
+                        "type": "string",
+                        "title": "Feature Image Path"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "tabs",
+                "type": "array",
+                "title": "Feature Tabs"
+              }
+            ],
+            "type": "object",
+            "name": "featureTabsBlock"
+          },
+          {
+            "fields": [
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "stat",
+                        "type": "string",
+                        "title": "Value (e.g. 87% or < 2 min)"
+                      },
+                      {
+                        "name": "label",
+                        "type": "string",
+                        "title": "Label Description"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "stats",
+                "type": "array",
+                "title": "Key Statistics"
+              }
+            ],
+            "type": "object",
+            "name": "statsBlock",
+            "title": "Social Proof Stats Block"
+          },
+          {
+            "fields": [
+              {
+                "name": "title",
                 "type": "string",
-                "title": "Card Description"
+                "title": "Section Title"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "step",
+                        "type": "string",
+                        "title": "Step Number (01, 02, 03)"
+                      },
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "title": "Step Title"
+                      },
+                      {
+                        "rows": 2,
+                        "name": "desc",
+                        "type": "text",
+                        "title": "Step Description"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "steps",
+                "type": "array",
+                "title": "Workflow Steps"
               }
             ],
-            "type": "object"
+            "type": "object",
+            "name": "workflowBlock",
+            "title": "Workflow Block (3-Step Process)"
+          },
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "title": "FAQ Section Title"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "q",
+                        "type": "string",
+                        "title": "Question"
+                      },
+                      {
+                        "rows": 3,
+                        "name": "a",
+                        "type": "text",
+                        "title": "Answer"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "items",
+                "type": "array",
+                "title": "FAQ Question & Answer Items"
+              }
+            ],
+            "type": "object",
+            "name": "faqBlock",
+            "title": "FAQ Accordion Block"
+          },
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "title": "CTA Title"
+              },
+              {
+                "rows": 2,
+                "name": "desc",
+                "type": "text",
+                "title": "CTA Description"
+              },
+              {
+                "name": "primaryButtonText",
+                "type": "string",
+                "title": "Primary Button Label"
+              },
+              {
+                "name": "secondaryButtonText",
+                "type": "string",
+                "title": "Secondary Button Label"
+              }
+            ],
+            "type": "object",
+            "name": "ctaBlock",
+            "title": "CTA Banner Block"
+          },
+          {
+            "fields": [
+              {
+                "name": "tag",
+                "type": "string",
+                "title": "Pill Badge Tag"
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "title": "Main Heading Title"
+              },
+              {
+                "rows": 3,
+                "name": "desc",
+                "type": "text",
+                "title": "Description Text"
+              },
+              {
+                "of": [
+                  {
+                    "type": "string"
+                  }
+                ],
+                "name": "bullets",
+                "type": "array",
+                "title": "Key Integration Bullets"
+              },
+              {
+                "name": "imagePath",
+                "type": "string",
+                "title": "Illustration Image Path"
+              }
+            ],
+            "type": "object",
+            "name": "architectureBlock",
+            "title": "Architecture & ERP Integration Block"
           }
         ],
-        "name": "relatedModules",
+        "name": "pageBlocks",
         "type": "array",
-        "title": "Related Modules (Cross-sell)"
+        "title": "Page Blocks (Modular Layout Builder)"
       },
       {
-        "fields": [
-          {
-            "name": "title",
-            "type": "string",
-            "title": "CTA Title"
-          },
-          {
-            "rows": 2,
-            "name": "desc",
-            "type": "text",
-            "title": "CTA Description"
-          },
-          {
-            "name": "primary",
-            "type": "string",
-            "title": "Primary Button Label"
-          },
-          {
-            "name": "secondary",
-            "type": "string",
-            "title": "Secondary Button Label"
-          }
-        ],
-        "name": "cta",
-        "type": "object",
-        "title": "CTA Footer Section"
-      },
-      {
-        "fields": [
-          {
-            "validation": [
-              {
-                "level": "warning",
-                "rules": [
-                  {
-                    "flag": "max",
-                    "constraint": 60
-                  }
-                ],
-                "message": "Keep under 60 characters"
-              }
-            ],
-            "description": "Max 60 characters",
-            "name": "title",
-            "type": "string",
-            "title": "SEO Title"
-          },
-          {
-            "rows": 2,
-            "validation": [
-              {
-                "level": "warning",
-                "rules": [
-                  {
-                    "flag": "max",
-                    "constraint": 160
-                  }
-                ],
-                "message": "Keep under 160 characters"
-              }
-            ],
-            "description": "Max 160 characters",
-            "name": "description",
-            "type": "text",
-            "title": "SEO Description"
-          },
-          {
-            "description": "Comma-separated keywords",
-            "name": "keywords",
-            "type": "string"
-          }
-        ],
         "name": "seo",
-        "type": "object",
+        "type": "seoFields",
         "title": "SEO Settings"
       }
     ],
     "name": "solutionPage",
-    "type": "document"
+    "type": "document",
+    "title": "Onze Apps Page"
   }
 ]

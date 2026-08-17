@@ -1,16 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { 
-    TrendingUp, 
-    Mail, 
-    CheckCircle2, 
-    Send, 
-    FileText, 
-    AlertCircle, 
-    DollarSign, 
+import {
+    TrendingUp,
+    Mail,
+    CheckCircle2,
+    Send,
+    FileText,
+    AlertCircle,
+    DollarSign,
     ArrowRight,
-    Loader2
+    Loader2,
 } from 'lucide-react';
 
 interface SimulatorProps {
@@ -37,7 +37,11 @@ export function SolutionSimulators({ locale, slug }: SimulatorProps) {
 function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
     const [baseRent, setBaseRent] = useState<number>(1500);
     const [cpiValue, setCpiValue] = useState<number>(3.8);
-    const [result, setResult] = useState<{ newRent: number; increase: number; yearlyExtra: number } | null>(null);
+    const [result, setResult] = useState<{
+        newRent: number;
+        increase: number;
+        yearlyExtra: number;
+    } | null>(null);
     const [isCalculating, setIsCalculating] = useState(false);
     const [showEmail, setShowEmail] = useState(false);
 
@@ -45,7 +49,9 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
         e.preventDefault();
         setIsCalculating(true);
         setTimeout(() => {
-            const increase = parseFloat(((baseRent * cpiValue) / 100).toFixed(2));
+            const increase = parseFloat(
+                ((baseRent * cpiValue) / 100).toFixed(2),
+            );
             const newRent = baseRent + increase;
             const yearlyExtra = increase * 12;
             setResult({ newRent, increase, yearlyExtra });
@@ -57,7 +63,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
     return (
         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto mt-12 px-4'>
             {/* Input Form Card */}
-            <div className='lg:col-span-5 bg-card border border-border rounded-xl p-6 shadow-sm'>
+            <div className='lg:col-span-5 bg-card border border-black/20 rounded-xl p-6 shadow-sm'>
                 <div className='flex items-center gap-2 mb-4'>
                     <div className='p-1.5 rounded-lg bg-amber/15 text-amber'>
                         <TrendingUp className='h-5 w-5' />
@@ -94,7 +100,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     ),
                                 )
                             }
-                            className='w-full h-10 px-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
+                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
                             required
                         />
                     </div>
@@ -114,7 +120,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     ),
                                 )
                             }
-                            className='w-full h-10 px-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
+                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
                             required
                         />
                     </div>
@@ -145,7 +151,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                     <div className='flex flex-col gap-6 animate-fadeIn'>
                         {/* Highlights Grid */}
                         <div className='grid grid-cols-3 gap-4'>
-                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                            <div className='bg-muted/30 border border-black/20/60 rounded-xl p-4 text-center'>
                                 <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
                                     {isEn ? 'New Rent' : 'Nieuwe huur'}
                                 </span>
@@ -157,7 +163,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     })}
                                 </span>
                             </div>
-                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                            <div className='bg-muted/30 border border-black/20/60 rounded-xl p-4 text-center'>
                                 <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
                                     {isEn ? 'Monthly Delta' : 'Verschil p.m.'}
                                 </span>
@@ -169,7 +175,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     })}
                                 </span>
                             </div>
-                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                            <div className='bg-muted/30 border border-black/20/60 rounded-xl p-4 text-center'>
                                 <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
                                     {isEn
                                         ? 'Yearly Gain'
@@ -187,8 +193,8 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
 
                         {/* Email Preview */}
                         {showEmail && (
-                            <div className='border border-border rounded-xl overflow-hidden shadow-sm bg-card'>
-                                <div className='bg-muted/50 border-b border-border px-4 py-6flex items-center justify-between'>
+                            <div className='border border-black/20 rounded-xl overflow-hidden shadow-sm bg-card'>
+                                <div className='bg-muted/50 border-b border-black/20 px-4 py-6flex items-center justify-between'>
                                     <div className='flex items-center gap-2'>
                                         <Mail className='h-4 w-4 text-muted-foreground' />
                                         <span className='text-xs font-semibold text-foreground'>
@@ -204,7 +210,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     </span>
                                 </div>
                                 <div className='p-5 text-left font-sans text-xs text-foreground/80 space-y-4'>
-                                    <div className='border-b border-border/60 pb-3 space-y-1 text-[11px]'>
+                                    <div className='border-b border-black/20/60 pb-3 space-y-1 text-[11px]'>
                                         <div>
                                             <strong className='text-muted-foreground'>
                                                 To:
@@ -228,7 +234,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                         met het CPI-percentage van{' '}
                                         <strong>{cpiValue}%</strong>.
                                     </p>
-                                    <div className='bg-muted/30 border border-border/60 rounded-lg p-3 space-y-1 font-mono text-[11px]'>
+                                    <div className='bg-muted/30 border border-black/20/60 rounded-lg p-3 space-y-1 font-mono text-[11px]'>
                                         <div>
                                             • Oude huurprijs: €
                                             {baseRent.toFixed(2)}
@@ -261,7 +267,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                         )}
                     </div>
                 ) : (
-                    <div className='border border-dashed border-border rounded-xl h-full min-h-[300px] flex flex-col items-center justify-center text-center p-6 bg-muted/5'>
+                    <div className='border border-dashed border-black/20 rounded-xl h-full min-h-[300px] flex flex-col items-center justify-center text-center p-6 bg-muted/5'>
                         <TrendingUp className='h-10 w-10 text-muted-foreground/30 mb-3' />
                         <h4 className='font-bold text-foreground/50 text-sm'>
                             {isEn
@@ -291,22 +297,28 @@ interface Ticket {
 
 function TicketSimulator({ isEn }: { isEn: boolean }) {
     const [tickets, setTickets] = useState<Ticket[]>([
-        { 
-            id: 1, 
-            category: isEn ? 'Heating & Climate' : 'Verwarming & Klimaat', 
-            desc: isEn ? 'Radiator in living room does not warm up.' : 'Radiator in woonkamer wordt niet warm.', 
-            status: 'In behandeling', 
-            time: 'Vandaag, 10:14' 
+        {
+            id: 1,
+            category: isEn ? 'Heating & Climate' : 'Verwarming & Klimaat',
+            desc: isEn
+                ? 'Radiator in living room does not warm up.'
+                : 'Radiator in woonkamer wordt niet warm.',
+            status: 'In behandeling',
+            time: 'Vandaag, 10:14',
         },
-        { 
-            id: 2, 
-            category: isEn ? 'Keys & Access' : 'Sleutels & Toegang', 
-            desc: isEn ? 'Request extra key fob for backend entrance.' : 'Extra druppel voor achteringang aanvragen.', 
-            status: 'Opgelost', 
-            time: 'Gisteren, 14:32' 
-        }
+        {
+            id: 2,
+            category: isEn ? 'Keys & Access' : 'Sleutels & Toegang',
+            desc: isEn
+                ? 'Request extra key fob for backend entrance.'
+                : 'Extra druppel voor achteringang aanvragen.',
+            status: 'Opgelost',
+            time: 'Gisteren, 14:32',
+        },
     ]);
-    const [category, setCategory] = useState(isEn ? 'Heating & Climate' : 'Verwarming & Klimaat');
+    const [category, setCategory] = useState(
+        isEn ? 'Heating & Climate' : 'Verwarming & Klimaat',
+    );
     const [desc, setDesc] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -321,7 +333,7 @@ function TicketSimulator({ isEn }: { isEn: boolean }) {
                 category,
                 desc,
                 status: 'Ingediend',
-                time: isEn ? 'Just now' : 'Zojuist'
+                time: isEn ? 'Just now' : 'Zojuist',
             };
             setTickets([newTicket, ...tickets]);
             setDesc('');
@@ -330,39 +342,63 @@ function TicketSimulator({ isEn }: { isEn: boolean }) {
     };
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto mt-12 px-4">
+        <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto mt-12 px-4'>
             {/* Ticket Submission Form */}
-            <div className="lg:col-span-5 bg-card border border-border rounded-xl p-6 shadow-sm">
-                <div className="flex items-center gap-2 mb-4">
-                    <div className="p-1.5 rounded-lg bg-amber/15 text-amber">
-                        <Send className="h-5 w-5" />
+            <div className='lg:col-span-5 bg-card border border-black/20 rounded-xl p-6 shadow-sm'>
+                <div className='flex items-center gap-2 mb-4'>
+                    <div className='p-1.5 rounded-lg bg-amber/15 text-amber'>
+                        <Send className='h-5 w-5' />
                     </div>
-                    <h3 className="font-bold text-foreground">
-                        {isEn ? 'Report a Maintenance Issue' : 'Meld een storing'}
+                    <h3 className='font-bold text-foreground'>
+                        {isEn
+                            ? 'Report a Maintenance Issue'
+                            : 'Meld een storing'}
                     </h3>
                 </div>
-                <p className="text-xs text-muted-foreground mb-6">
-                    {isEn 
-                        ? 'Simulate a tenant reporting a maintenance ticket.' 
+                <p className='text-xs text-muted-foreground mb-6'>
+                    {isEn
+                        ? 'Simulate a tenant reporting a maintenance ticket.'
                         : 'Simuleer hoe een huurder een ticket indient in het portaal.'}
                 </p>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
                     <div>
-                        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                        <label className='block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2'>
                             {isEn ? 'Category' : 'Categorie'}
                         </label>
                         <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber"
+                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
                         >
-                            <option value={isEn ? 'Heating & Climate' : 'Verwarming & Klimaat'}>
-                                {isEn ? 'Heating & Climate' : 'Verwarming & Klimaat'}
+                            <option
+                                value={
+                                    isEn
+                                        ? 'Heating & Climate'
+                                        : 'Verwarming & Klimaat'
+                                }
+                            >
+                                {isEn
+                                    ? 'Heating & Climate'
+                                    : 'Verwarming & Klimaat'}
                             </option>
-                            <option value={isEn ? 'Plumbing & Leaks' : 'Lekkage & Sanitair'}>
-                                {isEn ? 'Plumbing & Leaks' : 'Lekkage & Sanitair'}
+                            <option
+                                value={
+                                    isEn
+                                        ? 'Plumbing & Leaks'
+                                        : 'Lekkage & Sanitair'
+                                }
+                            >
+                                {isEn
+                                    ? 'Plumbing & Leaks'
+                                    : 'Lekkage & Sanitair'}
                             </option>
-                            <option value={isEn ? 'Keys & Access' : 'Sleutels & Toegang'}>
+                            <option
+                                value={
+                                    isEn
+                                        ? 'Keys & Access'
+                                        : 'Sleutels & Toegang'
+                                }
+                            >
                                 {isEn ? 'Keys & Access' : 'Sleutels & Toegang'}
                             </option>
                             <option value={isEn ? 'Other' : 'Overig'}>
@@ -371,74 +407,87 @@ function TicketSimulator({ isEn }: { isEn: boolean }) {
                         </select>
                     </div>
                     <div>
-                        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                            {isEn ? 'Description' : 'Omschrijving van het probleem'}
+                        <label className='block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2'>
+                            {isEn
+                                ? 'Description'
+                                : 'Omschrijving van het probleem'}
                         </label>
                         <textarea
                             value={desc}
                             onChange={(e) => setDesc(e.target.value)}
-                            placeholder={isEn ? 'What needs repair?' : 'Wat functioneert er niet naar behoren?'}
+                            placeholder={
+                                isEn
+                                    ? 'What needs repair?'
+                                    : 'Wat functioneert er niet naar behoren?'
+                            }
                             rows={3}
-                            className="w-full p-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber resize-none"
+                            className='w-full p-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber resize-none'
                             required
                         />
                     </div>
                     <button
-                        type="submit"
+                        type='submit'
                         disabled={isSubmitting}
-                        className="w-full h-11 bg-amber hover:bg-amber-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
+                        className='w-full h-11 bg-amber hover:bg-amber-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50'
                     >
                         {isSubmitting ? (
                             <>
-                                <Loader2 className="h-4 w-4 animate-spin" />
+                                <Loader2 className='h-4 w-4 animate-spin' />
                                 {isEn ? 'Sending...' : 'Versturen...'}
                             </>
                         ) : (
-                            <>
-                                {isEn ? 'Submit Ticket' : 'Meld storing'}
-                            </>
+                            <>{isEn ? 'Submit Ticket' : 'Meld storing'}</>
                         )}
                     </button>
                 </form>
             </div>
 
             {/* Backoffice Ticket Queue */}
-            <div className="lg:col-span-7 flex flex-col gap-5">
-                <div className="flex justify-between items-center px-1">
-                    <h4 className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
-                        {isEn ? 'Live Ticket Queue (Admin Dashboard)' : 'Live Ticket Overzicht (Beheer Dashboard)'}
+            <div className='lg:col-span-7 flex flex-col gap-5'>
+                <div className='flex justify-between items-center px-1'>
+                    <h4 className='font-bold text-xs uppercase tracking-wider text-muted-foreground'>
+                        {isEn
+                            ? 'Live Ticket Queue (Admin Dashboard)'
+                            : 'Live Ticket Overzicht (Beheer Dashboard)'}
                     </h4>
-                    <span className="flex h-2 w-2 relative">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    <span className='flex h-2 w-2 relative'>
+                        <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75'></span>
+                        <span className='relative inline-flex rounded-full h-2 w-2 bg-emerald-500'></span>
                     </span>
                 </div>
 
-                <div className="flex flex-col gap-3">
+                <div className='flex flex-col gap-3'>
                     {tickets.map((t) => {
-                        let statusColor = 'bg-blue-500/10 text-blue-500 border-blue-500/25';
-                        if (t.status === 'In behandeling') statusColor = 'bg-amber/10 text-amber border-amber/25';
-                        if (t.status === 'Opgelost') statusColor = 'bg-emerald-500/10 text-emerald-500 border-emerald-500/25';
+                        let statusColor =
+                            'bg-blue-500/10 text-blue-500 border-blue-500/25';
+                        if (t.status === 'In behandeling')
+                            statusColor =
+                                'bg-amber/10 text-amber border-amber/25';
+                        if (t.status === 'Opgelost')
+                            statusColor =
+                                'bg-emerald-500/10 text-emerald-500 border-emerald-500/25';
 
                         return (
-                            <div 
-                                key={t.id} 
-                                className="bg-card border border-border rounded-xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm hover:border-border/80 transition-all animate-fadeIn"
+                            <div
+                                key={t.id}
+                                className='bg-card border border-black/20 rounded-xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm hover:border-black/20/80 transition-all animate-fadeIn'
                             >
-                                <div className="text-left space-y-1">
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-xs font-semibold text-foreground">
+                                <div className='text-left space-y-1'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='text-xs font-semibold text-foreground'>
                                             {t.category}
                                         </span>
-                                        <span className="text-[9px] text-muted-foreground">
+                                        <span className='text-[9px] text-muted-foreground'>
                                             {t.time}
                                         </span>
                                     </div>
-                                    <p className="text-xs text-muted-foreground">
+                                    <p className='text-xs text-muted-foreground'>
                                         {t.desc}
                                     </p>
                                 </div>
-                                <span className={`text-[10px] font-semibold border rounded px-2.5 py-0.5 self-start sm:self-center ${statusColor}`}>
+                                <span
+                                    className={`text-[10px] font-semibold border rounded px-2.5 py-0.5 self-start sm:self-center ${statusColor}`}
+                                >
                                     {t.status}
                                 </span>
                             </div>
@@ -456,7 +505,11 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
     const [ownerAPct, setOwnerAPct] = useState<number>(60);
     const [ownerBPct, setOwnerBPct] = useState<number>(30);
     const [feePct, setFeePct] = useState<number>(10);
-    const [result, setResult] = useState<{ ownerA: number; ownerB: number; fee: number } | null>(null);
+    const [result, setResult] = useState<{
+        ownerA: number;
+        ownerB: number;
+        fee: number;
+    } | null>(null);
     const [isReconciling, setIsReconciling] = useState(false);
 
     const handleSimulate = (e: React.FormEvent) => {
@@ -474,7 +527,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
     return (
         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto mt-12 px-4'>
             {/* Inputs Card */}
-            <div className='lg:col-span-5 bg-card border border-border rounded-xl p-6 shadow-sm'>
+            <div className='lg:col-span-5 bg-card border border-black/20 rounded-xl p-6 shadow-sm'>
                 <div className='flex items-center gap-2 mb-4'>
                     <div className='p-1.5 rounded-lg bg-amber/15 text-amber'>
                         <DollarSign className='h-5 w-5' />
@@ -508,7 +561,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     ),
                                 )
                             }
-                            className='w-full h-10 px-3 rounded-md border border-border bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
+                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
                             required
                         />
                     </div>
@@ -528,7 +581,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                         ),
                                     )
                                 }
-                                className='w-full h-10 px-2 rounded-md border border-border bg-background text-xs text-foreground focus:outline-none focus:border-amber'
+                                className='w-full h-10 px-2 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-amber'
                                 required
                             />
                         </div>
@@ -547,7 +600,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                         ),
                                     )
                                 }
-                                className='w-full h-10 px-2 rounded-md border border-border bg-background text-xs text-foreground focus:outline-none focus:border-amber'
+                                className='w-full h-10 px-2 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-amber'
                                 required
                             />
                         </div>
@@ -566,7 +619,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                         ),
                                     )
                                 }
-                                className='w-full h-10 px-2 rounded-md border border-border bg-background text-xs text-foreground focus:outline-none focus:border-amber'
+                                className='w-full h-10 px-2 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-amber'
                                 required
                             />
                         </div>
@@ -598,7 +651,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                     <div className='flex flex-col gap-6 animate-fadeIn'>
                         {/* Highlights Grid */}
                         <div className='grid grid-cols-3 gap-4'>
-                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                            <div className='bg-muted/30 border border-black/20/60 rounded-xl p-4 text-center'>
                                 <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
                                     {isEn
                                         ? 'Owner A Yield'
@@ -614,7 +667,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     ({ownerAPct}%)
                                 </span>
                             </div>
-                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                            <div className='bg-muted/30 border border-black/20/60 rounded-xl p-4 text-center'>
                                 <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
                                     {isEn
                                         ? 'Owner B Yield'
@@ -630,7 +683,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     ({ownerBPct}%)
                                 </span>
                             </div>
-                            <div className='bg-muted/30 border border-border/60 rounded-xl p-4 text-center'>
+                            <div className='bg-muted/30 border border-black/20/60 rounded-xl p-4 text-center'>
                                 <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
                                     {isEn
                                         ? 'Management Fee'
@@ -649,8 +702,8 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                         </div>
 
                         {/* Audit Trail / Reconciliation Box */}
-                        <div className='border border-border rounded-xl overflow-hidden shadow-sm bg-card'>
-                            <div className='bg-muted/50 border-b border-border px-4 py-6flex items-center justify-between'>
+                        <div className='border border-black/20 rounded-xl overflow-hidden shadow-sm bg-card'>
+                            <div className='bg-muted/50 border-b border-black/20 px-4 py-6flex items-center justify-between'>
                                 <div className='flex items-center gap-2'>
                                     <FileText className='h-4 w-4 text-muted-foreground' />
                                     <span className='text-xs font-semibold text-foreground'>
@@ -667,7 +720,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                 </span>
                             </div>
                             <div className='p-4 space-y-3 font-mono text-[10px] text-left text-foreground/80'>
-                                <div className='border-b border-border/40 pb-2 flex justify-between text-muted-foreground font-semibold'>
+                                <div className='border-b border-black/20/40 pb-2 flex justify-between text-muted-foreground font-semibold'>
                                     <span>
                                         {isEn
                                             ? 'G/L Account Description'
@@ -704,7 +757,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                         </span>
                                     </div>
                                 </div>
-                                <div className='border-t border-dashed border-border/60 pt-2 flex justify-between font-semibold text-foreground'>
+                                <div className='border-t border-dashed border-black/20/60 pt-2 flex justify-between font-semibold text-foreground'>
                                     <span>
                                         {isEn
                                             ? 'Bank Reconciliation Matching Factor'
@@ -718,7 +771,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                         </div>
                     </div>
                 ) : (
-                    <div className='border border-dashed border-border rounded-xl h-full min-h-[300px] flex flex-col items-center justify-center text-center p-6 bg-muted/5'>
+                    <div className='border border-dashed border-black/20 rounded-xl h-full min-h-[300px] flex flex-col items-center justify-center text-center p-6 bg-muted/5'>
                         <DollarSign className='h-10 w-10 text-muted-foreground/30 mb-3' />
                         <h4 className='font-bold text-foreground/50 text-sm'>
                             {isEn

@@ -46,7 +46,7 @@ export default function LoginPage({ params }: LoginPageProps) {
 
     return (
         <div className='grow flex items-center justify-center py-20 px-6 bg-radial from-card via-background to-background'>
-            <div className='w-full max-w-md p-8 rounded-xl border border-border bg-card shadow-2xl flex flex-col gap-6'>
+            <div className='w-full max-w-md p-8 rounded-xl border border-black/20 bg-card shadow-2xl flex flex-col gap-6'>
                 {/* Header */}
                 <div className='text-center space-y-2'>
                     <span className='font-display text-2xl font-bold tracking-tight text-primary'>
@@ -70,7 +70,7 @@ export default function LoginPage({ params }: LoginPageProps) {
                             type='email'
                             defaultValue='admin@emlinked.com'
                             disabled
-                            className='h-10 px-3 rounded-md border border-border bg-muted/30 text-xs text-muted-foreground cursor-not-allowed'
+                            className='h-10 px-3 rounded-md border border-black/20 bg-muted/30 text-xs text-muted-foreground cursor-not-allowed'
                         />
                     </div>
 
@@ -82,7 +82,7 @@ export default function LoginPage({ params }: LoginPageProps) {
                             type='password'
                             defaultValue='••••••••'
                             disabled
-                            className='h-10 px-3 rounded-md border border-border bg-muted/30 text-xs text-muted-foreground cursor-not-allowed'
+                            className='h-10 px-3 rounded-md border border-black/20 bg-muted/30 text-xs text-muted-foreground cursor-not-allowed'
                         />
                     </div>
 

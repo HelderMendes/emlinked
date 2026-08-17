@@ -92,7 +92,7 @@ export default async function DocPage({ params }: DocPageProps) {
     if (slugArray.length === 0) {
         return (
             <div className='space-y-8'>
-                <div className='border-b border-border pb-6'>
+                <div className='border-b border-black/20 pb-6'>
                     <h1 className='text-3xl font-bold tracking-tight text-foreground'>
                         Documentation Center
                     </h1>
@@ -104,7 +104,7 @@ export default async function DocPage({ params }: DocPageProps) {
                 </div>
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-6'>
-                    <div className='p-6 rounded-lg border border-border bg-card'>
+                    <div className='p-6 rounded-lg border border-black/20 bg-card'>
                         <h3 className='text-sm font-semibold text-foreground'>
                             Vastgoed Beheer
                         </h3>
@@ -113,7 +113,7 @@ export default async function DocPage({ params }: DocPageProps) {
                             contracten en indexatie-cycli.
                         </p>
                     </div>
-                    <div className='p-6 rounded-lg border border-border bg-card'>
+                    <div className='p-6 rounded-lg border border-black/20 bg-card'>
                         <h3 className='text-sm font-semibold text-foreground'>
                             Financieel Beheer
                         </h3>
@@ -122,7 +122,7 @@ export default async function DocPage({ params }: DocPageProps) {
                             btw-verlegging en telebankieren.
                         </p>
                     </div>
-                    <div className='p-6 rounded-lg border border-border bg-card'>
+                    <div className='p-6 rounded-lg border border-black/20 bg-card'>
                         <h3 className='text-sm font-semibold text-foreground'>
                             Kosten & Service
                         </h3>
@@ -131,7 +131,7 @@ export default async function DocPage({ params }: DocPageProps) {
                             doorbelastingen.
                         </p>
                     </div>
-                    <div className='p-6 rounded-lg border border-border bg-card'>
+                    <div className='p-6 rounded-lg border border-black/20 bg-card'>
                         <h3 className='text-sm font-semibold text-foreground'>
                             Instellen
                         </h3>
@@ -168,7 +168,7 @@ export default async function DocPage({ params }: DocPageProps) {
     if (sanityDoc) {
         return (
             <div className='space-y-6'>
-                <div className='border-b border-border pb-6'>
+                <div className='border-b border-black/20 pb-6'>
                     <div className='text-[10px] font-bold tracking-widest text-primary uppercase mb-1'>
                         {sanityDoc.category.replace('-', ' ')}
                     </div>
@@ -196,7 +196,7 @@ export default async function DocPage({ params }: DocPageProps) {
 
     return (
         <div className='space-y-6'>
-            <div className='border-b border-border pb-6'>
+            <div className='border-b border-black/20 pb-6'>
                 <div className='text-[10px] font-bold tracking-widest text-primary uppercase mb-1'>
                     {categoryLabel}
                 </div>
@@ -212,7 +212,7 @@ export default async function DocPage({ params }: DocPageProps) {
                     WordPress database.
                 </p>
 
-                <div className='p-4 rounded-md bg-muted/30 border border-border space-y-3'>
+                <div className='p-4 rounded-md bg-muted/30 border border-black/20 space-y-3'>
                     <h4 className='font-semibold text-foreground text-xs uppercase tracking-wide'>
                         Inhoudsopgave Details
                     </h4>

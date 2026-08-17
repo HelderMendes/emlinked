@@ -74,9 +74,9 @@ export default async function ContactPage({ params }: ContactPageProps) {
             />
 
             {/* Form Container */}
-            <section className='px-6 py-20 bg-card border-b border-border'>
+            <section className='px-6 py-20 bg-card border-b border-black/20'>
                 <div className='mx-auto max-w-xl px-4 sm:px-6 lg:px-8'>
-                    <div className='p-8 rounded-xl border border-border bg-background shadow-md'>
+                    <div className='p-8 rounded-xl border border-black/20 bg-background shadow-md'>
                         <h2 className='text-xl font-bold text-foreground mb-6'>
                             {t.formTitle}
                         </h2>
@@ -88,7 +88,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
                                 <input
                                     type='text'
                                     required
-                                    className='h-10 px-3 rounded-md border border-border bg-card text-sm text-foreground focus:outline-none focus:border-primary'
+                                    className='h-10 px-3 rounded-md border border-black/20 bg-card text-sm text-foreground focus:outline-none focus:border-primary'
                                 />
                             </div>
                             <div className='flex flex-col gap-1.5'>
@@ -98,14 +98,14 @@ export default async function ContactPage({ params }: ContactPageProps) {
                                 <input
                                     type='email'
                                     required
-                                    className='h-10 px-3 rounded-md border border-border bg-card text-sm text-foreground focus:outline-none focus:border-primary'
+                                    className='h-10 px-3 rounded-md border border-black/20 bg-card text-sm text-foreground focus:outline-none focus:border-primary'
                                 />
                             </div>
                             <div className='flex flex-col gap-1.5'>
                                 <label className='text-sm font-semibold text-muted-foreground'>
                                     {t.portfolioLabel}
                                 </label>
-                                <select className='h-10 px-3 rounded-md border border-border bg-card text-sm text-foreground focus:outline-none focus:border-primary'>
+                                <select className='h-10 px-3 rounded-md border border-black/20 bg-card text-sm text-foreground focus:outline-none focus:border-primary'>
                                     <option>&lt; 50 VHE (Units)</option>
                                     <option>50 - 250 VHE (Units)</option>
                                     <option>250 - 1000 VHE (Units)</option>
@@ -118,7 +118,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
                                 </label>
                                 <textarea
                                     rows={4}
-                                    className='p-3 rounded-md border border-border bg-card text-sm text-foreground focus:outline-none focus:border-primary'
+                                    className='p-3 rounded-md border border-black/20 bg-card text-sm text-foreground focus:outline-none focus:border-primary'
                                 />
                             </div>
                             <button

@@ -293,7 +293,7 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
                     return (
                         <section
                             key={blockKey}
-                            className='py-12 bg-background border-b border-border'
+                            className='py-12 bg-background border-b border-black/20'
                         >
                             <div className='mx-auto max-w-6xl text-center px-4 mb-4'>
                                 <span className='inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold tracking-wide text-primary mb-4 uppercase'>
@@ -322,7 +322,7 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
                     return (
                         <section
                             key={blockKey}
-                            className='px-6 py-16 bg-card border-b border-border text-left'
+                            className='px-6 py-16 bg-card border-b border-black/20 text-left'
                         >
                             <div className='mx-auto max-w-3xl'>
                                 {block.sectionTitle && (

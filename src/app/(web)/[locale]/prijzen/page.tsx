@@ -38,7 +38,7 @@ async function getSanityPageData(locale: string) {
                 }
             }`,
             { locale },
-            { cache: 'no-store' }
+            { cache: 'no-store' },
         );
     } catch (e) {
         console.error('Failed to fetch pricing page from Sanity:', e);
@@ -93,12 +93,12 @@ export default async function PricingPage({ params }: PricingPageProps) {
 
     const heroImageUrl = getImageUrl(
         heroBlock?.image || heroBlock?.heroImage,
-        heroBlock?.imagePath || '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+        heroBlock?.imagePath || '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
     );
 
     const ctaImageUrl = getImageUrl(
         ctaBlock?.image,
-        ctaBlock?.imagePath || '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+        ctaBlock?.imagePath || '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
     );
 
     return (
@@ -160,7 +160,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
             />
 
             {/* ── SECTION 3: STRIPPENKAARTEN & SUPPORT ── */}
-            <section className='px-6 py-20 bg-card border-b border-border text-foreground relative z-10'>
+            <section className='px-6 py-20 bg-card border-b border-black/20 text-foreground relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-16'>
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
                         <div className='flex justify-center mb-1'>
@@ -210,7 +210,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                                         (€ 110,- / uur)
                                     </span>
                                 </div>
-                                <p className='text-sm text-muted-foreground font-light leading-relaxed pt-2 border-t border-border/40'>
+                                <p className='text-sm text-muted-foreground font-light leading-relaxed pt-2 border-t border-black/20/40'>
                                     {isEn
                                         ? 'Ideal for short questions, quick configurations, and light support.'
                                         : 'Ideaal voor korte vragen, snelle instellingen en lichte ondersteuning.'}
@@ -249,7 +249,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                                         (€ 89,90 / uur)
                                     </span>
                                 </div>
-                                <p className='text-sm text-muted-foreground font-light leading-relaxed pt-2 border-t border-border/40'>
+                                <p className='text-sm text-muted-foreground font-light leading-relaxed pt-2 border-t border-black/20/40'>
                                     {isEn
                                         ? 'Perfect for periodic guidance, custom setup, and ongoing operational support.'
                                         : 'Perfect voor periodieke begeleiding en aanvullende inrichting.'}
@@ -285,7 +285,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                                         (€ 79,95 / uur)
                                     </span>
                                 </div>
-                                <p className='text-sm text-muted-foreground font-light leading-relaxed pt-2 border-t border-border/40'>
+                                <p className='text-sm text-muted-foreground font-light leading-relaxed pt-2 border-t border-black/20/40'>
                                     {isEn
                                         ? 'Best value for extensive project support, team onboarding, and custom training.'
                                         : 'De meest voordelige optie voor uitgebreide ondersteuning, projecten en trainingen op maat.'}

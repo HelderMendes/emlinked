@@ -23,6 +23,7 @@ export interface HeroSectionProps {
     locale?: string;
     titleClassName?: string;
     customGraphic?: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 export function formatHeroTitle(titleText?: string | React.ReactNode) {
@@ -54,8 +55,8 @@ export function HeroSection({
     subtitle,
     ctaLabel = 'Gratis demo aanvragen',
     ctaLink = '/contact',
-    secondaryCtaLabel = 'Koppeling ontdekken',
-    secondaryCtaLink = '/integraties',
+    secondaryCtaLabel,
+    secondaryCtaLink,
     showProof = true,
     showProofAvatars = true,
     proofText,
@@ -64,13 +65,15 @@ export function HeroSection({
     locale = 'nl',
     titleClassName,
     customGraphic,
+    children,
 }: HeroSectionProps) {
     const isEn = locale === 'en';
     const effectiveProofText =
-        proofText ||
-        (isEn
-            ? 'Trusted by professional real estate managers & controllers'
-            : 'Vertrouwd door professionele vastgoedbeheerders en controllers');
+        proofText !== undefined
+            ? proofText
+            : isEn
+              ? 'Trusted by professional real estate managers & controllers'
+              : 'Vertrouwd door professionele vastgoedbeheerders en controllers';
 
     const getPath = (path: string) => {
         if (!path) return isEn ? '/en' : '/';
@@ -268,6 +271,12 @@ export function HeroSection({
                         </BorderBeam>
                     </div>
                 </div>
+
+                {children && (
+                    <div className='mt-12 pt-6 border-t border-white/10 dark:border-amber/15 -mb-12'>
+                        {children}
+                    </div>
+                )}
             </div>
         </section>
     );

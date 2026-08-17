@@ -16,16 +16,20 @@ export function getImageUrl(image: any, fallback: string = ''): string {
 
     // Sanity Asset Reference format: image-<hash>-<dimensions>-<format>
     // e.g. "image-a1b2c3d4e5f6-1200x800-jpg" -> "a1b2c3d4e5f6-1200x800.jpg"
-    const ref = image?.asset?._ref || image?._ref;
-    if (typeof ref === 'string' && ref.startsWith('image-')) {
-        const idWithExt = ref.slice(6);
-        const lastDashIndex = idWithExt.lastIndexOf('-');
-        if (lastDashIndex !== -1) {
-            const filename =
-                idWithExt.slice(0, lastDashIndex) +
-                '.' +
-                idWithExt.slice(lastDashIndex + 1);
-            return `https://cdn.sanity.io/images/${projectId}/${dataset}/${filename}`;
+    const ref =
+        image?.asset?._ref || image?._ref || image?.asset?._id || image?._id;
+    if (typeof ref === 'string') {
+        const cleanRef = ref.replace('drafts.', '');
+        if (cleanRef.startsWith('image-')) {
+            const idWithExt = cleanRef.slice(6);
+            const lastDashIndex = idWithExt.lastIndexOf('-');
+            if (lastDashIndex !== -1) {
+                const filename =
+                    idWithExt.slice(0, lastDashIndex) +
+                    '.' +
+                    idWithExt.slice(lastDashIndex + 1);
+                return `https://cdn.sanity.io/images/${projectId}/${dataset}/${filename}`;
+            }
         }
     }
 

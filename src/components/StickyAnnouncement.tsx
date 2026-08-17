@@ -71,7 +71,8 @@ export default function StickyAnnouncement({
 
     // Hide sticky announcement widget on box3-check and pricing routes to avoid clutter
     const isBox3Page = pathname?.includes('box3-check');
-    const isPricingPage = pathname?.includes('prijzen') || pathname?.includes('pricing');
+    const isPricingPage =
+        pathname?.includes('prijzen') || pathname?.includes('pricing');
     if (isBox3Page || isPricingPage) return null;
 
     // Only render if announcement is active in settings
@@ -113,7 +114,7 @@ export default function StickyAnnouncement({
                                 damping: 20,
                                 stiffness: 300,
                             }}
-                            className='pointer-events-auto flex items-center gap-3 bg-white dark:bg-[#060e32] border border-border/60 shadow-xl rounded-full pl-4 pr-1.5 py-1.5 cursor-pointer hover:shadow-xl hover:scale-102 hover:border-amber/40 transition-all duration-200 group text-left'
+                            className='pointer-events-auto flex items-center gap-3 bg-white dark:bg-[#060e32] border border-black/20/60 shadow-xl rounded-full pl-4 pr-1.5 py-1.5 cursor-pointer hover:shadow-xl hover:scale-102 hover:border-amber/40 transition-all duration-200 group text-left'
                         >
                             <div className='flex items-center gap-2'>
                                 <span className='relative flex h-2 w-2'>

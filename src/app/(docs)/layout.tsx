@@ -146,9 +146,9 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
     return (
         <div className='flex h-screen bg-background text-foreground font-sans overflow-hidden'>
             {/* Sidebar Navigation */}
-            <aside className='w-80 border-r border-border bg-card flex flex-col h-full shrink-0'>
+            <aside className='w-80 border-r border-black/20 bg-card flex flex-col h-full shrink-0'>
                 {/* Sidebar Header */}
-                <div className='h-16 border-b border-border px-6 flex items-center justify-between shrink-0 bg-muted/20'>
+                <div className='h-16 border-b border-black/20 px-6 flex items-center justify-between shrink-0 bg-muted/20'>
                     <Link href='/' className='flex items-center gap-2'>
                         <span className='font-display text-lg font-bold tracking-tight text-primary'>
                             em<span className='text-foreground'>linked</span>
@@ -186,7 +186,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
             {/* Main Content Area */}
             <div className='grow flex flex-col h-full overflow-hidden'>
                 {/* Top Navbar */}
-                <header className='h-16 border-b border-border bg-card px-8 flex items-center justify-between shrink-0'>
+                <header className='h-16 border-b border-black/20 bg-card px-8 flex items-center justify-between shrink-0'>
                     <div className='w-96 relative'>
                         <span className='absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-foreground'>
                             <svg
@@ -206,7 +206,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
                         <input
                             type='search'
                             placeholder='Search documentation...'
-                            className='w-full h-9 pl-9 pr-4 rounded-md border border-border bg-background text-xs text-foreground focus:outline-none focus:border-primary transition-all'
+                            className='w-full h-9 pl-9 pr-4 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-primary transition-all'
                         />
                     </div>
                     <div className='flex items-center gap-4 text-xs font-semibold'>

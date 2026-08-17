@@ -194,7 +194,16 @@ export default async function HomePage({ params }: HomePageProps) {
     const { locale } = await params;
     const isEn = locale === 'en';
     const pageData = await getHomepageData(locale);
-    console.log('🔍 [HomePage Debug] locale:', locale, 'fetched document _id:', pageData?._id, 'title:', pageData?.title, 'blocks count:', pageData?.pageBlocks?.length);
+    console.log(
+        '🔍 [HomePage Debug] locale:',
+        locale,
+        'fetched document _id:',
+        pageData?._id,
+        'title:',
+        pageData?.title,
+        'blocks count:',
+        pageData?.pageBlocks?.length,
+    );
 
     const getPath = (path: string) => {
         if (locale === 'nl') return path;
@@ -221,15 +230,28 @@ export default async function HomePage({ params }: HomePageProps) {
                             <HeroSection
                                 key={block._key}
                                 label={block.label}
-                                title={block.title || (isEn ? 'Your real estate portfolio always *automatically* tax & audit ready' : 'Uw vastgoedportefeuille altijd *automatisch* aangifte-klaar')}
+                                title={
+                                    block.title ||
+                                    (isEn
+                                        ? 'Your real estate portfolio always *automatically* tax & audit ready'
+                                        : 'Uw vastgoedportefeuille altijd *automatisch* aangifte-klaar')
+                                }
                                 subtitle={block.subtitle}
-                                ctaLabel={block.ctaLabel || (isEn ? 'Request Free Demo' : 'Gratis Demo Aanvragen')}
+                                ctaLabel={
+                                    block.ctaLabel ||
+                                    (isEn
+                                        ? 'Request Free Demo'
+                                        : 'Gratis Demo Aanvragen')
+                                }
                                 ctaLink={block.ctaLink || '/contact'}
                                 secondaryCtaLabel={block.secondaryCtaLabel}
                                 secondaryCtaLink={block.secondaryCtaLink}
                                 showProof={block.showProof ?? true}
                                 proofText={block.proofText}
-                                imagePath={block.imagePath || '/hero/vastgoedportfeuille_aangifte-klaar.jpg'}
+                                imagePath={
+                                    block.imagePath ||
+                                    '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                                }
                                 isHomepage={true}
                                 locale={locale}
                             />
@@ -322,7 +344,9 @@ export default async function HomePage({ params }: HomePageProps) {
                                                         )}
                                                         className='h-13 px-8  inline-flex '
                                                     >
-                                                        {isEn ? 'Start free Box 3 check ⚡' : 'Start de gratis Box 3-check ⚡'}
+                                                        {isEn
+                                                            ? 'Start free Box 3 check ⚡'
+                                                            : 'Start de gratis Box 3-check ⚡'}
                                                     </GlowingLink>
                                                 </div>
                                             </div>
@@ -350,7 +374,7 @@ export default async function HomePage({ params }: HomePageProps) {
                         return (
                             <section
                                 key={block._key}
-                                className='px-6 py-20 bg-card border-b border-border'
+                                className='px-6 py-20 bg-card border-b border-black/20'
                             >
                                 <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-12'>
                                     <div className='max-w-3xl mx-auto flex flex-col gap-3 text-center'>
@@ -461,7 +485,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
                                                             <div className='flex flex-col gap-4 z-10 pointer-events-none'>
                                                                 {/* Visual Preview Container */}
-                                                                <div className='relative w-full h-52 rounded-xl overflow-hidden bg-texture-navy/5 border border-border/50 group-hover:border-amber/30 transition-colors'>
+                                                                <div className='relative w-full h-52 rounded-xl overflow-hidden bg-texture-navy/5 border border-black/20/50 group-hover:border-amber/30 transition-colors'>
                                                                     {imagePath &&
                                                                     imagePath !==
                                                                         'payment-flow-animation' ? (
@@ -550,7 +574,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                             </div>
 
                                                             {/* Single-Line Card Footer: Tag (Left) + Action Link (Right) */}
-                                                            <div className='pt-2 border-t border-border/40 flex items-center justify-between gap-4 z-30 mt-auto pointer-events-none'>
+                                                            <div className='pt-2 border-t border-black/20/40 flex items-center justify-between gap-4 z-30 mt-auto pointer-events-none'>
                                                                 <div className='flex items-center gap-2 text-xs font-medium text-muted-foreground truncate'>
                                                                     <CheckCircle2 className='w-3.5 h-3.5 text-amber shrink-0' />
                                                                     <span className='truncate'>
@@ -583,13 +607,18 @@ export default async function HomePage({ params }: HomePageProps) {
                     }
                     case 'integrationsList': {
                         const sectionTag =
-                            block.sectionTag || (isEn ? 'ERP INTEGRATION' : 'ERP INTEGRATIE');
+                            block.sectionTag ||
+                            (isEn ? 'ERP INTEGRATION' : 'ERP INTEGRATIE');
                         const sectionTitle =
                             block.sectionTitle ||
-                            (isEn ? 'Native connection with Microsoft Dynamics 365 Business Central' : 'De directe koppeling met Microsoft Dynamics 365 Business Central');
+                            (isEn
+                                ? 'Native connection with Microsoft Dynamics 365 Business Central'
+                                : 'De directe koppeling met Microsoft Dynamics 365 Business Central');
                         const sectionSubtitle =
                             block.sectionSubtitle ||
-                            (isEn ? 'Many platforms promise an integration, but emlinked runs natively inside your ERP environment. That means zero manual CSV exports, no complex API sync errors, and absolute data integrity. Every operational entry lands directly as a validated journal post in your ledger.' : 'Veel platformen beloven een koppeling, maar emlinked werkt native binnen uw ERP-omgeving. Dit betekent: geen handmatige exports, geen gecompliceerde API-fouten en absolute data-integriteit. Elke operationele mutatie landt direct als gevalideerde journaalpost in uw grootboek.');
+                            (isEn
+                                ? 'Many platforms promise an integration, but emlinked runs natively inside your ERP environment. That means zero manual CSV exports, no complex API sync errors, and absolute data integrity. Every operational entry lands directly as a validated journal post in your ledger.'
+                                : 'Veel platformen beloven een koppeling, maar emlinked werkt native binnen uw ERP-omgeving. Dit betekent: geen handmatige exports, geen gecompliceerde API-fouten en absolute data-integriteit. Elke operationele mutatie landt direct als gevalideerde journaalpost in uw grootboek.');
                         const integrations = block.integrations || [];
 
                         return (
@@ -726,16 +755,24 @@ export default async function HomePage({ params }: HomePageProps) {
                         );
                     }
                     case 'ctaBanner': {
-                        const tag = block.tag || (isEn ? 'DIGITALIZATION' : 'DIGITALISERING');
+                        const tag =
+                            block.tag ||
+                            (isEn ? 'DIGITALIZATION' : 'DIGITALISERING');
                         const title =
                             block.title ||
-                            (isEn ? 'Ready to digitize your property management?' : 'Klaar om uw vastgoedbeheer te digitaliseren?');
+                            (isEn
+                                ? 'Ready to digitize your property management?'
+                                : 'Klaar om uw vastgoedbeheer te digitaliseren?');
                         const subtitle =
                             block.subtitle ||
-                            (isEn ? 'Join leading property managers who eliminated manual tasks and chose 100% real-time control within Business Central.' : 'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd en kiezen voor 100% realtime controle binnen Business Central.');
+                            (isEn
+                                ? 'Join leading property managers who eliminated manual tasks and chose 100% real-time control within Business Central.'
+                                : 'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd en kiezen voor 100% realtime controle binnen Business Central.');
                         const buttonLabel =
                             block.buttonLabel ||
-                            (isEn ? 'Request a free demo' : 'Vraag een live demonstratie aan');
+                            (isEn
+                                ? 'Request a free demo'
+                                : 'Vraag een live demonstratie aan');
                         const buttonLink = block.buttonLink || '/contact';
 
                         return (
