@@ -418,15 +418,32 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                                     </div>
                                     <div className='p-6 space-y-3 flex-1 flex flex-col justify-between'>
                                         <h4 className='font-display font-bold text-base text-darkblue group-hover:text-amber transition-colors line-clamp-2'>
-                                            <Link href={isEn ? `/en/news/${rel.slug}` : `/nieuws/${rel.slug}`}>
+                                            <Link
+                                                href={
+                                                    isEn
+                                                        ? `/en/news/${rel.slug}`
+                                                        : `/nieuws/${rel.slug}`
+                                                }
+                                            >
                                                 {rel.title}
                                             </Link>
                                         </h4>
+                                        <p className='text-[0.95rem] text-slate-600 font-light'>
+                                            {rel.excerpt}
+                                        </p>
                                         <Link
-                                            href={isEn ? `/en/news/${rel.slug}` : `/nieuws/${rel.slug}`}
+                                            href={
+                                                isEn
+                                                    ? `/en/news/${rel.slug}`
+                                                    : `/nieuws/${rel.slug}`
+                                            }
                                             className='inline-flex items-center gap-1.5 text-xs font-bold text-darkblue group-hover:text-amber transition-colors pt-2'
                                         >
-                                            <span>{isEn ? 'Read Article' : 'Lees Artikel'}</span>
+                                            <span>
+                                                {isEn
+                                                    ? 'Read Article'
+                                                    : 'Lees Artikel'}
+                                            </span>
                                             <ArrowRight className='w-3.5 h-3.5' />
                                         </Link>
                                     </div>
