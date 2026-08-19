@@ -100,12 +100,12 @@
         "status": 301
     },
 
-    "https://www.emlinked.nl/onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked/": {
-        "destination": "https://www.emlinked.com/nieuws/onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked",
+    "https://www.emlinked.nl/our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked/": {
+        "destination": "https://www.emlinked.com/nieuws/our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked",
         "status": 301
     },
-    "/onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked": {
-        "destination": "/nieuws/onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked",
+    "/our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked": {
+        "destination": "/nieuws/our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked",
         "status": 301
     },
 

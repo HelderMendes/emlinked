@@ -16,26 +16,37 @@ const all18Articles = [
         _type: 'article',
         title: 'emlinked versterkt team en zet koers voor verdere groei in 2026',
         language: 'nl',
-        slug: { _type: 'slug', current: 'emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026' },
+        slug: {
+            _type: 'slug',
+            current:
+                'emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026',
+        },
         category: 'Organisatie',
-        excerpt: 'Met de uitbreiding van ons team van wervingsspecialisten en software architecten versterkt emlinked haar marktpositie in vastgoedbeheer software en interim oplossingen.',
+        excerpt:
+            'Met de uitbreiding van ons team van wervingsspecialisten en software architecten versterkt emlinked haar marktpositie in vastgoedbeheer software en interim oplossingen.',
         readTime: '4 min leestijd',
         publishedAt: '2026-01-15T09:00:00Z',
         authorName: 'Raymond Perridon',
-        imagePath: '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
+        imagePath:
+            '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
     },
     {
         _id: 'art-persbericht-team-2026-en',
         _type: 'article',
         title: 'emlinked expands team and sets course for further growth in 2026',
         language: 'en',
-        slug: { _type: 'slug', current: 'emlinked-expands-team-and-sets-course-for-2026-growth' },
+        slug: {
+            _type: 'slug',
+            current: 'emlinked-expands-team-and-sets-course-for-2026-growth',
+        },
         category: 'Organisatie',
-        excerpt: 'With the expansion of our recruitment specialists and software architects, emlinked strengthens its position in real estate management software and interim solutions.',
+        excerpt:
+            'With the expansion of our recruitment specialists and software architects, emlinked strengthens its position in real estate management software and interim solutions.',
         readTime: '4 min read',
         publishedAt: '2026-01-15T09:00:00Z',
         authorName: 'Raymond Perridon',
-        imagePath: '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
+        imagePath:
+            '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
     },
 
     // 2. Wet Goed Verhuurderschap
@@ -44,9 +55,14 @@ const all18Articles = [
         _type: 'article',
         title: 'Wet Goed Verhuurderschap: Wat verandert er voor vastgoedbeheerders?',
         language: 'nl',
-        slug: { _type: 'slug', current: 'wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders' },
+        slug: {
+            _type: 'slug',
+            current:
+                'wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders',
+        },
         category: 'Wet & Regelgeving',
-        excerpt: 'Een compleet overzicht van de verplichtingen rond de Wet goed verhuurderschap en hoe je met de juiste software boetes en dossierachterstanden voorkomt.',
+        excerpt:
+            'Een compleet overzicht van de verplichtingen rond de Wet goed verhuurderschap en hoe je met de juiste software boetes en dossierachterstanden voorkomt.',
         readTime: '5 min leestijd',
         publishedAt: '2025-11-20T10:00:00Z',
         authorName: 'Raymond Perridon',
@@ -57,9 +73,13 @@ const all18Articles = [
         _type: 'article',
         title: 'Good Landlordship Act: What changes for real estate managers?',
         language: 'en',
-        slug: { _type: 'slug', current: 'good-landlordship-act-what-changes-for-property-managers' },
+        slug: {
+            _type: 'slug',
+            current: 'good-landlordship-act-what-changes-for-property-managers',
+        },
         category: 'Wet & Regelgeving',
-        excerpt: 'A comprehensive guide to compliance requirements under the Dutch Good Landlordship Act and how automated software prevents administrative delays.',
+        excerpt:
+            'A comprehensive guide to compliance requirements under the Dutch Good Landlordship Act and how automated software prevents administrative delays.',
         readTime: '5 min read',
         publishedAt: '2025-11-20T10:00:00Z',
         authorName: 'Raymond Perridon',
@@ -72,26 +92,38 @@ const all18Articles = [
         _type: 'article',
         title: 'Vast huurcontract vs. Flexibel huurcontract: Juridische en financiële impact',
         language: 'nl',
-        slug: { _type: 'slug', current: 'vast-huurcontract-vs-flexibel-huurcontract-juridische-en-financiele-impact' },
+        slug: {
+            _type: 'slug',
+            current:
+                'vast-huurcontract-vs-flexibel-huurcontract-juridische-en-financiele-impact',
+        },
         category: 'Vastgoedbeheer',
-        excerpt: 'De Wet vaste huurcontracten herstelt de vaste huurovereenkomst als norm. Wat betekent dit voor de exploitatierendementen van vastgoedbeleggers?',
+        excerpt:
+            'De Wet vaste huurcontracten herstelt de vaste huurovereenkomst als norm. Wat betekent dit voor de exploitatierendementen van vastgoedbeleggers?',
         readTime: '6 min leestijd',
         publishedAt: '2025-09-12T11:00:00Z',
         authorName: 'Raymond Perridon',
-        imagePath: '/emlinked/news/Vast_huurcontract_vs_flexibele_huurcontract_01-scaled.jpeg',
+        imagePath:
+            '/emlinked/news/Vast_huurcontract_vs_flexibele_huurcontract_01-scaled.jpeg',
     },
     {
         _id: 'art-vast-vs-flex-huurcontract-en',
         _type: 'article',
         title: 'Permanent vs. Flexible Lease Agreements: Legal and financial impact',
         language: 'en',
-        slug: { _type: 'slug', current: 'permanent-vs-flexible-lease-agreements-legal-and-financial-impact' },
+        slug: {
+            _type: 'slug',
+            current:
+                'permanent-vs-flexible-lease-agreements-legal-and-financial-impact',
+        },
         category: 'Vastgoedbeheer',
-        excerpt: 'The Dutch Fixed Lease Act restores indefinite lease contracts as standard. What does this mean for property portfolio yields?',
+        excerpt:
+            'The Dutch Fixed Lease Act restores indefinite lease contracts as standard. What does this mean for property portfolio yields?',
         readTime: '6 min read',
         publishedAt: '2025-09-12T11:00:00Z',
         authorName: 'Raymond Perridon',
-        imagePath: '/emlinked/news/Vast_huurcontract_vs_flexibele_huurcontract_01-scaled.jpeg',
+        imagePath:
+            '/emlinked/news/Vast_huurcontract_vs_flexibele_huurcontract_01-scaled.jpeg',
     },
 
     // 4. Box 3 Rendement 2026
@@ -100,9 +132,14 @@ const all18Articles = [
         _type: 'article',
         title: 'Box 3 Rendement 2026: Werkelijk rendement vs. Forfaitaire heffing',
         language: 'nl',
-        slug: { _type: 'slug', current: 'box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing' },
+        slug: {
+            _type: 'slug',
+            current:
+                'box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing',
+        },
         category: 'Wet & Regelgeving',
-        excerpt: 'De juridische uitspraken rondom Box 3 dwingen vastgoedbeleggers om werkelijke inkomsten en direct toewijsbare kosten nauwkeurig te registreren.',
+        excerpt:
+            'De juridische uitspraken rondom Box 3 dwingen vastgoedbeleggers om werkelijke inkomsten en direct toewijsbare kosten nauwkeurig te registreren.',
         readTime: '5 min leestijd',
         publishedAt: '2025-06-05T08:30:00Z',
         authorName: 'Manfred',
@@ -113,9 +150,13 @@ const all18Articles = [
         _type: 'article',
         title: 'Box 3 Tax 2026: Actual returns vs. Statutory rate in the Netherlands',
         language: 'en',
-        slug: { _type: 'slug', current: 'box-3-tax-2026-actual-returns-vs-statutory-rate' },
+        slug: {
+            _type: 'slug',
+            current: 'box-3-tax-2026-actual-returns-vs-statutory-rate',
+        },
         category: 'Wet & Regelgeving',
-        excerpt: 'Supreme Court rulings force real estate investors to track actual rental yields and directly attributable maintenance expenses.',
+        excerpt:
+            'Supreme Court rulings force real estate investors to track actual rental yields and directly attributable maintenance expenses.',
         readTime: '5 min read',
         publishedAt: '2025-06-05T08:30:00Z',
         authorName: 'Manfred',
@@ -128,9 +169,14 @@ const all18Articles = [
         _type: 'article',
         title: 'Geautomatiseerde incasso & bankaflettering in Business Central 23',
         language: 'nl',
-        slug: { _type: 'slug', current: 'geautomatiseerde-incasso-en-bankaflettering-in-business-central-23' },
+        slug: {
+            _type: 'slug',
+            current:
+                'geautomatiseerde-incasso-en-bankaflettering-in-business-central-23',
+        },
         category: 'ERP & Business Central',
-        excerpt: 'Hoe native SEPA-extensies en PSD2-bankkoppelingen handmatig afletterwerk met 95% verminderen voor professionele vastgoedbeheerders.',
+        excerpt:
+            'Hoe native SEPA-extensies en PSD2-bankkoppelingen handmatig afletterwerk met 95% verminderen voor professionele vastgoedbeheerders.',
         readTime: '4 min leestijd',
         publishedAt: '2025-03-18T14:00:00Z',
         authorName: 'Ebenezer',
@@ -141,9 +187,14 @@ const all18Articles = [
         _type: 'article',
         title: 'Automated direct debit & bank reconciliation in Business Central 23',
         language: 'en',
-        slug: { _type: 'slug', current: 'automated-direct-debit-and-bank-reconciliation-in-business-central-23' },
+        slug: {
+            _type: 'slug',
+            current:
+                'automated-direct-debit-and-bank-reconciliation-in-business-central-23',
+        },
         category: 'ERP & Business Central',
-        excerpt: 'How native SEPA extensions and PSD2 banking APIs eliminate manual ledger matching by up to 95% for property management companies.',
+        excerpt:
+            'How native SEPA extensions and PSD2 banking APIs eliminate manual ledger matching by up to 95% for property management companies.',
         readTime: '4 min read',
         publishedAt: '2025-03-18T14:00:00Z',
         authorName: 'Ebenezer',
@@ -156,9 +207,14 @@ const all18Articles = [
         _type: 'article',
         title: 'Online vastgoedbeheer software: De overstap van Excel naar ERP',
         language: 'nl',
-        slug: { _type: 'slug', current: 'online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp' },
+        slug: {
+            _type: 'slug',
+            current:
+                'online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp',
+        },
         category: 'Vastgoedbeheer',
-        excerpt: 'Excel voldoet bij kleine portefeuilles, maar leidt bij groei tot foutgevoelige indexaties en achterstallige incasso’s. Waarom overstappen op cloud ERP?',
+        excerpt:
+            'Excel voldoet bij kleine portefeuilles, maar leidt bij groei tot foutgevoelige indexaties en achterstallige incasso’s. Waarom overstappen op cloud ERP?',
         readTime: '5 min leestijd',
         publishedAt: '2025-01-10T10:00:00Z',
         authorName: 'Iryna Samiliak',
@@ -169,9 +225,14 @@ const all18Articles = [
         _type: 'article',
         title: 'Online real estate management software: Transitioning from Excel to ERP',
         language: 'en',
-        slug: { _type: 'slug', current: 'online-real-estate-management-software-transitioning-from-excel-to-erp' },
+        slug: {
+            _type: 'slug',
+            current:
+                'online-real-estate-management-software-transitioning-from-excel-to-erp',
+        },
         category: 'Vastgoedbeheer',
-        excerpt: 'Excel works for small portfolios, but triggers error-prone indexations as portfolios scale. Why upgrade to native cloud ERP?',
+        excerpt:
+            'Excel works for small portfolios, but triggers error-prone indexations as portfolios scale. Why upgrade to native cloud ERP?',
         readTime: '5 min read',
         publishedAt: '2025-01-10T10:00:00Z',
         authorName: 'Iryna Samiliak',
@@ -184,9 +245,13 @@ const all18Articles = [
         _type: 'article',
         title: 'Nieuw: emlinked online vastgoedbeheer voor iPhone en iPad',
         language: 'nl',
-        slug: { _type: 'slug', current: 'nieuw-emlinked-online-vastgoedbeheer-voor-iphone-en-ipad' },
+        slug: {
+            _type: 'slug',
+            current: 'nieuw-emlinked-online-vastgoedbeheer-voor-iphone-en-ipad',
+        },
         category: 'Vastgoedbeheer',
-        excerpt: 'Met de nieuwe emlinked mobiele extensie hebben vastgoedbeheerders en technische inspecteurs onderweg direct inzicht in de complete portefeuille.',
+        excerpt:
+            'Met de nieuwe emlinked mobiele extensie hebben vastgoedbeheerders en technische inspecteurs onderweg direct inzicht in de complete portefeuille.',
         readTime: '3 min leestijd',
         publishedAt: '2024-11-14T09:00:00Z',
         authorName: 'Ebenezer',
@@ -197,9 +262,13 @@ const all18Articles = [
         _type: 'article',
         title: 'New: emlinked property management for iPhone and iPad',
         language: 'en',
-        slug: { _type: 'slug', current: 'new-emlinked-property-management-for-iphone-and-ipad' },
+        slug: {
+            _type: 'slug',
+            current: 'new-emlinked-property-management-for-iphone-and-ipad',
+        },
         category: 'Vastgoedbeheer',
-        excerpt: 'With the new emlinked mobile application, property managers and field inspectors gain instant real-time access to portfolio data on the go.',
+        excerpt:
+            'With the new emlinked mobile application, property managers and field inspectors gain instant real-time access to portfolio data on the go.',
         readTime: '3 min read',
         publishedAt: '2024-11-14T09:00:00Z',
         authorName: 'Ebenezer',
@@ -212,9 +281,13 @@ const all18Articles = [
         _type: 'article',
         title: 'CBS wijzigt Consumentenprijsindex (CPI): Wat betekent dit voor de huurindexatie?',
         language: 'nl',
-        slug: { _type: 'slug', current: 'cbs-wijzigt-consumentenprijsindex-cpi' },
+        slug: {
+            _type: 'slug',
+            current: 'cbs-wijzigt-consumentenprijsindex-cpi',
+        },
         category: 'Wet & Regelgeving',
-        excerpt: 'Het Centraal Bureau voor de Statistiek vernieuwt de berekeningsmethode van de CPI. Ontdek hoe emlinked de nieuwste cijfers automatisch verwerkt.',
+        excerpt:
+            'Het Centraal Bureau voor de Statistiek vernieuwt de berekeningsmethode van de CPI. Ontdek hoe emlinked de nieuwste cijfers automatisch verwerkt.',
         readTime: '4 min leestijd',
         publishedAt: '2024-09-08T11:00:00Z',
         authorName: 'Manfred',
@@ -225,9 +298,13 @@ const all18Articles = [
         _type: 'article',
         title: 'CBS updates Consumer Price Index (CPI): Impact on rent indexation',
         language: 'en',
-        slug: { _type: 'slug', current: 'cbs-updates-consumer-price-index-cpi' },
+        slug: {
+            _type: 'slug',
+            current: 'cbs-updates-consumer-price-index-cpi',
+        },
         category: 'Wet & Regelgeving',
-        excerpt: 'Statistics Netherlands updates the CPI calculation model. Learn how emlinked automatically syncs CPI rates directly into Business Central.',
+        excerpt:
+            'Statistics Netherlands updates the CPI calculation model. Learn how emlinked automatically syncs CPI rates directly into Business Central.',
         readTime: '4 min read',
         publishedAt: '2024-09-08T11:00:00Z',
         authorName: 'Manfred',
@@ -240,9 +317,13 @@ const all18Articles = [
         _type: 'article',
         title: 'emlinked heeft een nieuw telefoonnummer en bereikbaarheid',
         language: 'nl',
-        slug: { _type: 'slug', current: 'emlinked-heeft-een-nieuw-telefoonnummer' },
+        slug: {
+            _type: 'slug',
+            current: 'emlinked-heeft-een-nieuw-telefoonnummer',
+        },
         category: 'Organisatie',
-        excerpt: 'Om onze klanten nog sneller te woord te staan, hebben we onze telefonische support- en advieslijnen gecentraliseerd.',
+        excerpt:
+            'Om onze klanten nog sneller te woord te staan, hebben we onze telefonische support- en advieslijnen gecentraliseerd.',
         readTime: '2 min leestijd',
         publishedAt: '2024-07-01T08:00:00Z',
         authorName: 'Elisabeth',
@@ -253,9 +334,13 @@ const all18Articles = [
         _type: 'article',
         title: 'emlinked launches new phone contact line',
         language: 'en',
-        slug: { _type: 'slug', current: 'emlinked-launches-new-phone-contact-line' },
+        slug: {
+            _type: 'slug',
+            current: 'emlinked-launches-new-phone-contact-line',
+        },
         category: 'Organisatie',
-        excerpt: 'To assist our clients faster, we have centralized our dedicated support and executive advice phone numbers.',
+        excerpt:
+            'To assist our clients faster, we have centralized our dedicated support and executive advice phone numbers.',
         readTime: '2 min read',
         publishedAt: '2024-07-01T08:00:00Z',
         authorName: 'Elisabeth',
@@ -270,7 +355,8 @@ const all18Articles = [
         language: 'nl',
         slug: { _type: 'slug', current: 'wij-zijn-verhuisd-naar-naarden' },
         category: 'Organisatie',
-        excerpt: 'Wegens aanhoudende groei is ons kantoor verhuisd naar een inspirerende nieuwe werkomgeving in Naarden.',
+        excerpt:
+            'Wegens aanhoudende groei is ons kantoor verhuisd naar een inspirerende nieuwe werkomgeving in Naarden.',
         readTime: '3 min leestijd',
         publishedAt: '2024-05-12T10:00:00Z',
         authorName: 'Raymond Perridon',
@@ -281,9 +367,13 @@ const all18Articles = [
         _type: 'article',
         title: 'We have moved to our new office location in Naarden!',
         language: 'en',
-        slug: { _type: 'slug', current: 'we-have-moved-to-our-new-office-in-naarden' },
+        slug: {
+            _type: 'slug',
+            current: 'we-have-moved-to-our-new-office-in-naarden',
+        },
         category: 'Organisatie',
-        excerpt: 'Due to ongoing expansion, our headquarters has relocated to a modern office in Naarden.',
+        excerpt:
+            'Due to ongoing expansion, our headquarters has relocated to a modern office in Naarden.',
         readTime: '3 min read',
         publishedAt: '2024-05-12T10:00:00Z',
         authorName: 'Raymond Perridon',
@@ -298,7 +388,8 @@ const all18Articles = [
         language: 'nl',
         slug: { _type: 'slug', current: 'emlinked-trainingsaanbod-2024' },
         category: 'Organisatie',
-        excerpt: 'Nieuwe interactieve workshops en trainingen voor vastgoedbeheerders en financieel medewerkers om ERP-processen optimaal te benutten.',
+        excerpt:
+            'Nieuwe interactieve workshops en trainingen voor vastgoedbeheerders en financieel medewerkers om ERP-processen optimaal te benutten.',
         readTime: '4 min leestijd',
         publishedAt: '2024-03-20T09:00:00Z',
         authorName: 'Elisabeth',
@@ -309,9 +400,14 @@ const all18Articles = [
         _type: 'article',
         title: 'emlinked training program: Maximize value from property software',
         language: 'en',
-        slug: { _type: 'slug', current: 'emlinked-training-program-maximize-value-from-property-software' },
+        slug: {
+            _type: 'slug',
+            current:
+                'emlinked-training-program-maximize-value-from-property-software',
+        },
         category: 'Organisatie',
-        excerpt: 'New interactive workshops for property managers and financial teams to optimize ERP workflows.',
+        excerpt:
+            'New interactive workshops for property managers and financial teams to optimize ERP workflows.',
         readTime: '4 min read',
         publishedAt: '2024-03-20T09:00:00Z',
         authorName: 'Elisabeth',
@@ -324,9 +420,14 @@ const all18Articles = [
         _type: 'article',
         title: 'Onze klanten beheren al meer dan € 15 miljard aan vastgoed met emlinked',
         language: 'nl',
-        slug: { _type: 'slug', current: 'onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked' },
+        slug: {
+            _type: 'slug',
+            current:
+                'our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked',
+        },
         category: 'Organisatie',
-        excerpt: 'Een belangrijke mijlpaal: meer dan 15 miljard euro aan residentieel en commercieel vastgoed wordt dagelijks geadministreerd via emlinked software.',
+        excerpt:
+            'Een belangrijke mijlpaal: meer dan 15 miljard euro aan residentieel en commercieel vastgoed wordt dagelijks geadministreerd via emlinked software.',
         readTime: '4 min leestijd',
         publishedAt: '2024-01-25T11:00:00Z',
         authorName: 'Raymond Perridon',
@@ -337,9 +438,14 @@ const all18Articles = [
         _type: 'article',
         title: 'Our clients manage over €15 billion in real estate assets with emlinked',
         language: 'en',
-        slug: { _type: 'slug', current: 'our-clients-manage-over-15-billion-in-real-estate-assets-with-emlinked' },
+        slug: {
+            _type: 'slug',
+            current:
+                'our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked',
+        },
         category: 'Organisatie',
-        excerpt: 'A major milestone: over 15 billion euros in residential and commercial real estate is managed daily through emlinked software.',
+        excerpt:
+            'A major milestone: over 15 billion euros in residential and commercial real estate is managed daily through emlinked software.',
         readTime: '4 min read',
         publishedAt: '2024-01-25T11:00:00Z',
         authorName: 'Raymond Perridon',
@@ -352,9 +458,14 @@ const all18Articles = [
         _type: 'article',
         title: 'Direct Banking: Geautomatiseerde banktransacties en betaalbestanden',
         language: 'nl',
-        slug: { _type: 'slug', current: 'direct-banking-banktransacties-bankafschriften-betaalbestanden' },
+        slug: {
+            _type: 'slug',
+            current:
+                'direct-banking-banktransacties-bankafschriften-betaalbestanden',
+        },
         category: 'ERP & Business Central',
-        excerpt: 'Ontdek hoe de Direct Banking module bankafschriften automatisch inleest en huuroverschrijvingen direct verwerkt.',
+        excerpt:
+            'Ontdek hoe de Direct Banking module bankafschriften automatisch inleest en huuroverschrijvingen direct verwerkt.',
         readTime: '4 min leestijd',
         publishedAt: '2023-11-15T10:00:00Z',
         authorName: 'Manfred',
@@ -369,7 +480,8 @@ const all18Articles = [
         language: 'nl',
         slug: { _type: 'slug', current: 'emlinked-huurdersportaal' },
         category: 'Vastgoedbeheer',
-        excerpt: 'Verhoog de tevredenheid van huurders met een 24/7 digitaal portaal voor onderhoudsverzoeken, huurnota’s en contractgegevens.',
+        excerpt:
+            'Verhoog de tevredenheid van huurders met een 24/7 digitaal portaal voor onderhoudsverzoeken, huurnota’s en contractgegevens.',
         readTime: '4 min leestijd',
         publishedAt: '2023-09-10T14:00:00Z',
         authorName: 'Thorwald',
@@ -382,9 +494,14 @@ const all18Articles = [
         _type: 'article',
         title: '5 redenen waarom het belangrijk is om uw vastgoedsoftware te updaten',
         language: 'nl',
-        slug: { _type: 'slug', current: '5-redenen-waarom-het-belangrijk-is-om-uw-systemen-te-updaten' },
+        slug: {
+            _type: 'slug',
+            current:
+                '5-redenen-waarom-het-belangrijk-is-om-uw-systemen-te-updaten',
+        },
         category: 'ERP & Business Central',
-        excerpt: 'Verouderde legacy-systemen brengen beveilingsrisico’s en trage koppelingen met zich mee. 5 redenen om over te stappen op de nieuwste Business Central cloud-versie.',
+        excerpt:
+            'Verouderde legacy-systemen brengen beveilingsrisico’s en trage koppelingen met zich mee. 5 redenen om over te stappen op de nieuwste Business Central cloud-versie.',
         readTime: '5 min leestijd',
         publishedAt: '2023-07-04T09:30:00Z',
         authorName: 'Ebenezer',
@@ -399,7 +516,8 @@ const all18Articles = [
         language: 'nl',
         slug: { _type: 'slug', current: 'vastgoedbeleggers-in-beweging' },
         category: 'Vastgoedbeheer',
-        excerpt: 'Stijgende rentes en veranderende regelgeving vragen om scherpe sturing op rendement en actueel inzicht in vastgoedportefeuilles.',
+        excerpt:
+            'Stijgende rentes en veranderende regelgeving vragen om scherpe sturing op rendement en actueel inzicht in vastgoedportefeuilles.',
         readTime: '5 min leestijd',
         publishedAt: '2023-05-18T11:00:00Z',
         authorName: 'Raymond Perridon',
@@ -414,7 +532,8 @@ const all18Articles = [
         language: 'nl',
         slug: { _type: 'slug', current: 'voorstellen-nieuwe-box-3' },
         category: 'Wet & Regelgeving',
-        excerpt: 'Een grondige analyse van het wetsvoorstel werkelijk rendement in Box 3 en de voorbereiding voor vastgoedbeleggers.',
+        excerpt:
+            'Een grondige analyse van het wetsvoorstel werkelijk rendement in Box 3 en de voorbereiding voor vastgoedbeleggers.',
         readTime: '5 min leestijd',
         publishedAt: '2023-03-22T10:00:00Z',
         authorName: 'Manfred',
@@ -427,9 +546,13 @@ const all18Articles = [
         _type: 'article',
         title: 'Nieuwe update emlinked vastgoedbeheer software beschikbaar',
         language: 'nl',
-        slug: { _type: 'slug', current: 'nieuwe-update-emlinked-vastgoedbeheer-software' },
+        slug: {
+            _type: 'slug',
+            current: 'nieuwe-update-emlinked-vastgoedbeheer-software',
+        },
         category: 'ERP & Business Central',
-        excerpt: 'De nieuwste release brengt snellere CPI-indexatie berekeningen en een vernieuwd dashboard voor vastgoedbeheerders.',
+        excerpt:
+            'De nieuwste release brengt snellere CPI-indexatie berekeningen en een vernieuwd dashboard voor vastgoedbeheerders.',
         readTime: '4 min leestijd',
         publishedAt: '2023-01-15T09:00:00Z',
         authorName: 'Ebenezer',

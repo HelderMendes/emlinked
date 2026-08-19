@@ -13,6 +13,7 @@ import {
     ArrowRight,
     CheckCircle2
 } from 'lucide-react';
+import { PortableText, PortableTextComponents } from 'next-sanity';
 import { sanityFetch } from '@/lib/sanity';
 import { getImageUrl } from '@/sanity/image';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
@@ -20,6 +21,49 @@ import { GlowingLink } from '@/components/ui/GlowingButton';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+const portableTextComponents: PortableTextComponents = {
+    marks: {
+        strong: ({ children }: { children?: React.ReactNode }) => <strong className="font-bold text-slate-900">{children}</strong>,
+        em: ({ children }: { children?: React.ReactNode }) => <em className="italic">{children}</em>,
+        code: ({ children }: { children?: React.ReactNode }) => <code className="bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-amber">{children}</code>,
+        underline: ({ children }: { children?: React.ReactNode }) => <u className="underline underline-offset-4">{children}</u>,
+        'strike-through': ({ children }: { children?: React.ReactNode }) => <span className="line-through">{children}</span>,
+        link: ({ value, children }: { value?: any; children?: React.ReactNode }) => {
+            const href = value?.href || '#';
+            const target = href.startsWith('http') ? '_blank' : undefined;
+            return (
+                <a
+                    href={href}
+                    target={target}
+                    rel={target ? 'noopener noreferrer' : undefined}
+                    className="text-amber hover:text-darkblue underline font-semibold transition-colors"
+                >
+                    {children}
+                </a>
+            );
+        },
+    },
+    block: {
+        h2: ({ children }: { children?: React.ReactNode }) => <h2 className="font-display text-2xl md:text-3xl font-bold text-darkblue pt-6 pb-2 leading-tight">{children}</h2>,
+        h3: ({ children }: { children?: React.ReactNode }) => <h3 className="font-display text-xl md:text-2xl font-bold text-darkblue pt-4 pb-2 leading-tight">{children}</h3>,
+        h4: ({ children }: { children?: React.ReactNode }) => <h4 className="font-display text-lg font-bold text-darkblue pt-3 pb-1">{children}</h4>,
+        normal: ({ children }: { children?: React.ReactNode }) => <p className="text-base md:text-lg text-slate-800 leading-relaxed my-4">{children}</p>,
+        blockquote: ({ children }: { children?: React.ReactNode }) => (
+            <blockquote className="border-l-4 border-amber pl-4 italic text-slate-700 my-6 py-2 bg-amber/5 rounded-r-lg font-serif">
+                {children}
+            </blockquote>
+        ),
+    },
+    list: {
+        bullet: ({ children }: { children?: React.ReactNode }) => <ul className="list-disc list-inside space-y-2 my-4 text-slate-800 text-base md:text-lg">{children}</ul>,
+        number: ({ children }: { children?: React.ReactNode }) => <ol className="list-decimal list-inside space-y-2 my-4 text-slate-800 text-base md:text-lg">{children}</ol>,
+    },
+    listItem: {
+        bullet: ({ children }: { children?: React.ReactNode }) => <li className="leading-relaxed">{children}</li>,
+        number: ({ children }: { children?: React.ReactNode }) => <li className="leading-relaxed">{children}</li>,
+    },
+};
 
 interface ArticleDetailPageProps {
     params: Promise<{ locale: string; slug: string }>;
@@ -407,23 +451,7 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                             </p>
                         ))
                     ) : article.body ? (
-                        Array.isArray(article.body) ? (
-                            article.body.map((block: any, idx: number) => {
-                                if (block._type === 'block' && block.children) {
-                                    const text = block.children.map((c: any) => c.text).join('');
-                                    if (block.style === 'h2') {
-                                        return <h2 key={idx} className='font-display text-2xl font-bold text-darkblue pt-4'>{text}</h2>;
-                                    }
-                                    if (block.style === 'h3') {
-                                        return <h3 key={idx} className='font-display text-xl font-bold text-darkblue pt-2'>{text}</h3>;
-                                    }
-                                    return <p key={idx} className='text-base md:text-lg text-slate-800 leading-relaxed'>{text}</p>;
-                                }
-                                return null;
-                            })
-                        ) : (
-                            <p className='text-base md:text-lg text-slate-800 leading-relaxed'>{String(article.body)}</p>
-                        )
+                        <PortableText value={article.body} components={portableTextComponents} />
                     ) : (
                         <p className='text-base md:text-lg text-slate-800 leading-relaxed'>
                             {article.excerpt}

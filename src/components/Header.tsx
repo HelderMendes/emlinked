@@ -27,16 +27,22 @@ function getSubIcon(title: string) {
         return BsBuilding;
     if (t.includes('huurdersportaal') || t.includes('tenant'))
         return BsChatSquareText;
-    if (t.includes('payment') || t.includes('betal'))
-        return BsCreditCard2Back;
+    if (t.includes('payment') || t.includes('betal')) return BsCreditCard2Back;
     if (t.includes('referenties') || t.includes('references'))
         return BsPeopleFill;
-    if (t.includes('indexatie') || t.includes('indexation') || t.includes('cpi'))
+    if (
+        t.includes('indexatie') ||
+        t.includes('indexation') ||
+        t.includes('cpi')
+    )
         return BsGraphUpArrow;
-    if (t.includes('prolongatie') || t.includes('invoicing') || t.includes('facturatie'))
+    if (
+        t.includes('prolongatie') ||
+        t.includes('invoicing') ||
+        t.includes('facturatie')
+    )
         return BsReceipt;
-    if (t.includes('boekhouding') || t.includes('accounting'))
-        return BsBank2;
+    if (t.includes('boekhouding') || t.includes('accounting')) return BsBank2;
     return BsArrowUpRight;
 }
 
@@ -66,14 +72,15 @@ const translations = {
         vastgoedbeheer: 'Vastgoedbeheer Software',
         vastgoedbeheerDesc: 'De core SaaS module voor vastgoedmanagement.',
         huurdersportaal: 'Huurdersportaal',
-        huurdersportaalDesc: 'Self-service portaal voor communicatie & meldingen.',
+        huurdersportaalDesc:
+            'Self-service portaal voor communicatie & meldingen.',
         payment: 'Payment Software',
         paymentDesc: 'Geautomatiseerde betalingstransacties.',
         team: 'Het Team',
         box3: 'Box 3 Check ⚡',
         integrations: 'Integraties',
         referenties: 'Referenties',
-        docs: 'Documentatie'
+        docs: 'Documentatie',
     },
     en: {
         vastgoedsoftware: 'Property Software',
@@ -95,8 +102,8 @@ const translations = {
         box3: 'Box 3 Calculator ⚡',
         integrations: 'Integrations',
         referenties: 'References',
-        docs: 'Docs Portal'
-    }
+        docs: 'Docs Portal',
+    },
 } as const;
 
 export default function Header({ locale = 'nl', settings }: HeaderProps) {
@@ -307,37 +314,56 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
 
         // Article slug translation map (NL <-> EN)
         const articleSlugMap: Record<string, string> = {
-            'emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026': 'emlinked-expands-team-and-sets-course-for-2026-growth',
-            'wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders': 'good-landlordship-act-what-changes-for-property-managers',
-            'vast-huurcontract-vs-flexibel-huurcontract-juridische-en-financiele-impact': 'permanent-vs-flexible-lease-agreements-legal-and-financial-impact',
-            'box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing': 'box-3-tax-2026-actual-returns-vs-statutory-rate',
-            'geautomatiseerde-incasso-en-bankaflettering-in-business-central-23': 'automated-direct-debit-and-bank-reconciliation-in-business-central-23',
-            'online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp': 'online-real-estate-management-software-transitioning-from-excel-to-erp',
-            'nieuw-emlinked-online-vastgoedbeheer-voor-iphone-en-ipad': 'new-emlinked-property-management-for-iphone-and-ipad',
-            'cbs-wijzigt-consumentenprijsindex-cpi': 'cbs-updates-consumer-price-index-cpi',
-            'emlinked-heeft-een-nieuw-telefoonnummer': 'emlinked-launches-new-phone-contact-line',
-            'wij-zijn-verhuisd-naar-naarden': 'we-have-moved-to-our-new-office-in-naarden',
-            'emlinked-trainingsaanbod-2024': 'emlinked-training-program-maximize-value-from-property-software',
-            'onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked': 'our-clients-manage-over-15-billion-in-real-estate-assets-with-emlinked',
-            'direct-banking-banktransacties-bankafschriften-betaalbestanden': 'direct-banking-automated-transactions-and-payment-files',
+            'emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026':
+                'emlinked-expands-team-and-sets-course-for-2026-growth',
+            'wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders':
+                'good-landlordship-act-what-changes-for-property-managers',
+            'vast-huurcontract-vs-flexibel-huurcontract-juridische-en-financiele-impact':
+                'permanent-vs-flexible-lease-agreements-legal-and-financial-impact',
+            'box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing':
+                'box-3-tax-2026-actual-returns-vs-statutory-rate',
+            'geautomatiseerde-incasso-en-bankaflettering-in-business-central-23':
+                'automated-direct-debit-and-bank-reconciliation-in-business-central-23',
+            'online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp':
+                'online-real-estate-management-software-transitioning-from-excel-to-erp',
+            'nieuw-emlinked-online-vastgoedbeheer-voor-iphone-en-ipad':
+                'new-emlinked-property-management-for-iphone-and-ipad',
+            'cbs-wijzigt-consumentenprijsindex-cpi':
+                'cbs-updates-consumer-price-index-cpi',
+            'emlinked-heeft-een-nieuw-telefoonnummer':
+                'emlinked-launches-new-phone-contact-line',
+            'wij-zijn-verhuisd-naar-naarden':
+                'we-have-moved-to-our-new-office-in-naarden',
+            'emlinked-trainingsaanbod-2024':
+                'emlinked-training-program-maximize-value-from-property-software',
+            'onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked':
+                'our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked',
+            'direct-banking-banktransacties-bankafschriften-betaalbestanden':
+                'direct-banking-automated-transactions-and-payment-files',
             'emlinked-huurdersportaal': 'emlinked-tenant-portal-self-service',
-            '5-redenen-waarom-het-belangrijk-is-om-uw-systemen-te-updaten': '5-reasons-why-updating-your-real-estate-software-is-essential',
-            'vastgoedbeleggers-in-beweging': 'real-estate-investors-on-the-move-trends-and-market-updates',
-            'voorstellen-nieuwe-box-3': 'new-dutch-box-3-proposals-implications-for-rental-property-portfolios',
-            'nieuwe-update-emlinked-vastgoedbeheer-software': 'new-update-available-for-emlinked-property-management-software',
+            '5-redenen-waarom-het-belangrijk-is-om-uw-systemen-te-updaten':
+                '5-reasons-why-updating-your-real-estate-software-is-essential',
+            'vastgoedbeleggers-in-beweging':
+                'real-estate-investors-on-the-move-trends-and-market-updates',
+            'voorstellen-nieuwe-box-3':
+                'new-dutch-box-3-proposals-implications-for-rental-property-portfolios',
+            'nieuwe-update-emlinked-vastgoedbeheer-software':
+                'new-update-available-for-emlinked-property-management-software',
         };
 
         // Reverse map (EN -> NL)
-        const reverseArticleSlugMap: Record<string, string> = Object.fromEntries(
-            Object.entries(articleSlugMap).map(([nl, en]) => [en, nl])
-        );
+        const reverseArticleSlugMap: Record<string, string> =
+            Object.fromEntries(
+                Object.entries(articleSlugMap).map(([nl, en]) => [en, nl]),
+            );
 
         if (targetLocale === 'en') {
             // Check if current URL is a news article detail page
             const newsNlMatch = path.match(/^\/nieuws\/(.+)$/);
             if (newsNlMatch) {
                 const currentNlSlug = newsNlMatch[1];
-                const mappedEnSlug = articleSlugMap[currentNlSlug] || currentNlSlug;
+                const mappedEnSlug =
+                    articleSlugMap[currentNlSlug] || currentNlSlug;
                 return `/en/news/${mappedEnSlug}`;
             }
 
@@ -364,7 +390,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             const newsEnMatch = path.match(/^\/en\/news\/(.+)$/);
             if (newsEnMatch) {
                 const currentEnSlug = newsEnMatch[1];
-                const mappedNlSlug = reverseArticleSlugMap[currentEnSlug] || currentEnSlug;
+                const mappedNlSlug =
+                    reverseArticleSlugMap[currentEnSlug] || currentEnSlug;
                 return `/nieuws/${mappedNlSlug}`;
             }
 
@@ -529,7 +556,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                         document.cookie =
                                             'emlinked_locale=nl; path=/; max-age=31536000; SameSite=Lax';
                                         setLangDropdownOpen(false);
-                                        window.location.href = getLocalePath('nl');
+                                        window.location.href =
+                                            getLocalePath('nl');
                                     }}
                                     className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
                                 >
@@ -561,7 +589,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                         document.cookie =
                                             'emlinked_locale=en; path=/; max-age=31536000; SameSite=Lax';
                                         setLangDropdownOpen(false);
-                                        window.location.href = getLocalePath('en');
+                                        window.location.href =
+                                            getLocalePath('en');
                                     }}
                                     className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
                                 >
@@ -818,7 +847,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                             document.cookie =
                                                 'emlinked_locale=nl; path=/; max-age=31536000; SameSite=Lax';
                                             setLangDropdownOpen(false);
-                                            window.location.href = getLocalePath('nl');
+                                            window.location.href =
+                                                getLocalePath('nl');
                                         }}
                                         className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
                                     >
@@ -852,7 +882,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                             document.cookie =
                                                 'emlinked_locale=en; path=/; max-age=31536000; SameSite=Lax';
                                             setLangDropdownOpen(false);
-                                            window.location.href = getLocalePath('en');
+                                            window.location.href =
+                                                getLocalePath('en');
                                         }}
                                         className='flex items-center justify-between px-2 py-1 text-sm font-semibold rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition-all'
                                     >

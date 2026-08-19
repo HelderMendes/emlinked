@@ -22,9 +22,13 @@ async function uploadImageAsset(fileName) {
 
     try {
         console.log(`📤 Uploading image asset to Sanity CDN: ${fileName}...`);
-        const asset = await client.assets.upload('image', fs.createReadStream(filePath), {
-            filename: fileName,
-        });
+        const asset = await client.assets.upload(
+            'image',
+            fs.createReadStream(filePath),
+            {
+                filename: fileName,
+            },
+        );
         console.log(`  ✅ Uploaded asset: ${asset._id}`);
         return asset._id;
     } catch (e) {
@@ -47,12 +51,13 @@ const articlesData = [
         nl: {
             title: 'emlinked versterkt team en zet koers voor verdere groei in 2026',
             slug: 'emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026',
-            excerpt: 'Met de uitbreiding van ons team van wervingsspecialisten en software architecten versterkt emlinked haar marktpositie in vastgoedbeheer software en interim oplossingen.',
+            excerpt:
+                'Met de uitbreiding van ons team van wervingsspecialisten en software architecten versterkt emlinked haar marktpositie in vastgoedbeheer software en interim oplossingen.',
             readTime: '4 min leestijd',
             keyTakeaways: [
                 'Versterking van het interim recruitment team voor versnelde plaatsing van vastgoed- en IT-specialisten.',
                 'Kortere oplevertijden voor custom Business Central add-ons en verhuurmodules.',
-                'Focus op schaalbare ondersteuning voor woningcorporaties en commerciële beheerders.'
+                'Focus op schaalbare ondersteuning voor woningcorporaties en commerciële beheerders.',
             ],
             body: [
                 'Het nieuwe jaar staat bij emlinked in het teken van versnelde innovatie en verdere verdieping van onze dienstverlening. Door de aanhoudende vraag naar zowel gekwalificeerde interim specialisten als geavanceerde vastgoedbeheer apps op het Microsoft Dynamics 365 platform, breiden we ons kernteam verder uit.',
@@ -63,12 +68,13 @@ const articlesData = [
         en: {
             title: 'emlinked expands team and sets course for further growth in 2026',
             slug: 'emlinked-expands-team-and-sets-course-for-2026-growth',
-            excerpt: 'With the expansion of our recruitment specialists and software architects, emlinked strengthens its position in real estate management software and interim solutions.',
+            excerpt:
+                'With the expansion of our recruitment specialists and software architects, emlinked strengthens its position in real estate management software and interim solutions.',
             readTime: '4 min read',
             keyTakeaways: [
                 'Expansion of the interim recruitment team to accelerate placements of real estate and IT specialists.',
                 'Faster delivery cycles for custom Business Central extensions and lease modules.',
-                'Focus on scalable support for housing associations and commercial managers.'
+                'Focus on scalable support for housing associations and commercial managers.',
             ],
             body: [
                 'The new year at emlinked marks accelerated innovation and deeper client engagement. Driven by sustained demand for qualified interim specialists and native real estate management apps on Microsoft Dynamics 365 Business Central, we are expanding our core team.',
@@ -87,11 +93,12 @@ const articlesData = [
         nl: {
             title: 'Wet Goed Verhuurderschap: Wat verandert er voor vastgoedbeheerders?',
             slug: 'wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders',
-            excerpt: 'Een compleet overzicht van de verplichtingen rond de Wet goed verhuurderschap en hoe je met de juiste software boetes en dossierachterstanden voorkomt.',
+            excerpt:
+                'Een compleet overzicht van de verplichtingen rond de Wet goed verhuurderschap en hoe je met de juiste software boetes en dossierachterstanden voorkomt.',
             readTime: '5 min leestijd',
             keyTakeaways: [
                 'Geautomatiseerde dossiervoering voorkomt achterstanden en juridische risico’s.',
-                'Microsoft Dynamics 365 BC integratie geeft direct inzicht in de complete portefeuille.'
+                'Microsoft Dynamics 365 BC integratie geeft direct inzicht in de complete portefeuille.',
             ],
             body: [
                 'De Wet goed verhuurderschap stelt landelijke regels aan het gedrag van verhuurders en beheerorganisaties. Het voorkomen van discriminatie, intimidatie en buitensporige borgsommen staat hierbij centraal.',
@@ -101,11 +108,12 @@ const articlesData = [
         en: {
             title: 'Good Landlordship Act: What changes for real estate managers?',
             slug: 'good-landlordship-act-what-changes-for-property-managers',
-            excerpt: 'A comprehensive guide to compliance requirements under the Dutch Good Landlordship Act and how automated software prevents administrative delays.',
+            excerpt:
+                'A comprehensive guide to compliance requirements under the Dutch Good Landlordship Act and how automated software prevents administrative delays.',
             readTime: '5 min read',
             keyTakeaways: [
                 'Automating administrative compliance prevents penalties and backlog.',
-                'Microsoft Dynamics 365 BC integration provides real-time portfolio oversight.'
+                'Microsoft Dynamics 365 BC integration provides real-time portfolio oversight.',
             ],
             body: [
                 'The Dutch Good Landlordship Act enforces national standards for landlord and property manager conduct. Preventing discrimination, intimidation, and excessive security deposits is central to the legislation.',
@@ -123,11 +131,12 @@ const articlesData = [
         nl: {
             title: 'Vast huurcontract vs. Flexibel huurcontract: Juridische en financiële impact',
             slug: 'vast-huurcontract-vs-flexibel-huurcontract-juridische-en-financiele-impact',
-            excerpt: 'De Wet vaste huurcontracten herstelt de vaste huurovereenkomst als norm. Wat betekent dit voor de exploitatierendementen van vastgoedbeleggers?',
+            excerpt:
+                'De Wet vaste huurcontracten herstelt de vaste huurovereenkomst als norm. Wat betekent dit voor de exploitatierendementen van vastgoedbeleggers?',
             readTime: '6 min leestijd',
             keyTakeaways: [
                 'Vaste contracten verlagen mutatiekosten en verhogen langetermijn huurderretentie.',
-                'Contract-automatisering in Business Central stroomlijnt de verplichte verlengingsberichten.'
+                'Contract-automatisering in Business Central stroomlijnt de verplichte verlengingsberichten.',
             ],
             body: [
                 'De Wet vaste huurcontracten heeft tijdelijke huurovereenkomsten voor zelfstandige woonruimte aan banden gelegd. Vastgoedbeheerders stappen massaal over op contracten voor onbepaalde tijd.',
@@ -137,11 +146,12 @@ const articlesData = [
         en: {
             title: 'Permanent vs. Flexible Lease Agreements: Legal and financial impact',
             slug: 'permanent-vs-flexible-lease-agreements-legal-and-financial-impact',
-            excerpt: 'The Dutch Fixed Lease Act restores indefinite lease contracts as standard. What does this mean for property portfolio yields?',
+            excerpt:
+                'The Dutch Fixed Lease Act restores indefinite lease contracts as standard. What does this mean for property portfolio yields?',
             readTime: '6 min read',
             keyTakeaways: [
                 'Indefinite contracts lower turnover costs and boost tenant retention rates.',
-                'Contract automation in Business Central streamlines mandatory renewal notices.'
+                'Contract automation in Business Central streamlines mandatory renewal notices.',
             ],
             body: [
                 'The Dutch Fixed Lease Act restricts temporary residential lease contracts. Property managers are switching back to indefinite lease agreements as the industry baseline.',
@@ -159,11 +169,12 @@ const articlesData = [
         nl: {
             title: 'Box 3 Rendement 2026: Werkelijk rendement vs. Forfaitaire heffing',
             slug: 'box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing',
-            excerpt: 'De juridische uitspraken rondom Box 3 dwingen vastgoedbeleggers om werkelijke inkomsten en direct toewijsbare kosten nauwkeurig te registreren.',
+            excerpt:
+                'De juridische uitspraken rondom Box 3 dwingen vastgoedbeleggers om werkelijke inkomsten en direct toewijsbare kosten nauwkeurig te registreren.',
             readTime: '5 min leestijd',
             keyTakeaways: [
                 'Sluitende opslag van bruto huurinkomsten en direct toewijsbare exploitatiekosten.',
-                'Geautomatiseerde export voor de belastingadviseur ter onderbouwing van werkelijk rendement.'
+                'Geautomatiseerde export voor de belastingadviseur ter onderbouwing van werkelijk rendement.',
             ],
             body: [
                 'Na recente uitspraken van de Hoge Raad moeten vastgoedbeleggers bewijzen wanneer hun werkelijke rendement lager is dan het forfaitaire rendement.',
@@ -173,11 +184,12 @@ const articlesData = [
         en: {
             title: 'Box 3 Tax 2026: Actual returns vs. Statutory rate in the Netherlands',
             slug: 'box-3-tax-2026-actual-returns-vs-statutory-rate',
-            excerpt: 'Supreme Court rulings force real estate investors to track actual rental yields and directly attributable maintenance expenses.',
+            excerpt:
+                'Supreme Court rulings force real estate investors to track actual rental yields and directly attributable maintenance expenses.',
             readTime: '5 min read',
             keyTakeaways: [
                 'Comprehensive tracking of gross rental income and deductible maintenance expenses.',
-                'Automated tax exports for advisors to substantiate actual investment returns.'
+                'Automated tax exports for advisors to substantiate actual investment returns.',
             ],
             body: [
                 'Following landmark Dutch Supreme Court rulings, property investors must document when actual investment yields fall below the statutory rate.',
@@ -195,11 +207,12 @@ const articlesData = [
         nl: {
             title: 'Geautomatiseerde incasso & bankaflettering in Business Central 23',
             slug: 'geautomatiseerde-incasso-en-bankaflettering-in-business-central-23',
-            excerpt: 'Hoe native SEPA-extensies en PSD2-bankkoppelingen handmatig afletterwerk met 95% verminderen voor professionele vastgoedbeheerders.',
+            excerpt:
+                'Hoe native SEPA-extensies en PSD2-bankkoppelingen handmatig afletterwerk met 95% verminderen voor professionele vastgoedbeheerders.',
             readTime: '4 min leestijd',
             keyTakeaways: [
                 '95% reductie in handmatige bankverwerking door CAMT.053 inlezing.',
-                'Foutloze SEPA-bepaling en automatische storno-verwerking in het grootboek.'
+                'Foutloze SEPA-bepaling en automatische storno-verwerking in het grootboek.',
             ],
             body: [
                 'Met de nieuwste Business Central 23 release introduceert emlinked directe bankintegraties die bankafschriften in CAMT.053 en MT940 formaat automatisch verwerken.',
@@ -209,11 +222,12 @@ const articlesData = [
         en: {
             title: 'Automated direct debit & bank reconciliation in Business Central 23',
             slug: 'automated-direct-debit-and-bank-reconciliation-in-business-central-23',
-            excerpt: 'How native SEPA extensions and PSD2 banking APIs eliminate manual ledger matching by up to 95% for property management companies.',
+            excerpt:
+                'How native SEPA extensions and PSD2 banking APIs eliminate manual ledger matching by up to 95% for property management companies.',
             readTime: '4 min read',
             keyTakeaways: [
                 '95% reduction in manual bank matching via automated CAMT.053 statement processing.',
-                'Error-free SEPA debit generation and automatic bounce handling.'
+                'Error-free SEPA debit generation and automatic bounce handling.',
             ],
             body: [
                 'With the Business Central 23 release, emlinked introduces direct banking integration that automatically imports CAMT.053 bank statements.',
@@ -231,11 +245,12 @@ const articlesData = [
         nl: {
             title: 'Online vastgoedbeheer software: De overstap van Excel naar ERP',
             slug: 'online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp',
-            excerpt: 'Excel voldoet bij kleine portefeuilles, maar leidt bij groei tot foutgevoelige indexaties en achterstallige incasso’s. Waarom overstappen op cloud ERP?',
+            excerpt:
+                'Excel voldoet bij kleine portefeuilles, maar leidt bij groei tot foutgevoelige indexaties en achterstallige incasso’s. Waarom overstappen op cloud ERP?',
             readTime: '5 min leestijd',
             keyTakeaways: [
                 'Geen losse spreadsheets meer met risico op menselijke typefouten.',
-                'Één centrale bron van de waarheid voor directies, beheerders en verhuurmakelaars.'
+                'Één centrale bron van de waarheid voor directies, beheerders en verhuurmakelaars.',
             ],
             body: [
                 'Bij groeiende vastgoedportefeuilles worden losse spreadsheets al snel onoverzichtelijk en foutgevoelig.',
@@ -245,11 +260,12 @@ const articlesData = [
         en: {
             title: 'Online real estate management software: Transitioning from Excel to ERP',
             slug: 'online-real-estate-management-software-transitioning-from-excel-to-erp',
-            excerpt: 'Excel works for small portfolios, but triggers error-prone indexations as portfolios scale. Why upgrade to native cloud ERP?',
+            excerpt:
+                'Excel works for small portfolios, but triggers error-prone indexations as portfolios scale. Why upgrade to native cloud ERP?',
             readTime: '5 min read',
             keyTakeaways: [
                 'Eliminates fragmented spreadsheets and manual calculation errors.',
-                'Provides a single source of truth for management, accountants, and leasing teams.'
+                'Provides a single source of truth for management, accountants, and leasing teams.',
             ],
             body: [
                 'For expanding real estate portfolios, spreadsheets quickly turn into error-prone operational risks.',
@@ -267,11 +283,12 @@ const articlesData = [
         nl: {
             title: 'Nieuw: emlinked online vastgoedbeheer voor iPhone en iPad',
             slug: 'nieuw-emlinked-online-vastgoedbeheer-voor-iphone-en-ipad',
-            excerpt: 'Met de nieuwe emlinked mobiele extensie hebben vastgoedbeheerders en technische inspecteurs onderweg direct inzicht in de complete portefeuille.',
+            excerpt:
+                'Met de nieuwe emlinked mobiele extensie hebben vastgoedbeheerders en technische inspecteurs onderweg direct inzicht in de complete portefeuille.',
             readTime: '3 min leestijd',
             keyTakeaways: [
                 'Direct inspectierapporten opstellen inclusief foto’s op locatie.',
-                'Volledige offline ondersteuning en synchronisatie met Business Central.'
+                'Volledige offline ondersteuning en synchronisatie met Business Central.',
             ],
             body: [
                 'Met de mobiele emlinked app voer je inspecties op locatie uit, voeg je foto’s toe aan opleverrapporten en raadpleeg je huurcontracten op je iPad of iPhone.',
@@ -280,11 +297,12 @@ const articlesData = [
         en: {
             title: 'New: emlinked property management for iPhone and iPad',
             slug: 'new-emlinked-property-management-for-iphone-and-ipad',
-            excerpt: 'With the new emlinked mobile application, property managers and field inspectors gain instant real-time access to portfolio data on the go.',
+            excerpt:
+                'With the new emlinked mobile application, property managers and field inspectors gain instant real-time access to portfolio data on the go.',
             readTime: '3 min read',
             keyTakeaways: [
                 'Generate inspection reports on-site complete with high-resolution photos.',
-                'Full offline mode with automatic Business Central sync upon reconnect.'
+                'Full offline mode with automatic Business Central sync upon reconnect.',
             ],
             body: [
                 'Perform property inspections on site, attach inspection photos to handover reports, and access lease documents directly on iPhone and iPad.',
@@ -301,11 +319,12 @@ const articlesData = [
         nl: {
             title: 'CBS wijzigt Consumentenprijsindex (CPI): Wat betekent dit voor de huurindexatie?',
             slug: 'cbs-wijzigt-consumentenprijsindex-cpi',
-            excerpt: 'Het Centraal Bureau voor de Statistiek vernieuwt de berekeningsmethode van de CPI. Ontdek hoe emlinked de nieuwste cijfers automatisch verwerkt.',
+            excerpt:
+                'Het Centraal Bureau voor de Statistiek vernieuwt de berekeningsmethode van de CPI. Ontdek hoe emlinked de nieuwste cijfers automatisch verwerkt.',
             readTime: '4 min leestijd',
             keyTakeaways: [
                 'Automatische koppeling met de nieuwste CBS rekenreeks via API.',
-                'Foutloze generatie van huurindexatiebrieven voor alle huurders.'
+                'Foutloze generatie van huurindexatiebrieven voor alle huurders.',
             ],
             body: [
                 'De vernieuwde rekenmethode van het CBS beïnvloedt de maandelijkse huuraanpassingspercentages. emlinked haalt de nieuwste CPI-reeks automatisch op via API.',
@@ -314,17 +333,17 @@ const articlesData = [
         en: {
             title: 'CBS updates Consumer Price Index (CPI): Impact on rent indexation',
             slug: 'cbs-updates-consumer-price-index-cpi',
-            excerpt: 'Statistics Netherlands updates the CPI calculation model. Learn how emlinked automatically syncs CPI rates directly into Business Central.',
+            excerpt:
+                'Statistics Netherlands updates the CPI calculation model. Learn how emlinked automatically syncs CPI rates directly into Business Central.',
             readTime: '4 min read',
             keyTakeaways: [
                 'Direct API integration with the latest CBS indexation data series.',
-                'Flawless batch generation of CPI rent adjustment notification letters.'
+                'Flawless batch generation of CPI rent adjustment notification letters.',
             ],
             body: [
                 'Statistics Netherlands has updated its CPI calculation methodology. emlinked automatically fetches the latest indexation rates via automated API calls.',
             ],
         },
-        
     },
 
     {
@@ -336,11 +355,12 @@ const articlesData = [
         nl: {
             title: 'emlinked heeft een nieuw telefoonnummer en bereikbaarheid',
             slug: 'emlinked-heeft-een-nieuw-telefoonnummer',
-            excerpt: 'Om onze klanten nog sneller te woord te staan, hebben we onze telefonische support- en advieslijnen gecentraliseerd.',
+            excerpt:
+                'Om onze klanten nog sneller te woord te staan, hebben we onze telefonische support- en advieslijnen gecentraliseerd.',
             readTime: '2 min leestijd',
             keyTakeaways: [
                 'Gecentraliseerde telefonische bereikbaarheid voor direct contact.',
-                'Snellere escalatie en doorverbinding naar senior IT en recruitment consultants.'
+                'Snellere escalatie en doorverbinding naar senior IT en recruitment consultants.',
             ],
             body: [
                 'Vanaf heden is ons team bereikbaar via een centraal telefoonnummer. Zo word je direct doorverbonden met de juiste consultant of interim recruiter.',
@@ -349,11 +369,12 @@ const articlesData = [
         en: {
             title: 'emlinked launches new phone contact line',
             slug: 'emlinked-launches-new-phone-contact-line',
-            excerpt: 'To assist our clients faster, we have centralized our dedicated support and executive advice phone numbers.',
+            excerpt:
+                'To assist our clients faster, we have centralized our dedicated support and executive advice phone numbers.',
             readTime: '2 min read',
             keyTakeaways: [
                 'Centralized phone desk for immediate client support.',
-                'Direct routing to senior technical advisors and interim specialists.'
+                'Direct routing to senior technical advisors and interim specialists.',
             ],
             body: [
                 'Our client desk is now accessible via a unified contact line, instantly connecting you with the right Business Central consultant or recruitment partner.',
@@ -370,11 +391,12 @@ const articlesData = [
         nl: {
             title: 'Wij zijn verhuisd naar een nieuwe locatie in Naarden!',
             slug: 'wij-zijn-verhuisd-naar-naarden',
-            excerpt: 'Wegens aanhoudende groei is ons kantoor verhuisd naar een inspirerende nieuwe werkomgeving in Naarden.',
+            excerpt:
+                'Wegens aanhoudende groei is ons kantoor verhuisd naar een inspirerende nieuwe werkomgeving in Naarden.',
             readTime: '3 min leestijd',
             keyTakeaways: [
                 'Moderne kantoorlocatie in Naarden ingericht voor hybride samenwerking.',
-                'Ruimte voor uitbreiding van ons IT- en wervingsteam.'
+                'Ruimte voor uitbreiding van ons IT- en wervingsteam.',
             ],
             body: [
                 'Ons team groeit! Om onze klanten en interim kandidaten in een inspirerende omgeving te ontvangen, zijn we verhuisd naar Naarden.',
@@ -383,11 +405,12 @@ const articlesData = [
         en: {
             title: 'We have moved to our new office location in Naarden!',
             slug: 'we-have-moved-to-our-new-office-in-naarden',
-            excerpt: 'Due to ongoing expansion, our headquarters has relocated to a modern office in Naarden.',
+            excerpt:
+                'Due to ongoing expansion, our headquarters has relocated to a modern office in Naarden.',
             readTime: '3 min read',
             keyTakeaways: [
                 'State-of-the-art office space in Naarden built for hybrid collaboration.',
-                'Expanded facilities for client workshops and team growth.'
+                'Expanded facilities for client workshops and team growth.',
             ],
             body: [
                 'We have moved! To accommodate our growing team and welcome clients in a modern setting, emlinked has relocated to Naarden.',
@@ -404,11 +427,12 @@ const articlesData = [
         nl: {
             title: 'emlinked trainingsaanbod: Haal het maximale uit vastgoedbeheer software',
             slug: 'emlinked-trainingsaanbod-2024',
-            excerpt: 'Nieuwe interactieve workshops en trainingen voor vastgoedbeheerders en financieel medewerkers om ERP-processen optimaal te benutten.',
+            excerpt:
+                'Nieuwe interactieve workshops en trainingen voor vastgoedbeheerders en financieel medewerkers om ERP-processen optimaal te benutten.',
             readTime: '4 min leestijd',
             keyTakeaways: [
                 'Praktijkgerichte workshops voor beheerders en administratieve teams.',
-                'Directe toepassing van de nieuwste Business Central vastgoedmodules.'
+                'Directe toepassing van de nieuwste Business Central vastgoedmodules.',
             ],
             body: [
                 'Met onze praktijkgerichte trainingen leren financieel beheerders en verhuurmakelaars hoe ze indexaties, incasso’s en jaarafrekeningen 100% foutloos verwerken.',
@@ -417,11 +441,12 @@ const articlesData = [
         en: {
             title: 'emlinked training program: Maximize value from property software',
             slug: 'emlinked-training-program-maximize-value-from-property-software',
-            excerpt: 'New interactive workshops for property managers and financial teams to optimize ERP workflows.',
+            excerpt:
+                'New interactive workshops for property managers and financial teams to optimize ERP workflows.',
             readTime: '4 min read',
             keyTakeaways: [
                 'Hands-on workshops tailored for property managers and accountants.',
-                'Immediate application of advanced Business Central property modules.'
+                'Immediate application of advanced Business Central property modules.',
             ],
             body: [
                 'Our practical workshops train financial property managers and leasing officers to execute indexations and reconciliation runs flawlessly.',
@@ -437,12 +462,13 @@ const articlesData = [
         author: 'Raymond Perridon',
         nl: {
             title: 'Onze klanten beheren al meer dan € 15 miljard aan vastgoed met emlinked',
-            slug: 'onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked',
-            excerpt: 'Een belangrijke mijlpaal: meer dan 15 miljard euro aan residentieel en commercieel vastgoed wordt dagelijks geadministreerd via emlinked software.',
+            slug: 'our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked',
+            excerpt:
+                'Een belangrijke mijlpaal: meer dan 15 miljard euro aan residentieel en commercieel vastgoed wordt dagelijks geadministreerd via emlinked software.',
             readTime: '4 min leestijd',
             keyTakeaways: [
                 'Mijlpaal van €15 miljard geadministreerd vastgoedvermogen bereikt.',
-                'Bewezen stabiliteit en schaalbaarheid voor grote portefeuilles.'
+                'Bewezen stabiliteit en schaalbaarheid voor grote portefeuilles.',
             ],
             body: [
                 'We zijn trots op het vertrouwen van onze opdrachtgevers. Meer dan 15 miljard euro aan vastgoedportefeuilles wordt momenteel beheerd met onze software.',
@@ -450,12 +476,13 @@ const articlesData = [
         },
         en: {
             title: 'Our clients manage over €15 billion in real estate assets with emlinked',
-            slug: 'our-clients-manage-over-15-billion-in-real-estate-assets-with-emlinked',
-            excerpt: 'A major milestone: over 15 billion euros in residential and commercial real estate is managed daily through emlinked software.',
+            slug: 'our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked',
+            excerpt:
+                'A major milestone: over 15 billion euros in residential and commercial real estate is managed daily through emlinked software.',
             readTime: '4 min read',
             keyTakeaways: [
                 'Milestone of €15 billion managed property assets achieved.',
-                'Proven enterprise stability and scaling capacity for large funds.'
+                'Proven enterprise stability and scaling capacity for large funds.',
             ],
             body: [
                 'A landmark milestone: over €15 billion in commercial and residential property portfolios is managed daily using emlinked applications.',
@@ -472,11 +499,12 @@ const articlesData = [
         nl: {
             title: 'Direct Banking: Geautomatiseerde banktransacties en betaalbestanden',
             slug: 'direct-banking-banktransacties-bankafschriften-betaalbestanden',
-            excerpt: 'Ontdek hoe de Direct Banking module bankafschriften automatisch inleest en huuroverschrijvingen direct verwerkt.',
+            excerpt:
+                'Ontdek hoe de Direct Banking module bankafschriften automatisch inleest en huuroverschrijvingen direct verwerkt.',
             readTime: '4 min leestijd',
             keyTakeaways: [
                 'Directe PSD2 bankkoppeling met alle Nederlandse grootbanken.',
-                'Geautomatiseerde aflettering van maandelijkse huurbetalingen.'
+                'Geautomatiseerde aflettering van maandelijkse huurbetalingen.',
             ],
             body: [
                 'Met de Direct Banking module koppel je Nederlandse grootbanken rechtstreeks aan Business Central voor automatische aflettering.',
@@ -485,11 +513,12 @@ const articlesData = [
         en: {
             title: 'Direct Banking: Automated transaction matching and payment files',
             slug: 'direct-banking-automated-transactions-and-payment-files',
-            excerpt: 'Discover how Direct Banking automatically imports bank statements and matches tenant rent payments.',
+            excerpt:
+                'Discover how Direct Banking automatically imports bank statements and matches tenant rent payments.',
             readTime: '4 min read',
             keyTakeaways: [
                 'Direct PSD2 banking API connection with top financial institutions.',
-                'Automated ledger matching for monthly rental payment receipts.'
+                'Automated ledger matching for monthly rental payment receipts.',
             ],
             body: [
                 'Direct Banking integrates Dutch financial institutions with Business Central for real-time ledger reconciliation.',
@@ -506,11 +535,12 @@ const articlesData = [
         nl: {
             title: 'emlinked Huurdersportaal: 24/7 zelfservice voor huurders en verhuurders',
             slug: 'emlinked-huurdersportaal',
-            excerpt: 'Verhoog de tevredenheid van huurders met een 24/7 digitaal portaal voor onderhoudsverzoeken, huurnota’s en contractgegevens.',
+            excerpt:
+                'Verhoog de tevredenheid van huurders met een 24/7 digitaal portaal voor onderhoudsverzoeken, huurnota’s en contractgegevens.',
             readTime: '4 min leestijd',
             keyTakeaways: [
                 '24/7 digitale toegang tot huurcontracten en jaarafrekeningen.',
-                'Snelle online melding van reparatie- en onderhoudsverzoeken.'
+                'Snelle online melding van reparatie- en onderhoudsverzoeken.',
             ],
             body: [
                 'Het emlinked huurdersportaal geeft huurders digitaal inzicht in hun huurcontracten, betalingshistorie en reparatieverzoeken.',
@@ -519,11 +549,12 @@ const articlesData = [
         en: {
             title: 'emlinked Tenant Portal: 24/7 self-service for tenants and property managers',
             slug: 'emlinked-tenant-portal-self-service',
-            excerpt: 'Boost tenant satisfaction with a 24/7 portal for repair requests, rent statements, and lease agreements.',
+            excerpt:
+                'Boost tenant satisfaction with a 24/7 portal for repair requests, rent statements, and lease agreements.',
             readTime: '4 min read',
             keyTakeaways: [
                 '24/7 digital access to lease contracts and annual reconciliation statements.',
-                'Fast online submission and tracking of maintenance requests.'
+                'Fast online submission and tracking of maintenance requests.',
             ],
             body: [
                 'The emlinked tenant portal provides digital access to lease documents, payment statements, and maintenance tickets.',
@@ -540,11 +571,12 @@ const articlesData = [
         nl: {
             title: '5 redenen waarom het belangrijk is om uw vastgoedsoftware te updaten',
             slug: '5-redenen-waarom-het-belangrijk-is-om-uw-systemen-te-updaten',
-            excerpt: 'Verouderde legacy-systemen brengen beveilingsrisico’s en trage koppelingen met zich mee. 5 redenen om over te stappen op de nieuwste Business Central cloud-versie.',
+            excerpt:
+                'Verouderde legacy-systemen brengen beveilingsrisico’s en trage koppelingen met zich mee. 5 redenen om over te stappen op de nieuwste Business Central cloud-versie.',
             readTime: '5 min leestijd',
             keyTakeaways: [
                 'Optimale beveilings- en AVG-compliance waarborgen.',
-                'Toegang tot de nieuwste AI-automatiseringen en Cloud features.'
+                'Toegang tot de nieuwste AI-automatiseringen en Cloud features.',
             ],
             body: [
                 'Regelmatige updates van je ERP-software waarborgen AVG-compliance, beveiligen gevoelige persoonsgegevens en bieden toegang tot de nieuwste AI-functies.',
@@ -553,11 +585,12 @@ const articlesData = [
         en: {
             title: '5 reasons why updating your real estate management software is essential',
             slug: '5-reasons-why-updating-your-real-estate-software-is-essential',
-            excerpt: 'Legacy systems introduce security vulnerabilities and slow integrations. 5 key reasons to upgrade to Business Central cloud.',
+            excerpt:
+                'Legacy systems introduce security vulnerabilities and slow integrations. 5 key reasons to upgrade to Business Central cloud.',
             readTime: '5 min read',
             keyTakeaways: [
                 'Ensures maximum security and GDPR compliance standards.',
-                'Provides access to modern AI tools and native cloud features.'
+                'Provides access to modern AI tools and native cloud features.',
             ],
             body: [
                 'Regular ERP software updates ensure GDPR compliance, protect tenant data, and unlock new AI automation tools.',
@@ -574,11 +607,12 @@ const articlesData = [
         nl: {
             title: 'Vastgoedbeleggers in beweging: Trends en marktontwikkelingen',
             slug: 'vastgoedbeleggers-in-beweging',
-            excerpt: 'Stijgende rentes en veranderende regelgeving vragen om scherpe sturing op rendement en actueel inzicht in vastgoedportefeuilles.',
+            excerpt:
+                'Stijgende rentes en veranderende regelgeving vragen om scherpe sturing op rendement en actueel inzicht in vastgoedportefeuilles.',
             readTime: '5 min leestijd',
             keyTakeaways: [
                 'Actuele portefeuilledata is essentieel bij fluctuerende rentestanden.',
-                'Scherpe sturing op netto exploitatierendement en duurzaamheid.'
+                'Scherpe sturing op netto exploitatierendement en duurzaamheid.',
             ],
             body: [
                 'In een dynamische vastgoedmarkt maken actuele portefeuillecijfers het verschil tussen rendement en leegstand.',
@@ -587,11 +621,12 @@ const articlesData = [
         en: {
             title: 'Real estate investors on the move: Industry trends and market updates',
             slug: 'real-estate-investors-on-the-move-trends-and-market-updates',
-            excerpt: 'Changing interest rates and rental regulations require data-driven portfolio management and yield optimization.',
+            excerpt:
+                'Changing interest rates and rental regulations require data-driven portfolio management and yield optimization.',
             readTime: '5 min read',
             keyTakeaways: [
                 'Real-time portfolio metrics are crucial amidst interest rate movements.',
-                'Data-driven focus on net operating income and ESG goals.'
+                'Data-driven focus on net operating income and ESG goals.',
             ],
             body: [
                 'In a shifting real estate market, real-time portfolio metrics empower investors to maximize rental yields.',
@@ -608,11 +643,12 @@ const articlesData = [
         nl: {
             title: 'Voorstellen nieuwe Box 3 wetgeving: Wat betekent dit voor verhuurd vastgoed?',
             slug: 'voorstellen-nieuwe-box-3',
-            excerpt: 'Een grondige analyse van het wetsvoorstel werkelijk rendement in Box 3 en de voorbereiding voor vastgoedbeleggers.',
+            excerpt:
+                'Een grondige analyse van het wetsvoorstel werkelijk rendement in Box 3 en de voorbereiding voor vastgoedbeleggers.',
             readTime: '5 min leestijd',
             keyTakeaways: [
                 'Gedetailleerde vastlegging van exploitatielasten voor fiscale aftrek.',
-                'Sluitende voorbereiding op het stelsel van werkelijk rendement.'
+                'Sluitende voorbereiding op het stelsel van werkelijk rendement.',
             ],
             body: [
                 'De overgang naar een stelsel van werkelijk rendement vraagt om een gedetailleerde uitsplitsing van verhuurinkomsten en onderhoudskosten.',
@@ -621,11 +657,12 @@ const articlesData = [
         en: {
             title: 'New Dutch Box 3 proposals: Implications for rental property portfolios',
             slug: 'new-dutch-box-3-proposals-implications-for-rental-property-portfolios',
-            excerpt: 'An in-depth analysis of actual return proposals in Box 3 tax rules and how property investors should prepare.',
+            excerpt:
+                'An in-depth analysis of actual return proposals in Box 3 tax rules and how property investors should prepare.',
             readTime: '5 min read',
             keyTakeaways: [
                 'Meticulous tracking of operating expenses for tax deduction eligibility.',
-                'Complete audit readiness for actual yield reporting rules.'
+                'Complete audit readiness for actual yield reporting rules.',
             ],
             body: [
                 'Transitioning to actual investment returns requires meticulous ledger tracking of gross rents and maintenance costs.',
@@ -642,11 +679,12 @@ const articlesData = [
         nl: {
             title: 'Nieuwe update emlinked vastgoedbeheer software beschikbaar',
             slug: 'nieuwe-update-emlinked-vastgoedbeheer-software',
-            excerpt: 'De nieuwste release brengt snellere CPI-indexatie berekeningen en een vernieuwd dashboard voor vastgoedbeheerders.',
+            excerpt:
+                'De nieuwste release brengt snellere CPI-indexatie berekeningen en een vernieuwd dashboard voor vastgoedbeheerders.',
             readTime: '4 min leestijd',
             keyTakeaways: [
                 'Vernieuwd dashboard met real-time bezettings- en incassometers.',
-                'Snellere verwerking van grote batch-indexaties.'
+                'Snellere verwerking van grote batch-indexaties.',
             ],
             body: [
                 'Met trots lanceren we de nieuwste update van emlinked vastgoedbeheer software met nog snellere indexaties en rapportages.',
@@ -655,11 +693,12 @@ const articlesData = [
         en: {
             title: 'New update available for emlinked property management software',
             slug: 'new-update-available-for-emlinked-property-management-software',
-            excerpt: 'The latest release brings faster CPI indexation calculations and a redesigned dashboard for property managers.',
+            excerpt:
+                'The latest release brings faster CPI indexation calculations and a redesigned dashboard for property managers.',
             readTime: '4 min read',
             keyTakeaways: [
                 'Redesigned dashboard featuring real-time occupancy and collection gauges.',
-                'Faster execution speed for large batch indexation runs.'
+                'Faster execution speed for large batch indexation runs.',
             ],
             body: [
                 'We are proud to release the latest update of emlinked property management software, featuring faster indexation runs and improved analytics.',
@@ -675,7 +714,9 @@ async function fixAndReseed() {
         await client.delete(doc._id);
     }
 
-    console.log('🚀 Starting fresh asset upload and document re-seeding with keyTakeaways...');
+    console.log(
+        '🚀 Starting fresh asset upload and document re-seeding with keyTakeaways...',
+    );
     const imageAssetCache = {};
 
     for (const item of articlesData) {
@@ -782,7 +823,9 @@ async function fixAndReseed() {
         console.log(`  ✅ Seeded EN: ${cleanSlugEn} (with keyTakeaways)`);
     }
 
-    console.log('🎉 Seed complete! All 36 documents in Sanity contain custom keyTakeaways!');
+    console.log(
+        '🎉 Seed complete! All 36 documents in Sanity contain custom keyTakeaways!',
+    );
 }
 
 fixAndReseed();
