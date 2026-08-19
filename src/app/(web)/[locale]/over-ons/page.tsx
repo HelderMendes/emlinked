@@ -282,13 +282,31 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
             {/* ── SECTION 0: HERO SECTION (DARK TEXTURE NAVY) ── */}
             <div className='bg-texture-navy text-white relative border-b border-white/10'>
                 <HeroSection
-                    label={heroBlock?.badge || (isEn ? 'HUMAN-CENTRIC RECRUITMENT & SAAS' : 'MENSGERICHT RECRUITMENT & SAAS')}
+                    label={
+                        heroBlock?.badge ||
+                        (isEn
+                            ? 'HUMAN-CENTRIC RECRUITMENT & SAAS'
+                            : 'MENSGERICHT RECRUITMENT & SAAS')
+                    }
                     title={heroTitle}
                     subtitle={heroSub}
-                    ctaLabel={heroBlock?.ctaLabel || (isEn ? 'Get in touch directly' : 'Neem direct contact op')}
+                    ctaLabel={
+                        heroBlock?.ctaLabel ||
+                        (isEn
+                            ? 'Get in touch directly'
+                            : 'Neem direct contact op')
+                    }
                     ctaLink={heroBlock?.ctaLink || '#demo'}
-                    secondaryCtaLabel={heroBlock?.secondaryCtaLabel || (isEn ? 'Explore our solutions →' : 'Bekijk onze oplossingen →')}
-                    secondaryCtaLink={heroBlock?.secondaryCtaLink || (isEn ? '/en/apps' : '/apps')}
+                    secondaryCtaLabel={
+                        heroBlock?.secondaryCtaLabel ||
+                        (isEn
+                            ? 'Explore our solutions →'
+                            : 'Bekijk onze oplossingen →')
+                    }
+                    secondaryCtaLink={
+                        heroBlock?.secondaryCtaLink ||
+                        (isEn ? '/en/apps' : '/apps')
+                    }
                     locale={locale}
                     showProof={false}
                 />
@@ -301,34 +319,55 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     <div className='lg:col-span-7 space-y-6 text-left'>
                         <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
                             <Sparkles className='w-3.5 h-3.5 text-amber' />
-                            {missionBlock?.badge || (isEn ? 'ARCHITECTING MEANINGFUL MATCHES' : 'ARCHITECTING MEANINGFUL MATCHES')}
+                            {missionBlock?.badge ||
+                                (isEn
+                                    ? 'ARCHITECTING MEANINGFUL MATCHES'
+                                    : 'ARCHITECTING MEANINGFUL MATCHES')}
                         </span>
 
                         <h2 className='font-display font-bold text-3xl md:text-4xl text-darkblue leading-tight'>
-                            {missionBlock?.title || (isEn
-                                ? 'The labor market demands more than quick transactions; it requires strategic synergy.'
-                                : 'De arbeidsmarkt vraagt om meer dan snelle transacties; het vereist strategische synergie.')}
+                            {missionBlock?.title ||
+                                (isEn
+                                    ? 'The labor market demands more than quick transactions; it requires strategic synergy.'
+                                    : 'De arbeidsmarkt vraagt om meer dan snelle transacties; het vereist strategische synergie.')}
                         </h2>
 
                         <p className='text-slate-600 text-base md:text-lg leading-relaxed font-light'>
-                            {missionBlock?.subtitle || (isEn
-                                ? 'At emlinked, we combine deep sector expertise with advanced recruitment methodologies to seamlessly synchronize professionals and clients. Our focus is on long-term employability, mutual growth, and tangible results across complex interim and permanent challenges.'
-                                : 'Bij emlinked combineren we diepgaande sectorkennis met geavanceerde wervingsmethodieken om professionals en opdrachtgevers naadloos te synchroniseren. Onze focus ligt op duurzame inzetbaarheid, wederzijdse groei en concrete resultaten binnen complexe interim- en vaste vraagstukken.')}
+                            {missionBlock?.subtitle ||
+                                (isEn
+                                    ? 'At emlinked, we combine deep sector expertise with advanced recruitment methodologies to seamlessly synchronize professionals and clients. Our focus is on long-term employability, mutual growth, and tangible results across complex interim and permanent challenges.'
+                                    : 'Bij emlinked combineren we diepgaande sectorkennis met geavanceerde wervingsmethodieken om professionals en opdrachtgevers naadloos te synchroniseren. Onze focus ligt op duurzame inzetbaarheid, wederzijdse groei en concrete resultaten binnen complexe interim- en vaste vraagstukken.')}
                         </p>
 
                         <div className='pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4'>
                             <div className='flex items-start gap-3 p-4 rounded-xl border border-slate-200 bg-slate-50/80 shadow-xs'>
                                 <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
                                 <div className='space-y-0.5 text-left'>
-                                    <h4 className='text-xs font-bold text-darkblue'>{isEn ? 'Sustainable Employability' : 'Duurzame Inzetbaarheid'}</h4>
-                                    <p className='text-[11px] text-slate-600'>{isEn ? 'Long-term mutual alignment & career growth' : 'Wederzijdse groei & lange-termijn matches'}</p>
+                                    <h4 className='text-xs font-bold text-darkblue'>
+                                        {isEn
+                                            ? 'Sustainable Employability'
+                                            : 'Duurzame Inzetbaarheid'}
+                                    </h4>
+                                    <p className='text-[11px] text-slate-600'>
+                                        {isEn
+                                            ? 'Long-term mutual alignment & career growth'
+                                            : 'Wederzijdse groei & lange-termijn matches'}
+                                    </p>
                                 </div>
                             </div>
                             <div className='flex items-start gap-3 p-4 rounded-xl border border-slate-200 bg-slate-50/80 shadow-xs'>
                                 <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
                                 <div className='space-y-0.5 text-left'>
-                                    <h4 className='text-xs font-bold text-darkblue'>{isEn ? 'Tangible Results' : 'Concrete Resultaten'}</h4>
-                                    <p className='text-[11px] text-slate-600'>{isEn ? 'Proven execution in complex sectors' : 'Trefzekere oplossingen in complexe vraagstukken'}</p>
+                                    <h4 className='text-xs font-bold text-darkblue'>
+                                        {isEn
+                                            ? 'Tangible Results'
+                                            : 'Concrete Resultaten'}
+                                    </h4>
+                                    <p className='text-[11px] text-slate-600'>
+                                        {isEn
+                                            ? 'Proven execution in complex sectors'
+                                            : 'Trefzekere oplossingen in complexe vraagstukken'}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -337,7 +376,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     {/* Right Column: Visual Architectural Card */}
                     <div className='lg:col-span-5 relative'>
                         <div className='relative rounded-3xl border border-amber/30 bg-slate-900 text-white p-8 md:p-10 shadow-2xl text-left overflow-hidden group'>
-                            <div className='absolute -inset-1 bg-gradient-to-r from-amber/20 via-indigo-500/10 to-amber/20 blur-xl opacity-60 pointer-events-none' />
+                            <div className='absolute -inset-1 bg-linear-to-r from-amber/20 via-indigo-500/10 to-amber/20 blur-xl opacity-60 pointer-events-none' />
 
                             <div className='relative z-10 space-y-6'>
                                 <div className='w-12 h-12 rounded-2xl bg-amber/15 border border-amber/30 flex items-center justify-center text-amber shadow-md'>
@@ -346,7 +385,9 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
 
                                 <div className='space-y-2'>
                                     <h3 className='font-display font-bold text-xl text-white'>
-                                        {isEn ? 'Synergy Between Expertise & Technology' : 'Synergie tussen Vakkennis & Technologie'}
+                                        {isEn
+                                            ? 'Synergy Between Expertise & Technology'
+                                            : 'Synergie tussen Vakkennis & Technologie'}
                                     </h3>
                                     <p className='text-xs text-slate-300 leading-relaxed font-light'>
                                         {isEn
@@ -355,11 +396,10 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                     </p>
                                 </div>
 
-                                <blockquote className='text-xs italic text-slate-200 border-l-2 border-amber pl-4 py-1.5 bg-white/[0.04] rounded-r-lg'>
+                                <blockquote className='text-xs italic text-slate-200 border-l-2 border-amber pl-4 py-1.5 bg-white/4 rounded-r-lg'>
                                     {isEn
                                         ? '"True alignment comes from understanding both the technical details and the human context."'
-                                        : '"Echte verbinding ontstaat wanneer vakkennis, menselijke maat en transparantie samenkomen."'
-                                    }
+                                        : '"Echte verbinding ontstaat wanneer vakkennis, menselijke maat en transparantie samenkomen."'}
                                 </blockquote>
 
                                 <div className='pt-2 flex items-center gap-3 border-t border-white/10'>
@@ -367,8 +407,14 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                         EM
                                     </div>
                                     <div>
-                                        <div className='text-xs font-bold text-white'>emlinked Management</div>
-                                        <div className='text-[10px] text-amber font-mono'>{isEn ? 'Interim & SaaS Solutions' : 'Interim & SaaS Oplossingen'}</div>
+                                        <div className='text-xs font-bold text-white'>
+                                            emlinked Management
+                                        </div>
+                                        <div className='text-[10px] text-amber font-mono'>
+                                            {isEn
+                                                ? 'Interim & SaaS Solutions'
+                                                : 'Interim & SaaS Oplossingen'}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -389,11 +435,15 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                         </div>
 
                         <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem] font-bold tracking-tight text-[#060e32]'>
-                            {valuesBlock?.title || (isEn ? 'Our Core Values' : 'Onze Kernwaarden')}
+                            {valuesBlock?.title ||
+                                (isEn ? 'Our Core Values' : 'Onze Kernwaarden')}
                         </h2>
 
                         <p className='text-[#060e32]/75 text-base md:text-lg leading-relaxed font-light'>
-                            {valuesBlock?.subtitle || (isEn ? 'The foundation of our transparent and data-driven way of working.' : 'De fundamenten van onze transparante en datagedreven werkwijze.')}
+                            {valuesBlock?.subtitle ||
+                                (isEn
+                                    ? 'The foundation of our transparent and data-driven way of working.'
+                                    : 'De fundamenten van onze transparante en datagedreven werkwijze.')}
                         </p>
                     </div>
 
@@ -404,7 +454,9 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                 <ShieldCheck className='w-6 h-6' />
                             </div>
                             <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-amber transition-colors'>
-                                {isEn ? 'Transparency & Integrity' : 'Transparantie & Integriteit'}
+                                {isEn
+                                    ? 'Transparency & Integrity'
+                                    : 'Transparantie & Integriteit'}
                             </h3>
                             <p className='text-xs md:text-sm text-[#060e32]/80 leading-relaxed font-light'>
                                 {isEn
@@ -419,7 +471,9 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                 <Layers className='w-6 h-6' />
                             </div>
                             <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-amber transition-colors'>
-                                {isEn ? 'Sector-Specific Expertise' : 'Sectorspecifieke Expertise'}
+                                {isEn
+                                    ? 'Sector-Specific Expertise'
+                                    : 'Sectorspecifieke Expertise'}
                             </h3>
                             <p className='text-xs md:text-sm text-[#060e32]/80 leading-relaxed font-light'>
                                 {isEn
@@ -434,7 +488,9 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                 <Zap className='w-6 h-6' />
                             </div>
                             <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-amber transition-colors'>
-                                {isEn ? 'Agility & Custom Work' : 'Wendbaarheid & Maatwerk'}
+                                {isEn
+                                    ? 'Agility & Custom Work'
+                                    : 'Wendbaarheid & Maatwerk'}
                             </h3>
                             <p className='text-xs md:text-sm text-[#060e32]/80 leading-relaxed font-light'>
                                 {isEn
@@ -464,17 +520,23 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     <div className='relative z-10 space-y-6 max-w-3xl mx-auto'>
                         <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md'>
                             <Users className='w-3.5 h-3.5 text-amber' />
-                            {isEn ? 'START THE CONVERSATION' : 'GA HET GESPREK AAN'}
+                            {isEn
+                                ? 'START THE CONVERSATION'
+                                : 'GA HET GESPREK AAN'}
                         </span>
 
                         <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] text-white leading-tight'>
-                            {ctaBlock?.title || (isEn ? 'Ready to strengthen your organization or career?' : 'Klaar om je organisatie of carrière te versterken?')}
+                            {ctaBlock?.title ||
+                                (isEn
+                                    ? 'Ready to strengthen your organization or career?'
+                                    : 'Klaar om je organisatie of carrière te versterken?')}
                         </h2>
 
                         <p className='text-slate-300 text-base md:text-lg leading-relaxed font-light'>
-                            {ctaBlock?.subtitle || (isEn
-                                ? 'Discover how our targeted approach makes the difference for your interim capacity or next career move.'
-                                : 'Ontdek hoe onze gerichte aanpak het verschil maakt voor je interim-capaciteit of volgende carrièrestap.')}
+                            {ctaBlock?.subtitle ||
+                                (isEn
+                                    ? 'Discover how our targeted approach makes the difference for your interim capacity or next career move.'
+                                    : 'Ontdek hoe onze gerichte aanpak het verschil maakt voor je interim-capaciteit of volgende carrièrestap.')}
                         </p>
 
                         <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-4'>
@@ -483,16 +545,27 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                 className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-gradient-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
                             >
                                 <span className='flex items-center justify-center gap-2 text-white'>
-                                    <span>{ctaBlock?.primaryCtaLabel || (isEn ? 'Get in touch directly' : 'Neem direct contact op')}</span>
+                                    <span>
+                                        {ctaBlock?.primaryCtaLabel ||
+                                            (isEn
+                                                ? 'Get in touch directly'
+                                                : 'Neem direct contact op')}
+                                    </span>
                                     <ArrowRight className='w-5 h-5 text-white' />
                                 </span>
                             </GlowingLink>
 
                             <Link
-                                href={ctaBlock?.secondaryCtaUrl || (isEn ? '/en/apps' : '/apps')}
+                                href={
+                                    ctaBlock?.secondaryCtaUrl ||
+                                    (isEn ? '/en/apps' : '/apps')
+                                }
                                 className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
                             >
-                                {ctaBlock?.secondaryCtaLabel || (isEn ? 'Explore our solutions →' : 'Bekijk onze oplossingen →')}
+                                {ctaBlock?.secondaryCtaLabel ||
+                                    (isEn
+                                        ? 'Explore our solutions →'
+                                        : 'Bekijk onze oplossingen →')}
                             </Link>
                         </div>
                     </div>
