@@ -1331,6 +1331,31 @@ export const page = defineType({
                                             rows: 3,
                                         }),
                                         defineField({
+                                            name: 'focusArea',
+                                            title: 'Focus Area / Domain Expertise',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'badge',
+                                            title: 'Badge Tag',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'photoPath',
+                                            title: 'Photo File Path (Fallback)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'linkedin',
+                                            title: 'LinkedIn URL',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'email',
+                                            title: 'Direct Email',
+                                            type: 'string',
+                                        }),
+                                        defineField({
                                             name: 'image',
                                             title: 'Avatar Image',
                                             type: 'image',
@@ -1340,6 +1365,127 @@ export const page = defineType({
                             ],
                         }),
                     ],
+                }),
+                defineArrayMember({
+                    name: 'heroBlock',
+                    title: 'Hero Block (Modular)',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'badge',
+                            title: 'Badge Tag',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'tagline',
+                            title: 'Tagline / Headline',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'description',
+                            title: 'Description',
+                            type: 'text',
+                            rows: 3,
+                        }),
+                        defineField({
+                            name: 'ctaLabel',
+                            title: 'Primary CTA Label',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'ctaLink',
+                            title: 'Primary CTA Link',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'secondaryCtaLabel',
+                            title: 'Secondary CTA Label',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'secondaryCtaLink',
+                            title: 'Secondary CTA Link',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'proofText',
+                            title: 'Proof Bar Text',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'imagePath',
+                            title: 'Image File Path (Optional)',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'image',
+                            title: 'Hero Image (Sanity Asset)',
+                            type: 'image',
+                            options: { hotspot: true },
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            title: 'tagline',
+                            subtitle: 'badge',
+                        },
+                        prepare({ title, subtitle }) {
+                            return {
+                                title: `Hero Block: ${title || 'Untitled'}`,
+                                subtitle: subtitle || 'Hero Section',
+                            };
+                        },
+                    },
+                }),
+                defineArrayMember({
+                    name: 'ctaBlock',
+                    title: 'CTA Conversion Block',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'title',
+                            title: 'CTA Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'subtitle',
+                            title: 'CTA Subtitle',
+                            type: 'text',
+                            rows: 2,
+                        }),
+                        defineField({
+                            name: 'primaryCtaLabel',
+                            title: 'Primary CTA Label',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'primaryCtaUrl',
+                            title: 'Primary CTA URL',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'secondaryCtaLabel',
+                            title: 'Secondary CTA Label',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'secondaryCtaUrl',
+                            title: 'Secondary CTA URL',
+                            type: 'string',
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            title: 'title',
+                            subtitle: 'subtitle',
+                        },
+                        prepare({ title, subtitle }) {
+                            return {
+                                title: `CTA: ${title || 'Call to Action'}`,
+                                subtitle: subtitle || 'Conversion Banner',
+                            };
+                        },
+                    },
                 }),
             ],
         }),

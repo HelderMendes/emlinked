@@ -1,17 +1,26 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Metadata } from 'next';
 import { 
     ShieldCheck, 
-    Lightbulb, 
-    HeartHandshake, 
+    Zap, 
+    Layers, 
     Target, 
-    Sparkles, 
-    ArrowRight 
+    ArrowRight,
+    Users,
+    Sparkles,
+    CheckCircle2
 } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { HeroSection } from '@/components/blocks/HeroSection';
+import { TeamBlock, TeamMember } from '@/components/blocks/TeamBlock';
+import { GlowingLink } from '@/components/ui/GlowingButton';
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 interface OverOnsPageProps {
     params: Promise<{ locale: string }>;
@@ -20,31 +29,34 @@ interface OverOnsPageProps {
 async function getSanityPageData(locale: string) {
     try {
         return await sanityFetch<any>({
-            query: `*[_type == "page" && slug.current == "team" && language == $locale][0] {
+            query: `*[_type == "page" && (slug.current == "over-ons" || slug.current == "about-us" || slug.current == "team") && language == $locale][0] {
                 title,
                 tagline,
                 desc,
                 pageBlocks[] {
                     ...,
                     _type,
-                    _key
+                    _key,
+                    members[] {
+                        ...,
+                        image { asset-> { url } }
+                    }
                 },
                 seo {
                     seoTitle,
                     seoDescription,
                     canonical,
-                    noIndex
+                    noIndex,
+                    structuredData
                 }
             }`,
             params: { locale },
         });
     } catch (e) {
-        console.error('Failed to fetch team page from Sanity:', e);
+        console.error('Failed to fetch Over Ons page from Sanity:', e);
         return null;
     }
 }
-
-import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 
 export async function generateMetadata({
     params,
@@ -54,12 +66,12 @@ export async function generateMetadata({
     const isEn = locale === 'en';
 
     const fallbackTitle = isEn
-        ? 'About emlinked | Our Vision, Philosophy & Team'
-        : 'Over emlinked | Onze Visie, Filosofie & Team';
+        ? 'About emlinked | Our Mission, Core Values & Specialist Team'
+        : 'Over emlinked | Onze Missie, Kernwaarden & Team Specialisten';
     const fallbackDescription = isEn
-        ? 'Get to know the team behind emlinked. We build the smartest native real estate management software solutions for Microsoft Dynamics 365 Business Central.'
-        : 'Maak kennis met het team achter emlinked. Wij bouwen de slimste, native vastgoedbeheer software-oplossingen voor Microsoft Dynamics 365 Business Central.';
-    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/over-ons' : '/over-ons'}`;
+        ? 'Meet the emlinked team. Human-centric interim & recruitment solutions with impact powered by deep real estate and Business Central expertise.'
+        : 'Maak kennis met het team van emlinked. Mensgerichte interim & werving oplossingen met impact gekoppeld aan diepgaande vastgoed- en Business Central expertise.';
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/about-us' : '/over-ons'}`;
 
     return buildMetadata({
         seo: pageData?.seo,
@@ -70,286 +82,423 @@ export async function generateMetadata({
     });
 }
 
-const fallbackContent = {
-    nl: {
-        title: 'Over emlinked: Onze missie, visie & team',
-        tagline:
-            'Maak kennis met het team achter emlinked. Wij bouwen de slimste, native vastgoedbeheer software-oplossingen voor Microsoft Dynamics 365 Business Central.',
-        philosophyTitle: 'Onze Filosofie',
-        philosophyDesc:
-            'emlinked is ontstaan vanuit de overtuiging dat operationeel vastgoedbeheer en de financiële boekhouding in één en hetzelfde systeem moeten plaatsvinden.',
-        team: [
-            {
-                name: 'Software Architecture Team',
-                role: 'Dynamics 365 Engineers',
-                bio: 'Gespecialiseerd in native AL-ontwikkeling en de nieuwste Microsoft Dynamics 365 Business Central architectuur.',
-            },
-            {
-                name: 'Real Estate & Finance Consultants',
-                role: 'Vastgoed & Fiscale Specialisten',
-                bio: 'Deskundigen in CPI-indexering, Box 3 regelgeving en geautomatiseerde bankaflettering.',
-            },
-            {
-                name: 'Customer Success & Support',
-                role: 'Support Lead',
-                bio: 'Toegewijd aan een vlekkeloze onboarding en ondersteuning van professionele vastgoedbeheerders.',
-            },
-        ],
-        values: [
-            {
-                title: '100% Data Integriteit',
-                description:
-                    'Één centrale waarheid in Business Central zonder losse databases of importfouten.',
-            },
-            {
-                title: 'Continue Automatisering',
-                description:
-                    'Geen handmatige Excel-berekeningen meer voor indexaties en servicekosten.',
-            },
-            {
-                title: 'Enterprise Kwaliteit',
-                description:
-                    'Robuuste software die voldoet aan de strengste eisen van beheerders en beleggers.',
-            },
-        ],
-    },
-    en: {
-        title: 'About emlinked: Our mission, vision & team',
-        tagline:
-            'Get to know the team behind emlinked. We build the smartest native real estate management software solutions for Microsoft Dynamics 365 Business Central.',
-        philosophyTitle: 'Our Philosophy',
-        philosophyDesc:
-            'emlinked was founded on the conviction that operational real estate management and financial accounting must take place inside one single system.',
-        team: [
-            {
-                name: 'Software Architecture Team',
-                role: 'Dynamics 365 Engineers',
-                bio: 'Specialized in native AL development and modern Microsoft Dynamics 365 Business Central architecture.',
-            },
-            {
-                name: 'Real Estate & Finance Consultants',
-                role: 'Real Estate & Tax Specialists',
-                bio: 'Experts in CPI indexations, Box 3 regulations, and automated bank reconciliations.',
-            },
-            {
-                name: 'Customer Success & Support',
-                role: 'Support Lead',
-                bio: 'Dedicated to ensuring seamless onboarding and providing technical assistance for institutional real estate managers.',
-            },
-        ],
-        values: [
-            {
-                title: '100% Data Integrity',
-                description:
-                    'We believe in a single source of truth inside Microsoft Dynamics Business Central.',
-            },
-            {
-                title: 'Continuous Automation',
-                description:
-                    'Manual tasks like CPI indexation and bank reconciliation cost hours of valuable time. We automate them.',
-            },
-            {
-                title: 'Enterprise Quality',
-                description:
-                    'We build software that matches the stability and security requirements of commercial and residential managers.',
-            },
-        ],
-    },
-} as const;
+const fallbackMembers: Record<'nl' | 'en', TeamMember[]> = {
+    nl: [
+        {
+            name: 'Raymond Perridon',
+            role: 'Founder & Managing Partner',
+            focusArea: 'Executive Leadership & Strategie',
+            badge: 'Managing Partner',
+            photoPath: '/emlinked/team/RaymondPerridon.jpg',
+            bio: 'Oprichter en strategisch leider van emlinked. Met een brede visie op de veranderende arbeidsmarkt en vastgoedsector verbindt hij organisaties met hoogwaardig interim- en vast talent.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+        {
+            name: 'Iryna Samiliak',
+            role: 'Executive Recruitment & Operations Lead',
+            focusArea: 'Executive Search & Werving',
+            badge: 'Executive Search',
+            photoPath: '/emlinked/team/Iryna.jpg',
+            bio: 'Gespecialiseerd in het verbinden van C-level en senior talent binnen snelgroeiende organisaties. Combineert data-gedreven wervingsmethodieken met een persoonlijke, transparante aanpak.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+        {
+            name: 'Thorwald',
+            role: 'Senior Interim Recruitment Specialist',
+            focusArea: 'Publieke & Private Sector Interim',
+            badge: 'Interim Management',
+            photoPath: '/emlinked/team/Thorwald.jpg',
+            bio: 'Focus op complexe interim vraagstukken binnen de overheid, zorg en vastgoed. Zorgt voor snelle schaalbaarheid en trefzekere interim plaatsingen met directe impact.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+        {
+            name: 'Manfred',
+            role: 'Business Central & Finance Consultant',
+            focusArea: 'ERP & Financiële Automatisering',
+            badge: 'Finance & ERP',
+            photoPath: '/emlinked/team/Manfred.jpg',
+            bio: 'Expert in Microsoft Dynamics 365 Business Central en geautomatiseerde bankaflettering. Helpt organisaties hun financiële processen foutloos te integreren.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+        {
+            name: 'Ebenezer',
+            role: 'Software Architecture & AL Engineer',
+            focusArea: 'Native Business Central Apps',
+            badge: 'Software Architecture',
+            photoPath: '/emlinked/team/Ebenezer.jpg',
+            bio: 'Verantwoordelijk voor de robuuste AL-codebase en cloud-architectuur van emlinked. Ontwikkelt native extensies die schaalbaar presteren in Business Central.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+        {
+            name: 'Elisabeth',
+            role: 'Customer Success & Onboarding Specialist',
+            focusArea: 'Onboarding & Support',
+            badge: 'Customer Success',
+            photoPath: '/emlinked/team/Elisabeth.jpg',
+            bio: 'Begeleidt opdrachtgevers en professionals tijdens de onboarding. Toegewijd aan maximale klanttevredenheid, heldere communicatie en langdurige samenwerking.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+    ],
+    en: [
+        {
+            name: 'Raymond Perridon',
+            role: 'Founder & Managing Partner',
+            focusArea: 'Executive Leadership & Strategy',
+            badge: 'Managing Partner',
+            photoPath: '/emlinked/team/RaymondPerridon.jpg',
+            bio: 'Founder and strategic leader at emlinked. With a broad vision for the evolving labor market and real estate sector, he connects organizations with top interim and permanent talent.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+        {
+            name: 'Iryna Samiliak',
+            role: 'Executive Recruitment & Operations Lead',
+            focusArea: 'Executive Search & Recruitment',
+            badge: 'Executive Search',
+            photoPath: '/emlinked/team/Iryna.jpg',
+            bio: 'Specialized in connecting C-level and senior talent within fast-growing organizations. Combines data-driven sourcing with a personal, transparent touch.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+        {
+            name: 'Thorwald',
+            role: 'Senior Interim Recruitment Specialist',
+            focusArea: 'Public & Private Sector Interim',
+            badge: 'Interim Management',
+            photoPath: '/emlinked/team/Thorwald.jpg',
+            bio: 'Focused on complex interim challenges across government, healthcare, and real estate. Delivers rapid scalability and high-impact interim placements.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+        {
+            name: 'Manfred',
+            role: 'Business Central & Finance Consultant',
+            focusArea: 'ERP & Financial Automation',
+            badge: 'Finance & ERP',
+            photoPath: '/emlinked/team/Manfred.jpg',
+            bio: 'Expert in Microsoft Dynamics 365 Business Central and automated bank reconciliation. Helps organizations integrate financial workflows flawlessly.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+        {
+            name: 'Ebenezer',
+            role: 'Software Architecture & AL Engineer',
+            focusArea: 'Native Business Central Apps',
+            badge: 'Software Architecture',
+            photoPath: '/emlinked/team/Ebenezer.jpg',
+            bio: 'Responsible for emlinked’s robust AL codebase and cloud architecture. Builds high-performance native extensions for Business Central.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+        {
+            name: 'Elisabeth',
+            role: 'Customer Success & Onboarding Specialist',
+            focusArea: 'Onboarding & Support',
+            badge: 'Customer Success',
+            photoPath: '/emlinked/team/Elisabeth.jpg',
+            bio: 'Guides clients and professionals through onboarding. Dedicated to maximum satisfaction, clear communication, and long-term partnerships.',
+            linkedin: 'https://www.linkedin.com/company/emlinked/',
+            email: 'info@emlinked.com',
+        },
+    ],
+};
 
 export default async function OverOnsPage({ params }: OverOnsPageProps) {
     const { locale } = await params;
     const isEn = locale === 'en';
     const pageData = await getSanityPageData(locale);
-    const fall = isEn ? fallbackContent.en : fallbackContent.nl;
+    const defaultMembers = isEn ? fallbackMembers.en : fallbackMembers.nl;
 
-    const title = pageData?.title || fall.title;
-    const tagline = pageData?.tagline || fall.tagline;
+    const pageBlocks = pageData?.pageBlocks || [];
+    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock');
+    const missionBlock = pageBlocks.find((b: any) => b._type === 'workflow');
+    const valuesBlock = pageBlocks.find((b: any) => b._type === 'trustBar');
+    const teamBlock = pageBlocks.find((b: any) => b._type === 'teamBlock');
+    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock');
 
-    // Use pageBlocks from Sanity if they exist, otherwise use fallback structure
-    const blocks = pageData?.pageBlocks || [
-        {
-            _type: 'teamBlock',
-            sectionTitle: isEn ? 'Meet Our Specialists' : 'Onze Specialisten',
-            members: fall.team
-        }
-    ];
+    // Extract dynamic content or fallback
+    const heroTitle = heroBlock?.tagline || pageData?.title || (isEn ? 'Human-Centric Interim & Recruitment Solutions with Impact.' : 'Mensgerichte Interim & Werving Oplossingen met Impact.');
+    const heroSub = heroBlock?.description || pageData?.desc || (isEn ? 'We connect top talent and leading organizations across the public and private sectors through sharp domain knowledge, transparency, and a sustainable vision.' : 'Wij verbinden toptalent en toonaangevende organisaties binnen de publieke en private sector door scherpe vakkennis, transparantie en een duurzame visie.');
 
-    const getPath = (path: string) => {
-        if (locale === 'nl') return path;
-        return `/en${path === '/' ? '' : path}`;
-    };
+    const teamMembers: TeamMember[] = teamBlock?.members?.length > 0 ? teamBlock.members : defaultMembers;
 
-    const getValueIcon = (index: number) => {
-        if (index === 0) return <ShieldCheck className="h-6 w-6 text-amber" />;
-        if (index === 1) return <Lightbulb className="h-6 w-6 text-amber" />;
-        return <HeartHandshake className="h-6 w-6 text-amber" />;
-    };
+    // Structured JSON-LD Data
+    const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/about-us' : '/over-ons'}`;
+    const jsonLdData = pageData?.seo?.structuredData
+        ? typeof pageData.seo.structuredData === 'string'
+            ? pageData.seo.structuredData
+            : JSON.stringify(pageData.seo.structuredData)
+        : JSON.stringify({
+              '@context': 'https://schema.org',
+              '@graph': [
+                  {
+                      '@type': 'AboutPage',
+                      '@id': `${canonicalPageUrl}#webpage`,
+                      url: canonicalPageUrl,
+                      name: isEn ? 'About emlinked | Our Team & Mission' : 'Over emlinked | Ons Team & Onze Missie',
+                      description: heroSub,
+                      inLanguage: isEn ? 'en-US' : 'nl-NL',
+                      isPartOf: {
+                          '@type': 'WebSite',
+                          '@id': `${DEFAULT_DOMAIN}/#website`,
+                      },
+                  },
+                  {
+                      '@type': 'Organization',
+                      '@id': `${DEFAULT_DOMAIN}/#organization`,
+                      name: 'emlinked',
+                      url: DEFAULT_DOMAIN,
+                      logo: `${DEFAULT_DOMAIN}/emlinked/Emlinked_logo__liggend.svg`,
+                      member: teamMembers.map((m) => ({
+                          '@type': 'Person',
+                          name: m.name,
+                          jobTitle: m.role,
+                          image: `${DEFAULT_DOMAIN}${m.photoPath || '/emlinked/team/avatar_partners.png'}`,
+                          worksFor: {
+                              '@type': 'Organization',
+                              name: 'emlinked',
+                          },
+                      })),
+                  },
+              ],
+          });
 
     return (
-        <main className="flex-1 bg-[url('/hero/bkg_darkBlue.jpg')] bg-cover bg-center bg-no-repeat text-white">
-            {/* Hero Section */}
-            <HeroSection
-                label={isEn ? 'ORGANIZATION & TEAM' : 'ORGANISATIE & TEAM'}
-                title={title}
-                subtitle={tagline}
-                locale={locale}
-            />
+        <main className='flex-1 bg-background text-foreground relative overflow-hidden'>
+            {/* Inject JSON-LD */}
+            {jsonLdData && (
+                <script
+                    type='application/ld+json'
+                    dangerouslySetInnerHTML={{ __html: jsonLdData }}
+                />
+            )}
 
-            {/* Our Story & Philosophy */}
-            <section className='px-6 py-12 relative z-10 max-w-7xl mx-auto'>
-                <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
-                    <div className='space-y-6 text-left'>
-                        <span className='text-xs font-bold text-amber uppercase tracking-wider'>
-                            {isEn ? 'OUR ORIGIN STORY' : 'ONS VERHAAL'}
+            {/* ── SECTION 0: HERO SECTION (DARK TEXTURE NAVY) ── */}
+            <div className='bg-texture-navy text-white relative border-b border-white/10'>
+                <HeroSection
+                    label={heroBlock?.badge || (isEn ? 'HUMAN-CENTRIC RECRUITMENT & SAAS' : 'MENSGERICHT RECRUITMENT & SAAS')}
+                    title={heroTitle}
+                    subtitle={heroSub}
+                    ctaLabel={heroBlock?.ctaLabel || (isEn ? 'Get in touch directly' : 'Neem direct contact op')}
+                    ctaLink={heroBlock?.ctaLink || '#demo'}
+                    secondaryCtaLabel={heroBlock?.secondaryCtaLabel || (isEn ? 'Explore our solutions →' : 'Bekijk onze oplossingen →')}
+                    secondaryCtaLink={heroBlock?.secondaryCtaLink || (isEn ? '/en/apps' : '/apps')}
+                    proofText={heroBlock?.proofText || (isEn ? 'Trusted by professional organizations, real estate managers, and IT leaders' : 'Vertrouwd door professionele organisaties, vastgoedbeheerders en IT-leiders')}
+                    locale={locale}
+                    showProof={true}
+                />
+            </div>
+
+            {/* ── SECTION 1: ONZE MISSIE & VISIE (LIGHT SECTION WITH RICH TYPOGRAPHY) ── */}
+            <section className='px-6 py-20 relative z-10 bg-white text-slate-900 border-b border-slate-200'>
+                <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10'>
+                    {/* Left Column: Mission Content */}
+                    <div className='lg:col-span-7 space-y-6 text-left'>
+                        <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                            <Sparkles className='w-3.5 h-3.5 text-amber' />
+                            {missionBlock?.badge || (isEn ? 'ARCHITECTING MEANINGFUL MATCHES' : 'ARCHITECTING MEANINGFUL MATCHES')}
                         </span>
-                        <h2 className='font-display font-bold text-3xl md:text-4xl text-white'>
-                            {isEn
-                                ? 'Eliminating the Double-Entry Tax'
-                                : 'Het elimineren van de dubbele invoer'}
+
+                        <h2 className='font-display font-bold text-3xl md:text-4xl text-darkblue leading-tight'>
+                            {missionBlock?.title || (isEn
+                                ? 'The labor market demands more than quick transactions; it requires strategic synergy.'
+                                : 'De arbeidsmarkt vraagt om meer dan snelle transacties; het vereist strategische synergie.')}
                         </h2>
-                        <div className='space-y-4 text-xs text-slate-300 leading-relaxed'>
-                            <p>
-                                {isEn
-                                    ? 'Traditionally, property managers use separate tools to manage tenants and invoices, while their financial ledger lives inside a heavy ERP. This creates constant manual exporting, bank reconciliation errors, and out-of-sync databases.'
-                                    : 'Traditioneel gebruiken vastgoedbeheerders losse softwarepakketten voor contracten en huurders, terwijl de financiële administratie in een zwaar ERP-systeem draait. Dit leidt tot handmatig exporteren, foutgevoelig afletterwerk en niet-synchrone databases.'}
-                            </p>
-                            <p>
-                                {isEn
-                                    ? 'We built emlinked to bridge this gap. By developing directly inside Dynamics 365 Business Central, property management functions become native ERP features. Huurprolongatie, bankaflettering, and CPI indexation happen where the transactions belong: in the general ledger.'
-                                    : 'We hebben emlinked gebouwd om deze kloof te dichten. Door software direct binnen Dynamics 365 Business Central te ontwikkelen, worden vastgoedfunctionaliteiten onderdeel van het ERP. Huurprolongatie, bankaflettering en CPI-indexatie gebeuren direct in de boekhouding.'}
-                            </p>
+
+                        <p className='text-slate-600 text-base md:text-lg leading-relaxed font-light'>
+                            {missionBlock?.subtitle || (isEn
+                                ? 'At emlinked, we combine deep sector expertise with advanced recruitment methodologies to seamlessly synchronize professionals and clients. Our focus is on long-term employability, mutual growth, and tangible results across complex interim and permanent challenges.'
+                                : 'Bij emlinked combineren we diepgaande sectorkennis met geavanceerde wervingsmethodieken om professionals en opdrachtgevers naadloos te synchroniseren. Onze focus ligt op duurzame inzetbaarheid, wederzijdse groei en concrete resultaten binnen complexe interim- en vaste vraagstukken.')}
+                        </p>
+
+                        <div className='pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4'>
+                            <div className='flex items-start gap-3 p-4 rounded-xl border border-slate-200 bg-slate-50/80 shadow-xs'>
+                                <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                <div className='space-y-0.5 text-left'>
+                                    <h4 className='text-xs font-bold text-darkblue'>{isEn ? 'Sustainable Employability' : 'Duurzame Inzetbaarheid'}</h4>
+                                    <p className='text-[11px] text-slate-600'>{isEn ? 'Long-term mutual alignment & career growth' : 'Wederzijdse groei & lange-termijn matches'}</p>
+                                </div>
+                            </div>
+                            <div className='flex items-start gap-3 p-4 rounded-xl border border-slate-200 bg-slate-50/80 shadow-xs'>
+                                <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                                <div className='space-y-0.5 text-left'>
+                                    <h4 className='text-xs font-bold text-darkblue'>{isEn ? 'Tangible Results' : 'Concrete Resultaten'}</h4>
+                                    <p className='text-[11px] text-slate-600'>{isEn ? 'Proven execution in complex sectors' : 'Trefzekere oplossingen in complexe vraagstukken'}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Visual Card / Philosophy Statement */}
-                    <div className='relative rounded-2xl border border-white/10 bg-white/[0.02] p-8 md:p-12 text-left overflow-hidden'>
-                        <div className='absolute top-0 right-0 w-48 h-48 bg-amber/5 rounded-full blur-[80px]' />
-                        <div className='space-y-6 relative z-10'>
-                            <div className='h-10 w-10 rounded-lg bg-white/[0.04] flex items-center justify-center border border-white/10 text-amber'>
-                                <Target className='h-5 w-5' />
-                            </div>
-                            <h3 className='font-display font-bold text-xl text-white'>
-                                {fall.philosophyTitle}
-                            </h3>
-                            <blockquote className='text-xs italic text-slate-300 border-l-2 border-primary pl-4 py-1'>
-                                {fall.philosophyDesc}
-                            </blockquote>
-                            <p className='text-[10px] text-muted-foreground'>
-                                — Coen Mendes, Founder & Lead Architect
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                    {/* Right Column: Visual Architectural Card */}
+                    <div className='lg:col-span-5 relative'>
+                        <div className='relative rounded-3xl border border-amber/30 bg-slate-900 text-white p-8 md:p-10 shadow-2xl text-left overflow-hidden group'>
+                            <div className='absolute -inset-1 bg-gradient-to-r from-amber/20 via-indigo-500/10 to-amber/20 blur-xl opacity-60 pointer-events-none' />
 
-            {/* Core Values Section */}
-            <section className='px-6 py-16 relative z-10 max-w-7xl mx-auto border-t border-white/5'>
-                <div className='text-center max-w-2xl mx-auto space-y-4 mb-12'>
-                    <h2 className='font-display font-bold text-3xl text-white'>
-                        {isEn ? 'What We Stand For' : 'Waar we in geloven'}
-                    </h2>
-                </div>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                    {fall.values.map((val, idx) => (
-                        <div
-                            key={idx}
-                            className='rounded-xl border border-white/5 bg-white/[0.01] p-6 text-left space-y-4'
-                        >
-                            <div className='h-11 w-11 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center shrink-0'>
-                                {getValueIcon(idx)}
-                            </div>
-                            <h3 className='font-display font-bold text-lg text-white'>
-                                {val.title}
-                            </h3>
-                            <p className='text-xs text-slate-300 leading-relaxed'>
-                                {val.description}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            </section>
+                            <div className='relative z-10 space-y-6'>
+                                <div className='w-12 h-12 rounded-2xl bg-amber/15 border border-amber/30 flex items-center justify-center text-amber shadow-md'>
+                                    <Target className='w-6 h-6' />
+                                </div>
 
-            {/* Dynamic blocks rendering */}
-            {blocks.map((block: any, bIdx: number) => {
-                if (block._type === 'teamBlock') {
-                    return (
-                        <section
-                            key={block._key || bIdx}
-                            className='px-6 py-16 relative z-10 max-w-7xl mx-auto border-t border-white/5'
-                        >
-                            <div className='text-center max-w-2xl mx-auto space-y-4 mb-12'>
-                                <h2 className='font-display font-bold text-3xl text-white'>
-                                    {block.sectionTitle}
-                                </h2>
-                                {block.sectionSubtitle && (
-                                    <p className='text-xs text-muted-foreground leading-relaxed'>
-                                        {block.sectionSubtitle}
+                                <div className='space-y-2'>
+                                    <h3 className='font-display font-bold text-xl text-white'>
+                                        {isEn ? 'Synergy Between Expertise & Technology' : 'Synergie tussen Vakkennis & Technologie'}
+                                    </h3>
+                                    <p className='text-xs text-slate-300 leading-relaxed font-light'>
+                                        {isEn
+                                            ? 'Whether providing senior interim capacity for government & real estate or building native Business Central apps, we eliminate operational friction with clarity.'
+                                            : 'Of het nu gaat om interim capaciteit binnen overheid en vastgoed, of het bouwen van native Business Central extensies: wij elimineren operationele frictie met helderheid.'}
                                     </p>
-                                )}
-                            </div>
-                            <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-                                {block.members?.map(
-                                    (member: any, idx: number) => (
-                                        <div
-                                            key={idx}
-                                            className='rounded-xl border border-white/10 bg-white/[0.01] p-8 text-left flex flex-col justify-between hover:border-amber/20 transition-all'
-                                        >
-                                            <div className='space-y-4'>
-                                                <div className='space-y-1'>
-                                                    <h3 className='font-display font-bold text-xl text-white'>
-                                                        {member.name}
-                                                    </h3>
-                                                    <p className='text-xs text-primary font-semibold tracking-wider'>
-                                                        {member.role}
-                                                    </p>
-                                                </div>
-                                                <p className='text-xs text-slate-300 leading-relaxed pt-2'>
-                                                    {member.bio}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    ),
-                                )}
-                            </div>
-                        </section>
-                    );
-                }
+                                </div>
 
-                if (block._type === 'ctaBanner') {
-                    return (
-                        <section
-                            key={block._key || bIdx}
-                            className='px-6 py-16 relative z-10 max-w-7xl mx-auto'
-                        >
-                            <div className='relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-transparent p-8 md:p-14 overflow-hidden text-center max-w-4xl mx-auto'>
-                                <div className='absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber/5 rounded-full blur-[100px] pointer-events-none' />
-                                <div className='relative z-10 space-y-6 max-w-2xl mx-auto'>
-                                    <h2 className='font-display font-bold text-3xl md:text-4xl text-white'>
-                                        {block.title}
-                                    </h2>
-                                    <p className='text-xs text-muted-foreground leading-relaxed'>
-                                        {block.subtitle}
-                                    </p>
-                                    <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-4'>
-                                        <Link
-                                            href='#demo'
-                                            className='h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold rounded-lg flex items-center gap-2 transition-all shadow-md'
-                                        >
-                                            {isEn
-                                                ? 'Request a Demo'
-                                                : 'Demo aanvragen'}
-                                            <ArrowRight className='h-4.5 w-4.5' />
-                                        </Link>
+                                <blockquote className='text-xs italic text-slate-200 border-l-2 border-amber pl-4 py-1.5 bg-white/[0.04] rounded-r-lg'>
+                                    {isEn
+                                        ? '"True alignment comes from understanding both the technical details and the human context."'
+                                        : '"Echte verbinding ontstaat wanneer vakkennis, menselijke maat en transparantie samenkomen."'
+                                    }
+                                </blockquote>
+
+                                <div className='pt-2 flex items-center gap-3 border-t border-white/10'>
+                                    <div className='w-8 h-8 rounded-full bg-amber/20 flex items-center justify-center text-amber text-xs font-bold font-mono'>
+                                        EM
+                                    </div>
+                                    <div>
+                                        <div className='text-xs font-bold text-white'>emlinked Management</div>
+                                        <div className='text-[10px] text-amber font-mono'>{isEn ? 'Interim & SaaS Solutions' : 'Interim & SaaS Oplossingen'}</div>
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                    );
-                }
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                return null;
-            })}
+            {/* ── SECTION 2: KERNWAARDEN (WARM LIGHT TINT SECTION) ── */}
+            <section className='px-6 py-20 relative z-10 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10'>
+                <div className='max-w-7xl mx-auto space-y-16'>
+                    <div className='text-center max-w-3xl mx-auto space-y-4 mb-12'>
+                        <div className='flex justify-center mb-1'>
+                            <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                                <Layers className='w-3.5 h-3.5 text-amber' />
+                                {isEn ? 'CORE PILLARS' : 'ONZE KERNWAARDEN'}
+                            </span>
+                        </div>
+
+                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem] font-bold tracking-tight text-[#060e32]'>
+                            {valuesBlock?.title || (isEn ? 'Our Core Values' : 'Onze Kernwaarden')}
+                        </h2>
+
+                        <p className='text-[#060e32]/75 text-base md:text-lg leading-relaxed font-light'>
+                            {valuesBlock?.subtitle || (isEn ? 'The foundation of our transparent and data-driven way of working.' : 'De fundamenten van onze transparante en datagedreven werkwijze.')}
+                        </p>
+                    </div>
+
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+                        {/* Card 1 */}
+                        <div className='rounded-2xl border border-amber/20 bg-white p-8 text-left space-y-5 hover:border-amber/50 transition-all duration-300 hover:-translate-y-1 group shadow-lg'>
+                            <div className='w-12 h-12 rounded-2xl bg-amber/15 border border-amber/30 flex items-center justify-center text-amber shadow-md group-hover:scale-110 transition-transform'>
+                                <ShieldCheck className='w-6 h-6' />
+                            </div>
+                            <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-amber transition-colors'>
+                                {isEn ? 'Transparency & Integrity' : 'Transparantie & Integriteit'}
+                            </h3>
+                            <p className='text-xs md:text-sm text-[#060e32]/80 leading-relaxed font-light'>
+                                {isEn
+                                    ? 'No vague promises, but data-driven and honest communication at every stage of the recruitment and software lifecycle.'
+                                    : 'Geen vage beloftes, maar datagedreven en eerlijke communicatie in elk stadium van het recruitment- en softwareproces.'}
+                            </p>
+                        </div>
+
+                        {/* Card 2 */}
+                        <div className='rounded-2xl border border-amber/20 bg-white p-8 text-left space-y-5 hover:border-amber/50 transition-all duration-300 hover:-translate-y-1 group shadow-lg'>
+                            <div className='w-12 h-12 rounded-2xl bg-amber/15 border border-amber/30 flex items-center justify-center text-amber shadow-md group-hover:scale-110 transition-transform'>
+                                <Layers className='w-6 h-6' />
+                            </div>
+                            <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-amber transition-colors'>
+                                {isEn ? 'Sector-Specific Expertise' : 'Sectorspecifieke Expertise'}
+                            </h3>
+                            <p className='text-xs md:text-sm text-[#060e32]/80 leading-relaxed font-light'>
+                                {isEn
+                                    ? 'Deep domain knowledge within government, education, healthcare, real estate, and business guarantees precise placements.'
+                                    : 'Diepe domeinkennis binnen overheid, onderwijs, zorg, vastgoed en het bedrijfsleven garandeert trefzekere plaatsingen.'}
+                            </p>
+                        </div>
+
+                        {/* Card 3 */}
+                        <div className='rounded-2xl border border-amber/20 bg-white p-8 text-left space-y-5 hover:border-amber/50 transition-all duration-300 hover:-translate-y-1 group shadow-xl'>
+                            <div className='w-12 h-12 rounded-2xl bg-amber/15 border border-amber/30 flex items-center justify-center text-amber shadow-md group-hover:scale-110 transition-transform'>
+                                <Zap className='w-6 h-6' />
+                            </div>
+                            <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-amber transition-colors'>
+                                {isEn ? 'Agility & Custom Work' : 'Wendbaarheid & Maatwerk'}
+                            </h3>
+                            <p className='text-xs md:text-sm text-[#060e32]/80 leading-relaxed font-light'>
+                                {isEn
+                                    ? 'Proactive sourcing and flexible interim solutions that immediately respond to evolving organizational needs.'
+                                    : 'Proactieve sourcing en flexibele interim-oplossingen die direct inspelen op veranderende organisatiebehoeften.'}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ── SECTION 3: HET TEAM (DARK CONTRASTING SHOWCASE) ── */}
+            <div className='bg-texture-navy text-white relative border-b border-white/10'>
+                <TeamBlock
+                    sectionTitle={teamBlock?.sectionTitle}
+                    sectionSubtitle={teamBlock?.sectionSubtitle}
+                    members={teamMembers}
+                    locale={locale}
+                />
+            </div>
+
+            {/* ── SECTION 4: CALL TO ACTION (ENGAGEMENT HOOK) ── */}
+            <section className='px-6 py-20 relative z-10 bg-background'>
+                <div className='relative rounded-3xl border border-amber/40 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-2xl text-white'>
+                    <div className='absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber/10 rounded-full blur-[120px] pointer-events-none' />
+
+                    <div className='relative z-10 space-y-6 max-w-3xl mx-auto'>
+                        <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md'>
+                            <Users className='w-3.5 h-3.5 text-amber' />
+                            {isEn ? 'START THE CONVERSATION' : 'GA HET GESPREK AAN'}
+                        </span>
+
+                        <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] text-white leading-tight'>
+                            {ctaBlock?.title || (isEn ? 'Ready to strengthen your organization or career?' : 'Klaar om je organisatie of carrière te versterken?')}
+                        </h2>
+
+                        <p className='text-slate-300 text-base md:text-lg leading-relaxed font-light'>
+                            {ctaBlock?.subtitle || (isEn
+                                ? 'Discover how our targeted approach makes the difference for your interim capacity or next career move.'
+                                : 'Ontdek hoe onze gerichte aanpak het verschil maakt voor je interim-capaciteit of volgende carrièrestap.')}
+                        </p>
+
+                        <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-4'>
+                            <GlowingLink
+                                href={ctaBlock?.primaryCtaUrl || '#demo'}
+                                className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-gradient-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
+                            >
+                                <span className='flex items-center justify-center gap-2 text-white'>
+                                    <span>{ctaBlock?.primaryCtaLabel || (isEn ? 'Get in touch directly' : 'Neem direct contact op')}</span>
+                                    <ArrowRight className='w-5 h-5 text-white' />
+                                </span>
+                            </GlowingLink>
+
+                            <Link
+                                href={ctaBlock?.secondaryCtaUrl || (isEn ? '/en/apps' : '/apps')}
+                                className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                            >
+                                {ctaBlock?.secondaryCtaLabel || (isEn ? 'Explore our solutions →' : 'Bekijk onze oplossingen →')}
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     );
 }
