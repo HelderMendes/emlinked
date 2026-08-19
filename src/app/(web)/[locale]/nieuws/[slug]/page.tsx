@@ -212,8 +212,22 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
             {/* ── HEADER HERO (DARK TEXTURE NAVY WITH INTEGRATED 1/3 IMAGE) ── */}
             <header className='bg-texture-navy text-white relative py-16 px-6 border-b border-white/10'>
                 <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
-                    {/* Left Column: 2/3 Text Content */}
-                    <div className='lg:col-span-7 xl:col-span-8 space-y-6 text-left'>
+                    {/* Image Column: Left side on desktop, 70% centered on md, 100% on sm */}
+                    <div className='lg:col-span-5 xl:col-span-4 w-full md:w-[70%] lg:w-full mx-auto relative lg:order-first'>
+                        <div className='relative aspect-[4/3] rounded-2xl border-2 border-white/15 overflow-hidden shadow-2xl bg-slate-950 group'>
+                            <Image
+                                src={heroImgUrl}
+                                alt={article.title}
+                                fill
+                                className='object-cover object-center group-hover:scale-105 transition-transform duration-500'
+                                priority
+                            />
+                            <div className='absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none' />
+                        </div>
+                    </div>
+
+                    {/* Text Column: Right side on desktop */}
+                    <div className='lg:col-span-7 xl:col-span-8 space-y-6 text-left lg:order-last'>
                         {/* Back Link */}
                         <Link
                             href={isEn ? '/en/news' : '/nieuws'}
@@ -281,20 +295,6 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                                     <span>Share</span>
                                 </a>
                             </div>
-                        </div>
-                    </div>
-
-                    {/* Right Column: 1/3 Integrated Image Card */}
-                    <div className='lg:col-span-5 xl:col-span-4 relative'>
-                        <div className='relative aspect-[4/3] rounded-2xl border-2 border-white/15 overflow-hidden shadow-2xl bg-slate-950 group'>
-                            <Image
-                                src={heroImgUrl}
-                                alt={article.title}
-                                fill
-                                className='object-cover object-center group-hover:scale-105 transition-transform duration-500'
-                                priority
-                            />
-                            <div className='absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none' />
                         </div>
                     </div>
                 </div>
