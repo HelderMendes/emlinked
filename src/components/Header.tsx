@@ -305,7 +305,42 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
 
         let path = pathname;
 
+        // Article slug translation map (NL <-> EN)
+        const articleSlugMap: Record<string, string> = {
+            'emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026': 'emlinked-expands-team-and-sets-course-for-2026-growth',
+            'wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders': 'good-landlordship-act-what-changes-for-property-managers',
+            'vast-huurcontract-vs-flexibel-huurcontract-juridische-en-financiele-impact': 'permanent-vs-flexible-lease-agreements-legal-and-financial-impact',
+            'box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing': 'box-3-tax-2026-actual-returns-vs-statutory-rate',
+            'geautomatiseerde-incasso-en-bankaflettering-in-business-central-23': 'automated-direct-debit-and-bank-reconciliation-in-business-central-23',
+            'online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp': 'online-real-estate-management-software-transitioning-from-excel-to-erp',
+            'nieuw-emlinked-online-vastgoedbeheer-voor-iphone-en-ipad': 'new-emlinked-property-management-for-iphone-and-ipad',
+            'cbs-wijzigt-consumentenprijsindex-cpi': 'cbs-updates-consumer-price-index-cpi',
+            'emlinked-heeft-een-nieuw-telefoonnummer': 'emlinked-launches-new-phone-contact-line',
+            'wij-zijn-verhuisd-naar-naarden': 'we-have-moved-to-our-new-office-in-naarden',
+            'emlinked-trainingsaanbod-2024': 'emlinked-training-program-maximize-value-from-property-software',
+            'onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked': 'our-clients-manage-over-15-billion-in-real-estate-assets-with-emlinked',
+            'direct-banking-banktransacties-bankafschriften-betaalbestanden': 'direct-banking-automated-transactions-and-payment-files',
+            'emlinked-huurdersportaal': 'emlinked-tenant-portal-self-service',
+            '5-redenen-waarom-het-belangrijk-is-om-uw-systemen-te-updaten': '5-reasons-why-updating-your-real-estate-software-is-essential',
+            'vastgoedbeleggers-in-beweging': 'real-estate-investors-on-the-move-trends-and-market-updates',
+            'voorstellen-nieuwe-box-3': 'new-dutch-box-3-proposals-implications-for-rental-property-portfolios',
+            'nieuwe-update-emlinked-vastgoedbeheer-software': 'new-update-available-for-emlinked-property-management-software',
+        };
+
+        // Reverse map (EN -> NL)
+        const reverseArticleSlugMap: Record<string, string> = Object.fromEntries(
+            Object.entries(articleSlugMap).map(([nl, en]) => [en, nl])
+        );
+
         if (targetLocale === 'en') {
+            // Check if current URL is a news article detail page
+            const newsNlMatch = path.match(/^\/nieuws\/(.+)$/);
+            if (newsNlMatch) {
+                const currentNlSlug = newsNlMatch[1];
+                const mappedEnSlug = articleSlugMap[currentNlSlug] || currentNlSlug;
+                return `/en/news/${mappedEnSlug}`;
+            }
+
             path = path.replace(
                 '/apps/vastgoedbeheer-software',
                 '/apps/property-management-software',
@@ -325,6 +360,14 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             }
             return path;
         } else {
+            // Check if current URL is an English news article detail page
+            const newsEnMatch = path.match(/^\/en\/news\/(.+)$/);
+            if (newsEnMatch) {
+                const currentEnSlug = newsEnMatch[1];
+                const mappedNlSlug = reverseArticleSlugMap[currentEnSlug] || currentEnSlug;
+                return `/nieuws/${mappedNlSlug}`;
+            }
+
             if (path.startsWith('/en')) {
                 path = path.replace('/en', '') || '/';
             }
