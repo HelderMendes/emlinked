@@ -212,8 +212,8 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
             {/* ── HEADER HERO (DARK TEXTURE NAVY WITH INTEGRATED 1/3 IMAGE) ── */}
             <header className='bg-texture-navy text-white relative py-16 px-6 border-b border-white/10'>
                 <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
-                    {/* Image Column: Left side on desktop, 70% centered on md, 100% on sm */}
-                    <div className='lg:col-span-5 xl:col-span-4 w-full md:w-[70%] lg:w-full mx-auto relative lg:order-first'>
+                    {/* Image Column: Left side on desktop (lg:order-1), Order-last on mobile/tablet (order-2, 70% centered on md) */}
+                    <div className='order-2 lg:order-1 lg:col-span-5 xl:col-span-4 w-full md:w-[70%] lg:w-full mx-auto relative'>
                         <div className='relative aspect-[4/3] rounded-2xl border-2 border-white/15 overflow-hidden shadow-2xl bg-slate-950 group'>
                             <Image
                                 src={heroImgUrl}
@@ -226,8 +226,8 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                         </div>
                     </div>
 
-                    {/* Text Column: Right side on desktop */}
-                    <div className='lg:col-span-7 xl:col-span-8 space-y-6 text-left lg:order-last'>
+                    {/* Text Column: Right side on desktop (lg:order-2), Order-first on mobile/tablet (order-1) */}
+                    <div className='order-1 lg:order-2 lg:col-span-7 xl:col-span-8 space-y-6 text-left'>
                         {/* Back Link */}
                         <Link
                             href={isEn ? '/en/news' : '/nieuws'}
