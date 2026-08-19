@@ -57,10 +57,17 @@ async function getSanityArticleBySlug(slug: string, locale: string) {
     }
 }
 
-async function getRelatedArticles(currentSlug: string, locale: string) {
+async function getRelatedArticles(currentArticle: any, locale: string) {
+    if (!currentArticle) return [];
+    const currentSlug = currentArticle.slug;
+    const currentCategory = currentArticle.category || '';
+    const currentTitle = currentArticle.title || '';
+    const currentWords = new Set(currentTitle.toLowerCase().split(/\s+/).filter((w: string) => w.length > 3));
+
     try {
-        return await sanityFetch<any[]>({
-            query: `*[_type == "article" && slug.current != $currentSlug && language == $locale][0...3] {
+        // 1. Fetch candidate pool (up to 12 candidates in same language)
+        const candidates = await sanityFetch<any[]>({
+            query: `*[_type == "article" && slug.current != $currentSlug && language == $locale][0...12] {
                 _id,
                 title,
                 "slug": slug.current,
@@ -74,7 +81,74 @@ async function getRelatedArticles(currentSlug: string, locale: string) {
             }`,
             params: { currentSlug, locale },
         });
+
+        if (!candidates || candidates.length === 0) return [];
+
+        const now = Date.now();
+
+        // 2. Multi-factor scoring for each candidate
+        const scoredCandidates = candidates.map((candidate) => {
+            // A. Category Match (20% weight)
+            const categoryScore = candidate.category === currentCategory ? 100 : 0;
+
+            // B. Relevance / Keyword Overlap (40% weight)
+            const candidateWords = (candidate.title || '').toLowerCase().split(/\s+/).filter((w: string) => w.length > 3);
+            let overlapCount = 0;
+            candidateWords.forEach((w: string) => {
+                if (currentWords.has(w)) overlapCount++;
+            });
+            const relevanceScore = candidateWords.length > 0 ? Math.min(100, (overlapCount / candidateWords.length) * 200) : 0;
+
+            // C. Freshness / Recency (15% weight)
+            const pubTime = candidate.publishedAt ? new Date(candidate.publishedAt).getTime() : now;
+            const daysOld = Math.max(0, (now - pubTime) / (1000 * 60 * 60 * 24));
+            const freshnessScore = Math.max(0, 100 - (daysOld / 3.65)); // Soft decay over 1 year
+
+            // D. Serendipity / Randomness (10% weight)
+            const randomnessScore = Math.random() * 100;
+
+            // Weighted composite score formula
+            const totalScore =
+                (relevanceScore * 0.40) +
+                (categoryScore * 0.20) +
+                (freshnessScore * 0.15) +
+                (randomnessScore * 0.25);
+
+            return { candidate, totalScore };
+        });
+
+        // 3. Sort candidates by total score descending
+        scoredCandidates.sort((a, b) => b.totalScore - a.totalScore);
+
+        // 4. Select top 3 with Diversity Enforcement (max 2 from same category)
+        const selected: any[] = [];
+        const categoryCounts: Record<string, number> = {};
+
+        for (const item of scoredCandidates) {
+            const cat = item.candidate.category || 'General';
+            const count = categoryCounts[cat] || 0;
+
+            if (count < 2 || selected.length >= candidates.length - 1) {
+                selected.push(item.candidate);
+                categoryCounts[cat] = count + 1;
+            }
+
+            if (selected.length >= 3) break;
+        }
+
+        // Fallback if diversity filter yields less than 3
+        if (selected.length < 3) {
+            for (const item of scoredCandidates) {
+                if (!selected.some((s) => s.slug === item.candidate.slug)) {
+                    selected.push(item.candidate);
+                }
+                if (selected.length >= 3) break;
+            }
+        }
+
+        return selected;
     } catch (e) {
+        console.error('Error in getRelatedArticles content recirculation:', e);
         return [];
     }
 }
@@ -195,7 +269,7 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
         notFound();
     }
 
-    const relatedArticles = await getRelatedArticles(slug, locale);
+    const relatedArticles = await getRelatedArticles(article, locale);
     const heroImgUrl = article.mainImage ? getImageUrl(article.mainImage) : (article.imagePath || '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png');
     const canonicalPageUrl = article.seo?.canonical || `${DEFAULT_DOMAIN}/${isEn ? 'en/news' : 'nieuws'}/${slug}`;
     const displayReadTime = calculateReadTime(article.body, isEn, article.readTime);
