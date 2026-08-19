@@ -72,10 +72,15 @@ export function VastgoedbeheerSoftwareModule({
     const heroDescription = heroBlock?.description || doc?.description;
 
     const explicitHeroPath = heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || doc?.heroImagePath;
-    const heroImageUrl = explicitHeroPath || getImageUrl(
-        heroBlock?.image || heroBlock?.heroImage || doc?.image || doc?.heroImage,
-        '/emlinked/apps/vastgoedbeheer.png',
-    );
+    const heroImageUrl =
+        explicitHeroPath ||
+        getImageUrl(
+            heroBlock?.image ||
+                heroBlock?.heroImage ||
+                doc?.image ||
+                doc?.heroImage,
+            '/emlinked/apps/vastgoedbeheer-software/geautomatiseerde-business-central.png',
+        );
 
     // Structured JSON-LD from Sanity or default blueprint fallback
     const jsonLdData = doc?.seo?.structuredData
