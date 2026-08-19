@@ -163,20 +163,43 @@ export async function generateMetadata({
     });
 }
 
+function calculateReadTime(body: any, isEn: boolean, fallbackReadTime?: string): string {
+    if (fallbackReadTime && fallbackReadTime.trim().length > 0) {
+        return fallbackReadTime;
+    }
+    
+    let totalWords = 0;
+    if (Array.isArray(body)) {
+        body.forEach((block: any) => {
+            if (block._type === 'block' && block.children) {
+                block.children.forEach((c: any) => {
+                    if (c.text) {
+                        totalWords += c.text.trim().split(/\s+/).filter(Boolean).length;
+                    }
+                });
+            }
+        });
+    }
+    
+    const minutes = Math.max(1, Math.ceil(totalWords / 200));
+    return isEn ? `${minutes} min read` : `${minutes} min leestijd`;
+}
+
 export default async function ArticleDetailPage({ params }: ArticleDetailPageProps) {
     const { locale, slug } = await params;
     const isEn = locale === 'en';
-    const article = (await getSanityArticleBySlug(slug, locale)) || fallbackArticlesBySlug[slug];
+
+    const article = await getSanityArticleBySlug(slug, locale);
 
     if (!article) {
         notFound();
     }
 
     const relatedArticles = await getRelatedArticles(slug, locale);
-    const heroImgUrl = getImageUrl(article.mainImage, article.imagePath || '/emlinked/news/Wet-Goed-Verhuurderschap-emlinked.jpg');
-
-    // JSON-LD Article Schema
-    const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? `/en/news/${slug}` : `/nieuws/${slug}`}`;
+    const heroImgUrl = article.mainImage ? getImageUrl(article.mainImage) : (article.imagePath || '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png');
+    const canonicalPageUrl = article.seo?.canonical || `${DEFAULT_DOMAIN}/${isEn ? 'en/news' : 'nieuws'}/${slug}`;
+    const displayReadTime = calculateReadTime(article.body, isEn, article.readTime);
+    
     const jsonLdData = JSON.stringify({
         '@context': 'https://schema.org',
         '@graph': [
@@ -251,12 +274,10 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                                     <span>{new Date(article.publishedAt).toLocaleDateString(isEn ? 'en-US' : 'nl-NL', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                                 </span>
                             )}
-                            {article.readTime && (
-                                <span className='flex items-center gap-1.5 text-slate-300'>
-                                    <Clock className='w-3.5 h-3.5 text-amber' />
-                                    <span>{article.readTime}</span>
-                                </span>
-                            )}
+                            <span className='flex items-center gap-1.5 text-slate-300'>
+                                <Clock className='w-3.5 h-3.5 text-amber' />
+                                <span>{displayReadTime}</span>
+                            </span>
                         </div>
 
                         {/* Title */}
