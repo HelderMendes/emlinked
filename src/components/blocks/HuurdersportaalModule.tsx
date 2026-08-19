@@ -76,10 +76,15 @@ export function HuurdersportaalModule({
     const heroDescription = heroBlock?.description || doc?.description;
 
     const explicitHeroPath = heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || doc?.heroImagePath;
-    const heroImageUrl = explicitHeroPath || getImageUrl(
-        heroBlock?.image || heroBlock?.heroImage || doc?.image || doc?.heroImage,
-        '/emlinked/home/Huurdersportaal.png',
-    );
+    const heroImageUrl =
+        explicitHeroPath ||
+        getImageUrl(
+            heroBlock?.image ||
+                heroBlock?.heroImage ||
+                doc?.image ||
+                doc?.heroImage,
+            '/public/emlinked/apps/huurdersportaal/Huurdersportaal.webp',
+        );
 
     // Structured JSON-LD from Sanity or user-provided blueprint
     const jsonLdData = doc?.seo?.structuredData
