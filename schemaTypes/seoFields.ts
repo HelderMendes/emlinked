@@ -39,6 +39,12 @@ export const seoFields = defineType({
             },
         }),
         defineField({
+            name: 'canonical',
+            title: 'Canonical URL',
+            type: 'url',
+            description: 'The canonical URL of the page/article.',
+        }),
+        defineField({
             name: 'noIndex',
             title: 'No-Index',
             type: 'boolean',
