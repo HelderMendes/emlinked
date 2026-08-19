@@ -181,7 +181,11 @@ export function proxy(request: NextRequest) {
 
         // Translate English URL slugs in browser to internal filesystem folder names
         if (internalPath === '/en/about-us') internalPath = '/en/over-ons';
-        if (internalPath === '/en/news') internalPath = '/en/nieuws';
+        if (internalPath.startsWith('/en/news/')) {
+            internalPath = internalPath.replace('/en/news/', '/en/nieuws/');
+        } else if (internalPath === '/en/news') {
+            internalPath = '/en/nieuws';
+        }
         if (internalPath === '/en/references') internalPath = '/en/referenties';
         if (internalPath === '/en/pricing') internalPath = '/en/prijzen';
         if (internalPath === '/en/apps/property-management-software')
