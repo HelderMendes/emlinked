@@ -73,9 +73,10 @@ export function PaymentSoftwareModule({
     const heroTagline = heroBlock?.tagline || doc?.tagline || doc?.title;
     const heroDescription = heroBlock?.description || doc?.description;
 
-    const heroImageUrl = getImageUrl(
+    const explicitHeroPath = heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || doc?.heroImagePath;
+    const heroImageUrl = explicitHeroPath || getImageUrl(
         heroBlock?.image || heroBlock?.heroImage || doc?.image || doc?.heroImage,
-        heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || '/emlinked/apps/payment/payment-software-her0.webp',
+        '/emlinked/apps/payment/payment-software-her0.webp',
     );
 
     // Structured JSON-LD from Sanity or user blueprint
