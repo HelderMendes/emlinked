@@ -289,9 +289,8 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     ctaLink={heroBlock?.ctaLink || '#demo'}
                     secondaryCtaLabel={heroBlock?.secondaryCtaLabel || (isEn ? 'Explore our solutions →' : 'Bekijk onze oplossingen →')}
                     secondaryCtaLink={heroBlock?.secondaryCtaLink || (isEn ? '/en/apps' : '/apps')}
-                    proofText={heroBlock?.proofText || (isEn ? 'Trusted by professional organizations, real estate managers, and IT leaders' : 'Vertrouwd door professionele organisaties, vastgoedbeheerders en IT-leiders')}
                     locale={locale}
-                    showProof={true}
+                    showProof={false}
                 />
             </div>
 

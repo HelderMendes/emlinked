@@ -31,7 +31,6 @@ const nlData = {
             ctaLink: '#demo',
             secondaryCtaLabel: 'Bekijk onze oplossingen →',
             secondaryCtaLink: '/apps',
-            proofText: 'Vertrouwd door professionele organisaties, vastgoedbeheerders en IT-leiders',
         },
         {
             _type: 'workflow',
@@ -172,7 +171,6 @@ const enData = {
             ctaLink: '#demo',
             secondaryCtaLabel: 'Explore our solutions →',
             secondaryCtaLink: '/en/apps',
-            proofText: 'Trusted by professional organizations, real estate managers, and IT leaders',
         },
         {
             _type: 'workflow',
