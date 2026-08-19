@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType } from 'sanity';
 
 export const article = defineType({
   name: 'article',
@@ -12,6 +12,18 @@ export const article = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Nederlands', value: 'nl' },
+          { title: 'English', value: 'en' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -22,20 +34,56 @@ export const article = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Organisatie', value: 'Organisatie' },
+          { title: 'Wet & Regelgeving', value: 'Wet & Regelgeving' },
+          { title: 'Vastgoedbeheer', value: 'Vastgoedbeheer' },
+          { title: 'ERP & Business Central', value: 'ERP & Business Central' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'excerpt',
+      title: 'Excerpt / Summary',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'readTime',
+      title: 'Estimated Read Time',
+      type: 'string',
+      description: 'e.g. "4 min leestijd"',
+    }),
+    defineField({
       name: 'publishedAt',
       title: 'Published At',
       type: 'datetime',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'authorName',
+      title: 'Author Name',
+      type: 'string',
+    }),
+    defineField({
       name: 'author',
-      title: 'Author',
+      title: 'Author Reference',
       type: 'reference',
       to: [{ type: 'author' }],
     }),
     defineField({
+      name: 'imagePath',
+      title: 'Image File Path (Fallback)',
+      type: 'string',
+      description: 'e.g. /emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
+    }),
+    defineField({
       name: 'mainImage',
-      title: 'Main Image',
+      title: 'Main Image (Sanity CDN Upload)',
       type: 'image',
       options: {
         hotspot: true,
@@ -91,4 +139,11 @@ export const article = defineType({
       type: 'seoFields',
     }),
   ],
-})
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'category',
+      media: 'mainImage',
+    },
+  },
+});
