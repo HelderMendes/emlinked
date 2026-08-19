@@ -53,6 +53,13 @@ export const article = defineType({
       rows: 3,
     }),
     defineField({
+      name: 'keyTakeaways',
+      title: 'Key Takeaways / Belangrijkste Inzichten',
+      type: 'array',
+      description: 'Bullet points rendered in the Key Takeaways highlight box on the article detail page.',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
       name: 'readTime',
       title: 'Estimated Read Time',
       type: 'string',

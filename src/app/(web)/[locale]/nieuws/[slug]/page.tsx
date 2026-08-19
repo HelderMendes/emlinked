@@ -34,6 +34,7 @@ async function getSanityArticleBySlug(slug: string, locale: string) {
                 "slug": slug.current,
                 category,
                 excerpt,
+                keyTakeaways,
                 readTime,
                 publishedAt,
                 authorName,
@@ -342,14 +343,25 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                         <span>{isEn ? 'Key Takeaways for Real Estate Managers' : 'Belangrijkste inzichten voor vastgoedbeheerders'}</span>
                     </h4>
                     <ul className='space-y-2 text-xs md:text-sm text-slate-700'>
-                        <li className='flex items-start gap-2.5'>
-                            <CheckCircle2 className='w-4 h-4 text-amber shrink-0 mt-0.5' />
-                            <span>{isEn ? 'Automating administrative compliance prevents penalties and backlog.' : 'Geautomatiseerde dossiervoering voorkomt achterstanden en juridische risico’s.'}</span>
-                        </li>
-                        <li className='flex items-start gap-2.5'>
-                            <CheckCircle2 className='w-4 h-4 text-amber shrink-0 mt-0.5' />
-                            <span>{isEn ? 'Microsoft Dynamics 365 BC integration provides real-time portfolio oversight.' : 'Microsoft Dynamics 365 BC integratie geeft direct inzicht in de complete portefeuille.'}</span>
-                        </li>
+                        {article.keyTakeaways && Array.isArray(article.keyTakeaways) && article.keyTakeaways.length > 0 ? (
+                            article.keyTakeaways.map((point: string, idx: number) => (
+                                <li key={idx} className='flex items-start gap-2.5'>
+                                    <CheckCircle2 className='w-4 h-4 text-amber shrink-0 mt-0.5' />
+                                    <span>{point}</span>
+                                </li>
+                            ))
+                        ) : (
+                            <>
+                                <li className='flex items-start gap-2.5'>
+                                    <CheckCircle2 className='w-4 h-4 text-amber shrink-0 mt-0.5' />
+                                    <span>{isEn ? 'Automating administrative compliance prevents penalties and backlog.' : 'Geautomatiseerde dossiervoering voorkomt achterstanden en juridische risico’s.'}</span>
+                                </li>
+                                <li className='flex items-start gap-2.5'>
+                                    <CheckCircle2 className='w-4 h-4 text-amber shrink-0 mt-0.5' />
+                                    <span>{isEn ? 'Microsoft Dynamics 365 BC integration provides real-time portfolio oversight.' : 'Microsoft Dynamics 365 BC integratie geeft direct inzicht in de complete portefeuille.'}</span>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </article>
