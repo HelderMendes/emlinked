@@ -1347,13 +1347,15 @@ export const page = defineType({
                                         }),
                                         defineField({
                                             name: 'linkedin',
-                                            title: 'LinkedIn URL',
+                                            title: 'LinkedIn Profile URL',
                                             type: 'string',
+                                            description: 'e.g. https://www.linkedin.com/in/raymondperridon/',
                                         }),
                                         defineField({
                                             name: 'email',
-                                            title: 'Direct Email',
+                                            title: 'Direct Email Address',
                                             type: 'string',
+                                            description: 'e.g. info@emlinked.com',
                                         }),
                                         defineField({
                                             name: 'image',
