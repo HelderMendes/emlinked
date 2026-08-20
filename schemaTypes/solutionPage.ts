@@ -73,7 +73,8 @@ export const solutionPage = defineType({
                             name: 'primaryCtaLabel',
                             title: 'Primary CTA Button Label',
                             type: 'string',
-                            description: 'Label for primary action button (e.g. "Gratis live demo aanvragen")',
+                            description:
+                                'Label for primary action button (e.g. "Gratis live demo aanvragen")',
                         }),
                         defineField({
                             name: 'primaryCtaUrl',
@@ -85,7 +86,8 @@ export const solutionPage = defineType({
                             name: 'secondaryCtaLabel',
                             title: 'Secondary CTA Button Label',
                             type: 'string',
-                            description: 'Label for secondary action button (e.g. "Bereken je Box 3-impact")',
+                            description:
+                                'Label for secondary action button (e.g. "Bereken je Box 3-impact")',
                         }),
                         defineField({
                             name: 'secondaryCtaUrl',
@@ -97,12 +99,15 @@ export const solutionPage = defineType({
                             name: 'proofText',
                             title: 'Social Proof Text',
                             type: 'string',
-                            description: 'Social proof message (e.g. "Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland")',
+                            description:
+                                'Social proof message (e.g. "Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland")',
                         }),
                         defineField({
                             name: 'heroImage',
                             title: 'Hero Image Path',
                             type: 'string',
+                            description:
+                                'Relative path to image (e.g.,/emlinked/apps/huurdersportaal/Huurdersportaal.webp)',
                         }),
                     ],
                     preview: {

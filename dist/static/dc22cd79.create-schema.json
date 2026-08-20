@@ -2620,9 +2620,10 @@
                 "title": "Social Proof Text"
               },
               {
-                "name": "heroImage",
-                "type": "string",
-                "title": "Hero Image Path"
+                  "name": "heroImage",
+                  "type": "string",
+                  "title": "Hero Image Path",
+                  "description": "Relative path to image (e.g.,/emlinked/apps/huurdersportaal/name.jpg)"
               }
             ],
             "type": "object",

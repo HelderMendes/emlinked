@@ -1885,6 +1885,7 @@ var ze = [
                                 name: `heroImage`,
                                 title: `Hero Image Path`,
                                 type: `string`,
+                                description: `Relative path to image (e.g.,/emlinked/apps/huurdersportaal/name.jpg)`,
                             }),
                         ],
                         preview: {

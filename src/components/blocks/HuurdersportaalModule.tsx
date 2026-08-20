@@ -83,7 +83,7 @@ export function HuurdersportaalModule({
                 heroBlock?.heroImage ||
                 doc?.image ||
                 doc?.heroImage,
-            '/public/emlinked/apps/huurdersportaal/Huurdersportaal.webp',
+            '/emlinked/apps/huurdersportaal/Huurdersportaal.webp',
         );
 
     // Structured JSON-LD from Sanity or user-provided blueprint
