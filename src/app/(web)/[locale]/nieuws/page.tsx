@@ -223,7 +223,6 @@ const fallbackArticles: Record<'nl' | 'en', NewsArticleItem[]> = {
             category: 'Vastgoedbeheer',
             excerpt: 'Excel works for small portfolios, but triggers error-prone indexations as portfolios scale. Why upgrade to native cloud ERP?',
             readTime: '5 min read',
-            publishedAt: '2025-01-10T10:00:00Z',
             authorName: 'Iryna Samiliak',
             imagePath: '/emlinked/news/Online-vastgoedbeheer-software-.jpg',
         },
@@ -233,8 +232,21 @@ const fallbackArticles: Record<'nl' | 'en', NewsArticleItem[]> = {
 export default async function NieuwsPage({ params }: NieuwsPageProps) {
     const { locale } = await params;
     const isEn = locale === 'en';
+    const pageData = await getSanityNewsPageData(locale);
     const sanityArticles = await getSanityArticles(locale);
     const articles = sanityArticles.length > 0 ? sanityArticles : (isEn ? fallbackArticles.en : fallbackArticles.nl);
+
+    const pageBlocks = pageData?.pageBlocks || [];
+    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock' || b._type === 'hero');
+    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock' || b._type === 'ctaBanner' || b._type === 'cta');
+
+    const heroLabel = heroBlock?.badge || (isEn ? 'KNOWLEDGE BASE & INSIGHTS' : 'KENNISBANK & INZICHTEN');
+    const heroTitle = heroBlock?.tagline || (isEn ? 'News, insights, and *property management tips*' : 'Nieuws, inzichten en *vastgoedbeheer tips*');
+    const heroSub = heroBlock?.description || (isEn ? 'Stay informed with the latest news on real estate software, Box 3 legislation updates, and Microsoft Dynamics 365 developments.' : 'Blijf op de hoogte van het laatste nieuws rondom vastgoedbeheer software, wetgeving, Box 3-ontwikkelingen en Microsoft Dynamics updates.');
+
+    const ctaTitle = ctaBlock?.title || (isEn ? 'Stay ahead in the real estate market' : 'Blijf voorop lopen in de vastgoedmarkt');
+    const ctaSub = ctaBlock?.subtitle || (isEn ? 'Want to discuss software, legislation, or the latest features in Business Central? Connect with our experts directly.' : 'Wil je sparren over software, wetgeving of de nieuwste functies in Business Central? Neem direct contact op met onze experts.');
+    const ctaBtn = ctaBlock?.primaryCtaLabel || (isEn ? 'Get in touch' : 'Neem direct contact op');
 
     // JSON-LD CollectionPage Schema
     const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/news' : '/nieuws'}`;
@@ -246,9 +258,7 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
                 '@id': `${canonicalPageUrl}#webpage`,
                 url: canonicalPageUrl,
                 name: isEn ? 'News & Knowledge Base | emlinked' : 'Nieuws & Kennisbank | emlinked',
-                description: isEn
-                    ? 'Latest news and insights on real estate management software, Box 3 tax updates, and Business Central ERP.'
-                    : 'Laatste nieuws en inzichten rondom vastgoedbeheer software, Box 3 wetgeving en Business Central ERP.',
+                description: heroSub,
                 inLanguage: isEn ? 'en-US' : 'nl-NL',
                 isPartOf: {
                     '@type': 'WebSite',
@@ -269,17 +279,9 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
             {/* ── HERO SECTION (DARK TEXTURE NAVY) ── */}
             <div className='bg-texture-navy text-white relative border-b border-white/10'>
                 <HeroSection
-                    label={isEn ? 'KNOWLEDGE BASE & INSIGHTS' : 'KENNISBANK & INZICHTEN'}
-                    title={
-                        isEn
-                            ? 'News, insights, and *property management tips*'
-                            : 'Nieuws, inzichten en *vastgoedbeheer tips*'
-                    }
-                    subtitle={
-                        isEn
-                            ? 'Stay informed with the latest news on real estate software, Box 3 legislation updates, and Microsoft Dynamics 365 developments.'
-                            : 'Blijf op de hoogte van het laatste nieuws rondom vastgoedbeheer software, wetgeving, Box 3-ontwikkelingen en Microsoft Dynamics updates.'
-                    }
+                    label={heroLabel}
+                    title={heroTitle}
+                    subtitle={heroSub}
                     locale={locale}
                     showProof={false}
                 />
@@ -300,15 +302,11 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
                         </span>
 
                         <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] text-white leading-tight'>
-                            {isEn
-                                ? 'Want to receive Box 3 & ERP updates in your inbox?'
-                                : 'Box 3 & ERP-updates in je inbox ontvangen?'}
+                            {ctaTitle}
                         </h2>
 
                         <p className='text-slate-300 text-base md:text-lg leading-relaxed font-light'>
-                            {isEn
-                                ? 'Contact our team for advisory notes or request a live demonstration of emlinked property management apps.'
-                                : 'Neem contact op met ons team voor persoonlijk advies over vastgoedbeheer software en wetgeving.'}
+                            {ctaSub}
                         </p>
 
                         <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-4'>
@@ -317,7 +315,7 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
                                 className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-gradient-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
                             >
                                 <span className='flex items-center justify-center gap-2 text-white'>
-                                    <span>{isEn ? 'Get in touch' : 'Neem direct contact op'}</span>
+                                    <span>{ctaBtn}</span>
                                     <ArrowRight className='w-5 h-5 text-white' />
                                 </span>
                             </GlowingLink>
