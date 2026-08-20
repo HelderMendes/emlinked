@@ -439,8 +439,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
 
     const logoSrc =
         mounted && theme === 'dark'
-            ? '/emlinked/Emlinked_logo__liggend_white.png'
-            : '/emlinked/Emlinked_logo__liggend.svg';
+            ? '/emlinked/Emlinked_logo__liggend_white.png?v=2'
+            : '/emlinked/Emlinked_logo__liggend.svg?v=2';
 
     const toggleMobileSubmenu = (menu: string) => {
         setMobileSubmenu(mobileSubmenu === menu ? null : menu);
