@@ -11,6 +11,7 @@ export interface TeamMember {
     name: string;
     role: string;
     bio?: string;
+    fullBio?: string;
     focusArea?: string;
     badge?: string;
     photoPath?: string;
@@ -310,8 +311,12 @@ export function TeamBlock({
                                             </div>
 
                                             {/* Detailed Narrative Biography */}
-                                            <div className='space-y-3 pt-2 text-slate-200 text-sm md:text-base leading-relaxed font-light'>
-                                                <p>{activeMember.bio}</p>
+                                            <div className='space-y-4 pt-2 text-slate-200 text-sm md:text-base leading-relaxed font-light'>
+                                                {(activeMember.fullBio || activeMember.bio)
+                                                    ?.split('\n\n')
+                                                    .map((paragraph, pIdx) => (
+                                                        <p key={pIdx}>{paragraph}</p>
+                                                    ))}
                                             </div>
                                         </div>
 

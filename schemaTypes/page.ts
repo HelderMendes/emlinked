@@ -1326,9 +1326,17 @@ export const page = defineType({
                                         }),
                                         defineField({
                                             name: 'bio',
-                                            title: 'Biography',
+                                            title: 'Short Biography (Grid Card)',
                                             type: 'text',
-                                            rows: 3,
+                                            rows: 2,
+                                            description: 'Short 1-2 sentence preview summary shown on the team grid card.',
+                                        }),
+                                        defineField({
+                                            name: 'fullBio',
+                                            title: 'Extended Biography / Full Story (Popup Modal)',
+                                            type: 'text',
+                                            rows: 5,
+                                            description: 'Detailed narrative description shown inside the team member popup modal.',
                                         }),
                                         defineField({
                                             name: 'focusArea',
