@@ -91,10 +91,10 @@ export default async function PricingPage({ params }: PricingPageProps) {
     const strippenBlock = blocks.find((b: any) => b._type === 'featuresList');
     const ctaBlock = blocks.find((b: any) => b._type === 'ctaBanner');
 
-    const heroImageUrl = getImageUrl(
-        heroBlock?.image || heroBlock?.heroImage,
-        heroBlock?.imagePath || '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
-    );
+    const heroImageUrl =
+        heroBlock?.heroImagePath ||
+        heroBlock?.imagePath ||
+        '/emlinked/prijzen-hero.jpg';
 
     const ctaImageUrl = getImageUrl(
         ctaBlock?.image,
