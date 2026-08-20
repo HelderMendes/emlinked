@@ -100,10 +100,17 @@ export const article = defineType({
       name: 'body',
       title: 'Body',
       type: 'array',
-      description: 'The body text of the article. Use internal link annotations to improve SEO topology.',
+      description: 'The body text of the article. Use H2 for main section headers (best for SEO) and H3/H4 for sub-sections.',
       of: [
         {
           type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'H2 (Main Section Header - SEO)', value: 'h2' },
+            { title: 'H3 (Sub-section Header)', value: 'h3' },
+            { title: 'H4 (Minor Header)', value: 'h4' },
+            { title: 'Quote', value: 'blockquote' },
+          ],
           marks: {
             annotations: [
               {
