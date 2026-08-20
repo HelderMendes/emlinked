@@ -39,11 +39,40 @@ async function getSanityArticles(locale: string): Promise<NewsArticleItem[]> {
     }
 }
 
+async function getSanityNewsPageData(locale: string) {
+    try {
+        const pageId = locale === 'en' ? 'page-nieuws-en' : 'page-nieuws-nl';
+        return await sanityFetch<any>({
+            query: `*[_type == "page" && (_id == $pageId || (slug.current == $slug && language == $locale))][0] {
+                _id,
+                title,
+                "slug": slug.current,
+                seo {
+                    seoTitle,
+                    seoDescription,
+                    canonical,
+                    noIndex,
+                    structuredData
+                }
+            }`,
+            params: {
+                pageId,
+                slug: locale === 'en' ? 'news' : 'nieuws',
+                locale,
+            },
+        });
+    } catch (e) {
+        console.error('Failed to fetch news page data from Sanity:', e);
+        return null;
+    }
+}
+
 export async function generateMetadata({
     params,
 }: NieuwsPageProps): Promise<Metadata> {
     const { locale } = await params;
     const isEn = locale === 'en';
+    const pageData = await getSanityNewsPageData(locale);
 
     const fallbackTitle = isEn
         ? 'News & Knowledge Base Real Estate Management'
@@ -54,7 +83,7 @@ export async function generateMetadata({
     const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/news' : '/nieuws'}`;
 
     return buildMetadata({
-        seo: null,
+        seo: pageData?.seo,
         fallbackTitle,
         fallbackDescription,
         canonicalUrl,
