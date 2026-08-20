@@ -107,6 +107,29 @@ export const article = defineType({
           marks: {
             annotations: [
               {
+                name: 'link',
+                type: 'object',
+                title: 'External Link',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                    validation: (Rule) =>
+                      Rule.uri({
+                        scheme: ['http', 'https', 'mailto', 'tel'],
+                        allowRelative: true,
+                      }).required(),
+                  },
+                  {
+                    name: 'blank',
+                    type: 'boolean',
+                    title: 'Open in new tab',
+                    initialValue: true,
+                  },
+                ],
+              },
+              {
                 name: 'internalLink',
                 type: 'object',
                 title: 'Internal Link',
@@ -118,6 +141,7 @@ export const article = defineType({
                     to: [
                       { type: 'page' },
                       { type: 'article' },
+                      { type: 'solutionPage' },
                     ],
                   },
                 ],
