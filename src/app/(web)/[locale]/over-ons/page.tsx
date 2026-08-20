@@ -216,11 +216,11 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     const defaultMembers = isEn ? fallbackMembers.en : fallbackMembers.nl;
 
     const pageBlocks = pageData?.pageBlocks || [];
-    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock');
-    const missionBlock = pageBlocks.find((b: any) => b._type === 'workflow');
-    const valuesBlock = pageBlocks.find((b: any) => b._type === 'trustBar');
-    const teamBlock = pageBlocks.find((b: any) => b._type === 'teamBlock');
-    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock');
+    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock' || b._type === 'hero');
+    const missionBlock = pageBlocks.find((b: any) => b._type === 'workflow' || b._type === 'featuresList');
+    const valuesBlock = pageBlocks.find((b: any) => b._type === 'trustBar' || b._type === 'trust');
+    const teamBlock = pageBlocks.find((b: any) => b._type === 'teamBlock' || b._type === 'team');
+    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock' || b._type === 'ctaBanner' || b._type === 'cta');
 
     // Extract dynamic content or fallback
     const heroTitle = heroBlock?.tagline || pageData?.title || (isEn ? 'Human-Centric Interim & Recruitment Solutions with Impact.' : 'Mensgerichte Interim & Werving Oplossingen met Impact.');
