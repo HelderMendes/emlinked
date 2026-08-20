@@ -116,6 +116,7 @@ export function NewsArticlesSection({ articles, locale = 'nl' }: NewsArticlesSec
                                 src={getImageUrl(featuredArticle.mainImage, featuredArticle.imagePath || '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png')}
                                 alt={featuredArticle.title}
                                 fill
+                                sizes='(max-width: 1024px) 100vw, 50vw'
                                 className='object-cover object-center group-hover:scale-105 transition-transform duration-700'
                                 priority
                             />
@@ -191,6 +192,7 @@ export function NewsArticlesSection({ articles, locale = 'nl' }: NewsArticlesSec
                                         src={imgUrl}
                                         alt={art.title}
                                         fill
+                                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                                         className='object-cover object-center group-hover:scale-105 transition-transform duration-500'
                                     />
                                     {art.category && (

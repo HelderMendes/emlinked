@@ -13,6 +13,15 @@ export function getImageUrl(image: any, fallback: string = ''): string {
         if (image.includes('/emlinked/home/Huurdersportaal.png')) {
             return '/emlinked/apps/huurdersportaal.png';
         }
+        if (image.includes('M2-Capital')) {
+            return '/emlinked/referenties/M2-Capital.jpg';
+        }
+        if (image.includes('uitvoeringlogoVGBR') || image.includes('VGBR')) {
+            return '/emlinked/referenties/VGBRgrootde.webp';
+        }
+        if (image.includes('Unknown') || image.includes('van-overhagen')) {
+            return '/emlinked/referenties/van-overhagen_logo.jpg';
+        }
         return image;
     }
 
