@@ -37,6 +37,22 @@ export const page = defineType({
             validation: (Rule) => Rule.required(),
         }),
         defineField({
+            name: 'featuredArticle',
+            title: 'Uitgelicht Artikel / Featured Spotlight',
+            type: 'reference',
+            to: [{ type: 'article' }],
+            description: 'Selecteer hier het artikel dat groot bovenaan de nieuwspagina uitgelicht moet worden.',
+            options: {
+                filter: ({ document }) => {
+                    const lang = document?.language || 'nl';
+                    return {
+                        filter: 'language == $lang',
+                        params: { lang },
+                    };
+                },
+            },
+        }),
+        defineField({
             name: 'pageBlocks',
             title: 'Page Blocks',
             type: 'array',

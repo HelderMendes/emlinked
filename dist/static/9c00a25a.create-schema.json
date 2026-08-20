@@ -318,6 +318,17 @@
         "type": "slug"
       },
       {
+        "description": "Selecteer hier het artikel dat groot bovenaan de nieuwspagina uitgelicht moet worden.",
+        "to": [
+          {
+            "type": "article"
+          }
+        ],
+        "name": "featuredArticle",
+        "type": "reference",
+        "title": "Uitgelicht Artikel / Featured Spotlight"
+      },
+      {
         "description": "Assemble your page layout using modular content blocks.",
         "of": [
           {
@@ -1932,6 +1943,13 @@
         ],
         "name": "slug",
         "type": "slug"
+      },
+      {
+        "initialValue": false,
+        "description": "Vink dit aan om dit artikel als het grote uitgelichte spotlight-artikel bovenaan de nieuwspagina te tonen.",
+        "name": "isFeatured",
+        "type": "boolean",
+        "title": "Uitgelicht Artikel / Featured Spotlight"
       },
       {
         "options": {

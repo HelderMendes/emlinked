@@ -23,10 +23,11 @@ export interface NewsArticleItem {
 
 export interface NewsArticlesSectionProps {
     articles: NewsArticleItem[];
+    pinnedArticle?: NewsArticleItem | null;
     locale?: string;
 }
 
-export function NewsArticlesSection({ articles, locale = 'nl' }: NewsArticlesSectionProps) {
+export function NewsArticlesSection({ articles, pinnedArticle, locale = 'nl' }: NewsArticlesSectionProps) {
     const isEn = locale === 'en';
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
     const [searchQuery, setSearchQuery] = useState<string>('');
@@ -60,11 +61,17 @@ export function NewsArticlesSection({ articles, locale = 'nl' }: NewsArticlesSec
 
     const featuredArticle = useMemo(() => {
         if (selectedCategory === 'all' && !searchQuery && filteredArticles.length > 0) {
+            if (pinnedArticle) {
+                const found = filteredArticles.find(
+                    (a) => a.slug === pinnedArticle.slug || (a._id && pinnedArticle._id && a._id === pinnedArticle._id)
+                );
+                return found || pinnedArticle;
+            }
             const explicitFeatured = filteredArticles.find((a) => a.isFeatured || a.featured);
             return explicitFeatured || filteredArticles[0];
         }
         return null;
-    }, [filteredArticles, selectedCategory, searchQuery]);
+    }, [filteredArticles, pinnedArticle, selectedCategory, searchQuery]);
 
     const gridArticles = useMemo(() => {
         if (featuredArticle) {

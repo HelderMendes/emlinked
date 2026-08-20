@@ -48,6 +48,18 @@ async function getSanityNewsPageData(locale: string) {
                 _id,
                 title,
                 "slug": slug.current,
+                featuredArticle->{
+                    _id,
+                    title,
+                    "slug": slug.current,
+                    category,
+                    excerpt,
+                    readTime,
+                    publishedAt,
+                    authorName,
+                    imagePath,
+                    mainImage
+                },
                 seo {
                     seoTitle,
                     seoDescription,
@@ -289,7 +301,11 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
             </div>
 
             {/* ── ARTICLES SECTION (LIGHT / INTERACTIVE FILTER) ── */}
-            <NewsArticlesSection articles={articles} locale={locale} />
+            <NewsArticlesSection
+                articles={articles}
+                pinnedArticle={pageData?.featuredArticle}
+                locale={locale}
+            />
 
             {/* ── CTA CONVERSION BANNER ── */}
             <section className='px-6 py-20 relative z-10 max-w-7xl mx-auto'>
