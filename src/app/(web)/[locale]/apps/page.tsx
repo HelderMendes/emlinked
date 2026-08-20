@@ -195,6 +195,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                 src='/emlinked/apps/vastgoedbeheer.png'
                                                 alt='Vastgoedbeheer'
                                                 fill
+                                                sizes='24px'
                                                 className='object-contain'
                                             />
                                         </div>
@@ -212,6 +213,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                 src='/emlinked/apps/huurdersportaal.png'
                                                 alt='Huurdersportaal'
                                                 fill
+                                                sizes='24px'
                                                 className='object-contain'
                                             />
                                         </div>
@@ -229,6 +231,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                 src='/emlinked/apps/payment_engine.png'
                                                 alt='Payment Engine'
                                                 fill
+                                                sizes='24px'
                                                 className='object-contain'
                                             />
                                         </div>
@@ -334,6 +337,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                             'App Module'
                                                         }
                                                         fill
+                                                        sizes='52px'
                                                         className='object-contain'
                                                     />
                                                 </div>

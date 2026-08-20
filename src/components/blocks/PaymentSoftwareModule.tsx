@@ -44,6 +44,7 @@ function CardBadge({
                     src={imageSrc}
                     alt={alt}
                     fill
+                    sizes='52px'
                     className='object-cover object-center scale-105'
                 />
             </div>
@@ -190,22 +191,35 @@ export function PaymentSoftwareModule({
 
                             <div className='flex flex-col sm:flex-row gap-4 mt-2'>
                                 <GlowingLink
-                                    href={heroBlock?.primaryCtaUrl || heroBlock?.ctaLink || '#demo'}
+                                    href={
+                                        heroBlock?.primaryCtaUrl ||
+                                        heroBlock?.ctaLink ||
+                                        '#demo'
+                                    }
                                     className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
                                 >
                                     <span className='flex items-center justify-center gap-2 text-white'>
                                         <span>
-                                            {heroBlock?.primaryCtaLabel || heroBlock?.ctaLabel || (isEn ? 'Request a demo' : 'Vraag een demonstratie aan')}
+                                            {heroBlock?.primaryCtaLabel ||
+                                                heroBlock?.ctaLabel ||
+                                                (isEn
+                                                    ? 'Request a demo'
+                                                    : 'Vraag een demonstratie aan')}
                                         </span>
                                         <ArrowRight className='w-5 h-5 text-white' />
                                     </span>
                                 </GlowingLink>
 
                                 <Link
-                                    href={heroBlock?.secondaryCtaUrl || heroBlock?.secondaryCtaLink || (isEn ? '/en/apps' : '/apps')}
+                                    href={
+                                        heroBlock?.secondaryCtaUrl ||
+                                        heroBlock?.secondaryCtaLink ||
+                                        (isEn ? '/en/apps' : '/apps')
+                                    }
                                     className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
                                 >
-                                    {heroBlock?.secondaryCtaLabel || (isEn ? 'All Apps →' : 'Alle apps →')}
+                                    {heroBlock?.secondaryCtaLabel ||
+                                        (isEn ? 'All Apps →' : 'Alle apps →')}
                                 </Link>
                             </div>
 
@@ -213,9 +227,11 @@ export function PaymentSoftwareModule({
                             <div className='flex items-center gap-3 pt-4 border-t border-white/10 mt-1'>
                                 <span className='w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0' />
                                 <span className='text-xs sm:text-sm text-white/80 font-light leading-snug'>
-                                    {heroBlock?.proofText || doc?.proofText || (isEn
-                                        ? 'Trusted by professional real estate managers and investors in Europe'
-                                        : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')}
+                                    {heroBlock?.proofText ||
+                                        doc?.proofText ||
+                                        (isEn
+                                            ? 'Trusted by professional real estate managers and investors in Europe'
+                                            : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')}
                                 </span>
                             </div>
                         </div>
@@ -243,15 +259,20 @@ export function PaymentSoftwareModule({
                                         </div>
                                         <div className='inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] border border-emerald-500/40'>
                                             <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping' />
-                                            <span>100% Direct Banking Sync</span>
+                                            <span>
+                                                100% Direct Banking Sync
+                                            </span>
                                         </div>
                                     </div>
 
                                     {/* Taller Showcase Image Container */}
-                                    <div className='relative aspect-[1.08] w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
+                                    <div className='relative aspect-[1.08] w-full overflow-hidden bg-slate-950 flex flex-col justify-end items-center'>
                                         <Image
                                             src={heroImageUrl}
-                                            alt={heroBlock?.title || 'Emlinked Payment Software'}
+                                            alt={
+                                                heroBlock?.title ||
+                                                'Emlinked Payment Software'
+                                            }
                                             width={1200}
                                             height={1300}
                                             className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-700'
@@ -262,7 +283,9 @@ export function PaymentSoftwareModule({
                                         <div className='absolute bottom-3 left-3 right-3 grid grid-cols-3 gap-2 backdrop-blur-md bg-slate-950/90 p-3 rounded-xl border border-white/15 shadow-xl z-20'>
                                             <div>
                                                 <div className='text-[10px] uppercase text-white/50 font-mono'>
-                                                    {isEn ? 'Direct Debit' : 'SEPA Incasso'}
+                                                    {isEn
+                                                        ? 'Direct Debit'
+                                                        : 'SEPA Incasso'}
                                                 </div>
                                                 <div className='text-xs sm:text-sm font-bold text-emerald-400'>
                                                     Geautomatiseerd
@@ -270,7 +293,9 @@ export function PaymentSoftwareModule({
                                             </div>
                                             <div>
                                                 <div className='text-[10px] uppercase text-white/50 font-mono'>
-                                                    {isEn ? 'Reconciliation' : 'Aflettering'}
+                                                    {isEn
+                                                        ? 'Reconciliation'
+                                                        : 'Aflettering'}
                                                 </div>
                                                 <div className='text-xs sm:text-sm font-bold text-amber'>
                                                     95% Match
@@ -278,7 +303,9 @@ export function PaymentSoftwareModule({
                                             </div>
                                             <div>
                                                 <div className='text-[10px] uppercase text-white/50 font-mono'>
-                                                    {isEn ? 'Banking API' : 'Bankkoppeling'}
+                                                    {isEn
+                                                        ? 'Banking API'
+                                                        : 'Bankkoppeling'}
                                                 </div>
                                                 <div className='text-xs sm:text-sm font-bold text-white'>
                                                     CAMT.053 / PSD2
@@ -301,20 +328,25 @@ export function PaymentSoftwareModule({
                         <div className='flex justify-center mb-1'>
                             <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
                                 <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
-                                {comparisonBlock?.badge || doc?.comparisonSection?.badge ||
-                                    (isEn ? '100% RECONCILIATION WITHOUT HUMAN ERRORS' : '100% RECONCILIATIE ZONDER MENSELIJKE FOUTEN')}
+                                {comparisonBlock?.badge ||
+                                    doc?.comparisonSection?.badge ||
+                                    (isEn
+                                        ? '100% RECONCILIATION WITHOUT HUMAN ERRORS'
+                                        : '100% RECONCILIATIE ZONDER MENSELIJKE FOUTEN')}
                             </span>
                         </div>
 
                         <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-[#060e32]'>
-                            {comparisonBlock?.title || doc?.comparisonSection?.title ||
+                            {comparisonBlock?.title ||
+                                doc?.comparisonSection?.title ||
                                 (isEn
                                     ? 'Why manual rent payment processing holds you back'
                                     : 'Waarom handmatige verwerking van huurbetalingen je afremt')}
                         </h2>
 
                         <p className='text-[#060e32]/75 text-base md:text-lg leading-relaxed font-light'>
-                            {comparisonBlock?.desc || doc?.comparisonSection?.desc ||
+                            {comparisonBlock?.desc ||
+                                doc?.comparisonSection?.desc ||
                                 (isEn
                                     ? 'As portfolios grow, manually checking bank statements and sending reminders wastes hours weekly. Our real estate payment software automates transactions and gives real-time collection insight.'
                                     : 'Bij groeiende portefeuilles kost het handmatig controleren van bankafschriften en versturen van aanmaningen veel tijd. Onze vastgoed betaalsoftware verwerkt transacties automatisch en geeft realtime inzicht in betalingsachterstanden.')}
@@ -334,13 +366,18 @@ export function PaymentSoftwareModule({
                             <div className='space-y-6'>
                                 <div className='border-b border-black/10 pb-4 pr-16'>
                                     <h3 className='text-lg font-bold text-amber uppercase'>
-                                        {comparisonBlock?.leftTitle || doc?.comparisonSection?.leftTitle ||
-                                            (isEn ? 'MANUAL BANK RECONCILIATION' : 'HANDMATIGE BANKAFLETTERING')}
+                                        {comparisonBlock?.leftTitle ||
+                                            doc?.comparisonSection?.leftTitle ||
+                                            (isEn
+                                                ? 'MANUAL BANK RECONCILIATION'
+                                                : 'HANDMATIGE BANKAFLETTERING')}
                                     </h3>
                                 </div>
 
                                 <ul className='space-y-4 text-sm text-[#060e32]/80'>
-                                    {(comparisonBlock?.leftItems || doc?.comparisonSection?.leftItems ||
+                                    {(
+                                        comparisonBlock?.leftItems ||
+                                        doc?.comparisonSection?.leftItems ||
                                         (isEn
                                             ? [
                                                   {
@@ -379,11 +416,18 @@ export function PaymentSoftwareModule({
                                                   },
                                               ])
                                     ).map((item: any, idx: number) => {
-                                        const isObj = typeof item === 'object' && item !== null;
-                                        const titleText = isObj ? item.title : item;
+                                        const isObj =
+                                            typeof item === 'object' &&
+                                            item !== null;
+                                        const titleText = isObj
+                                            ? item.title
+                                            : item;
                                         const descText = isObj ? item.desc : '';
                                         return (
-                                            <li key={idx} className='flex items-start gap-3'>
+                                            <li
+                                                key={idx}
+                                                className='flex items-start gap-3'
+                                            >
                                                 <XCircle className='w-5 h-5 text-amber shrink-0 mt-0.5' />
                                                 <div className='space-y-0.5'>
                                                     <strong className='text-[#060e32] block font-semibold text-sm'>
@@ -413,13 +457,20 @@ export function PaymentSoftwareModule({
                             <div className='space-y-6'>
                                 <div className='border-b border-black/10 pb-4 pr-16'>
                                     <h3 className='text-lg font-bold text-amber uppercase'>
-                                        {comparisonBlock?.rightTitle || doc?.comparisonSection?.rightTitle ||
-                                            (isEn ? 'EMLINKED PAYMENT ENGINE' : 'EMLINKED PAYMENT ENGINE')}
+                                        {comparisonBlock?.rightTitle ||
+                                            doc?.comparisonSection
+                                                ?.rightTitle ||
+                                            (isEn
+                                                ? 'EMLINKED PAYMENT ENGINE'
+                                                : 'EMLINKED PAYMENT ENGINE')}
                                     </h3>
                                 </div>
 
                                 <ul className='space-y-4 text-sm text-[#060e32]/80'>
-                                    {(comparisonBlock?.rightItems || doc?.comparisonSection?.rightItems || doc?.benefits ||
+                                    {(
+                                        comparisonBlock?.rightItems ||
+                                        doc?.comparisonSection?.rightItems ||
+                                        doc?.benefits ||
                                         (isEn
                                             ? [
                                                   {
@@ -458,11 +509,20 @@ export function PaymentSoftwareModule({
                                                   },
                                               ])
                                     ).map((item: any, idx: number) => {
-                                        const isObj = typeof item === 'object' && item !== null;
-                                        const titleText = isObj ? item.title || item.benefit : item;
-                                        const descText = isObj ? item.desc || item.description : '';
+                                        const isObj =
+                                            typeof item === 'object' &&
+                                            item !== null;
+                                        const titleText = isObj
+                                            ? item.title || item.benefit
+                                            : item;
+                                        const descText = isObj
+                                            ? item.desc || item.description
+                                            : '';
                                         return (
-                                            <li key={idx} className='flex items-start gap-3'>
+                                            <li
+                                                key={idx}
+                                                className='flex items-start gap-3'
+                                            >
                                                 <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
                                                 <div className='space-y-0.5'>
                                                     <strong className='text-[#060e32] block font-semibold text-sm'>
@@ -492,15 +552,18 @@ export function PaymentSoftwareModule({
                     <div className='text-center max-w-3xl mx-auto space-y-4 flex flex-col items-center'>
                         <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
                             <span className='w-2 h-2 rounded-full bg-amber shrink-0 animate-ping' />
-                            {featureTabsBlock?.badge || (isEn ? 'CAPABILITIES' : 'FUNCTIONALITEITEN')}
+                            {featureTabsBlock?.badge ||
+                                (isEn ? 'CAPABILITIES' : 'FUNCTIONALITEITEN')}
                         </span>
                         <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-white'>
-                            {featureTabsBlock?.title || (isEn
-                                ? 'Complete control over your rent collection flow'
-                                : 'Volledige controle over je huurincassostroom')}
+                            {featureTabsBlock?.title ||
+                                (isEn
+                                    ? 'Complete control over your rent collection flow'
+                                    : 'Volledige controle over je huurincassostroom')}
                         </h2>
                         <p className='text-white/80 leading-relaxed text-base md:text-lg font-light max-w-3xl'>
-                            {featureTabsBlock?.desc || doc?.featuresSectionDesc ||
+                            {featureTabsBlock?.desc ||
+                                doc?.featuresSectionDesc ||
                                 (isEn
                                     ? 'Designed to effortlessly streamline SEPA direct debits, automatic reversal processing, and real-time bank reconciliation in Business Central.'
                                     : 'Ontwikkeld om SEPA-incasso’s, automatische storneerverwerking en realtime bankaflettering in Business Central moeiteloos te stroomlijnen.')}
@@ -518,7 +581,11 @@ export function PaymentSoftwareModule({
                             }`}
                         >
                             <CreditCard className='w-4 h-4' />
-                            <span>{isEn ? '1. SEPA Direct Debit Collection' : '1. SEPA Direct Debit Incasso'}</span>
+                            <span>
+                                {isEn
+                                    ? '1. SEPA Direct Debit Collection'
+                                    : '1. SEPA Direct Debit Incasso'}
+                            </span>
                         </button>
                         <button
                             onClick={() => setActiveTab('reconciliation')}
@@ -529,7 +596,11 @@ export function PaymentSoftwareModule({
                             }`}
                         >
                             <RefreshCw className='w-4 h-4' />
-                            <span>{isEn ? '2. Real-time Bank Reconciliation' : '2. Realtime Bankreconciliatie'}</span>
+                            <span>
+                                {isEn
+                                    ? '2. Real-time Bank Reconciliation'
+                                    : '2. Realtime Bankreconciliatie'}
+                            </span>
                         </button>
                         <button
                             onClick={() => setActiveTab('dunning')}
@@ -540,7 +611,11 @@ export function PaymentSoftwareModule({
                             }`}
                         >
                             <BarChart3 className='w-4 h-4' />
-                            <span>{isEn ? '3. Reversal & Dunning Management' : '3. Storneer- & Aanmaningsbeheer'}</span>
+                            <span>
+                                {isEn
+                                    ? '3. Reversal & Dunning Management'
+                                    : '3. Storneer- & Aanmaningsbeheer'}
+                            </span>
                         </button>
                     </div>
 
@@ -551,7 +626,9 @@ export function PaymentSoftwareModule({
                                 <div className='lg:col-span-6 space-y-6'>
                                     <h3 className='text-2xl sm:text-3xl font-bold text-white'>
                                         {doc?.features?.[0]?.title ||
-                                            (isEn ? 'SEPA Direct Debit & Collection Automation' : 'SEPA Direct Debit & Incasso-automatisering')}
+                                            (isEn
+                                                ? 'SEPA Direct Debit & Collection Automation'
+                                                : 'SEPA Direct Debit & Incasso-automatisering')}
                                     </h3>
                                     <p className='text-white/70 leading-relaxed text-base font-light'>
                                         {doc?.features?.[0]?.text ||
@@ -563,19 +640,25 @@ export function PaymentSoftwareModule({
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                {isEn ? 'Automated generation of SEPA XML collection files' : 'Automatische generatie van SEPA XML incassobestanden'}
+                                                {isEn
+                                                    ? 'Automated generation of SEPA XML collection files'
+                                                    : 'Automatische generatie van SEPA XML incassobestanden'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                {isEn ? 'Direct debits automatically retried upon failure' : 'Storneringen automatisch gedetecteerd & heraangeboden'}
+                                                {isEn
+                                                    ? 'Direct debits automatically retried upon failure'
+                                                    : 'Storneringen automatisch gedetecteerd & heraangeboden'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                {isEn ? 'Integration with all major European banks' : 'Integratie met alle Nederlandse en Europese banken'}
+                                                {isEn
+                                                    ? 'Integration with all major European banks'
+                                                    : 'Integratie met alle Nederlandse en Europese banken'}
                                             </span>
                                         </li>
                                     </ul>
@@ -607,7 +690,9 @@ export function PaymentSoftwareModule({
                                 <div className='lg:col-span-6 space-y-6'>
                                     <h3 className='text-2xl sm:text-3xl font-bold text-white'>
                                         {doc?.features?.[1]?.title ||
-                                            (isEn ? 'Real-time Bank Reconciliation via Direct Banking' : 'Realtime Bankreconciliatie via Direct Banking')}
+                                            (isEn
+                                                ? 'Real-time Bank Reconciliation via Direct Banking'
+                                                : 'Realtime Bankreconciliatie via Direct Banking')}
                                     </h3>
                                     <p className='text-white/70 leading-relaxed text-base font-light'>
                                         {doc?.features?.[1]?.text ||
@@ -619,19 +704,25 @@ export function PaymentSoftwareModule({
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                {isEn ? 'Direct Banking & CAMT.053 bank feeds imported automatically' : 'Direct Banking & CAMT.053 bankafschriften automatisch ingelezen'}
+                                                {isEn
+                                                    ? 'Direct Banking & CAMT.053 bank feeds imported automatically'
+                                                    : 'Direct Banking & CAMT.053 bankafschriften automatisch ingelezen'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                {isEn ? '100% accurate matching engine per lease & tenant' : '100% accurate matche-engine op huurcontract en debiteurnummer'}
+                                                {isEn
+                                                    ? '100% accurate matching engine per lease & tenant'
+                                                    : '100% accurate matche-engine op huurcontract en debiteurnummer'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                {isEn ? 'Split payments across owners and management fees' : 'Split payments over eigenaren en beheervergoedingen'}
+                                                {isEn
+                                                    ? 'Split payments across owners and management fees'
+                                                    : 'Split payments over eigenaren en beheervergoedingen'}
                                             </span>
                                         </li>
                                     </ul>
@@ -663,7 +754,9 @@ export function PaymentSoftwareModule({
                                 <div className='lg:col-span-6 space-y-6'>
                                     <h3 className='text-2xl sm:text-3xl font-bold text-white'>
                                         {doc?.features?.[2]?.title ||
-                                            (isEn ? 'Automated Credit Management & Dunning' : 'Geautomatiseerd Debiteurenbeheer')}
+                                            (isEn
+                                                ? 'Automated Credit Management & Dunning'
+                                                : 'Geautomatiseerd Debiteurenbeheer')}
                                     </h3>
                                     <p className='text-white/70 leading-relaxed text-base font-light'>
                                         {doc?.features?.[2]?.text ||
@@ -675,19 +768,25 @@ export function PaymentSoftwareModule({
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                {isEn ? 'Automated reminder & dunning flows via email / SMS' : 'Automatische herinneringen & aanmaningsflows per e-mail / SMS'}
+                                                {isEn
+                                                    ? 'Automated reminder & dunning flows via email / SMS'
+                                                    : 'Automatische herinneringen & aanmaningsflows per e-mail / SMS'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                {isEn ? 'Clear accounts receivable aging reports per property' : 'Inzichtelijke debiteuren-aging rapportage per object'}
+                                                {isEn
+                                                    ? 'Clear accounts receivable aging reports per property'
+                                                    : 'Inzichtelijke debiteuren-aging rapportage per object'}
                                             </span>
                                         </li>
                                         <li className='flex items-center gap-2.5'>
                                             <Check className='w-4 h-4 text-amber shrink-0' />
                                             <span>
-                                                {isEn ? 'Full audit trail in Business Central & tenant file' : 'Volledige audittrail in Business Central & huurdersdossier'}
+                                                {isEn
+                                                    ? 'Full audit trail in Business Central & tenant file'
+                                                    : 'Volledige audittrail in Business Central & huurdersdossier'}
                                             </span>
                                         </li>
                                     </ul>
@@ -725,18 +824,24 @@ export function PaymentSoftwareModule({
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                 <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
                                     <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
-                                    {ctaBlock?.tag || doc?.cta?.tag || (isEn ? 'REQUEST DEMO' : 'DEMO AANVRAGEN')}
+                                    {ctaBlock?.tag ||
+                                        doc?.cta?.tag ||
+                                        (isEn
+                                            ? 'REQUEST DEMO'
+                                            : 'DEMO AANVRAGEN')}
                                 </span>
 
                                 <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
-                                    {ctaBlock?.title || doc?.cta?.title ||
+                                    {ctaBlock?.title ||
+                                        doc?.cta?.title ||
                                         (isEn
                                             ? 'Ready to automate your rent collection and reconciliation?'
                                             : 'Klaar om je huurincasso en aflettering te automatiseren?')}
                                 </h2>
 
                                 <p className='text-white/75 text-base md:text-lg font-light leading-relaxed max-w-2xl'>
-                                    {ctaBlock?.desc || doc?.cta?.desc ||
+                                    {ctaBlock?.desc ||
+                                        doc?.cta?.desc ||
                                         (isEn
                                             ? 'Experience how our payment software speeds up credit management and processes bank reconciliation flawlessly in Business Central.'
                                             : 'Ervaar zelf hoe onze payment software je debiteurenbeheer versnelt en je bankaflettering foutloos verwerkt in Business Central.')}
@@ -749,8 +854,11 @@ export function PaymentSoftwareModule({
                                     >
                                         <span className='flex items-center justify-center gap-2 text-white'>
                                             <span>
-                                                {ctaBlock?.primaryButtonText || doc?.cta?.primary ||
-                                                    (isEn ? 'Request Live Demo' : 'Live demo aanvragen')}
+                                                {ctaBlock?.primaryButtonText ||
+                                                    doc?.cta?.primary ||
+                                                    (isEn
+                                                        ? 'Request Live Demo'
+                                                        : 'Live demo aanvragen')}
                                             </span>
                                             <ArrowRight className='h-5 w-5 text-white' />
                                         </span>
