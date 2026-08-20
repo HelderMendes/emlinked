@@ -183,7 +183,7 @@ export function TeamBlock({
             {/* ── INTERACTIVE TEAM MEMBER POPUP MODAL (faect.nl Style with emlinked aesthetics) ── */}
             <AnimatePresence>
                 {selectedIndex !== null && activeMember && (
-                    <div className='fixed inset-0 z-9990 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-slate-950/85 backdrop-blur-md'>
+                    <div className='fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-slate-900/35 backdrop-blur-md'>
                         {/* Overlay backdrop button for click outside */}
                         <motion.div
                             initial={{ opacity: 0 }}
