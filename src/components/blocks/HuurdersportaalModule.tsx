@@ -227,7 +227,7 @@ export function HuurdersportaalModule({
                             </div>
                         </div>
 
-                        {/* Right Column: Hero Graphic / Image (Sleek BorderBeam matching /apps & Frontpage) */}
+                        {/* Right Column: High-Tech Graphic Card with Mockup Header & Metric Footer */}
                         <div className='lg:col-span-5 hover:scale-[1.01] transition-transform duration-300 flex justify-center items-center relative'>
                             <BorderBeam
                                 size='md'
@@ -235,15 +235,64 @@ export function HuurdersportaalModule({
                                 strength={1.2}
                                 className='w-full'
                             >
-                                <div className='relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 dark:border-amber/20 group'>
-                                    <Image
-                                        src={heroImageUrl}
-                                        alt={heroBlock?.title || 'Emlinked Huurdersportaal Software'}
-                                        width={600}
-                                        height={400}
-                                        className='w-full h-auto object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700'
-                                        priority
-                                    />
+                                <div className='relative w-full rounded-2xl bg-slate-950/90 backdrop-blur-xl shadow-2xl group overflow-hidden border border-white/15'>
+                                    <div className='absolute -inset-1 bg-linear-to-r from-amber/30 via-indigo-500/20 to-amber/30 blur-xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none' />
+
+                                    {/* Mockup Top Navigation Header */}
+                                    <div className='relative z-10 flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-slate-950/90 text-xs text-white/70 font-mono'>
+                                        <div className='flex items-center gap-2'>
+                                            <div className='w-3 h-3 rounded-full bg-rose-500' />
+                                            <div className='w-3 h-3 rounded-full bg-amber' />
+                                            <div className='w-3 h-3 rounded-full bg-emerald-500' />
+                                            <span className='ml-2 text-[11px] text-white/80 font-bold'>
+                                                huurdersportaal_v2.0
+                                            </span>
+                                        </div>
+                                        <div className='inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] border border-emerald-500/40'>
+                                            <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping' />
+                                            <span>24/7 Live Self-Service</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Taller Showcase Image Container */}
+                                    <div className='relative aspect-[1.08] w-full overflow-hidden bg-slate-950 flex flex-col justify-center items-center'>
+                                        <Image
+                                            src={heroImageUrl}
+                                            alt={heroBlock?.title || 'Emlinked Huurdersportaal Software'}
+                                            width={1200}
+                                            height={1300}
+                                            className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-700'
+                                            priority
+                                        />
+
+                                        {/* Bottom Metric Badges Footer */}
+                                        <div className='absolute bottom-3 left-3 right-3 grid grid-cols-3 gap-2 backdrop-blur-md bg-slate-950/90 p-3 rounded-xl border border-white/15 shadow-xl z-20'>
+                                            <div>
+                                                <div className='text-[10px] uppercase text-white/50 font-mono'>
+                                                    {isEn ? 'Portal Status' : 'Portaal Status'}
+                                                </div>
+                                                <div className='text-xs sm:text-sm font-bold text-emerald-400'>
+                                                    24/7 Active
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className='text-[10px] uppercase text-white/50 font-mono'>
+                                                    {isEn ? 'Avg Response' : 'Gem. Responstijd'}
+                                                </div>
+                                                <div className='text-xs sm:text-sm font-bold text-amber'>
+                                                    &lt; 15 min
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className='text-[10px] uppercase text-white/50 font-mono'>
+                                                    {isEn ? 'Tenant Rating' : 'Huurderscore'}
+                                                </div>
+                                                <div className='text-xs sm:text-sm font-bold text-white'>
+                                                    9.4 / 10
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </BorderBeam>
                         </div>
