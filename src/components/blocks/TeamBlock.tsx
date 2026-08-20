@@ -79,6 +79,7 @@ export function TeamBlock({
                                             src={avatarUrl}
                                             alt={member.name}
                                             fill
+                                            sizes='80px'
                                             className='object-cover object-center group-hover:scale-105 transition-transform duration-500'
                                         />
                                     </div>
