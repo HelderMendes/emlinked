@@ -28,7 +28,8 @@ async function getSanityArticles(locale: string): Promise<NewsArticleItem[]> {
                 publishedAt,
                 authorName,
                 imagePath,
-                mainImage
+                mainImage,
+                isFeatured
             }`,
             params: { locale },
         });

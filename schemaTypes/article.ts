@@ -34,6 +34,13 @@ export const article = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'isFeatured',
+      title: 'Uitgelicht Artikel / Featured Spotlight',
+      type: 'boolean',
+      description: 'Vink dit aan om dit artikel als het grote uitgelichte spotlight-artikel bovenaan de nieuwspagina te tonen.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'category',
       title: 'Category',
       type: 'string',

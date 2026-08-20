@@ -17,6 +17,8 @@ export interface NewsArticleItem {
     authorName?: string;
     imagePath?: string;
     mainImage?: any;
+    isFeatured?: boolean;
+    featured?: boolean;
 }
 
 export interface NewsArticlesSectionProps {
@@ -58,14 +60,15 @@ export function NewsArticlesSection({ articles, locale = 'nl' }: NewsArticlesSec
 
     const featuredArticle = useMemo(() => {
         if (selectedCategory === 'all' && !searchQuery && filteredArticles.length > 0) {
-            return filteredArticles[0];
+            const explicitFeatured = filteredArticles.find((a) => a.isFeatured || a.featured);
+            return explicitFeatured || filteredArticles[0];
         }
         return null;
     }, [filteredArticles, selectedCategory, searchQuery]);
 
     const gridArticles = useMemo(() => {
         if (featuredArticle) {
-            return filteredArticles.slice(1);
+            return filteredArticles.filter((a) => a._id !== featuredArticle._id && a.slug !== featuredArticle.slug);
         }
         return filteredArticles;
     }, [filteredArticles, featuredArticle]);
