@@ -78,11 +78,12 @@ export async function generateMetadata({
     };
 }
 
-// GROQ query to retrieve the homepage document by slug
+// GROQ query to retrieve the homepage document by slug or ID
 async function getHomepageData(locale: string) {
     try {
+        const pageId = locale === 'en' ? 'page-home-en' : 'page-home-nl';
         return await client.fetch(
-            `*[_type == "page" && (slug.current == "home" || slug.current == "/" || slug.current == "/en/" || slug.current == "/en") && language == $locale][0] {
+            `*[_type == "page" && (_id == $pageId || slug.current == "home" || slug.current == "/" || slug.current == "/en/" || slug.current == "/en") && language == $locale][0] {
                 title,
                 pageBlocks[] {
                     _type,
@@ -147,7 +148,7 @@ async function getHomepageData(locale: string) {
                     structuredData
                 }
             }`,
-            { locale },
+            { pageId, locale },
             { cache: 'no-store' },
         );
     } catch (e) {
