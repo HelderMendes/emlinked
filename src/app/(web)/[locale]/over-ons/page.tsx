@@ -28,8 +28,9 @@ interface OverOnsPageProps {
 
 async function getSanityPageData(locale: string) {
     try {
+        const pageId = locale === 'en' ? 'page-over-ons-en' : 'page-over-ons-nl';
         return await sanityFetch<any>({
-            query: `*[_type == "page" && (slug.current == "over-ons" || slug.current == "about-us" || slug.current == "team") && language == $locale][0] {
+            query: `*[_type == "page" && (_id == $pageId || slug.current == $slug || slug.current == $slashSlug || slug.current == "team") && language == $locale][0] {
                 title,
                 tagline,
                 desc,
@@ -50,7 +51,12 @@ async function getSanityPageData(locale: string) {
                     structuredData
                 }
             }`,
-            params: { locale },
+            params: {
+                pageId,
+                slug: locale === 'en' ? 'about-us' : 'over-ons',
+                slashSlug: locale === 'en' ? '/about-us' : '/over-ons',
+                locale,
+            },
         });
     } catch (e) {
         console.error('Failed to fetch Over Ons page from Sanity:', e);
