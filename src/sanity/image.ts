@@ -1,28 +1,37 @@
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'rqeokhhk';
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 
+function parseStringPath(str: string): string {
+    if (!str) return '';
+    if (str.includes('DrieKrachtigeApps_VastgoedbeheerSoftware.png')) {
+        return '/emlinked/apps/vastgoedbeheer.png';
+    }
+    if (str.includes('DrieKrachtigeApps_PaymentSoftware.png')) {
+        return '/emlinked/apps/payment/payment-software-her0.webp';
+    }
+    if (str.includes('/emlinked/home/Huurdersportaal.png')) {
+        return '/emlinked/apps/huurdersportaal.png';
+    }
+    if (str.includes('M2-Capital')) {
+        return '/emlinked/referenties/M2-Capital.jpg';
+    }
+    if (str.includes('uitvoeringlogoVGBR') || str.includes('VGBR')) {
+        return '/emlinked/referenties/VGBRgrootde.webp';
+    }
+    if (str.includes('Unknown')) {
+        return '/emlinked/referenties/baetland.png';
+    }
+    if (str.includes('van-overhagen')) {
+        return '/emlinked/referenties/van-overhagen_logo.jpg';
+    }
+    return str;
+}
+
 export function getImageUrl(image: any, fallback: string = ''): string {
-    if (!image) return fallback;
+    const cleanFallback = parseStringPath(fallback);
+    if (!image) return cleanFallback;
     if (typeof image === 'string') {
-        if (image.includes('DrieKrachtigeApps_VastgoedbeheerSoftware.png')) {
-            return '/emlinked/apps/vastgoedbeheer.png';
-        }
-        if (image.includes('DrieKrachtigeApps_PaymentSoftware.png')) {
-            return '/emlinked/apps/payment/payment-software-her0.webp';
-        }
-        if (image.includes('/emlinked/home/Huurdersportaal.png')) {
-            return '/emlinked/apps/huurdersportaal.png';
-        }
-        if (image.includes('M2-Capital')) {
-            return '/emlinked/referenties/M2-Capital.jpg';
-        }
-        if (image.includes('uitvoeringlogoVGBR') || image.includes('VGBR')) {
-            return '/emlinked/referenties/VGBRgrootde.webp';
-        }
-        if (image.includes('Unknown') || image.includes('van-overhagen')) {
-            return '/emlinked/referenties/van-overhagen_logo.jpg';
-        }
-        return image;
+        return parseStringPath(image);
     }
 
     // Direct URL if populated via asset->url GROQ query
@@ -53,5 +62,5 @@ export function getImageUrl(image: any, fallback: string = ''): string {
         }
     }
 
-    return fallback;
+    return cleanFallback;
 }

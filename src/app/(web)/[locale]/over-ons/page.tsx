@@ -392,7 +392,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
 
             {/* ── SECTION 4: CALL TO ACTION (ENGAGEMENT HOOK) ── */}
             <section className='px-6 py-20 relative z-10 bg-background'>
-                <div className='relative rounded-3xl border border-amber/40 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-2xl text-white'>
+                <div className='relative rounded-3xl border border-amber/40 bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-2xl text-white'>
                     <div className='absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber/10 rounded-full blur-[120px] pointer-events-none' />
 
                     <div className='relative z-10 space-y-6 max-w-3xl mx-auto'>
@@ -420,7 +420,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                         <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-4'>
                             <GlowingLink
                                 href={ctaBlock?.primaryCtaUrl || '#demo'}
-                                className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-gradient-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
+                                className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
                             >
                                 <span className='flex items-center justify-center gap-2 text-white'>
                                     <span>
