@@ -412,10 +412,10 @@ export default async function HomePage({ params }: HomePageProps) {
                                                             'payment-flow-animation'
                                                             ? feature.imagePath
                                                             : index === 0
-                                                              ? '/emlinked/home/DrieKrachtigeApps_VastgoedbeheerSoftware.png'
+                                                              ? '/emlinked/home/DrieKrachtigeApps01_VastgoedbeheerSoftware.webp'
                                                               : index === 1
                                                                 ? '/emlinked/home/Huurdersportaal.png'
-                                                                : '/emlinked/home/DrieKrachtigeApps_PaymentSoftware.png';
+                                                                : '/emlinked/home/DrieKrachtigeApps03_PaymentSoftware.webp';
 
                                                     const appUrls = [
                                                         '/apps/vastgoedbeheer-software',
