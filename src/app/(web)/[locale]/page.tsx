@@ -55,14 +55,14 @@ export async function generateMetadata({
     const title =
         seoData?.seoTitle ||
         (isEn
-            ? 'emlinked — Professional Real Estate Management for Box 3 & Microsoft BC'
-            : 'emlinked — Professionele Vastgoedbeheer Software voor Box 3 & Microsoft BC');
+            ? 'emlinked — Real Estate Portfolio Management & Box 3 for Microsoft BC'
+            : 'emlinked — Vastgoedbeheer & Portefeuille Management voor Box 3 & Microsoft BC');
 
     const description =
         seoData?.seoDescription ||
         (isEn
-            ? 'Manage your real estate portfolio natively inside Microsoft Dynamics 365 Business Central. No manual exports, automated CPI indexation and bank reconciliation.'
-            : 'Beheer uw vastgoedportefeuille native binnen Microsoft Dynamics 365 Business Central. Geen handmatige exports, wel geautomatiseerde CPI-indexaties en aflettering.');
+            ? 'Manage your real estate portfolio with confidence. Automated CPI indexation, Box 3 tax compliance, and automated rent collection, backed natively by Microsoft Dynamics 365.'
+            : 'Beheer je vastgoedportefeuille moeiteloos en met volledige controle. Automatische CPI-indexatie, Box 3 aflettering en huurincasso, native ondersteund door Microsoft Dynamics 365.');
 
     const robots = seoData?.noIndex ? 'noindex, nofollow' : 'index, follow';
 
