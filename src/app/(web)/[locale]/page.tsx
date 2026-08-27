@@ -263,13 +263,13 @@ export default async function HomePage({ params }: HomePageProps) {
                         return (
                             <section
                                 key={block._key}
-                                className='bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] animate-none dark:text-[#060e32] dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-3 px-4 sm:px-6 lg:px-8 shadow-sm'
+                                className='bg-slate-100/70 border-b border-slate-200/80 py-4 px-4 sm:px-6 lg:px-8 shadow-2xs'
                             >
-                                <div className='max-w-7xl mx-auto flex items-center justify-center gap-6 sm:gap-9 flex-wrap'>
+                                <div className='max-w-7xl mx-auto flex items-center justify-center gap-6 sm:gap-10 flex-wrap'>
                                     {items.map((item: any) => (
                                         <div
                                             key={item._key}
-                                            className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-amber dark:hover:text-amber transition-colors tracking-wide'
+                                            className='flex items-center gap-2 text-xs font-sans font-bold text-slate-700 hover:text-emerald-700 transition-colors tracking-wide'
                                         >
                                             {getTrustIcon(item.icon)}
                                             <span>{item.text}</span>
@@ -375,23 +375,23 @@ export default async function HomePage({ params }: HomePageProps) {
                         return (
                             <section
                                 key={block._key}
-                                className='px-6 py-20 bg-card border-b border-black/20'
+                                className='px-6 py-20 bg-[#FAF8F5] border-b border-slate-200/80'
                             >
                                 <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-12'>
                                     <div className='max-w-3xl mx-auto flex flex-col gap-3 text-center'>
                                         {sectionTag && (
                                             <div className='flex justify-center mb-1'>
-                                                <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                                                    <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
+                                                <span className='inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4.5 py-1 text-xs font-bold tracking-wider text-emerald-800 uppercase shadow-2xs'>
+                                                    <span className='w-2 h-2 rounded-full bg-emerald-500 shrink-0' />
                                                     {sectionTag}
                                                 </span>
                                             </div>
                                         )}
-                                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-darkblue'>
+                                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-slate-900'>
                                             {sectionTitle}
                                         </h2>
                                         {sectionSubtitle && (
-                                            <p className='text-muted-foreground leading-relaxed text-lg'>
+                                            <p className='text-slate-600 leading-relaxed text-lg font-normal'>
                                                 {sectionSubtitle}
                                             </p>
                                         )}
@@ -463,7 +463,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                                                 feature._key ||
                                                                 index
                                                             }
-                                                            className='px-6 md:px-8 pt-6 md:pt-8 md:pb-6 pb-5 rounded-2xl border border-black/20 bg-background flex flex-col justify-between gap-3.5 hover:shadow-xl hover:-translate-y-1.5 hover:border-amber/40 transition-all duration-300 group relative'
+                                                            className='px-6 md:px-8 pt-6 md:pt-8 md:pb-6 pb-5 rounded-2xl border border-slate-200 bg-white flex flex-col justify-between gap-3.5 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-slate-300 transition-all duration-300 group relative'
                                                         >
                                                             {/* Whole-card overlay link for optimal UX */}
                                                             <Link

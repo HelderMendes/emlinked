@@ -86,29 +86,29 @@ export function HeroSection({
     };
 
     return (
-        <section className='relative px-6 py-10 md:py-16 overflow-hidden bg-texture-navy text-white dark:bg-linear-to-br dark:from-[#FFFBEF] dark:via-[#FFFDF9] dark:to-[#FFF3D4] dark:animate-none dark:text-[#060e32] border-b border-white/10 dark:border-amber/10 transition-colors duration-300'>
-            {/* Animated Data Grid Canvas overlay */}
-            <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
+        <section className='relative px-6 py-12 md:py-20 overflow-hidden bg-linear-to-b from-[#F8FAF9] via-[#FAF8F5] to-[#F1F5F9] text-slate-900 border-b border-slate-200/80 transition-colors duration-300'>
+            {/* Subtle Grid overlay */}
+            <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] opacity-40' />
 
             <div className='mx-auto max-w-7xl relative z-10'>
                 <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
                     {/* Left Column: Copy & Actions */}
                     <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
                         {label && (
-                            <span className='inline-flex items-center gap-3.5 self-start rounded-full bg-amber/15 border border-amber/35 px-4.5 py-1 text-xs font-bold tracking-wide text-amber'>
-                                <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                            <span className='inline-flex items-center gap-2.5 self-start rounded-full bg-emerald-50 border border-emerald-200/80 px-4 py-1 text-xs font-bold tracking-wide text-emerald-800 shadow-xs'>
+                                <span className='w-2 h-2 bg-emerald-500 rounded-full animate-ping' />
                                 {label}
                             </span>
                         )}
 
                         <h1
-                            className={`font-display font-bold tracking-tight text-white dark:text-[#060e32] leading-[1.1] ${titleClassName || 'text-4xl sm:text-5xl lg:text-6xl'}`}
+                            className={`font-display font-extrabold tracking-tight text-slate-900 leading-[1.12] ${titleClassName || 'text-4xl sm:text-5xl lg:text-6xl'}`}
                         >
                             {formatHeroTitle(title)}
                         </h1>
 
                         {subtitle && (
-                            <p className='text-lg md:text-xl text-white/65 dark:text-[#060e32]/75 leading-relaxed font-light'>
+                            <p className='text-lg md:text-xl text-slate-650 leading-relaxed font-normal max-w-2xl'>
                                 {subtitle}
                             </p>
                         )}
@@ -119,7 +119,7 @@ export function HeroSection({
                                 {ctaLabel && ctaLink && (
                                     <Link
                                         href={getPath(ctaLink)}
-                                        className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32] transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
+                                        className='inline-flex h-13 items-center justify-center rounded-xl bg-slate-900 hover:bg-slate-800 px-7 text-sm font-bold text-white transition-all duration-200 shadow-md hover:shadow-lg hover:scale-[1.01] active:scale-[0.98]'
                                     >
                                         {ctaLabel}
                                     </Link>
@@ -127,7 +127,7 @@ export function HeroSection({
                                 {secondaryCtaLabel && secondaryCtaLink && (
                                     <Link
                                         href={getPath(secondaryCtaLink)}
-                                        className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                                        className='inline-flex h-13 items-center justify-center rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-7 text-sm font-bold text-slate-800 transition-all text-center shadow-xs hover:scale-[1.01] active:scale-[0.98] duration-200'
                                     >
                                         {secondaryCtaLabel}
                                     </Link>
@@ -137,7 +137,7 @@ export function HeroSection({
 
                         {/* Social proof bar: Text always renders when present; showProof controls avatar cluster vs clean dot */}
                         {effectiveProofText && (
-                            <div className='flex items-center gap-3 pt-6 border-t border-white/10 dark:border-[#060e32]/10 mt-2'>
+                            <div className='flex items-center gap-3 pt-6 border-t border-slate-200/80 mt-2'>
                                 {showProof && showProofAvatars ? (
                                     <div className='flex -space-x-2.5 overflow-visible relative shrink-0'>
                                         {/* Levi Bosboom */}
@@ -246,103 +246,95 @@ export function HeroSection({
                         )}
                     </div>
 
-                    {/* Right Column: Hero Graphic / Image */}
                     {/* Right Column: Hero Graphic / Real Estate Management Dashboard Mockup */}
                     <div className='lg:col-span-5 hover:scale-[1.01] transition-transform duration-300 flex justify-center items-center relative'>
-                        <BorderBeam
-                            size='md'
-                            colorVariant='orange'
-                            strength={1.2}
-                            className='w-full'
-                        >
-                            <div className='relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-slate-900/90 backdrop-blur-xl p-5 md:p-6 text-white'>
-                                {customGraphic ? (
-                                    customGraphic
-                                ) : (
-                                    <div className='flex flex-col gap-4.5'>
-                                        {/* Dashboard Header Bar */}
-                                        <div className='flex items-center justify-between border-b border-white/10 pb-3.5'>
-                                            <div className='flex items-center gap-2.5'>
-                                                <div className='w-3 h-3 rounded-full bg-emerald-400 animate-pulse' />
-                                                <span className='text-xs font-bold tracking-wider uppercase text-white/90'>
-                                                    {isEn ? 'Real Estate Portfolio View' : 'Vastgoedportefeuille Live'}
-                                                </span>
-                                            </div>
-                                            <span className='inline-flex items-center gap-1.5 rounded-full bg-amber/20 border border-amber/40 px-2.5 py-0.5 text-[11px] font-semibold text-amber'>
-                                                <span>Box 3 & BC Native</span>
+                        <div className='relative w-full rounded-2xl overflow-hidden shadow-xl border border-slate-200/80 bg-white/95 backdrop-blur-xl p-5 md:p-6 text-slate-900'>
+                            {customGraphic ? (
+                                customGraphic
+                            ) : (
+                                <div className='flex flex-col gap-4.5'>
+                                    {/* Dashboard Header Bar */}
+                                    <div className='flex items-center justify-between border-b border-slate-100 pb-3.5'>
+                                        <div className='flex items-center gap-2.5'>
+                                            <div className='w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse' />
+                                            <span className='text-xs font-extrabold tracking-wider uppercase text-slate-800'>
+                                                {isEn ? 'Real Estate Portfolio View' : 'Vastgoedportefeuille Live'}
                                             </span>
                                         </div>
+                                        <span className='inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[11px] font-bold text-amber-800'>
+                                            <span>Box 3 & BC Native</span>
+                                        </span>
+                                    </div>
 
-                                        {/* Main KPI Stat Cards */}
-                                        <div className='grid grid-cols-2 gap-3'>
-                                            <div className='rounded-xl bg-white/5 border border-white/10 p-3.5 flex flex-col justify-between hover:bg-white/10 transition-colors'>
-                                                <span className='text-[11px] text-white/60 font-medium'>
-                                                    {isEn ? 'Total Rental Assets' : 'Totale Portefeuille'}
-                                                </span>
-                                                <div className='mt-1 text-2xl font-bold text-white tracking-tight'>
-                                                    142 <span className='text-xs font-normal text-emerald-400'>units</span>
-                                                </div>
-                                                <div className='mt-1.5 flex items-center text-[10px] text-emerald-400 font-semibold gap-1'>
-                                                    <span>↑ 99.4% Bezettingsgraad</span>
-                                                </div>
+                                    {/* Main KPI Stat Cards */}
+                                    <div className='grid grid-cols-2 gap-3'>
+                                        <div className='rounded-xl bg-slate-50/80 border border-slate-200/70 p-3.5 flex flex-col justify-between hover:bg-slate-100/80 transition-colors'>
+                                            <span className='text-[11px] text-slate-500 font-semibold uppercase tracking-wider'>
+                                                {isEn ? 'Total Rental Assets' : 'Totale Portefeuille'}
+                                            </span>
+                                            <div className='mt-1 text-2xl font-black text-slate-900 tracking-tight'>
+                                                142 <span className='text-xs font-bold text-emerald-600'>units</span>
                                             </div>
-
-                                            <div className='rounded-xl bg-white/5 border border-white/10 p-3.5 flex flex-col justify-between hover:bg-white/10 transition-colors'>
-                                                <span className='text-[11px] text-white/60 font-medium'>
-                                                    {isEn ? 'Monthly Rent Roll' : 'Maandelijkse Huurstroom'}
-                                                </span>
-                                                <div className='mt-1 text-2xl font-bold text-amber tracking-tight'>
-                                                    €184.250
-                                                </div>
-                                                <div className='mt-1.5 flex items-center text-[10px] text-white/70 font-medium gap-1'>
-                                                    <span>✓ CPI Geindexeerd</span>
-                                                </div>
+                                            <div className='mt-1.5 flex items-center text-[11px] text-emerald-700 font-bold gap-1'>
+                                                <span>↑ 99.4% Bezettingsgraad</span>
                                             </div>
                                         </div>
 
-                                        {/* Operation Activity Widget */}
-                                        <div className='rounded-xl bg-white/5 border border-white/10 p-3.5 flex flex-col gap-2.5'>
-                                            <div className='flex items-center justify-between text-xs font-semibold text-white/90'>
-                                                <span>{isEn ? 'Automated Workflows' : 'Geautomatiseerd Beheer'}</span>
-                                                <span className='text-[11px] text-emerald-400 font-medium'>100% Synchroon</span>
+                                        <div className='rounded-xl bg-slate-50/80 border border-slate-200/70 p-3.5 flex flex-col justify-between hover:bg-slate-100/80 transition-colors'>
+                                            <span className='text-[11px] text-slate-500 font-semibold uppercase tracking-wider'>
+                                                {isEn ? 'Monthly Rent Roll' : 'Maandelijkse Huurstroom'}
+                                            </span>
+                                            <div className='mt-1 text-2xl font-black text-amber-600 tracking-tight'>
+                                                €184.250
                                             </div>
-
-                                            <div className='space-y-2 text-[12px]'>
-                                                <div className='flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/5'>
-                                                    <div className='flex items-center gap-2'>
-                                                        <span className='w-2 h-2 rounded-full bg-emerald-400' />
-                                                        <span className='text-white/80 font-medium'>Bankaflettering Huur</span>
-                                                    </div>
-                                                    <span className='text-emerald-400 font-semibold text-[11px]'>Afgeletterd</span>
-                                                </div>
-
-                                                <div className='flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/5'>
-                                                    <div className='flex items-center gap-2'>
-                                                        <span className='w-2 h-2 rounded-full bg-amber' />
-                                                        <span className='text-white/80 font-medium'>Box 3 Rendement Berekening</span>
-                                                    </div>
-                                                    <span className='text-amber font-semibold text-[11px]'>Aangifte-klaar</span>
-                                                </div>
-
-                                                <div className='flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/5'>
-                                                    <div className='flex items-center gap-2'>
-                                                        <span className='w-2 h-2 rounded-full bg-sky-400' />
-                                                        <span className='text-white/80 font-medium'>Dynamics 365 BC Sync</span>
-                                                    </div>
-                                                    <span className='text-sky-300 font-medium text-[11px]'>Direct Verwerkt</span>
-                                                </div>
+                                            <div className='mt-1.5 flex items-center text-[11px] text-slate-600 font-medium gap-1'>
+                                                <span>✓ CPI Geindexeerd</span>
                                             </div>
-                                        </div>
-
-                                        {/* Platform Footer Banner */}
-                                        <div className='flex items-center justify-between pt-1 border-t border-white/10 text-[11px] text-white/50'>
-                                            <span>Real Estate Core Ops v4.2</span>
-                                            <span className='text-white/80 font-medium'>85% Vastgoed | 15% BC Engine</span>
                                         </div>
                                     </div>
-                                )}
-                            </div>
-                        </BorderBeam>
+
+                                    {/* Operation Activity Widget */}
+                                    <div className='rounded-xl bg-slate-50/80 border border-slate-200/70 p-3.5 flex flex-col gap-2.5'>
+                                        <div className='flex items-center justify-between text-xs font-bold text-slate-800'>
+                                            <span>{isEn ? 'Automated Workflows' : 'Geautomatiseerd Beheer'}</span>
+                                            <span className='text-[11px] text-emerald-700 font-bold'>100% Synchroon</span>
+                                        </div>
+
+                                        <div className='space-y-2 text-[12px]'>
+                                            <div className='flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200/60 shadow-2xs'>
+                                                <div className='flex items-center gap-2'>
+                                                    <span className='w-2 h-2 rounded-full bg-emerald-500' />
+                                                    <span className='text-slate-800 font-semibold'>Bankaflettering Huur</span>
+                                                </div>
+                                                <span className='text-emerald-700 font-bold text-[11px]'>Afgeletterd</span>
+                                            </div>
+
+                                            <div className='flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200/60 shadow-2xs'>
+                                                <div className='flex items-center gap-2'>
+                                                    <span className='w-2 h-2 rounded-full bg-amber-500' />
+                                                    <span className='text-slate-800 font-semibold'>Box 3 Rendement Berekening</span>
+                                                </div>
+                                                <span className='text-amber-700 font-bold text-[11px]'>Aangifte-klaar</span>
+                                            </div>
+
+                                            <div className='flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200/60 shadow-2xs'>
+                                                <div className='flex items-center gap-2'>
+                                                    <span className='w-2 h-2 rounded-full bg-sky-500' />
+                                                    <span className='text-slate-800 font-semibold'>Dynamics 365 BC Sync</span>
+                                                </div>
+                                                <span className='text-sky-700 font-bold text-[11px]'>Direct Verwerkt</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Platform Footer Banner */}
+                                    <div className='flex items-center justify-between pt-1 border-t border-slate-150 text-[11px] text-slate-400 font-medium'>
+                                        <span>Real Estate Core Ops v4.2</span>
+                                        <span className='text-slate-700 font-bold'>85% Vastgoed | 15% BC Engine</span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
 
