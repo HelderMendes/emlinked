@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { client } from '@/sanity/client';
+import { getImageUrl } from '@/sanity/image';
 import { HugeiconsIcon } from '@hugeicons/react';
 import {
     AiSecurity01Icon,
@@ -99,6 +100,19 @@ async function getHomepageData(locale: string) {
                     showProof,
                     proofText,
                     cardTitle,
+                    imagePath,
+                    image {
+                        asset-> {
+                            _id,
+                            url
+                        }
+                    },
+                    heroImage {
+                        asset-> {
+                            _id,
+                            url
+                        }
+                    },
                     cardStats[] {
                         _key,
                         label,
@@ -123,6 +137,12 @@ async function getHomepageData(locale: string) {
                         description,
                         icon,
                         imagePath,
+                        image {
+                            asset-> {
+                                _id,
+                                url
+                            }
+                        },
                         bullets,
                         ctaLabel,
                         ctaLink
@@ -133,6 +153,13 @@ async function getHomepageData(locale: string) {
                     subtitle,
                     buttonLabel,
                     buttonLink,
+                    imagePath,
+                    image {
+                        asset-> {
+                            _id,
+                            url
+                        }
+                    },
                     // Integrations List fields
                     integrations[] {
                         _key,
@@ -237,6 +264,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                         ? 'Your real estate portfolio always *automatically* tax & audit ready'
                                         : 'Uw vastgoedportefeuille altijd *automatisch* aangifte-klaar')
                                 }
+                                titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
                                 subtitle={block.subtitle}
                                 ctaLabel={
                                     block.ctaLabel ||
@@ -250,7 +278,7 @@ export default async function HomePage({ params }: HomePageProps) {
                                 showProof={block.showProof ?? true}
                                 proofText={block.proofText}
                                 imagePath={
-                                    block.imagePath ||
+                                    getImageUrl(block.image || block.heroImage, block.imagePath) ||
                                     '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
                                 }
                                 isHomepage={true}
