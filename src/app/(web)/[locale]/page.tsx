@@ -26,6 +26,10 @@ import {
 } from 'lucide-react';
 import { Metadata } from 'next';
 import { HeroSection } from '@/components/blocks/HeroSection';
+import { Box3EcosystemSection } from '@/components/blocks/box3/Box3EcosystemSection';
+import { Box3SolutionWorkflow } from '@/components/blocks/box3/Box3SolutionWorkflow';
+import { TestimonialSlider } from '@/components/TestimonialSlider';
+import { TeamBlock } from '@/components/blocks/TeamBlock';
 
 interface HomePageProps {
     params: Promise<{ locale: string }>;
@@ -87,20 +91,9 @@ async function getHomepageData(locale: string) {
             `*[_type == "page" && (_id == $pageId || slug.current == "home" || slug.current == "/" || slug.current == "/en/" || slug.current == "/en") && language == $locale][0] {
                 title,
                 pageBlocks[] {
+                    ...,
                     _type,
                     _key,
-                    // Hero fields
-                    label,
-                    title,
-                    subtitle,
-                    ctaLabel,
-                    ctaLink,
-                    secondaryCtaLabel,
-                    secondaryCtaLink,
-                    showProof,
-                    proofText,
-                    cardTitle,
-                    imagePath,
                     image {
                         asset-> {
                             _id,
@@ -113,62 +106,34 @@ async function getHomepageData(locale: string) {
                             url
                         }
                     },
-                    cardStats[] {
-                        _key,
-                        label,
-                        value,
-                        badgeText,
-                        badgeType
-                    },
-                    // TrustBar items
-                    items[] {
-                        _key,
-                        text,
-                        icon,
-                        link
-                    },
-                    // Features list fields
-                    sectionTag,
-                    sectionTitle,
-                    sectionSubtitle,
-                    features[] {
-                        _key,
-                        title,
-                        description,
-                        icon,
-                        imagePath,
-                        image {
-                            asset-> {
-                                _id,
-                                url
-                            }
-                        },
-                        bullets,
-                        ctaLabel,
-                        ctaLink
-                    },
-                    // CTA Banner fields
-                    tag,
-                    title,
-                    subtitle,
-                    buttonLabel,
-                    buttonLink,
-                    imagePath,
-                    image {
+                    photo {
                         asset-> {
                             _id,
                             url
                         }
                     },
-                    // Integrations List fields
+                    logo {
+                        asset-> {
+                            _id,
+                            url
+                        }
+                    },
+                    items[] {
+                        ...,
+                        image { asset-> { _id, url } },
+                        logo { asset-> { _id, url } },
+                        photo { asset-> { _id, url } }
+                    },
+                    features[] {
+                        ...,
+                        image { asset-> { _id, url } }
+                    },
                     integrations[] {
-                        _key,
-                        title,
-                        badge,
-                        description,
-                        imagePlaceholder,
-                        bullets,
-                        link
+                        ...
+                    },
+                    members[] {
+                        ...,
+                        photo { asset-> { _id, url } }
                     }
                 },
                 seo {
@@ -850,6 +815,56 @@ export default async function HomePage({ params }: HomePageProps) {
                                     </div>
                                 </div>
                             </section>
+                        );
+                    }
+                    case 'ecosystemSection':
+                    case 'ecosystem': {
+                        return (
+                            <Box3EcosystemSection
+                                key={block._key}
+                                isEn={isEn}
+                                badge={block.badge}
+                                title={block.title}
+                                subtitle={block.subtitle}
+                                cardTitle={block.cardTitle}
+                                cardSubtitle={block.cardSubtitle}
+                                cardPoints={block.cardPoints}
+                                trustItems={block.trustItems}
+                            />
+                        );
+                    }
+                    case 'workflow':
+                    case 'workflowBlock': {
+                        return (
+                            <Box3SolutionWorkflow
+                                key={block._key}
+                                workflowBadge={block.badge}
+                                workflowTitle={block.title}
+                                workflowItems={block.items}
+                                isEn={isEn}
+                            />
+                        );
+                    }
+                    case 'testimonialSection':
+                    case 'testimonial': {
+                        return (
+                            <TestimonialSlider
+                                key={block._key}
+                                title={block.title || block.sectionTitle}
+                                subtitle={block.subtitle || block.sectionSubtitle}
+                            />
+                        );
+                    }
+                    case 'teamBlock':
+                    case 'team': {
+                        return (
+                            <TeamBlock
+                                key={block._key}
+                                sectionTitle={block.title || block.sectionTitle}
+                                sectionSubtitle={block.subtitle || block.sectionSubtitle}
+                                members={block.members}
+                                locale={locale}
+                            />
                         );
                     }
                     default:
