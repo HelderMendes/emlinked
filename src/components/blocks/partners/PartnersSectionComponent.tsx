@@ -10,12 +10,14 @@ import {
     Cpu,
     Layers,
 } from 'lucide-react';
+import { getImageUrl } from '@/sanity/image';
 
 export interface PartnerItem {
     _key?: string;
     name: string;
     badge: string;
     logoUrl: string;
+    logo?: any;
     description: string;
     featureTitle?: string;
     featureText?: string;
@@ -176,7 +178,10 @@ export function PartnersSectionComponent({
                                         {/* Direct Logo Rendering */}
                                         <div className='py-2 flex items-center justify-start min-h-[70px]'>
                                             <Image
-                                                src={partner.logoUrl}
+                                                src={getImageUrl(
+                                                    partner.logo,
+                                                    partner.logoUrl,
+                                                )}
                                                 alt={partner.name}
                                                 width={620}
                                                 height={300}

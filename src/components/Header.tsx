@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { DemoModal } from '@/components/DemoModal';
 import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     BsRocketTakeoff,
@@ -110,7 +109,6 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [langDropdownOpen, setLangDropdownOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
-    const { theme, setTheme } = useTheme();
     const pathname = usePathname();
     const t = translations[locale as 'nl' | 'en'] || translations.nl;
     const isEn = locale === 'en';
@@ -433,14 +431,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         return pathname?.startsWith(fullPath);
     };
 
-    const toggleTheme = () => {
-        setTheme(theme === 'dark' ? 'light' : 'dark');
-    };
-
-    const logoSrc =
-        mounted && theme === 'dark'
-            ? '/emlinked/Emlinked_logo__liggend_white.png?v=2'
-            : '/emlinked/Emlinked_logo__liggend.svg?v=2';
+    const logoSrc = '/emlinked/Emlinked_logo__liggend.svg?v=2';
 
     const toggleMobileSubmenu = (menu: string) => {
         setMobileSubmenu(mobileSubmenu === menu ? null : menu);

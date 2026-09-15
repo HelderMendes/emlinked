@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
+import { getImageUrl } from '@/sanity/image';
 
 interface AppsArchitectureSectionProps {
     locale?: string;
@@ -13,7 +14,12 @@ interface AppsArchitectureSectionProps {
     sectionTitle?: string;
     sectionSubtitle?: string;
     bullets?: Array<{ bold?: string; text: string }>;
+    bgImage?: any;
     bgImagePath?: string;
+    diagramImage?: any;
+    diagramImagePath?: string;
+    calloutImage?: any;
+    calloutImagePath?: string;
 }
 
 export function AppsArchitectureSection({
@@ -25,7 +31,12 @@ export function AppsArchitectureSection({
     sectionTitle,
     sectionSubtitle,
     bullets: customBullets,
+    bgImage,
     bgImagePath = '/emlinked/apps/bg_naadloze_integratie_section.jpg',
+    diagramImage,
+    diagramImagePath = '/emlinked/apps/naadloze-intergratie.png',
+    calloutImage,
+    calloutImagePath = '/emlinked/apps/samenwerken-binnen-ERP.jpg',
 }: AppsArchitectureSectionProps) {
     const isEn = locale === 'en';
 
@@ -55,19 +66,44 @@ export function AppsArchitectureSection({
     ];
 
     const activeBullets = customBullets || defaultBullets;
-    const activeTag = tag || (isEn ? 'SEAMLESS INTEGRATION' : 'NAADLOZE INTEGRATIE');
-    const activeTitle = title || (isEn ? 'How our applications work together inside your ERP' : 'Hoe onze applicaties samenwerken binnen uw ERP');
-    const activeSubtitle = subtitle || (isEn ? 'Unlike traditional real estate software that relies on complex API integrations and periodic batch imports, Emlinked software runs native inside Microsoft Dynamics 365 Business Central. That means: one central source of truth, zero duplicate data entry, and 100% realtime data integrity.' : 'In tegenstelling tot traditionele vastgoedsoftware die werkt met ingewikkelde API-koppelingen en periodieke batch-imports, draait de software van Emlinked native binnen Microsoft Dynamics 365 Business Central. Dat betekent: één centrale bron van waarheid, nul dubbele invoer en 100% realtime data-integriteit.');
+    const activeTag =
+        tag || (isEn ? 'SEAMLESS INTEGRATION' : 'NAADLOZE INTEGRATIE');
+    const activeTitle =
+        title ||
+        (isEn
+            ? 'How our applications work together inside your ERP'
+            : 'Hoe onze applicaties samenwerken binnen uw ERP');
+    const activeSubtitle =
+        subtitle ||
+        (isEn
+            ? 'Unlike traditional real estate software that relies on complex API integrations and periodic batch imports, Emlinked software runs native inside Microsoft Dynamics 365 Business Central. That means: one central source of truth, zero duplicate data entry, and 100% realtime data integrity.'
+            : 'In tegenstelling tot traditionele vastgoedsoftware die werkt met ingewikkelde API-koppelingen en periodieke batch-imports, draait de software van Emlinked native binnen Microsoft Dynamics 365 Business Central. Dat betekent: één centrale bron van waarheid, nul dubbele invoer en 100% realtime data-integriteit.');
 
-    const activeSectionTag = sectionTag || (isEn ? 'MICROSOFT BUSINESS CENTRAL' : 'MICROSOFT BUSINESS CENTRAL INTEGRATIE');
-    const activeSectionTitle = sectionTitle || (isEn ? '100% Realtime Control & Automatic Posting' : '100% Realtime controle en automatische aflettering');
-    const activeSectionSubtitle = sectionSubtitle || (isEn ? 'Manage all your real estate operations natively inside Business Central with zero latency or shadow file risks.' : 'Beheer al je vastgoedprocessen native in Microsoft Dynamics 365 Business Central zonder vertraging of risico van schaduwbestanden.');
+    const activeSectionTag =
+        sectionTag ||
+        (isEn
+            ? 'MICROSOFT BUSINESS CENTRAL'
+            : 'MICROSOFT BUSINESS CENTRAL INTEGRATIE');
+    const activeSectionTitle =
+        sectionTitle ||
+        (isEn
+            ? '100% Realtime Control & Automatic Posting'
+            : '100% Realtime controle en automatische aflettering');
+    const activeSectionSubtitle =
+        sectionSubtitle ||
+        (isEn
+            ? 'Manage all your real estate operations natively inside Business Central with zero latency or shadow file risks.'
+            : 'Beheer al je vastgoedprocessen native in Microsoft Dynamics 365 Business Central zonder vertraging of risico van schaduwbestanden.');
+
+    const resolvedBgImage = getImageUrl(bgImage, bgImagePath);
+    const resolvedDiagramImage = getImageUrl(diagramImage, diagramImagePath);
+    const resolvedCalloutImage = getImageUrl(calloutImage, calloutImagePath);
 
     return (
         <section className='relative px-6 py-20 text-white border-b border-white/10 overflow-hidden bg-[#02030A] bg-[radial-gradient(circle_at_18%_-5%,rgba(79,70,229,.18),transparent_24%),radial-gradient(circle_at_22%_60%,rgba(79,70,229,.12),transparent_20%),radial-gradient(circle_at_74%_40%,rgba(79,70,229,.16),transparent_18%),radial-gradient(circle_at_72%_105%,rgba(79,70,229,.14),transparent_20%),linear-gradient(to_right,transparent_49.95%,rgba(255,255,255,.03)_50%,transparent_50.05%)]'>
             {/* Custom Section Background Image - 100% Full Cover */}
             <Image
-                src={bgImagePath}
+                src={resolvedBgImage}
                 alt={activeTitle}
                 fill
                 priority
@@ -99,7 +135,7 @@ export function AppsArchitectureSection({
                     {/* Centered Transparent PNG Architecture Diagram on Dark Background */}
                     <div className='relative w-full max-w-90 h-90 items-center justify-center mx-auto transition-all duration-300 mb-2'>
                         <Image
-                            src='/emlinked/apps/naadloze-intergratie.png'
+                            src={resolvedDiagramImage}
                             alt={activeTitle}
                             fill
                             sizes='360px'
@@ -154,7 +190,7 @@ export function AppsArchitectureSection({
                     <div className='lg:col-span-5 flex justify-center items-center'>
                         <div className='relative w-full max-w-md aspect-4/3 sm:aspect-square rounded-2xl overflow-hidden border border-white/20 shadow-2xl group flex items-center justify-center hover:border-amber/60 transition-all duration-500'>
                             <Image
-                                src='/emlinked/apps/samenwerken-binnen-ERP.jpg'
+                                src={resolvedCalloutImage}
                                 alt='Samenwerken binnen Business Central ERP'
                                 fill
                                 sizes='(max-width: 1024px) 100vw, 40vw'

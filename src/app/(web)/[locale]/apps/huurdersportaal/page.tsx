@@ -18,8 +18,12 @@ async function getHuurdersportaalPageData(locale: string) {
                 ...,
                 pageBlocks[] {
                     ...,
-                    image { asset-> { url } },
-                    heroImage { asset-> { url } }
+                    image { asset-> { _id, url } },
+                    heroImage { asset-> { _id, url } },
+                    tabs[] {
+                        ...,
+                        image { asset-> { _id, url } }
+                    }
                 },
                 seo {
                     seoTitle,

@@ -122,13 +122,20 @@ async function getHomepageData(locale: string) {
                     },
                     features[] {
                         ...,
-                        image { asset-> { _id, url } }
+                        image { asset-> { _id, url } },
+                        iconImage { asset-> { _id, url } }
                     },
                     integrations[] {
-                        ...
+                        ...,
+                        image { asset-> { _id, url } }
+                    },
+                    partners[] {
+                        ...,
+                        logo { asset-> { _id, url } }
                     },
                     members[] {
                         ...,
+                        image { asset-> { _id, url } },
                         photo { asset-> { _id, url } }
                     }
                 },

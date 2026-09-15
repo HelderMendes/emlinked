@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
+import { getImageUrl } from '@/sanity/image';
 
 interface Box3CtaBannerProps {
     ctaBadge: string;
@@ -12,6 +13,7 @@ interface Box3CtaBannerProps {
     secondaryButtonText?: string;
     secondaryButtonLink?: string;
     isEn: boolean;
+    image?: any;
     imagePath?: string;
 }
 
@@ -24,9 +26,13 @@ export function Box3CtaBanner({
     secondaryButtonText,
     secondaryButtonLink,
     isEn,
+    image,
     imagePath,
 }: Box3CtaBannerProps) {
-    const bannerImg = imagePath || '/emlinked/box3/box3-automatiseren.jpg';
+    const bannerImg = getImageUrl(
+        image,
+        imagePath || '/emlinked/box3/box3-automatiseren.jpg',
+    );
 
     return (
         <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>

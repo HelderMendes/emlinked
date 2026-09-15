@@ -41,7 +41,8 @@ export const page = defineType({
             title: 'Uitgelicht Artikel / Featured Spotlight',
             type: 'reference',
             to: [{ type: 'article' }],
-            description: 'Selecteer hier het artikel dat groot bovenaan de nieuwspagina uitgelicht moet worden.',
+            description:
+                'Selecteer hier het artikel dat groot bovenaan de nieuwspagina uitgelicht moet worden.',
             options: {
                 filter: ({ document }) => {
                     const lang = document?.language || 'nl';
@@ -427,8 +428,16 @@ export const page = defineType({
                         }),
                         defineField({
                             name: 'bgImagePath',
-                            title: 'Background Image Path',
+                            title: 'Background Image Path (Fallback String)',
                             type: 'string',
+                        }),
+                        defineField({
+                            name: 'bgImage',
+                            title: 'Background Image (Sanity Asset Upload)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description:
+                                'Upload custom graphic directly to Sanity CDN',
                         }),
                     ],
                     preview: {
@@ -508,9 +517,17 @@ export const page = defineType({
                                     rows: 3,
                                 }),
                                 defineField({
-                                    name: 'image',
-                                    title: 'Image Path',
+                                    name: 'imagePath',
+                                    title: 'Image Path (Fallback String)',
                                     type: 'string',
+                                }),
+                                defineField({
+                                    name: 'image',
+                                    title: 'Image (Sanity Asset Upload)',
+                                    type: 'image',
+                                    options: { hotspot: true },
+                                    description:
+                                        'Upload custom graphic directly to Sanity CDN',
                                 }),
                             ],
                         }),
@@ -610,10 +627,18 @@ export const page = defineType({
                                         }),
                                         defineField({
                                             name: 'imagePath',
-                                            title: 'Main Module Image Path (Grote Afbeelding)',
+                                            title: 'Main Module Image Path (Fallback String)',
                                             type: 'string',
                                             description:
                                                 'Pad naar de grote preview afbeelding (bijv. "/emlinked/apps/vastgoedbeheer-sopftware_modules.jpg")',
+                                        }),
+                                        defineField({
+                                            name: 'image',
+                                            title: 'Main Module Image (Sanity Asset Upload)',
+                                            type: 'image',
+                                            options: { hotspot: true },
+                                            description:
+                                                'Upload de grote preview afbeelding rechtstreeks naar Sanity CDN',
                                         }),
                                         defineField({
                                             name: 'iconPath',
@@ -621,6 +646,14 @@ export const page = defineType({
                                             type: 'string',
                                             description:
                                                 'Pad naar het PNG-icoontje rechtsboven op de kaart (bijv. "/emlinked/apps/vastgoedbeheer.png")',
+                                        }),
+                                        defineField({
+                                            name: 'iconImage',
+                                            title: 'Top-Right PNG Icon Badge (Sanity Asset Upload)',
+                                            type: 'image',
+                                            options: { hotspot: true },
+                                            description:
+                                                'Upload het PNG-icoontje rechtsboven op de kaart rechtstreeks naar Sanity CDN',
                                         }),
                                         defineField({
                                             name: 'bullets',
@@ -643,6 +676,20 @@ export const page = defineType({
                                             type: 'string',
                                         }),
                                     ],
+                                    preview: {
+                                        select: {
+                                            title: 'title',
+                                            subtitle: 'badge',
+                                            media: 'image',
+                                        },
+                                        prepare({ title, subtitle, media }) {
+                                            return {
+                                                title: title || 'Feature Card',
+                                                subtitle: subtitle || 'Module Card',
+                                                media,
+                                            };
+                                        },
+                                    },
                                 }),
                             ],
                         }),
@@ -976,10 +1023,18 @@ export const page = defineType({
                                         }),
                                         defineField({
                                             name: 'logoUrl',
-                                            title: 'Logo Image Path',
+                                            title: 'Logo Image Path (Fallback String)',
                                             type: 'string',
                                             description:
                                                 'Relative path in public directory (e.g. /emlinked/partners/Continia-e1670413209950.png)',
+                                        }),
+                                        defineField({
+                                            name: 'logo',
+                                            title: 'Logo (Sanity Asset Upload)',
+                                            type: 'image',
+                                            options: { hotspot: true },
+                                            description:
+                                                'Upload partner logo directly to Sanity CDN',
                                         }),
                                         defineField({
                                             name: 'description',
@@ -1069,10 +1124,18 @@ export const page = defineType({
                                         }),
                                         defineField({
                                             name: 'imagePlaceholder',
-                                            title: 'Image Placeholder Name',
+                                            title: 'Image Placeholder Name (Fallback String)',
                                             type: 'string',
                                             description:
                                                 'e.g. BC-Integration-Flowchart.webp',
+                                        }),
+                                        defineField({
+                                            name: 'image',
+                                            title: 'Image (Sanity Asset Upload)',
+                                            type: 'image',
+                                            options: { hotspot: true },
+                                            description:
+                                                'Upload custom graphic directly to Sanity CDN',
                                         }),
                                         defineField({
                                             name: 'bullets',
@@ -1345,14 +1408,16 @@ export const page = defineType({
                                             title: 'Short Biography (Grid Card)',
                                             type: 'text',
                                             rows: 2,
-                                            description: 'Short 1-2 sentence preview summary shown on the team grid card.',
+                                            description:
+                                                'Short 1-2 sentence preview summary shown on the team grid card.',
                                         }),
                                         defineField({
                                             name: 'fullBio',
                                             title: 'Extended Biography / Full Story (Popup Modal)',
                                             type: 'text',
                                             rows: 5,
-                                            description: 'Detailed narrative description shown inside the team member popup modal.',
+                                            description:
+                                                'Detailed narrative description shown inside the team member popup modal.',
                                         }),
                                         defineField({
                                             name: 'focusArea',
@@ -1373,13 +1438,15 @@ export const page = defineType({
                                             name: 'linkedin',
                                             title: 'LinkedIn Profile URL',
                                             type: 'string',
-                                            description: 'e.g. https://www.linkedin.com/in/raymondperridon/',
+                                            description:
+                                                'e.g. https://www.linkedin.com/in/raymondperridon/',
                                         }),
                                         defineField({
                                             name: 'email',
                                             title: 'Direct Email Address',
                                             type: 'string',
-                                            description: 'e.g. info@emlinked.com',
+                                            description:
+                                                'e.g. info@emlinked.com',
                                         }),
                                         defineField({
                                             name: 'image',
@@ -1499,16 +1566,31 @@ export const page = defineType({
                             title: 'Secondary CTA URL',
                             type: 'string',
                         }),
+                        defineField({
+                            name: 'imagePath',
+                            title: 'Afbeelding Pad (Fallback String)',
+                            type: 'string',
+                            description: 'Relatief pad naar banner afbeelding (bijv. /emlinked/home/Vastgoedbeheer_automatiseren.jpg)',
+                        }),
+                        defineField({
+                            name: 'image',
+                            title: 'Banner Afbeelding (Upload naar Sanity CDN)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description: 'Upload de banner afbeelding rechtstreeks naar de Sanity CDN',
+                        }),
                     ],
                     preview: {
                         select: {
                             title: 'title',
                             subtitle: 'subtitle',
+                            media: 'image',
                         },
-                        prepare({ title, subtitle }) {
+                        prepare({ title, subtitle, media }) {
                             return {
                                 title: `CTA: ${title || 'Call to Action'}`,
                                 subtitle: subtitle || 'Conversion Banner',
+                                media,
                             };
                         },
                     },

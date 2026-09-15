@@ -75,9 +75,39 @@ export function PaymentSoftwareModule({
     const heroDescription = heroBlock?.description || doc?.description;
 
     const explicitHeroPath = heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || doc?.heroImagePath;
-    const heroImageUrl = explicitHeroPath || getImageUrl(
-        heroBlock?.image || heroBlock?.heroImage || doc?.image || doc?.heroImage,
-        '/emlinked/apps/payment/payment-software-her0.webp',
+    const heroImageUrl = getImageUrl(
+        heroBlock?.image ||
+            heroBlock?.heroImage ||
+            doc?.image ||
+            doc?.heroImage,
+        explicitHeroPath || '/emlinked/apps/payment/payment-software-her0.webp',
+    );
+
+    const sepaTab =
+        featureTabsBlock?.tabs?.find((t: any) => t.tabId === 'sepa') ||
+        featureTabsBlock?.tabs?.[0];
+    const reconciliationTab =
+        featureTabsBlock?.tabs?.find((t: any) => t.tabId === 'reconciliation') ||
+        featureTabsBlock?.tabs?.[1];
+    const dunningTab =
+        featureTabsBlock?.tabs?.find((t: any) => t.tabId === 'dunning') ||
+        featureTabsBlock?.tabs?.[2];
+
+    const tab0Img = getImageUrl(
+        sepaTab?.image,
+        sepaTab?.imagePath || '/emlinked/apps/payment/tab01_SEPA-direct-debit-Incasso.jpg',
+    );
+    const tab1Img = getImageUrl(
+        reconciliationTab?.image,
+        reconciliationTab?.imagePath || '/emlinked/apps/payment/tab02_realtime-ankreconciliatie.jpg',
+    );
+    const tab2Img = getImageUrl(
+        dunningTab?.image,
+        dunningTab?.imagePath || '/emlinked/apps/payment/tab03_storneer-aanmaningsbeheer.jpg',
+    );
+    const ctaImageUrl = getImageUrl(
+        ctaBlock?.image,
+        ctaBlock?.imagePath || '/emlinked/apps/payment/automatiseren_payment.jpg',
     );
 
     // Structured JSON-LD from Sanity or user blueprint
@@ -148,18 +178,9 @@ export function PaymentSoftwareModule({
         'sepa' | 'reconciliation' | 'dunning'
     >('sepa');
 
-    return (
-        <>
-            {/* Inject JSON-LD Structured Data */}
-            {jsonLdData && (
-                <script
-                    type='application/ld+json'
-                    dangerouslySetInnerHTML={{ __html: jsonLdData }}
-                />
-            )}
 
-            {/* ── BLOCK 1: HERO SECTION ── */}
-            <section className='relative px-6 py-12 md:py-20 overflow-hidden bg-texture-navy text-white border-b border-white/10'>
+    const renderHero = (block: any, key: any) => (
+<section key={key} className='relative px-6 py-12 md:py-20 overflow-hidden bg-texture-navy text-white border-b border-white/10'>
                 <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
 
                 <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10'>
@@ -319,9 +340,11 @@ export function PaymentSoftwareModule({
                     </div>
                 </div>
             </section>
+    );
 
-            {/* ── BLOCK 2: OPERATIONAL BOTTLENECKS ── */}
-            <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative z-10'>
+
+    const renderComparison = (block: any, key: any) => (
+<section key={key} className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-16'>
                     {/* Header */}
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
@@ -449,7 +472,7 @@ export function PaymentSoftwareModule({
                         {/* Right Card: Emlinked Native Solution */}
                         <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                             <CardBadge
-                                imageSrc='/emlinked/apps/payment/automatiseren_payment.jpg'
+                                imageSrc={ctaImageUrl}
                                 alt='Emlinked Payment Engine'
                                 isLegacy={false}
                             />
@@ -543,9 +566,11 @@ export function PaymentSoftwareModule({
                     </div>
                 </div>
             </section>
+    );
 
-            {/* ── BLOCK 3: CORE FUNCTIONALITIES ── */}
-            <section className='py-20 px-6 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
+
+    const renderFeatureTabs = (block: any, key: any) => (
+<section key={key} className='py-20 px-6 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
                 <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
 
                 <div className='max-w-7xl mx-auto space-y-8 relative z-10'>
@@ -582,9 +607,10 @@ export function PaymentSoftwareModule({
                         >
                             <CreditCard className='w-4 h-4' />
                             <span>
-                                {isEn
-                                    ? '1. SEPA Direct Debit Collection'
-                                    : '1. SEPA Direct Debit Incasso'}
+                                {sepaTab?.tabTitle ||
+                                    (isEn
+                                        ? '1. SEPA Direct Debit Collection'
+                                        : '1. SEPA Direct Debit Incasso')}
                             </span>
                         </button>
                         <button
@@ -597,9 +623,10 @@ export function PaymentSoftwareModule({
                         >
                             <RefreshCw className='w-4 h-4' />
                             <span>
-                                {isEn
-                                    ? '2. Real-time Bank Reconciliation'
-                                    : '2. Realtime Bankreconciliatie'}
+                                {reconciliationTab?.tabTitle ||
+                                    (isEn
+                                        ? '2. Real-time Bank Reconciliation'
+                                        : '2. Realtime Bankreconciliatie')}
                             </span>
                         </button>
                         <button
@@ -612,9 +639,10 @@ export function PaymentSoftwareModule({
                         >
                             <BarChart3 className='w-4 h-4' />
                             <span>
-                                {isEn
-                                    ? '3. Reversal & Dunning Management'
-                                    : '3. Storneer- & Aanmaningsbeheer'}
+                                {dunningTab?.tabTitle ||
+                                    (isEn
+                                        ? '3. Reversal & Dunning Management'
+                                        : '3. Storneer- & Aanmaningsbeheer')}
                             </span>
                         </button>
                     </div>
@@ -625,42 +653,60 @@ export function PaymentSoftwareModule({
                             <>
                                 <div className='lg:col-span-6 space-y-6'>
                                     <h3 className='text-2xl sm:text-3xl font-bold text-white'>
-                                        {doc?.features?.[0]?.title ||
+                                        {sepaTab?.title ||
+                                            doc?.features?.[0]?.title ||
                                             (isEn
                                                 ? 'SEPA Direct Debit & Collection Automation'
                                                 : 'SEPA Direct Debit & Incasso-automatisering')}
                                     </h3>
                                     <p className='text-white/70 leading-relaxed text-base font-light'>
-                                        {doc?.features?.[0]?.text ||
+                                        {sepaTab?.text ||
+                                            doc?.features?.[0]?.text ||
                                             (isEn
                                                 ? 'Generate and submit all monthly SEPA collection files to your bank with a single click. The software handles chargebacks automatically and schedules retries.'
                                                 : 'Genereer en verstuur maandelijks met één druk op de knop alle SEPA-incassobestanden naar je bank. De software verwerkt storneringen automatisch en plant herhalingen in.')}
                                     </p>
                                     <ul className='space-y-2.5 text-sm text-white/80'>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                {isEn
-                                                    ? 'Automated generation of SEPA XML collection files'
-                                                    : 'Automatische generatie van SEPA XML incassobestanden'}
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                {isEn
-                                                    ? 'Direct debits automatically retried upon failure'
-                                                    : 'Storneringen automatisch gedetecteerd & heraangeboden'}
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                {isEn
-                                                    ? 'Integration with all major European banks'
-                                                    : 'Integratie met alle Nederlandse en Europese banken'}
-                                            </span>
-                                        </li>
+                                        {sepaTab?.bullets?.length ? (
+                                            sepaTab.bullets.map(
+                                                (b: string, i: number) => (
+                                                    <li
+                                                        key={i}
+                                                        className='flex items-center gap-2.5'
+                                                    >
+                                                        <Check className='w-4 h-4 text-amber shrink-0' />
+                                                        <span>{b}</span>
+                                                    </li>
+                                                ),
+                                            )
+                                        ) : (
+                                            <>
+                                                <li className='flex items-center gap-2.5'>
+                                                    <Check className='w-4 h-4 text-amber shrink-0' />
+                                                    <span>
+                                                        {isEn
+                                                            ? 'Automated generation of SEPA XML collection files'
+                                                            : 'Automatische generatie van SEPA XML incassobestanden'}
+                                                    </span>
+                                                </li>
+                                                <li className='flex items-center gap-2.5'>
+                                                    <Check className='w-4 h-4 text-amber shrink-0' />
+                                                    <span>
+                                                        {isEn
+                                                            ? 'Direct debits automatically retried upon failure'
+                                                            : 'Storneringen automatisch gedetecteerd & heraangeboden'}
+                                                    </span>
+                                                </li>
+                                                <li className='flex items-center gap-2.5'>
+                                                    <Check className='w-4 h-4 text-amber shrink-0' />
+                                                    <span>
+                                                        {isEn
+                                                            ? 'Integration with all major European banks'
+                                                            : 'Integratie met alle Nederlandse en Europese banken'}
+                                                    </span>
+                                                </li>
+                                            </>
+                                        )}
                                     </ul>
                                 </div>
                                 <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
@@ -674,8 +720,11 @@ export function PaymentSoftwareModule({
                                     </div>
                                     <div className='rounded-xl overflow-hidden shadow-2xl'>
                                         <Image
-                                            src='/emlinked/apps/payment/tab01_SEPA-direct-debit-Incasso.jpg'
-                                            alt='SEPA Direct Debit Incasso UI Preview'
+                                            src={tab0Img}
+                                            alt={
+                                                sepaTab?.title ||
+                                                'SEPA Direct Debit Incasso UI Preview'
+                                            }
                                             width={1200}
                                             height={675}
                                             className='w-full h-auto rounded-xl'
@@ -689,42 +738,60 @@ export function PaymentSoftwareModule({
                             <>
                                 <div className='lg:col-span-6 space-y-6'>
                                     <h3 className='text-2xl sm:text-3xl font-bold text-white'>
-                                        {doc?.features?.[1]?.title ||
+                                        {reconciliationTab?.title ||
+                                            doc?.features?.[1]?.title ||
                                             (isEn
                                                 ? 'Real-time Bank Reconciliation via Direct Banking'
                                                 : 'Realtime Bankreconciliatie via Direct Banking')}
                                     </h3>
                                     <p className='text-white/70 leading-relaxed text-base font-light'>
-                                        {doc?.features?.[1]?.text ||
+                                        {reconciliationTab?.text ||
+                                            doc?.features?.[1]?.text ||
                                             (isEn
                                                 ? 'Connect your bank account directly via Direct Banking or PSD2. Incoming rent payments are instantly matched against open invoices in your ledger.'
                                                 : 'Koppel je bankrekening rechtstreeks via Direct Banking of PSD2. Inkomende betalingen worden op basis van kenmerk en bedrag direct gematcht met de openstaande posten in je boekhouding.')}
                                     </p>
                                     <ul className='space-y-2.5 text-sm text-white/80'>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                {isEn
-                                                    ? 'Direct Banking & CAMT.053 bank feeds imported automatically'
-                                                    : 'Direct Banking & CAMT.053 bankafschriften automatisch ingelezen'}
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                {isEn
-                                                    ? '100% accurate matching engine per lease & tenant'
-                                                    : '100% accurate matche-engine op huurcontract en debiteurnummer'}
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                {isEn
-                                                    ? 'Split payments across owners and management fees'
-                                                    : 'Split payments over eigenaren en beheervergoedingen'}
-                                            </span>
-                                        </li>
+                                        {reconciliationTab?.bullets?.length ? (
+                                            reconciliationTab.bullets.map(
+                                                (b: string, i: number) => (
+                                                    <li
+                                                        key={i}
+                                                        className='flex items-center gap-2.5'
+                                                    >
+                                                        <Check className='w-4 h-4 text-amber shrink-0' />
+                                                        <span>{b}</span>
+                                                    </li>
+                                                ),
+                                            )
+                                        ) : (
+                                            <>
+                                                <li className='flex items-center gap-2.5'>
+                                                    <Check className='w-4 h-4 text-amber shrink-0' />
+                                                    <span>
+                                                        {isEn
+                                                            ? 'Direct Banking & CAMT.053 bank feeds imported automatically'
+                                                            : 'Direct Banking & CAMT.053 bankafschriften automatisch ingelezen'}
+                                                    </span>
+                                                </li>
+                                                <li className='flex items-center gap-2.5'>
+                                                    <Check className='w-4 h-4 text-amber shrink-0' />
+                                                    <span>
+                                                        {isEn
+                                                            ? '100% accurate matching engine per lease & tenant'
+                                                            : '100% accurate matche-engine op huurcontract en debiteurnummer'}
+                                                    </span>
+                                                </li>
+                                                <li className='flex items-center gap-2.5'>
+                                                    <Check className='w-4 h-4 text-amber shrink-0' />
+                                                    <span>
+                                                        {isEn
+                                                            ? 'Split payments across owners and management fees'
+                                                            : 'Split payments over eigenaren en beheervergoedingen'}
+                                                    </span>
+                                                </li>
+                                            </>
+                                        )}
                                     </ul>
                                 </div>
                                 <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
@@ -738,8 +805,11 @@ export function PaymentSoftwareModule({
                                     </div>
                                     <div className='rounded-xl overflow-hidden shadow-2xl'>
                                         <Image
-                                            src='/emlinked/apps/payment/tab02_realtime-ankreconciliatie.jpg'
-                                            alt='Realtime Bankreconciliatie UI Preview'
+                                            src={tab1Img}
+                                            alt={
+                                                reconciliationTab?.title ||
+                                                'Realtime Bankreconciliatie UI Preview'
+                                            }
                                             width={1200}
                                             height={675}
                                             className='w-full h-auto rounded-xl'
@@ -753,42 +823,60 @@ export function PaymentSoftwareModule({
                             <>
                                 <div className='lg:col-span-6 space-y-6'>
                                     <h3 className='text-2xl sm:text-3xl font-bold text-white'>
-                                        {doc?.features?.[2]?.title ||
+                                        {dunningTab?.title ||
+                                            doc?.features?.[2]?.title ||
                                             (isEn
                                                 ? 'Automated Credit Management & Dunning'
                                                 : 'Geautomatiseerd Debiteurenbeheer')}
                                     </h3>
                                     <p className='text-white/70 leading-relaxed text-base font-light'>
-                                        {doc?.features?.[2]?.text ||
+                                        {dunningTab?.text ||
+                                            doc?.features?.[2]?.text ||
                                             (isEn
                                                 ? 'Prevent accumulating rent arrears. Configure flexible dunning workflows for automated email and SMS reminders when payments are overdue.'
                                                 : 'Voorkom oplopende betalingsachterstanden. Stel flexibele herinneringsschema’s in voor automatische herinneringen per e-mail of SMS zodra een betalingstermijn verstrijkt.')}
                                     </p>
                                     <ul className='space-y-2.5 text-sm text-white/80'>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                {isEn
-                                                    ? 'Automated reminder & dunning flows via email / SMS'
-                                                    : 'Automatische herinneringen & aanmaningsflows per e-mail / SMS'}
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                {isEn
-                                                    ? 'Clear accounts receivable aging reports per property'
-                                                    : 'Inzichtelijke debiteuren-aging rapportage per object'}
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                {isEn
-                                                    ? 'Full audit trail in Business Central & tenant file'
-                                                    : 'Volledige audittrail in Business Central & huurdersdossier'}
-                                            </span>
-                                        </li>
+                                        {dunningTab?.bullets?.length ? (
+                                            dunningTab.bullets.map(
+                                                (b: string, i: number) => (
+                                                    <li
+                                                        key={i}
+                                                        className='flex items-center gap-2.5'
+                                                    >
+                                                        <Check className='w-4 h-4 text-amber shrink-0' />
+                                                        <span>{b}</span>
+                                                    </li>
+                                                ),
+                                            )
+                                        ) : (
+                                            <>
+                                                <li className='flex items-center gap-2.5'>
+                                                    <Check className='w-4 h-4 text-amber shrink-0' />
+                                                    <span>
+                                                        {isEn
+                                                            ? 'Automated reminder & dunning flows via email / SMS'
+                                                            : 'Automatische herinneringen & aanmaningsflows per e-mail / SMS'}
+                                                    </span>
+                                                </li>
+                                                <li className='flex items-center gap-2.5'>
+                                                    <Check className='w-4 h-4 text-amber shrink-0' />
+                                                    <span>
+                                                        {isEn
+                                                            ? 'Clear accounts receivable aging reports per property'
+                                                            : 'Inzichtelijke debiteuren-aging rapportage per object'}
+                                                    </span>
+                                                </li>
+                                                <li className='flex items-center gap-2.5'>
+                                                    <Check className='w-4 h-4 text-amber shrink-0' />
+                                                    <span>
+                                                        {isEn
+                                                            ? 'Full audit trail in Business Central & tenant file'
+                                                            : 'Volledige audittrail in Business Central & huurdersdossier'}
+                                                    </span>
+                                                </li>
+                                            </>
+                                        )}
                                     </ul>
                                 </div>
                                 <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
@@ -802,8 +890,11 @@ export function PaymentSoftwareModule({
                                     </div>
                                     <div className='rounded-xl overflow-hidden shadow-2xl'>
                                         <Image
-                                            src='/emlinked/apps/payment/tab03_storneer-aanmaningsbeheer.jpg'
-                                            alt='Geautomatiseerd Debiteurenbeheer UI Preview'
+                                            src={tab2Img}
+                                            alt={
+                                                dunningTab?.title ||
+                                                'Geautomatiseerd Debiteurenbeheer UI Preview'
+                                            }
                                             width={1200}
                                             height={675}
                                             className='w-full h-auto rounded-xl'
@@ -815,9 +906,11 @@ export function PaymentSoftwareModule({
                     </div>
                 </div>
             </section>
+    );
 
-            {/* ── BLOCK 4: CALL TO ACTION BANNER ── */}
-            <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
+
+    const renderCta = (block: any, key: any) => (
+<section key={key} className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
                 <div className='mx-auto max-w-8xl px-0'>
                     <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
@@ -879,8 +972,8 @@ export function PaymentSoftwareModule({
 
                             <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                 <Image
-                                    src='/emlinked/apps/payment/automatiseren_payment.jpg'
-                                    alt='Payment Software Illustratie'
+                                    src={ctaImageUrl}
+                                    alt={ctaBlock?.title || 'Payment Software Illustratie'}
                                     width={700}
                                     height={500}
                                     className='w-full h-[350px] max-h-[350px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
@@ -890,6 +983,48 @@ export function PaymentSoftwareModule({
                     </div>
                 </div>
             </section>
+    );
+
+
+    const blocksToRender =
+        pageBlocks.length > 0
+            ? pageBlocks
+            : [
+                  { _type: 'heroBlock', _key: 'default_hero' },
+                  { _type: 'comparisonBlock', _key: 'default_comp' },
+                  { _type: 'featureTabsBlock', _key: 'default_tabs' },
+                  { _type: 'ctaBlock', _key: 'default_cta' },
+              ];
+
+    return (
+        <>
+            {/* Inject JSON-LD Structured Data */}
+            {jsonLdData && (
+                <script
+                    type='application/ld+json'
+                    dangerouslySetInnerHTML={{ __html: jsonLdData }}
+                />
+            )}
+            
+            {blocksToRender.map((block: any, idx: number) => {
+                const key = block._key || idx;
+                switch (block._type) {
+                    case 'heroBlock':
+                    case 'hero':
+                        return renderHero(block, key);
+                    case 'comparisonBlock':
+                        return renderComparison(block, key);
+                    case 'featureTabsBlock':
+                        return renderFeatureTabs(block, key);
+                    case 'ctaBlock':
+                    case 'ctaBanner':
+                    case 'cta':
+                        return renderCta(block, key);
+                    default:
+                        return null;
+                }
+            })}
+
         </>
     );
 }

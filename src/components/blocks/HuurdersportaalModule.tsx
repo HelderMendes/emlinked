@@ -155,18 +155,10 @@ export function HuurdersportaalModule({
         'maintenance' | 'invoices' | 'documents'
     >('maintenance');
 
-    return (
-        <>
-            {/* Inject JSON-LD Structured Data */}
-            {jsonLdData && (
-                <script
-                    type='application/ld+json'
-                    dangerouslySetInnerHTML={{ __html: jsonLdData }}
-                />
-            )}
 
-            {/* ── BLOCK 1: HERO SECTION ── */}
-            <section className='relative px-6 py-12 md:py-20 overflow-hidden bg-texture-navy text-white border-b border-white/10'>
+    const renderHero = (block: any, key: any) => (
+// ── BLOCK 1: HERO SECTION ── */}
+            <section key={key} className='relative px-6 py-12 md:py-20 overflow-hidden bg-texture-navy text-white border-b border-white/10'>
                 <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
 
                 <div className='mx-auto max-w-7xl relative z-10'>
@@ -324,9 +316,12 @@ export function HuurdersportaalModule({
                     </div>
                 </div>
             </section>
+    );
 
-            {/* ── BLOCK 2: OPERATIONAL BOTTLENECKS ── */}
-            <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative z-10'>
+
+    const renderComparison = (block: any, key: any) => (
+// ── BLOCK 2: OPERATIONAL BOTTLENECKS ── */}
+            <section key={key} className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-16'>
                     {/* Header */}
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
@@ -548,9 +543,12 @@ export function HuurdersportaalModule({
                     </div>
                 </div>
             </section>
+    );
 
-            {/* ── BLOCK 3: CORE FUNCTIONALITIES ── */}
-            <section className='py-20 px-6 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
+
+    const renderFeatureTabs = (block: any, key: any) => (
+// ── BLOCK 3: CORE FUNCTIONALITIES ── */}
+            <section key={key} className='py-20 px-6 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
                 <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
 
                 <div className='max-w-7xl mx-auto space-y-8 relative z-10'>
@@ -820,9 +818,121 @@ export function HuurdersportaalModule({
                     </div>
                 </div>
             </section>
+    );
 
-            {/* ── BLOCK 4: CALL TO ACTION BANNER ── */}
-            <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
+
+    const renderArchitecture = (block: any, key: any) => {
+        const defaultArchBullets = isEn
+            ? [
+                  {
+                      bold: 'Direct Maintenance Orders:',
+                      text: 'Requests logged by tenants automatically generate repair work orders in Business Central.',
+                  },
+                  {
+                      bold: 'Zero Double Entry:',
+                      text: 'Payment status and contract renewals synchronize in real-time.',
+                  },
+                  {
+                      bold: 'Role-Based Access:',
+                      text: 'Secure authentication for tenants, managers, and external maintenance contractors.',
+                  },
+              ]
+            : [
+                  {
+                      bold: 'Directe Werkorders:',
+                      text: 'Onderhoudsmeldingen van huurders worden direct werkorders in Business Central.',
+                  },
+                  {
+                      bold: 'Nul Dubbele Invoer:',
+                      text: 'Betalingsstatussen en contractinzicht worden realtime bijgewerkt in het grootboek.',
+                  },
+                  {
+                      bold: 'Rollen & Rechten:',
+                      text: 'Veilig rollensysteem voor huurders, beheerders en servicepartners.',
+                  },
+              ];
+
+        const bTag =
+            block?.tag ||
+            architectureBlock?.tag ||
+            (isEn ? 'ERP INTEGRATION' : 'ERP INTEGRATIE');
+        const bTitle =
+            block?.title ||
+            architectureBlock?.title ||
+            (isEn
+                ? '24/7 Digital Self-Service & Realtime ERP Synchronization'
+                : '24/7 Digital Self-Service & Realtime ERP Synchronisatie');
+        const bDesc =
+            block?.desc ||
+            architectureBlock?.desc ||
+            (isEn
+                ? 'The Emlinked tenant portal connects directly to Microsoft Business Central without middle-tier delay.'
+                : 'Het Emlinked huurdersportaal is geen losstaand eiland. Alle meldingen, contractwijzigingen en betalingen worden direct gesynchroniseerd met je centrale Business Central database.');
+        const bBullets = block?.bullets?.length
+            ? block.bullets.map((text: string) => ({ bold: '', text }))
+            : architectureBlock?.bullets?.length
+              ? architectureBlock.bullets.map((text: string) => ({ bold: '', text }))
+              : defaultArchBullets;
+        const bImage =
+            getImageUrl(
+                block?.image || architectureBlock?.image,
+                block?.imagePath || architectureBlock?.imagePath,
+            ) || '/emlinked/apps/huurdersportaal/automatiseren_huurdersportaal.jpg';
+
+        return (
+            <section key={key} className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
+                <div className='max-w-7xl mx-auto relative z-10'>
+                    <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
+                        <div className='lg:col-span-6 flex flex-col gap-6 text-left'>
+                            <span className='inline-flex items-center justify-center self-start rounded-full border border-amber/50 bg-[#251b14]/90 px-5 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                                {bTag}
+                            </span>
+                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                                {bTitle}
+                            </h2>
+                            <p className='text-white/75 text-base md:text-lg font-light leading-relaxed'>
+                                {bDesc}
+                            </p>
+                            <div className='space-y-4 pt-2'>
+                                {bBullets.map((bullet: any, bIdx: number) => (
+                                    <div key={bIdx} className='flex items-start gap-3.5'>
+                                        <div className='w-6 h-6 rounded-full border border-amber/60 bg-amber/15 flex items-center justify-center shrink-0 mt-0.5 shadow-sm'>
+                                            <Check className='w-3.5 h-3.5 text-amber' />
+                                        </div>
+                                        <div className='text-sm text-white/80 leading-relaxed'>
+                                            {bullet.bold && (
+                                                <strong className='text-white font-semibold'>
+                                                    {bullet.bold}{' '}
+                                                </strong>
+                                            )}
+                                            {bullet.text}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className='lg:col-span-6 flex justify-center lg:justify-end'>
+                            <div className='relative w-full rounded-2xl overflow-hidden border border-amber/30 shadow-2xl group bg-slate-950'>
+                                <Image
+                                    src={bImage}
+                                    alt={bTitle}
+                                    width={1200}
+                                    height={800}
+                                    className='w-full h-auto object-cover rounded-2xl group-hover:scale-[1.01] transition-transform duration-500'
+                                    priority
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    };
+
+
+    const renderCta = (block: any, key: any) => (
+// ── BLOCK 4: CALL TO ACTION BANNER ── */}
+            <section key={key} className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
                 <div className='mx-auto max-w-8xl px-0'>
                     <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
@@ -895,6 +1005,51 @@ export function HuurdersportaalModule({
                     </div>
                 </div>
             </section>
+    );
+
+
+    const blocksToRender =
+        pageBlocks.length > 0
+            ? pageBlocks
+            : [
+                  { _type: 'heroBlock', _key: 'default_hero' },
+                  { _type: 'comparisonBlock', _key: 'default_comp' },
+                  { _type: 'featureTabsBlock', _key: 'default_tabs' },
+                  { _type: 'ctaBlock', _key: 'default_cta' },
+              ];
+
+    return (
+        <>
+            {/* Inject JSON-LD Structured Data */}
+            {jsonLdData && (
+                <script
+                    type='application/ld+json'
+                    dangerouslySetInnerHTML={{ __html: jsonLdData }}
+                />
+            )}
+            
+            {blocksToRender.map((block: any, idx: number) => {
+                const key = block._key || idx;
+                switch (block._type) {
+                    case 'heroBlock':
+                    case 'hero':
+                        return renderHero(block, key);
+                    case 'comparisonBlock':
+                        return renderComparison(block, key);
+                    case 'featureTabsBlock':
+                        return renderFeatureTabs(block, key);
+                    case 'architectureBlock':
+                    case 'architectureSection':
+                        return renderArchitecture(block, key);
+                    case 'ctaBlock':
+                    case 'ctaBanner':
+                    case 'cta':
+                        return renderCta(block, key);
+                    default:
+                        return null;
+                }
+            })}
+
         </>
     );
 }

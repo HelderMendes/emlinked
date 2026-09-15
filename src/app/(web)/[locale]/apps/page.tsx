@@ -2,6 +2,7 @@
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
@@ -11,6 +12,7 @@ import { HeroSection } from '@/components/blocks/HeroSection';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
 import { TestimonialSlider } from '@/components/TestimonialSlider';
 import { GlowingLink } from '@/components/ui/GlowingButton';
+import { getImageUrl } from '@/sanity/image';
 
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 
@@ -27,8 +29,13 @@ async function getSanityPageData(locale: string) {
                     ...,
                     _type,
                     _key,
+                    image { asset-> { _id, url } },
+                    heroImage { asset-> { _id, url } },
+                    bgImage { asset-> { _id, url } },
                     features[] {
                         ...,
+                        image { asset-> { _id, url } },
+                        iconImage { asset-> { _id, url } },
                         bullets
                     }
                 },
@@ -140,38 +147,39 @@ export default async function AppsPage({ params }: AppsPageProps) {
         },
     };
 
-    return (
-        <div className='flex flex-col min-h-screen bg-background'>
-            {/* Structured Data script */}
-            <script
-                type='application/ld+json'
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
 
-            {/* SECTION 1: HERO OVERVIEW */}
-            {heroBlock && (
+    const renderHero = (b: any, key: any) => {
+        const blk = b || heroBlock;
+        if (!blk) return null;
+        return (
+            <React.Fragment key={key}>
                 <HeroSection
-                    label={heroBlock.label}
-                    title={heroBlock.title}
+                    label={blk.label}
+                    title={blk.title}
                     titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
-                    subtitle={heroBlock.subtitle}
-                    ctaLabel={heroBlock.ctaLabel}
-                    ctaLink={heroBlock.ctaLink}
-                    secondaryCtaLabel={heroBlock.secondaryCtaLabel}
-                    secondaryCtaLink={heroBlock.secondaryCtaLink}
-                    showProof={heroBlock.showProof ?? false}
+                    subtitle={blk.subtitle}
+                    ctaLabel={blk.ctaLabel}
+                    ctaLink={blk.ctaLink}
+                    secondaryCtaLabel={blk.secondaryCtaLabel}
+                    secondaryCtaLink={blk.secondaryCtaLink}
+                    showProof={blk.showProof ?? false}
                     imagePath={
-                        heroBlock.imagePath || '/emlinked/apps/hero-apps.jpg'
+                        getImageUrl(
+                            blk.image || blk.heroImage,
+                            blk.imagePath,
+                        ) || '/emlinked/apps/hero-apps.jpg'
                     }
                     customGraphic={
                         <div className='relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 dark:border-amber/20 group'>
                             <Image
                                 src={
-                                    heroBlock.imagePath ||
-                                    '/emlinked/apps/hero-apps.jpg'
+                                    getImageUrl(
+                                        blk.image || blk.heroImage,
+                                        blk.imagePath,
+                                    ) || '/emlinked/apps/hero-apps.jpg'
                                 }
                                 alt={
-                                    heroBlock.title ||
+                                    blk.title ||
                                     'emlinked Modular Apps Platform'
                                 }
                                 width={600}
@@ -179,7 +187,6 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                 className='w-full h-auto object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700'
                                 priority
                             />
-                            {/* Floating 3-App Overlay Cards with PNG Icons simulating the 3 modular apps */}
                             <div className='absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/20 to-transparent p-4 sm:p-5 flex flex-col justify-between pointer-events-none'>
                                 <div className='flex justify-end items-end'>
                                     <span className='px-3 py-1 rounded-full bg-slate-900/90 border border-amber/40 text-amber font-mono text-[11px] font-bold shadow-md backdrop-blur-md flex items-center gap-2.5'>
@@ -187,7 +194,6 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                         <span className='h-2 w-2 rounded-full bg-emerald-400 animate-ping' />
                                     </span>
                                 </div>
-
                                 <div className='grid grid-cols-3 gap-2 sm:gap-3 pt-1'>
                                     <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-amber/40 text-center backdrop-blur-md shadow-xl hover:border-amber transition-colors flex flex-col items-center justify-center'>
                                         <div className='relative w-6 h-6 my-1 '>
@@ -206,7 +212,6 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                             01 • Core Engine
                                         </span>
                                     </div>
-
                                     <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-amber/40 text-center backdrop-blur-md shadow-xl hover:border-cyan-400 transition-colors flex flex-col items-center justify-center'>
                                         <div className='relative w-6 h-6 my-1 '>
                                             <Image
@@ -224,7 +229,6 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                             02 • Self-Service
                                         </span>
                                     </div>
-
                                     <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-amber/40 text-center backdrop-blur-md shadow-xl hover:border-emerald-400 transition-colors flex flex-col items-center justify-center'>
                                         <div className='relative w-6 h-6 my-1 '>
                                             <Image
@@ -249,11 +253,16 @@ export default async function AppsPage({ params }: AppsPageProps) {
                     isHomepage={false}
                     locale={locale}
                 />
-            )}
+            </React.Fragment>
+        );
+    };
 
-            {/* SECTION 2: THE THREE CORE APPS (Refined Product Module Cards) */}
-            {featuresBlock && (
-                <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] dark:bg-navy-dark border-b border-amber/10 relative z-10'>
+
+    const renderFeatures = (b: any, key: any) => {
+        const blk = b || featuresBlock;
+        if (!blk) return null;
+        return (
+<section key={key} className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] dark:bg-navy-dark border-b border-amber/10 relative z-10'>
                     <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8'>
                         {/* Section Header */}
                         <div className='text-center max-w-3xl mx-auto space-y-4'>
@@ -289,7 +298,10 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                 .slice(0, 3)
                                 .map((feature: any, index: number) => {
                                     const imagePath =
-                                        feature.imagePath ||
+                                        getImageUrl(
+                                            feature.image,
+                                            feature.imagePath,
+                                        ) ||
                                         (index === 0
                                             ? '/emlinked/apps/vastgoedbeheer-sopftware_modules.jpg'
                                             : index === 1
@@ -320,7 +332,10 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                         checkmarkColors[0];
 
                                     const cardIcon =
-                                        feature.iconPath || appIcons[index];
+                                        getImageUrl(
+                                            feature.iconImage,
+                                            feature.iconPath,
+                                        ) || appIcons[index];
 
                                     return (
                                         <div
@@ -441,33 +456,56 @@ export default async function AppsPage({ params }: AppsPageProps) {
                         </div>
                     </div>
                 </section>
-            )}
+        );
+    };
 
-            {/* SECTION 3: SYSTEM ARCHITECTURE */}
-            <AppsArchitectureSection
-                locale={locale}
-                tag={architectureBlock?.tag}
-                title={architectureBlock?.title}
-                subtitle={architectureBlock?.subtitle}
-                sectionTag={architectureBlock?.sectionTag}
-                sectionTitle={architectureBlock?.sectionTitle}
-                sectionSubtitle={architectureBlock?.sectionSubtitle}
-                bullets={architectureBlock?.bullets}
-                bgImagePath={architectureBlock?.bgImagePath}
-            />
 
-            {/* SECTION 4: TRUST & SCALE REVIEWS SLIDER */}
-            <TestimonialSlider
-                locale={locale}
-                tag={testimonialBlock?.sectionTag}
-                title={testimonialBlock?.sectionTitle}
-                subtitle={testimonialBlock?.sectionSubtitle}
-                customTestimonials={testimonialBlock?.testimonials}
-            />
+    const renderArchitecture = (b: any, key: any) => {
+        const blk = b || architectureBlock;
+        return (
+            <React.Fragment key={key}>
+                <AppsArchitectureSection
+                    locale={locale}
+                    tag={blk?.tag}
+                    title={blk?.title}
+                    subtitle={blk?.subtitle}
+                    sectionTag={blk?.sectionTag}
+                    sectionTitle={blk?.sectionTitle}
+                    sectionSubtitle={blk?.sectionSubtitle}
+                    bullets={blk?.bullets}
+                    bgImage={blk?.bgImage}
+                    bgImagePath={blk?.bgImagePath}
+                    diagramImage={blk?.diagramImage}
+                    diagramImagePath={blk?.diagramImagePath}
+                    calloutImage={blk?.calloutImage}
+                    calloutImagePath={blk?.calloutImagePath}
+                />
+            </React.Fragment>
+        );
+    };
 
-            {/* SECTION 5: FINAL PRE-FOOTER CONVERSION CTA (Exact Homepage Layout Parity) */}
-            {ctaBlock && (
-                <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative overflow-hidden z-10'>
+
+    const renderTestimonial = (b: any, key: any) => {
+        const blk = b || testimonialBlock;
+        return (
+            <React.Fragment key={key}>
+                <TestimonialSlider
+                    locale={locale}
+                    tag={blk?.sectionTag}
+                    title={blk?.sectionTitle}
+                    subtitle={blk?.sectionSubtitle}
+                    customTestimonials={blk?.testimonials}
+                />
+            </React.Fragment>
+        );
+    };
+
+
+    const renderCta = (b: any, key: any) => {
+        const blk = b || ctaBlock;
+        if (!blk) return null;
+        return (
+<section key={key} className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative overflow-hidden z-10'>
                     <div className='mx-auto max-w-8xl px-0'>
                         <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                             <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
@@ -524,7 +562,13 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                 {/* Right Column: Preserved Apps Image Asset */}
                                 <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                     <Image
-                                        src='/emlinked/apps/bewezen_resultaat.png'
+                                        src={
+                                            getImageUrl(
+                                                ctaBlock.image,
+                                                ctaBlock.imagePath,
+                                            ) ||
+                                            '/emlinked/apps/bewezen_resultaat.png'
+                                        }
                                         alt={
                                             ctaBlock.title ||
                                             'Bewezen resultaat'
@@ -539,7 +583,54 @@ export default async function AppsPage({ params }: AppsPageProps) {
                         </div>
                     </div>
                 </section>
-            )}
+        );
+    };
+
+
+    const blocksToRender =
+        pageBlocks.length > 0
+            ? pageBlocks
+            : [
+                  { _type: 'hero', _key: 'default_hero' },
+                  { _type: 'featuresList', _key: 'default_features' },
+                  { _type: 'architectureSection', _key: 'default_arch' },
+                  { _type: 'testimonialSection', _key: 'default_test' },
+                  { _type: 'ctaBanner', _key: 'default_cta' },
+              ];
+
+    return (
+        <div className='flex flex-col min-h-screen bg-background'>
+            {/* Structured Data script */}
+            <script
+                type='application/ld+json'
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            
+            {blocksToRender.map((block: any, idx: number) => {
+                const key = block._key || idx;
+                switch (block._type) {
+                    case 'hero':
+                    case 'heroBlock':
+                        return renderHero(block, key);
+                    case 'featuresList':
+                    case 'features':
+                        return renderFeatures(block, key);
+                    case 'architectureSection':
+                    case 'architectureBlock':
+                    case 'architecture':
+                        return renderArchitecture(block, key);
+                    case 'testimonialSection':
+                    case 'testimonial':
+                        return renderTestimonial(block, key);
+                    case 'ctaBanner':
+                    case 'ctaBlock':
+                    case 'cta':
+                        return renderCta(block, key);
+                    default:
+                        return null;
+                }
+            })}
+
         </div>
     );
 }

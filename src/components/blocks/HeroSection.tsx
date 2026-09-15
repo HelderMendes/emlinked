@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 
 import { BorderBeam } from 'border-beam';
+import { getImageUrl } from '@/sanity/image';
 
 export interface HeroSectionProps {
     label?: string;
@@ -18,6 +19,7 @@ export interface HeroSectionProps {
     showProof?: boolean;
     showProofAvatars?: boolean;
     proofText?: string;
+    image?: any;
     imagePath?: string;
     isHomepage?: boolean;
     locale?: string;
@@ -60,6 +62,7 @@ export function HeroSection({
     showProof = true,
     showProofAvatars = true,
     proofText,
+    image,
     imagePath = '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
     isHomepage = true,
     locale = 'nl',
@@ -68,6 +71,7 @@ export function HeroSection({
     children,
 }: HeroSectionProps) {
     const isEn = locale === 'en';
+    const effectiveHeroImg = getImageUrl(image, imagePath);
     const effectiveProofText =
         proofText !== undefined
             ? proofText
@@ -259,7 +263,7 @@ export function HeroSection({
                                     customGraphic
                                 ) : (
                                     <Image
-                                        src={imagePath}
+                                        src={effectiveHeroImg}
                                         alt={title}
                                         width={600}
                                         height={500}

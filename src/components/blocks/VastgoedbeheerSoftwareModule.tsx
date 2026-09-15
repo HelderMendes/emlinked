@@ -63,25 +63,200 @@ export function VastgoedbeheerSoftwareModule({
     // Extract Sanity modular pageBlocks
     const pageBlocks = doc?.pageBlocks || [];
     const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock');
-    const featureTabsBlock = pageBlocks.find((b: any) => b._type === 'featureTabsBlock');
-    const comparisonBlock = pageBlocks.find((b: any) => b._type === 'comparisonBlock');
-    const architectureBlock = pageBlocks.find((b: any) => b._type === 'architectureBlock');
+    const featureTabsBlock = pageBlocks.find(
+        (b: any) => b._type === 'featureTabsBlock',
+    );
+    const comparisonBlock = pageBlocks.find(
+        (b: any) => b._type === 'comparisonBlock',
+    );
+    const architectureBlock = pageBlocks.find(
+        (b: any) => b._type === 'architectureBlock',
+    );
     const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock');
 
-    const heroBadge = heroBlock?.badge || doc?.badge || (isEn ? 'MICROSOFT DYNAMICS 365 NATIVE' : 'CORE SAAS MODULE VOOR VASTGOEDMANAGEMENT');
+    const heroBadge =
+        heroBlock?.badge ||
+        doc?.badge ||
+        (isEn
+            ? 'MICROSOFT DYNAMICS 365 NATIVE'
+            : 'CORE SAAS MODULE VOOR VASTGOEDMANAGEMENT');
     const heroTagline = heroBlock?.tagline || doc?.tagline || doc?.title;
     const heroDescription = heroBlock?.description || doc?.description;
 
-    const explicitHeroPath = heroBlock?.imagePath || heroBlock?.heroImagePath || doc?.imagePath || doc?.heroImagePath;
-    const heroImageUrl =
+    const explicitHeroPath =
+        heroBlock?.imagePath ||
+        heroBlock?.heroImagePath ||
+        doc?.imagePath ||
+        doc?.heroImagePath;
+    const heroImageUrl = getImageUrl(
+        heroBlock?.image ||
+            heroBlock?.heroImage ||
+            doc?.image ||
+            doc?.heroImage,
         explicitHeroPath ||
-        getImageUrl(
-            heroBlock?.image ||
-                heroBlock?.heroImage ||
-                doc?.image ||
-                doc?.heroImage,
             '/emlinked/apps/vastgoedbeheer-software/geautomatiseerde-business-central.png',
-        );
+    );
+
+    // Sanity-driven feature tabs, falling back to the shipped defaults per index
+    const defaultFeatureTabs = [
+        {
+            tabId: 'indexation',
+            icon: Zap,
+            navLabel: isEn
+                ? '1. CPI Indexation & Contracts'
+                : '1. CPI-Indexaties & Contracten',
+            title: isEn
+                ? 'Automated CPI Indexation & Contract Management'
+                : 'Geautomatiseerde CPI-Indexaties & Contractbeheer',
+            text: isEn
+                ? 'Forget manual calculations on the first of the month. Our real estate management software automatically retrieves the latest CBS CPI index figures, recalculates the new rent amounts, and applies them directly to all active lease agreements.'
+                : 'Vergeet handmatige berekeningen op de eerste van de maand. Onze software voor vastgoedbeheer haalt automatisch de nieuwste CBS CPI-indexcijfers op, berekent de nieuwe huursommen en past deze direct toe op al je lopende huurovereenkomsten.',
+            bullets: isEn
+                ? [
+                      'Automated indexation letters by email & portal',
+                      'Supports CBS CPI all-household & sub-lists',
+                      'Full audit trail per lease directly in Business Central',
+                  ]
+                : [
+                      'Automatische indexatiebrieven per mail & portaal',
+                      'Ondersteuning voor CBS CPI alle huishoudens & deellijsten',
+                      'Audittrail per huurcontract direct in Business Central',
+                  ],
+            image: '/emlinked/apps/vastgoedbeheer-software/tab01-indexaties.jpg',
+            imageAlt: isEn
+                ? 'CPI indexation log UI card preview'
+                : 'CPI Indexatie log UI card preview',
+        },
+        {
+            tabId: 'retail',
+            icon: Building2,
+            navLabel: isEn
+                ? '2. Dynamic Floor Area & Retail'
+                : '2. Dynamisch Metrage & Retail',
+            title: isEn
+                ? 'Dynamic Floor Area & Retail Management'
+                : 'Dynamisch Metrage- & Retailbeheer',
+            text: isEn
+                ? 'Purpose-built for the challenges of retail chains and commercial real estate. Manage changing store layouts, floor area types, turnover-rent agreements, and location-specific maintenance contracts centrally in a single dashboard.'
+                : 'Speciaal ingericht voor de uitdagingen van retailketens en commercieel vastgoed. Beheer wisselende winkelindelingen, verschillende metrage-types, omzethuurafspraken en locatiespecifieke onderhoudscontracten centraal in één dashboard.',
+            bullets: isEn
+                ? [
+                      'Flexible splitting and merging of rentable units (LFA / GFA)',
+                      'Turnover-rent calculations with thresholds and tiers',
+                      'Management of retailer association contributions & promotion funds',
+                  ]
+                : [
+                      'Flexibele splitsing en samenvoeging van verhuurbare eenheden (VVO / BVO)',
+                      'Omzethuurberekeningen met drempels en staffels',
+                      'Beheer van winkeliersvereniging bijdragen & promotiefondsen',
+                  ],
+            image: '/emlinked/apps/vastgoedbeheer-software/tab02-dynamisch.jpg',
+            imageAlt: isEn
+                ? 'Retail floor area and unit layout blueprint UI'
+                : 'Retail Metrage en Unit Indeling Blueprint UI',
+        },
+        {
+            tabId: 'service',
+            icon: BarChart3,
+            navLabel: isEn
+                ? '3. Service Charges & Subsidies'
+                : '3. Servicekosten & Subsidies',
+            title: isEn
+                ? 'Service Charges & Subsidy Settlements'
+                : 'Servicekosten & Subsidieafrekeningen',
+            text: isEn
+                ? 'Determine, advance, and settle service charges transparently for tenants or housing corporations. All advances and actual costs incurred are matched directly against purchase invoices via Document Capture.'
+                : 'Bepaal, voorschot en verreken servicekosten transparant voor je huurders of woningcorporatie. Alle voorschotten en werkelijke gemaakte kosten worden direct gematcht met inkoopfacturen via Document Capture.',
+            bullets: isEn
+                ? [
+                      'Precise cost allocation keys per m², weighted share, or fixed amount',
+                      'Automatic linkage with purchase orders & Continia OCR Document Capture',
+                      'Legally compliant settlement statements ready to send',
+                  ]
+                : [
+                      'Nauwkeurige kostenverdeelsleutels per m², gewogen aandeel of vast bedrag',
+                      'Automatische koppeling met inkooporders & Continia OCR Document Capture',
+                      'Wet-compliant afrekeningsoverzichten klaar voor verzending',
+                  ],
+            image: '/emlinked/apps/vastgoedbeheer-software/tab03_servicekosten.jpg',
+            imageAlt: isEn
+                ? 'Service charge distribution chart UI'
+                : 'Service Charge Distribution Chart UI',
+        },
+    ] as const;
+
+    const featureTabs = defaultFeatureTabs.map((def, idx) => {
+        const sanityTab = featureTabsBlock?.tabs?.[idx];
+        return {
+            ...def,
+            navLabel: sanityTab?.tabTitle || def.navLabel,
+            title: sanityTab?.title || def.title,
+            text: sanityTab?.text || def.text,
+            bullets: sanityTab?.bullets?.length
+                ? sanityTab.bullets
+                : def.bullets,
+            image:
+                getImageUrl(sanityTab?.image, sanityTab?.imagePath) ||
+                def.image,
+        };
+    });
+
+    const archTag =
+        architectureBlock?.tag ||
+        (isEn
+            ? 'MICROSOFT BUSINESS CENTRAL INTEGRATION'
+            : 'MICROSOFT BUSINESS CENTRAL INTEGRATIE');
+    const archTitle =
+        architectureBlock?.title ||
+        (isEn
+            ? '100% Realtime Control & Automatic Posting'
+            : '100% Realtime controle en automatische aflettering');
+    const archDesc =
+        architectureBlock?.desc ||
+        (isEn
+            ? 'Manage all your real estate processes natively inside Microsoft Dynamics 365 Business Central, with zero latency or shadow-file risk.'
+            : 'Beheer al je vastgoedprocessen native in Microsoft Dynamics 365 Business Central zonder vertraging of risico van schaduwbestanden.');
+    const defaultArchBullets = isEn
+        ? [
+              {
+                  bold: 'One central source of truth:',
+                  text: 'No separate databases, spreadsheets, or fragile API connections.',
+              },
+              {
+                  bold: 'Zero duplicate entry:',
+                  text: 'Leases, indexations, and invoices land directly as validated journal entries in your GL.',
+              },
+              {
+                  bold: '100% realtime data integrity:',
+                  text: 'Instantly reliable insight for accountants, management, and your team.',
+              },
+          ]
+        : [
+              {
+                  bold: 'Één centrale bron van waarheid:',
+                  text: 'Geen losse databases, Excel-sheets of gevaarlijke API-koppelingen.',
+              },
+              {
+                  bold: 'Nul dubbele invoer:',
+                  text: 'Huurovereenkomsten, indexaties en facturen landen direct als gevalideerde journaalposten in je grootboek.',
+              },
+              {
+                  bold: '100% Realtime data-integriteit:',
+                  text: 'Direct betrouwbaar inzicht voor accountant, directie en beheerteam.',
+              },
+          ];
+    const archBullets = architectureBlock?.bullets?.length
+        ? architectureBlock.bullets.map((text: string) => ({ bold: '', text }))
+        : defaultArchBullets;
+    const archImage =
+        getImageUrl(architectureBlock?.image, architectureBlock?.imagePath) ||
+        '/emlinked/apps/vastgoedbeheer-software/native-dynamics-365.jpg';
+
+    const ctaImageUrl = getImageUrl(
+        ctaBlock?.image,
+        ctaBlock?.imagePath ||
+            '/emlinked/apps/vastgoedbeheer-software/automatiseren_vastgoedbehher.jpg',
+    );
 
     // Structured JSON-LD from Sanity or default blueprint fallback
     const jsonLdData = doc?.seo?.structuredData
@@ -170,22 +345,14 @@ export function VastgoedbeheerSoftwareModule({
               ],
           });
 
-    const [activeTab, setActiveTab] = useState<
-        'indexation' | 'retail' | 'service'
-    >('indexation');
+    const [activeTab, setActiveTab] = useState<string>(
+        featureTabs[0]?.tabId ?? 'indexation',
+    );
 
-    return (
-        <>
-            {/* Inject JSON-LD Structured Data for AIO / GEO / Search Engines */}
-            {jsonLdData && (
-                <script
-                    type='application/ld+json'
-                    dangerouslySetInnerHTML={{ __html: jsonLdData }}
-                />
-            )}
 
-            {/* ── BLOCK 1: HERO SECTION (Exact bg-texture-navy matching Frontpage & Apps) ── */}
-            <section className='relative px-6 py-10 md:py-16 overflow-hidden bg-texture-navy text-white border-b border-white/10'>
+    const renderHero = (block: any, key: any) => (
+        <React.Fragment key={key}>
+<section className='relative px-6 py-10 md:py-16 overflow-hidden bg-texture-navy text-white border-b border-white/10'>
                 {/* DataGridCanvas Overlay matching Frontpage & Apps */}
                 <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
 
@@ -384,9 +551,12 @@ export function VastgoedbeheerSoftwareModule({
                     </div>
                 </div>
             </section>
+        </React.Fragment>
+    );
 
-            {/* ── BLOCK 2: OPERATIONAL BOTTLENECKS (Light Warm Cream Background matching Frontpage & Apps) ── */}
-            <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative z-10'>
+
+    const renderComparison = (block: any, key: any) => (
+<section key={key} className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-16'>
                     {/* Header */}
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
@@ -513,7 +683,7 @@ export function VastgoedbeheerSoftwareModule({
                         {/* Right Card: Emlinked Solution */}
                         <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                             <CardBadge
-                                imageSrc='/emlinked/apps/vastgoedbeheer-software/native_vastgoedsoftware.jpg'
+                                imageSrc={archImage}
                                 alt='Emlinked Native Vastgoedsoftware'
                                 isLegacy={false}
                             />
@@ -604,342 +774,165 @@ export function VastgoedbeheerSoftwareModule({
                     </div>
                 </div>
             </section>
+    );
 
-            {/* ── BLOCK 3: KEY MODULE FEATURES (Light Mode Canvas matching Frontpage & Apps) ── */}
-            <section className='py-20 px-6 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative overflow-hidden'>
+
+    const renderFeatureTabs = (block: any, key: any) => (
+<section key={key} className='py-20 px-6 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10 relative overflow-hidden'>
                 <div className='max-w-7xl mx-auto space-y-8 relative z-10'>
                     {/* Header */}
                     <div className='text-center max-w-3xl mx-auto space-y-4 flex flex-col items-center'>
                         <span className='inline-flex items-center justify-center rounded-full border border-amber/40 bg-amber/15 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-xs'>
-                            FUNCTIONALITEITEN
+                            {featureTabsBlock?.badge ||
+                                (isEn
+                                    ? 'FUNCTIONALITIES'
+                                    : 'FUNCTIONALITEITEN')}
                         </span>
                         <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-[#060e32]'>
-                            Krachtige functionaliteiten voor modern{' '}
-                            <span className='text-amber'>vastgoedbeheer</span>
+                            {featureTabsBlock?.title ||
+                                (isEn ? (
+                                    <>
+                                        Powerful functionalities for modern{' '}
+                                        <span className='text-amber'>
+                                            real estate management
+                                        </span>
+                                    </>
+                                ) : (
+                                    <>
+                                        Krachtige functionaliteiten voor modern{' '}
+                                        <span className='text-amber'>
+                                            vastgoedbeheer
+                                        </span>
+                                    </>
+                                ))}
                         </h2>
                         <p className='text-[#060e32]/75 text-base md:text-lg font-light'>
-                            Ontwikkeld om ingewikkelde contractvormen,
-                            retailketen-metrages en corporatie-afrekeningen
-                            moeiteloos te stroomlijnen.
+                            {isEn
+                                ? 'Built to effortlessly streamline complex lease structures, retail-chain floor areas, and housing corporation settlements.'
+                                : 'Ontwikkeld om ingewikkelde contractvormen, retailketen-metrages en corporatie-afrekeningen moeiteloos te stroomlijnen.'}
                         </p>
                     </div>
 
                     {/* Feature Tabs */}
                     <div className='flex justify-center border-b border-black/10 gap-2 sm:gap-4 overflow-x-auto pb-px'>
-                        <button
-                            onClick={() => setActiveTab('indexation')}
-                            className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-                                activeTab === 'indexation'
-                                    ? 'border-amber text-amber bg-amber/15 rounded-t-lg'
-                                    : 'border-transparent text-[#060e32]/60 hover:text-[#060e32]'
-                            }`}
-                        >
-                            <Zap className='w-4 h-4' />
-                            <span>1. CPI-Indexaties & Contracten</span>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('retail')}
-                            className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-                                activeTab === 'retail'
-                                    ? 'border-amber text-amber bg-amber/15 rounded-t-lg'
-                                    : 'border-transparent text-[#060e32]/60 hover:text-[#060e32]'
-                            }`}
-                        >
-                            <Building2 className='w-4 h-4' />
-                            <span>2. Dynamisch Metrage & Retail</span>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('service')}
-                            className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-                                activeTab === 'service'
-                                    ? 'border-amber text-amber bg-amber/15 rounded-t-lg'
-                                    : 'border-transparent text-[#060e32]/60 hover:text-[#060e32]'
-                            }`}
-                        >
-                            <BarChart3 className='w-4 h-4' />
-                            <span>3. Servicekosten & Subsidies</span>
-                        </button>
+                        {featureTabs.map((tab) => {
+                            const TabIcon = tab.icon;
+                            return (
+                                <button
+                                    key={tab.tabId}
+                                    onClick={() => setActiveTab(tab.tabId)}
+                                    className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
+                                        activeTab === tab.tabId
+                                            ? 'border-amber text-amber bg-amber/15 rounded-t-lg'
+                                            : 'border-transparent text-[#060e32]/60 hover:text-[#060e32]'
+                                    }`}
+                                >
+                                    <TabIcon className='w-4 h-4' />
+                                    <span>{tab.navLabel}</span>
+                                </button>
+                            );
+                        })}
                     </div>
 
                     {/* Tab Content (Direct Grid Layout with Top-Right Image Badge) */}
                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center'>
-                        {activeTab === 'indexation' && (
-                            <>
-                                <div className='lg:col-span-6 space-y-6'>
-                                    <h3 className='text-2xl sm:text-3xl font-bold text-[#060e32]'>
-                                        {doc?.features?.[0]?.title ||
-                                            'Geautomatiseerde CPI-Indexaties & Contractbeheer'}
-                                    </h3>
-                                    <p className='text-[#060e32]/80 leading-relaxed text-base font-light'>
-                                        {doc?.features?.[0]?.text || (
-                                            <>
-                                                Vergeet handmatige berekeningen
-                                                op de eerste van de maand. Onze{' '}
-                                                <strong className='text-[#060e32] font-semibold'>
-                                                    software voor vastgoedbeheer
-                                                </strong>{' '}
-                                                haalt automatisch de nieuwste
-                                                CBS CPI-indexcijfers op,
-                                                berekent de nieuwe huursommen en
-                                                past deze direct toe op al je
-                                                lopende huurovereenkomsten.
-                                            </>
-                                        )}
-                                    </p>
-                                    <ul className='space-y-2.5 text-sm text-[#060e32]/85'>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                Automatische indexatiebrieven
-                                                per mail & portaal
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                Ondersteuning voor CBS CPI alle
-                                                huishoudens & deellijsten
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                Audittrail per huurcontract
-                                                direct in Business Central
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
-                                    {/* Circular Top-Right Floating Badge */}
-                                    <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
-                                        <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                            APP
-                                        </span>
-                                        <span className='text-xl sm:text-2xl font-black leading-none'>
-                                            01
-                                        </span>
-                                    </div>
+                        {featureTabs.map(
+                            (tab, idx) =>
+                                activeTab === tab.tabId && (
+                                    <React.Fragment key={tab.tabId}>
+                                        <div className='lg:col-span-6 space-y-6'>
+                                            <h3 className='text-2xl sm:text-3xl font-bold text-[#060e32]'>
+                                                {tab.title}
+                                            </h3>
+                                            <p className='text-[#060e32]/80 leading-relaxed text-base font-light'>
+                                                {tab.text}
+                                            </p>
+                                            <ul className='space-y-2.5 text-sm text-[#060e32]/85'>
+                                                {tab.bullets.map(
+                                                    (
+                                                        bullet: string,
+                                                        bIdx: number,
+                                                    ) => (
+                                                        <li
+                                                            key={bIdx}
+                                                            className='flex items-center gap-2.5'
+                                                        >
+                                                            <Check className='w-4 h-4 text-amber shrink-0' />
+                                                            <span>
+                                                                {bullet}
+                                                            </span>
+                                                        </li>
+                                                    ),
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
+                                            {/* Circular Top-Right Floating Badge */}
+                                            <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
+                                                <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
+                                                    APP
+                                                </span>
+                                                <span className='text-xl sm:text-2xl font-black leading-none'>
+                                                    0{idx + 1}
+                                                </span>
+                                            </div>
 
-                                    <div className='rounded-xl overflow-hidden shadow-2xl'>
-                                        <Image
-                                            src='/emlinked/apps/vastgoedbeheer-software/tab01-indexaties.jpg'
-                                            alt='CPI Indexatie log UI card preview'
-                                            width={1200}
-                                            height={675}
-                                            className='w-full h-auto rounded-lg border border-white/10'
-                                        />
-                                    </div>
-                                </div>
-                            </>
-                        )}
-
-                        {activeTab === 'retail' && (
-                            <>
-                                <div className='lg:col-span-6 space-y-6'>
-                                    <h3 className='text-2xl sm:text-3xl font-bold text-[#060e32]'>
-                                        {doc?.features?.[1]?.title ||
-                                            'Dynamisch Metrage- & Retailbeheer'}
-                                    </h3>
-                                    <p className='text-[#060e32]/80 leading-relaxed text-base font-light'>
-                                        {doc?.features?.[1]?.text || (
-                                            <>
-                                                Speciaal ingericht voor de
-                                                uitdagingen van retailketens en
-                                                commercieel vastgoed. Beheer
-                                                wisselende winkelindelingen,
-                                                verschillende metrage-types,
-                                                omzethuurafspraken en
-                                                locatiespecifieke
-                                                onderhoudscontracten centraal in
-                                                één dashboard.
-                                            </>
-                                        )}
-                                    </p>
-                                    <ul className='space-y-2.5 text-sm text-[#060e32]/85'>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                Flexibele splitsing en
-                                                samenvoeging van verhuurbare
-                                                eenheden (VVO / BVO)
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                Omzethuurberekeningen met
-                                                drempels en staffels
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                Beheer van winkeliersvereniging
-                                                bijdragen & promotiefondsen
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
-                                    {/* Circular Top-Right Floating Badge */}
-                                    <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
-                                        <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                            APP
-                                        </span>
-                                        <span className='text-xl sm:text-2xl font-black leading-none'>
-                                            02
-                                        </span>
-                                    </div>
-
-                                    <div className='rounded-xl overflow-hidden shadow-2xl'>
-                                        <Image
-                                            src='/emlinked/apps/vastgoedbeheer-software/tab02-dynamisch.jpg'
-                                            alt='Retail Metrage en Unit Indeling Blueprint UI'
-                                            width={1200}
-                                            height={675}
-                                            className='w-full h-auto rounded-lg border border-white/10'
-                                        />
-                                    </div>
-                                </div>
-                            </>
-                        )}
-
-                        {activeTab === 'service' && (
-                            <>
-                                <div className='lg:col-span-6 space-y-6'>
-                                    <h3 className='text-2xl sm:text-3xl font-bold text-[#060e32]'>
-                                        {doc?.features?.[2]?.title ||
-                                            'Servicekosten & Subsidieafrekeningen'}
-                                    </h3>
-                                    <p className='text-[#060e32]/80 leading-relaxed text-base font-light'>
-                                        {doc?.features?.[2]?.text || (
-                                            <>
-                                                Bepaal, voorschot en verreken
-                                                servicekosten transparant voor
-                                                je huurders of woningcorporatie.
-                                                Alle voorschotten en werkelijke
-                                                gemaakte kosten worden direct
-                                                gematcht met inkoopfacturen via
-                                                Document Capture.
-                                            </>
-                                        )}
-                                    </p>
-                                    <ul className='space-y-2.5 text-sm text-[#060e32]/85'>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                Nauwkeurige
-                                                kostenverdeelsleutels per m²,
-                                                gewogen aandeel of vast bedrag
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                Automatische koppeling met
-                                                inkooporders & Continia OCR
-                                                Document Capture
-                                            </span>
-                                        </li>
-                                        <li className='flex items-center gap-2.5'>
-                                            <Check className='w-4 h-4 text-amber shrink-0' />
-                                            <span>
-                                                Wet-compliant
-                                                afrekeningsoverzichten klaar
-                                                voor verzending
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
-                                    {/* Circular Top-Right Floating Badge */}
-                                    <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-amber-400 via-amber-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
-                                        <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                            APP
-                                        </span>
-                                        <span className='text-xl sm:text-2xl font-black leading-none'>
-                                            03
-                                        </span>
-                                    </div>
-
-                                    <div className='rounded-xl overflow-hidden shadow-2xl'>
-                                        <Image
-                                            src='/emlinked/apps/vastgoedbeheer-software/tab03_servicekosten.jpg'
-                                            alt='Service Charge Distribution Chart UI'
-                                            width={1200}
-                                            height={675}
-                                            className='w-full h-auto rounded-lg border border-white/10'
-                                        />
-                                    </div>
-                                </div>
-                            </>
+                                            <div className='rounded-xl overflow-hidden shadow-2xl'>
+                                                <Image
+                                                    src={tab.image}
+                                                    alt={tab.imageAlt}
+                                                    width={1200}
+                                                    height={675}
+                                                    className='w-full h-auto rounded-lg border border-white/10'
+                                                />
+                                            </div>
+                                        </div>
+                                    </React.Fragment>
+                                ),
                         )}
                     </div>
                 </div>
             </section>
+    );
 
-            {/* ── BLOCK 4: NATIVE BUSINESS CENTRAL INTEGRATION (Dark Section - Matching Screenshot Layout) ── */}
-            <section className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
+
+    const renderArchitecture = (block: any, key: any) => (
+<section key={key} className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
                 <div className='max-w-7xl mx-auto relative z-10'>
                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
                         {/* Left Column: Copy & Bullets */}
                         <div className='lg:col-span-6 flex flex-col gap-6 text-left'>
                             <span className='inline-flex items-center justify-center self-start rounded-full border border-amber/50 bg-[#251b14]/90 px-5 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
-                                MICROSOFT BUSINESS CENTRAL INTEGRATIE
+                                {archTag}
                             </span>
 
                             <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
-                                100% Realtime controle en automatische
-                                aflettering
+                                {archTitle}
                             </h2>
 
                             <p className='text-white/75 text-base md:text-lg font-light leading-relaxed'>
-                                Beheer al je vastgoedprocessen native in
-                                Microsoft Dynamics 365 Business Central zonder
-                                vertraging of risico van schaduwbestanden.
+                                {archDesc}
                             </p>
 
                             <div className='space-y-4 pt-2'>
-                                <div className='flex items-start gap-3.5'>
-                                    <div className='w-6 h-6 rounded-full border border-amber/60 bg-amber/15 flex items-center justify-center shrink-0 mt-0.5 shadow-sm'>
-                                        <Check className='w-3.5 h-3.5 text-amber' />
+                                {archBullets.map((bullet: any, bIdx: number) => (
+                                    <div
+                                        key={bIdx}
+                                        className='flex items-start gap-3.5'
+                                    >
+                                        <div className='w-6 h-6 rounded-full border border-amber/60 bg-amber/15 flex items-center justify-center shrink-0 mt-0.5 shadow-sm'>
+                                            <Check className='w-3.5 h-3.5 text-amber' />
+                                        </div>
+                                        <div className='text-sm text-white/80 leading-relaxed'>
+                                            {bullet.bold && (
+                                                <strong className='text-white font-semibold'>
+                                                    {bullet.bold}{' '}
+                                                </strong>
+                                            )}
+                                            {bullet.text}
+                                        </div>
                                     </div>
-                                    <div className='text-sm text-white/80 leading-relaxed'>
-                                        <strong className='text-white font-semibold'>
-                                            Één centrale bron van waarheid:
-                                        </strong>{' '}
-                                        Geen losse databases, Excel-sheets of
-                                        gevaarlijke API-koppelingen.
-                                    </div>
-                                </div>
-
-                                <div className='flex items-start gap-3.5'>
-                                    <div className='w-6 h-6 rounded-full border border-amber/60 bg-amber/15 flex items-center justify-center shrink-0 mt-0.5 shadow-sm'>
-                                        <Check className='w-3.5 h-3.5 text-amber' />
-                                    </div>
-                                    <div className='text-sm text-white/80 leading-relaxed'>
-                                        <strong className='text-white font-semibold'>
-                                            Nul dubbele invoer:
-                                        </strong>{' '}
-                                        Huurovereenkomsten, indexaties en
-                                        facturen landen direct als gevalideerde
-                                        journaalposten in je grootboek.
-                                    </div>
-                                </div>
-
-                                <div className='flex items-start gap-3.5'>
-                                    <div className='w-6 h-6 rounded-full border border-amber/60 bg-amber/15 flex items-center justify-center shrink-0 mt-0.5 shadow-sm'>
-                                        <Check className='w-3.5 h-3.5 text-amber' />
-                                    </div>
-                                    <div className='text-sm text-white/80 leading-relaxed'>
-                                        <strong className='text-white font-semibold'>
-                                            100% Realtime data-integriteit:
-                                        </strong>{' '}
-                                        Direct betrouwbaar inzicht voor
-                                        accountant, directie en beheerteam.
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
 
@@ -947,8 +940,8 @@ export function VastgoedbeheerSoftwareModule({
                         <div className='lg:col-span-6 flex justify-center lg:justify-end'>
                             <div className='relative w-full rounded-2xl overflow-hidden border border-amber/30 shadow-2xl group bg-slate-950'>
                                 <Image
-                                    src='/emlinked/apps/vastgoedbeheer-software/native-dynamics-365.jpg'
-                                    alt='Microsoft Business Central Integratie: 100% Realtime controle'
+                                    src={archImage}
+                                    alt={archTitle}
                                     width={1200}
                                     height={800}
                                     className='w-full h-auto object-cover rounded-2xl group-hover:scale-[1.01] transition-transform duration-500'
@@ -959,9 +952,11 @@ export function VastgoedbeheerSoftwareModule({
                     </div>
                 </div>
             </section>
+    );
 
-            {/* ── BLOCK 5: CALL TO ACTION BANNER (Exact Homepage Layout & Image Parity) ── */}
-            <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
+
+    const renderCta = (block: any, key: any) => (
+<section key={key} className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
                 <div className='mx-auto max-w-8xl px-0'>
                     <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
@@ -1026,8 +1021,9 @@ export function VastgoedbeheerSoftwareModule({
                             {/* Right Column: Exact Homepage Illustration Image */}
                             <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                 <Image
-                                    src='/emlinked/apps/vastgoedbeheer-software/automatiseren_vastgoedbehher.jpg'
+                                    src={ctaImageUrl}
                                     alt={
+                                        ctaBlock?.title ||
                                         doc?.cta?.title ||
                                         'Klaar om je vastgoedbeheer software te moderniseren?'
                                     }
@@ -1041,6 +1037,52 @@ export function VastgoedbeheerSoftwareModule({
                     </div>
                 </div>
             </section>
+    );
+
+
+    const blocksToRender =
+        pageBlocks.length > 0
+            ? pageBlocks
+            : [
+                  { _type: 'heroBlock', _key: 'default_hero' },
+                  { _type: 'comparisonBlock', _key: 'default_comp' },
+                  { _type: 'featureTabsBlock', _key: 'default_tabs' },
+                  { _type: 'architectureBlock', _key: 'default_arch' },
+                  { _type: 'ctaBlock', _key: 'default_cta' },
+              ];
+
+    return (
+        <>
+            {/* Inject JSON-LD Structured Data for AIO / GEO / Search Engines */}
+            {jsonLdData && (
+                <script
+                    type='application/ld+json'
+                    dangerouslySetInnerHTML={{ __html: jsonLdData }}
+                />
+            )}
+            
+            {blocksToRender.map((block: any, idx: number) => {
+                const key = block._key || idx;
+                switch (block._type) {
+                    case 'heroBlock':
+                    case 'hero':
+                        return renderHero(block, key);
+                    case 'comparisonBlock':
+                        return renderComparison(block, key);
+                    case 'featureTabsBlock':
+                        return renderFeatureTabs(block, key);
+                    case 'architectureBlock':
+                    case 'architectureSection':
+                        return renderArchitecture(block, key);
+                    case 'ctaBlock':
+                    case 'ctaBanner':
+                    case 'cta':
+                        return renderCta(block, key);
+                    default:
+                        return null;
+                }
+            })}
+
         </>
     );
 }

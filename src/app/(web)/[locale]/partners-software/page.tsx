@@ -77,6 +77,7 @@ export default async function PartnersSoftwarePage({
                 showProofAvatars={false}
                 proofText={heroBlock?.proofText}
                 titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
+                image={heroBlock?.image || heroBlock?.heroImage}
                 imagePath={heroBlock?.imagePath}
                 locale={locale}
             />
@@ -99,6 +100,7 @@ export default async function PartnersSoftwarePage({
                 ctaButtonText={ctaBlock?.buttonText}
                 ctaButtonLink={ctaBlock?.buttonLink}
                 isEn={isEn}
+                image={ctaBlock?.image}
                 imagePath={ctaBlock?.imagePath}
             />
         </main>

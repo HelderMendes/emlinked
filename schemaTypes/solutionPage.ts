@@ -103,19 +103,28 @@ export const solutionPage = defineType({
                                 'Social proof message (e.g. "Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland")',
                         }),
                         defineField({
-                            name: 'heroImage',
-                            title: 'Hero Image Path',
+                            name: 'heroImagePath',
+                            title: 'Hero Image Path (Fallback String)',
                             type: 'string',
                             description:
                                 'Relative path to image (e.g.,/emlinked/apps/huurdersportaal/Huurdersportaal.webp)',
                         }),
+                        defineField({
+                            name: 'heroImage',
+                            title: 'Hero Image (Sanity Asset Upload)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description:
+                                'Upload custom graphic directly to Sanity CDN',
+                        }),
                     ],
                     preview: {
-                        select: { title: 'tagline', subtitle: 'badge' },
-                        prepare({ title, subtitle }) {
+                        select: { title: 'tagline', subtitle: 'badge', media: 'heroImage' },
+                        prepare({ title, subtitle, media }) {
                             return {
                                 title: `Hero Block: ${title || 'Untitled Tagline'}`,
                                 subtitle: subtitle || 'Hero Section Banner',
+                                media,
                             };
                         },
                     },
@@ -264,10 +273,30 @@ export const solutionPage = defineType({
                                         }),
                                         defineField({
                                             name: 'imagePath',
-                                            title: 'Feature Image Path',
+                                            title: 'Feature Image Path (Fallback String)',
                                             type: 'string',
                                         }),
+                                        defineField({
+                                            name: 'image',
+                                            title: 'Feature Image (Sanity Asset Upload)',
+                                            type: 'image',
+                                            options: { hotspot: true },
+                                        }),
                                     ],
+                                    preview: {
+                                        select: {
+                                            title: 'title',
+                                            subtitle: 'tabTitle',
+                                            media: 'image',
+                                        },
+                                        prepare({ title, subtitle, media }) {
+                                            return {
+                                                title: title || subtitle || 'Tab Feature',
+                                                subtitle: subtitle ? `Tab: ${subtitle}` : undefined,
+                                                media,
+                                            };
+                                        },
+                                    },
                                 }),
                             ],
                         }),
@@ -443,12 +472,28 @@ export const solutionPage = defineType({
                             title: 'Secondary Button Label',
                             type: 'string',
                         }),
+                        defineField({
+                            name: 'imagePath',
+                            title: 'Afbeelding Pad (Fallback String)',
+                            type: 'string',
+                            description:
+                                'Relatief pad naar banner afbeelding (bijv. /emlinked/apps/payment/automatiseren_payment.jpg)',
+                        }),
+                        defineField({
+                            name: 'image',
+                            title: 'Banner Afbeelding (Upload naar Sanity CDN)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description:
+                                'Upload de banner afbeelding rechtstreeks naar de Sanity CDN',
+                        }),
                     ],
                     preview: {
-                        select: { title: 'title' },
-                        prepare({ title }) {
+                        select: { title: 'title', media: 'image' },
+                        prepare({ title, media }) {
                             return {
                                 title: `CTA Banner Block: ${title || 'Call to Action'}`,
+                                media,
                             };
                         },
                     },
@@ -488,16 +533,23 @@ export const solutionPage = defineType({
                         }),
                         defineField({
                             name: 'imagePath',
-                            title: 'Illustration Image Path',
+                            title: 'Illustration Image Path (Fallback String)',
                             type: 'string',
+                        }),
+                        defineField({
+                            name: 'image',
+                            title: 'Illustration Image (Sanity Asset Upload)',
+                            type: 'image',
+                            options: { hotspot: true },
                         }),
                     ],
                     preview: {
-                        select: { title: 'title', tag: 'tag' },
-                        prepare({ title, tag }) {
+                        select: { title: 'title', tag: 'tag', media: 'image' },
+                        prepare({ title, tag, media }) {
                             return {
                                 title: `Architecture Block: ${title || 'ERP Integration'}`,
                                 subtitle: tag || 'Native Integration Callout',
+                                media,
                             };
                         },
                     },

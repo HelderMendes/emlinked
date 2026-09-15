@@ -42,11 +42,17 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang='nl' className={cn("h-full antialiased", "font-sans", inter.variable)} suppressHydrationWarning>
+        <html
+            lang='nl'
+            className={cn('h-full antialiased', 'font-sans', inter.variable)}
+            suppressHydrationWarning
+        >
             <body className='min-h-full flex flex-col'>
                 <ThemeProvider
                     attribute='class'
+                    defaultTheme='light'
                     forcedTheme='light'
+                    enableSystem={false}
                     disableTransitionOnChange
                 >
                     {children}

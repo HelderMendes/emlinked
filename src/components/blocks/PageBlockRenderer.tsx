@@ -95,7 +95,11 @@ export function PageBlockRenderer({
                     key={block._key}
                     label={block.label || block.tagline}
                     title={block.title}
-                    titleClassName={isHomepage ? 'text-3xl sm:text-4xl lg:text-[2.75rem]' : undefined}
+                    titleClassName={
+                        isHomepage
+                            ? 'text-3xl sm:text-4xl lg:text-[2.75rem]'
+                            : undefined
+                    }
                     subtitle={block.subtitle || block.description}
                     ctaLabel={block.ctaLabel}
                     ctaLink={block.ctaLink}
@@ -104,8 +108,10 @@ export function PageBlockRenderer({
                     showProof={block.showProof ?? true}
                     proofText={block.proofText}
                     imagePath={
-                        getImageUrl(block.image || block.heroImage, block.imagePath) ||
-                        '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                        getImageUrl(
+                            block.image || block.heroImage,
+                            block.imagePath,
+                        ) || '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
                     }
                     isHomepage={isHomepage}
                     locale={locale}
@@ -190,20 +196,32 @@ export function PageBlockRenderer({
                                           : '/emlinked/home/DrieKrachtigeApps03_PaymentSoftware.webp';
                                 const cardImg = resolvedImg || fallbackImg;
 
+                                const resolvedIconBadge = getImageUrl(
+                                    feature.iconImage,
+                                    feature.iconPath,
+                                );
+
                                 const linkTarget =
                                     feature.ctaLink ||
                                     (idx === 0
-                                        ? '/apps'
+                                        ? '/apps/vastgoedbeheer-software'
                                         : idx === 1
-                                          ? '/apps'
-                                          : '/apps');
+                                          ? '/apps/huurdersportaal'
+                                          : '/apps/payment-software');
 
                                 const tagText =
-                                    idx === 0
-                                        ? isEn ? 'Primary operational module' : 'Basis beheermodule'
+                                    feature.badge ||
+                                    (idx === 0
+                                        ? isEn
+                                            ? 'Primary operational module'
+                                            : 'Basis beheermodule'
                                         : idx === 1
-                                          ? isEn ? 'Self-service module' : 'Self-service module'
-                                          : isEn ? 'Automated banking module' : 'Automatische bankmodule';
+                                          ? isEn
+                                              ? 'Self-service module'
+                                              : 'Self-service module'
+                                          : isEn
+                                            ? 'Automated banking module'
+                                            : 'Automatische bankmodule');
 
                                 return (
                                     <div
@@ -218,18 +236,34 @@ export function PageBlockRenderer({
                                             />
                                         )}
 
-                                        <div className='absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 z-30 w-13 h-13 rounded-full bg-amber/80 text-white shadow-xl border-2 border-white dark:border-[#060e32] flex flex-col items-center justify-center font-extrabold text-[10px] uppercase tracking-tight leading-none group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
-                                            <span>APP</span>
-                                            <span className='text-[20px] font-black text-white mt-0.5'>
-                                                0{idx + 1}
-                                            </span>
-                                        </div>
+                                        {resolvedIconBadge ? (
+                                            <div className='absolute top-0 right-0 -translate-y-1/3 translate-x-1/3 z-30 w-12 h-12 rounded-full bg-white dark:bg-navy-dark shadow-xl border-2 border-amber flex items-center justify-center p-1.5 group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
+                                                <div className='relative w-full h-full rounded-full overflow-hidden'>
+                                                    <Image
+                                                        src={resolvedIconBadge}
+                                                        alt={feature.title || 'Badge'}
+                                                        fill
+                                                        className='object-contain'
+                                                    />
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className='absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 z-30 w-13 h-13 rounded-full bg-amber/80 text-white shadow-xl border-2 border-white dark:border-[#060e32] flex flex-col items-center justify-center font-extrabold text-[10px] uppercase tracking-tight leading-none group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
+                                                <span>APP</span>
+                                                <span className='text-[20px] font-black text-white mt-0.5'>
+                                                    0{idx + 1}
+                                                </span>
+                                            </div>
+                                        )}
 
                                         <div className='flex flex-col gap-4 z-10 pointer-events-none'>
                                             <div className='relative w-full h-52 rounded-xl overflow-hidden bg-texture-navy/5 border border-black/20/50 group-hover:border-amber/30 transition-colors'>
                                                 <Image
                                                     src={cardImg}
-                                                    alt={feature.title || 'Module'}
+                                                    alt={
+                                                        feature.title ||
+                                                        'Module'
+                                                    }
                                                     fill
                                                     sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                                                     className='object-cover group-hover:scale-105 transition-transform duration-500'
@@ -250,12 +284,17 @@ export function PageBlockRenderer({
                                         <div className='pt-2 border-t border-black/20/40 flex items-center justify-between gap-4 z-30 mt-auto pointer-events-none'>
                                             <div className='flex items-center gap-2 text-xs font-medium text-muted-foreground truncate'>
                                                 <CheckCircle2 className='w-3.5 h-3.5 text-amber shrink-0' />
-                                                <span className='truncate'>{tagText}</span>
+                                                <span className='truncate'>
+                                                    {tagText}
+                                                </span>
                                             </div>
 
                                             <div className='inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber group-hover:text-foreground group-hover:translate-x-0.5 transition-all duration-200 shrink-0'>
                                                 <span>
-                                                    {feature.ctaLabel || (isEn ? 'Learn more →' : 'Bekijk module →')}
+                                                    {feature.ctaLabel ||
+                                                        (isEn
+                                                            ? 'Learn more →'
+                                                            : 'Bekijk module →')}
                                                 </span>
                                                 <ArrowRight className='w-3.5 h-3.5' />
                                             </div>
@@ -270,9 +309,19 @@ export function PageBlockRenderer({
         }
 
         case 'integrationsList': {
-            const sectionTag = block.sectionTag || (isEn ? 'ERP INTEGRATION' : 'ERP INTEGRATIE');
-            const sectionTitle = block.sectionTitle || (isEn ? 'Native connection with Microsoft Dynamics 365 Business Central' : 'De directe koppeling met Microsoft Dynamics 365 Business Central');
-            const sectionSubtitle = block.sectionSubtitle || (isEn ? 'Many platforms promise an integration, but emlinked runs natively inside your ERP environment.' : 'Veel platformen beloven een koppeling, maar emlinked werkt native binnen uw ERP-omgeving.');
+            const sectionTag =
+                block.sectionTag ||
+                (isEn ? 'ERP INTEGRATION' : 'ERP INTEGRATIE');
+            const sectionTitle =
+                block.sectionTitle ||
+                (isEn
+                    ? 'Native connection with Microsoft Dynamics 365 Business Central'
+                    : 'De directe koppeling met Microsoft Dynamics 365 Business Central');
+            const sectionSubtitle =
+                block.sectionSubtitle ||
+                (isEn
+                    ? 'Many platforms promise an integration, but emlinked runs natively inside your ERP environment.'
+                    : 'Veel platformen beloven een koppeling, maar emlinked werkt native binnen uw ERP-omgeving.');
             const integrations = block.integrations || block.items || [];
 
             return (
@@ -301,9 +350,26 @@ export function PageBlockRenderer({
 
                         <div className='relative grid grid-cols-1 lg:grid-cols-3 gap-8 text-left'>
                             {integrations.map((item: any, idx: number) => {
-                                const footerSpec = item.footerSpec || (idx === 0 ? 'Direct DB Schema' : idx === 1 ? 'Continia OCR Engine' : 'PSD2 / ISO 20022');
-                                const statusText = item.statusText || (idx === 0 ? 'Core Database' : idx === 1 ? 'Auto-Matching' : 'Live Reconciled');
-                                const nodeLabel = idx === 0 ? '2-Way Sync' : idx === 1 ? 'Inbound Feed' : 'Realtime Feed';
+                                const footerSpec =
+                                    item.footerSpec ||
+                                    (idx === 0
+                                        ? 'Direct DB Schema'
+                                        : idx === 1
+                                          ? 'Continia OCR Engine'
+                                          : 'PSD2 / ISO 20022');
+                                const statusText =
+                                    item.statusText ||
+                                    (idx === 0
+                                        ? 'Core Database'
+                                        : idx === 1
+                                          ? 'Auto-Matching'
+                                          : 'Live Reconciled');
+                                const nodeLabel =
+                                    idx === 0
+                                        ? '2-Way Sync'
+                                        : idx === 1
+                                          ? 'Inbound Feed'
+                                          : 'Realtime Feed';
 
                                 return (
                                     <div
@@ -313,7 +379,13 @@ export function PageBlockRenderer({
                                         <div className='flex flex-col gap-4 z-10'>
                                             <div className='flex items-center justify-between'>
                                                 <div className='h-12 w-12 rounded-xl bg-amber/15 border border-amber/35 flex items-center justify-center text-amber font-bold text-lg shadow-md'>
-                                                    {idx === 0 ? <Database className='h-6 w-6' /> : idx === 1 ? <FileText className='h-6 w-6' /> : <Cpu className='h-6 w-6' />}
+                                                    {idx === 0 ? (
+                                                        <Database className='h-6 w-6' />
+                                                    ) : idx === 1 ? (
+                                                        <FileText className='h-6 w-6' />
+                                                    ) : (
+                                                        <Cpu className='h-6 w-6' />
+                                                    )}
                                                 </div>
                                                 <span className='text-[10px] font-bold text-amber bg-amber/10 border border-amber/30 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5'>
                                                     {nodeLabel}
@@ -357,10 +429,26 @@ export function PageBlockRenderer({
         case 'ctaBanner':
         case 'ctaBlock':
         case 'cta': {
-            const tag = block.tag || block.badge || (isEn ? 'DIGITALIZATION' : 'DIGITALISERING');
-            const title = block.title || (isEn ? 'Ready to digitize your property management?' : 'Klaar om uw vastgoedbeheer te digitaliseren?');
-            const subtitle = block.subtitle || (isEn ? 'Join leading property managers who eliminated manual tasks.' : 'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd.');
-            const buttonLabel = block.buttonLabel || block.buttonText || (isEn ? 'Request a free demo' : 'Vraag een live demonstratie aan');
+            const tag =
+                block.tag ||
+                block.badge ||
+                (isEn ? 'DIGITALIZATION' : 'DIGITALISERING');
+            const title =
+                block.title ||
+                (isEn
+                    ? 'Ready to digitize your property management?'
+                    : 'Klaar om uw vastgoedbeheer te digitaliseren?');
+            const subtitle =
+                block.subtitle ||
+                (isEn
+                    ? 'Join leading property managers who eliminated manual tasks.'
+                    : 'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd.');
+            const buttonLabel =
+                block.buttonLabel ||
+                block.buttonText ||
+                (isEn
+                    ? 'Request a free demo'
+                    : 'Vraag een live demonstratie aan');
             const buttonLink = block.buttonLink || '/contact';
 
             return (
@@ -396,7 +484,10 @@ export function PageBlockRenderer({
                                 <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                                     <Image
                                         src={
-                                            getImageUrl(block.image, block.imagePath) ||
+                                            getImageUrl(
+                                                block.image,
+                                                block.imagePath,
+                                            ) ||
                                             '/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
                                         }
                                         alt={title}
@@ -474,6 +565,14 @@ export function PageBlockRenderer({
                     tag={block.tag || block.badge}
                     title={block.title || block.sectionTitle}
                     subtitle={block.subtitle || block.sectionSubtitle}
+                    sectionTag={block.sectionTag}
+                    sectionTitle={block.sectionTitle}
+                    sectionSubtitle={block.sectionSubtitle}
+                    bullets={block.bullets}
+                    bgImagePath={
+                        getImageUrl(block.bgImage, block.bgImagePath) ||
+                        undefined
+                    }
                     locale={locale}
                 />
             );
