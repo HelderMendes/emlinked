@@ -10,6 +10,7 @@ import { HeroSection } from '@/components/blocks/HeroSection';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl } from '@/sanity/image';
+import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
 import {
     ArrowRight,
     Building2,
@@ -30,7 +31,7 @@ interface ReferentiesPageProps {
 async function getSanityPageData(locale: string) {
     try {
         return await client.fetch(
-            `*[_type == "page" && (slug.current == "/referenties" || slug.current == "referenties" || slug.current == "/references" || slug.current == "references" || slug.current == "customer-cases") && language == $locale][0] {
+            `*[_type == "page" && (slug.current == "/referenties" || slug.current == "referenties" || slug.current == "/references" || slug.current == "references" || slug.current == "customer-cases" || _id == "page-referenties-" + $locale) && language == $locale][0] {
                 title,
                 pageBlocks[] {
                     ...,
@@ -138,34 +139,31 @@ export default async function ReferentiesPage({
     };
 
     const blocks = pageData?.pageBlocks || [];
-    const heroBlock = blocks.find((b: any) => b._type === 'hero');
+    const heroBlock = blocks.find((b: any) => b._type === 'hero' || b._type === 'heroBlock');
     const trustBarBlock = blocks.find((b: any) => b._type === 'trustBar');
-    const casesBlock = blocks.find((b: any) => b._type === 'workflow');
+    const casesBlock = blocks.find(
+        (b: any) => b._type === 'workflow' || b._type === 'casesBlock' || b._type === 'stepsBlock',
+    );
     const ecosystemBlock = blocks.find(
-        (b: any) => b._type === 'ecosystemSection',
+        (b: any) => b._type === 'ecosystemSection' || b._type === 'integrationsList',
     );
-    const whyBlock = blocks.find((b: any) => b._type === 'architectureSection');
-    const ctaBlock = blocks.find((b: any) => b._type === 'ctaBanner');
-
-    const heroImageUrl = getImageUrl(
-        heroBlock?.image || heroBlock?.heroImage,
-        heroBlock?.imagePath ||
-            '/emlinked/referenties/beheerders_referencties.jpg',
+    const whyBlock = blocks.find(
+        (b: any) => b._type === 'architectureSection' || b._type === 'architectureBlock',
+    );
+    const ctaBlock = blocks.find(
+        (b: any) => b._type === 'ctaBanner' || b._type === 'ctaBlock' || b._type === 'cta',
     );
 
-    const ctaImageUrl = getImageUrl(
-        ctaBlock?.image,
-        ctaBlock?.imagePath || '/emlinked/referenties/adviesgesprek.jpg',
-    );
+    const defaultBlocks = [
+        { _type: 'hero', ...heroBlock },
+        { _type: 'workflow', ...casesBlock },
+        { _type: 'ecosystemSection', ...ecosystemBlock },
+        { _type: 'architectureSection', ...whyBlock },
+        { _type: 'ctaBanner', ...ctaBlock },
+    ];
 
-    // Dynamic case items directly from Sanity CMS
-    const caseItems = casesBlock?.items || [];
+    const blocksToRender = blocks.length > 0 ? blocks : defaultBlocks;
 
-    // Partner Ecosystem Items from Sanity CMS
-    const partnerItems = ecosystemBlock?.items || [];
-
-    // Why Choose Us Bullets from Sanity CMS
-    const whyBullets = whyBlock?.bullets || [];
     const whyIcons = [
         <Building2 key='b' className='w-5 h-5' />,
         <Check key='c' className='w-5 h-5' />,
@@ -194,101 +192,105 @@ export default async function ReferentiesPage({
         },
     };
 
-    return (
-        <div className='flex flex-col min-h-screen bg-background text-foreground'>
-            {/* JSON-LD Structured Data */}
-            <script
-                type='application/ld+json'
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+    const renderHero = (b: any, key: any) => {
+        const heroImageUrl = getImageUrl(
+            b?.image || b?.heroImage,
+            b?.imagePath || '/emlinked/referenties/beheerders_referencties.jpg',
+        );
 
-            {/* ── SECTION 1: HERO HEADER WITH INTEGRATED TRUST BAR ── */}
-            <HeroSection
-                label={
-                    heroBlock?.label ||
-                    (isEn
-                        ? 'PROVEN RESULTS IN REAL ESTATE AUTOMATION'
-                        : 'BEWEZEN RESULTATEN IN VASTGOEDAUTOMATISERING')
-                }
-                title={
-                    heroBlock?.title ||
-                    (isEn
-                        ? 'How industry leaders *scale operations*'
-                        : 'Hoe toonaangevende beheerders hun *operatie schalen*')
-                }
-                subtitle={
-                    heroBlock?.subtitle ||
-                    (isEn
-                        ? 'Discover how property managers, investors, and accounting firms scale operational efficiency with specialized emlinked solutions native in Microsoft Business Central.'
-                        : 'Ontdek hoe vastgoedbeheerders, beleggers en administratiekantoren hun operationele efficiëntie verhogen met de gespecialiseerde oplossingen van emlinked native in Microsoft Business Central.')
-                }
-                ctaLabel={
-                    heroBlock?.ctaLabel ||
-                    (isEn
-                        ? 'Schedule a consultation'
-                        : 'Plan een adviesgesprek')
-                }
-                ctaLink={heroBlock?.ctaLink || '#contact'}
-                secondaryCtaLabel=''
-                secondaryCtaLink=''
-                showProof={false}
-                proofText=''
-                imagePath={heroImageUrl}
-                isHomepage={false}
-                locale={locale}
-                titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
-            >
-                {/* Integrated Trust Bar sharing the Hero background */}
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/10'>
-                    <div className='flex flex-col items-center p-3 space-y-1.5'>
-                        <span className='font-display text-xl lg:text-2xl font-extrabold text-amber tracking-tight flex items-center gap-2'>
-                            <Sparkles className='w-5 h-5 text-amber animate-pulse' />
-                            100%
-                        </span>
-                        <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
-                            {trustBarBlock?.items?.[0]?.text ||
-                                (isEn
-                                    ? 'Focus on real estate software & process automation'
-                                    : 'Focus op vastgoedsoftware & procesautomatisering')}
-                        </p>
+        return (
+            <React.Fragment key={key}>
+                <HeroSection
+                    label={
+                        b?.label ||
+                        (isEn
+                            ? 'PROVEN RESULTS IN REAL ESTATE AUTOMATION'
+                            : 'BEWEZEN RESULTATEN IN VASTGOEDAUTOMATISERING')
+                    }
+                    title={
+                        b?.title ||
+                        (isEn
+                            ? 'How industry leaders *scale operations*'
+                            : 'Hoe toonaangevende beheerders hun *operatie schalen*')
+                    }
+                    subtitle={
+                        b?.subtitle ||
+                        (isEn
+                            ? 'Discover how property managers, investors, and accounting firms scale operational efficiency with specialized emlinked solutions native in Microsoft Business Central.'
+                            : 'Ontdek hoe vastgoedbeheerders, beleggers en administratiekantoren hun operationele efficiëntie verhogen met de gespecialiseerde oplossingen van emlinked native in Microsoft Business Central.')
+                    }
+                    ctaLabel={
+                        b?.ctaLabel ||
+                        (isEn
+                            ? 'Schedule a consultation'
+                            : 'Plan een adviesgesprek')
+                    }
+                    ctaLink={b?.ctaLink || '#contact'}
+                    secondaryCtaLabel=''
+                    secondaryCtaLink=''
+                    showProof={false}
+                    proofText=''
+                    imagePath={heroImageUrl}
+                    isHomepage={false}
+                    locale={locale}
+                    titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
+                >
+                    {/* Integrated Trust Bar sharing the Hero background */}
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/10'>
+                        <div className='flex flex-col items-center p-3 space-y-1.5'>
+                            <span className='font-display text-xl lg:text-2xl font-extrabold text-amber tracking-tight flex items-center gap-2'>
+                                <Sparkles className='w-5 h-5 text-amber animate-pulse' />
+                                100%
+                            </span>
+                            <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
+                                {trustBarBlock?.items?.[0]?.text ||
+                                    (isEn
+                                        ? 'Focus on real estate software & process automation'
+                                        : 'Focus op vastgoedsoftware & procesautomatisering')}
+                            </p>
+                        </div>
+
+                        <div className='flex flex-col items-center p-3 pt-5 md:pt-3 space-y-1.5'>
+                            <span className='font-display text-xl lg:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2'>
+                                <Building2 className='w-5 h-5 text-amber' />
+                                Enterprise
+                            </span>
+                            <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
+                                {trustBarBlock?.items?.[1]?.text ||
+                                    (isEn
+                                        ? 'Seamless ERP & financial accounting integrations'
+                                        : 'Naadloze ERP- en financieel-administratieve integraties')}
+                            </p>
+                        </div>
+
+                        <div className='flex flex-col items-center p-3 pt-5 md:pt-3 space-y-1.5'>
+                            <span className='font-display text-xl lg:text-2xl font-extrabold text-amber tracking-tight flex items-center gap-2'>
+                                <ShieldCheck className='w-5 h-5 text-amber' />
+                                Continuïteit
+                            </span>
+                            <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
+                                {trustBarBlock?.items?.[2]?.text ||
+                                    (isEn
+                                        ? 'Decades of domain expertise in real estate software'
+                                        : 'Decennialange domeinexpertise binnen de vastgoedsector')}
+                            </p>
+                        </div>
                     </div>
+                </HeroSection>
+            </React.Fragment>
+        );
+    };
 
-                    <div className='flex flex-col items-center p-3 pt-5 md:pt-3 space-y-1.5'>
-                        <span className='font-display text-xl lg:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2'>
-                            <Building2 className='w-5 h-5 text-amber' />
-                            Enterprise
-                        </span>
-                        <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
-                            {trustBarBlock?.items?.[1]?.text ||
-                                (isEn
-                                    ? 'Seamless ERP & financial accounting integrations'
-                                    : 'Naadloze ERP- en financieel-administratieve integraties')}
-                        </p>
-                    </div>
-
-                    <div className='flex flex-col items-center p-3 pt-5 md:pt-3 space-y-1.5'>
-                        <span className='font-display text-xl lg:text-2xl font-extrabold text-amber tracking-tight flex items-center gap-2'>
-                            <ShieldCheck className='w-5 h-5 text-amber' />
-                            Continuïteit
-                        </span>
-                        <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
-                            {trustBarBlock?.items?.[2]?.text ||
-                                (isEn
-                                    ? 'Decades of domain expertise in real estate software'
-                                    : 'Decennialange domeinexpertise binnen de vastgoedsector')}
-                        </p>
-                    </div>
-                </div>
-            </HeroSection>
-
-            {/* ── SECTION 2: ALL 5 KLANTCASES & SUCCESVERHALEN ── */}
-            <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-foreground border-b border-black/10 relative z-10'>
+    const renderCases = (b: any, key: any) => {
+        const caseItems = b?.items || [];
+        return (
+            <section key={key} className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-foreground border-b border-black/10 relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-16'>
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
                         <div className='flex justify-center mb-1'>
                             <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
                                 <Award className='w-3.5 h-3.5 text-amber' />
-                                {casesBlock?.badge ||
+                                {b?.badge ||
                                     (isEn
                                         ? 'CUSTOMER CASES & EXPERIENCES'
                                         : 'KLANTCASES & ERVARINGEN')}
@@ -296,7 +298,7 @@ export default async function ReferentiesPage({
                         </div>
 
                         <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-darkblue dark:text-white'>
-                            {casesBlock?.title ||
+                            {b?.title ||
                                 (isEn
                                     ? '5 Proven Case Studies in Property Management'
                                     : '5 Bewezen Praktijkcases in Vastgoedbeheer')}
@@ -467,35 +469,38 @@ export default async function ReferentiesPage({
                     </div>
                 </div>
             </section>
+        );
+    };
 
-            {/* ── SECTION 3: ONZE PARTNERS & ECOSYSTEEM (Dark Navy Section) ── */}
-            <section className='px-6 py-20 bg-texture-navy text-white border-b border-white/10 relative z-10 overflow-hidden'>
+    const renderEcosystem = (b: any, key: any) => {
+        const partnerItems = b?.items || [];
+        return (
+            <section key={key} className='px-6 py-20 bg-texture-navy text-white border-b border-white/10 relative z-10 overflow-hidden'>
                 <div className='max-w-7xl mx-auto space-y-12 text-center relative z-10'>
                     <div className='max-w-3xl mx-auto space-y-4'>
                         <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
                             <Layers className='w-3.5 h-3.5 text-amber' />
-                            {ecosystemBlock?.badge ||
+                            {b?.badge ||
                                 (isEn
                                     ? 'OUR PARTNERS & ECOSYSTEM'
                                     : 'ONZE PARTNERS & ECOSYSTEEM')}
                         </span>
 
                         <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-white'>
-                            {ecosystemBlock?.title ||
+                            {b?.title ||
                                 (isEn
                                     ? 'Certified Integrations & Tech Synergies'
                                     : 'Gecertificeerde integraties & technologische synergie')}
                         </h2>
 
                         <p className='text-white/80 text-base md:text-lg font-light leading-relaxed max-w-3xl mx-auto'>
-                            {ecosystemBlock?.subtitle ||
+                            {b?.subtitle ||
                                 (isEn
                                     ? 'Our software works seamlessly connected. We build robust two-way integrations with top financial platforms, bank feeds, and specialized tools.'
                                     : 'Onze software functioneert niet op een eiland. Wij zorgen voor robuuste tweewegkoppelingen met de meest gebruikte financiële platforms, bankkoppelingen en sectorspecifieke tools.')}
                         </p>
                     </div>
 
-                    {/* Single Horizontal Card Container with Vertical Dividers (Dark Theme Negative Pattern) */}
                     {partnerItems.length > 0 && (
                         <div className='bg-slate-900/80 rounded-2xl border border-white/10 shadow-xl backdrop-blur-md overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 divide-y sm:divide-y-0 md:divide-x divide-white/10 text-center max-w-7xl mx-auto py-6'>
                             {partnerItems.map((p: any, idx: number) => (
@@ -515,28 +520,31 @@ export default async function ReferentiesPage({
                     )}
                 </div>
             </section>
+        );
+    };
 
-            {/* ── SECTION 4: WAAROM MARKTLEIDERS KIEZEN VOOR EMLINKED ── */}
-            <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] border-b border-black/10 text-foreground relative z-10'>
+    const renderWhyChooseUs = (b: any, key: any) => {
+        const whyBullets = b?.bullets || [];
+        return (
+            <section key={key} className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] border-b border-black/10 text-foreground relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-12'>
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
                         <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md'>
                             <TrendingUp className='w-3.5 h-3.5 text-amber' />
-                            {whyBlock?.tag ||
+                            {b?.tag ||
                                 (isEn
                                     ? 'WHY LEADERS CHOOSE EMLINKED'
                                     : 'WAAROM MARKTLEIDERS KIEZEN VOOR EMLINKED')}
                         </span>
 
                         <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-darkblue dark:text-white'>
-                            {whyBlock?.title ||
+                            {b?.title ||
                                 (isEn
                                     ? 'Designed for Complex Portfolios'
                                     : 'Ontworpen voor complexe vastgoedportefeuilles')}
                         </h2>
                     </div>
 
-                    {/* Single Horizontal Card Container with Vertical Dividers (Box3 Style) */}
                     {whyBullets.length > 0 && (
                         <div className='bg-white/80 rounded-xl border border-black/10 shadow-sm p-5 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
                             {whyBullets.map((bItem: any, idx: number) => {
@@ -566,9 +574,18 @@ export default async function ReferentiesPage({
                     )}
                 </div>
             </section>
+        );
+    };
 
-            {/* ── SECTION 5: PRE-FOOTER CTA ── */}
+    const renderCta = (b: any, key: any) => {
+        const ctaImageUrl = getImageUrl(
+            b?.image,
+            b?.imagePath || '/emlinked/referenties/adviesgesprek.jpg',
+        );
+
+        return (
             <section
+                key={key}
                 className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'
                 id='contact'
             >
@@ -578,21 +595,21 @@ export default async function ReferentiesPage({
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                 <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
                                     <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
-                                    {ctaBlock?.tag ||
+                                    {b?.tag ||
                                         (isEn
                                             ? 'CONSULTATION'
                                             : 'ADVIESGESPREK')}
                                 </span>
 
                                 <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
-                                    {ctaBlock?.title ||
+                                    {b?.title ||
                                         (isEn
                                             ? 'Ready to elevate your property management?'
                                             : 'Klaar om je vastgoedadministratie naar het volgende niveau te tillen?')}
                                 </h2>
 
                                 <p className='text-white/75 text-base md:text-lg font-light leading-relaxed max-w-2xl'>
-                                    {ctaBlock?.subtitle ||
+                                    {b?.subtitle ||
                                         (isEn
                                             ? 'Discuss your case with our specialists and discover immediate automation gains.'
                                             : 'Bespreek je casus met onze specialisten en ontdek direct waar automatiseringswinst te behalen valt.')}
@@ -601,13 +618,13 @@ export default async function ReferentiesPage({
                                 <div className='pt-4 flex flex-col sm:flex-row gap-4'>
                                     <GlowingLink
                                         href={getPath(
-                                            ctaBlock?.buttonLink || '/contact',
+                                            b?.buttonLink || '/contact',
                                         )}
                                         className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98]'
                                     >
                                         <span className='flex items-center justify-center gap-2 text-white'>
                                             <span>
-                                                {ctaBlock?.buttonLabel ||
+                                                {b?.buttonLabel ||
                                                     (isEn
                                                         ? 'Request a live demo'
                                                         : 'Vraag een demonstratie aan')}
@@ -631,6 +648,62 @@ export default async function ReferentiesPage({
                     </div>
                 </div>
             </section>
+        );
+    };
+
+    return (
+        <div className='flex flex-col min-h-screen bg-background text-foreground'>
+            {/* JSON-LD Structured Data */}
+            <script
+                type='application/ld+json'
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+
+            {blocksToRender.map((block: any, idx: number) => {
+                const key = block._key || `${block._type}-${idx}`;
+
+                if (block._type === 'hero' || block._type === 'heroBlock') {
+                    return renderHero(block, key);
+                }
+
+                if (
+                    block._type === 'workflow' ||
+                    block._type === 'casesBlock' ||
+                    block._type === 'stepsBlock'
+                ) {
+                    return renderCases(block, key);
+                }
+
+                if (
+                    block._type === 'ecosystemSection' ||
+                    block._type === 'integrationsList'
+                ) {
+                    return renderEcosystem(block, key);
+                }
+
+                if (
+                    block._type === 'architectureSection' ||
+                    block._type === 'architectureBlock'
+                ) {
+                    return renderWhyChooseUs(block, key);
+                }
+
+                if (
+                    block._type === 'ctaBanner' ||
+                    block._type === 'ctaBlock' ||
+                    block._type === 'cta'
+                ) {
+                    return renderCta(block, key);
+                }
+
+                return (
+                    <PageBlockRenderer
+                        key={key}
+                        block={block}
+                        locale={locale}
+                    />
+                );
+            })}
         </div>
     );
 }

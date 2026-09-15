@@ -880,29 +880,36 @@ export function HuurdersportaalModule({
             ) || '/emlinked/apps/huurdersportaal/automatiseren_huurdersportaal.jpg';
 
         return (
-            <section key={key} className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
+            <section
+                key={key}
+                className='px-6 py-20 md:py-24 text-[#060e32] relative z-10 overflow-hidden bg-linear-to-bl from-[#FFF3D4] via-[#FFFDF9] to-[#FFFBEF]'
+            >
                 <div className='max-w-7xl mx-auto relative z-10'>
                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
                         <div className='lg:col-span-6 flex flex-col gap-6 text-left'>
-                            <span className='inline-flex items-center justify-center self-start rounded-full border border-amber/50 bg-[#251b14]/90 px-5 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                            <span className='inline-flex items-center gap-2 self-start rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
+                                <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
                                 {bTag}
                             </span>
-                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#060e32] leading-tight'>
                                 {bTitle}
                             </h2>
-                            <p className='text-white/75 text-base md:text-lg font-light leading-relaxed'>
+                            <p className='text-[#060e32]/75 text-base md:text-lg font-light leading-relaxed'>
                                 {bDesc}
                             </p>
                             <div className='space-y-4 pt-2'>
                                 {bBullets.map((bullet: any, bIdx: number) => (
-                                    <div key={bIdx} className='flex items-start gap-3.5'>
-                                        <div className='w-6 h-6 rounded-full border border-amber/60 bg-amber/15 flex items-center justify-center shrink-0 mt-0.5 shadow-sm'>
+                                    <div
+                                        key={bIdx}
+                                        className='flex items-start gap-3.5'
+                                    >
+                                        <div className='w-6 h-6 rounded-full border border-amber/40 bg-amber/15 flex items-center justify-center shrink-0 mt-0.5 shadow-xs'>
                                             <Check className='w-3.5 h-3.5 text-amber' />
                                         </div>
-                                        <div className='text-sm text-white/80 leading-relaxed'>
+                                        <div className='text-sm md:text-base text-[#060e32]/85 leading-relaxed'>
                                             {bullet.bold && (
-                                                <strong className='text-white font-semibold'>
-                                                    {bullet.bold}{' '}
+                                                <strong className='text-[#060e32] font-semibold mr-1'>
+                                                    {bullet.bold}
                                                 </strong>
                                             )}
                                             {bullet.text}
@@ -912,7 +919,7 @@ export function HuurdersportaalModule({
                             </div>
                         </div>
                         <div className='lg:col-span-6 flex justify-center lg:justify-end'>
-                            <div className='relative w-full rounded-2xl overflow-hidden border border-amber/30 shadow-2xl group bg-slate-950'>
+                            <div className='relative w-full rounded-2xl overflow-hidden border border-black/10 shadow-2xl group bg-white'>
                                 <Image
                                     src={bImage}
                                     alt={bTitle}
