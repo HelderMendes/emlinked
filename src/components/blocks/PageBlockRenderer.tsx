@@ -11,6 +11,7 @@ import { TeamBlock } from '@/components/blocks/TeamBlock';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { getImageUrl } from '@/sanity/image';
+import { cn } from '@/lib/utils';
 import { HugeiconsIcon } from '@hugeicons/react';
 import {
     AiSecurity01Icon,
@@ -324,25 +325,30 @@ export function PageBlockRenderer({
                     : 'Veel platformen beloven een koppeling, maar emlinked werkt native binnen uw ERP-omgeving.');
             const integrations = block.integrations || block.items || [];
 
+            // version02: soft light-warm canvas instead of the dark navy
+            // texture, one pastel wash per card (amber/emerald/navy-50) in
+            // place of a flat dark-glass treatment.
+            const cardWash = ['bg-amber-pale/50', 'bg-emerald-50', 'bg-navy-50'];
+
             return (
                 <section
                     key={block._key}
-                    className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'
+                    className='px-6 py-24 bg-stone-bg text-navy-900 border-b border-navy-900/10 relative overflow-hidden'
                 >
                     <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-14 relative z-10'>
                         <div className='max-w-3xl mx-auto flex flex-col gap-4 text-center'>
                             {sectionTag && (
                                 <div className='flex justify-center mb-1'>
-                                    <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                                    <span className='inline-flex items-center justify-center rounded-full border border-amber/40 bg-white px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber-hover uppercase shadow-xs'>
                                         {sectionTag}
                                     </span>
                                 </div>
                             )}
-                            <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-white'>
+                            <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-navy-900'>
                                 {sectionTitle}
                             </h2>
                             {sectionSubtitle && (
-                                <p className='text-white/75 leading-relaxed text-base md:text-lg font-light'>
+                                <p className='text-navy-600 leading-relaxed text-base md:text-lg font-light'>
                                     {sectionSubtitle}
                                 </p>
                             )}
@@ -374,11 +380,14 @@ export function PageBlockRenderer({
                                 return (
                                     <div
                                         key={item._key || idx}
-                                        className='p-8 rounded-2xl border border-white/15 bg-white/4 backdrop-blur-xl text-white hover:border-amber/50 hover:bg-white/[0.07] transition-all duration-300 relative overflow-hidden group flex flex-col justify-between gap-6 z-10'
+                                        className={cn(
+                                            'p-8 rounded-2xl border border-navy-900/10 text-navy-900 hover:border-amber/40 hover:shadow-lg transition-all duration-300 relative overflow-hidden group flex flex-col justify-between gap-6 z-10',
+                                            cardWash[idx % cardWash.length],
+                                        )}
                                     >
                                         <div className='flex flex-col gap-4 z-10'>
                                             <div className='flex items-center justify-between'>
-                                                <div className='h-12 w-12 rounded-xl bg-amber/15 border border-amber/35 flex items-center justify-center text-amber font-bold text-lg shadow-md'>
+                                                <div className='h-12 w-12 rounded-xl bg-white border border-amber/35 flex items-center justify-center text-amber font-bold text-lg shadow-xs'>
                                                     {idx === 0 ? (
                                                         <Database className='h-6 w-6' />
                                                     ) : idx === 1 ? (
@@ -387,33 +396,33 @@ export function PageBlockRenderer({
                                                         <Cpu className='h-6 w-6' />
                                                     )}
                                                 </div>
-                                                <span className='text-[10px] font-bold text-amber bg-amber/10 border border-amber/30 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5'>
+                                                <span className='text-[10px] font-bold text-amber-hover bg-white border border-amber/30 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5'>
                                                     {nodeLabel}
                                                 </span>
                                             </div>
 
                                             <div className='flex flex-col gap-1 mt-2'>
                                                 {item.badge && (
-                                                    <span className='text-[10px] font-bold text-amber/90 uppercase tracking-widest'>
+                                                    <span className='text-[10px] font-bold text-amber-hover uppercase tracking-widest'>
                                                         {item.badge}
                                                     </span>
                                                 )}
-                                                <h3 className='text-2xl font-bold text-white tracking-tight'>
+                                                <h3 className='text-2xl font-bold text-navy-900 tracking-tight'>
                                                     {item.title}
                                                 </h3>
                                             </div>
-                                            <p className='font-normal text-white/75 leading-relaxed text-sm'>
+                                            <p className='font-normal text-navy-600 leading-relaxed text-sm'>
                                                 {item.description}
                                             </p>
                                         </div>
 
-                                        <div className='pt-4 border-t border-white/10 flex items-center justify-between text-xs z-10'>
-                                            <span className='text-amber font-mono font-semibold tracking-wide flex items-center gap-1.5'>
+                                        <div className='pt-4 border-t border-navy-900/10 flex items-center justify-between text-xs z-10'>
+                                            <span className='text-amber-hover font-mono font-semibold tracking-wide flex items-center gap-1.5'>
                                                 <Layers className='h-3.5 w-3.5 text-amber/80' />
                                                 {footerSpec}
                                             </span>
-                                            <span className='text-emerald-400 font-semibold text-[11px] flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-md'>
-                                                <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse' />
+                                            <span className='text-emerald-700 font-semibold text-[11px] flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md'>
+                                                <span className='w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse' />
                                                 {statusText}
                                             </span>
                                         </div>
@@ -457,19 +466,19 @@ export function PageBlockRenderer({
                     className='px-6 py-24 bg-background relative overflow-hidden'
                 >
                     <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                        <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+                        <div className='border border-amber/30 rounded-3xl bg-linear-to-br from-amber-ultra via-stone-bg to-amber-pale/60 text-navy-900 p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg'>
                             <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                                 <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                     {tag && (
-                                        <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
+                                        <span className='inline-flex items-center gap-2 self-start rounded-full bg-white border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber-hover uppercase shadow-xs'>
                                             <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
                                             {tag}
                                         </span>
                                     )}
-                                    <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                                    <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight'>
                                         {title}
                                     </h2>
-                                    <p className='text-white/80 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
+                                    <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
                                         {subtitle}
                                     </p>
                                     {buttonLabel && buttonLink && (

@@ -7,6 +7,8 @@ import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 
 import { BorderBeam } from 'border-beam';
 import { getImageUrl } from '@/sanity/image';
+import { cn } from '@/lib/utils';
+import { ArrowUpRight } from 'lucide-react';
 
 export interface HeroSectionProps {
     label?: string;
@@ -64,7 +66,11 @@ export function HeroSection({
     proofText,
     image,
     imagePath = '/hero/vastgoedportfeuille_aangifte-klaar.jpg',
-    isHomepage = true,
+    // Was `true` — inert until this redesign gave the prop a visual effect.
+    // Call sites that never passed it (over-ons, contact, nieuws, ...) would
+    // have silently inherited the homepage's soft background. Defaulting to
+    // false keeps every page's look unchanged unless explicitly opted in.
+    isHomepage = false,
     locale = 'nl',
     titleClassName,
     customGraphic,
@@ -89,30 +95,125 @@ export function HeroSection({
         return path;
     };
 
+    // The homepage hero swaps the site-wide dark navy backdrop for a flat,
+    // light, structural layout (version02) — every other page using
+    // HeroSection (contact, apps, prijzen, ...) keeps today's dark-navy
+    // hero untouched, rendered by the JSX further below.
+    const soft = isHomepage;
+
+    if (soft) {
+        return (
+            <section className='relative bg-stone-bg text-navy-900 border-b border-navy-900/10'>
+                <div className='mx-auto max-w-9xl px-4 sm:px-6 lg:px-8'>
+                    <div className='grid grid-cols-1 lg:grid-cols-2 border-x border-navy-900/10 lg:divide-x lg:divide-navy-900/10'>
+                        {/* Left: eyebrow + headline */}
+                        <div className='px-6 sm:px-10 py-16 md:py-24 flex flex-col gap-8'>
+                            {label && (
+                                <span className='inline-flex items-center self-start rounded-[7px] border border-navy-900 h-6 px-2.5 text-xs font-semibold tracking-wide text-navy-900 w-min whitespace-nowrap'>
+                                    {label}
+                                </span>
+                            )}
+                            <h1 className='font-hero font-bold tracking-[-0.02em] leading-[1.125] text-3xl sm:text-4xl lg:text-[3.5rem]'>
+                                {formatHeroTitle(title)}
+                            </h1>
+                        </div>
+
+                        {/* Right: subtitle + CTAs */}
+                        <div className='px-6 sm:px-10 py-16 md:py-24 flex flex-col justify-center gap-8'>
+                            {subtitle && (
+                                <p className='text-lg text-navy-700 leading-relaxed max-w-md'>
+                                    {subtitle}
+                                </p>
+                            )}
+
+                            {(ctaLabel || secondaryCtaLabel) && (
+                                <div className='flex flex-wrap gap-3'>
+                                    {ctaLabel && ctaLink && (
+                                        <Link
+                                            href={getPath(ctaLink)}
+                                            className='inline-flex items-center gap-2 justify-center rounded-[14px] bg-navy-900 hover:bg-black py-[18px] px-4 text-sm font-semibold text-white transition-colors w-min whitespace-nowrap'
+                                        >
+                                            {ctaLabel}
+                                            <ArrowUpRight className='w-4 h-4' />
+                                        </Link>
+                                    )}
+                                    {secondaryCtaLabel && secondaryCtaLink && (
+                                        <Link
+                                            href={getPath(secondaryCtaLink)}
+                                            className='inline-flex h-11 items-center gap-1.5 justify-center rounded-[18px] border border-navy-900 hover:bg-navy-900/5 px-6 text-sm font-semibold text-navy-900 transition-colors'
+                                        >
+                                            {secondaryCtaLabel}
+                                            <ArrowUpRight className='w-4 h-4' />
+                                        </Link>
+                                    )}
+                                </div>
+                            )}
+
+                            {effectiveProofText && (
+                                <p className='text-xs text-navy-500'>
+                                    {effectiveProofText}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
     return (
-        <section className='relative px-6 py-10 md:py-16 overflow-hidden bg-texture-navy text-white dark:bg-linear-to-br dark:from-[#FFFBEF] dark:via-[#FFFDF9] dark:to-[#FFF3D4] dark:animate-none dark:text-[#060e32] border-b border-white/10 dark:border-amber/10 transition-colors duration-300'>
-            {/* Animated Data Grid Canvas overlay */}
-            <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
+        <section
+            className={cn(
+                'relative px-6 py-10 md:py-16 overflow-hidden border-b transition-colors duration-300',
+                soft
+                    ? 'bg-stone-bg bg-mesh-brand text-navy-900 border-navy-900/10'
+                    : 'bg-texture-navy text-white border-white/10',
+                'dark:bg-linear-to-br dark:from-[#dc9ed4] dark:via-[#9ff1f5] dark:to-[#b6fcca] dark:animate-none dark:text-[#060e32] dark:border-amber/10',
+            )}
+        >
+            {/* Animated Data Grid Canvas overlay — designed for the dark
+                navy backdrop, so only render it there. */}
+            {!soft && (
+                <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
+            )}
 
             <div className='mx-auto max-w-7xl relative z-10'>
                 <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
                     {/* Left Column: Copy & Actions */}
                     <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
-                        {label && (
-                            <span className='inline-flex items-center gap-3.5 self-start rounded-full bg-amber/15 border border-amber/35 px-4.5 py-1 text-xs font-bold tracking-wide text-amber'>
-                                <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
-                                {label}
-                            </span>
-                        )}
+                        {label &&
+                            (soft ? (
+                                <span className='inline-flex items-center self-start rounded-full border border-navy-900/20 px-4 py-1.5 text-xs font-semibold tracking-wide text-navy-700'>
+                                    {label}
+                                </span>
+                            ) : (
+                                <span className='inline-flex items-center gap-3.5 self-start rounded-full bg-amber/15 border border-amber/35 px-4.5 py-1 text-xs font-bold tracking-wide text-amber'>
+                                    <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                    {label}
+                                </span>
+                            ))}
 
                         <h1
-                            className={`font-display font-bold tracking-tight text-white dark:text-[#060e32] leading-[1.1] ${titleClassName || 'text-4xl sm:text-5xl lg:text-6xl'}`}
+                            className={cn(
+                                'font-bold leading-[1.05] dark:text-[#060e32]',
+                                soft
+                                    ? 'font-hero tracking-[-0.02em]'
+                                    : 'font-display tracking-tight',
+                                soft ? 'text-navy-900' : 'text-white',
+                                titleClassName ||
+                                    'text-4xl sm:text-5xl lg:text-6xl',
+                            )}
                         >
                             {formatHeroTitle(title)}
                         </h1>
 
                         {subtitle && (
-                            <p className='text-lg md:text-xl text-white/65 dark:text-[#060e32]/75 leading-relaxed font-light'>
+                            <p
+                                className={cn(
+                                    'text-lg md:text-xl leading-relaxed font-light dark:text-[#060e32]/75',
+                                    soft ? 'text-navy-700' : 'text-white/65',
+                                )}
+                            >
                                 {subtitle}
                             </p>
                         )}
@@ -131,7 +232,12 @@ export function HeroSection({
                                 {secondaryCtaLabel && secondaryCtaLink && (
                                     <Link
                                         href={getPath(secondaryCtaLink)}
-                                        className='inline-flex h-12 items-center justify-center rounded-md border border-white/20 dark:border-[#060e32]/20 bg-transparent px-6 text-sm font-semibold text-white dark:text-[#060e32] hover:bg-white/10 dark:hover:bg-[#060e32]/5 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                                        className={cn(
+                                            'inline-flex h-12 items-center justify-center rounded-md bg-transparent px-6 text-sm font-semibold transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200 dark:border-[#060e32]/20 dark:text-[#060e32] dark:hover:bg-[#060e32]/5',
+                                            soft
+                                                ? 'border border-navy-900/15 text-navy-900 hover:bg-navy-900/5'
+                                                : 'border border-white/20 text-white hover:bg-white/10',
+                                        )}
                                     >
                                         {secondaryCtaLabel}
                                     </Link>
@@ -141,7 +247,14 @@ export function HeroSection({
 
                         {/* Social proof bar: Text always renders when present; showProof controls avatar cluster vs clean dot */}
                         {effectiveProofText && (
-                            <div className='flex items-center gap-3 pt-6 border-t border-white/10 dark:border-[#060e32]/10 mt-2'>
+                            <div
+                                className={cn(
+                                    'flex items-center gap-3 pt-6 border-t mt-2 dark:border-[#060e32]/10',
+                                    soft
+                                        ? 'border-navy-900/10'
+                                        : 'border-white/10',
+                                )}
+                            >
                                 {showProof && showProofAvatars ? (
                                     <div className='flex -space-x-2.5 overflow-visible relative shrink-0'>
                                         {/* Levi Bosboom */}
@@ -243,7 +356,14 @@ export function HeroSection({
                                 ) : (
                                     <span className='w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0' />
                                 )}
-                                <span className='text-xs sm:text-sm text-white/80 dark:text-orange font-light leading-snug'>
+                                <span
+                                    className={cn(
+                                        'text-xs sm:text-sm font-light leading-snug dark:text-orange',
+                                        soft
+                                            ? 'text-navy-700'
+                                            : 'text-white/80',
+                                    )}
+                                >
                                     {effectiveProofText}
                                 </span>
                             </div>
@@ -258,7 +378,14 @@ export function HeroSection({
                             strength={1.2}
                             className='w-full'
                         >
-                            <div className='relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 dark:border-amber/20'>
+                            <div
+                                className={cn(
+                                    'relative w-full rounded-2xl overflow-hidden shadow-2xl border dark:border-amber/20',
+                                    soft
+                                        ? 'border-navy-900/10'
+                                        : 'border-white/10',
+                                )}
+                            >
                                 {customGraphic ? (
                                     customGraphic
                                 ) : (
@@ -277,7 +404,12 @@ export function HeroSection({
                 </div>
 
                 {children && (
-                    <div className='mt-12 pt-6 border-t border-white/10 dark:border-amber/15 -mb-12'>
+                    <div
+                        className={cn(
+                            'mt-12 pt-6 border-t -mb-12 dark:border-amber/15',
+                            soft ? 'border-navy-900/10' : 'border-white/10',
+                        )}
+                    >
                         {children}
                     </div>
                 )}

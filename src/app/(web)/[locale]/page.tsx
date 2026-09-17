@@ -207,7 +207,15 @@ export default async function HomePage({ params }: HomePageProps) {
     };
 
     // Extract dynamic blocks 100% from Sanity CMS
-    const blocks = pageData?.pageBlocks || [];
+    // version02: the "ecosystemSection" block (badge/title/gibberish
+    // placeholder copy + stat badges) is hidden here only — this is a
+    // code-level filter on this branch's homepage render, not a Sanity
+    // content change, so main/production and every other branch still
+    // render it exactly as the CMS has it today.
+    const blocks = (pageData?.pageBlocks || []).filter(
+        (b: { _type?: string }) =>
+            b._type !== 'ecosystemSection' && b._type !== 'ecosystem',
+    );
 
     const structuredData = pageData?.seo?.structuredData;
 

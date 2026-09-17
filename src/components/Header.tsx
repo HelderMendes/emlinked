@@ -452,7 +452,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                 </button>
                 <Link
                     href='/docs'
-                    className='w-1/2 bg-darkBlue text-amber hover:bg-navy flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-none border-l border-amber/30 transition-colors cursor-pointer font-semibold'
+                    className='w-1/2 bg-amber-pale text-navy-900 hover:bg-amber-100 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-none border-l border-amber/30 transition-colors cursor-pointer font-semibold'
                 >
                     <BsRocketTakeoff className='h-3.5 w-3.5 shrink-0 text-amber' />
                     <span>{t.mijnEmlinked}</span>
@@ -539,7 +539,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         </button>
 
                         {langDropdownOpen && (
-                            <div className='absolute right-0 mt-2 w-44 origin-top-right rounded-lg border border-amber/30 bg-[#FFFDF9] text-[#060e32] p-1 shadow-2xl transition-all z-50'>
+                            <div className='absolute right-0 mt-2 w-44 origin-top-right rounded-lg border border-amber/30 bg-amber-ultra text-navy-dark p-1 shadow-lg transition-all z-50'>
                                 <a
                                     href={getLocalePath('nl')}
                                     onClick={(e) => {
@@ -689,7 +689,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 </svg>
                                             </button>
                                         )}
-                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-80 origin-top rounded-xl border border-amber/30 p-2 shadow-2xl transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50 bg-[#FFFDF9] text-[#060e32]'>
+                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-80 origin-top rounded-xl border border-amber/30 p-2 shadow-lg transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50 bg-amber-ultra text-navy-dark'>
                                             <div className='flex flex-col gap-1'>
                                                 {item.links?.map(
                                                     (
@@ -830,7 +830,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             </button>
 
                             {langDropdownOpen && (
-                                <div className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-amber/30 bg-[#FFFDF9] text-[#060e32] p-1 shadow-2xl transition-all z-50'>
+                                <div className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-amber/30 bg-amber-ultra text-navy-dark p-1 shadow-lg transition-all z-50'>
                                     <a
                                         href={getLocalePath('nl')}
                                         onClick={(e) => {
@@ -912,7 +912,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         >
                             <button
                                 onClick={() => setIsDemoModalOpen(true)}
-                                className='inline-flex items-center gap-1.5 px-4 py-2 font-semibold rounded-md border transition-all duration-300 bg-orange border-primary text-primary-foreground cursor-pointer shadow-sm text-sm hover:bg-darkBlue hover:border-darkBlue hover:text-orange dark:bg-darkBlue'
+                                className='inline-flex items-center gap-1.5 px-5 py-2.5 font-semibold rounded-full border border-navy-900 transition-all duration-300 bg-navy-900 text-white cursor-pointer shadow-xs text-sm hover:bg-black hover:border-black'
                             >
                                 {isEn ? 'Request a Demo' : 'Demo aanvragen'}
                             </button>
@@ -921,10 +921,10 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         {/* Sign In Button / Portal Access */}
                         <Link
                             href='/docs'
-                            className='inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-md border transition-all duration-300 bg-orange border-darkBlue text-darkBlue hover:bg-darkBlue hover:border-darkBlue hover:text-orange dark:bg-darkBlue dark:border-orange dark:text-orange dark:hover:bg-orange dark:hover:border-darkBlue dark:hover:text-darkBlue'
+                            className='inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full border border-navy-900/25 text-navy-900 bg-transparent transition-all duration-300 hover:bg-navy-900/5 hover:border-navy-900'
                         >
                             <BsRocketTakeoff className='h-4 w-4 shrink-0' />
-                            <span className='text-sm'>{t.mijnEmlinked}</span>
+                            <span>{t.mijnEmlinked}</span>
                         </Link>
                     </div>
                 </div>

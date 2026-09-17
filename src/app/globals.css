@@ -26,6 +26,51 @@
     --amber-pale: 42 100% 92%;
     --amber-ultra: 45 100% 97%;
 
+    /* --- version02: modernized ramps, additive-only ---
+       Every token above this block is untouched, so every other route
+       (which reads only --navy/--navy-mid/--navy-dark/--amber*) keeps
+       rendering exactly as it does on main today. These fuller ramps and
+       new shadow/surface tokens exist for the homepage redesign to build
+       on; nothing else in the codebase references them yet. */
+    --navy-50: 225 30% 97%;
+    --navy-100: 226 25% 93%;
+    --navy-200: 227 22% 85%;
+    --navy-300: 228 20% 72%;
+    --navy-400: 229 18% 56%;
+    --navy-500: 230 22% 42%;
+    --navy-600: 231 30% 30%;
+    --navy-700: 232 47% 21%; /* = --navy-mid */
+    --navy-800: 230 46% 17%; /* = --navy */
+    --navy-900: 232 45% 11%; /* = --navy-dark */
+    --navy-950: 233 48% 7%;
+
+    --amber-50: 45 100% 97%; /* = --amber-ultra */
+    --amber-100: 42 100% 92%; /* = --amber-pale */
+    --amber-200: 40 100% 85%;
+    --amber-300: 38 100% 74%;
+    --amber-400: 36 100% 61%; /* = --amber-light */
+    --amber-500: 35 100% 50%; /* = --amber */
+    --amber-600: 35 100% 45%; /* = --amber-hover */
+    --amber-700: 33 95% 38%;
+    --amber-800: 31 90% 30%;
+    --amber-900: 28 85% 22%;
+
+    /* Tinted (navy-hued) shadows instead of flat black drop-shadows —
+       a more cohesive, branded elevation system for the redesign. */
+    --shadow-color: 230 46% 17%;
+    --shadow-2xs: 0 1px 1px hsl(var(--shadow-color) / 0.04);
+    --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.05);
+    --shadow-sm: 0 2px 4px hsl(var(--shadow-color) / 0.06);
+    --shadow-md: 0 4px 12px hsl(var(--shadow-color) / 0.08), 0 2px 4px hsl(var(--shadow-color) / 0.05);
+    --shadow-lg: 0 12px 28px hsl(var(--shadow-color) / 0.10), 0 4px 10px hsl(var(--shadow-color) / 0.06);
+    --shadow-xl: 0 24px 48px hsl(var(--shadow-color) / 0.14), 0 8px 16px hsl(var(--shadow-color) / 0.08);
+    --shadow-glow-amber: 0 8px 28px hsl(var(--amber) / 0.3);
+
+    /* Warm off-white canvas + soft glass surface, distinct from the
+       cool `--background` used site-wide, reserved for the homepage. */
+    --stone-bg: 40 20% 98%;
+    --surface-glass: 0 0% 100%;
+
     --font-sans: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
     --font-display: 'General Sans', sans-serif;
     --background: oklch(1 0 0);
@@ -112,12 +157,50 @@
     --color-amber-pale: hsl(var(--amber-pale));
     --color-amber-ultra: hsl(var(--amber-ultra));
 
+    /* version02 ramps + shadows — see :root for provenance/notes */
+    --color-navy-50: hsl(var(--navy-50));
+    --color-navy-100: hsl(var(--navy-100));
+    --color-navy-200: hsl(var(--navy-200));
+    --color-navy-300: hsl(var(--navy-300));
+    --color-navy-400: hsl(var(--navy-400));
+    --color-navy-500: hsl(var(--navy-500));
+    --color-navy-600: hsl(var(--navy-600));
+    --color-navy-700: hsl(var(--navy-700));
+    --color-navy-800: hsl(var(--navy-800));
+    --color-navy-900: hsl(var(--navy-900));
+    --color-navy-950: hsl(var(--navy-950));
+
+    --color-amber-50: hsl(var(--amber-50));
+    --color-amber-100: hsl(var(--amber-100));
+    --color-amber-200: hsl(var(--amber-200));
+    --color-amber-300: hsl(var(--amber-300));
+    --color-amber-400: hsl(var(--amber-400));
+    --color-amber-500: hsl(var(--amber-500));
+    --color-amber-600: hsl(var(--amber-600));
+    --color-amber-700: hsl(var(--amber-700));
+    --color-amber-800: hsl(var(--amber-800));
+    --color-amber-900: hsl(var(--amber-900));
+
+    --color-stone-bg: hsl(var(--stone-bg));
+    --color-surface-glass: hsl(var(--surface-glass));
+
+    --shadow-2xs: var(--shadow-2xs);
+    --shadow-xs: var(--shadow-xs);
+    --shadow-sm: var(--shadow-sm);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
+    --shadow-glow-amber: var(--shadow-glow-amber);
+
     --color-orange: hsl(var(--amber));
     --color-darkBlue: oklch(0.1846 0.0722 268.08);
     --color-emlinkedblue: var(--color-darkBlue);
 
     --font-sans: var(--font-sans);
     --font-display: var(--font-display);
+    /* version02: Space Grotesk, homepage hero headline only — see
+       src/app/layout.tsx (spaceGrotesk.variable) and HeroSection.tsx. */
+    --font-hero: var(--font-hero, var(--font-display));
 
     --width-8xl: 88rem;
 
@@ -283,6 +366,21 @@ h1, h2, h3, h4, h5, h6, .font-display {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+/* version02 — homepage-only surface utilities, additive. */
+.bg-mesh-brand {
+    background-image:
+        radial-gradient(55% 55% at 12% 15%, hsl(var(--amber-100) / 0.9) 0%, transparent 60%),
+        radial-gradient(50% 60% at 85% 8%, hsl(var(--amber-300) / 0.35) 0%, transparent 55%),
+        radial-gradient(70% 70% at 55% 95%, hsl(var(--navy-300) / 0.22) 0%, transparent 60%);
+}
+
+.surface-glass {
+    background-color: hsl(var(--surface-glass) / 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid hsl(var(--surface-glass) / 0.9);
 }
 
 @layer base {

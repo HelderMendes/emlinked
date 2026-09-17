@@ -1,10 +1,17 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import './globals.css';
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+// version02: homepage hero headline only (see HeroSection.tsx `soft` branch)
+// — tight, geometric grotesk closer to the reference look than General Sans.
+const spaceGrotesk = Space_Grotesk({
+    subsets: ['latin'],
+    weight: ['600', '700'],
+    variable: '--font-hero',
+});
 
 
 // export const metadata: Metadata = {
@@ -44,7 +51,12 @@ export default function RootLayout({
     return (
         <html
             lang='nl'
-            className={cn('h-full antialiased', 'font-sans', inter.variable)}
+            className={cn(
+                'h-full antialiased',
+                'font-sans',
+                inter.variable,
+                spaceGrotesk.variable,
+            )}
             suppressHydrationWarning
         >
             <body className='min-h-full flex flex-col'>

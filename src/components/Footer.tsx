@@ -125,7 +125,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
     };
 
     return (
-        <footer className='w-full bg-texture-navy text-white border-t border-white/10 pt-16 pb-12 transition-all'>
+        <footer className='w-full bg-linear-to-b from-amber-ultra via-stone-bg to-amber-pale/50 text-navy-800 border-t border-navy-900/10 pt-16 pb-12 transition-all relative overflow-hidden'>
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
                 {/* 1. Dynamic Callback Callout Banner with Horizontally Inverted Glowing Gradient Background */}
                 <div className='bg-linear-to-tl from-[#f12711] via-[#ff9400] to-[#d88a04] text-white p-6 md:p-8 rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden border border-white/20'>
@@ -183,28 +183,28 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                 </div>
 
                 {/* 2. Main Footer Navigation Grid */}
-                <div className='grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 max-w-7xl mx-auto pb-12 border-b border-white/10'>
+                <div className='grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 max-w-7xl mx-auto pb-12 border-b border-navy-900/10'>
                     {/* Brand Info (Col span 4) */}
                     <div className='md:col-span-4 flex flex-col gap-5'>
                         <Link href={getPath('/')} className='inline-flex'>
                             <img
-                                src='/emlinked/Emlinked_logo__liggend_white.png'
+                                src='/emlinked/Emlinked_logo__liggend.svg'
                                 alt='emlinked - Vastgoedbeheer software homepage'
                                 className='w-auto h-12 transition-opacity hover:opacity-90'
                             />
                         </Link>
-                        <p className='text-xs text-slate-400 leading-relaxed'>
+                        <p className='text-xs text-navy-600 leading-relaxed'>
                             {t.tagline}
                         </p>
                         {/* Address & Phone details */}
-                        <div className='flex flex-col gap-2 mt-2 text-xs text-slate-400'>
+                        <div className='flex flex-col gap-2 mt-2 text-xs text-navy-600'>
                             <a
                                 href={
                                     settings?.phone
                                         ? `tel:${settings.phone.replace(/[^\d+]/g, '')}`
                                         : 'tel:+310887077000'
                                 }
-                                className='flex items-center gap-2 hover:text-[#ff9400] transition-colors'
+                                className='flex items-center gap-2 hover:text-amber-hover transition-colors'
                             >
                                 <svg
                                     className='h-3.5 w-3.5 text-[#ff9400] shrink-0'
@@ -252,16 +252,16 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 1: Product (Col span 2) */}
                     <div className='md:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-white font-mono'>
+                        <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.product}
                         </h4>
-                        <ul className='flex flex-col gap-2.5 text-xs text-slate-400'>
+                        <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
                                     href={getPath(
                                         '/apps/vastgoedbeheer-software',
                                     )}
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.vastgoedbeheer}
                                 </Link>
@@ -269,7 +269,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/apps/huurdersportaal')}
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.huurdersportaal}
                                 </Link>
@@ -277,7 +277,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/apps/payment-software')}
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.payment}
                                 </Link>
@@ -287,16 +287,16 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 2: Integrations (Col span 2) */}
                     <div className='md:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-white font-mono'>
+                        <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.integrations}
                         </h4>
-                        <ul className='flex flex-col gap-2.5 text-xs text-slate-400'>
+                        <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
                                     href={getPath(
                                         '/integraties/business-central',
                                     )}
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.businessCentral}
                                 </Link>
@@ -306,7 +306,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                     href={getPath(
                                         '/integraties/document-capture',
                                     )}
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.documentCapture}
                                 </Link>
@@ -316,7 +316,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                     href={getPath(
                                         '/integraties/direct-banking',
                                     )}
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.directBanking}
                                 </Link>
@@ -334,14 +334,14 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 3: Company (Col span 2) */}
                     <div className='md:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-white font-mono'>
+                        <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.company}
                         </h4>
-                        <ul className='flex flex-col gap-2.5 text-xs text-slate-400'>
+                        <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
                                     href={getPath('/over-ons')}
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.team}
                                 </Link>
@@ -349,7 +349,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/referenties')}
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.referenties}
                                 </Link>
@@ -357,7 +357,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/nieuws')}
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.blog}
                                 </Link>
@@ -365,7 +365,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/contact')}
-                                    className='hover:text-[#ff9400] transition-colors font-semibold'
+                                    className='hover:text-amber-hover transition-colors font-semibold'
                                 >
                                     {t.contact}
                                 </Link>
@@ -375,14 +375,14 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 4: Resources (Col span 2) */}
                     <div className='md:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-white font-mono'>
+                        <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.resources}
                         </h4>
-                        <ul className='flex flex-col gap-2.5 text-xs text-slate-400'>
+                        <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
                                     href='/docs'
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.docs}
                                 </Link>
@@ -390,7 +390,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/help')}
-                                    className='hover:text-[#ff9400] transition-colors'
+                                    className='hover:text-amber-hover transition-colors'
                                 >
                                     {t.support}
                                 </Link>
@@ -405,7 +405,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 }
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#ff9400] transition-colors'
+                                className='h-7 w-7 rounded-md border border-navy-900/10 flex items-center justify-center text-navy-600 hover:text-navy-900 hover:border-amber transition-colors'
                                 aria-label='LinkedIn'
                             >
                                 <svg
@@ -420,7 +420,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 href={settings?.twitterUrl || 'https://x.com'}
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#ff9400] transition-colors'
+                                className='h-7 w-7 rounded-md border border-navy-900/10 flex items-center justify-center text-navy-600 hover:text-navy-900 hover:border-amber transition-colors'
                                 aria-label='X (Twitter)'
                             >
                                 <svg
@@ -437,22 +437,22 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                 {/* 3. Bottom Legal Copyright Bar */}
                 <div className='mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left max-w-7xl mx-auto'>
-                    <p className='text-[10px] text-slate-400'>{t.rights}</p>
-                    <div className='flex flex-wrap justify-center gap-4 md:gap-6 text-[10px] text-slate-400 items-center'>
+                    <p className='text-[10px] text-navy-600'>{t.rights}</p>
+                    <div className='flex flex-wrap justify-center gap-4 md:gap-6 text-[10px] text-navy-600 items-center'>
                         <Link
                             href={getPath('/privacybeleid')}
-                            className='hover:text-[#ff9400] transition-colors'
+                            className='hover:text-amber-hover transition-colors'
                         >
                             {t.disclaimer}
                         </Link>
-                        <span className='text-white/10'>|</span>
+                        <span className='text-navy-900/15'>|</span>
                         <Link
                             href={getPath('/algemene-voorwaarden')}
-                            className='hover:text-[#ff9400] transition-colors'
+                            className='hover:text-amber-hover transition-colors'
                         >
                             {t.terms}
                         </Link>
-                        <span className='text-white/10'>|</span>
+                        <span className='text-navy-900/15'>|</span>
                         <button
                             type='button'
                             onClick={() => {
@@ -460,7 +460,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                     new CustomEvent('open_cookie_preferences'),
                                 );
                             }}
-                            className='hover:text-[#ff9400] transition-colors bg-transparent border-0 p-0 text-[10px] cursor-pointer text-slate-400'
+                            className='hover:text-amber-hover transition-colors bg-transparent border-0 p-0 text-[10px] cursor-pointer text-navy-600'
                         >
                             {locale === 'en'
                                 ? 'Cookie settings'
