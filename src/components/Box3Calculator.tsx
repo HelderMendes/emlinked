@@ -13,6 +13,7 @@ import {
     FileSpreadsheet,
     ShieldCheck,
 } from 'lucide-react';
+import { Badge } from '@/components/ui/Badge';
 import { Box3CalculatorCard } from '@/components/blocks/box3/Box3CalculatorCard';
 
 export type VerhuurStatus = 100 | 50 | 0;
@@ -196,7 +197,9 @@ export function Box3Calculator({
               'Exporteerbaar voor uw accountant',
           ];
 
-    const featureList = featureItems?.length ? featureItems : defaultFeatureList;
+    const featureList = featureItems?.length
+        ? featureItems
+        : defaultFeatureList;
     const sectionBadge =
         badge ||
         (isEn
@@ -221,20 +224,20 @@ export function Box3Calculator({
     return (
         <section
             id='calculator'
-            className='w-full bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] py-16 px-4 md:px-8 text-[#060e32] border-y border-amber/20 relative overflow-hidden'
+            className='w-full bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] py-16 px-4 md:px-8 text-[#060e32] border-y border-teal/20 relative overflow-hidden'
         >
             {/* Ambient Background Glows */}
-            <div className='absolute top-0 right-1/4 w-96 h-96 bg-amber/15 rounded-full blur-3xl pointer-events-none' />
-            <div className='absolute bottom-0 left-10 w-80 h-80 bg-amber-light/10 rounded-full blur-3xl pointer-events-none' />
+            <div className='absolute top-0 right-1/4 w-96 h-96 bg-teal/15 rounded-full blur-3xl pointer-events-none' />
+            <div className='absolute bottom-0 left-10 w-80 h-80 bg-teal-light/10 rounded-full blur-3xl pointer-events-none' />
 
             <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10'>
                 {/* Left Information Column */}
                 <div className='lg:col-span-5 flex flex-col justify-between space-y-8'>
                     <div>
-                        <span className='inline-flex items-center gap-2 text-xs font-bold text-amber uppercase tracking-widest bg-amber/15 border border-amber/35 px-3.5 py-1 rounded-full mb-4 shadow-xs backdrop-blur-md'>
+                        <Badge color='teal' uppercase className='mb-4'>
                             <Sparkles className='w-3.5 h-3.5' />
                             {sectionBadge}
-                        </span>
+                        </Badge>
                         <h2 className='font-display text-3xl md:text-4xl font-extrabold text-[#060e32] leading-tight mt-2 mb-4'>
                             {sectionTitle}
                         </h2>
@@ -244,8 +247,8 @@ export function Box3Calculator({
                     </div>
 
                     <div className='space-y-4 pt-2'>
-                        <h3 className='text-lg md:text-xl mb-5 font-bold text-amber flex items-center gap-2.5'>
-                            <ShieldCheck className='w-6 h-6 text-amber shrink-0' />
+                        <h3 className='text-lg md:text-xl mb-5 font-bold text-teal flex items-center gap-2.5'>
+                            <ShieldCheck className='w-6 h-6 text-teal shrink-0' />
                             <span>{leftFeatureTitle}</span>
                         </h3>
                         <div className='space-y-3.5'>
@@ -254,7 +257,7 @@ export function Box3Calculator({
                                     key={idx}
                                     className='flex items-center gap-3 text-sm md:text-base text-[#060e32]/90 font-medium'
                                 >
-                                    <span className='w-5 h-5 rounded-full bg-amber/15 text-amber border border-amber/40 flex items-center justify-center text-xs font-bold shrink-0 shadow-xs'>
+                                    <span className='w-5 h-5 rounded-full bg-teal/15 text-teal border border-teal/40 flex items-center justify-center text-xs font-bold shrink-0 shadow-xs'>
                                         ✓
                                     </span>
                                     <span>{item}</span>

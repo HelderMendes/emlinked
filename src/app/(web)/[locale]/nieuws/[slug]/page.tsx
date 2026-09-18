@@ -3,15 +3,15 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { 
-    Calendar, 
-    Clock, 
-    User, 
-    ArrowLeft, 
-    Share2, 
-    Sparkles, 
+import {
+    Calendar,
+    Clock,
+    User,
+    ArrowLeft,
+    Share2,
+    Sparkles,
     ArrowRight,
-    CheckCircle2
+    CheckCircle2,
 } from 'lucide-react';
 import { PortableText, PortableTextComponents } from 'next-sanity';
 import { sanityFetch } from '@/lib/sanity';
@@ -24,12 +24,30 @@ export const revalidate = 0;
 
 const portableTextComponents: PortableTextComponents = {
     marks: {
-        strong: ({ children }: { children?: React.ReactNode }) => <strong className="font-bold text-slate-900">{children}</strong>,
-        em: ({ children }: { children?: React.ReactNode }) => <em className="italic">{children}</em>,
-        code: ({ children }: { children?: React.ReactNode }) => <code className="bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-amber">{children}</code>,
-        underline: ({ children }: { children?: React.ReactNode }) => <u className="underline underline-offset-4">{children}</u>,
-        'strike-through': ({ children }: { children?: React.ReactNode }) => <span className="line-through">{children}</span>,
-        link: ({ value, children }: { value?: any; children?: React.ReactNode }) => {
+        strong: ({ children }: { children?: React.ReactNode }) => (
+            <strong className='font-bold text-slate-900'>{children}</strong>
+        ),
+        em: ({ children }: { children?: React.ReactNode }) => (
+            <em className='italic'>{children}</em>
+        ),
+        code: ({ children }: { children?: React.ReactNode }) => (
+            <code className='bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-teal'>
+                {children}
+            </code>
+        ),
+        underline: ({ children }: { children?: React.ReactNode }) => (
+            <u className='underline underline-offset-4'>{children}</u>
+        ),
+        'strike-through': ({ children }: { children?: React.ReactNode }) => (
+            <span className='line-through'>{children}</span>
+        ),
+        link: ({
+            value,
+            children,
+        }: {
+            value?: any;
+            children?: React.ReactNode;
+        }) => {
             const href = value?.href || '#';
             const target = href.startsWith('http') ? '_blank' : undefined;
             return (
@@ -37,7 +55,7 @@ const portableTextComponents: PortableTextComponents = {
                     href={href}
                     target={target}
                     rel={target ? 'noopener noreferrer' : undefined}
-                    className="text-amber hover:text-darkblue underline font-semibold transition-colors"
+                    className='text-teal hover:text-darkblue underline font-semibold transition-colors'
                 >
                     {children}
                 </a>
@@ -45,23 +63,51 @@ const portableTextComponents: PortableTextComponents = {
         },
     },
     block: {
-        h2: ({ children }: { children?: React.ReactNode }) => <h2 className="font-display text-2xl md:text-3xl font-bold text-darkblue pt-6 pb-2 leading-tight">{children}</h2>,
-        h3: ({ children }: { children?: React.ReactNode }) => <h3 className="font-display text-xl md:text-2xl font-bold text-darkblue pt-4 pb-2 leading-tight">{children}</h3>,
-        h4: ({ children }: { children?: React.ReactNode }) => <h4 className="font-display text-lg font-bold text-darkblue pt-3 pb-1">{children}</h4>,
-        normal: ({ children }: { children?: React.ReactNode }) => <p className="text-base md:text-lg text-slate-800 leading-relaxed my-4">{children}</p>,
+        h2: ({ children }: { children?: React.ReactNode }) => (
+            <h2 className='font-display text-2xl md:text-3xl font-bold text-darkblue pt-6 pb-2 leading-tight'>
+                {children}
+            </h2>
+        ),
+        h3: ({ children }: { children?: React.ReactNode }) => (
+            <h3 className='font-display text-xl md:text-2xl font-bold text-darkblue pt-4 pb-2 leading-tight'>
+                {children}
+            </h3>
+        ),
+        h4: ({ children }: { children?: React.ReactNode }) => (
+            <h4 className='text-lg font-bold text-darkblue pt-3 pb-1'>
+                {children}
+            </h4>
+        ),
+        normal: ({ children }: { children?: React.ReactNode }) => (
+            <p className='text-base md:text-lg text-slate-800 leading-relaxed my-4'>
+                {children}
+            </p>
+        ),
         blockquote: ({ children }: { children?: React.ReactNode }) => (
-            <blockquote className="border-l-4 border-amber pl-4 italic text-slate-700 my-6 py-2 bg-amber/5 rounded-r-lg font-serif">
+            <blockquote className='border-l-4 border-teal pl-4 italic text-slate-700 my-6 py-2 bg-teal/5 rounded-r-lg font-serif'>
                 {children}
             </blockquote>
         ),
     },
     list: {
-        bullet: ({ children }: { children?: React.ReactNode }) => <ul className="list-disc list-inside space-y-2 my-4 text-slate-800 text-base md:text-lg">{children}</ul>,
-        number: ({ children }: { children?: React.ReactNode }) => <ol className="list-decimal list-inside space-y-2 my-4 text-slate-800 text-base md:text-lg">{children}</ol>,
+        bullet: ({ children }: { children?: React.ReactNode }) => (
+            <ul className='list-disc list-inside space-y-2 my-4 text-slate-800 text-base md:text-lg'>
+                {children}
+            </ul>
+        ),
+        number: ({ children }: { children?: React.ReactNode }) => (
+            <ol className='list-decimal list-inside space-y-2 my-4 text-slate-800 text-base md:text-lg'>
+                {children}
+            </ol>
+        ),
     },
     listItem: {
-        bullet: ({ children }: { children?: React.ReactNode }) => <li className="leading-relaxed">{children}</li>,
-        number: ({ children }: { children?: React.ReactNode }) => <li className="leading-relaxed">{children}</li>,
+        bullet: ({ children }: { children?: React.ReactNode }) => (
+            <li className='leading-relaxed'>{children}</li>
+        ),
+        number: ({ children }: { children?: React.ReactNode }) => (
+            <li className='leading-relaxed'>{children}</li>
+        ),
     },
 };
 
@@ -106,7 +152,12 @@ async function getRelatedArticles(currentArticle: any, locale: string) {
     const currentSlug = currentArticle.slug;
     const currentCategory = currentArticle.category || '';
     const currentTitle = currentArticle.title || '';
-    const currentWords = new Set(currentTitle.toLowerCase().split(/\s+/).filter((w: string) => w.length > 3));
+    const currentWords = new Set(
+        currentTitle
+            .toLowerCase()
+            .split(/\s+/)
+            .filter((w: string) => w.length > 3),
+    );
 
     try {
         // 1. Fetch candidate pool (up to 12 candidates in same language)
@@ -133,30 +184,45 @@ async function getRelatedArticles(currentArticle: any, locale: string) {
         // 2. Multi-factor scoring for each candidate
         const scoredCandidates = candidates.map((candidate) => {
             // A. Category Match (20% weight)
-            const categoryScore = candidate.category === currentCategory ? 100 : 0;
+            const categoryScore =
+                candidate.category === currentCategory ? 100 : 0;
 
             // B. Relevance / Keyword Overlap (40% weight)
-            const candidateWords = (candidate.title || '').toLowerCase().split(/\s+/).filter((w: string) => w.length > 3);
+            const candidateWords = (candidate.title || '')
+                .toLowerCase()
+                .split(/\s+/)
+                .filter((w: string) => w.length > 3);
             let overlapCount = 0;
             candidateWords.forEach((w: string) => {
                 if (currentWords.has(w)) overlapCount++;
             });
-            const relevanceScore = candidateWords.length > 0 ? Math.min(100, (overlapCount / candidateWords.length) * 200) : 0;
+            const relevanceScore =
+                candidateWords.length > 0
+                    ? Math.min(
+                          100,
+                          (overlapCount / candidateWords.length) * 200,
+                      )
+                    : 0;
 
             // C. Freshness / Recency (15% weight)
-            const pubTime = candidate.publishedAt ? new Date(candidate.publishedAt).getTime() : now;
-            const daysOld = Math.max(0, (now - pubTime) / (1000 * 60 * 60 * 24));
-            const freshnessScore = Math.max(0, 100 - (daysOld / 3.65)); // Soft decay over 1 year
+            const pubTime = candidate.publishedAt
+                ? new Date(candidate.publishedAt).getTime()
+                : now;
+            const daysOld = Math.max(
+                0,
+                (now - pubTime) / (1000 * 60 * 60 * 24),
+            );
+            const freshnessScore = Math.max(0, 100 - daysOld / 3.65); // Soft decay over 1 year
 
             // D. Serendipity / Randomness (10% weight)
             const randomnessScore = Math.random() * 100;
 
             // Weighted composite score formula
             const totalScore =
-                (relevanceScore * 0.40) +
-                (categoryScore * 0.20) +
-                (freshnessScore * 0.15) +
-                (randomnessScore * 0.25);
+                relevanceScore * 0.4 +
+                categoryScore * 0.2 +
+                freshnessScore * 0.15 +
+                randomnessScore * 0.25;
 
             return { candidate, totalScore };
         });
@@ -201,11 +267,13 @@ const fallbackArticlesBySlug: Record<string, any> = {
     'emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026': {
         title: 'emlinked versterkt team en zet koers voor verdere groei in 2026',
         category: 'Organisatie',
-        excerpt: 'Met de uitbreiding van ons team van wervingsspecialisten en software architecten versterkt emlinked haar marktpositie in vastgoedbeheer software en interim oplossingen.',
+        excerpt:
+            'Met de uitbreiding van ons team van wervingsspecialisten en software architecten versterkt emlinked haar marktpositie in vastgoedbeheer software en interim oplossingen.',
         readTime: '4 min leestijd',
         publishedAt: '2026-01-15T09:00:00Z',
         authorName: 'Raymond Perridon',
-        imagePath: '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
+        imagePath:
+            '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
         paragraphs: [
             'Het nieuwe jaar staat bij emlinked in het teken van versnelde innovatie en verdere verdieping van onze dienstverlening. Door de aanhoudende vraag naar zowel gekwalificeerde interim specialisten als geavanceerde vastgoedbeheer apps op het Microsoft Dynamics 365 platform, breiden we ons kernteam verder uit.',
             'Onze unieke formule – de combinatie van hoogwaardige wervings- en interim-oplossingen met eigen native Business Central software – stelt organisaties in staat om operationele knelpunten direct op te lossen. Met het versterkte team kunnen we interim functies sneller invullen en software-ontwikkelingen met nog kortere oplevertijden realiseren.',
@@ -215,11 +283,13 @@ const fallbackArticlesBySlug: Record<string, any> = {
     'emlinked-expands-team-and-sets-course-for-2026-growth': {
         title: 'emlinked expands team and sets course for further growth in 2026',
         category: 'Organisatie',
-        excerpt: 'With the expansion of our recruitment specialists and software architects, emlinked strengthens its position in real estate management software and interim solutions.',
+        excerpt:
+            'With the expansion of our recruitment specialists and software architects, emlinked strengthens its position in real estate management software and interim solutions.',
         readTime: '4 min read',
         publishedAt: '2026-01-15T09:00:00Z',
         authorName: 'Raymond Perridon',
-        imagePath: '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
+        imagePath:
+            '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
         paragraphs: [
             'The new year at emlinked marks accelerated innovation and deeper client engagement. Driven by sustained demand for qualified interim specialists and native real estate management apps on Microsoft Dynamics 365 Business Central, we are expanding our core team.',
             'Our unique formula – combining executive interim placement with proprietary Business Central extensions – allows property organizations to resolve operational bottlenecks immediately.',
@@ -228,7 +298,8 @@ const fallbackArticlesBySlug: Record<string, any> = {
     'wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders': {
         title: 'Wet Goed Verhuurderschap: Wat verandert er voor vastgoedbeheerders?',
         category: 'Wet & Regelgeving',
-        excerpt: 'Een compleet overzicht van de verplichtingen rond de Wet goed verhuurderschap en hoe je met de juiste software boetes en dossierachterstanden voorkomt.',
+        excerpt:
+            'Een compleet overzicht van de verplichtingen rond de Wet goed verhuurderschap en hoe je met de juiste software boetes en dossierachterstanden voorkomt.',
         readTime: '5 min leestijd',
         publishedAt: '2025-11-20T10:00:00Z',
         authorName: 'Raymond Perridon',
@@ -241,7 +312,8 @@ const fallbackArticlesBySlug: Record<string, any> = {
     'good-landlordship-act-what-changes-for-property-managers': {
         title: 'Good Landlordship Act: What changes for real estate managers?',
         category: 'Wet & Regelgeving',
-        excerpt: 'A comprehensive guide to compliance requirements under the Dutch Good Landlordship Act and how automated software prevents administrative delays.',
+        excerpt:
+            'A comprehensive guide to compliance requirements under the Dutch Good Landlordship Act and how automated software prevents administrative delays.',
         readTime: '5 min read',
         publishedAt: '2025-11-20T10:00:00Z',
         authorName: 'Raymond Perridon',
@@ -258,12 +330,16 @@ export async function generateMetadata({
 }: ArticleDetailPageProps): Promise<Metadata> {
     const { locale, slug } = await params;
     const isEn = locale === 'en';
-    const article = (await getSanityArticleBySlug(slug, locale)) || fallbackArticlesBySlug[slug];
+    const article =
+        (await getSanityArticleBySlug(slug, locale)) ||
+        fallbackArticlesBySlug[slug];
 
     if (!article) {
         return buildMetadata({
             seo: null,
-            fallbackTitle: isEn ? 'Article Not Found | emlinked' : 'Artikel Niet Gevonden | emlinked',
+            fallbackTitle: isEn
+                ? 'Article Not Found | emlinked'
+                : 'Artikel Niet Gevonden | emlinked',
             fallbackDescription: '',
             canonicalUrl: `${DEFAULT_DOMAIN}/${locale}/nieuws`,
             locale,
@@ -281,29 +357,38 @@ export async function generateMetadata({
     });
 }
 
-function calculateReadTime(body: any, isEn: boolean, fallbackReadTime?: string): string {
+function calculateReadTime(
+    body: any,
+    isEn: boolean,
+    fallbackReadTime?: string,
+): string {
     if (fallbackReadTime && fallbackReadTime.trim().length > 0) {
         return fallbackReadTime;
     }
-    
+
     let totalWords = 0;
     if (Array.isArray(body)) {
         body.forEach((block: any) => {
             if (block._type === 'block' && block.children) {
                 block.children.forEach((c: any) => {
                     if (c.text) {
-                        totalWords += c.text.trim().split(/\s+/).filter(Boolean).length;
+                        totalWords += c.text
+                            .trim()
+                            .split(/\s+/)
+                            .filter(Boolean).length;
                     }
                 });
             }
         });
     }
-    
+
     const minutes = Math.max(1, Math.ceil(totalWords / 200));
     return isEn ? `${minutes} min read` : `${minutes} min leestijd`;
 }
 
-export default async function ArticleDetailPage({ params }: ArticleDetailPageProps) {
+export default async function ArticleDetailPage({
+    params,
+}: ArticleDetailPageProps) {
     const { locale, slug } = await params;
     const isEn = locale === 'en';
 
@@ -314,10 +399,19 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
     }
 
     const relatedArticles = await getRelatedArticles(article, locale);
-    const heroImgUrl = article.mainImage ? getImageUrl(article.mainImage) : (article.imagePath || '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png');
-    const canonicalPageUrl = article.seo?.canonical || `${DEFAULT_DOMAIN}/${isEn ? 'en/news' : 'nieuws'}/${slug}`;
-    const displayReadTime = calculateReadTime(article.body, isEn, article.readTime);
-    
+    const heroImgUrl = article.mainImage
+        ? getImageUrl(article.mainImage)
+        : article.imagePath ||
+          '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png';
+    const canonicalPageUrl =
+        article.seo?.canonical ||
+        `${DEFAULT_DOMAIN}/${isEn ? 'en/news' : 'nieuws'}/${slug}`;
+    const displayReadTime = calculateReadTime(
+        article.body,
+        isEn,
+        article.readTime,
+    );
+
     const jsonLdData = JSON.stringify({
         '@context': 'https://schema.org',
         '@graph': [
@@ -373,27 +467,42 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                         {/* Back Link */}
                         <Link
                             href={isEn ? '/en/news' : '/nieuws'}
-                            className='inline-flex items-center gap-2 text-xs font-mono font-bold text-amber hover:text-white transition-colors'
+                            className='inline-flex items-center gap-2 text-xs font-mono font-bold text-teal hover:text-white transition-colors'
                         >
                             <ArrowLeft className='w-4 h-4' />
-                            <span>{isEn ? 'Back to News Overview' : 'Terug naar Nieuwsoverzicht'}</span>
+                            <span>
+                                {isEn
+                                    ? 'Back to News Overview'
+                                    : 'Terug naar Nieuwsoverzicht'}
+                            </span>
                         </Link>
 
                         {/* Meta Row */}
-                        <div className='flex flex-wrap items-center gap-4 text-xs font-mono text-amber'>
+                        <div className='flex flex-wrap items-center gap-4 text-xs font-mono text-teal'>
                             {article.category && (
-                                <span className='px-3 py-1 rounded-full bg-amber/15 border border-amber/30 uppercase tracking-wider font-bold'>
+                                <span className='px-3 py-1 rounded-full bg-teal/15 border border-teal/30 uppercase tracking-wider font-bold'>
                                     {article.category}
                                 </span>
                             )}
                             {article.publishedAt && (
                                 <span className='flex items-center gap-1.5 text-slate-300'>
-                                    <Calendar className='w-3.5 h-3.5 text-amber' />
-                                    <span>{new Date(article.publishedAt).toLocaleDateString(isEn ? 'en-US' : 'nl-NL', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                                    <Calendar className='w-3.5 h-3.5 text-teal' />
+                                    <span>
+                                        {new Date(
+                                            article.publishedAt,
+                                        ).toLocaleDateString(
+                                            isEn ? 'en-US' : 'nl-NL',
+                                            {
+                                                month: 'long',
+                                                day: 'numeric',
+                                                year: 'numeric',
+                                            },
+                                        )}
+                                    </span>
                                 </span>
                             )}
                             <span className='flex items-center gap-1.5 text-slate-300'>
-                                <Clock className='w-3.5 h-3.5 text-amber' />
+                                <Clock className='w-3.5 h-3.5 text-teal' />
                                 <span>{displayReadTime}</span>
                             </span>
                         </div>
@@ -413,12 +522,21 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                         {/* Author & Share Row */}
                         <div className='pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4'>
                             <div className='flex items-center gap-3'>
-                                <div className='w-10 h-10 rounded-full bg-amber/20 border border-amber/40 flex items-center justify-center text-amber font-mono font-bold text-sm'>
-                                    {article.authorName ? article.authorName.charAt(0) : 'R'}
+                                <div className='w-10 h-10 rounded-full bg-teal/20 border border-teal/40 flex items-center justify-center text-teal font-mono font-bold text-sm'>
+                                    {article.authorName
+                                        ? article.authorName.charAt(0)
+                                        : 'R'}
                                 </div>
                                 <div>
-                                    <div className='text-xs font-bold text-white'>{article.authorName || 'Raymond Perridon'}</div>
-                                    <div className='text-[10px] text-amber font-mono'>{isEn ? 'emlinked Executive Team' : 'emlinked Management'}</div>
+                                    <div className='text-xs font-bold text-white'>
+                                        {article.authorName ||
+                                            'Raymond Perridon'}
+                                    </div>
+                                    <div className='text-[10px] text-teal font-mono'>
+                                        {isEn
+                                            ? 'emlinked Executive Team'
+                                            : 'emlinked Management'}
+                                    </div>
                                 </div>
                             </div>
 
@@ -429,7 +547,10 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                                     rel='noopener noreferrer'
                                     className='px-3.5 py-2 rounded-xl bg-white/10 border border-white/15 text-xs font-mono font-semibold text-slate-200 hover:text-white hover:bg-white/20 transition-all flex items-center gap-2'
                                 >
-                                    <svg className='w-3.5 h-3.5 fill-current text-amber' viewBox='0 0 24 24'>
+                                    <svg
+                                        className='w-3.5 h-3.5 fill-current text-teal'
+                                        viewBox='0 0 24 24'
+                                    >
                                         <path d='M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z' />
                                     </svg>
                                     <span>Share</span>
@@ -446,12 +567,18 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                 <div className='prose prose-lg max-w-none text-slate-700 space-y-6 font-light leading-relaxed'>
                     {article.paragraphs ? (
                         article.paragraphs.map((p: string, idx: number) => (
-                            <p key={idx} className='text-base md:text-lg text-slate-800 leading-relaxed'>
+                            <p
+                                key={idx}
+                                className='text-base md:text-lg text-slate-800 leading-relaxed'
+                            >
                                 {p}
                             </p>
                         ))
                     ) : article.body ? (
-                        <PortableText value={article.body} components={portableTextComponents} />
+                        <PortableText
+                            value={article.body}
+                            components={portableTextComponents}
+                        />
                     ) : (
                         <p className='text-base md:text-lg text-slate-800 leading-relaxed'>
                             {article.excerpt}
@@ -460,28 +587,47 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                 </div>
 
                 {/* Article Key Takeaways Card */}
-                <div className='rounded-2xl border border-amber/30 bg-amber/5 p-6 md:p-8 space-y-4'>
-                    <h4 className='font-display font-bold text-lg text-darkblue flex items-center gap-2'>
-                        <Sparkles className='w-5 h-5 text-amber' />
-                        <span>{isEn ? 'Key Takeaways for Real Estate Managers' : 'Belangrijkste inzichten voor vastgoedbeheerders'}</span>
+                <div className='rounded-2xl border border-teal/30 bg-teal/5 p-6 md:p-8 space-y-4'>
+                    <h4 className='font-bold text-lg text-darkblue flex items-center gap-2'>
+                        <Sparkles className='w-5 h-5 text-teal' />
+                        <span>
+                            {isEn
+                                ? 'Key Takeaways for Real Estate Managers'
+                                : 'Belangrijkste inzichten voor vastgoedbeheerders'}
+                        </span>
                     </h4>
                     <ul className='space-y-2 text-xs md:text-sm text-slate-700'>
-                        {article.keyTakeaways && Array.isArray(article.keyTakeaways) && article.keyTakeaways.length > 0 ? (
-                            article.keyTakeaways.map((point: string, idx: number) => (
-                                <li key={idx} className='flex items-start gap-2.5'>
-                                    <CheckCircle2 className='w-4 h-4 text-amber shrink-0 mt-0.5' />
-                                    <span>{point}</span>
-                                </li>
-                            ))
+                        {article.keyTakeaways &&
+                        Array.isArray(article.keyTakeaways) &&
+                        article.keyTakeaways.length > 0 ? (
+                            article.keyTakeaways.map(
+                                (point: string, idx: number) => (
+                                    <li
+                                        key={idx}
+                                        className='flex items-start gap-2.5'
+                                    >
+                                        <CheckCircle2 className='w-4 h-4 text-teal shrink-0 mt-0.5' />
+                                        <span>{point}</span>
+                                    </li>
+                                ),
+                            )
                         ) : (
                             <>
                                 <li className='flex items-start gap-2.5'>
-                                    <CheckCircle2 className='w-4 h-4 text-amber shrink-0 mt-0.5' />
-                                    <span>{isEn ? 'Automating administrative compliance prevents penalties and backlog.' : 'Geautomatiseerde dossiervoering voorkomt achterstanden en juridische risico’s.'}</span>
+                                    <CheckCircle2 className='w-4 h-4 text-teal shrink-0 mt-0.5' />
+                                    <span>
+                                        {isEn
+                                            ? 'Automating administrative compliance prevents penalties and backlog.'
+                                            : 'Geautomatiseerde dossiervoering voorkomt achterstanden en juridische risico’s.'}
+                                    </span>
                                 </li>
                                 <li className='flex items-start gap-2.5'>
-                                    <CheckCircle2 className='w-4 h-4 text-amber shrink-0 mt-0.5' />
-                                    <span>{isEn ? 'Microsoft Dynamics 365 BC integration provides real-time portfolio oversight.' : 'Microsoft Dynamics 365 BC integratie geeft direct inzicht in de complete portefeuille.'}</span>
+                                    <CheckCircle2 className='w-4 h-4 text-teal shrink-0 mt-0.5' />
+                                    <span>
+                                        {isEn
+                                            ? 'Microsoft Dynamics 365 BC integration provides real-time portfolio oversight.'
+                                            : 'Microsoft Dynamics 365 BC integratie geeft direct inzicht in de complete portefeuille.'}
+                                    </span>
                                 </li>
                             </>
                         )}
@@ -494,21 +640,29 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                 <section className='px-6 py-16 max-w-7xl mx-auto border-t border-slate-200 space-y-8'>
                     <div className='text-left space-y-2'>
                         <h3 className='font-display font-bold text-2xl text-darkblue'>
-                            {isEn ? 'Related Articles' : 'Gerelateerde Artikelen'}
+                            {isEn
+                                ? 'Related Articles'
+                                : 'Gerelateerde Artikelen'}
                         </h3>
                         <p className='text-xs text-slate-600 font-light'>
-                            {isEn ? 'Explore more insights from our team.' : 'Lees meer inzichten van ons team.'}
+                            {isEn
+                                ? 'Explore more insights from our team.'
+                                : 'Lees meer inzichten van ons team.'}
                         </p>
                     </div>
 
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                         {relatedArticles.map((rel) => {
-                            const relImg = getImageUrl(rel.mainImage, rel.imagePath || '/emlinked/news/Wet-Goed-Verhuurderschap-emlinked.jpg');
+                            const relImg = getImageUrl(
+                                rel.mainImage,
+                                rel.imagePath ||
+                                    '/emlinked/news/Wet-Goed-Verhuurderschap-emlinked.jpg',
+                            );
 
                             return (
                                 <div
                                     key={rel._id || rel.slug}
-                                    className='group rounded-2xl border border-slate-200 bg-white text-slate-900 flex flex-col justify-between hover:border-amber/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden text-left'
+                                    className='group rounded-2xl border border-slate-200 bg-white text-slate-900 flex flex-col justify-between hover:border-teal/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden text-left'
                                 >
                                     <div className='relative w-full h-44 bg-slate-100 overflow-hidden'>
                                         <Image
@@ -519,7 +673,7 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                                         />
                                     </div>
                                     <div className='p-6 space-y-3 flex-1 flex flex-col justify-between'>
-                                        <h4 className='font-display font-bold text-base text-darkblue group-hover:text-amber transition-colors line-clamp-2'>
+                                        <h4 className='font-bold text-base text-darkblue group-hover:text-teal transition-colors line-clamp-2'>
                                             <Link
                                                 href={
                                                     isEn
@@ -539,7 +693,7 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                                                     ? `/en/news/${rel.slug}`
                                                     : `/nieuws/${rel.slug}`
                                             }
-                                            className='inline-flex items-center gap-1.5 text-xs font-bold text-darkblue group-hover:text-amber transition-colors pt-2'
+                                            className='inline-flex items-center gap-1.5 text-xs font-bold text-darkblue group-hover:text-teal transition-colors pt-2'
                                         >
                                             <span>
                                                 {isEn

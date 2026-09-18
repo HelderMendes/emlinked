@@ -114,12 +114,12 @@ export default function StickyAnnouncement({
                                 damping: 20,
                                 stiffness: 300,
                             }}
-                            className='pointer-events-auto flex items-center gap-3 bg-white dark:bg-[#060e32] border border-black/20/60 shadow-xl rounded-full pl-4 pr-1.5 py-1.5 cursor-pointer hover:shadow-xl hover:scale-102 hover:border-amber/40 transition-all duration-200 group text-left'
+                            className='pointer-events-auto flex items-center gap-3 bg-white dark:bg-[#060e32] border border-black/20/60 shadow-xl rounded-full pl-4 pr-1.5 py-1.5 cursor-pointer hover:shadow-xl hover:scale-102 hover:border-teal/40 transition-all duration-200 group text-left'
                         >
                             <div className='flex items-center gap-2'>
                                 <span className='relative flex h-2 w-2'>
-                                    <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-amber opacity-75'></span>
-                                    <span className='relative inline-flex rounded-full h-2 w-2 bg-amber'></span>
+                                    <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-teal opacity-75'></span>
+                                    <span className='relative inline-flex rounded-full h-2 w-2 bg-teal'></span>
                                 </span>
                                 <span className='text-[10.5px] font-bold text-foreground font-display tracking-wider mt-0.5 uppercase '>
                                     {pillText}
@@ -157,12 +157,12 @@ export default function StickyAnnouncement({
                                 </button>
 
                                 <div className='flex items-center mb-1.5'>
-                                    <span className='inline-flex items-center gap-1 bg-amber/20 border border-amber/35 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-amber'>
-                                        <span className='w-1 h-1 bg-amber rounded-full mr-1.5 animate-ping' />
+                                    <span className='inline-flex items-center gap-1 bg-teal/20 border border-teal/35 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-teal'>
+                                        <span className='w-1 h-1 bg-teal rounded-full mr-1.5 animate-ping' />
                                         Platform
                                     </span>
                                 </div>
-                                <h4 className='font-display text-lg font-bold tracking-tight text-white'>
+                                <h4 className='text-lg font-bold tracking-tight text-white'>
                                     {title}
                                 </h4>
                                 <p className='text-[13px] text-white/70 font-light leading-relaxed mt-1'>
@@ -184,11 +184,11 @@ export default function StickyAnnouncement({
                                         key={index}
                                         className='flex flex-col gap-1 border-b border-border/40 last:border-0 pb-3 last:pb-0'
                                     >
-                                        <div className='flex gap-0.5 text-amber'>
+                                        <div className='flex gap-0.5 text-teal'>
                                             {[...Array(5)].map((_, i) => (
                                                 <Star
                                                     key={i}
-                                                    className='h-2.5 w-2.5 fill-amber'
+                                                    className='h-2.5 w-2.5 fill-teal'
                                                 />
                                             ))}
                                         </div>

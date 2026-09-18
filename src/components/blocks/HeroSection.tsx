@@ -9,6 +9,8 @@ import { BorderBeam } from 'border-beam';
 import { getImageUrl } from '@/sanity/image';
 import { cn } from '@/lib/utils';
 import { ArrowUpRight } from 'lucide-react';
+import { Badge } from '@/components/ui/Badge';
+import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
 export interface HeroSectionProps {
     label?: string;
@@ -30,7 +32,10 @@ export interface HeroSectionProps {
     children?: React.ReactNode;
 }
 
-export function formatHeroTitle(titleText?: string | React.ReactNode) {
+export function formatHeroTitle(
+    titleText?: string | React.ReactNode,
+    boldAccent: boolean = true,
+) {
     if (!titleText) return null;
     if (typeof titleText !== 'string') return titleText;
     let formatted = titleText;
@@ -43,7 +48,10 @@ export function formatHeroTitle(titleText?: string | React.ReactNode) {
             return (
                 <span
                     key={index}
-                    className='text-amber bg-linear-to-r from-amber via-amber-light to-amber bg-clip-text font-extrabold tracking-tight inline'
+                    className={cn(
+                        'text-teal bg-linear-to-r from-teal via-teal-light to-teal bg-clip-text tracking-tight inline',
+                        boldAccent ? 'font-extrabold' : 'font-normal',
+                    )}
                 >
                     {part.slice(1, -1)}
                 </span>
@@ -104,24 +112,20 @@ export function HeroSection({
     if (soft) {
         return (
             <section className='relative bg-stone-bg text-navy-900 border-b border-navy-900/10'>
-                <div className='mx-auto max-w-9xl px-4 sm:px-6 lg:px-8'>
+                <div className='mx-auto max-w-9xl px-4 sm:px-6 lg:px-8 lg:py-20'>
                     <div className='grid grid-cols-1 lg:grid-cols-2 border-x border-navy-900/10 lg:divide-x lg:divide-navy-900/10'>
                         {/* Left: eyebrow + headline */}
-                        <div className='px-6 sm:px-10 py-16 md:py-24 flex flex-col gap-8'>
-                            {label && (
-                                <span className='inline-flex items-center self-start rounded-[7px] border border-navy-900 h-6 px-2.5 text-xs font-semibold tracking-wide text-navy-900 w-min whitespace-nowrap'>
-                                    {label}
-                                </span>
-                            )}
-                            <h1 className='font-hero font-bold tracking-[-0.02em] leading-[1.125] text-3xl sm:text-4xl lg:text-[3.5rem]'>
-                                {formatHeroTitle(title)}
+                        <div className='px-6 sm:px-10  flex flex-col gap-8'>
+                            {label && <Badge color='navy'>{label}</Badge>}
+                            <h1 className='font-hero font-semibold text-5xl/tight tracking-[-0.75px] text-[#1D1C1B]'>
+                                {formatHeroTitle(title, false)}
                             </h1>
                         </div>
 
                         {/* Right: subtitle + CTAs */}
-                        <div className='px-6 sm:px-10 py-16 md:py-24 flex flex-col justify-center gap-8'>
+                        <div className='px-6 sm:px-10 flex flex-col justify-center gap-8'>
                             {subtitle && (
-                                <p className='text-lg text-navy-700 leading-relaxed max-w-md'>
+                                <p className='font-hero-body text-lg text-navy-700 leading-relaxed max-w-xl'>
                                     {subtitle}
                                 </p>
                             )}
@@ -131,20 +135,20 @@ export function HeroSection({
                                     {ctaLabel && ctaLink && (
                                         <Link
                                             href={getPath(ctaLink)}
-                                            className='inline-flex items-center gap-2 justify-center rounded-[14px] bg-navy-900 hover:bg-black py-[18px] px-4 text-sm font-semibold text-white transition-colors w-min whitespace-nowrap'
+                                            className='inline-flex items-center gap-2 justify-center  rounded-lg bg-navy-900 hover:bg-black py-3 px-4 text-sm font-semibold text-white transition-colors w-min whitespace-nowrap'
                                         >
                                             {ctaLabel}
                                             <ArrowUpRight className='w-4 h-4' />
                                         </Link>
                                     )}
                                     {secondaryCtaLabel && secondaryCtaLink && (
-                                        <Link
+                                        <OutlineLinkButton
                                             href={getPath(secondaryCtaLink)}
-                                            className='inline-flex h-11 items-center gap-1.5 justify-center rounded-[18px] border border-navy-900 hover:bg-navy-900/5 px-6 text-sm font-semibold text-navy-900 transition-colors'
+                                            color='navy'
                                         >
                                             {secondaryCtaLabel}
                                             <ArrowUpRight className='w-4 h-4' />
-                                        </Link>
+                                        </OutlineLinkButton>
                                     )}
                                 </div>
                             )}
@@ -168,7 +172,7 @@ export function HeroSection({
                 soft
                     ? 'bg-stone-bg bg-mesh-brand text-navy-900 border-navy-900/10'
                     : 'bg-texture-navy text-white border-white/10',
-                'dark:bg-linear-to-br dark:from-[#dc9ed4] dark:via-[#9ff1f5] dark:to-[#b6fcca] dark:animate-none dark:text-[#060e32] dark:border-amber/10',
+                'dark:bg-linear-to-br dark:from-[#dc9ed4] dark:via-[#9ff1f5] dark:to-[#b6fcca] dark:animate-none dark:text-[#060e32] dark:border-teal/10',
             )}
         >
             {/* Animated Data Grid Canvas overlay — designed for the dark
@@ -187,10 +191,9 @@ export function HeroSection({
                                     {label}
                                 </span>
                             ) : (
-                                <span className='inline-flex items-center gap-3.5 self-start rounded-full bg-amber/15 border border-amber/35 px-4.5 py-1 text-xs font-bold tracking-wide text-amber'>
-                                    <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                <Badge color='teal' dot dotPulse>
                                     {label}
-                                </span>
+                                </Badge>
                             ))}
 
                         <h1
@@ -224,7 +227,7 @@ export function HeroSection({
                                 {ctaLabel && ctaLink && (
                                     <Link
                                         href={getPath(ctaLink)}
-                                        className='inline-flex h-12 items-center justify-center rounded-md bg-amber hover:bg-amber-hover px-6 text-sm font-semibold text-[#060e32] transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
+                                        className='inline-flex h-12 items-center justify-center rounded-md bg-teal hover:bg-teal-hover px-6 text-sm font-semibold text-[#060e32] transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
                                     >
                                         {ctaLabel}
                                     </Link>
@@ -266,7 +269,7 @@ export function HeroSection({
                                                 height={32}
                                                 className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                             />
-                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-teal/35 shadow-2xl text-left'>
                                                 <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
                                                     Levi Bosboom
                                                 </div>
@@ -274,7 +277,7 @@ export function HeroSection({
                                                     Eigenaar, Vastgoedbeheer
                                                     Rotterdam
                                                 </div>
-                                                <div className='text-[10px] text-amber mt-1 tracking-widest'>
+                                                <div className='text-[10px] text-teal mt-1 tracking-widest'>
                                                     ★★★★★
                                                 </div>
                                                 <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
@@ -290,7 +293,7 @@ export function HeroSection({
                                                 height={32}
                                                 className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                             />
-                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-teal/35 shadow-2xl text-left'>
                                                 <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
                                                     Angelique van Doorn
                                                 </div>
@@ -298,7 +301,7 @@ export function HeroSection({
                                                     Vastgoedbeheerder, Van
                                                     Overhagen
                                                 </div>
-                                                <div className='text-[10px] text-amber mt-1 tracking-widest'>
+                                                <div className='text-[10px] text-teal mt-1 tracking-widest'>
                                                     ★★★★★
                                                 </div>
                                                 <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
@@ -314,7 +317,7 @@ export function HeroSection({
                                                 height={32}
                                                 className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                             />
-                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-teal/35 shadow-2xl text-left'>
                                                 <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
                                                     Michel De Waal
                                                 </div>
@@ -322,7 +325,7 @@ export function HeroSection({
                                                     Directeur, M2 Capital Real
                                                     Estate
                                                 </div>
-                                                <div className='text-[10px] text-amber mt-1 tracking-widest'>
+                                                <div className='text-[10px] text-teal mt-1 tracking-widest'>
                                                     ★★★★★
                                                 </div>
                                                 <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
@@ -338,7 +341,7 @@ export function HeroSection({
                                                 height={32}
                                                 className='w-8 h-8 rounded-full border-2 border-navy dark:border-[#FFFBEF] object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
                                             />
-                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-amber/35 shadow-2xl text-left'>
+                                            <div className='absolute top-full left-0 mt-1.5 w-max min-w-[200px] max-w-[250px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-9990 p-2.5 rounded-xl bg-[#FFFDF9] border border-teal/35 shadow-2xl text-left'>
                                                 <div className='text-[12px] font-extrabold text-[#060e32] leading-tight'>
                                                     Sander Bot
                                                 </div>
@@ -346,7 +349,7 @@ export function HeroSection({
                                                     Mede-eigenaar, Baetland
                                                     Vastgoed
                                                 </div>
-                                                <div className='text-[10px] text-amber mt-1 tracking-widest'>
+                                                <div className='text-[10px] text-teal mt-1 tracking-widest'>
                                                     ★★★★★
                                                 </div>
                                                 <div className='absolute bottom-full left-3 border-4 border-transparent border-b-[#FFFDF9]' />
@@ -380,7 +383,7 @@ export function HeroSection({
                         >
                             <div
                                 className={cn(
-                                    'relative w-full rounded-2xl overflow-hidden shadow-2xl border dark:border-amber/20',
+                                    'relative w-full rounded-2xl overflow-hidden shadow-2xl border dark:border-teal/20',
                                     soft
                                         ? 'border-navy-900/10'
                                         : 'border-white/10',
@@ -406,7 +409,7 @@ export function HeroSection({
                 {children && (
                     <div
                         className={cn(
-                            'mt-12 pt-6 border-t -mb-12 dark:border-amber/15',
+                            'mt-12 pt-6 border-t -mb-12 dark:border-teal/15',
                             soft ? 'border-navy-900/10' : 'border-white/10',
                         )}
                     >

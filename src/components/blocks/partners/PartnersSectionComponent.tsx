@@ -11,6 +11,7 @@ import {
     Layers,
 } from 'lucide-react';
 import { getImageUrl } from '@/sanity/image';
+import { Badge } from '@/components/ui/Badge';
 
 export interface PartnerItem {
     _key?: string;
@@ -115,15 +116,15 @@ export function PartnersSectionComponent({
     return (
         <section
             id='partners-grid'
-            className='py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10 text-[#060e32] border-t border-amber/20'
+            className='py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10 text-[#060e32] border-t border-teal/20'
         >
             <div className='max-w-7xl mx-auto space-y-16'>
                 {/* Header Title Block */}
                 <div className='text-center max-w-3xl mx-auto space-y-5'>
-                    <span className='inline-flex items-center gap-2 text-xs font-bold text-amber uppercase tracking-widest bg-amber/15 border border-amber/35 px-4 py-1.5 rounded-full shadow-xs backdrop-blur-md'>
+                    <Badge color='teal' uppercase>
                         <Sparkles className='w-3.5 h-3.5' />
                         {secBadge}
-                    </span>
+                    </Badge>
                     <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#060e32] tracking-tight leading-tight'>
                         {secTitle}
                     </h2>
@@ -149,7 +150,7 @@ export function PartnersSectionComponent({
                                 key={idx}
                                 className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/5 border border-black/10'
                             >
-                                <CheckCircle2 className='w-3.5 h-3.5 text-amber' />
+                                <CheckCircle2 className='w-3.5 h-3.5 text-teal' />
                                 {tag}
                             </span>
                         ))}
@@ -164,7 +165,7 @@ export function PartnersSectionComponent({
                             className='rounded-xl bg-white/80 border border-black/10 p-8 md:p-12 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group'
                         >
                             {/* Ambient Subtle Accent Glow */}
-                            {/* <div className='absolute top-0 right-0 w-64 h-64 bg-amber/5 rounded-full blur-3xl pointer-events-none group-hover:bg-amber/15 transition-all duration-500' />
+                            {/* <div className='absolute top-0 right-0 w-64 h-64 bg-teal/5 rounded-full blur-3xl pointer-events-none group-hover:bg-teal/15 transition-all duration-500' />
                              */}
                             <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10'>
                                 {/* Left Column: Logo, Tag & Bottom Link */}
@@ -198,9 +199,9 @@ export function PartnersSectionComponent({
                                                 href={partner.websiteUrl}
                                                 target='_blank'
                                                 rel='noopener noreferrer'
-                                                className='inline-flex items-center gap-2.5 text-xs md:text-sm font-bold text-[#060e32] hover:text-amber transition-colors group/link'
+                                                className='inline-flex items-center gap-2.5 text-xs md:text-sm font-bold text-[#060e32] hover:text-teal transition-colors group/link'
                                             >
-                                                <span className='w-5 h-5 rounded-full bg-amber/15 text-amber border border-amber/40 flex items-center justify-center text-[10px] font-bold shrink-0 shadow-xs group-hover/link:bg-amber group-hover/link:text-white transition-colors'>
+                                                <span className='w-5 h-5 rounded-full bg-teal/15 text-teal border border-teal/40 flex items-center justify-center text-[10px] font-bold shrink-0 shadow-xs group-hover/link:bg-teal group-hover/link:text-white transition-colors'>
                                                     <ExternalLink className='w-3 h-3' />
                                                 </span>
                                                 <span>
@@ -226,8 +227,8 @@ export function PartnersSectionComponent({
                                     {partner.featureTitle &&
                                         partner.featureText && (
                                             <div className='pt-2 space-y-2'>
-                                                <h4 className='text-base font-bold text-amber flex items-center gap-2.5'>
-                                                    <ShieldCheck className='w-5 h-5 text-amber shrink-0' />
+                                                <h4 className='text-base font-bold text-teal flex items-center gap-2.5'>
+                                                    <ShieldCheck className='w-5 h-5 text-teal shrink-0' />
                                                     <span>
                                                         {partner.featureTitle}
                                                     </span>

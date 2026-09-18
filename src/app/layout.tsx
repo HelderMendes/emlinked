@@ -1,16 +1,27 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import './globals.css';
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
-// version02: homepage hero headline only (see HeroSection.tsx `soft` branch)
-// — tight, geometric grotesk closer to the reference look than General Sans.
-const spaceGrotesk = Space_Grotesk({
-    subsets: ['latin'],
-    weight: ['600', '700'],
+// version02 homepage hero (see HeroSection.tsx `soft` branch): Expose for the
+// headline, Zodiak for hero body copy — self-hosted from Fontshare (ITF Free
+// Font License), replacing the earlier Space Grotesk / General Sans pairing.
+const expose = localFont({
+    src: '../fonts/expose/Expose-Variable.woff2',
+    weight: '400 900',
     variable: '--font-hero',
+    display: 'swap',
+});
+const zodiak = localFont({
+    src: [
+        { path: '../fonts/zodiak/Zodiak-Variable.woff2', weight: '100 900', style: 'normal' },
+        { path: '../fonts/zodiak/Zodiak-Variable-Italic.woff2', weight: '100 900', style: 'italic' },
+    ],
+    variable: '--font-hero-body',
+    display: 'swap',
 });
 
 
@@ -55,7 +66,8 @@ export default function RootLayout({
                 'h-full antialiased',
                 'font-sans',
                 inter.variable,
-                spaceGrotesk.variable,
+                expose.variable,
+                zodiak.variable,
             )}
             suppressHydrationWarning
         >

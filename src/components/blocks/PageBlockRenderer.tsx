@@ -11,6 +11,7 @@ import { TeamBlock } from '@/components/blocks/TeamBlock';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { getImageUrl } from '@/sanity/image';
+import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/lib/utils';
 import { HugeiconsIcon } from '@hugeicons/react';
 import {
@@ -63,7 +64,7 @@ function getTrustIcon(iconName: string) {
                 <HugeiconsIcon
                     icon={StarAward01Icon}
                     size={20}
-                    className='shrink-0 transition-colors text-amber'
+                    className='shrink-0 transition-colors text-teal'
                 />
             );
     }
@@ -133,7 +134,7 @@ export function PageBlockRenderer({
                         {items.map((item: any) => (
                             <div
                                 key={item._key || item.text}
-                                className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-amber dark:hover:text-amber transition-colors tracking-wide'
+                                className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-teal dark:hover:text-teal transition-colors tracking-wide'
                             >
                                 {getTrustIcon(item.icon)}
                                 <span>{item.text}</span>
@@ -166,9 +167,9 @@ export function PageBlockRenderer({
                         <div className='max-w-3xl mx-auto flex flex-col gap-4 text-center'>
                             {sectionTag && (
                                 <div className='flex justify-center mb-1'>
-                                    <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                                    <Badge color='teal' uppercase>
                                         {sectionTag}
-                                    </span>
+                                    </Badge>
                                 </div>
                             )}
                             {sectionTitle && (
@@ -227,7 +228,7 @@ export function PageBlockRenderer({
                                 return (
                                     <div
                                         key={feature._key || idx}
-                                        className='px-6 md:px-8 pt-6 md:pt-8 md:pb-6 pb-5 rounded-2xl border border-black/20 bg-background flex flex-col justify-between gap-3.5 hover:shadow-xl hover:-translate-y-1.5 hover:border-amber/40 transition-all duration-300 group relative'
+                                        className='px-6 md:px-8 pt-6 md:pt-8 md:pb-6 pb-5 rounded-2xl border border-black/20 bg-background flex flex-col justify-between gap-3.5 hover:shadow-xl hover:-translate-y-1.5 hover:border-teal/40 transition-all duration-300 group relative'
                                     >
                                         {linkTarget && (
                                             <Link
@@ -238,18 +239,21 @@ export function PageBlockRenderer({
                                         )}
 
                                         {resolvedIconBadge ? (
-                                            <div className='absolute top-0 right-0 -translate-y-1/3 translate-x-1/3 z-30 w-12 h-12 rounded-full bg-white dark:bg-navy-dark shadow-xl border-2 border-amber flex items-center justify-center p-1.5 group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
+                                            <div className='absolute top-0 right-0 -translate-y-1/3 translate-x-1/3 z-30 w-12 h-12 rounded-full bg-white dark:bg-navy-dark shadow-xl border-2 border-teal flex items-center justify-center p-1.5 group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
                                                 <div className='relative w-full h-full rounded-full overflow-hidden'>
                                                     <Image
                                                         src={resolvedIconBadge}
-                                                        alt={feature.title || 'Badge'}
+                                                        alt={
+                                                            feature.title ||
+                                                            'Badge'
+                                                        }
                                                         fill
                                                         className='object-contain'
                                                     />
                                                 </div>
                                             </div>
                                         ) : (
-                                            <div className='absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 z-30 w-13 h-13 rounded-full bg-amber/80 text-white shadow-xl border-2 border-white dark:border-[#060e32] flex flex-col items-center justify-center font-extrabold text-[10px] uppercase tracking-tight leading-none group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
+                                            <div className='absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 z-30 w-13 h-13 rounded-full bg-teal/80 text-white shadow-xl border-2 border-white dark:border-[#060e32] flex flex-col items-center justify-center font-extrabold text-[10px] uppercase tracking-tight leading-none group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
                                                 <span>APP</span>
                                                 <span className='text-[20px] font-black text-white mt-0.5'>
                                                     0{idx + 1}
@@ -258,7 +262,7 @@ export function PageBlockRenderer({
                                         )}
 
                                         <div className='flex flex-col gap-4 z-10 pointer-events-none'>
-                                            <div className='relative w-full h-52 rounded-xl overflow-hidden bg-texture-navy/5 border border-black/20/50 group-hover:border-amber/30 transition-colors'>
+                                            <div className='relative w-full h-52 rounded-xl overflow-hidden bg-texture-navy/5 border border-black/20/50 group-hover:border-teal/30 transition-colors'>
                                                 <Image
                                                     src={cardImg}
                                                     alt={
@@ -272,7 +276,7 @@ export function PageBlockRenderer({
                                             </div>
 
                                             <div className='flex items-center gap-3 mt-1'>
-                                                <h3 className='text-xl font-bold text-[#060e32] dark:text-white group-hover:text-amber transition-colors'>
+                                                <h3 className='text-xl font-bold text-[#060e32] dark:text-white group-hover:text-teal transition-colors'>
                                                     {feature.title}
                                                 </h3>
                                             </div>
@@ -284,13 +288,13 @@ export function PageBlockRenderer({
 
                                         <div className='pt-2 border-t border-black/20/40 flex items-center justify-between gap-4 z-30 mt-auto pointer-events-none'>
                                             <div className='flex items-center gap-2 text-xs font-medium text-muted-foreground truncate'>
-                                                <CheckCircle2 className='w-3.5 h-3.5 text-amber shrink-0' />
+                                                <CheckCircle2 className='w-3.5 h-3.5 text-teal shrink-0' />
                                                 <span className='truncate'>
                                                     {tagText}
                                                 </span>
                                             </div>
 
-                                            <div className='inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber group-hover:text-foreground group-hover:translate-x-0.5 transition-all duration-200 shrink-0'>
+                                            <div className='inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal group-hover:text-foreground group-hover:translate-x-0.5 transition-all duration-200 shrink-0'>
                                                 <span>
                                                     {feature.ctaLabel ||
                                                         (isEn
@@ -326,9 +330,9 @@ export function PageBlockRenderer({
             const integrations = block.integrations || block.items || [];
 
             // version02: soft light-warm canvas instead of the dark navy
-            // texture, one pastel wash per card (amber/emerald/navy-50) in
+            // texture, one pastel wash per card (teal/emerald/navy-50) in
             // place of a flat dark-glass treatment.
-            const cardWash = ['bg-amber-pale/50', 'bg-emerald-50', 'bg-navy-50'];
+            const cardWash = ['bg-teal-pale/50', 'bg-emerald-50', 'bg-navy-50'];
 
             return (
                 <section
@@ -339,9 +343,9 @@ export function PageBlockRenderer({
                         <div className='max-w-3xl mx-auto flex flex-col gap-4 text-center'>
                             {sectionTag && (
                                 <div className='flex justify-center mb-1'>
-                                    <span className='inline-flex items-center justify-center rounded-full border border-amber/40 bg-white px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber-hover uppercase shadow-xs'>
+                                    <Badge color='teal' uppercase>
                                         {sectionTag}
-                                    </span>
+                                    </Badge>
                                 </div>
                             )}
                             <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-navy-900'>
@@ -381,13 +385,13 @@ export function PageBlockRenderer({
                                     <div
                                         key={item._key || idx}
                                         className={cn(
-                                            'p-8 rounded-2xl border border-navy-900/10 text-navy-900 hover:border-amber/40 hover:shadow-lg transition-all duration-300 relative overflow-hidden group flex flex-col justify-between gap-6 z-10',
+                                            'p-8 rounded-2xl border border-navy-900/10 text-navy-900 hover:border-teal/40 hover:shadow-lg transition-all duration-300 relative overflow-hidden group flex flex-col justify-between gap-6 z-10',
                                             cardWash[idx % cardWash.length],
                                         )}
                                     >
                                         <div className='flex flex-col gap-4 z-10'>
                                             <div className='flex items-center justify-between'>
-                                                <div className='h-12 w-12 rounded-xl bg-white border border-amber/35 flex items-center justify-center text-amber font-bold text-lg shadow-xs'>
+                                                <div className='h-12 w-12 rounded-xl bg-white border border-teal/35 flex items-center justify-center text-teal font-bold text-lg shadow-xs'>
                                                     {idx === 0 ? (
                                                         <Database className='h-6 w-6' />
                                                     ) : idx === 1 ? (
@@ -396,14 +400,14 @@ export function PageBlockRenderer({
                                                         <Cpu className='h-6 w-6' />
                                                     )}
                                                 </div>
-                                                <span className='text-[10px] font-bold text-amber-hover bg-white border border-amber/30 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5'>
+                                                <Badge color='teal' uppercase>
                                                     {nodeLabel}
-                                                </span>
+                                                </Badge>
                                             </div>
 
                                             <div className='flex flex-col gap-1 mt-2'>
                                                 {item.badge && (
-                                                    <span className='text-[10px] font-bold text-amber-hover uppercase tracking-widest'>
+                                                    <span className='text-[10px] font-bold text-teal-hover uppercase tracking-widest'>
                                                         {item.badge}
                                                     </span>
                                                 )}
@@ -417,8 +421,8 @@ export function PageBlockRenderer({
                                         </div>
 
                                         <div className='pt-4 border-t border-navy-900/10 flex items-center justify-between text-xs z-10'>
-                                            <span className='text-amber-hover font-mono font-semibold tracking-wide flex items-center gap-1.5'>
-                                                <Layers className='h-3.5 w-3.5 text-amber/80' />
+                                            <span className='text-teal-hover font-mono font-semibold tracking-wide flex items-center gap-1.5'>
+                                                <Layers className='h-3.5 w-3.5 text-teal/80' />
                                                 {footerSpec}
                                             </span>
                                             <span className='text-emerald-700 font-semibold text-[11px] flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md'>
@@ -466,14 +470,18 @@ export function PageBlockRenderer({
                     className='px-6 py-24 bg-background relative overflow-hidden'
                 >
                     <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                        <div className='border border-amber/30 rounded-3xl bg-linear-to-br from-amber-ultra via-stone-bg to-amber-pale/60 text-navy-900 p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg'>
+                        <div className='border border-teal/30 rounded-3xl bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 text-navy-900 p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg'>
                             <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                                 <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                     {tag && (
-                                        <span className='inline-flex items-center gap-2 self-start rounded-full bg-white border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber-hover uppercase shadow-xs'>
-                                            <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                        <Badge
+                                            color='teal'
+                                            uppercase
+                                            dot
+                                            dotPulse
+                                        >
                                             {tag}
-                                        </span>
+                                        </Badge>
                                     )}
                                     <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight'>
                                         {title}
@@ -484,7 +492,7 @@ export function PageBlockRenderer({
                                     {buttonLabel && buttonLink && (
                                         <GlowingLink
                                             href={getPath(buttonLink)}
-                                            className='h-14 px-12 text-base mr-auto font-bold shadow-xl hover:shadow-amber/30'
+                                            className='h-14 px-12 text-base mr-auto font-bold shadow-xl hover:shadow-teal/30'
                                         >
                                             {buttonLabel}
                                         </GlowingLink>

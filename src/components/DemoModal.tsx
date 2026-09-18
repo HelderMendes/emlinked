@@ -3,7 +3,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, MapPin, Phone, Check, AlertCircle, Loader2 } from 'lucide-react';
+import {
+    X,
+    Mail,
+    MapPin,
+    Phone,
+    Check,
+    AlertCircle,
+    Loader2,
+} from 'lucide-react';
 import { BsLinkedin, BsTwitterX } from 'react-icons/bs';
 import Script from 'next/script';
 import Image from 'next/image';
@@ -27,8 +35,9 @@ const translations = {
         title: 'Demo aanvraag',
         subtitle: 'We horen graag van je. Ons team staat voor je klaar.',
         formTitle: 'Demo aanvragen',
-        formSubtitle: 'Vul je gegevens in voor een live 1-op-1 demonstratie van ons platform.',
-        
+        formSubtitle:
+            'Vul je gegevens in voor een live 1-op-1 demonstratie van ons platform.',
+
         firstNameLabel: 'Voornaam',
         lastNameLabel: 'Achternaam',
         emailLabel: 'E-mailadres',
@@ -36,27 +45,28 @@ const translations = {
         companyLabel: 'Organisatie',
         portfolioLabel: 'Omvang portefeuille',
         messageLabel: 'Bericht / Vraag',
-        
+
         placeholderFirstName: 'Sander',
         placeholderLastName: 'de Bruijn',
         placeholderEmail: 'sander@bedrijf.nl',
         placeholderPhone: '+31 (0) 6 12345678',
         placeholderCompany: 'Vastgoedbeheer B.V.',
         placeholderMessage: 'Laat een bericht achter...',
-        
+
         chatTitle: 'Stuur een e-mail',
         chatDesc: 'Ons team beantwoordt al je vragen.',
         officeTitle: 'Kantoor',
         officeDesc: 'Kom langs op ons hoofdkantoor.',
         phoneTitle: 'Bellen',
         phoneDesc: 'Maandag t/m vrijdag van 9:00 tot 17:00.',
-        
+
         submitBtn: 'Demo aanvragen',
         sendingBtn: 'Verzenden...',
         successTitle: 'Demo aanvraag verzonden!',
-        successMessage: 'Beste {name}, we hebben je aanvraag in goede orde ontvangen. Ons team neemt zo snel mogelijk contact met je op.',
+        successMessage:
+            'Beste {name}, we hebben je aanvraag in goede orde ontvangen. Ons team neemt zo snel mogelijk contact met je op.',
         closeBtn: 'Sluiten',
-        
+
         errorRecaptcha: 'Bevestig a.u.b. dat je geen robot bent.',
         portfolioOption1: 'Minder dan 10 objecten',
         portfolioOption2: '10 tot 50 objecten',
@@ -67,8 +77,9 @@ const translations = {
         title: 'Request a Demo',
         subtitle: 'We would love to hear from you. Our team is here to help.',
         formTitle: 'Request a Demo',
-        formSubtitle: 'Fill in your details for a live 1-on-1 demonstration of our platform.',
-        
+        formSubtitle:
+            'Fill in your details for a live 1-on-1 demonstration of our platform.',
+
         firstNameLabel: 'First name',
         lastNameLabel: 'Last name',
         emailLabel: 'Email address',
@@ -76,49 +87,59 @@ const translations = {
         companyLabel: 'Company / Organization',
         portfolioLabel: 'Portfolio size',
         messageLabel: 'Message',
-        
+
         placeholderFirstName: 'Alex',
         placeholderLastName: 'Smith',
         placeholderEmail: 'alex@company.com',
         placeholderPhone: '+31 (0) 6 12345678',
         placeholderCompany: 'Property Management Ltd.',
         placeholderMessage: 'Leave us a message...',
-        
+
         chatTitle: 'Email us',
         chatDesc: 'Our friendly team is here to help.',
         officeTitle: 'Office',
         officeDesc: 'Come say hello at our office HQ.',
         phoneTitle: 'Phone',
         phoneDesc: 'Mon-Fri from 9:00 to 17:00.',
-        
+
         submitBtn: 'Request Demo',
         sendingBtn: 'Sending...',
         successTitle: 'Request submitted!',
-        successMessage: 'Dear {name}, we have received your request. Our team will contact you as soon as possible.',
+        successMessage:
+            'Dear {name}, we have received your request. Our team will contact you as soon as possible.',
         closeBtn: 'Close',
-        
+
         errorRecaptcha: 'Please verify that you are not a robot.',
         portfolioOption1: 'Less than 10 properties',
         portfolioOption2: '10 to 50 properties',
         portfolioOption3: '50 to 250 properties',
         portfolioOption4: 'More than 250 properties',
-    }
+    },
 } as const;
 
-export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModalProps) {
+export function DemoModal({
+    isOpen,
+    onClose,
+    locale = 'nl',
+    settings,
+}: DemoModalProps) {
     const t = translations[locale as 'nl' | 'en'] || translations.nl;
-    
+
     const [mounted, setMounted] = useState(false);
-    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+    const [status, setStatus] = useState<
+        'idle' | 'submitting' | 'success' | 'error'
+    >('idle');
     const [errorMessage, setErrorMessage] = useState('');
-    
+
     // Form fields
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [company, setCompany] = useState('');
-    const [portfolioSize, setPortfolioSize] = useState<string>(t.portfolioOption2);
+    const [portfolioSize, setPortfolioSize] = useState<string>(
+        t.portfolioOption2,
+    );
     const [message, setMessage] = useState('');
     const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
 
@@ -146,14 +167,22 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
 
         const renderWidget = () => {
             const win = window as any;
-            if (win.grecaptcha && recaptchaContainerRef.current && widgetIdRef.current === null) {
+            if (
+                win.grecaptcha &&
+                recaptchaContainerRef.current &&
+                widgetIdRef.current === null
+            ) {
                 try {
-                    widgetIdRef.current = win.grecaptcha.render(recaptchaContainerRef.current, {
-                        sitekey: siteKey,
-                        callback: (token: string) => setRecaptchaToken(token),
-                        'expired-callback': () => setRecaptchaToken(null),
-                        'error-callback': () => setRecaptchaToken(null),
-                    });
+                    widgetIdRef.current = win.grecaptcha.render(
+                        recaptchaContainerRef.current,
+                        {
+                            sitekey: siteKey,
+                            callback: (token: string) =>
+                                setRecaptchaToken(token),
+                            'expired-callback': () => setRecaptchaToken(null),
+                            'error-callback': () => setRecaptchaToken(null),
+                        },
+                    );
                 } catch (err) {
                     console.error('reCAPTCHA render error:', err);
                 }
@@ -182,7 +211,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         // reCAPTCHA client validation
         if (siteKey && !recaptchaToken) {
             setStatus('error');
@@ -219,7 +248,9 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
             setStatus('success');
         } catch (err: any) {
             setStatus('error');
-            setErrorMessage(err.message || 'Verzending mislukt. Probeer het later opnieuw.');
+            setErrorMessage(
+                err.message || 'Verzending mislukt. Probeer het later opnieuw.',
+            );
         }
     };
 
@@ -273,7 +304,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                             damping: 25,
                             stiffness: 350,
                         }}
-                        className='relative w-full max-w-4xl bg-[#FFFDF9] border border-amber/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
+                        className='relative w-full max-w-4xl bg-[#FFFDF9] border border-teal/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
                     >
                         {/* Close button */}
                         <button
@@ -410,7 +441,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                         <Check className='h-6 w-6' />
                                     </div>
                                     <div className='space-y-2'>
-                                        <h4 className='font-display font-bold text-xl text-[#060e32]'>
+                                        <h4 className='font-bold text-xl text-[#060e32]'>
                                             {t.successTitle}
                                         </h4>
                                         <p className='text-xs text-[#060e32]/75 leading-relaxed'>
@@ -435,7 +466,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                     className='space-y-6'
                                 >
                                     <div>
-                                        <h4 className='font-display font-extrabold text-xl text-[#060e32] tracking-tight'>
+                                        <h4 className='font-extrabold text-xl text-[#060e32] tracking-tight'>
                                             {t.formTitle}
                                         </h4>
                                         <p className='text-xs text-[#060e32]/75 mt-1.5 leading-relaxed'>
@@ -455,7 +486,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
                                                 {t.firstNameLabel}{' '}
-                                                <span className='text-amber'>
+                                                <span className='text-teal'>
                                                     *
                                                 </span>
                                             </label>
@@ -468,7 +499,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                                 placeholder={
                                                     t.placeholderFirstName
                                                 }
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
                                                 required
                                                 disabled={
                                                     status === 'submitting'
@@ -478,7 +509,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
                                                 {t.lastNameLabel}{' '}
-                                                <span className='text-amber'>
+                                                <span className='text-teal'>
                                                     *
                                                 </span>
                                             </label>
@@ -491,7 +522,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                                 placeholder={
                                                     t.placeholderLastName
                                                 }
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
                                                 required
                                                 disabled={
                                                     status === 'submitting'
@@ -505,7 +536,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
                                                 {t.emailLabel}{' '}
-                                                <span className='text-amber'>
+                                                <span className='text-teal'>
                                                     *
                                                 </span>
                                             </label>
@@ -516,7 +547,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                                     setEmail(e.target.value)
                                                 }
                                                 placeholder={t.placeholderEmail}
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
                                                 required
                                                 disabled={
                                                     status === 'submitting'
@@ -526,7 +557,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
                                                 {t.phoneLabel}{' '}
-                                                <span className='text-amber'>
+                                                <span className='text-teal'>
                                                     *
                                                 </span>
                                             </label>
@@ -537,7 +568,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                                     setPhone(e.target.value)
                                                 }
                                                 placeholder={t.placeholderPhone}
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
                                                 required
                                                 disabled={
                                                     status === 'submitting'
@@ -551,7 +582,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
                                                 {t.companyLabel}{' '}
-                                                <span className='text-amber'>
+                                                <span className='text-teal'>
                                                     *
                                                 </span>
                                             </label>
@@ -564,7 +595,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                                 placeholder={
                                                     t.placeholderCompany
                                                 }
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
                                                 required
                                                 disabled={
                                                     status === 'submitting'
@@ -582,7 +613,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                                         e.target.value,
                                                     )
                                                 }
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
                                                 disabled={
                                                     status === 'submitting'
                                                 }
@@ -627,7 +658,7 @@ export function DemoModal({ isOpen, onClose, locale = 'nl', settings }: DemoModa
                                             }
                                             placeholder={t.placeholderMessage}
                                             rows={3}
-                                            className='w-full p-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber shadow-xs'
+                                            className='w-full p-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
                                             disabled={status === 'submitting'}
                                         />
                                     </div>

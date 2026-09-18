@@ -101,14 +101,14 @@ export default function CookieConsentBanner({
 
     return (
         <div className='fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-xl z-50 animate-in fade-in slide-in-from-bottom-5 duration-300'>
-            <div className='bg-slate-900/95 border border-amber/30 text-white rounded-2xl p-5 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl relative overflow-hidden'>
+            <div className='bg-slate-900/95 border border-teal/30 text-white rounded-2xl p-5 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl relative overflow-hidden'>
                 {/* Top Ambient Glow */}
-                <div className='absolute top-0 right-0 w-32 h-32 bg-amber/10 rounded-full blur-2xl pointer-events-none' />
+                <div className='absolute top-0 right-0 w-32 h-32 bg-teal/10 rounded-full blur-2xl pointer-events-none' />
 
                 {/* HEADER ROW */}
                 <div className='flex items-start justify-between gap-4 mb-3'>
                     <div className='flex items-center gap-2.5'>
-                        <div className='p-2 rounded-xl bg-amber/15 border border-amber/30 text-amber shadow-xs shrink-0'>
+                        <div className='p-2 rounded-xl bg-teal/15 border border-teal30 text-teal shadow-xs shrink-0'>
                             <Cookie className='w-5 h-5' />
                         </div>
                         <h3 className='font-bold text-base md:text-lg text-white'>
@@ -140,7 +140,7 @@ export default function CookieConsentBanner({
                                         ? '/en/privacybeleid'
                                         : '/privacybeleid'
                                 }
-                                className='underline hover:text-amber ml-1 transition-colors'
+                                className='underline hover:text-teal ml-1 transition-colors'
                             >
                                 {isEn ? 'Privacy policy' : 'Privacybeleid'}
                             </Link>
@@ -161,7 +161,7 @@ export default function CookieConsentBanner({
 
                             <button
                                 onClick={handleAcceptAll}
-                                className='w-full h-11 px-4 rounded-xl border border-amber/50 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 text-xs md:text-sm font-bold text-white transition-all duration-200 shadow-md shadow-orange-500/20 flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]'
+                                className='w-full h-11 px-4 rounded-xl border border-teal/50 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 text-xs md:text-sm font-bold text-white transition-all duration-200 shadow-md shadow-orange-500/20 flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]'
                             >
                                 <Check className='w-4 h-4' />
                                 <span>
@@ -173,7 +173,7 @@ export default function CookieConsentBanner({
                         <div className='pt-3 text-center sm:text-right'>
                             <button
                                 onClick={() => setShowPreferences(true)}
-                                className='text-xs text-amber hover:text-amber-light underline font-medium inline-flex items-center gap-1.5 transition-colors'
+                                className='text-xs text-teal hover:text-teallight underline font-medium inline-flex items-center gap-1.5 transition-colors'
                             >
                                 <Settings className='w-3.5 h-3.5' />
                                 <span>
@@ -239,7 +239,7 @@ export default function CookieConsentBanner({
                                             analytics: e.target.checked,
                                         }))
                                     }
-                                    className='w-5 h-5 accent-amber rounded-md cursor-pointer shrink-0'
+                                    className='w-5 h-5 accent-tealrounded-md cursor-pointer shrink-0'
                                 />
                             </div>
 
@@ -266,7 +266,7 @@ export default function CookieConsentBanner({
                                             marketing: e.target.checked,
                                         }))
                                     }
-                                    className='w-5 h-5 accent-amber rounded-md cursor-pointer shrink-0'
+                                    className='w-5 h-5 accent-teal rounded-md cursor-pointer shrink-0'
                                 />
                             </div>
                         </div>
@@ -282,7 +282,7 @@ export default function CookieConsentBanner({
 
                             <button
                                 onClick={handleSaveCustom}
-                                className='h-10 px-5 rounded-xl border border-amber/40 bg-amber/15 hover:bg-amber text-xs font-bold text-amber hover:text-slate-950 transition-all duration-200 shadow-sm'
+                                className='h-10 px-5 rounded-xl border border-teal/40 bg-teal/15 hover:bg-teal text-xs font-bold text-teal hover:text-slate-950 transition-all duration-200 shadow-sm'
                             >
                                 {isEn
                                     ? 'Save preferences'

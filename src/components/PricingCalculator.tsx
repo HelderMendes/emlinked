@@ -23,6 +23,7 @@ import {
     Loader2,
 } from 'lucide-react';
 import { GlowingLink } from '@/components/ui/GlowingButton';
+import { Badge } from '@/components/ui/Badge';
 
 interface PricingCalculatorProps {
     locale?: string;
@@ -311,9 +312,7 @@ export function PricingCalculator({
                         : 'Strippenkaart – (20 uur)',
                 );
             selectedItems.push({
-                category: isEn
-                    ? 'Support Packs (One-time)'
-                    : 'Strippenkaarten',
+                category: isEn ? 'Support Packs (One-time)' : 'Strippenkaarten',
                 label: labels.join(', '),
                 priceFormatted: formatEur(strippenkaartenCost),
             });
@@ -367,9 +366,7 @@ export function PricingCalculator({
             if (verkoopFactuurXml)
                 labels.push(isEn ? 'Sales Invoice' : 'Verkoop factuur');
             if (verkoopCreditNotaXml)
-                labels.push(
-                    isEn ? 'Sales Credit Memo' : 'Verkoop credit nota',
-                );
+                labels.push(isEn ? 'Sales Credit Memo' : 'Verkoop credit nota');
             if (bankpostenXml)
                 labels.push(isEn ? 'Bank Ledger Entries' : 'Bankposten');
             selectedItems.push({
@@ -450,19 +447,18 @@ export function PricingCalculator({
     return (
         <section
             id='calculator'
-            className='px-4 sm:px-6 lg:px-8 py-16 md:py-24 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/20 relative z-10'
+            className='px-4 sm:px-6 lg:px-8 py-16 md:py-24 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/20 relative z-10'
         >
             <div className='max-w-7xl mx-auto space-y-12'>
                 {/* Section Header */}
                 <div className='text-center max-w-3xl mx-auto space-y-4'>
                     <div className='flex justify-center mb-1'>
-                        <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-[10px] font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                            <span className='w-2 h-2 rounded-full bg-amber shrink-0 animate-ping' />
+                        <Badge color='teal' uppercase dot dotPulse>
                             {sectionTag ||
                                 (isEn
                                     ? 'CALCULATE YOUR SUBSCRIPTION'
                                     : 'BEREKEN JE ABONNEMENT')}
-                        </span>
+                        </Badge>
                     </div>
 
                     <h2 className='font-display text-2xl md:text-3xl lg:text-3.5xl font-bold tracking-tight text-[#060e32] leading-tight'>
@@ -505,9 +501,9 @@ export function PricingCalculator({
                             </div>
 
                             {/* Base Subscription Toggle Badge */}
-                            <div className='p-4 rounded-md bg-amber/10 border border-amber/30 flex items-center justify-between'>
+                            <div className='p-4 rounded-md bg-teal/10 border border-teal/30 flex items-center justify-between'>
                                 <div className='flex items-center gap-3'>
-                                    <div className='w-5 h-5 rounded-full bg-amber text-white flex items-center justify-center font-bold text-xs'>
+                                    <div className='w-5 h-5 rounded-full bg-teal text-white flex items-center justify-center font-bold text-xs'>
                                         ✓
                                     </div>
                                     <span className='text-sm font-semibold text-[#060e32]'>
@@ -516,7 +512,7 @@ export function PricingCalculator({
                                             : 'emlinked Basisabonnement'}
                                     </span>
                                 </div>
-                                <span className='text-xs font-mono font-bold text-amber'>
+                                <span className='text-xs font-mono font-bold text-teal'>
                                     € 144,80 / mnd
                                 </span>
                             </div>
@@ -536,7 +532,7 @@ export function PricingCalculator({
                                                 Number(e.target.value),
                                             )
                                         }
-                                        className='w-full appearance-none rounded-md border border-black/20 bg-slate-50 pl-3 pr-10 py-2 text-sm font-medium text-[#060e32] focus:border-amber focus:outline-hidden focus:ring-2 focus:ring-amber/30 transition-all cursor-pointer'
+                                        className='w-full appearance-none rounded-md border border-black/20 bg-slate-50 pl-3 pr-10 py-2 text-sm font-medium text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30 transition-all cursor-pointer'
                                     >
                                         {extraContractLabels.map(
                                             (label, idx) => (
@@ -570,7 +566,7 @@ export function PricingCalculator({
                                                 Number(e.target.value),
                                             )
                                         }
-                                        className='w-full appearance-none rounded-md border border-black/20 bg-slate-50 pl-3 pr-10 py-2 text-sm font-medium text-[#060e32] focus:border-amber focus:outline-hidden focus:ring-2 focus:ring-amber/30 transition-all cursor-pointer'
+                                        className='w-full appearance-none rounded-md border border-black/20 bg-slate-50 pl-3 pr-10 py-2 text-sm font-medium text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30 transition-all cursor-pointer'
                                     >
                                         {tenantPortalLabels.map(
                                             (label, idx) => (
@@ -592,7 +588,7 @@ export function PricingCalculator({
                                             ? 'Extra Full Users / Month'
                                             : 'Extra gebruikers / Maand'}
                                     </label>
-                                    <span className='text-sm font-mono font-bold text-amber'>
+                                    <span className='text-sm font-mono font-bold text-teal'>
                                         {formatEur(extraUsersCost)}
                                     </span>
                                 </div>
@@ -610,7 +606,7 @@ export function PricingCalculator({
                                         style={{
                                             background: `linear-gradient(to right, #ff9400 0%, #ff9400 ${(extraUsers / 20) * 100}%, rgba(0, 0, 0, 0.15) ${(extraUsers / 20) * 100}%, rgba(0, 0, 0, 0.15) 100%)`,
                                         }}
-                                        className='w-full accent-amber h-2 rounded-lg cursor-pointer appearance-none'
+                                        className='w-full accent-teal h-2 rounded-lg cursor-pointer appearance-none'
                                     />
                                     <input
                                         type='number'
@@ -643,7 +639,7 @@ export function PricingCalculator({
                                             ? 'Read-only Team Member Users'
                                             : 'Leesrechten voor Team Member'}
                                     </label>
-                                    <span className='text-sm font-mono font-bold text-amber'>
+                                    <span className='text-sm font-mono font-bold text-teal'>
                                         {formatEur(teamUsersCost)}
                                     </span>
                                 </div>
@@ -659,7 +655,7 @@ export function PricingCalculator({
                                         style={{
                                             background: `linear-gradient(to right, #ff9400 0%, #ff9400 ${(teamUsers / 50) * 100}%, rgba(0, 0, 0, 0.15) ${(teamUsers / 50) * 100}%, rgba(0, 0, 0, 0.15) 100%)`,
                                         }}
-                                        className='w-full accent-amber h-2 rounded-lg cursor-pointer appearance-none'
+                                        className='w-full accent-teal h-2 rounded-lg cursor-pointer appearance-none'
                                     />
                                     <input
                                         type='number'
@@ -699,7 +695,7 @@ export function PricingCalculator({
                                                 Number(e.target.value),
                                             )
                                         }
-                                        className='w-full appearance-none rounded-md border border-black/20 bg-slate-50 pl-3 pr-10 py-2 text-sm font-medium text-[#060e32] focus:border-amber focus:outline-hidden focus:ring-2 focus:ring-amber/30 transition-all cursor-pointer'
+                                        className='w-full appearance-none rounded-md border border-black/20 bg-slate-50 pl-3 pr-10 py-2 text-sm font-medium text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30 transition-all cursor-pointer'
                                     >
                                         {directBankingLabels.map(
                                             (label, idx) => (
@@ -729,7 +725,7 @@ export function PricingCalculator({
                                 className='w-full px-6 pt-6 pb-1 flex items-center justify-between text-left font-bold text-lg text-[#060e32] hover:bg-slate-50 transition-colors'
                             >
                                 <div className='flex items-center gap-3'>
-                                    <Sparkles className='w-5 h-5 text-amber' />
+                                    <Sparkles className='w-5 h-5 text-teal' />
                                     <span>
                                         {isEn
                                             ? 'Extra Integration & Setup'
@@ -747,13 +743,13 @@ export function PricingCalculator({
                                 <div className='p-6 pt-0 border-t border-black/10 space-y-6'>
                                     {/* Strippenkaarten Sub-block */}
                                     <div className='space-y-3 pt-4'>
-                                        <h4 className='text-[10px] font-bold uppercase tracking-wider text-amber'>
+                                        <h4 className='text-[10px] font-bold uppercase tracking-wider text-teal'>
                                             {isEn
                                                 ? 'Prepaid Support Packs (Strippenkaarten)'
                                                 : 'Strippenkaarten (Eenmalig)'}
                                         </h4>
                                         <div className='space-y-1.5'>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={strippenkaart5u}
@@ -762,7 +758,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -770,7 +766,7 @@ export function PricingCalculator({
                                                         : 'Strippenkaart – (5 uur) – € 550,00'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={strippenkaart10u}
@@ -779,7 +775,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -787,7 +783,7 @@ export function PricingCalculator({
                                                         : 'Strippenkaart – (10 uur) – € 899,00'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={strippenkaart20u}
@@ -796,7 +792,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -809,7 +805,7 @@ export function PricingCalculator({
 
                                     {/* Opstartkosten Sub-block */}
                                     <div className='space-y-1 pt-1'>
-                                        <h4 className='text-[10px] font-bold uppercase tracking-wider text-amber'>
+                                        <h4 className='text-[10px] font-bold uppercase tracking-wider text-teal'>
                                             {isEn
                                                 ? 'Onboarding & Setup Fees (One-time)'
                                                 : 'Opstartkosten (Eenmalig)'}
@@ -818,8 +814,8 @@ export function PricingCalculator({
                                             <label
                                                 className={`flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border transition-all ${
                                                     tenantSetup
-                                                        ? 'border-amber/30 bg-amber/5'
-                                                        : 'border-black/10 hover:border-amber/50 bg-slate-50/50'
+                                                        ? 'border-teal/30 bg-teal/5'
+                                                        : 'border-black/10 hover:border-teal/50 bg-slate-50/50'
                                                 }`}
                                             >
                                                 <input
@@ -830,7 +826,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -838,7 +834,7 @@ export function PricingCalculator({
                                                         : 'Opzetten/inrichten emlinked Tenant – € 300,00 (Standaard)'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={directBankingSetup}
@@ -847,7 +843,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -855,7 +851,7 @@ export function PricingCalculator({
                                                         : 'Setup Direct Banking – € 300,00'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={docCaptureSetup}
@@ -864,7 +860,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -872,7 +868,7 @@ export function PricingCalculator({
                                                         : 'Initiële installatie Document Capture – € 300,00'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={trainingVastgoed}
@@ -881,7 +877,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -889,7 +885,7 @@ export function PricingCalculator({
                                                         : 'Training emlinked Vastgoed (1 dag) – € 799,00'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={trainingFinance}
@@ -898,7 +894,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -920,7 +916,7 @@ export function PricingCalculator({
                                 className='w-full px-6 pt-6 pb-1 flex items-center justify-between text-left font-bold text-lg text-[#060e32] hover:bg-slate-50 transition-colors'
                             >
                                 <div className='flex items-center gap-3'>
-                                    <FileText className='w-5 h-5 text-amber' />
+                                    <FileText className='w-5 h-5 text-teal' />
                                     <span>
                                         {isEn
                                             ? 'XML/TXT Export File / Setup'
@@ -944,7 +940,7 @@ export function PricingCalculator({
                                                 : 'XML/TXT export bestand'}
                                         </h4>
                                         <div className='space-y-1.5'>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={inkoopFactuurXml}
@@ -953,7 +949,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -961,7 +957,7 @@ export function PricingCalculator({
                                                         : 'Inkoop factuur – Na berekening'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={
@@ -972,7 +968,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -980,7 +976,7 @@ export function PricingCalculator({
                                                         : 'Inkoop creditfactuur – Na berekening'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={verkoopFactuurXml}
@@ -989,7 +985,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -997,7 +993,7 @@ export function PricingCalculator({
                                                         : 'Verkoop factuur – Na berekening'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={
@@ -1008,7 +1004,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -1016,7 +1012,7 @@ export function PricingCalculator({
                                                         : 'Verkoop credit nota – Na berekening'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={bankpostenXml}
@@ -1025,7 +1021,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -1049,7 +1045,7 @@ export function PricingCalculator({
                                                 : 'Extra integratie en setup'}
                                         </h4>
                                         <div className='space-y-1.5'>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={
@@ -1060,7 +1056,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -1068,7 +1064,7 @@ export function PricingCalculator({
                                                         : 'Office integratie en setup – na berekening'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={
@@ -1079,7 +1075,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -1087,7 +1083,7 @@ export function PricingCalculator({
                                                         : 'Bank integratie en setup – na berekening'}
                                                 </span>
                                             </label>
-                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-amber/50 bg-slate-50/50 transition-all'>
+                                            <label className='flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border border-black/10 hover:border-teal/50 bg-slate-50/50 transition-all'>
                                                 <input
                                                     type='checkbox'
                                                     checked={
@@ -1098,7 +1094,7 @@ export function PricingCalculator({
                                                             e.target.checked,
                                                         )
                                                     }
-                                                    className='w-4 h-4 accent-amber rounded-sm'
+                                                    className='w-4 h-4 accent-teal rounded-sm'
                                                 />
                                                 <span className='text-sm font-medium text-[#060e32] grow'>
                                                     {isEn
@@ -1120,8 +1116,8 @@ export function PricingCalculator({
 
                     {/* Right Column: Sticky Total Summary Card */}
                     <div className='lg:col-span-5 sticky top-24'>
-                        <div className='rounded-2xl border-2 border-amber/40 bg-texture-navy text-white p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden backdrop-blur-xl'>
-                            <div className='absolute -right-16 -top-16 w-32 h-32 bg-amber/20 rounded-full blur-2xl pointer-events-none' />
+                        <div className='rounded-2xl border-2 border-teal/40 bg-texture-navy text-white p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden backdrop-blur-xl'>
+                            <div className='absolute -right-16 -top-16 w-32 h-32 bg-teal/20 rounded-full blur-2xl pointer-events-none' />
 
                             <div className='flex items-center justify-between border-b border-white/10 pb-4'>
                                 <h3 className='text-xl font-bold text-white tracking-tight flex items-center gap-2'>
@@ -1131,7 +1127,7 @@ export function PricingCalculator({
                                             : 'Total Summary'}
                                     </span>
                                 </h3>
-                                <span className='text-[10px] font-mono uppercase bg-amber/20 text-amber border border-amber/40 px-2.5 py-1 rounded-full font-bold'>
+                                <span className='text-[10px] font-mono uppercase bg-teal/20 text-teal border border-teal/40 px-2.5 py-1 rounded-full font-bold'>
                                     Live Calculation
                                 </span>
                             </div>
@@ -1162,7 +1158,7 @@ export function PricingCalculator({
                                                 {formatEur(extraContractsCost)}
                                             </span>
                                         </div>
-                                        <div className='pl-3 pt-0.5 text-[11px] text-amber/80 font-normal'>
+                                        <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
                                             <span>
                                                 •{' '}
                                                 {
@@ -1188,7 +1184,7 @@ export function PricingCalculator({
                                                 {formatEur(tenantPortalCost)}
                                             </span>
                                         </div>
-                                        <div className='pl-3 pt-0.5 text-[11px] text-amber/80 font-normal'>
+                                        <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
                                             <span>
                                                 •{' '}
                                                 {
@@ -1214,7 +1210,7 @@ export function PricingCalculator({
                                                 {formatEur(extraUsersCost)}
                                             </span>
                                         </div>
-                                        <div className='pl-3 pt-0.5 text-[11px] text-amber/80 font-normal'>
+                                        <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
                                             <span>
                                                 • {extraUsers}{' '}
                                                 {isEn
@@ -1242,7 +1238,7 @@ export function PricingCalculator({
                                                 {formatEur(teamUsersCost)}
                                             </span>
                                         </div>
-                                        <div className='pl-3 pt-0.5 text-[11px] text-amber/80 font-normal'>
+                                        <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
                                             <span>
                                                 • {teamUsers}{' '}
                                                 {isEn
@@ -1268,7 +1264,7 @@ export function PricingCalculator({
                                                 {formatEur(directBankingCost)}
                                             </span>
                                         </div>
-                                        <div className='pl-3 pt-0.5 text-[11px] text-amber/80 font-normal'>
+                                        <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
                                             <span>
                                                 •{' '}
                                                 {
@@ -1283,7 +1279,7 @@ export function PricingCalculator({
 
                                 {/* 7. Strippenkaarten (only when selected) */}
                                 {strippenkaartenCost > 0 && (
-                                    <div className='py-1 border-b border-white/5 text-amber'>
+                                    <div className='py-1 border-b border-white/5 text-teal'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1295,7 +1291,7 @@ export function PricingCalculator({
                                             </span>
                                         </div>
                                         {strippenkaart5u && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1306,7 +1302,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {strippenkaart10u && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1317,7 +1313,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {strippenkaart20u && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1332,7 +1328,7 @@ export function PricingCalculator({
 
                                 {/* 8. Opstartkosten (only when selected) */}
                                 {opstartkostenCost > 0 && (
-                                    <div className='py-1 border-b border-white/5 text-amber'>
+                                    <div className='py-1 border-b border-white/5 text-teal'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1344,7 +1340,7 @@ export function PricingCalculator({
                                             </span>
                                         </div>
                                         {tenantSetup && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1355,7 +1351,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {directBankingSetup && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1366,7 +1362,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {docCaptureSetup && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1377,7 +1373,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {trainingVastgoed && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1388,7 +1384,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {trainingFinance && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1403,7 +1399,7 @@ export function PricingCalculator({
 
                                 {/* 9. XML/TXT Export (only when selected) */}
                                 {isAnyXmlSelected && (
-                                    <div className='py-1 border-b border-white/5 text-amber'>
+                                    <div className='py-1 border-b border-white/5 text-teal'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1417,7 +1413,7 @@ export function PricingCalculator({
                                             </span>
                                         </div>
                                         {inkoopFactuurXml && (
-                                            <div className='pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1427,7 +1423,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {inkoopCreditFactuurXml && (
-                                            <div className='pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1437,7 +1433,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {verkoopFactuurXml && (
-                                            <div className='pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1447,7 +1443,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {verkoopCreditNotaXml && (
-                                            <div className='pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1457,7 +1453,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {bankpostenXml && (
-                                            <div className='pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1471,7 +1467,7 @@ export function PricingCalculator({
 
                                 {/* 10. Extra Integratie (only when selected) */}
                                 {isAnyExtraIntegrationSelected && (
-                                    <div className='py-1 border-b border-white/5 text-amber'>
+                                    <div className='py-1 border-b border-white/5 text-teal'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1485,7 +1481,7 @@ export function PricingCalculator({
                                             </span>
                                         </div>
                                         {officeIntegratieSetup && (
-                                            <div className='pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1495,7 +1491,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {bankIntegratieSetup && (
-                                            <div className='pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1505,7 +1501,7 @@ export function PricingCalculator({
                                             </div>
                                         )}
                                         {docCaptureCustomSetup && (
-                                            <div className='pl-3 pt-1 text-[11px] text-amber/80 font-normal'>
+                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
                                                 <span>
                                                     •{' '}
                                                     {isEn
@@ -1518,7 +1514,7 @@ export function PricingCalculator({
                                 )}
 
                                 {/* Calculation Totals */}
-                                <div className='pt-3 space-y-2 border-t border-amber/30 text-sm'>
+                                <div className='pt-3 space-y-2 border-t border-teal/30 text-sm'>
                                     <div className='flex justify-between items-center text-white/90'>
                                         <span className='font-sans font-medium text-xs'>
                                             {isEn
@@ -1547,12 +1543,12 @@ export function PricingCalculator({
                                                 ? 'Support Fee (20%)'
                                                 : 'Support fee (20%)'}
                                         </span>
-                                        <span className='font-bold text-amber'>
+                                        <span className='font-bold text-teal'>
                                             {formatEur(supportFee)}
                                         </span>
                                     </div>
 
-                                    <div className='flex justify-between items-center text-amber text-xs pt-1 border-t border-white/10'>
+                                    <div className='flex justify-between items-center text-teal text-xs pt-1 border-t border-white/10'>
                                         <span className='font-sans font-semibold'>
                                             {isEn
                                                 ? 'Total One-time Setup Services'
@@ -1563,8 +1559,8 @@ export function PricingCalculator({
                                         </span>
                                     </div>
 
-                                    <div className='flex justify-between items-center text-base pt-3 border-t border-amber/40 text-white'>
-                                        <span className='font-sans font-extrabold uppercase tracking-wide text-xs text-amber'>
+                                    <div className='flex justify-between items-center text-base pt-3 border-t border-teal/40 text-white'>
+                                        <span className='font-sans font-extrabold uppercase tracking-wide text-xs text-teal'>
                                             {isEn
                                                 ? 'Total Monthly Subscription'
                                                 : 'Totaal – Maand Abonnement'}
@@ -1608,7 +1604,7 @@ export function PricingCalculator({
                 isModalOpen &&
                 createPortal(
                     <div className='fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fadeIn'>
-                        <div className='relative w-full max-w-xl rounded-2xl bg-white p-6 sm:p-8 text-[#060e32] shadow-2xl border border-amber/30 max-h-[90vh] overflow-y-auto'>
+                        <div className='relative w-full max-w-xl rounded-2xl bg-white p-6 sm:p-8 text-[#060e32] shadow-2xl border border-teal/30 max-h-[90vh] overflow-y-auto'>
                             <button
                                 type='button'
                                 onClick={() => setIsModalOpen(false)}
@@ -1623,7 +1619,7 @@ export function PricingCalculator({
                                     className='space-y-6'
                                 >
                                     <div className='space-y-2 text-left border-b border-slate-100 pb-4'>
-                                        <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber/15 text-amber text-[10px] font-mono font-bold uppercase'>
+                                        <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/15 text-teal text-[10px] font-mono font-bold uppercase'>
                                             <Sparkles className='w-3.5 h-3.5' />
                                             {isEn
                                                 ? 'QUOTE CONFIGURATION'
@@ -1670,7 +1666,7 @@ export function PricingCalculator({
                                                         )}
                                                     </span>
                                                 </div>
-                                                <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                     <span>
                                                         •{' '}
                                                         {
@@ -1698,7 +1694,7 @@ export function PricingCalculator({
                                                         )}
                                                     </span>
                                                 </div>
-                                                <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                     <span>
                                                         •{' '}
                                                         {
@@ -1726,7 +1722,7 @@ export function PricingCalculator({
                                                         )}
                                                     </span>
                                                 </div>
-                                                <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                     <span>
                                                         • {extraUsers}{' '}
                                                         {isEn
@@ -1756,7 +1752,7 @@ export function PricingCalculator({
                                                         )}
                                                     </span>
                                                 </div>
-                                                <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                     <span>
                                                         • {teamUsers}{' '}
                                                         {isEn
@@ -1784,7 +1780,7 @@ export function PricingCalculator({
                                                         )}
                                                     </span>
                                                 </div>
-                                                <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                     <span>
                                                         •{' '}
                                                         {
@@ -1799,7 +1795,7 @@ export function PricingCalculator({
 
                                         {/* 7. Strippenkaarten (if selected) */}
                                         {strippenkaartenCost > 0 && (
-                                            <div className='py-1 border-b border-slate-200/60 text-amber-700'>
+                                            <div className='py-1 border-b border-slate-200/60 text-teal-700'>
                                                 <div className='flex justify-between items-center font-medium'>
                                                     <span>
                                                         {isEn
@@ -1813,7 +1809,7 @@ export function PricingCalculator({
                                                     </span>
                                                 </div>
                                                 {strippenkaart5u && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1823,7 +1819,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {strippenkaart10u && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1833,7 +1829,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {strippenkaart20u && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1847,7 +1843,7 @@ export function PricingCalculator({
 
                                         {/* 8. Opstartkosten (if selected) */}
                                         {opstartkostenCost > 0 && (
-                                            <div className='py-1 border-b border-slate-200/60 text-amber-700'>
+                                            <div className='py-1 border-b border-slate-200/60 text-teal-700'>
                                                 <div className='flex justify-between items-center font-medium'>
                                                     <span>
                                                         {isEn
@@ -1861,7 +1857,7 @@ export function PricingCalculator({
                                                     </span>
                                                 </div>
                                                 {tenantSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1871,7 +1867,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {directBankingSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1881,7 +1877,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {docCaptureSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1891,7 +1887,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {trainingVastgoed && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1901,7 +1897,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {trainingFinance && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1915,7 +1911,7 @@ export function PricingCalculator({
 
                                         {/* 9. XML/TXT Export (if selected) */}
                                         {isAnyXmlSelected && (
-                                            <div className='py-1 border-b border-slate-200/60 text-amber-700'>
+                                            <div className='py-1 border-b border-slate-200/60 text-teal-700'>
                                                 <div className='flex justify-between items-center font-medium'>
                                                     <span>
                                                         {isEn
@@ -1929,7 +1925,7 @@ export function PricingCalculator({
                                                     </span>
                                                 </div>
                                                 {inkoopFactuurXml && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1939,7 +1935,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {inkoopCreditFactuurXml && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1949,7 +1945,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {verkoopFactuurXml && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1959,7 +1955,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {verkoopCreditNotaXml && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1969,7 +1965,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {bankpostenXml && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -1983,7 +1979,7 @@ export function PricingCalculator({
 
                                         {/* 10. Extra Integratie (if selected) */}
                                         {isAnyExtraIntegrationSelected && (
-                                            <div className='py-1 border-b border-slate-200/60 text-amber-700'>
+                                            <div className='py-1 border-b border-slate-200/60 text-teal-700'>
                                                 <div className='flex justify-between items-center font-medium'>
                                                     <span>
                                                         {isEn
@@ -1997,7 +1993,7 @@ export function PricingCalculator({
                                                     </span>
                                                 </div>
                                                 {officeIntegratieSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -2007,7 +2003,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {bankIntegratieSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -2017,7 +2013,7 @@ export function PricingCalculator({
                                                     </div>
                                                 )}
                                                 {docCaptureCustomSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-amber-800 font-normal'>
+                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
                                                         <span>
                                                             •{' '}
                                                             {isEn
@@ -2057,7 +2053,7 @@ export function PricingCalculator({
                                                 </span>
                                             </div>
 
-                                            <div className='flex justify-between text-amber-700 text-xs'>
+                                            <div className='flex justify-between text-teal-700 text-xs'>
                                                 <span>
                                                     {isEn
                                                         ? 'Support fee (20%)'
@@ -2068,7 +2064,7 @@ export function PricingCalculator({
                                                 </span>
                                             </div>
 
-                                            <div className='flex justify-between text-amber-700 text-xs font-semibold pt-1 border-t border-slate-200/80'>
+                                            <div className='flex justify-between text-teal-700 text-xs font-semibold pt-1 border-t border-slate-200/80'>
                                                 <span>
                                                     {isEn
                                                         ? 'Total One-time Setup Services'
@@ -2080,7 +2076,7 @@ export function PricingCalculator({
                                             </div>
 
                                             <div className='flex justify-between items-center text-slate-900 text-sm pt-2 border-t border-slate-300 font-extrabold'>
-                                                <span className='uppercase text-xs tracking-wider text-amber-700'>
+                                                <span className='uppercase text-xs tracking-wider text-teal-700'>
                                                     {isEn
                                                         ? 'Total Monthly Subscription'
                                                         : 'TOTAAL – MAAND ABONNEMENT'}
@@ -2120,7 +2116,7 @@ export function PricingCalculator({
                                                             ? 'e.g. John Doe'
                                                             : 'bijv. Jan de Vries'
                                                     }
-                                                    className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-amber focus:outline-hidden focus:ring-2 focus:ring-amber/30'
+                                                    className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30'
                                                 />
                                             </div>
                                         </div>
@@ -2145,7 +2141,7 @@ export function PricingCalculator({
                                                         })
                                                     }
                                                     placeholder='jan@organisatie.nl'
-                                                    className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-amber focus:outline-hidden focus:ring-2 focus:ring-amber/30'
+                                                    className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30'
                                                 />
                                             </div>
                                         </div>
@@ -2170,7 +2166,7 @@ export function PricingCalculator({
                                                             })
                                                         }
                                                         placeholder='+31 6 12345678'
-                                                        className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-amber focus:outline-hidden focus:ring-2 focus:ring-amber/30'
+                                                        className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30'
                                                     />
                                                 </div>
                                             </div>
@@ -2199,7 +2195,7 @@ export function PricingCalculator({
                                                                 ? 'Real Estate B.V.'
                                                                 : 'Vastgoed Beheer B.V.'
                                                         }
-                                                        className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-amber focus:outline-hidden focus:ring-2 focus:ring-amber/30'
+                                                        className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30'
                                                     />
                                                 </div>
                                             </div>

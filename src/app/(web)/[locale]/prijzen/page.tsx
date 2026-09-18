@@ -10,6 +10,7 @@ import { Clock, ArrowRight } from 'lucide-react';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl } from '@/sanity/image';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
+import { Badge } from '@/components/ui/Badge';
 
 interface PricingPageProps {
     params: Promise<{ locale: string }>;
@@ -177,13 +178,12 @@ export default async function PricingPage({ params }: PricingPageProps) {
             <div className='max-w-7xl mx-auto space-y-16'>
                 <div className='text-center max-w-3xl mx-auto space-y-4'>
                     <div className='flex justify-center mb-1'>
-                        <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                            <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
+                        <Badge color='teal' uppercase dot>
                             {b?.sectionTag ||
                                 (isEn
                                     ? 'FLEXIBLE SUPPORT'
                                     : 'FLEXIBELE ONDERSTEUNING')}
-                        </span>
+                        </Badge>
                     </div>
 
                     <h2 className='font-display text-2xl md:text-3xl lg:text-3.5xl font-bold tracking-tight text-darkblue'>
@@ -206,7 +206,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                     {/* 5 Hours */}
                     <div className='rounded-2xl border border-black/20 bg-background p-8 space-y-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group'>
                         <div className='space-y-4'>
-                            <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber/15 text-amber text-xs font-mono font-bold uppercase'>
+                            <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/15 text-teal text-xs font-mono font-bold uppercase'>
                                 <Clock className='w-3.5 h-3.5' />
                                 <span>5 {isEn ? 'Hours' : 'Uur'}</span>
                             </div>
@@ -231,7 +231,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                         </div>
                         <Link
                             href={getPath('/contact')}
-                            className='inline-flex h-12 items-center justify-center rounded-xl border border-black/20 dark:border-white/20 bg-transparent px-6 text-sm font-semibold text-[#060e32] dark:text-white hover:bg-amber hover:text-[#060e32] hover:border-amber transition-all duration-200 text-center'
+                            className='inline-flex h-12 items-center justify-center rounded-xl border border-black/20 dark:border-white/20 bg-transparent px-6 text-sm font-semibold text-[#060e32] dark:text-white hover:bg-teal hover:text-[#060e32] hover:border-teal transition-all duration-200 text-center'
                         >
                             {isEn
                                 ? 'Order Support Pack'
@@ -240,12 +240,12 @@ export default async function PricingPage({ params }: PricingPageProps) {
                     </div>
 
                     {/* 10 Hours */}
-                    <div className='rounded-2xl border-2 border-amber/50 bg-background p-8 space-y-6 flex flex-col justify-between shadow-xl relative overflow-hidden group hover:-translate-y-1 transition-all duration-300'>
-                        <div className='absolute top-0 right-0 bg-amber text-[#060e32] font-mono text-[10px] font-extrabold uppercase px-3 py-1 rounded-bl-xl tracking-wider'>
+                    <div className='rounded-2xl border-2 border-teal/50 bg-background p-8 space-y-6 flex flex-col justify-between shadow-xl relative overflow-hidden group hover:-translate-y-1 transition-all duration-300'>
+                        <div className='absolute top-0 right-0 bg-teal text-[#060e32] font-mono text-[10px] font-extrabold uppercase px-3 py-1 rounded-bl-xl tracking-wider'>
                             {isEn ? 'Popular Choice' : 'Meest gekozen'}
                         </div>
                         <div className='space-y-4'>
-                            <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber/15 text-amber text-xs font-mono font-bold uppercase'>
+                            <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/15 text-teal text-xs font-mono font-bold uppercase'>
                                 <Clock className='w-3.5 h-3.5' />
                                 <span>10 {isEn ? 'Hours' : 'Uur'}</span>
                             </div>
@@ -270,7 +270,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                         </div>
                         <GlowingLink
                             href={getPath('/contact')}
-                            className='inline-flex h-12 items-center justify-center rounded-xl bg-amber px-6 text-sm font-bold text-[#060e32] transition-all duration-200 text-center shadow-md'
+                            className='inline-flex h-12 items-center justify-center rounded-xl bg-teal px-6 text-sm font-bold text-[#060e32] transition-all duration-200 text-center shadow-md'
                         >
                             {isEn
                                 ? 'Order Support Pack'
@@ -281,7 +281,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                     {/* 20 Hours */}
                     <div className='rounded-2xl border border-black/20 bg-background p-8 space-y-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group'>
                         <div className='space-y-4'>
-                            <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber/15 text-amber text-xs font-mono font-bold uppercase'>
+                            <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/15 text-teal text-xs font-mono font-bold uppercase'>
                                 <Clock className='w-3.5 h-3.5' />
                                 <span>20 {isEn ? 'Hours' : 'Uur'}</span>
                             </div>
@@ -306,7 +306,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                         </div>
                         <Link
                             href={getPath('/contact')}
-                            className='inline-flex h-12 items-center justify-center rounded-xl border border-black/20 dark:border-white/20 bg-transparent px-6 text-sm font-semibold text-[#060e32] dark:text-white hover:bg-amber hover:text-[#060e32] hover:border-amber transition-all duration-200 text-center'
+                            className='inline-flex h-12 items-center justify-center rounded-xl border border-black/20 dark:border-white/20 bg-transparent px-6 text-sm font-semibold text-[#060e32] dark:text-white hover:bg-teal hover:text-[#060e32] hover:border-teal transition-all duration-200 text-center'
                         >
                             {isEn
                                 ? 'Order Support Pack'
@@ -327,16 +327,15 @@ export default async function PricingPage({ params }: PricingPageProps) {
         return (
             <section key={key} className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
                 <div className='mx-auto max-w-8xl px-0'>
-                    <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+                    <div className='border border-teal/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
-                                <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
-                                    <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                <Badge color='teal' uppercase dot dotPulse>
                                     {b?.tag ||
                                         (isEn
                                             ? 'CONSULTATION'
                                             : 'ADVIESGESPREK')}
-                                </span>
+                                </Badge>
 
                                 <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
                                     {b?.title ||

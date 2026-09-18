@@ -1,12 +1,16 @@
 import React from 'react';
 import { Metadata } from 'next';
-import Link from 'next/link';
 import { ArrowRight, Mail } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
-import { NewsArticlesSection, NewsArticleItem } from '@/components/nieuws/NewsArticlesSection';
+import {
+    NewsArticlesSection,
+    NewsArticleItem,
+} from '@/components/nieuws/NewsArticlesSection';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { GlowingLink } from '@/components/ui/GlowingButton';
+import { Badge } from '@/components/ui/Badge';
+import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -111,16 +115,43 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
     const articles = await getSanityArticles(locale);
 
     const pageBlocks = pageData?.pageBlocks || [];
-    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock' || b._type === 'hero');
-    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock' || b._type === 'ctaBanner' || b._type === 'cta');
+    const heroBlock = pageBlocks.find(
+        (b: any) => b._type === 'heroBlock' || b._type === 'hero',
+    );
+    const ctaBlock = pageBlocks.find(
+        (b: any) =>
+            b._type === 'ctaBlock' ||
+            b._type === 'ctaBanner' ||
+            b._type === 'cta',
+    );
 
-    const heroLabel = heroBlock?.badge || (isEn ? 'KNOWLEDGE BASE & INSIGHTS' : 'KENNISBANK & INZICHTEN');
-    const heroTitle = heroBlock?.tagline || (isEn ? 'News, insights, and *property management tips*' : 'Nieuws, inzichten en *vastgoedbeheer tips*');
-    const heroSub = heroBlock?.description || (isEn ? 'Stay informed with the latest news on real estate software, Box 3 legislation updates, and Microsoft Dynamics 365 developments.' : 'Blijf op de hoogte van het laatste nieuws rondom vastgoedbeheer software, wetgeving, Box 3-ontwikkelingen en Microsoft Dynamics updates.');
+    const heroLabel =
+        heroBlock?.badge ||
+        (isEn ? 'KNOWLEDGE BASE & INSIGHTS' : 'KENNISBANK & INZICHTEN');
+    const heroTitle =
+        heroBlock?.tagline ||
+        (isEn
+            ? 'News, insights, and *property management tips*'
+            : 'Nieuws, inzichten en *vastgoedbeheer tips*');
+    const heroSub =
+        heroBlock?.description ||
+        (isEn
+            ? 'Stay informed with the latest news on real estate software, Box 3 legislation updates, and Microsoft Dynamics 365 developments.'
+            : 'Blijf op de hoogte van het laatste nieuws rondom vastgoedbeheer software, wetgeving, Box 3-ontwikkelingen en Microsoft Dynamics updates.');
 
-    const ctaTitle = ctaBlock?.title || (isEn ? 'Stay ahead in the real estate market' : 'Blijf voorop lopen in de vastgoedmarkt');
-    const ctaSub = ctaBlock?.subtitle || (isEn ? 'Want to discuss software, legislation, or the latest features in Business Central? Connect with our experts directly.' : 'Wil je sparren over software, wetgeving of de nieuwste functies in Business Central? Neem direct contact op met onze experts.');
-    const ctaBtn = ctaBlock?.primaryCtaLabel || (isEn ? 'Get in touch' : 'Neem direct contact op');
+    const ctaTitle =
+        ctaBlock?.title ||
+        (isEn
+            ? 'Stay ahead in the real estate market'
+            : 'Blijf voorop lopen in de vastgoedmarkt');
+    const ctaSub =
+        ctaBlock?.subtitle ||
+        (isEn
+            ? 'Want to discuss software, legislation, or the latest features in Business Central? Connect with our experts directly.'
+            : 'Wil je sparren over software, wetgeving of de nieuwste functies in Business Central? Neem direct contact op met onze experts.');
+    const ctaBtn =
+        ctaBlock?.primaryCtaLabel ||
+        (isEn ? 'Get in touch' : 'Neem direct contact op');
 
     // JSON-LD CollectionPage Schema
     const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/news' : '/nieuws'}`;
@@ -131,7 +162,9 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
                 '@type': 'CollectionPage',
                 '@id': `${canonicalPageUrl}#webpage`,
                 url: canonicalPageUrl,
-                name: isEn ? 'News & Knowledge Base | emlinked' : 'Nieuws & Kennisbank | emlinked',
+                name: isEn
+                    ? 'News & Knowledge Base | emlinked'
+                    : 'Nieuws & Kennisbank | emlinked',
                 description: heroSub,
                 inLanguage: isEn ? 'en-US' : 'nl-NL',
                 isPartOf: {
@@ -170,14 +203,14 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
 
             {/* ── CTA CONVERSION BANNER ── */}
             <section className='px-6 py-20 relative z-10 max-w-7xl mx-auto'>
-                <div className='relative rounded-3xl border border-amber/40 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-2xl text-white'>
-                    <div className='absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber/10 rounded-full blur-[120px] pointer-events-none' />
+                <div className='relative rounded-3xl border border-teal/40 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-2xl text-white'>
+                    <div className='absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-teal/10 rounded-full blur-[120px] pointer-events-none' />
 
                     <div className='relative z-10 space-y-6 max-w-3xl mx-auto'>
-                        <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md'>
-                            <Mail className='w-3.5 h-3.5 text-amber' />
+                        <Badge color='teal' uppercase>
+                            <Mail className='w-3.5 h-3.5 text-teal' />
                             {isEn ? 'STAY INFORMED' : 'BLIJF OP DE HOOGTE'}
-                        </span>
+                        </Badge>
 
                         <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] text-white leading-tight'>
                             {ctaTitle}
@@ -198,12 +231,14 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
                                 </span>
                             </GlowingLink>
 
-                            <Link
+                            <OutlineLinkButton
                                 href={isEn ? '/en/apps' : '/apps'}
-                                className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                                color='white'
                             >
-                                {isEn ? 'Explore our solutions →' : 'Bekijk onze oplossingen →'}
-                            </Link>
+                                {isEn
+                                    ? 'Explore our solutions →'
+                                    : 'Bekijk onze oplossingen →'}
+                            </OutlineLinkButton>
                         </div>
                     </div>
                 </div>

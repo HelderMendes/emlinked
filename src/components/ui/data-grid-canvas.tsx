@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 /**
  * Animated data-grid: a field of grid nodes where pulses travel along
  * horizontal/vertical lines, evoking connected real-estate data.
- * Rendered on navy background with amber accent pulses.
+ * Rendered on navy background with teal accent pulses.
  */
 export function DataGridCanvas({ className }: { className?: string }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);

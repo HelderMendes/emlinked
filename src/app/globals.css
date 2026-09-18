@@ -1,13 +1,12 @@
 @import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&f[]=general-sans@300,400,500,600,700&display=swap');
 @import 'tailwindcss';
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-
-    --primary: oklch(0.1846 0.0722 268.08); 
+    --primary: oklch(0.1846 0.0722 268.08);
     --primary-foreground: oklch(0.985 0 0);
 
     --muted: oklch(0.97 0 0);
@@ -15,23 +14,25 @@
 
     --border: oklch(0.922 0 0);
     --card: oklch(0.99 0.005 85);
-    --card-foreground: oklch(0.1846 0.0722 268.08); 
+    --card-foreground: oklch(0.1846 0.0722 268.08);
 
     --navy: 230 46% 17%;
     --navy-mid: 232 47% 21%;
     --navy-dark: 232 45% 11%;
-    --amber: 35 100% 50%;
-    --amber-hover: 35 100% 45%;
-    --amber-light: 36 100% 61%;
-    --amber-pale: 42 100% 92%;
-    --amber-ultra: 45 100% 97%;
+
+    /* Primary brand accent — teal (replaces the old amber accent) */
+    --teal: 180 100% 35%;
+    --teal-hover: 180 100% 30%;
+    --teal-light: 180 100% 45%;
+    --teal-pale: 180 100% 90%;
+    --teal-ultra: 180 100% 96%;
 
     /* --- version02: modernized ramps, additive-only ---
        Every token above this block is untouched, so every other route
-       (which reads only --navy/--navy-mid/--navy-dark/--amber*) keeps
-       rendering exactly as it does on main today. These fuller ramps and
-       new shadow/surface tokens exist for the homepage redesign to build
-       on; nothing else in the codebase references them yet. */
+       keeps rendering exactly as it does on main today. These fuller
+       ramps and new shadow/surface tokens exist for the homepage
+       redesign to build on; nothing else in the codebase references
+       them yet. */
     --navy-50: 225 30% 97%;
     --navy-100: 226 25% 93%;
     --navy-200: 227 22% 85%;
@@ -44,16 +45,16 @@
     --navy-900: 232 45% 11%; /* = --navy-dark */
     --navy-950: 233 48% 7%;
 
-    --amber-50: 45 100% 97%; /* = --amber-ultra */
-    --amber-100: 42 100% 92%; /* = --amber-pale */
-    --amber-200: 40 100% 85%;
-    --amber-300: 38 100% 74%;
-    --amber-400: 36 100% 61%; /* = --amber-light */
-    --amber-500: 35 100% 50%; /* = --amber */
-    --amber-600: 35 100% 45%; /* = --amber-hover */
-    --amber-700: 33 95% 38%;
-    --amber-800: 31 90% 30%;
-    --amber-900: 28 85% 22%;
+    --teal-50: 180 100% 97%; /* = --teal-ultra */
+    --teal-100: 180 100% 92%; /* = --teal-pale */
+    --teal-200: 180 100% 85%;
+    --teal-300: 180 100% 74%;
+    --teal-400: 180 100% 61%; /* = --teal-light */
+    --teal-500: 180 100% 50%; /* = --teal */
+    --teal-600: 180 100% 45%; /* = --teal-hover */
+    --teal-700: 180 95% 38%;
+    --teal-800: 180 90% 30%;
+    --teal-900: 180 85% 22%;
 
     /* Tinted (navy-hued) shadows instead of flat black drop-shadows —
        a more cohesive, branded elevation system for the redesign. */
@@ -61,10 +62,16 @@
     --shadow-2xs: 0 1px 1px hsl(var(--shadow-color) / 0.04);
     --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.05);
     --shadow-sm: 0 2px 4px hsl(var(--shadow-color) / 0.06);
-    --shadow-md: 0 4px 12px hsl(var(--shadow-color) / 0.08), 0 2px 4px hsl(var(--shadow-color) / 0.05);
-    --shadow-lg: 0 12px 28px hsl(var(--shadow-color) / 0.10), 0 4px 10px hsl(var(--shadow-color) / 0.06);
-    --shadow-xl: 0 24px 48px hsl(var(--shadow-color) / 0.14), 0 8px 16px hsl(var(--shadow-color) / 0.08);
-    --shadow-glow-amber: 0 8px 28px hsl(var(--amber) / 0.3);
+    --shadow-md:
+        0 4px 12px hsl(var(--shadow-color) / 0.08),
+        0 2px 4px hsl(var(--shadow-color) / 0.05);
+    --shadow-lg:
+        0 12px 28px hsl(var(--shadow-color) / 0.1),
+        0 4px 10px hsl(var(--shadow-color) / 0.06);
+    --shadow-xl:
+        0 24px 48px hsl(var(--shadow-color) / 0.14),
+        0 8px 16px hsl(var(--shadow-color) / 0.08);
+    --shadow-glow-teal: 0 8px 28px hsl(var(--teal) / 0.3);
 
     /* Warm off-white canvas + soft glass surface, distinct from the
        cool `--background` used site-wide, reserved for the homepage. */
@@ -80,7 +87,7 @@
     --secondary: oklch(0.97 0 0);
     --secondary-foreground: oklch(0.205 0 0);
     --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.1846 0.0722 268.08); 
+    --accent-foreground: oklch(0.1846 0.0722 268.08);
     --destructive: oklch(0.577 0.245 27.325);
     --input: oklch(0.922 0 0);
     --ring: oklch(0.708 0 0);
@@ -91,8 +98,8 @@
     --chart-5: oklch(0.269 0 0);
     --radius: 0.625rem;
     --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.1846 0.0722 268.08); 
-    --sidebar-primary: oklch(0.1846 0.0722 268.08); 
+    --sidebar-foreground: oklch(0.1846 0.0722 268.08);
+    --sidebar-primary: oklch(0.1846 0.0722 268.08);
     --sidebar-primary-foreground: oklch(0.985 0 0);
     --sidebar-accent: oklch(0.97 0 0);
     --sidebar-accent-foreground: oklch(0.205 0 0);
@@ -151,11 +158,12 @@
     --color-navy: hsl(var(--navy));
     --color-navy-mid: hsl(var(--navy-mid));
     --color-navy-dark: hsl(var(--navy-dark));
-    --color-amber: hsl(var(--amber));
-    --color-amber-hover: hsl(var(--amber-hover));
-    --color-amber-light: hsl(var(--amber-light));
-    --color-amber-pale: hsl(var(--amber-pale));
-    --color-amber-ultra: hsl(var(--amber-ultra));
+
+    --color-teal: hsl(var(--teal));
+    --color-teal-hover: hsl(var(--teal-hover));
+    --color-teal-light: hsl(var(--teal-light));
+    --color-teal-pale: hsl(var(--teal-pale));
+    --color-teal-ultra: hsl(var(--teal-ultra));
 
     /* version02 ramps + shadows — see :root for provenance/notes */
     --color-navy-50: hsl(var(--navy-50));
@@ -170,16 +178,16 @@
     --color-navy-900: hsl(var(--navy-900));
     --color-navy-950: hsl(var(--navy-950));
 
-    --color-amber-50: hsl(var(--amber-50));
-    --color-amber-100: hsl(var(--amber-100));
-    --color-amber-200: hsl(var(--amber-200));
-    --color-amber-300: hsl(var(--amber-300));
-    --color-amber-400: hsl(var(--amber-400));
-    --color-amber-500: hsl(var(--amber-500));
-    --color-amber-600: hsl(var(--amber-600));
-    --color-amber-700: hsl(var(--amber-700));
-    --color-amber-800: hsl(var(--amber-800));
-    --color-amber-900: hsl(var(--amber-900));
+    --color-teal-50: hsl(var(--teal-50));
+    --color-teal-100: hsl(var(--teal-100));
+    --color-teal-200: hsl(var(--teal-200));
+    --color-teal-300: hsl(var(--teal-300));
+    --color-teal-400: hsl(var(--teal-400));
+    --color-teal-500: hsl(var(--teal-500));
+    --color-teal-600: hsl(var(--teal-600));
+    --color-teal-700: hsl(var(--teal-700));
+    --color-teal-800: hsl(var(--teal-800));
+    --color-teal-900: hsl(var(--teal-900));
 
     --color-stone-bg: hsl(var(--stone-bg));
     --color-surface-glass: hsl(var(--surface-glass));
@@ -190,17 +198,18 @@
     --shadow-md: var(--shadow-md);
     --shadow-lg: var(--shadow-lg);
     --shadow-xl: var(--shadow-xl);
-    --shadow-glow-amber: var(--shadow-glow-amber);
+    --shadow-glow-teal: var(--shadow-glow-teal);
 
-    --color-orange: hsl(var(--amber));
+    --color-orange: hsl(var(--teal));
     --color-darkBlue: oklch(0.1846 0.0722 268.08);
     --color-emlinkedblue: var(--color-darkBlue);
 
     --font-sans: var(--font-sans);
     --font-display: var(--font-display);
-    /* version02: Space Grotesk, homepage hero headline only — see
-       src/app/layout.tsx (spaceGrotesk.variable) and HeroSection.tsx. */
+    /* version02: Expose (headline) / Zodiak (body), homepage hero only —
+       see src/app/layout.tsx (expose/zodiak variables) and HeroSection.tsx. */
     --font-hero: var(--font-hero, var(--font-display));
+    --font-hero-body: var(--font-hero-body, var(--font-sans));
 
     --width-8xl: 88rem;
 
@@ -273,7 +282,7 @@
 
     --radius-3xl: calc(var(--radius) * 2.2);
 
-    --radius-4xl: calc(var(--radius) * 2.6)
+    --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 body {
@@ -285,9 +294,21 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6, .font-display {
-    font-family: var(--font-display);
-    font-weight: 700;
+@layer base {
+    h1,
+    h2,
+    h3,
+    .font-display {
+        font-family: var(--font-hero);
+        font-weight: 700;
+    }
+
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-sans);
+        font-weight: 700;
+    }
 }
 
 @keyframes gradient-shift {
@@ -303,7 +324,8 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 @keyframes float-glow {
-    0%, 100% {
+    0%,
+    100% {
         transform: translate(-50%, -50%) scale(1);
         opacity: 0.4;
     }
@@ -371,9 +393,21 @@ h1, h2, h3, h4, h5, h6, .font-display {
 /* version02 — homepage-only surface utilities, additive. */
 .bg-mesh-brand {
     background-image:
-        radial-gradient(55% 55% at 12% 15%, hsl(var(--amber-100) / 0.9) 0%, transparent 60%),
-        radial-gradient(50% 60% at 85% 8%, hsl(var(--amber-300) / 0.35) 0%, transparent 55%),
-        radial-gradient(70% 70% at 55% 95%, hsl(var(--navy-300) / 0.22) 0%, transparent 60%);
+        radial-gradient(
+            55% 55% at 12% 15%,
+            hsl(var(--teal-100) / 0.9) 0%,
+            transparent 60%
+        ),
+        radial-gradient(
+            50% 60% at 85% 8%,
+            hsl(var(--teal-300) / 0.35) 0%,
+            transparent 55%
+        ),
+        radial-gradient(
+            70% 70% at 55% 95%,
+            hsl(var(--navy-300) / 0.22) 0%,
+            transparent 60%
+        );
 }
 
 .surface-glass {
@@ -384,20 +418,20 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground;
     }
-  html {
-    @apply font-sans;
+    html {
+        @apply font-sans;
     }
 }
 
 /* Cross-browser Range Slider Hardening */
 input[type='range'] {
-    accent-color: #ff9400;
+    accent-color: #00b3b3;
 }
 
 input[type='range']::-webkit-slider-thumb {
@@ -406,9 +440,9 @@ input[type='range']::-webkit-slider-thumb {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #ff9400;
+    background: #00b3b3;
     cursor: pointer;
-    box-shadow: 0 2px 6px rgba(255, 148, 0, 0.4);
+    box-shadow: 0 2px 6px rgba(0, 179, 179, 0.4);
     border: 2px solid #ffffff;
 }
 
@@ -416,8 +450,8 @@ input[type='range']::-moz-range-thumb {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #ff9400;
+    background: #00b3b3;
     cursor: pointer;
     border: 2px solid #ffffff;
-    box-shadow: 0 2px 6px rgba(255, 148, 0, 0.4);
+    box-shadow: 0 2px 6px rgba(0, 179, 179, 0.4);
 }

@@ -15,6 +15,8 @@ import { GlowingLink } from '@/components/ui/GlowingButton';
 import { getImageUrl } from '@/sanity/image';
 
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+import { Badge } from '@/components/ui/Badge';
+import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
 interface AppsPageProps {
     params: Promise<{ locale: string }>;
@@ -117,7 +119,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
 
     // Checkmark colors per app module
     const checkmarkColors = [
-        'text-amber',
+        'text-teal',
         'text-cyan-500 dark:text-cyan-400',
         'text-emerald-500 dark:text-emerald-400',
     ];
@@ -169,7 +171,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                         ) || '/emlinked/apps/hero-apps.jpg'
                     }
                     customGraphic={
-                        <div className='relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 dark:border-amber/20 group'>
+                        <div className='relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 dark:border-teal/20 group'>
                             <Image
                                 src={
                                     getImageUrl(
@@ -188,13 +190,13 @@ export default async function AppsPage({ params }: AppsPageProps) {
                             />
                             <div className='absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/20 to-transparent p-4 sm:p-5 flex flex-col justify-between pointer-events-none'>
                                 <div className='flex justify-end items-end'>
-                                    <span className='px-3 py-1 rounded-full bg-slate-900/90 border border-amber/40 text-amber font-mono text-[11px] font-bold shadow-md backdrop-blur-md flex items-center gap-2.5'>
+                                    <span className='px-3 py-1 rounded-full bg-slate-900/90 border border-teal/40 text-teal font-mono text-[11px] font-bold shadow-md backdrop-blur-md flex items-center gap-2.5'>
                                         Microsoft Business Central Core Hub
                                         <span className='h-2 w-2 rounded-full bg-emerald-400 animate-ping' />
                                     </span>
                                 </div>
                                 <div className='grid grid-cols-3 gap-2 sm:gap-3 pt-1'>
-                                    <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-amber/40 text-center backdrop-blur-md shadow-xl hover:border-amber transition-colors flex flex-col items-center justify-center'>
+                                    <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-teal/40 text-center backdrop-blur-md shadow-xl hover:border-teal transition-colors flex flex-col items-center justify-center'>
                                         <div className='relative w-6 h-6 my-1 '>
                                             <Image
                                                 src='/emlinked/apps/vastgoedbeheer.png'
@@ -207,11 +209,11 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                         <span className='text-[10px] sm:text-[11px] font-bold text-white block leading-tight truncate'>
                                             Vastgoedbeheer
                                         </span>
-                                        <span className='text-[8px] sm:text-[9px] text-amber font-mono block uppercase tracking-wider font-semibold'>
+                                        <span className='text-[8px] sm:text-[9px] text-teal font-mono block uppercase tracking-wider font-semibold'>
                                             01 • Core Engine
                                         </span>
                                     </div>
-                                    <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-amber/40 text-center backdrop-blur-md shadow-xl hover:border-cyan-400 transition-colors flex flex-col items-center justify-center'>
+                                    <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-teal/40 text-center backdrop-blur-md shadow-xl hover:border-cyan-400 transition-colors flex flex-col items-center justify-center'>
                                         <div className='relative w-6 h-6 my-1 '>
                                             <Image
                                                 src='/emlinked/apps/huurdersportaal.png'
@@ -228,7 +230,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                             02 • Self-Service
                                         </span>
                                     </div>
-                                    <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-amber/40 text-center backdrop-blur-md shadow-xl hover:border-emerald-400 transition-colors flex flex-col items-center justify-center'>
+                                    <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-teal/40 text-center backdrop-blur-md shadow-xl hover:border-emerald-400 transition-colors flex flex-col items-center justify-center'>
                                         <div className='relative w-6 h-6 my-1 '>
                                             <Image
                                                 src='/emlinked/apps/payment_engine.png'
@@ -262,18 +264,17 @@ export default async function AppsPage({ params }: AppsPageProps) {
         return (
             <section
                 key={key}
-                className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] dark:bg-navy-dark border-b border-amber/10 relative z-10'
+                className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] dark:bg-navy-dark border-b border-teal/10 relative z-10'
             >
                 <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8'>
                     {/* Section Header */}
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
                         {(featuresBlock.sectionTag || featuresBlock.tag) && (
                             <div className='flex justify-center mb-1'>
-                                <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                                    <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
+                                <Badge color='teal' uppercase dot>
                                     {featuresBlock.sectionTag ||
                                         featuresBlock.tag}
-                                </span>
+                                </Badge>
                             </div>
                         )}
                         {(featuresBlock.sectionTitle ||
@@ -340,10 +341,10 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                 return (
                                     <div
                                         key={feature._key || index}
-                                        className='relative p-6 rounded-2xl border border-black/20 bg-white dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:border-amber/50 space-y-5 flex flex-col justify-between transition-all duration-300 group'
+                                        className='relative p-6 rounded-2xl border border-black/20 bg-white dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:border-teal/50 space-y-5 flex flex-col justify-between transition-all duration-300 group'
                                     >
                                         {/* Floating PNG Icon Badge on top-right corner (Enlarged) */}
-                                        <div className='absolute -top-6 -right-6 sm:-top-7 sm:-right-7 z-30 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200/95 dark:bg-slate-800 border-2 sm:border-3 border-amber shadow-2xl flex items-center justify-center p-2 group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
+                                        <div className='absolute -top-6 -right-6 sm:-top-7 sm:-right-7 z-30 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200/95 dark:bg-slate-800 border-2 sm:border-3 border-teal shadow-2xl flex items-center justify-center p-2 group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
                                             <div className='relative w-10 h-10 sm:w-13 sm:h-13'>
                                                 <Image
                                                     src={cardIcon}
@@ -370,7 +371,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                         <div className='space-y-5'>
                                             {/* 1. TOP IMAGE PREVIEW CONTAINER WITH TOP-LEFT OVERLAY CATEGORY BADGE */}
                                             {imagePath && (
-                                                <div className='relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-slate-950 border border-gray-200 dark:border-white/10 group-hover:border-amber/30 transition-colors'>
+                                                <div className='relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-slate-950 border border-gray-200 dark:border-white/10 group-hover:border-teal/30 transition-colors'>
                                                     <Image
                                                         src={imagePath}
                                                         alt={
@@ -386,7 +387,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                     {/* Category Badge Pill Overlay inside Top-Left of Image */}
                                                     {badge && (
                                                         <div className='absolute top-3 left-3 z-20 pointer-events-none'>
-                                                            <span className='px-3 py-1 text-[11px] font-bold rounded-full bg-slate-900/90 border border-amber/30 text-amber shadow-lg backdrop-blur-md tracking-wide'>
+                                                            <span className='px-3 py-1 text-[11px] font-bold rounded-full bg-slate-900/90 border border-teal/30 text-teal shadow-lg backdrop-blur-md tracking-wide'>
                                                                 {badge}
                                                             </span>
                                                         </div>
@@ -396,7 +397,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
 
                                             {/* 2. TITLE & DESCRIPTION */}
                                             <div className='space-y-2 pt-1'>
-                                                <h3 className='text-2xl font-bold font-display text-[#060e32] dark:text-white group-hover:text-amber transition-colors'>
+                                                <h3 className='text-2xl font-bold font-display text-[#060e32] dark:text-white group-hover:text-teal transition-colors'>
                                                     {feature.title}
                                                 </h3>
                                                 <p className='text-sm text-[#060e32]/75 dark:text-slate-300 leading-relaxed font-light'>
@@ -432,7 +433,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                         {/* 4. SINGLE-LINE CARD FOOTER MATCHING FRONTPAGE & IMAGE */}
                                         <div className='pt-3 border-t border-black/15 dark:border-white/10 flex items-center justify-between gap-4 z-30 mt-auto pointer-events-none'>
                                             <div className='flex items-center gap-2 text-xs font-semibold text-[#060e32]/85 dark:text-slate-200 truncate'>
-                                                <CheckCircle2 className='w-4 h-4 text-amber shrink-0' />
+                                                <CheckCircle2 className='w-4 h-4 text-teal shrink-0' />
                                                 <span className='truncate'>
                                                     {index === 0
                                                         ? 'Primary operational'
@@ -442,7 +443,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                 </span>
                                             </div>
 
-                                            <div className='inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber group-hover:text-[#060e32] dark:group-hover:text-white group-hover:translate-x-0.5 transition-all duration-200 shrink-0'>
+                                            <div className='inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal group-hover:text-[#060e32] dark:group-hover:text-white group-hover:translate-x-0.5 transition-all duration-200 shrink-0'>
                                                 <span>MODULE</span>
                                                 <ArrowRight className='w-3.5 h-3.5' />
                                             </div>
@@ -504,14 +505,13 @@ export default async function AppsPage({ params }: AppsPageProps) {
                 className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative overflow-hidden z-10'
             >
                 <div className='mx-auto max-w-8xl px-0'>
-                    <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+                    <div className='border border-teal/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                             {/* Left Column: Copy & Action Triggers */}
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
-                                <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
-                                    <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                <Badge color='teal' uppercase dot dotPulse>
                                     {ctaBlock.tag || 'START MET AUTOMATISEREN'}
-                                </span>
+                                </Badge>
                                 <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
                                     {ctaBlock.title ||
                                         'Klaar om je vastgoedbeheer te digitaliseren?'}
@@ -538,17 +538,17 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                     )}
 
                                     {ctaBlock.secondaryButtonLabel && (
-                                        <Link
+                                        <OutlineLinkButton
                                             href={getPath(
                                                 ctaBlock.secondaryButtonLink ||
                                                     '/integraties',
                                             )}
-                                            className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 hover:border-white/40 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98]'
+                                            color='white'
                                         >
                                             <span>
                                                 {ctaBlock.secondaryButtonLabel}
                                             </span>
-                                        </Link>
+                                        </OutlineLinkButton>
                                     )}
                                 </div>
                             </div>

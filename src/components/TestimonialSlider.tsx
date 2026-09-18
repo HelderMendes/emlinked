@@ -9,6 +9,7 @@ import {
     ArrowRight,
     MessageSquareQuote,
 } from 'lucide-react';
+import { Badge } from '@/components/ui/Badge';
 
 export interface TestimonialItem {
     id: string;
@@ -160,10 +161,9 @@ export function TestimonialSlider({
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 space-y-8'>
                 {/* Header (Centered) */}
                 <div className='space-y-3 max-w-3xl mx-auto text-center flex flex-col items-center'>
-                    <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                        <span className='w-2 h-2 rounded-full bg-amber shrink-0' />
+                    <Badge color='teal' uppercase dot>
                         {activeTag}
-                    </span>
+                    </Badge>
                     <h2 className='font-display font-bold text-2xl md:text-4xl text-[#060e32] dark:text-white tracking-tight'>
                         {activeTitle}
                     </h2>
@@ -175,14 +175,14 @@ export function TestimonialSlider({
                 {/* Active Review Quote Card (Whole card links to /referenties page) */}
                 <Link
                     href={getPath('/referenties')}
-                    className=' p-6 md:p-8 rounded-2xl border border-neutral-300 hover:border-amber/50 bg-transparent dark:bg-amber/5 relative space-y-6 text-center shadow-sm hover:shadow-md transition-all duration-300 max-w-4xl mx-auto flex flex-col items-center cursor-pointer group'
+                    className=' p-6 md:p-8 rounded-2xl border border-neutral-300 hover:border-teal/50 bg-transparent dark:bg-teal/5 relative space-y-6 text-center shadow-sm hover:shadow-md transition-all duration-300 max-w-4xl mx-auto flex flex-col items-center cursor-pointer group'
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => setIsPaused(false)}
                 >
-                    <MessageSquareQuote className='h-8 w-8 text-amber  absolute top-2 right-2 pointer-events-none group-hover:text-amber/70 transition-colors' />
+                    <MessageSquareQuote className='h-8 w-8 text-teal  absolute top-2 right-2 pointer-events-none group-hover:text-teal/70 transition-colors' />
 
                     <div className='space-y-2 max-w-3xl mx-auto text-center'>
-                        <h3 className='font-extrabold font-display text-lg sm:text-xl text-amber tracking-tight group-hover:underline decoration-amber/40 underline-offset-4'>
+                        <h3 className='font-extrabold font-display text-lg sm:text-xl text-teal tracking-tight group-hover:underline decoration-teal/40 underline-offset-4'>
                             “{current.headline}”
                         </h3>
                         {/* Clamped to only 2 lines */}
@@ -194,11 +194,11 @@ export function TestimonialSlider({
                     {/* Author info & Navigation controls bar */}
                     <div className='flex items-center justify-between pt-4 border-t border-black/20 flex-wrap gap-4 w-full'>
                         <div className='flex items-center gap-3 text-left'>
-                            <div className='h-10 w-10 rounded-full bg-amber/20 border border-amber/40 flex items-center justify-center text-amber font-bold text-xs font-mono shadow-sm shrink-0 group-hover:bg-amber group-hover:text-[#060e32] transition-colors'>
+                            <div className='h-10 w-10 rounded-full bg-teal/20 border border-teal/40 flex items-center justify-center text-teal font-bold text-xs font-mono shadow-sm shrink-0 group-hover:bg-teal group-hover:text-[#060e32] transition-colors'>
                                 {current.initials}
                             </div>
                             <div>
-                                <h4 className='font-bold text-sm text-amber dark:text-white'>
+                                <h4 className='font-bold text-sm text-teal dark:text-white'>
                                     {current.author}
                                 </h4>
                                 <span className='text-xs text-darkBlue font-mono font-semibold block'>
@@ -215,7 +215,7 @@ export function TestimonialSlider({
                             <button
                                 onClick={handlePrev}
                                 aria-label='Vorige referentie'
-                                className='p-2 rounded-full border border-white bg-black/20 hover:bg-amber text-white transition-all duration-200 shadow-sm cursor-pointer'
+                                className='p-2 rounded-full border border-white bg-black/20 hover:bg-teal text-white transition-all duration-200 shadow-sm cursor-pointer'
                             >
                                 <ChevronLeft className='h-4 w-4' />
                             </button>
@@ -228,8 +228,8 @@ export function TestimonialSlider({
                                         aria-label={`Referentie ${idx + 1}`}
                                         className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                                             idx === currentIndex
-                                                ? 'w-6 bg-amber/40'
-                                                : 'w-2 bg-black/20 hover:bg-amber'
+                                                ? 'w-6 bg-teal/40'
+                                                : 'w-2 bg-black/20 hover:bg-teal'
                                         }`}
                                     />
                                 ))}
@@ -238,7 +238,7 @@ export function TestimonialSlider({
                             <button
                                 onClick={handleNext}
                                 aria-label='Volgende referentie'
-                                className='p-2 rounded-full border border-white bg-black/20 hover:bg-amber text-white transition-all duration-200 shadow-sm cursor-pointer'
+                                className='p-2 rounded-full border border-white bg-black/20 hover:bg-teal text-white transition-all duration-200 shadow-sm cursor-pointer'
                             >
                                 <ChevronRight className='h-4 w-4' />
                             </button>

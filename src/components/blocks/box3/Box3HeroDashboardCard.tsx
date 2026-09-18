@@ -15,9 +15,7 @@ export function Box3HeroDashboardCard({
 }: Box3HeroDashboardCardProps) {
     const cardBadge =
         badge ||
-        (isEn
-            ? 'PORTFOLIO OVERVIEW · LIVE'
-            : 'PORTEFEUILLE-OVERZICHT · LIVE');
+        (isEn ? 'PORTFOLIO OVERVIEW · LIVE' : 'PORTEFEUILLE-OVERZICHT · LIVE');
 
     const cardTitle = title || 'Box 3-Status & Metrics';
 
@@ -34,8 +32,7 @@ export function Box3HeroDashboardCard({
             label: isEn ? 'Occupancy Rate' : 'Bezettingsgraad',
             val: '96,4%',
             badge: isEn ? '↑ Good' : '↑ Goed',
-            bStyle:
-                'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold',
+            bStyle: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold',
         },
         {
             label: isEn ? 'Rental Income YTD' : 'Huurinkomsten YTD',
@@ -47,8 +44,7 @@ export function Box3HeroDashboardCard({
             label: isEn ? 'Expenses Logged' : 'Kosten Geregistreerd',
             val: '€ 41.800',
             badge: isEn ? 'Deductible' : 'Aftrekbaar',
-            bStyle:
-                'bg-amber-500/20 text-amber-400 border border-amber-500/30 font-bold',
+            bStyle: 'bg-teal-500/20 text-teal-400 border border-teal-500/30 font-bold',
         },
         {
             label: isEn ? 'Box 3 Status 2028' : 'Box 3-Status 2028',
@@ -60,17 +56,16 @@ export function Box3HeroDashboardCard({
             label: isEn ? 'Open Indexations' : 'Openstaande Indexaties',
             val: '3',
             badge: isEn ? 'Action required' : 'Actie vereist',
-            bStyle:
-                'bg-red-500/20 text-red-400 border border-red-500/30 font-bold',
+            bStyle: 'bg-red-500/20 text-red-400 border border-red-500/30 font-bold',
         },
     ];
 
     return (
-        <div className='w-full p-6 md:p-8 rounded-2xl bg-slate-900/90 text-white border border-amber/30 shadow-2xl relative overflow-hidden group backdrop-blur-xl space-y-5'>
+        <div className='w-full p-6 md:p-8 rounded-2xl bg-slate-900/90 text-white border border-teal/30 shadow-2xl relative overflow-hidden group backdrop-blur-xl space-y-5'>
             {/* Header Row */}
             <div className='flex items-start justify-between border-b border-white/10 pb-4'>
                 <div>
-                    <span className='font-mono text-xs font-bold tracking-widest text-amber uppercase block'>
+                    <span className='font-mono text-xs font-bold tracking-widest text-teal uppercase block'>
                         {cardBadge}
                     </span>
                     <h3 className='font-bold text-xl md:text-2xl text-white mt-1'>
@@ -110,7 +105,7 @@ export function Box3HeroDashboardCard({
             {/* Footer Row */}
             <div className='pt-3 border-t border-white/10 flex items-center justify-between text-xs text-white/50'>
                 <span>Microsoft Business Central</span>
-                <span className='text-amber font-mono font-bold'>
+                <span className='text-teal font-mono font-bold'>
                     100% Synced
                 </span>
             </div>

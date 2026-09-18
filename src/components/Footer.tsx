@@ -16,7 +16,8 @@ interface FooterProps {
 
 const translations = {
     nl: {
-        tagline: 'Emlinked brengt commercieel, technisch en administratief vastgoedbeheer samen in één overzichtelijk platform. Zo werk je efficiënter, met minder fouten en meer grip op je portefeuille.',
+        tagline:
+            'Emlinked brengt commercieel, technisch en administratief vastgoedbeheer samen in één overzichtelijk platform. Zo werk je efficiënter, met minder fouten en meer grip op je portefeuille.',
         phone: '+31 (0) 88 707 7000',
         address: 'Gooimeer 12, 1411 DE Naarden',
         demoLabel: 'Vraag vrijblijvend een demo aan',
@@ -30,7 +31,7 @@ const translations = {
         terms: 'Algemene voorwaarden',
         support: 'Help & Ondersteuning',
         docs: 'Documentatie center',
-        
+
         // Navigation headers
         product: 'Product',
         integrations: 'Integraties',
@@ -48,10 +49,11 @@ const translations = {
         team: 'Het Team',
         referenties: 'Referenties',
         blog: 'Nieuws & Blog',
-        contact: 'Contact Opnemen'
+        contact: 'Contact Opnemen',
     },
     en: {
-        tagline: 'Emlinked brings commercial, technical, and financial property management together in one clear platform. Work more efficiently with total control over your portfolio.',
+        tagline:
+            'Emlinked brings commercial, technical, and financial property management together in one clear platform. Work more efficiently with total control over your portfolio.',
         phone: '+31 (0) 88 707 7000',
         address: 'Gooimeer 12, 1411 DE Naarden',
         demoLabel: 'Request a free demo session',
@@ -83,8 +85,8 @@ const translations = {
         team: 'Our Team',
         referenties: 'References',
         blog: 'News & Blog',
-        contact: 'Contact Sales'
-    }
+        contact: 'Contact Sales',
+    },
 } as const;
 
 export default function Footer({ locale = 'nl', settings }: FooterProps) {
@@ -125,7 +127,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
     };
 
     return (
-        <footer className='w-full bg-linear-to-b from-amber-ultra via-stone-bg to-amber-pale/50 text-navy-800 border-t border-navy-900/10 pt-16 pb-12 transition-all relative overflow-hidden'>
+        <footer className='w-full bg-linear-to-b from-teal-ultra via-stone-bg to-teal-pale/50 text-navy-800 border-t border-navy-900/10 pt-16 pb-12 transition-all relative overflow-hidden'>
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
                 {/* 1. Dynamic Callback Callout Banner with Horizontally Inverted Glowing Gradient Background */}
                 <div className='bg-linear-to-tl from-[#f12711] via-[#ff9400] to-[#d88a04] text-white p-6 md:p-8 rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden border border-white/20'>
@@ -204,7 +206,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                         ? `tel:${settings.phone.replace(/[^\d+]/g, '')}`
                                         : 'tel:+310887077000'
                                 }
-                                className='flex items-center gap-2 hover:text-amber-hover transition-colors'
+                                className='flex items-center gap-2 hover:text-teal-hover transition-colors'
                             >
                                 <svg
                                     className='h-3.5 w-3.5 text-[#ff9400] shrink-0'
@@ -261,7 +263,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                     href={getPath(
                                         '/apps/vastgoedbeheer-software',
                                     )}
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.vastgoedbeheer}
                                 </Link>
@@ -269,7 +271,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/apps/huurdersportaal')}
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.huurdersportaal}
                                 </Link>
@@ -277,7 +279,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/apps/payment-software')}
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.payment}
                                 </Link>
@@ -296,7 +298,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                     href={getPath(
                                         '/integraties/business-central',
                                     )}
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.businessCentral}
                                 </Link>
@@ -306,7 +308,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                     href={getPath(
                                         '/integraties/document-capture',
                                     )}
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.documentCapture}
                                 </Link>
@@ -316,7 +318,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                     href={getPath(
                                         '/integraties/direct-banking',
                                     )}
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.directBanking}
                                 </Link>
@@ -341,7 +343,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/over-ons')}
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.team}
                                 </Link>
@@ -349,7 +351,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/referenties')}
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.referenties}
                                 </Link>
@@ -357,7 +359,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/nieuws')}
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.blog}
                                 </Link>
@@ -365,7 +367,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/contact')}
-                                    className='hover:text-amber-hover transition-colors font-semibold'
+                                    className='hover:text-teal-hover transition-colors font-semibold'
                                 >
                                     {t.contact}
                                 </Link>
@@ -382,7 +384,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href='/docs'
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.docs}
                                 </Link>
@@ -390,7 +392,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/help')}
-                                    className='hover:text-amber-hover transition-colors'
+                                    className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.support}
                                 </Link>
@@ -405,7 +407,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 }
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                className='h-7 w-7 rounded-md border border-navy-900/10 flex items-center justify-center text-navy-600 hover:text-navy-900 hover:border-amber transition-colors'
+                                className='h-7 w-7 rounded-md border border-navy-900/10 flex items-center justify-center text-navy-600 hover:text-navy-900 hover:border-teal transition-colors'
                                 aria-label='LinkedIn'
                             >
                                 <svg
@@ -420,7 +422,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 href={settings?.twitterUrl || 'https://x.com'}
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                className='h-7 w-7 rounded-md border border-navy-900/10 flex items-center justify-center text-navy-600 hover:text-navy-900 hover:border-amber transition-colors'
+                                className='h-7 w-7 rounded-md border border-navy-900/10 flex items-center justify-center text-navy-600 hover:text-navy-900 hover:border-teal transition-colors'
                                 aria-label='X (Twitter)'
                             >
                                 <svg
@@ -441,14 +443,14 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     <div className='flex flex-wrap justify-center gap-4 md:gap-6 text-[10px] text-navy-600 items-center'>
                         <Link
                             href={getPath('/privacybeleid')}
-                            className='hover:text-amber-hover transition-colors'
+                            className='hover:text-teal-hover transition-colors'
                         >
                             {t.disclaimer}
                         </Link>
                         <span className='text-navy-900/15'>|</span>
                         <Link
                             href={getPath('/algemene-voorwaarden')}
-                            className='hover:text-amber-hover transition-colors'
+                            className='hover:text-teal-hover transition-colors'
                         >
                             {t.terms}
                         </Link>
@@ -460,7 +462,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                     new CustomEvent('open_cookie_preferences'),
                                 );
                             }}
-                            className='hover:text-amber-hover transition-colors bg-transparent border-0 p-0 text-[10px] cursor-pointer text-navy-600'
+                            className='hover:text-teal-hover transition-colors bg-transparent border-0 p-0 text-[10px] cursor-pointer text-navy-600'
                         >
                             {locale === 'en'
                                 ? 'Cookie settings'

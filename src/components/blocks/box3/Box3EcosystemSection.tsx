@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Check } from 'lucide-react';
+import { Badge } from '@/components/ui/Badge';
 
 interface Box3EcosystemSectionProps {
     isEn: boolean;
@@ -79,9 +80,9 @@ export function Box3EcosystemSection({
         <section className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
             <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10'>
                 <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
-                    <span className='inline-flex items-center justify-center self-start rounded-full border border-amber/50 bg-[#251b14]/90 px-5 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                    <Badge color='teal' uppercase>
                         {secBadge}
-                    </span>
+                    </Badge>
                     <h2 className='font-display text-3xl/16 md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
                         {secTitle}
                     </h2>
@@ -90,7 +91,7 @@ export function Box3EcosystemSection({
                     </p>
                 </div>
                 <div className='lg:col-span-5 flex justify-center'>
-                    <div className='relative w-full max-w-md p-8 rounded-3xl bg-slate-900/90 text-white border border-amber/30 shadow-2xl space-y-6 backdrop-blur-xl'>
+                    <div className='relative w-full max-w-md p-8 rounded-3xl bg-slate-900/90 text-white border border-teal/30 shadow-2xl space-y-6 backdrop-blur-xl'>
                         <div className='flex items-center gap-4 border-b border-white/10 pb-4 relative'>
                             <Image
                                 src='/emlinked/box3/CERT-Associate-Dynamics365-Business-Central-Functional-Consultant.webp'
@@ -103,7 +104,7 @@ export function Box3EcosystemSection({
                                 <h3 className='font-bold text-lg text-white'>
                                     {cTitle}
                                 </h3>
-                                <span className='text-sm text-amber font-mono -mt-1 block'>
+                                <span className='text-sm text-teal font-mono -mt-1 block'>
                                     {cSubtitle}
                                 </span>
                             </div>
@@ -114,7 +115,7 @@ export function Box3EcosystemSection({
                                     key={idx}
                                     className='flex items-center gap-3'
                                 >
-                                    <Check className='w-4 h-4 text-amber shrink-0' />
+                                    <Check className='w-4 h-4 text-teal shrink-0' />
                                     <span>{pt}</span>
                                 </li>
                             ))}
@@ -129,7 +130,7 @@ export function Box3EcosystemSection({
                         key={idx}
                         className='px-4 py-6sm:py-0 flex flex-col items-center justify-center text-center space-y-1'
                     >
-                        <h4 className='text-sm font-bold text-amber text-center'>
+                        <h4 className='text-sm font-bold text-teal text-center'>
                             {item.title}
                         </h4>
                         <p className='text-xs text-white/70 font-light text-center'>

@@ -65,7 +65,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
             {/* Input Form Card */}
             <div className='lg:col-span-5 bg-card border border-black/20 rounded-xl p-6 shadow-sm'>
                 <div className='flex items-center gap-2 mb-4'>
-                    <div className='p-1.5 rounded-lg bg-amber/15 text-amber'>
+                    <div className='p-1.5 rounded-lg bg-teal/15 text-teal'>
                         <TrendingUp className='h-5 w-5' />
                     </div>
                     <h3 className='font-bold text-foreground'>
@@ -100,7 +100,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     ),
                                 )
                             }
-                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
+                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                             required
                         />
                     </div>
@@ -120,14 +120,14 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     ),
                                 )
                             }
-                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
+                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                             required
                         />
                     </div>
                     <button
                         type='submit'
                         disabled={isCalculating}
-                        className='mt-2 w-full h-11 bg-amber hover:bg-amber-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50'
+                        className='mt-2 w-full h-11 bg-teal hover:bg-teal-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50'
                     >
                         {isCalculating ? (
                             <>
@@ -167,7 +167,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                 <span className='text-[10px] uppercase font-semibold text-muted-foreground block mb-1'>
                                     {isEn ? 'Monthly Delta' : 'Verschil p.m.'}
                                 </span>
-                                <span className='text-lg font-bold text-amber'>
+                                <span className='text-lg font-bold text-teal'>
                                     +€
                                     {result.increase.toLocaleString(locale, {
                                         minimumFractionDigits: 2,
@@ -346,7 +346,7 @@ function TicketSimulator({ isEn }: { isEn: boolean }) {
             {/* Ticket Submission Form */}
             <div className='lg:col-span-5 bg-card border border-black/20 rounded-xl p-6 shadow-sm'>
                 <div className='flex items-center gap-2 mb-4'>
-                    <div className='p-1.5 rounded-lg bg-amber/15 text-amber'>
+                    <div className='p-1.5 rounded-lg bg-teal/15 text-teal'>
                         <Send className='h-5 w-5' />
                     </div>
                     <h3 className='font-bold text-foreground'>
@@ -368,7 +368,7 @@ function TicketSimulator({ isEn }: { isEn: boolean }) {
                         <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
+                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                         >
                             <option
                                 value={
@@ -421,14 +421,14 @@ function TicketSimulator({ isEn }: { isEn: boolean }) {
                                     : 'Wat functioneert er niet naar behoren?'
                             }
                             rows={3}
-                            className='w-full p-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber resize-none'
+                            className='w-full p-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal resize-none'
                             required
                         />
                     </div>
                     <button
                         type='submit'
                         disabled={isSubmitting}
-                        className='w-full h-11 bg-amber hover:bg-amber-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50'
+                        className='w-full h-11 bg-teal hover:bg-teal-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50'
                     >
                         {isSubmitting ? (
                             <>
@@ -461,8 +461,7 @@ function TicketSimulator({ isEn }: { isEn: boolean }) {
                         let statusColor =
                             'bg-blue-500/10 text-blue-500 border-blue-500/25';
                         if (t.status === 'In behandeling')
-                            statusColor =
-                                'bg-amber/10 text-amber border-amber/25';
+                            statusColor = 'bg-teal/10 text-teal border-teal/25';
                         if (t.status === 'Opgelost')
                             statusColor =
                                 'bg-emerald-500/10 text-emerald-500 border-emerald-500/25';
@@ -529,7 +528,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
             {/* Inputs Card */}
             <div className='lg:col-span-5 bg-card border border-black/20 rounded-xl p-6 shadow-sm'>
                 <div className='flex items-center gap-2 mb-4'>
-                    <div className='p-1.5 rounded-lg bg-amber/15 text-amber'>
+                    <div className='p-1.5 rounded-lg bg-teal/15 text-teal'>
                         <DollarSign className='h-5 w-5' />
                     </div>
                     <h3 className='font-bold text-foreground'>
@@ -561,7 +560,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                     ),
                                 )
                             }
-                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber'
+                            className='w-full h-10 px-3 rounded-md border border-black/20 bg-background text-sm text-foreground focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                             required
                         />
                     </div>
@@ -581,7 +580,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                         ),
                                     )
                                 }
-                                className='w-full h-10 px-2 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-amber'
+                                className='w-full h-10 px-2 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-teal'
                                 required
                             />
                         </div>
@@ -600,7 +599,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                         ),
                                     )
                                 }
-                                className='w-full h-10 px-2 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-amber'
+                                className='w-full h-10 px-2 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-teal'
                                 required
                             />
                         </div>
@@ -619,7 +618,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                         ),
                                     )
                                 }
-                                className='w-full h-10 px-2 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-amber'
+                                className='w-full h-10 px-2 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-teal'
                                 required
                             />
                         </div>
@@ -627,7 +626,7 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                     <button
                         type='submit'
                         disabled={isReconciling}
-                        className='mt-2 w-full h-11 bg-amber hover:bg-amber-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50'
+                        className='mt-2 w-full h-11 bg-teal hover:bg-teal-hover text-white text-sm font-semibold rounded-md flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50'
                     >
                         {isReconciling ? (
                             <>
@@ -689,13 +688,13 @@ function PaymentSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                         ? 'Management Fee'
                                         : 'Beheervergoeding'}
                                 </span>
-                                <span className='text-base font-bold text-amber'>
+                                <span className='text-base font-bold text-teal'>
                                     €
                                     {result.fee.toLocaleString(locale, {
                                         minimumFractionDigits: 2,
                                     })}
                                 </span>
-                                <span className='text-[9px] text-amber block font-medium'>
+                                <span className='text-[9px] text-teal block font-medium'>
                                     ({feePct}%)
                                 </span>
                             </div>

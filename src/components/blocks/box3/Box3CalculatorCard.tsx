@@ -35,11 +35,11 @@ export function Box3CalculatorCard({
         `€ ${Math.round(Math.abs(val)).toLocaleString(isEn ? 'en-US' : 'nl-NL')}`;
 
     return (
-        <div className='bg-white border-2 border-amber/30 rounded-3xl p-6 md:p-8 shadow-[0_16px_45px_rgba(245,158,11,0.12)] relative overflow-hidden text-[#060e32]'>
+        <div className='bg-white border-2 border-teal/30 rounded-3xl p-6 md:p-8 shadow-[0_16px_45px_rgba(245,158,11,0.12)] relative overflow-hidden text-[#060e32]'>
             {/* Header */}
-            <div className='flex items-center justify-between border-b border-amber/20 pb-4 mb-6'>
+            <div className='flex items-center justify-between border-b border-teal/20 pb-4 mb-6'>
                 <div className='flex items-center gap-3'>
-                    <div className='p-2.5 rounded-xl bg-amber/15 border border-amber/30 text-amber shadow-xs'>
+                    <div className='p-2.5 rounded-xl bg-teal/15 border border-teal/30 text-teal shadow-xs'>
                         <Calculator className='w-5 h-5' />
                     </div>
                     <div>
@@ -64,7 +64,7 @@ export function Box3CalculatorCard({
                     <label className='block text-xs font-semibold text-[#060e32]/70 mb-1.5 tracking-wider'>
                         {isEn ? 'WOZ Property Value' : 'WOZ-waarde pand (€)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-amber focus-within:ring-2 focus-within:ring-amber/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             €
                         </span>
@@ -87,7 +87,7 @@ export function Box3CalculatorCard({
                             ? 'Gross Rent / year'
                             : 'Bruto huurinkomsten / jr (€)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-amber focus-within:ring-2 focus-within:ring-amber/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             €
                         </span>
@@ -110,7 +110,7 @@ export function Box3CalculatorCard({
                             ? 'Maintenance Costs / year'
                             : 'Onderhoudskosten / jr (€)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-amber focus-within:ring-2 focus-within:ring-amber/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             €
                         </span>
@@ -133,7 +133,7 @@ export function Box3CalculatorCard({
                             ? 'Mortgage Interest / year'
                             : 'Hypotheekrente / jr (€)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-amber focus-within:ring-2 focus-within:ring-amber/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             €
                         </span>
@@ -156,7 +156,7 @@ export function Box3CalculatorCard({
                             ? 'Mortgage Debt Total'
                             : 'Hypotheekschuld totaal (€)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-amber focus-within:ring-2 focus-within:ring-amber/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             €
                         </span>
@@ -177,7 +177,7 @@ export function Box3CalculatorCard({
                     <label className='block text-xs font-semibold text-[#060e32]/70 mb-1.5 tracking-wider'>
                         {isEn ? 'Value Growth (%/yr)' : 'Waardestijging (%/jr)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-amber focus-within:ring-2 focus-within:ring-amber/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             %
                         </span>
@@ -227,8 +227,8 @@ export function Box3CalculatorCard({
                                 }
                                 className={`py-2.5 px-3 text-xs rounded-xl border transition-all duration-200 text-center font-medium ${
                                     inputs.verhuurPct === option.val
-                                        ? 'border-amber bg-amber/15 text-amber font-bold shadow-xs'
-                                        : 'border-slate-200 bg-white text-[#060e32]/70 hover:border-amber/50 hover:text-[#060e32]'
+                                        ? 'border-teal bg-teal/15 text-teal font-bold shadow-xs'
+                                        : 'border-slate-200 bg-white text-[#060e32]/70 hover:border-teal/50 hover:text-[#060e32]'
                                 }`}
                             >
                                 {option.label}
@@ -242,7 +242,7 @@ export function Box3CalculatorCard({
             <div
                 className={`mt-6 p-5 rounded-2xl border transition-all duration-300 ${
                     results.verdictType === 'good'
-                        ? 'bg-amber/15 border-amber/40 text-amber-hover'
+                        ? 'bg-teal/15 border-teal/40 text-teal-hover'
                         : results.verdictType === 'neutral'
                           ? 'bg-slate-100 border-slate-300 text-[#060e32]'
                           : 'bg-rose-500/15 border-rose-500/30 text-rose-900'
@@ -250,10 +250,10 @@ export function Box3CalculatorCard({
             >
                 <div className='font-bold text-base flex items-center gap-2 mb-3'>
                     {results.verdictType === 'good' && (
-                        <CheckCircle2 className='w-5 h-5 shrink-0 text-amber' />
+                        <CheckCircle2 className='w-5 h-5 shrink-0 text-teal' />
                     )}
                     {results.verdictType === 'neutral' && (
-                        <Info className='w-5 h-5 shrink-0 text-amber' />
+                        <Info className='w-5 h-5 shrink-0 text-teal' />
                     )}
                     {results.verdictType === 'bad' && (
                         <AlertTriangle className='w-5 h-5 shrink-0 text-rose-600' />
@@ -264,7 +264,7 @@ export function Box3CalculatorCard({
                 </div>
 
                 <div className='grid grid-cols-2 gap-3 my-4'>
-                    <div className='bg-white p-3.5 rounded-xl text-center border border-amber/20 shadow-xs'>
+                    <div className='bg-white p-3.5 rounded-xl text-center border border-teal/20 shadow-xs'>
                         <div className='text-[11px] text-[#060e32]/60 uppercase tracking-wider font-semibold'>
                             {isEn
                                 ? 'Tax Current (Forfait)'
@@ -274,13 +274,13 @@ export function Box3CalculatorCard({
                             {formatCurrency(results.belastingNu)}
                         </div>
                     </div>
-                    <div className='bg-white p-3.5 rounded-xl text-center border border-amber/20 shadow-xs'>
+                    <div className='bg-white p-3.5 rounded-xl text-center border border-teal/20 shadow-xs'>
                         <div className='text-[11px] text-[#060e32]/60 uppercase tracking-wider font-semibold'>
                             {isEn
                                 ? 'Tax 2028 (Actual Yield)'
                                 : 'Belasting 2028 (werkelijk)'}
                         </div>
-                        <div className='text-lg md:text-xl font-extrabold text-amber mt-1'>
+                        <div className='text-lg md:text-xl font-extrabold text-teal mt-1'>
                             {formatCurrency(results.belastingNieuw)}
                         </div>
                     </div>

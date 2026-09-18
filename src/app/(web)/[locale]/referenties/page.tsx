@@ -11,6 +11,7 @@ import { GlowingLink } from '@/components/ui/GlowingButton';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl } from '@/sanity/image';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
+import { Badge } from '@/components/ui/Badge';
 import {
     ArrowRight,
     Building2,
@@ -139,19 +140,30 @@ export default async function ReferentiesPage({
     };
 
     const blocks = pageData?.pageBlocks || [];
-    const heroBlock = blocks.find((b: any) => b._type === 'hero' || b._type === 'heroBlock');
+    const heroBlock = blocks.find(
+        (b: any) => b._type === 'hero' || b._type === 'heroBlock',
+    );
     const trustBarBlock = blocks.find((b: any) => b._type === 'trustBar');
     const casesBlock = blocks.find(
-        (b: any) => b._type === 'workflow' || b._type === 'casesBlock' || b._type === 'stepsBlock',
+        (b: any) =>
+            b._type === 'workflow' ||
+            b._type === 'casesBlock' ||
+            b._type === 'stepsBlock',
     );
     const ecosystemBlock = blocks.find(
-        (b: any) => b._type === 'ecosystemSection' || b._type === 'integrationsList',
+        (b: any) =>
+            b._type === 'ecosystemSection' || b._type === 'integrationsList',
     );
     const whyBlock = blocks.find(
-        (b: any) => b._type === 'architectureSection' || b._type === 'architectureBlock',
+        (b: any) =>
+            b._type === 'architectureSection' ||
+            b._type === 'architectureBlock',
     );
     const ctaBlock = blocks.find(
-        (b: any) => b._type === 'ctaBanner' || b._type === 'ctaBlock' || b._type === 'cta',
+        (b: any) =>
+            b._type === 'ctaBanner' ||
+            b._type === 'ctaBlock' ||
+            b._type === 'cta',
     );
 
     const defaultBlocks = [
@@ -238,8 +250,8 @@ export default async function ReferentiesPage({
                     {/* Integrated Trust Bar sharing the Hero background */}
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/10'>
                         <div className='flex flex-col items-center p-3 space-y-1.5'>
-                            <span className='font-display text-xl lg:text-2xl font-extrabold text-amber tracking-tight flex items-center gap-2'>
-                                <Sparkles className='w-5 h-5 text-amber animate-pulse' />
+                            <span className='font-display text-xl lg:text-2xl font-extrabold text-teal tracking-tight flex items-center gap-2'>
+                                <Sparkles className='w-5 h-5 text-teal animate-pulse' />
                                 100%
                             </span>
                             <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
@@ -252,7 +264,7 @@ export default async function ReferentiesPage({
 
                         <div className='flex flex-col items-center p-3 pt-5 md:pt-3 space-y-1.5'>
                             <span className='font-display text-xl lg:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2'>
-                                <Building2 className='w-5 h-5 text-amber' />
+                                <Building2 className='w-5 h-5 text-teal' />
                                 Enterprise
                             </span>
                             <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
@@ -264,8 +276,8 @@ export default async function ReferentiesPage({
                         </div>
 
                         <div className='flex flex-col items-center p-3 pt-5 md:pt-3 space-y-1.5'>
-                            <span className='font-display text-xl lg:text-2xl font-extrabold text-amber tracking-tight flex items-center gap-2'>
-                                <ShieldCheck className='w-5 h-5 text-amber' />
+                            <span className='font-display text-xl lg:text-2xl font-extrabold text-teal tracking-tight flex items-center gap-2'>
+                                <ShieldCheck className='w-5 h-5 text-teal' />
                                 Continuïteit
                             </span>
                             <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
@@ -284,17 +296,20 @@ export default async function ReferentiesPage({
     const renderCases = (b: any, key: any) => {
         const caseItems = b?.items || [];
         return (
-            <section key={key} className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-foreground border-b border-black/10 relative z-10'>
+            <section
+                key={key}
+                className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-foreground border-b border-black/10 relative z-10'
+            >
                 <div className='max-w-7xl mx-auto space-y-16'>
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
                         <div className='flex justify-center mb-1'>
-                            <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                                <Award className='w-3.5 h-3.5 text-amber' />
+                            <Badge color='teal' uppercase>
+                                <Award className='w-3.5 h-3.5 text-teal' />
                                 {b?.badge ||
                                     (isEn
                                         ? 'CUSTOMER CASES & EXPERIENCES'
                                         : 'KLANTCASES & ERVARINGEN')}
-                            </span>
+                            </Badge>
                         </div>
 
                         <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-darkblue dark:text-white'>
@@ -311,19 +326,19 @@ export default async function ReferentiesPage({
                                 c.photo || c.image,
                                 c.photoPath || c.imagePath,
                             );
-                            const logoUrl = getImageUrl(
-                                c.logo,
-                                c.logoPath,
-                            );
-                            const companyName = c.company || c.step || `Case ${index + 1}`;
+                            const logoUrl = getImageUrl(c.logo, c.logoPath);
+                            const companyName =
+                                c.company || c.step || `Case ${index + 1}`;
                             const metricVal = c.feature;
-                            const metricLbl = c.metricLabel || (isEn ? 'Key Result' : 'Kernresultaat');
+                            const metricLbl =
+                                c.metricLabel ||
+                                (isEn ? 'Key Result' : 'Kernresultaat');
                             const tags = c.tags || [];
 
                             return (
                                 <div
                                     key={c._key || index}
-                                    className='rounded-xl border border-black/10 bg-white/80 p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-amber/40 transition-all duration-300'
+                                    className='rounded-xl border border-black/10 bg-white/80 p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-teal/40 transition-all duration-300'
                                 >
                                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 items-center'>
                                         <div className='lg:col-span-7 space-y-6'>
@@ -337,11 +352,11 @@ export default async function ReferentiesPage({
                                                         }
                                                         width={80}
                                                         height={80}
-                                                        className='w-20 h-20 rounded-2xl object-cover border-2 border-amber/50 shadow-lg shrink-0'
+                                                        className='w-20 h-20 rounded-2xl object-cover border-2 border-teal/50 shadow-lg shrink-0'
                                                     />
                                                 )}
                                                 <div className='space-y-1'>
-                                                    <span className='text-xs font-mono font-bold text-amber uppercase tracking-wider block'>
+                                                    <span className='text-xs font-mono font-bold text-teal uppercase tracking-wider block'>
                                                         {c.step ||
                                                             `CASE ${index + 1}`}
                                                     </span>
@@ -357,10 +372,10 @@ export default async function ReferentiesPage({
 
                                             {/* Key Metric Banner */}
                                             {metricVal && (
-                                                <div className='p-4 rounded-xl bg-amber/10 border border-amber/30 flex items-center gap-4 text-darkblue dark:text-white leading-tight'>
-                                                    <Zap className='w-7 h-7 text-amber shrink-0' />
+                                                <div className='p-4 rounded-xl bg-teal/10 border border-teal/30 flex items-center gap-4 text-darkblue dark:text-white leading-tight'>
+                                                    <Zap className='w-7 h-7 text-teal shrink-0' />
                                                     <div>
-                                                        <span className='text-[11px] font-mono font-bold text-amber uppercase block mb-1'>
+                                                        <span className='text-[11px] font-mono font-bold text-teal uppercase block mb-1'>
                                                             {metricLbl}
                                                         </span>
                                                         <span className='text-sm font-bold'>
@@ -373,12 +388,14 @@ export default async function ReferentiesPage({
                                             {/* Customer Quote */}
                                             {c.quote && (
                                                 <blockquote className='relative ml-4 pl-6 italic text-sm text-foreground/90 font-medium'>
-                                                    <Quote className='w-4 h-4 text-amber/40 absolute -left-2.5 -top-1' />
+                                                    <Quote className='w-4 h-4 text-teal/40 absolute -left-2.5 -top-1' />
                                                     {c.quote}
                                                     {c.author && (
-                                                        <footer className='text-xs font-bold text-amber not-italic mt-2'>
+                                                        <footer className='text-xs font-bold text-teal not-italic mt-2'>
                                                             — {c.author}
-                                                            {c.role ? `, ${c.role}` : ''}
+                                                            {c.role
+                                                                ? `, ${c.role}`
+                                                                : ''}
                                                         </footer>
                                                     )}
                                                 </blockquote>
@@ -390,12 +407,14 @@ export default async function ReferentiesPage({
                                             <div className='relative rounded-2xl bg-texture-navy p-6 text-white border border-white/15 shadow-2xl space-y-5 overflow-hidden'>
                                                 {/* Header Bar */}
                                                 <div className='flex items-center justify-between border-b border-white/10 pb-3'>
-                                                    <span className='text-xs font-mono text-amber font-bold uppercase tracking-wider truncate max-w-[200px]'>
+                                                    <span className='text-xs font-mono text-teal font-bold uppercase tracking-wider truncate max-w-[200px]'>
                                                         {companyName}
                                                     </span>
                                                     <span className='px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold uppercase flex items-center gap-1.5 shrink-0'>
                                                         <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse' />
-                                                        {isEn ? 'Verified' : 'Geverifieerd'}
+                                                        {isEn
+                                                            ? 'Verified'
+                                                            : 'Geverifieerd'}
                                                     </span>
                                                 </div>
 
@@ -414,16 +433,18 @@ export default async function ReferentiesPage({
                                                             />
                                                         </div>
                                                     ) : (
-                                                        <div className='text-xl font-bold text-amber font-mono text-center py-6'>
+                                                        <div className='text-xl font-bold text-teal font-mono text-center py-6'>
                                                             {companyName}
                                                         </div>
                                                     )}
                                                     <div className='flex items-center justify-between w-full text-[11px] font-mono'>
                                                         <span className='text-slate-300 font-semibold truncate'>
                                                             {c.author ||
-                                                                (isEn ? 'Verified Customer' : 'Geverifieerde Klant')}
+                                                                (isEn
+                                                                    ? 'Verified Customer'
+                                                                    : 'Geverifieerde Klant')}
                                                         </span>
-                                                        <span className='text-amber font-bold shrink-0 ml-2'>
+                                                        <span className='text-teal font-bold shrink-0 ml-2'>
                                                             ERP Native
                                                         </span>
                                                     </div>
@@ -434,9 +455,11 @@ export default async function ReferentiesPage({
                                                     <div className='space-y-2 pt-1'>
                                                         <div className='text-[11px] font-mono text-white/60 uppercase tracking-wider flex items-center justify-between'>
                                                             <span>
-                                                                {isEn ? 'Specifications & Tags' : 'Specificaties & Tags'}
+                                                                {isEn
+                                                                    ? 'Specifications & Tags'
+                                                                    : 'Specificaties & Tags'}
                                                             </span>
-                                                            <span className='text-amber font-bold'>
+                                                            <span className='text-teal font-bold'>
                                                                 Business Central
                                                             </span>
                                                         </div>
@@ -447,12 +470,16 @@ export default async function ReferentiesPage({
                                                                     tIdx: number,
                                                                 ) => (
                                                                     <div
-                                                                        key={tIdx}
-                                                                        className='flex items-center gap-1.5 bg-white/5 px-2.5 py-1.5 rounded-lg border border-white/10 hover:border-amber/30 transition-colors'
+                                                                        key={
+                                                                            tIdx
+                                                                        }
+                                                                        className='flex items-center gap-1.5 bg-white/5 px-2.5 py-1.5 rounded-lg border border-white/10 hover:border-teal/30 transition-colors'
                                                                     >
-                                                                        <Check className='w-3.5 h-3.5 text-amber shrink-0' />
+                                                                        <Check className='w-3.5 h-3.5 text-teal shrink-0' />
                                                                         <span className='truncate text-[11px]'>
-                                                                            {tag}
+                                                                            {
+                                                                                tag
+                                                                            }
                                                                         </span>
                                                                     </div>
                                                                 ),
@@ -475,16 +502,19 @@ export default async function ReferentiesPage({
     const renderEcosystem = (b: any, key: any) => {
         const partnerItems = b?.items || [];
         return (
-            <section key={key} className='px-6 py-20 bg-texture-navy text-white border-b border-white/10 relative z-10 overflow-hidden'>
+            <section
+                key={key}
+                className='px-6 py-20 bg-texture-navy text-white border-b border-white/10 relative z-10 overflow-hidden'
+            >
                 <div className='max-w-7xl mx-auto space-y-12 text-center relative z-10'>
                     <div className='max-w-3xl mx-auto space-y-4'>
-                        <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                            <Layers className='w-3.5 h-3.5 text-amber' />
+                        <Badge color='teal' uppercase>
+                            <Layers className='w-3.5 h-3.5 text-teal' />
                             {b?.badge ||
                                 (isEn
                                     ? 'OUR PARTNERS & ECOSYSTEM'
                                     : 'ONZE PARTNERS & ECOSYSTEEM')}
-                        </span>
+                        </Badge>
 
                         <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-white'>
                             {b?.title ||
@@ -508,10 +538,10 @@ export default async function ReferentiesPage({
                                     key={p._key || idx}
                                     className='px-6 flex flex-col items-center justify-center gap-2 group hover:bg-white/5 transition-colors duration-300'
                                 >
-                                    <span className='text-xs font-mono font-bold text-amber uppercase tracking-wider'>
+                                    <span className='text-xs font-mono font-bold text-teal uppercase tracking-wider'>
                                         {p.tag || p.category || 'Integration'}
                                     </span>
-                                    <span className='text-sm md:text-base text-white/80 text-center group-hover:text-amber transition-colors leading-snug'>
+                                    <span className='text-sm md:text-base text-white/80 text-center group-hover:text-teal transition-colors leading-snug'>
                                         {p.name || p.title}
                                     </span>
                                 </div>
@@ -526,16 +556,19 @@ export default async function ReferentiesPage({
     const renderWhyChooseUs = (b: any, key: any) => {
         const whyBullets = b?.bullets || [];
         return (
-            <section key={key} className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] border-b border-black/10 text-foreground relative z-10'>
+            <section
+                key={key}
+                className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] border-b border-black/10 text-foreground relative z-10'
+            >
                 <div className='max-w-7xl mx-auto space-y-12'>
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
-                        <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4.5 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md'>
-                            <TrendingUp className='w-3.5 h-3.5 text-amber' />
+                        <Badge color='teal' uppercase>
+                            <TrendingUp className='w-3.5 h-3.5 text-teal' />
                             {b?.tag ||
                                 (isEn
                                     ? 'WHY LEADERS CHOOSE EMLINKED'
                                     : 'WAAROM MARKTLEIDERS KIEZEN VOOR EMLINKED')}
-                        </span>
+                        </Badge>
 
                         <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-darkblue dark:text-white'>
                             {b?.title ||
@@ -557,8 +590,12 @@ export default async function ReferentiesPage({
                                         className='px-4 py-5 md:py-2 md:px-6 flex flex-col items-start justify-start text-left space-y-2 group'
                                     >
                                         <div className='flex items-center gap-3 w-full'>
-                                            <div className='w-10 h-10 rounded-full border-2 border-amber bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-amber-hover transition-all duration-300 text-black'>
-                                                {whyIcons[idx % whyIcons.length]}
+                                            <div className='w-10 h-10 rounded-full border-2 border-teal bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-teal-hover transition-all duration-300 text-black'>
+                                                {
+                                                    whyIcons[
+                                                        idx % whyIcons.length
+                                                    ]
+                                                }
                                             </div>
                                             <h3 className='text-sm md:text-base font-bold text-[#060e32] dark:text-white text-left leading-tight'>
                                                 {titleStr}
@@ -590,16 +627,15 @@ export default async function ReferentiesPage({
                 id='contact'
             >
                 <div className='mx-auto max-w-8xl px-0'>
-                    <div className='border border-amber/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+                    <div className='border border-teal/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
-                                <span className='inline-flex items-center gap-2 self-start rounded-full bg-amber/15 border border-amber/35 px-5 py-1.5 text-xs font-bold tracking-widest text-amber uppercase backdrop-blur-md'>
-                                    <span className='w-1.5 h-1.5 bg-amber rounded-full animate-ping' />
+                                <Badge color='teal' uppercase dot dotPulse>
                                     {b?.tag ||
                                         (isEn
                                             ? 'CONSULTATION'
                                             : 'ADVIESGESPREK')}
-                                </span>
+                                </Badge>
 
                                 <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
                                     {b?.title ||

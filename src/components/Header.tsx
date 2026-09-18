@@ -17,6 +17,7 @@ import {
     BsArrowUpRight,
 } from 'react-icons/bs';
 import { BorderBeam } from 'border-beam';
+import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
 // Maps a submenu link title to a representative icon so the mega-menu
 // reads as a scannable grid instead of a wall of text.
@@ -440,21 +441,21 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
     return (
         <header
             ref={headerRef}
-            className='sticky top-0 z-50 w-full xl:border-t-6 border-amber bg-white/95 backdrop-blur-md transition-all duration-300 shadow-md text-foreground'
+            className='sticky top-0 z-50 w-full xl:border-t-6 border-teal bg-white/95 backdrop-blur-md transition-all duration-300 shadow-md text-foreground'
         >
             {/* Row 1: Full-Width 50/50 Top CTA Bar (Only visible on < xl screens) */}
-            <div className='flex xl:hidden w-full border-b border-amber/20 items-stretch font-semibold text-xs sm:text-sm bg-white'>
+            <div className='flex xl:hidden w-full border-b border-teal/20 items-stretch font-semibold text-xs sm:text-sm bg-white'>
                 <button
                     onClick={() => setIsDemoModalOpen(true)}
-                    className='w-1/2 bg-amber text-white hover:bg-amber-hover flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-none transition-colors cursor-pointer font-bold shadow-xs'
+                    className='w-1/2 bg-teal text-white hover:bg-teal-hover flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-none transition-colors cursor-pointer font-bold shadow-xs'
                 >
                     <span>{isEn ? 'Request a Demo' : 'Demo aanvragen'}</span>
                 </button>
                 <Link
                     href='/docs'
-                    className='w-1/2 bg-amber-pale text-navy-900 hover:bg-amber-100 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-none border-l border-amber/30 transition-colors cursor-pointer font-semibold'
+                    className='w-1/2 bg-teal-pale text-navy-900 hover:bg-teal-100 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-none border-l border-teal/30 transition-colors cursor-pointer font-semibold'
                 >
-                    <BsRocketTakeoff className='h-3.5 w-3.5 shrink-0 text-amber' />
+                    <BsRocketTakeoff className='h-3.5 w-3.5 shrink-0 text-teal' />
                     <span>{t.mijnEmlinked}</span>
                 </Link>
             </div>
@@ -482,7 +483,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     {/* Middle: Centered Mobile Menu Pill Toggle */}
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className='inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber/10 border border-amber/30 text-amber font-semibold text-xs uppercase tracking-wider hover:bg-amber/20 active:scale-95 transition-all cursor-pointer'
+                        className='inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal/10 border border-teal/30 text-teal font-semibold text-xs uppercase tracking-wider hover:bg-teal/20 active:scale-95 transition-all cursor-pointer'
                         aria-label='Toggle Menu'
                     >
                         <svg
@@ -539,7 +540,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         </button>
 
                         {langDropdownOpen && (
-                            <div className='absolute right-0 mt-2 w-44 origin-top-right rounded-lg border border-amber/30 bg-amber-ultra text-navy-dark p-1 shadow-lg transition-all z-50'>
+                            <div className='absolute right-0 mt-2 w-44 origin-top-right rounded-lg border border-teal/30 bg-teal-ultra text-navy-dark p-1 shadow-lg transition-all z-50'>
                                 <a
                                     href={getLocalePath('nl')}
                                     onClick={(e) => {
@@ -650,13 +651,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 href={getPath(item.path)}
                                                 className={`flex items-center gap-1.5 text-[13px] 2xl:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap px-3 py-1.5 rounded-lg ${
                                                     isDropdownActive
-                                                        ? 'text-amber bg-amber/10 font-bold shadow-xs'
-                                                        : 'text-foreground/80 hover:text-amber hover:bg-amber/5'
+                                                        ? 'text-teal bg-teal/10 font-bold shadow-xs'
+                                                        : 'text-foreground/80 hover:text-teal hover:bg-teal/5'
                                                 }`}
                                             >
                                                 {item.title}
                                                 <svg
-                                                    className='h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180 text-amber/80'
+                                                    className='h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180 text-teal/80'
                                                     viewBox='0 0 20 20'
                                                     fill='currentColor'
                                                 >
@@ -671,13 +672,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                             <button
                                                 className={`flex items-center gap-1.5 text-[13px] 2xl:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap px-3 py-1.5 rounded-lg ${
                                                     isDropdownActive
-                                                        ? 'text-amber bg-amber/10 font-bold shadow-xs'
-                                                        : 'text-foreground/80 hover:text-amber hover:bg-amber/5'
+                                                        ? 'text-teal bg-teal/10 font-bold shadow-xs'
+                                                        : 'text-foreground/80 hover:text-teal hover:bg-teal/5'
                                                 }`}
                                             >
                                                 {item.title}
                                                 <svg
-                                                    className='h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180 text-amber/80'
+                                                    className='h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180 text-teal/80'
                                                     viewBox='0 0 20 20'
                                                     fill='currentColor'
                                                 >
@@ -689,7 +690,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 </svg>
                                             </button>
                                         )}
-                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-80 origin-top rounded-xl border border-amber/30 p-2 shadow-lg transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50 bg-amber-ultra text-navy-dark'>
+                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-80 origin-top rounded-xl border border-teal/30 p-2 shadow-lg transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50 bg-teal-ultra text-navy-dark'>
                                             <div className='flex flex-col gap-1'>
                                                 {item.links?.map(
                                                     (
@@ -710,13 +711,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                         const subContent = (
                                                             <div className='flex items-start gap-3'>
                                                                 <div
-                                                                    className={`p-2 rounded-lg shrink-0 transition-colors ${active ? 'bg-amber text-white' : 'bg-amber/10 text-amber group-hover/item:bg-amber group-hover/item:text-white'}`}
+                                                                    className={`p-2 rounded-lg shrink-0 transition-colors ${active ? 'bg-teal text-white' : 'bg-teal/10 text-teal group-hover/item:bg-teal group-hover/item:text-white'}`}
                                                                 >
                                                                     <SubIcon className='w-4 h-4' />
                                                                 </div>
                                                                 <div className='flex flex-col gap-0.5'>
                                                                     <span
-                                                                        className={`block text-[13px] font-bold leading-tight ${active ? 'text-amber' : 'text-foreground group-hover/item:text-amber'}`}
+                                                                        className={`block text-[13px] font-bold leading-tight ${active ? 'text-teal' : 'text-foreground group-hover/item:text-teal'}`}
                                                                     >
                                                                         {
                                                                             subLink.title
@@ -733,7 +734,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                             </div>
                                                         );
 
-                                                        const cellClass = `group/item block rounded-lg p-2.5 transition-all duration-200 text-left w-full ${active ? 'bg-amber/10 border border-amber/20' : 'hover:bg-amber/5'}`;
+                                                        const cellClass = `group/item block rounded-lg p-2.5 transition-all duration-200 text-left w-full ${active ? 'bg-teal/10 border border-teal/20' : 'hover:bg-teal/5'}`;
 
                                                         if (isDemo) {
                                                             return (
@@ -781,7 +782,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     <button
                                         key={idx}
                                         onClick={() => setIsDemoModalOpen(true)}
-                                        className='text-[13px] 2xl:text-sm font-semibold transition-all duration-200 text-foreground/80 hover:text-amber hover:bg-amber/5 px-3 py-1.5 rounded-lg cursor-pointer'
+                                        className='text-[13px] 2xl:text-sm font-semibold transition-all duration-200 text-foreground/80 hover:text-teal hover:bg-teal/5 px-3 py-1.5 rounded-lg cursor-pointer'
                                     >
                                         {item.title}
                                     </button>
@@ -794,8 +795,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     href={getPath(item.path)}
                                     className={`text-[13px] 2xl:text-sm font-semibold transition-all duration-200 px-3 py-1.5 rounded-lg ${
                                         active
-                                            ? 'text-amber bg-amber/10 font-bold shadow-xs'
-                                            : 'text-foreground/80 hover:text-amber hover:bg-amber/5'
+                                            ? 'text-teal bg-teal/10 font-bold shadow-xs'
+                                            : 'text-foreground/80 hover:text-teal hover:bg-teal/5'
                                     }`}
                                 >
                                     {item.title}
@@ -830,7 +831,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             </button>
 
                             {langDropdownOpen && (
-                                <div className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-amber/30 bg-amber-ultra text-navy-dark p-1 shadow-lg transition-all z-50'>
+                                <div className='absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-teal/30 bg-teal-ultra text-navy-dark p-1 shadow-lg transition-all z-50'>
                                     <a
                                         href={getLocalePath('nl')}
                                         onClick={(e) => {
@@ -912,20 +913,17 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         >
                             <button
                                 onClick={() => setIsDemoModalOpen(true)}
-                                className='inline-flex items-center gap-1.5 px-5 py-2.5 font-semibold rounded-full border border-navy-900 transition-all duration-300 bg-navy-900 text-white cursor-pointer shadow-xs text-sm hover:bg-black hover:border-black'
+                                className='inline-flex items-center gap-1.5 px-5 py-2.5 font-semibold rounded-lg border border-navy-900 transition-all duration-300 bg-navy-900 text-white cursor-pointer shadow-xs text-sm hover:bg-black hover:border-black'
                             >
                                 {isEn ? 'Request a Demo' : 'Demo aanvragen'}
                             </button>
                         </BorderBeam>
 
                         {/* Sign In Button / Portal Access */}
-                        <Link
-                            href='/docs'
-                            className='inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full border border-navy-900/25 text-navy-900 bg-transparent transition-all duration-300 hover:bg-navy-900/5 hover:border-navy-900'
-                        >
+                        <OutlineLinkButton href='/docs' color='navy'>
                             <BsRocketTakeoff className='h-4 w-4 shrink-0' />
                             <span>{t.mijnEmlinked}</span>
-                        </Link>
+                        </OutlineLinkButton>
                     </div>
                 </div>
             </div>
@@ -950,7 +948,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.25, ease: 'easeInOut' }}
-                            className='relative z-50 xl:hidden border-t border-amber/20 bg-white dark:bg-card overflow-hidden shadow-xl'
+                            className='relative z-50 xl:hidden border-t border-teal/20 bg-white dark:bg-card overflow-hidden shadow-xl'
                         >
                             <nav className='flex flex-col p-4 gap-1'>
                                 {menuItems.map((item: any, idx: number) => {
@@ -961,7 +959,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                         return (
                                             <div
                                                 key={key}
-                                                className='border-b border-amber/10 py-3 transition-colors'
+                                                className='border-b border-teal/10 py-3 transition-colors'
                                             >
                                                 <div className='flex w-full items-center justify-between py-1'>
                                                     {item.path ? (
@@ -978,8 +976,8 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                                 isActive(
                                                                     item.path,
                                                                 )
-                                                                    ? 'text-amber font-bold'
-                                                                    : 'text-foreground hover:text-amber'
+                                                                    ? 'text-teal font-bold'
+                                                                    : 'text-foreground hover:text-teal'
                                                             }`}
                                                         >
                                                             {item.title}
@@ -1002,11 +1000,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                                 item.title,
                                                             )
                                                         }
-                                                        className='p-1 rounded-md text-foreground/50 hover:text-amber hover:bg-amber/10 active:scale-95 transition-all cursor-pointer'
+                                                        className='p-1 rounded-md text-foreground/50 hover:text-teal hover:bg-teal/10 active:scale-95 transition-all cursor-pointer'
                                                         aria-label='Toggle Submenu'
                                                     >
                                                         <svg
-                                                            className={`h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-180 text-amber' : 'text-foreground/50'}`}
+                                                            className={`h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-180 text-teal' : 'text-foreground/50'}`}
                                                             fill='none'
                                                             viewBox='0 0 24 24'
                                                             stroke='currentColor'
@@ -1038,7 +1036,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                                     getSubIcon(
                                                                         subLink.title,
                                                                     );
-                                                                const itemClass = `flex items-center gap-3 text-xs transition-all py-2.5 px-2 border-t border-amber/10 rounded-lg w-full text-left cursor-pointer active:scale-[0.98] active:bg-amber/10 ${active ? 'text-amber font-bold bg-amber/5' : 'text-foreground/80 hover:text-amber hover:bg-amber/5'}`;
+                                                                const itemClass = `flex items-center gap-3 text-xs transition-all py-2.5 px-2 border-t border-teal/10 rounded-lg w-full text-left cursor-pointer active:scale-[0.98] active:bg-teal/10 ${active ? 'text-teal font-bold bg-teal/5' : 'text-foreground/80 hover:text-teal hover:bg-teal/5'}`;
 
                                                                 if (isDemo) {
                                                                     return (
@@ -1058,7 +1056,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                                                 itemClass
                                                                             }
                                                                         >
-                                                                            <SubIcon className='w-4 h-4 text-amber shrink-0' />
+                                                                            <SubIcon className='w-4 h-4 text-teal shrink-0' />
                                                                             <span>
                                                                                 {
                                                                                     subLink.title
@@ -1085,7 +1083,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                                         }
                                                                     >
                                                                         <SubIcon
-                                                                            className={`w-4 h-4 shrink-0 ${active ? 'text-amber' : 'text-amber/70'}`}
+                                                                            className={`w-4 h-4 shrink-0 ${active ? 'text-teal' : 'text-teal/70'}`}
                                                                         />
                                                                         <span>
                                                                             {
@@ -1107,7 +1105,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                         return (
                                             <div
                                                 key={key}
-                                                className='border-b border-amber/10 py-3'
+                                                className='border-b border-teal/10 py-3'
                                             >
                                                 <button
                                                     onClick={() => {
@@ -1118,7 +1116,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                             false,
                                                         );
                                                     }}
-                                                    className='text-sm font-semibold block text-left w-full text-foreground hover:text-amber transition-colors cursor-pointer'
+                                                    className='text-sm font-semibold block text-left w-full text-foreground hover:text-teal transition-colors cursor-pointer'
                                                 >
                                                     {item.title}
                                                 </button>
@@ -1129,14 +1127,14 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     return (
                                         <div
                                             key={key}
-                                            className='border-b border-amber/10 py-3'
+                                            className='border-b border-teal/10 py-3'
                                         >
                                             <Link
                                                 href={getPath(item.path)}
                                                 onClick={() =>
                                                     setMobileMenuOpen(false)
                                                 }
-                                                className={`text-sm font-semibold block transition-colors ${isActive(item.path) ? 'text-amber font-bold' : 'text-foreground hover:text-amber'}`}
+                                                className={`text-sm font-semibold block transition-colors ${isActive(item.path) ? 'text-teal font-bold' : 'text-foreground hover:text-teal'}`}
                                             >
                                                 {item.title}
                                             </Link>

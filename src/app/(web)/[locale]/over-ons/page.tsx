@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { 
@@ -19,6 +18,8 @@ import { TeamBlock, TeamMember } from '@/components/blocks/TeamBlock';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
+import { Badge } from '@/components/ui/Badge';
+import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -197,13 +198,13 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
             <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10'>
                 {/* Left Column: Mission Content */}
                 <div className='lg:col-span-7 space-y-6 text-left'>
-                    <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                        <Sparkles className='w-3.5 h-3.5 text-amber' />
+                    <Badge color='teal' uppercase>
+                        <Sparkles className='w-3.5 h-3.5 text-teal' />
                         {b?.badge ||
                             (isEn
                                 ? 'ARCHITECTING MEANINGFUL MATCHES'
                                 : 'ARCHITECTING MEANINGFUL MATCHES')}
-                    </span>
+                    </Badge>
 
                     <h2 className='font-display font-bold text-3xl md:text-4xl text-darkblue leading-tight'>
                         {b?.title ||
@@ -221,7 +222,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
 
                     <div className='pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4'>
                         <div className='flex items-start gap-3 p-4 rounded-xl border border-slate-200 bg-slate-50/80 shadow-xs'>
-                            <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                            <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                             <div className='space-y-0.5 text-left'>
                                 <h4 className='text-xs font-bold text-darkblue'>
                                     {isEn
@@ -236,7 +237,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                             </div>
                         </div>
                         <div className='flex items-start gap-3 p-4 rounded-xl border border-slate-200 bg-slate-50/80 shadow-xs'>
-                            <CheckCircle2 className='w-5 h-5 text-amber shrink-0 mt-0.5' />
+                            <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                             <div className='space-y-0.5 text-left'>
                                 <h4 className='text-xs font-bold text-darkblue'>
                                     {isEn
@@ -255,11 +256,11 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
 
                 {/* Right Column: Visual Architectural Card */}
                 <div className='lg:col-span-5 relative'>
-                    <div className='relative rounded-3xl border border-amber/30 bg-slate-900 text-white p-8 md:p-10 shadow-2xl text-left overflow-hidden group'>
-                        <div className='absolute -inset-1 bg-linear-to-r from-amber/20 via-indigo-500/10 to-amber/20 blur-xl opacity-60 pointer-events-none' />
+                    <div className='relative rounded-3xl border border-teal/30 bg-slate-900 text-white p-8 md:p-10 shadow-2xl text-left overflow-hidden group'>
+                        <div className='absolute -inset-1 bg-linear-to-r from-teal/20 via-indigo-500/10 to-teal/20 blur-xl opacity-60 pointer-events-none' />
 
                         <div className='relative z-10 space-y-6'>
-                            <div className='w-12 h-12 rounded-2xl bg-amber/15 border border-amber/30 flex items-center justify-center text-amber shadow-md'>
+                            <div className='w-12 h-12 rounded-2xl bg-teal/15 border border-teal/30 flex items-center justify-center text-teal shadow-md'>
                                 <Target className='w-6 h-6' />
                             </div>
 
@@ -276,21 +277,21 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                 </p>
                             </div>
 
-                            <blockquote className='text-xs italic text-slate-200 border-l-2 border-amber pl-4 py-1.5 bg-white/4 rounded-r-lg'>
+                            <blockquote className='text-xs italic text-slate-200 border-l-2 border-teal pl-4 py-1.5 bg-white/4 rounded-r-lg'>
                                 {isEn
                                     ? '"True alignment comes from understanding both the technical details and the human context."'
                                     : '"Echte verbinding ontstaat wanneer vakkennis, menselijke maat en transparantie samenkomen."'}
                             </blockquote>
 
                             <div className='pt-2 flex items-center gap-3 border-t border-white/10'>
-                                <div className='w-8 h-8 rounded-full bg-amber/20 flex items-center justify-center text-amber text-xs font-bold font-mono'>
+                                <div className='w-8 h-8 rounded-full bg-teal/20 flex items-center justify-center text-teal text-xs font-bold font-mono'>
                                     EM
                                 </div>
                                 <div>
                                     <div className='text-xs font-bold text-white'>
                                         emlinked Management
                                     </div>
-                                    <div className='text-[10px] text-amber font-mono'>
+                                    <div className='text-[10px] text-teal font-mono'>
                                         {isEn
                                             ? 'Interim & SaaS Solutions'
                                             : 'Interim & SaaS Oplossingen'}
@@ -305,14 +306,14 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     );
 
     const renderValues = (b: any, key: any) => (
-        <section key={key} className='px-6 py-20 relative z-10 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-amber/10'>
+        <section key={key} className='px-6 py-20 relative z-10 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/10'>
             <div className='max-w-7xl mx-auto space-y-16'>
                 <div className='text-center max-w-3xl mx-auto space-y-4 mb-12'>
                     <div className='flex justify-center mb-1'>
-                        <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md shadow-xs'>
-                            <Layers className='w-3.5 h-3.5 text-amber' />
+                        <Badge color='teal' uppercase>
+                            <Layers className='w-3.5 h-3.5 text-teal' />
                             {isEn ? 'CORE PILLARS' : 'ONZE KERNWAARDEN'}
-                        </span>
+                        </Badge>
                     </div>
 
                     <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem] font-bold tracking-tight text-[#060e32]'>
@@ -330,11 +331,11 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
 
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                     {/* Card 1 */}
-                    <div className='rounded-2xl border border-amber/20 bg-white p-8 text-left space-y-5 hover:border-amber/50 transition-all duration-300 hover:-translate-y-1 group shadow-lg'>
-                        <div className='w-12 h-12 rounded-2xl bg-amber/15 border border-amber/30 flex items-center justify-center text-amber shadow-md group-hover:scale-110 transition-transform'>
+                    <div className='rounded-2xl border border-teal/20 bg-white p-8 text-left space-y-5 hover:border-teal/50 transition-all duration-300 hover:-translate-y-1 group shadow-lg'>
+                        <div className='w-12 h-12 rounded-2xl bg-teal/15 border border-teal/30 flex items-center justify-center text-teal shadow-md group-hover:scale-110 transition-transform'>
                             <ShieldCheck className='w-6 h-6' />
                         </div>
-                        <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-amber transition-colors'>
+                        <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-teal transition-colors'>
                             {isEn
                                 ? 'Transparency & Integrity'
                                 : 'Transparantie & Integriteit'}
@@ -347,11 +348,11 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     </div>
 
                     {/* Card 2 */}
-                    <div className='rounded-2xl border border-amber/20 bg-white p-8 text-left space-y-5 hover:border-amber/50 transition-all duration-300 hover:-translate-y-1 group shadow-lg'>
-                        <div className='w-12 h-12 rounded-2xl bg-amber/15 border border-amber/30 flex items-center justify-center text-amber shadow-md group-hover:scale-110 transition-transform'>
+                    <div className='rounded-2xl border border-teal/20 bg-white p-8 text-left space-y-5 hover:border-teal/50 transition-all duration-300 hover:-translate-y-1 group shadow-lg'>
+                        <div className='w-12 h-12 rounded-2xl bg-teal/15 border border-teal/30 flex items-center justify-center text-teal shadow-md group-hover:scale-110 transition-transform'>
                             <Layers className='w-6 h-6' />
                         </div>
-                        <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-amber transition-colors'>
+                        <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-teal transition-colors'>
                             {isEn
                                 ? 'Sector-Specific Expertise'
                                 : 'Sectorspecifieke Expertise'}
@@ -364,11 +365,11 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     </div>
 
                     {/* Card 3 */}
-                    <div className='rounded-2xl border border-amber/20 bg-white p-8 text-left space-y-5 hover:border-amber/50 transition-all duration-300 hover:-translate-y-1 group shadow-xl'>
-                        <div className='w-12 h-12 rounded-2xl bg-amber/15 border border-amber/30 flex items-center justify-center text-amber shadow-md group-hover:scale-110 transition-transform'>
+                    <div className='rounded-2xl border border-teal/20 bg-white p-8 text-left space-y-5 hover:border-teal/50 transition-all duration-300 hover:-translate-y-1 group shadow-xl'>
+                        <div className='w-12 h-12 rounded-2xl bg-teal/15 border border-teal/30 flex items-center justify-center text-teal shadow-md group-hover:scale-110 transition-transform'>
                             <Zap className='w-6 h-6' />
                         </div>
-                        <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-amber transition-colors'>
+                        <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-teal transition-colors'>
                             {isEn
                                 ? 'Agility & Custom Work'
                                 : 'Wendbaarheid & Maatwerk'}
@@ -400,16 +401,16 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
 
     const renderCta = (b: any, key: any) => (
         <section key={key} className='px-6 py-20 relative z-10 bg-background'>
-            <div className='relative rounded-3xl border border-amber/40 bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-2xl text-white'>
-                <div className='absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber/10 rounded-full blur-[120px] pointer-events-none' />
+            <div className='relative rounded-3xl border border-teal/40 bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-2xl text-white'>
+                <div className='absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-teal/10 rounded-full blur-[120px] pointer-events-none' />
 
                 <div className='relative z-10 space-y-6 max-w-3xl mx-auto'>
-                    <span className='inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/15 px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-amber uppercase backdrop-blur-md'>
-                        <Users className='w-3.5 h-3.5 text-amber' />
+                    <Badge color='teal' uppercase>
+                        <Users className='w-3.5 h-3.5 text-teal' />
                         {isEn
                             ? 'START THE CONVERSATION'
                             : 'GA HET GESPREK AAN'}
-                    </span>
+                    </Badge>
 
                     <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] text-white leading-tight'>
                         {b?.title ||
@@ -441,18 +442,18 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                             </span>
                         </GlowingLink>
 
-                        <Link
+                        <OutlineLinkButton
                             href={
                                 b?.secondaryCtaUrl ||
                                 (isEn ? '/en/apps' : '/apps')
                             }
-                            className='inline-flex h-14 items-center justify-center rounded-2xl border border-white/20 bg-transparent px-8 text-base font-semibold text-white hover:bg-white/10 transition-all text-center shadow-sm hover:scale-[1.02] active:scale-[0.98] duration-200'
+                            color='white'
                         >
                             {b?.secondaryCtaLabel ||
                                 (isEn
                                     ? 'Explore our solutions →'
                                     : 'Bekijk onze oplossingen →')}
-                        </Link>
+                        </OutlineLinkButton>
                     </div>
                 </div>
             </div>

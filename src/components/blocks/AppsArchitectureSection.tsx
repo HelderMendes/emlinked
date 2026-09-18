@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
 import { getImageUrl } from '@/sanity/image';
+import { Badge } from '@/components/ui/Badge';
 
 interface AppsArchitectureSectionProps {
     locale?: string;
@@ -120,9 +121,9 @@ export function AppsArchitectureSection({
             <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative z-10'>
                 {/* ── 1. TOP PART: CENTERED HEADER & SMALLER TOP PNG DIAGRAM ── */}
                 <div className='max-w-4xl mx-auto flex flex-col items-center text-center space-y-6'>
-                    <span className='inline-flex items-center justify-center rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                    <Badge color='teal' uppercase>
                         {activeTag}
-                    </span>
+                    </Badge>
 
                     <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-white'>
                         {activeTitle}
@@ -149,9 +150,9 @@ export function AppsArchitectureSection({
                 <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-4 border-t border-white/10'>
                     {/* Left Column: Title, Subtitle & Bullets matching Box 3 check styling */}
                     <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
-                        <span className='inline-flex items-center justify-center self-start rounded-full border border-amber/50 bg-[#251b14]/90 px-6 py-1.5 text-xs font-mono font-bold tracking-widest text-amber uppercase backdrop-blur-md shadow-md'>
+                        <Badge color='teal' uppercase>
                             {activeSectionTag}
-                        </span>
+                        </Badge>
 
                         <h3 className='font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight'>
                             {activeSectionTitle}
@@ -168,7 +169,7 @@ export function AppsArchitectureSection({
                                     key={idx}
                                     className='flex items-start gap-3.5 group'
                                 >
-                                    <div className='h-7 w-7 rounded-xl bg-amber/20 border border-amber/40 flex items-center justify-center text-amber shrink-0 mt-0.5 shadow-sm group-hover:bg-amber group-hover:text-[#060e32] transition-all duration-300'>
+                                    <div className='h-7 w-7 rounded-xl bg-teal/20 border border-teal/40 flex items-center justify-center text-teal shrink-0 mt-0.5 shadow-sm group-hover:bg-teal group-hover:text-[#060e32] transition-all duration-300'>
                                         <CheckCircle2 className='h-4 w-4' />
                                     </div>
                                     <div className='text-sm sm:text-base leading-relaxed text-white/90 pt-0.5'>
@@ -188,7 +189,7 @@ export function AppsArchitectureSection({
 
                     {/* Right Column: 3D Visual Workspace Image */}
                     <div className='lg:col-span-5 flex justify-center items-center'>
-                        <div className='relative w-full max-w-md aspect-4/3 sm:aspect-square rounded-2xl overflow-hidden border border-white/20 shadow-2xl group flex items-center justify-center hover:border-amber/60 transition-all duration-500'>
+                        <div className='relative w-full max-w-md aspect-4/3 sm:aspect-square rounded-2xl overflow-hidden border border-white/20 shadow-2xl group flex items-center justify-center hover:border-teal/60 transition-all duration-500'>
                             <Image
                                 src={resolvedCalloutImage}
                                 alt='Samenwerken binnen Business Central ERP'
