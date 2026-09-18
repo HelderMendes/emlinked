@@ -108,7 +108,7 @@ export default function CookieConsentBanner({
                 {/* HEADER ROW */}
                 <div className='flex items-start justify-between gap-4 mb-3'>
                     <div className='flex items-center gap-2.5'>
-                        <div className='p-2 rounded-xl bg-teal/15 border border-teal30 text-teal shadow-xs shrink-0'>
+                        <div className='p-2 rounded-xl bg-teal/15 border border-teal/30 text-teal shadow-xs shrink-0'>
                             <Cookie className='w-5 h-5' />
                         </div>
                         <h3 className='font-bold text-base md:text-lg text-white'>
@@ -173,7 +173,7 @@ export default function CookieConsentBanner({
                         <div className='pt-3 text-center sm:text-right'>
                             <button
                                 onClick={() => setShowPreferences(true)}
-                                className='text-xs text-teal hover:text-teallight underline font-medium inline-flex items-center gap-1.5 transition-colors'
+                                className='text-xs text-teal hover:text-teal-light underline font-medium inline-flex items-center gap-1.5 transition-colors'
                             >
                                 <Settings className='w-3.5 h-3.5' />
                                 <span>

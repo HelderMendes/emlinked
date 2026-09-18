@@ -88,10 +88,22 @@ export default async function PricingPage({ params }: PricingPageProps) {
     };
 
     const blocks = pageData?.pageBlocks || [];
-    const heroBlock = blocks.find((b: any) => b._type === 'hero' || b._type === 'heroBlock');
-    const calcBlock = blocks.find((b: any) => b._type === 'pricingCalculator' || b._type === 'calculatorBlock');
-    const strippenBlock = blocks.find((b: any) => b._type === 'featuresList' || b._type === 'features');
-    const ctaBlock = blocks.find((b: any) => b._type === 'ctaBanner' || b._type === 'ctaBlock' || b._type === 'cta');
+    const heroBlock = blocks.find(
+        (b: any) => b._type === 'hero' || b._type === 'heroBlock',
+    );
+    const calcBlock = blocks.find(
+        (b: any) =>
+            b._type === 'pricingCalculator' || b._type === 'calculatorBlock',
+    );
+    const strippenBlock = blocks.find(
+        (b: any) => b._type === 'featuresList' || b._type === 'features',
+    );
+    const ctaBlock = blocks.find(
+        (b: any) =>
+            b._type === 'ctaBanner' ||
+            b._type === 'ctaBlock' ||
+            b._type === 'cta',
+    );
 
     const defaultBlocks = [
         { _type: 'hero', ...heroBlock },
@@ -105,9 +117,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
     const renderHero = (b: any, key: any) => {
         const heroImageUrl = getImageUrl(
             b?.image || b?.heroImage,
-            b?.heroImagePath ||
-                b?.imagePath ||
-                '/emlinked/prijzen-hero.jpg',
+            b?.heroImagePath || b?.imagePath || '/emlinked/prijzen-hero.jpg',
         );
 
         return (
@@ -174,7 +184,10 @@ export default async function PricingPage({ params }: PricingPageProps) {
     );
 
     const renderStrippenkaarten = (b: any, key: any) => (
-        <section key={key} className='px-6 py-20 bg-card border-b border-black/20 text-foreground relative z-10'>
+        <section
+            key={key}
+            className='px-6 py-20 bg-card border-b border-black/20 text-foreground relative z-10'
+        >
             <div className='max-w-7xl mx-auto space-y-16'>
                 <div className='text-center max-w-3xl mx-auto space-y-4'>
                     <div className='flex justify-center mb-1'>
@@ -325,7 +338,10 @@ export default async function PricingPage({ params }: PricingPageProps) {
         );
 
         return (
-            <section key={key} className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
+            <section
+                key={key}
+                className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'
+            >
                 <div className='mx-auto max-w-8xl px-0'>
                     <div className='border border-teal/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>

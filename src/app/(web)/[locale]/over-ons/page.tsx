@@ -1,15 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { 
-    ShieldCheck, 
-    Zap, 
-    Layers, 
-    Target, 
+import {
+    ShieldCheck,
+    Zap,
+    Layers,
+    Target,
     ArrowRight,
     Users,
     Sparkles,
-    CheckCircle2
+    CheckCircle2,
 } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
@@ -30,7 +30,8 @@ interface OverOnsPageProps {
 
 async function getSanityPageData(locale: string) {
     try {
-        const pageId = locale === 'en' ? 'page-over-ons-en' : 'page-over-ons-nl';
+        const pageId =
+            locale === 'en' ? 'page-over-ons-en' : 'page-over-ons-nl';
         return await sanityFetch<any>({
             query: `*[_type == "page" && (_id == $pageId || slug.current == $slug || slug.current == $slashSlug || slug.current == "team") && language == $locale][0] {
                 title,
@@ -96,11 +97,24 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     const pageData = await getSanityPageData(locale);
 
     const pageBlocks = pageData?.pageBlocks || [];
-    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock' || b._type === 'hero');
-    const missionBlock = pageBlocks.find((b: any) => b._type === 'workflow' || b._type === 'featuresList');
-    const valuesBlock = pageBlocks.find((b: any) => b._type === 'trustBar' || b._type === 'trust');
-    const teamBlock = pageBlocks.find((b: any) => b._type === 'teamBlock' || b._type === 'team');
-    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock' || b._type === 'ctaBanner' || b._type === 'cta');
+    const heroBlock = pageBlocks.find(
+        (b: any) => b._type === 'heroBlock' || b._type === 'hero',
+    );
+    const missionBlock = pageBlocks.find(
+        (b: any) => b._type === 'workflow' || b._type === 'featuresList',
+    );
+    const valuesBlock = pageBlocks.find(
+        (b: any) => b._type === 'trustBar' || b._type === 'trust',
+    );
+    const teamBlock = pageBlocks.find(
+        (b: any) => b._type === 'teamBlock' || b._type === 'team',
+    );
+    const ctaBlock = pageBlocks.find(
+        (b: any) =>
+            b._type === 'ctaBlock' ||
+            b._type === 'ctaBanner' ||
+            b._type === 'cta',
+    );
 
     const defaultBlocks = [
         { _type: 'hero', ...heroBlock },
@@ -113,10 +127,21 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     const blocksToRender = pageBlocks.length > 0 ? pageBlocks : defaultBlocks;
 
     // Extract dynamic content from Sanity
-    const heroTitle = heroBlock?.tagline || pageData?.title || (isEn ? 'Human-Centric Interim & Recruitment Solutions with Impact.' : 'Mensgerichte Interim & Werving Oplossingen met Impact.');
-    const heroSub = heroBlock?.description || pageData?.desc || (isEn ? 'We connect top talent and leading organizations across the public and private sectors through sharp domain knowledge, transparency, and a sustainable vision.' : 'Wij verbinden toptalent en toonaangevende organisaties binnen de publieke en private sector door scherpe vakkennis, transparantie en een duurzame visie.');
+    const heroTitle =
+        heroBlock?.tagline ||
+        pageData?.title ||
+        (isEn
+            ? 'Human-Centric Interim & Recruitment Solutions with Impact.'
+            : 'Mensgerichte Interim & Werving Oplossingen met Impact.');
+    const heroSub =
+        heroBlock?.description ||
+        pageData?.desc ||
+        (isEn
+            ? 'We connect top talent and leading organizations across the public and private sectors through sharp domain knowledge, transparency, and a sustainable vision.'
+            : 'Wij verbinden toptalent en toonaangevende organisaties binnen de publieke en private sector door scherpe vakkennis, transparantie en een duurzame visie.');
 
-    const teamMembers: TeamMember[] = teamBlock?.members?.length > 0 ? teamBlock.members : [];
+    const teamMembers: TeamMember[] =
+        teamBlock?.members?.length > 0 ? teamBlock.members : [];
 
     // Structured JSON-LD Data
     const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/about-us' : '/over-ons'}`;
@@ -131,7 +156,9 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                       '@type': 'AboutPage',
                       '@id': `${canonicalPageUrl}#webpage`,
                       url: canonicalPageUrl,
-                      name: isEn ? 'About emlinked | Our Team & Mission' : 'Over emlinked | Ons Team & Onze Missie',
+                      name: isEn
+                          ? 'About emlinked | Our Team & Mission'
+                          : 'Over emlinked | Ons Team & Onze Missie',
                       description: heroSub,
                       inLanguage: isEn ? 'en-US' : 'nl-NL',
                       isPartOf: {
@@ -160,7 +187,10 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
           });
 
     const renderHero = (b: any, key: any) => (
-        <div key={key} className='bg-texture-navy text-white relative border-b border-white/10'>
+        <div
+            key={key}
+            className='bg-texture-navy text-white relative border-b border-white/10'
+        >
             <HeroSection
                 label={
                     b?.badge ||
@@ -172,9 +202,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                 subtitle={b?.description || heroSub}
                 ctaLabel={
                     b?.ctaLabel ||
-                    (isEn
-                        ? 'Get in touch directly'
-                        : 'Neem direct contact op')
+                    (isEn ? 'Get in touch directly' : 'Neem direct contact op')
                 }
                 ctaLink={b?.ctaLink || '#demo'}
                 secondaryCtaLabel={
@@ -184,8 +212,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                         : 'Bekijk onze oplossingen →')
                 }
                 secondaryCtaLink={
-                    b?.secondaryCtaLink ||
-                    (isEn ? '/en/apps' : '/apps')
+                    b?.secondaryCtaLink || (isEn ? '/en/apps' : '/apps')
                 }
                 locale={locale}
                 showProof={false}
@@ -194,7 +221,10 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     );
 
     const renderMission = (b: any, key: any) => (
-        <section key={key} className='px-6 py-20 relative z-10 bg-white text-slate-900 border-b border-slate-200'>
+        <section
+            key={key}
+            className='px-6 py-20 relative z-10 bg-white text-slate-900 border-b border-slate-200'
+        >
             <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10'>
                 {/* Left Column: Mission Content */}
                 <div className='lg:col-span-7 space-y-6 text-left'>
@@ -306,7 +336,10 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     );
 
     const renderValues = (b: any, key: any) => (
-        <section key={key} className='px-6 py-20 relative z-10 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/10'>
+        <section
+            key={key}
+            className='px-6 py-20 relative z-10 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/10'
+        >
             <div className='max-w-7xl mx-auto space-y-16'>
                 <div className='text-center max-w-3xl mx-auto space-y-4 mb-12'>
                     <div className='flex justify-center mb-1'>
@@ -386,9 +419,13 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     );
 
     const renderTeam = (b: any, key: any) => {
-        const members: TeamMember[] = b?.members?.length > 0 ? b.members : teamMembers;
+        const members: TeamMember[] =
+            b?.members?.length > 0 ? b.members : teamMembers;
         return (
-            <div key={key} className='bg-texture-navy text-white relative border-b border-white/10'>
+            <div
+                key={key}
+                className='bg-texture-navy text-white relative border-b border-white/10'
+            >
                 <TeamBlock
                     sectionTitle={b?.sectionTitle}
                     sectionSubtitle={b?.sectionSubtitle}
@@ -407,9 +444,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                 <div className='relative z-10 space-y-6 max-w-3xl mx-auto'>
                     <Badge color='teal' uppercase>
                         <Users className='w-3.5 h-3.5 text-teal' />
-                        {isEn
-                            ? 'START THE CONVERSATION'
-                            : 'GA HET GESPREK AAN'}
+                        {isEn ? 'START THE CONVERSATION' : 'GA HET GESPREK AAN'}
                     </Badge>
 
                     <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] text-white leading-tight'>
@@ -484,17 +519,11 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     return renderMission(block, key);
                 }
 
-                if (
-                    block._type === 'trustBar' ||
-                    block._type === 'trust'
-                ) {
+                if (block._type === 'trustBar' || block._type === 'trust') {
                     return renderValues(block, key);
                 }
 
-                if (
-                    block._type === 'teamBlock' ||
-                    block._type === 'team'
-                ) {
+                if (block._type === 'teamBlock' || block._type === 'team') {
                     return renderTeam(block, key);
                 }
 
