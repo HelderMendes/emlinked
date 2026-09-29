@@ -11,7 +11,6 @@ import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
 import { TestimonialSlider } from '@/components/TestimonialSlider';
-import { GlowingLink } from '@/components/ui/GlowingButton';
 import { getImageUrl } from '@/sanity/image';
 
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
@@ -505,18 +504,18 @@ export default async function AppsPage({ params }: AppsPageProps) {
                 className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative overflow-hidden z-10'
             >
                 <div className='mx-auto max-w-8xl px-0'>
-                    <div className='border border-teal/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+                    <div className='border border-teal/30 rounded-3xl bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 text-navy-900 p-6 sm:p-10 md:p-14 hover:shadow-lg transition-all duration-500 relative overflow-hidden group shadow-md'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                             {/* Left Column: Copy & Action Triggers */}
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                 <Badge color='teal' uppercase dot dotPulse>
                                     {ctaBlock.tag || 'START MET AUTOMATISEREN'}
                                 </Badge>
-                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight'>
                                     {ctaBlock.title ||
                                         'Klaar om je vastgoedbeheer te digitaliseren?'}
                                 </h2>
-                                <p className='text-white/80 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
+                                <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
                                     {ctaBlock.subtitle ||
                                         'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd en kiezen voor 100% realtime controle binnen Business Central.'}
                                 </p>
@@ -524,9 +523,9 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                 {/* Primary & Secondary Action Buttons */}
                                 <div className='flex flex-col sm:flex-row gap-4 pt-2'>
                                     {ctaBlock.buttonLabel && (
-                                        <GlowingLink
+                                        <Link
                                             href='#demo'
-                                            className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98]'
+                                            className='inline-flex h-14 items-center justify-center rounded-2xl bg-navy-900 hover:bg-black px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
                                         >
                                             <span className='flex items-center justify-center gap-2 text-white'>
                                                 <span>
@@ -534,7 +533,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                 </span>
                                                 <ArrowRight className='h-5 w-5 text-white' />
                                             </span>
-                                        </GlowingLink>
+                                        </Link>
                                     )}
 
                                     {ctaBlock.secondaryButtonLabel && (
@@ -543,7 +542,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                 ctaBlock.secondaryButtonLink ||
                                                     '/integraties',
                                             )}
-                                            color='white'
+                                            color='navy'
                                         >
                                             <span>
                                                 {ctaBlock.secondaryButtonLabel}

@@ -20,18 +20,14 @@ import {
     StarAward01Icon,
 } from '@hugeicons/core-free-icons';
 import {
-    AlertCircle,
-    Info,
     FileText,
     Cpu,
     Database,
-    CheckCircle2,
-    CreditCard,
-    RefreshCw,
     Zap,
-    ArrowDownRight,
     ArrowRight,
     Layers,
+    Building2,
+    ShieldCheck,
 } from 'lucide-react';
 
 interface PageBlockRendererProps {
@@ -113,7 +109,10 @@ export function PageBlockRenderer({
                         getImageUrl(
                             block.image || block.heroImage,
                             block.imagePath,
-                        ) || '/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                        ) ||
+                        (isHomepage
+                            ? '/hero/vastgoedbeheer-dashboard-illustration.jpg'
+                            : '/hero/vastgoedportfeuille_aangifte-klaar.jpg')
                     }
                     isHomepage={isHomepage}
                     locale={locale}
@@ -211,24 +210,39 @@ export function PageBlockRenderer({
                                           ? '/apps/huurdersportaal'
                                           : '/apps/payment-software');
 
-                                const tagText =
-                                    feature.badge ||
-                                    (idx === 0
-                                        ? isEn
-                                            ? 'Primary operational module'
-                                            : 'Basis beheermodule'
-                                        : idx === 1
-                                          ? isEn
-                                              ? 'Self-service module'
-                                              : 'Self-service module'
-                                          : isEn
-                                            ? 'Automated banking module'
-                                            : 'Automatische bankmodule');
+                                // version02: card wash rotation lifted from
+                                // the integrationsList section below — teal /
+                                // emerald / navy pastel per card, matching
+                                // the frontpage's layout (v4) recolored with
+                                // our own accent instead of v4's orange/blue.
+                                const cardWash = [
+                                    'bg-teal-pale/50',
+                                    'bg-emerald-50',
+                                    'bg-navy-50',
+                                ];
+                                const iconColor = [
+                                    'text-teal bg-white',
+                                    'text-emerald-600 bg-white',
+                                    'text-navy-700 bg-white',
+                                ];
+                                const linkColor = [
+                                    'text-teal',
+                                    'text-emerald-600',
+                                    'text-navy-700',
+                                ];
+                                const DefaultIcon = [
+                                    Building2,
+                                    ShieldCheck,
+                                    Zap,
+                                ][idx % 3];
 
                                 return (
                                     <div
                                         key={feature._key || idx}
-                                        className='px-6 md:px-8 pt-6 md:pt-8 md:pb-6 pb-5 rounded-2xl border border-black/20 bg-background flex flex-col justify-between gap-3.5 hover:shadow-xl hover:-translate-y-1.5 hover:border-teal/40 transition-all duration-300 group relative'
+                                        className={cn(
+                                            'rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group relative',
+                                            cardWash[idx % cardWash.length],
+                                        )}
                                     >
                                         {linkTarget && (
                                             <Link
@@ -238,71 +252,70 @@ export function PageBlockRenderer({
                                             />
                                         )}
 
-                                        {resolvedIconBadge ? (
-                                            <div className='absolute top-0 right-0 -translate-y-1/3 translate-x-1/3 z-30 w-12 h-12 rounded-full bg-white dark:bg-navy-dark shadow-xl border-2 border-teal flex items-center justify-center p-1.5 group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
-                                                <div className='relative w-full h-full rounded-full overflow-hidden'>
-                                                    <Image
-                                                        src={resolvedIconBadge}
-                                                        alt={
-                                                            feature.title ||
-                                                            'Badge'
-                                                        }
-                                                        fill
-                                                        className='object-contain'
-                                                    />
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div className='absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 z-30 w-13 h-13 rounded-full bg-teal/80 text-white shadow-xl border-2 border-white dark:border-[#060e32] flex flex-col items-center justify-center font-extrabold text-[10px] uppercase tracking-tight leading-none group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
-                                                <span>APP</span>
-                                                <span className='text-[20px] font-black text-white mt-0.5'>
-                                                    0{idx + 1}
-                                                </span>
-                                            </div>
-                                        )}
-
-                                        <div className='flex flex-col gap-4 z-10 pointer-events-none'>
-                                            <div className='relative w-full h-52 rounded-xl overflow-hidden bg-texture-navy/5 border border-black/20/50 group-hover:border-teal/30 transition-colors'>
-                                                <Image
-                                                    src={cardImg}
-                                                    alt={
-                                                        feature.title ||
-                                                        'Module'
-                                                    }
-                                                    fill
-                                                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                                                    className='object-cover group-hover:scale-105 transition-transform duration-500'
-                                                />
+                                        <div className='flex flex-col gap-4 p-6 md:p-8 pb-4 z-10 pointer-events-none'>
+                                            <div
+                                                className={cn(
+                                                    'w-11 h-11 rounded-xl shadow-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300',
+                                                    iconColor[
+                                                        idx % iconColor.length
+                                                    ],
+                                                )}
+                                            >
+                                                {resolvedIconBadge ? (
+                                                    <div className='relative w-6 h-6'>
+                                                        <Image
+                                                            src={
+                                                                resolvedIconBadge
+                                                            }
+                                                            alt={
+                                                                feature.title ||
+                                                                'Icon'
+                                                            }
+                                                            fill
+                                                            className='object-contain'
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <DefaultIcon className='w-5 h-5' />
+                                                )}
                                             </div>
 
-                                            <div className='flex items-center gap-3 mt-1'>
-                                                <h3 className='text-xl font-bold text-[#060e32] dark:text-white group-hover:text-teal transition-colors'>
-                                                    {feature.title}
-                                                </h3>
-                                            </div>
+                                            <h3 className='text-xl font-bold text-navy-900 group-hover:text-teal transition-colors'>
+                                                {feature.title}
+                                            </h3>
 
-                                            <p className='text-sm text-muted-foreground leading-relaxed font-light'>
+                                            <p className='text-sm text-navy-600 leading-relaxed font-light'>
                                                 {feature.description}
                                             </p>
-                                        </div>
 
-                                        <div className='pt-2 border-t border-black/20/40 flex items-center justify-between gap-4 z-30 mt-auto pointer-events-none'>
-                                            <div className='flex items-center gap-2 text-xs font-medium text-muted-foreground truncate'>
-                                                <CheckCircle2 className='w-3.5 h-3.5 text-teal shrink-0' />
-                                                <span className='truncate'>
-                                                    {tagText}
-                                                </span>
-                                            </div>
-
-                                            <div className='inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal group-hover:text-foreground group-hover:translate-x-0.5 transition-all duration-200 shrink-0'>
+                                            <div
+                                                className={cn(
+                                                    'inline-flex items-center gap-1.5 text-sm font-semibold group-hover:translate-x-0.5 transition-all duration-200 w-min whitespace-nowrap',
+                                                    linkColor[
+                                                        idx % linkColor.length
+                                                    ],
+                                                )}
+                                            >
                                                 <span>
                                                     {feature.ctaLabel ||
                                                         (isEn
-                                                            ? 'Learn more →'
-                                                            : 'Bekijk module →')}
+                                                            ? 'Discover more'
+                                                            : 'Bekijk module')}
                                                 </span>
                                                 <ArrowRight className='w-3.5 h-3.5' />
                                             </div>
+                                        </div>
+
+                                        <div className='relative w-full h-44 mt-2'>
+                                            <Image
+                                                src={cardImg}
+                                                alt={
+                                                    feature.title || 'Module'
+                                                }
+                                                fill
+                                                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                                                className='object-cover group-hover:scale-105 transition-transform duration-500'
+                                            />
                                         </div>
                                     </div>
                                 );

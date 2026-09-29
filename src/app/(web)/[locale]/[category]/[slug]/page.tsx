@@ -1035,22 +1035,20 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
 
             {/* ── Rich Frontpage-style Pre-Footer Conversion CTA Banner ───── */}
             <section className='px-6 py-20 bg-background max-w-5xl mx-auto text-center'>
-                <div className='p-10 md:p-16 rounded-3xl border border-white/10 bg-texture-navy text-white space-y-8 relative overflow-hidden shadow-2xl'>
-                    <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-teal/15 blur-3xl pointer-events-none rounded-full' />
-
+                <div className='p-10 md:p-16 rounded-3xl border border-teal/30 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 text-navy-900 space-y-8 relative overflow-hidden shadow-md'>
                     <div className='space-y-4 max-w-2xl mx-auto relative z-10'>
                         <Badge color='teal' uppercase>
                             {isEn
                                 ? 'START AUTOMATING TODAY'
                                 : 'START MET AUTOMATISEREN'}
                         </Badge>
-                        <h2 className='font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight'>
+                        <h2 className='font-display font-extrabold text-3xl sm:text-4xl text-navy-900 tracking-tight'>
                             {content.cta.title ||
                                 (isEn
                                     ? 'Ready to modernize your property software?'
                                     : 'Klaar om je vastgoedbeheer te moderniseren?')}
                         </h2>
-                        <p className='text-sm sm:text-base text-white/80 leading-relaxed font-light'>
+                        <p className='text-sm sm:text-base text-navy-700 leading-relaxed font-light'>
                             {content.cta.desc ||
                                 (isEn
                                     ? 'Experience how Emlinked halves administrative workloads and boosts financial control directly inside Business Central.'
@@ -1061,7 +1059,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                     <div className='flex flex-wrap items-center justify-center gap-4 relative z-10 pt-2'>
                         <Link
                             href={`/${locale}/contact`}
-                            className='px-8 py-4 rounded-xl bg-teal hover:bg-teal-hover text-[#060e32] font-bold text-sm flex items-center gap-2 transition-all shadow-xl hover:scale-105'
+                            className='px-8 py-4 rounded-xl bg-navy-900 hover:bg-black text-white font-bold text-sm flex items-center gap-2 transition-all shadow-xl hover:scale-105'
                         >
                             <span>
                                 {content.cta.primary ||
@@ -1073,7 +1071,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                         </Link>
                         <OutlineLinkButton
                             href={`/${locale}/apps`}
-                            color='white'
+                            color='navy'
                         >
                             <span>
                                 {content.cta.secondary ||

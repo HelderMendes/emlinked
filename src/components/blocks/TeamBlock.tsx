@@ -81,7 +81,7 @@ export function TeamBlock({
     }, [selectedIndex]);
 
     return (
-        <section className='px-6 py-20 relative z-10 max-w-7xl mx-auto border-t border-white/10'>
+        <section className='px-6 py-20 relative z-10 max-w-7xl mx-auto border-t border-navy-900/10'>
             {/* Section Header */}
             <div className='text-center max-w-3xl mx-auto space-y-4 mb-16'>
                 <div className='flex justify-center mb-1'>
@@ -92,11 +92,11 @@ export function TeamBlock({
                     </Badge>
                 </div>
 
-                <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem] font-bold tracking-tight text-white leading-tight'>
+                <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem] font-bold tracking-tight text-navy-900 leading-tight'>
                     {defaultTitle}
                 </h2>
 
-                <p className='text-slate-300 text-base md:text-lg leading-relaxed font-light'>
+                <p className='text-navy-600 text-base md:text-lg leading-relaxed font-light'>
                     {defaultSubtitle}
                 </p>
             </div>
@@ -114,7 +114,7 @@ export function TeamBlock({
                         <div
                             key={idx}
                             onClick={() => setSelectedIndex(idx)}
-                            className='group relative rounded-2xl border border-white/10 bg-slate-950/70 backdrop-blur-xl p-6 text-left flex flex-col justify-between hover:border-teal/50 hover:shadow-2xl hover:shadow-teal/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer'
+                            className='group relative rounded-2xl border border-navy-900/10 bg-white p-6 text-left flex flex-col justify-between hover:border-teal/50 hover:shadow-2xl hover:shadow-teal/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer'
                         >
                             {/* Ambient Glow */}
                             <div className='absolute -top-12 -right-12 w-36 h-36 bg-teal/10 rounded-full blur-2xl group-hover:bg-teal/20 transition-all duration-500 pointer-events-none' />
@@ -122,7 +122,7 @@ export function TeamBlock({
                             <div className='space-y-5 relative z-10'>
                                 {/* Top Avatar & Badge Row */}
                                 <div className='flex items-start justify-between gap-4'>
-                                    <div className='relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-white/15 group-hover:border-teal/60 transition-colors shrink-0 shadow-lg bg-slate-900'>
+                                    <div className='relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-navy-900/10 group-hover:border-teal/60 transition-colors shrink-0 shadow-lg bg-navy-50'>
                                         <Image
                                             src={avatarUrl}
                                             alt={member.name}
@@ -145,7 +145,7 @@ export function TeamBlock({
 
                                 {/* Title & Role */}
                                 <div className='space-y-1 pt-1'>
-                                    <h3 className='font-display font-bold text-xl text-white group-hover:text-teal transition-colors flex items-center justify-between'>
+                                    <h3 className='font-display font-bold text-xl text-navy-900 group-hover:text-teal transition-colors flex items-center justify-between'>
                                         <span>{member.name}</span>
                                         <ArrowRight className='w-4 h-4 text-teal opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200' />
                                     </h3>
@@ -156,15 +156,15 @@ export function TeamBlock({
 
                                 {/* Bio Snippet */}
                                 {member.bio && (
-                                    <p className='text-xs text-slate-300 leading-relaxed font-light pt-1 line-clamp-3'>
+                                    <p className='text-xs text-navy-600 leading-relaxed font-light pt-1 line-clamp-3'>
                                         {member.bio}
                                     </p>
                                 )}
                             </div>
 
                             {/* Direct Connections & View Profile Footer */}
-                            <div className='pt-5 mt-5 border-t border-white/10 flex items-center justify-between relative z-10'>
-                                <span className='text-[11px] font-mono text-teal hover:text-white font-semibold flex items-center gap-1.5 transition-colors'>
+                            <div className='pt-5 mt-5 border-t border-navy-900/10 flex items-center justify-between relative z-10'>
+                                <span className='text-[11px] font-mono text-teal hover:text-navy-900 font-semibold flex items-center gap-1.5 transition-colors'>
                                     <span>
                                         {isEn
                                             ? 'View Profile ➔'
@@ -182,7 +182,7 @@ export function TeamBlock({
                                             target='_blank'
                                             rel='noopener noreferrer'
                                             aria-label={`LinkedIn ${member.name}`}
-                                            className='w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-teal/20 hover:border-teal/40 transition-all duration-200'
+                                            className='w-8 h-8 rounded-lg bg-navy-50 border border-navy-900/10 flex items-center justify-center text-navy-600 hover:text-navy-900 hover:bg-teal/20 hover:border-teal/40 transition-all duration-200'
                                         >
                                             <svg
                                                 className='w-4 h-4 fill-current'
@@ -196,7 +196,7 @@ export function TeamBlock({
                                         <a
                                             href={`mailto:${member.email}`}
                                             aria-label={`Email ${member.name}`}
-                                            className='w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-teal/20 hover:border-teal/40 transition-all duration-200'
+                                            className='w-8 h-8 rounded-lg bg-navy-50 border border-navy-900/10 flex items-center justify-center text-navy-600 hover:text-navy-900 hover:bg-teal/20 hover:border-teal/40 transition-all duration-200'
                                         >
                                             <Mail className='w-4 h-4' />
                                         </a>
@@ -213,7 +213,7 @@ export function TeamBlock({
                 createPortal(
                     <AnimatePresence>
                         {selectedIndex !== null && activeMember && (
-                            <div className='fixed inset-0 z-[999999] flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-slate-900/40 backdrop-blur-md'>
+                            <div className='fixed inset-0 z-[999999] flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-navy-900/40 backdrop-blur-md'>
                                 {/* Overlay backdrop button for click outside */}
                                 <motion.div
                                     initial={{ opacity: 0 }}
@@ -232,18 +232,18 @@ export function TeamBlock({
                                         duration: 0.25,
                                         ease: 'easeOut',
                                     }}
-                                    className='relative z-20 w-full max-w-4xl bg-slate-900 border border-teal/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[88vh] text-left'
+                                    className='relative z-20 w-full max-w-4xl bg-white border border-navy-900/10 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[88vh] text-left'
                                 >
                                     {/* Left Roster Sidebar */}
-                                    <div className='w-full md:w-72 bg-slate-950/90 border-b md:border-b-0 md:border-r border-white/10 flex flex-col shrink-0 overflow-y-auto max-h-48 md:max-h-none'>
-                                        <div className='p-4 border-b border-white/10 text-xs font-mono font-bold text-teal uppercase tracking-wider flex items-center gap-2 sticky top-0 bg-slate-950 z-10'>
+                                    <div className='w-full md:w-72 bg-navy-50 border-b md:border-b-0 md:border-r border-navy-900/10 flex flex-col shrink-0 overflow-y-auto max-h-48 md:max-h-none'>
+                                        <div className='p-4 border-b border-navy-900/10 text-xs font-mono font-bold text-teal uppercase tracking-wider flex items-center gap-2 sticky top-0 bg-navy-50 z-10'>
                                             <Sparkles className='w-3.5 h-3.5 text-teal' />
                                             <span>
                                                 {isEn ? 'OUR TEAM' : 'ONS TEAM'}
                                             </span>
                                         </div>
 
-                                        <div className='divide-y divide-white/5 py-1'>
+                                        <div className='divide-y divide-navy-900/5 py-1'>
                                             {members.map((m, idx) => {
                                                 const mAvatar = getImageUrl(
                                                     m.image,
@@ -263,11 +263,11 @@ export function TeamBlock({
                                                         }
                                                         className={`w-full p-3.5 flex items-center gap-3 text-left transition-all duration-200 border-l-4 cursor-pointer ${
                                                             isActive
-                                                                ? 'bg-teal/15 border-teal text-white font-semibold'
-                                                                : 'border-transparent text-slate-400 hover:text-white hover:bg-white/5'
+                                                                ? 'bg-teal/15 border-teal text-navy-900 font-semibold'
+                                                                : 'border-transparent text-navy-500 hover:text-navy-900 hover:bg-white'
                                                         }`}
                                                     >
-                                                        <div className='relative w-10 h-10 rounded-full overflow-hidden shrink-0 border border-white/15 bg-slate-800'>
+                                                        <div className='relative w-10 h-10 rounded-full overflow-hidden shrink-0 border border-navy-900/10 bg-white'>
                                                             <Image
                                                                 src={mAvatar}
                                                                 alt={m.name}
@@ -277,10 +277,10 @@ export function TeamBlock({
                                                             />
                                                         </div>
                                                         <div className='truncate min-w-0'>
-                                                            <div className='text-xs font-bold truncate text-white'>
+                                                            <div className='text-xs font-bold truncate text-navy-900'>
                                                                 {m.name}
                                                             </div>
-                                                            <div className='text-[10px] font-mono text-slate-400 truncate'>
+                                                            <div className='text-[10px] font-mono text-navy-500 truncate'>
                                                                 {m.role}
                                                             </div>
                                                         </div>
@@ -291,13 +291,13 @@ export function TeamBlock({
                                     </div>
 
                                     {/* Right Main Content Panel */}
-                                    <div className='flex-1 p-6 md:p-10 overflow-y-auto flex flex-col justify-between relative bg-linear-to-b from-slate-900 via-slate-900 to-slate-950 text-white space-y-6'>
+                                    <div className='flex-1 p-6 md:p-10 overflow-y-auto flex flex-col justify-between relative bg-white text-navy-900 space-y-6'>
                                         {/* Close Button */}
                                         <button
                                             onClick={() =>
                                                 setSelectedIndex(null)
                                             }
-                                            className='absolute top-4 right-4 z-30 w-9 h-9 rounded-full bg-white/10 hover:bg-teal hover:text-slate-950 text-slate-300 flex items-center justify-center transition-all cursor-pointer shadow-md'
+                                            className='absolute top-4 right-4 z-30 w-9 h-9 rounded-full bg-navy-50 hover:bg-teal hover:text-white text-navy-500 flex items-center justify-center transition-all cursor-pointer shadow-md'
                                             aria-label='Sluiten'
                                         >
                                             <X className='w-5 h-5' />
@@ -305,8 +305,8 @@ export function TeamBlock({
 
                                         <div className='space-y-6'>
                                             {/* Member Header */}
-                                            <div className='flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 border-b border-white/10 pb-6 pr-8'>
-                                                <div className='relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-3 border-teal shadow-2xl p-1 overflow-hidden shrink-0 bg-slate-950'>
+                                            <div className='flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 border-b border-navy-900/10 pb-6 pr-8'>
+                                                <div className='relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-3 border-teal shadow-xl p-1 overflow-hidden shrink-0 bg-white'>
                                                     <Image
                                                         src={getImageUrl(
                                                             activeMember.image,
@@ -335,7 +335,7 @@ export function TeamBlock({
                                                         </Badge>
                                                     )}
 
-                                                    <h2 className='text-2xl sm:text-3xl font-bold font-display text-white tracking-tight'>
+                                                    <h2 className='text-2xl sm:text-3xl font-bold font-display text-navy-900 tracking-tight'>
                                                         {activeMember.name}
                                                     </h2>
 
@@ -344,7 +344,7 @@ export function TeamBlock({
                                                     </div>
 
                                                     {activeMember.focusArea && (
-                                                        <div className='text-xs text-slate-400 font-mono pt-0.5 flex items-center justify-center sm:justify-start gap-1.5'>
+                                                        <div className='text-xs text-navy-500 font-mono pt-0.5 flex items-center justify-center sm:justify-start gap-1.5'>
                                                             <CheckCircle2 className='w-3.5 h-3.5 text-emerald-400 shrink-0' />
                                                             <span>
                                                                 {
@@ -357,7 +357,7 @@ export function TeamBlock({
                                             </div>
 
                                             {/* Detailed Narrative Biography */}
-                                            <div className='space-y-4 pt-2 text-slate-200 text-sm md:text-base leading-relaxed font-light'>
+                                            <div className='space-y-4 pt-2 text-navy-700 text-sm md:text-base leading-relaxed font-light'>
                                                 {(
                                                     activeMember.fullBio ||
                                                     activeMember.bio
@@ -372,9 +372,9 @@ export function TeamBlock({
                                         </div>
 
                                         {/* Bottom Direct Action Bar */}
-                                        <div className='pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 mt-auto'>
-                                            <div className='flex items-center gap-2 text-xs font-mono text-slate-400'>
-                                                <UserCheck className='w-4 h-4 text-emerald-400' />
+                                        <div className='pt-6 border-t border-navy-900/10 flex flex-wrap items-center justify-between gap-4 mt-auto'>
+                                            <div className='flex items-center gap-2 text-xs font-mono text-navy-500'>
+                                                <UserCheck className='w-4 h-4 text-emerald-500' />
                                                 <span>
                                                     {isEn
                                                         ? 'Direct Team Contact'
@@ -390,7 +390,7 @@ export function TeamBlock({
                                                         }
                                                         target='_blank'
                                                         rel='noopener noreferrer'
-                                                        className='px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white border border-white/15 font-semibold transition-all inline-flex items-center gap-2 text-xs shadow-sm hover:border-teal/40'
+                                                        className='px-4 py-2.5 rounded-xl bg-navy-900 hover:bg-black text-white border border-navy-900/10 font-semibold transition-all inline-flex items-center gap-2 text-xs shadow-sm'
                                                     >
                                                         <svg
                                                             className='w-4 h-4 fill-teal'

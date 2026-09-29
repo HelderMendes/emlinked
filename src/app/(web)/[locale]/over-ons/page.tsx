@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Metadata } from 'next';
 import {
     ShieldCheck,
@@ -15,7 +16,6 @@ import { sanityFetch } from '@/lib/sanity';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { TeamBlock, TeamMember } from '@/components/blocks/TeamBlock';
-import { GlowingLink } from '@/components/ui/GlowingButton';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
 import { Badge } from '@/components/ui/Badge';
@@ -424,7 +424,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
         return (
             <div
                 key={key}
-                className='bg-texture-navy text-white relative border-b border-white/10'
+                className='bg-stone-bg text-navy-900 relative border-b border-navy-900/10'
             >
                 <TeamBlock
                     sectionTitle={b?.sectionTitle}
@@ -438,23 +438,21 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
 
     const renderCta = (b: any, key: any) => (
         <section key={key} className='px-6 py-20 relative z-10 bg-background'>
-            <div className='relative rounded-3xl border border-teal/40 bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-2xl text-white'>
-                <div className='absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-teal/10 rounded-full blur-[120px] pointer-events-none' />
-
+            <div className='relative rounded-3xl border border-teal/30 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-md text-navy-900'>
                 <div className='relative z-10 space-y-6 max-w-3xl mx-auto'>
-                    <Badge color='teal' uppercase>
+                    <Badge color='teal' uppercase className='mx-auto'>
                         <Users className='w-3.5 h-3.5 text-teal' />
                         {isEn ? 'START THE CONVERSATION' : 'GA HET GESPREK AAN'}
                     </Badge>
 
-                    <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] text-white leading-tight'>
+                    <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] text-navy-900 leading-tight'>
                         {b?.title ||
                             (isEn
                                 ? 'Ready to strengthen your organization or career?'
                                 : 'Klaar om je organisatie of carrière te versterken?')}
                     </h2>
 
-                    <p className='text-slate-300 text-base md:text-lg leading-relaxed font-light'>
+                    <p className='text-navy-700 text-base md:text-lg leading-relaxed font-light'>
                         {b?.subtitle ||
                             (isEn
                                 ? 'Discover how our targeted approach makes the difference for your interim capacity or next career move.'
@@ -462,9 +460,9 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     </p>
 
                     <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-4'>
-                        <GlowingLink
+                        <Link
                             href={b?.primaryCtaUrl || '#demo'}
-                            className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
+                            className='inline-flex h-14 items-center justify-center rounded-2xl bg-navy-900 hover:bg-black px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
                         >
                             <span className='flex items-center justify-center gap-2 text-white'>
                                 <span>
@@ -475,14 +473,14 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                 </span>
                                 <ArrowRight className='w-5 h-5 text-white' />
                             </span>
-                        </GlowingLink>
+                        </Link>
 
                         <OutlineLinkButton
                             href={
                                 b?.secondaryCtaUrl ||
                                 (isEn ? '/en/apps' : '/apps')
                             }
-                            color='white'
+                            color='navy'
                         >
                             {b?.secondaryCtaLabel ||
                                 (isEn

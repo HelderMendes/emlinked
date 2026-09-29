@@ -257,7 +257,7 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
     );
 
     return (
-        <main className='flex-1 text-white bg-slate-950'>
+        <main className='flex-1 text-navy-900 bg-stone-bg'>
             {blocksToRender.map((block: any, idx: number) => {
                 const key = block._key || `${block._type}-${idx}`;
 

@@ -77,22 +77,22 @@ export function Box3EcosystemSection({
     const trustGrid = trustItems?.length ? trustItems : defaultTrustItems;
 
     return (
-        <section className='px-6 py-24 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'>
+        <section className='px-6 py-24 bg-stone-bg text-navy-900 border-b border-navy-900/10 relative overflow-hidden'>
             <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10'>
                 <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
                     <Badge color='teal' uppercase>
                         {secBadge}
                     </Badge>
-                    <h2 className='font-display text-3xl/16 md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                    <h2 className='font-display text-3xl/16 md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight'>
                         {secTitle}
                     </h2>
-                    <p className='text-white/80 text-base md:text-lg font-light leading-relaxed'>
+                    <p className='text-navy-700 text-base md:text-lg font-light leading-relaxed'>
                         {secSubtitle}
                     </p>
                 </div>
                 <div className='lg:col-span-5 flex justify-center'>
-                    <div className='relative w-full max-w-md p-8 rounded-3xl bg-slate-900/90 text-white border border-teal/30 shadow-2xl space-y-6 backdrop-blur-xl'>
-                        <div className='flex items-center gap-4 border-b border-white/10 pb-4 relative'>
+                    <div className='relative w-full max-w-md p-8 rounded-3xl bg-white text-navy-900 border border-navy-900/10 shadow-xl space-y-6'>
+                        <div className='flex items-center gap-4 border-b border-navy-900/10 pb-4 relative'>
                             <Image
                                 src='/emlinked/box3/CERT-Associate-Dynamics365-Business-Central-Functional-Consultant.webp'
                                 alt='Microsoft Business Central'
@@ -101,7 +101,7 @@ export function Box3EcosystemSection({
                                 className='w-16 h-16 rounded-xl object-contain -top-6 -right-6 absolute'
                             />
                             <div>
-                                <h3 className='font-bold text-lg text-white'>
+                                <h3 className='font-bold text-lg text-navy-900'>
                                     {cTitle}
                                 </h3>
                                 <span className='text-sm text-teal font-mono -mt-1 block'>
@@ -109,7 +109,7 @@ export function Box3EcosystemSection({
                                 </span>
                             </div>
                         </div>
-                        <ul className='space-y-3 text-xs md:text-sm text-white/80'>
+                        <ul className='space-y-3 text-xs md:text-sm text-navy-700'>
                             {pointsList.map((pt, idx) => (
                                 <li
                                     key={idx}
@@ -124,16 +124,16 @@ export function Box3EcosystemSection({
                 </div>
             </div>
 
-            <div className='max-w-7xl mx-auto bg-white/5 mt-10 rounded-xl p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/15 text-center'>
+            <div className='max-w-7xl mx-auto bg-white mt-10 rounded-xl p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-navy-900/10 border border-navy-900/10 text-center'>
                 {trustGrid.map((item, idx) => (
                     <div
                         key={idx}
-                        className='px-4 py-6sm:py-0 flex flex-col items-center justify-center text-center space-y-1'
+                        className='px-4 py-6 sm:py-0 flex flex-col items-center justify-center text-center space-y-1'
                     >
                         <h4 className='text-sm font-bold text-teal text-center'>
                             {item.title}
                         </h4>
-                        <p className='text-xs text-white/70 font-light text-center'>
+                        <p className='text-xs text-navy-600 font-light text-center'>
                             {item.desc}
                         </p>
                     </div>

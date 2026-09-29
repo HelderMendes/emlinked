@@ -246,15 +246,17 @@ export default async function ReferentiesPage({
                     isHomepage={false}
                     locale={locale}
                     titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
-                >
-                    {/* Integrated Trust Bar sharing the Hero background */}
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/10'>
+                />
+
+                {/* Trust bar directly below the hero, light-styled to match */}
+                <div className='bg-stone-bg border-t border-navy-900/10 px-4 sm:px-6 lg:px-8 py-10'>
+                    <div className='mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-navy-900/10'>
                         <div className='flex flex-col items-center p-3 space-y-1.5'>
                             <span className='font-display text-xl lg:text-2xl font-extrabold text-teal tracking-tight flex items-center gap-2'>
                                 <Sparkles className='w-5 h-5 text-teal animate-pulse' />
                                 100%
                             </span>
-                            <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
+                            <p className='text-xs sm:text-sm text-navy-700 font-light max-w-xs'>
                                 {trustBarBlock?.items?.[0]?.text ||
                                     (isEn
                                         ? 'Focus on real estate software & process automation'
@@ -263,11 +265,11 @@ export default async function ReferentiesPage({
                         </div>
 
                         <div className='flex flex-col items-center p-3 pt-5 md:pt-3 space-y-1.5'>
-                            <span className='font-display text-xl lg:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2'>
+                            <span className='font-display text-xl lg:text-2xl font-extrabold text-navy-900 tracking-tight flex items-center gap-2'>
                                 <Building2 className='w-5 h-5 text-teal' />
                                 Enterprise
                             </span>
-                            <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
+                            <p className='text-xs sm:text-sm text-navy-700 font-light max-w-xs'>
                                 {trustBarBlock?.items?.[1]?.text ||
                                     (isEn
                                         ? 'Seamless ERP & financial accounting integrations'
@@ -280,7 +282,7 @@ export default async function ReferentiesPage({
                                 <ShieldCheck className='w-5 h-5 text-teal' />
                                 Continuïteit
                             </span>
-                            <p className='text-xs sm:text-sm text-white/80 font-light max-w-xs'>
+                            <p className='text-xs sm:text-sm text-navy-700 font-light max-w-xs'>
                                 {trustBarBlock?.items?.[2]?.text ||
                                     (isEn
                                         ? 'Decades of domain expertise in real estate software'
@@ -288,7 +290,7 @@ export default async function ReferentiesPage({
                             </p>
                         </div>
                     </div>
-                </HeroSection>
+                </div>
             </React.Fragment>
         );
     };
