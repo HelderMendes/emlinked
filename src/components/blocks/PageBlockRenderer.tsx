@@ -185,16 +185,27 @@ export function PageBlockRenderer({
 
                         <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-left'>
                             {features.map((feature: any, idx: number) => {
+                                // The hardcoded "three apps" screenshots and
+                                // links only belong to the homepage apps
+                                // grid — every other featuresList block on
+                                // the site (Box3 lead magnet, differentiator
+                                // cards, ...) reuses this same schema/case
+                                // and must NOT inherit unrelated app
+                                // screenshots or /apps/* links as a fallback.
+                                const isAppsGrid =
+                                    block._key === 'features-core-block';
+
                                 const resolvedImg = getImageUrl(
                                     feature.image,
                                     feature.imagePath || feature.photoPath,
                                 );
-                                const fallbackImg =
-                                    idx === 0
+                                const fallbackImg = isAppsGrid
+                                    ? idx === 0
                                         ? '/emlinked/home/DrieKrachtigeApps01_VastgoedbeheerSoftware.webp'
                                         : idx === 1
                                           ? '/emlinked/home/DrieKrachtigeApps02_Huurdersportaal.webp'
-                                          : '/emlinked/home/DrieKrachtigeApps03_PaymentSoftware.webp';
+                                          : '/emlinked/home/DrieKrachtigeApps03_PaymentSoftware.webp'
+                                    : undefined;
                                 const cardImg = resolvedImg || fallbackImg;
 
                                 const resolvedIconBadge = getImageUrl(
@@ -202,13 +213,15 @@ export function PageBlockRenderer({
                                     feature.iconPath,
                                 );
 
-                                const linkTarget =
-                                    feature.ctaLink ||
-                                    (idx === 0
+                                const appsGridLink = isAppsGrid
+                                    ? idx === 0
                                         ? '/apps/vastgoedbeheer-software'
                                         : idx === 1
                                           ? '/apps/huurdersportaal'
-                                          : '/apps/payment-software');
+                                          : '/apps/payment-software'
+                                    : undefined;
+                                const linkTarget =
+                                    feature.ctaLink || appsGridLink;
 
                                 // version02: card wash rotation lifted from
                                 // the integrationsList section below — teal /
@@ -306,17 +319,20 @@ export function PageBlockRenderer({
                                             </div>
                                         </div>
 
-                                        <div className='relative w-full h-44 mt-2'>
-                                            <Image
-                                                src={cardImg}
-                                                alt={
-                                                    feature.title || 'Module'
-                                                }
-                                                fill
-                                                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                                                className='object-cover group-hover:scale-105 transition-transform duration-500'
-                                            />
-                                        </div>
+                                        {cardImg && (
+                                            <div className='relative w-full h-44 mt-2'>
+                                                <Image
+                                                    src={cardImg}
+                                                    alt={
+                                                        feature.title ||
+                                                        'Module'
+                                                    }
+                                                    fill
+                                                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                                                    className='object-cover group-hover:scale-105 transition-transform duration-500'
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
@@ -347,28 +363,96 @@ export function PageBlockRenderer({
             // place of a flat dark-glass treatment.
             const cardWash = ['bg-teal-pale/50', 'bg-emerald-50', 'bg-navy-50'];
 
+            const diagramIcons = [Database, FileText, Cpu];
+            const diagramPos = [
+                'top-0 left-0',
+                'top-6 right-0',
+                'bottom-0 right-6',
+            ];
+            const connectorRotate = [
+                '-rotate-[143deg]',
+                '-rotate-[34deg]',
+                'rotate-[38deg]',
+            ];
+
             return (
                 <section
                     key={block._key}
                     className='px-6 py-24 bg-stone-bg text-navy-900 border-b border-navy-900/10 relative overflow-hidden'
                 >
-                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-14 relative z-10'>
-                        <div className='max-w-3xl mx-auto flex flex-col gap-4 text-center'>
-                            {sectionTag && (
-                                <div className='flex justify-center mb-1'>
-                                    <Badge color='teal' uppercase>
+                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 flex flex-col gap-14 relative z-10'>
+                        {/* Hub-and-spoke hero: Emlinked as the connected
+                            center of the ERP, not a bolt-on integration —
+                            the site's one deliberate dark section, giving
+                            this claim visual weight against the light pages
+                            around it (frontpage/v4 layout reference). */}
+                        <div className='rounded-3xl bg-navy-900 text-white p-8 sm:p-12 md:p-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center overflow-hidden relative'>
+                            <div className='absolute -top-24 -left-24 w-72 h-72 rounded-full bg-teal/10 blur-3xl pointer-events-none' />
+
+                            <div className='flex flex-col gap-5 text-left relative z-10'>
+                                {sectionTag && (
+                                    <Badge color='teal' uppercase dot>
                                         {sectionTag}
                                     </Badge>
+                                )}
+                                <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-white'>
+                                    {sectionTitle}
+                                </h2>
+                                {sectionSubtitle && (
+                                    <p className='text-white/70 leading-relaxed text-base md:text-lg font-light'>
+                                        {sectionSubtitle}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className='relative min-h-72 flex items-center justify-center z-10'>
+                                {[0, 1, 2].map((i) => (
+                                    <div
+                                        key={i}
+                                        className={cn(
+                                            'absolute top-1/2 left-1/2 w-32 border-t border-dashed border-white/25 origin-left pointer-events-none',
+                                            connectorRotate[i],
+                                        )}
+                                    />
+                                ))}
+
+                                <div className='relative z-10 w-40 text-center rounded-2xl bg-teal border border-teal p-4'>
+                                    <span className='w-8 h-8 mx-auto rounded-full bg-white text-teal font-black text-lg flex items-center justify-center'>
+                                        e
+                                    </span>
+                                    <b className='block text-xs font-bold mt-2'>
+                                        Emlinked
+                                    </b>
+                                    <small className='block text-[10px] text-white/85 mt-1'>
+                                        {isEn
+                                            ? 'Real estate platform'
+                                            : 'Vastgoedplatform'}
+                                    </small>
                                 </div>
-                            )}
-                            <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-navy-900'>
-                                {sectionTitle}
-                            </h2>
-                            {sectionSubtitle && (
-                                <p className='text-navy-600 leading-relaxed text-base md:text-lg font-light'>
-                                    {sectionSubtitle}
-                                </p>
-                            )}
+
+                                {integrations
+                                    .slice(0, 3)
+                                    .map((item: any, idx: number) => {
+                                        const NodeIcon = diagramIcons[idx];
+                                        return (
+                                            <div
+                                                key={item._key || idx}
+                                                className={cn(
+                                                    'absolute z-10 min-w-36 rounded-2xl bg-[#1d3b62] border border-white/10 p-3.5',
+                                                    diagramPos[idx],
+                                                )}
+                                            >
+                                                <NodeIcon className='w-4.5 h-4.5 text-teal' />
+                                                <b className='block text-[11px] font-bold mt-1.5'>
+                                                    {item.title}
+                                                </b>
+                                                <small className='block text-[9px] text-white/60 mt-1'>
+                                                    {item.badge}
+                                                </small>
+                                            </div>
+                                        );
+                                    })}
+                            </div>
                         </div>
 
                         <div className='relative grid grid-cols-1 lg:grid-cols-3 gap-8 text-left'>

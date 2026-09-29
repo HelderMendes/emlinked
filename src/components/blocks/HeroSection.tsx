@@ -114,7 +114,7 @@ export function HeroSection({
                         )}
                         <h1
                             className={cn(
-                                'font-hero font-semibold leading-[1.08] tracking-[-0.02em] text-[#1D1C1B] max-w-xl',
+                                'font-hero font-semibold leading-[1.1] tracking-[-0.02em] text-[#1D1C1B] max-w-xl',
                                 titleClassName || 'text-4xl sm:text-5xl',
                             )}
                         >
@@ -191,7 +191,7 @@ export function HeroSection({
                         <div className='absolute w-140 h-140 rounded-full bg-teal-pale/50 blur-3xl -right-10 top-0 pointer-events-none' />
                         <div className='absolute w-28 h-28 rounded-full bg-teal-ultra blur-2xl left-4 bottom-4 pointer-events-none' />
 
-                        <div className='relative z-10 w-full aspect-4/3 rounded-2xl overflow-hidden bg-white'>
+                        <div className='relative z-10 w-full aspect-4/3'>
                             {customGraphic ? (
                                 customGraphic
                             ) : (
@@ -200,7 +200,7 @@ export function HeroSection({
                                     alt={title}
                                     fill
                                     sizes='(max-width: 1024px) 100vw, 55vw'
-                                    className='object-cover'
+                                    className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
                                     priority
                                 />
                             )}
