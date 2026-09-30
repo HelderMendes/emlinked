@@ -55,7 +55,7 @@ export function Badge({
                         color === 'teal' && 'bg-teal',
                         color === 'white' && 'bg-white',
                         color === 'emerald' && 'bg-emerald-500',
-                        dotPulse && 'animate-ping',
+                        dotPulse && 'animate-none',
                     )}
                 />
             )}

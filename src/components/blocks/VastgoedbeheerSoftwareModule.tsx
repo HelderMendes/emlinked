@@ -479,7 +479,7 @@ export function VastgoedbeheerSoftwareModule({
                                             </span>
                                         </div>
                                         <div className='inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] border border-emerald-500/40'>
-                                            <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping' />
+                                            <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-none' />
                                             <span>100% Synced BC</span>
                                         </div>
                                     </div>

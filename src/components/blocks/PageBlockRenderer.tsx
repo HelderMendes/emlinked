@@ -265,35 +265,33 @@ export function PageBlockRenderer({
                                             />
                                         )}
 
-                                        <div className='flex flex-col gap-4 p-6 md:p-8 pb-4 z-10 pointer-events-none'>
-                                            <div
-                                                className={cn(
-                                                    'w-11 h-11 rounded-xl shadow-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300',
-                                                    iconColor[
-                                                        idx % iconColor.length
-                                                    ],
-                                                )}
-                                            >
-                                                {resolvedIconBadge ? (
-                                                    <div className='relative w-6 h-6'>
-                                                        <Image
-                                                            src={
-                                                                resolvedIconBadge
-                                                            }
-                                                            alt={
-                                                                feature.title ||
-                                                                'Icon'
-                                                            }
-                                                            fill
-                                                            className='object-contain'
-                                                        />
-                                                    </div>
-                                                ) : (
-                                                    <DefaultIcon className='w-5 h-5' />
-                                                )}
-                                            </div>
+                                        <div
+                                            className={cn(
+                                                'absolute top-4 right-4 z-30 w-11 h-11 rounded-lg shadow-md flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 pointer-events-none',
+                                                iconColor[
+                                                    idx % iconColor.length
+                                                ],
+                                            )}
+                                        >
+                                            {resolvedIconBadge ? (
+                                                <div className='relative w-7 h-7'>
+                                                    <Image
+                                                        src={resolvedIconBadge}
+                                                        alt={
+                                                            feature.title ||
+                                                            'Icon'
+                                                        }
+                                                        fill
+                                                        className='object-contain'
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <DefaultIcon className='w-6 h-6' />
+                                            )}
+                                        </div>
 
-                                            <h3 className='text-xl font-bold text-navy-900 group-hover:text-teal transition-colors'>
+                                        <div className='flex flex-col gap-4 p-6 md:p-8 pb-4 z-10 pointer-events-none'>
+                                            <h3 className='text-xl font-bold text-navy-900 group-hover:text-teal transition-colors pr-12'>
                                                 {feature.title}
                                             </h3>
 
@@ -320,17 +318,19 @@ export function PageBlockRenderer({
                                         </div>
 
                                         {cardImg && (
-                                            <div className='relative w-full h-44 mt-2'>
-                                                <Image
-                                                    src={cardImg}
-                                                    alt={
-                                                        feature.title ||
-                                                        'Module'
-                                                    }
-                                                    fill
-                                                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                                                    className='object-cover group-hover:scale-105 transition-transform duration-500'
-                                                />
+                                            <div className='relative w-full h-56 px-4 pb-4 mt-2'>
+                                                <div className='relative w-full h-full rounded-xl overflow-hidden'>
+                                                    <Image
+                                                        src={cardImg}
+                                                        alt={
+                                                            feature.title ||
+                                                            'Module'
+                                                        }
+                                                        fill
+                                                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                                                        className='object-cover group-hover:scale-105 transition-transform duration-500'
+                                                    />
+                                                </div>
                                             </div>
                                         )}
                                     </div>

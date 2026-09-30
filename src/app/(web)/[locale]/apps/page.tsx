@@ -191,7 +191,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                 <div className='flex justify-end items-end'>
                                     <span className='px-3 py-1 rounded-full bg-slate-900/90 border border-teal/40 text-teal font-mono text-[11px] font-bold shadow-md backdrop-blur-md flex items-center gap-2.5'>
                                         Microsoft Business Central Core Hub
-                                        <span className='h-2 w-2 rounded-full bg-emerald-400 animate-ping' />
+                                        <span className='h-2 w-2 rounded-full bg-emerald-400 animate-none' />
                                     </span>
                                 </div>
                                 <div className='grid grid-cols-3 gap-2 sm:gap-3 pt-1'>

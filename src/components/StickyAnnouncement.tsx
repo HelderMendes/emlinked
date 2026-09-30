@@ -118,7 +118,7 @@ export default function StickyAnnouncement({
                         >
                             <div className='flex items-center gap-2'>
                                 <span className='relative flex h-2 w-2'>
-                                    <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-teal opacity-75'></span>
+                                    <span className='animate-none absolute inline-flex h-full w-full rounded-full bg-teal opacity-75'></span>
                                     <span className='relative inline-flex rounded-full h-2 w-2 bg-teal'></span>
                                 </span>
                                 <span className='text-[10.5px] font-bold text-foreground font-display tracking-wider mt-0.5 uppercase '>
@@ -158,7 +158,7 @@ export default function StickyAnnouncement({
 
                                 <div className='flex items-center mb-1.5'>
                                     <span className='inline-flex items-center gap-1 bg-teal/20 border border-teal/35 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-teal'>
-                                        <span className='w-1 h-1 bg-teal rounded-full mr-1.5 animate-ping' />
+                                        <span className='w-1 h-1 bg-teal rounded-full mr-1.5 animate-none' />
                                         Platform
                                     </span>
                                 </div>
