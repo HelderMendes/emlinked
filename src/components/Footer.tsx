@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 
 interface FooterProps {
@@ -25,6 +24,7 @@ const translations = {
         placeholderName: 'Naam',
         placeholderPhone: 'Telefoon',
         placeholderEmail: 'Email',
+        placeholderMessage: 'Vraag of toelichting (optioneel)',
         sendButton: 'Stuur',
         rights: '© 2010 - 2026 Emlinked. Alle rechten voorbehouden.',
         disclaimer: 'Privacybeleid',
@@ -61,6 +61,7 @@ const translations = {
         placeholderName: 'Name',
         placeholderPhone: 'Phone',
         placeholderEmail: 'Email',
+        placeholderMessage: 'Question or note (optional)',
         sendButton: 'Send',
         rights: '© 2010 - 2026 Emlinked. All rights reserved.',
         disclaimer: 'Privacy Policy',
@@ -129,59 +130,79 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
     return (
         <footer className='w-full bg-linear-to-b from-teal-ultra via-stone-bg to-teal-pale/50 text-navy-800 border-t border-navy-900/10 pt-16 pb-12 transition-all relative overflow-hidden'>
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                {/* 1. Dynamic Callback Callout Banner with Horizontally Inverted Glowing Gradient Background */}
-                <div className='bg-linear-to-tl from-[#f12711] via-[#ff9400] to-[#d88a04] text-white p-6 md:p-8 rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-6 mb-16 max-w-7xl mx-auto shadow-2xl relative overflow-hidden border border-white/20'>
-                    {/* Background accents for Schematic-vibe */}
-                    <div className='absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-size-[16px_16px]'></div>
+                {/* 1. Demo/contact callout — dark navy card with teal accents,
+                    matching the hub-and-spoke integration section's
+                    deliberate dark contrast against the rest of this light
+                    footer. */}
+                <div className='bg-white/30 backdrop-blur-sm border border-white/40 text-navy-900 p-6 md:p-8 rounded-2xl flex flex-col gap-6 mb-16 max-w-7xl mx-auto shadow-md relative overflow-hidden'>
+                    <div className='absolute -top-20 -right-20 w-64 h-64 rounded-full bg-teal/20 blur-3xl pointer-events-none' />
 
-                    <div className='text-center lg:text-left shrink-0 z-10 space-y-0.5'>
-                        <span className='text-[10px] md:text-xs font-bold uppercase tracking-widest block text-white/95 font-mono drop-shadow-xs'>
-                            {t.demoLabel}
-                        </span>
-                        <span className='font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase leading-none block text-white drop-shadow-sm'>
-                            {t.contactLabel}
-                        </span>
-                    </div>
+                    <div className='grid grid-cols-1 lg:grid-cols-[auto_1fr_1fr] items-start gap-y-3 gap-x-3 relative z-10'>
+                        {/* col 1: title/subtitle — sized to content. Gap to col 2
+                            is 15% wider than the gap-3 baseline shared by the
+                            col2/col3 boundary and the naam/tel-email/stuur grid.
+                            mb-3 restores that stacked-row gap below lg, where the
+                            grid falls back to a single column and gap-y-3 alone
+                            would otherwise shrink it to match the other rows. */}
+                        <div className='text-center lg:text-left shrink-0 space-y-0.5 mb-3 lg:mb-0 lg:mr-[1.2rem]'>
+                            <span className='text-[10px] md:text-xs font-bold uppercase tracking-widest block text-teal-hover font-mono'>
+                                {t.demoLabel}
+                            </span>
+                            <span className='font-display text-2xl md:text-3xl font-extrabold tracking-[-0.35px] uppercase leading-none block text-navy-900'>
+                                {t.contactLabel}
+                            </span>
+                        </div>
 
-                    <form className='flex flex-col sm:flex-row gap-3 w-full lg:w-auto items-stretch z-10'>
-                        <input
-                            type='text'
-                            placeholder={t.placeholderName}
-                            required
-                            className='bg-white/10 border border-white/40 placeholder-white/80 px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white rounded-xl transition-all w-full sm:w-40 backdrop-blur-xs'
+                        {/* col 2: message — 6-7 visible lines, user can grow it */}
+                        <textarea
+                            placeholder={t.placeholderMessage}
+                            rows={4}
+                            className='bg-white/50 border border-navy-900/15 placeholder-navy-900/40 px-4 py-2.5  text-xs text-navy-900 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal rounded-lg transition-all w-full h-full  resize-y'
                         />
-                        <input
-                            type='text'
-                            placeholder={t.placeholderPhone}
-                            required
-                            className='bg-white/10 border border-white/40 placeholder-white/80 px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white rounded-xl transition-all w-full sm:w-40 backdrop-blur-xs'
-                        />
-                        <input
-                            type='email'
-                            placeholder={t.placeholderEmail}
-                            required
-                            className='bg-white/10 border border-white/40 placeholder-white/80 px-4 py-2.5 text-xs text-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white rounded-xl transition-all w-full sm:w-40 backdrop-blur-xs'
-                        />
-                        <button
-                            type='submit'
-                            className='bg-[#060e32] text-white hover:bg-[#091548] hover:scale-[1.02] active:scale-[0.98] font-bold text-[10px] uppercase tracking-wider px-6 py-2.5 rounded-xl shadow-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0 border border-white/15'
-                        >
-                            <span>{t.sendButton}</span>
-                            <svg
-                                className='h-3.5 w-3.5 shrink-0'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                stroke='currentColor'
-                                strokeWidth='2.5'
+
+                        {/* col 3: naam/tel, email/stuur — 2x2 equal-width grid */}
+                        <div className='grid grid-cols-2 gap-3 h-full content-start'>
+                            <input
+                                type='text'
+                                placeholder={t.placeholderName}
+                                required
+                                className='bg-white/50 border border-navy-900/15 placeholder-navy-900/40 px-4 py-2.5 text-xs text-navy-900 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal rounded-lg transition-all w-full'
+                            />
+                            <input
+                                type='tel'
+                                placeholder={t.placeholderPhone}
+                                required
+                                pattern='\+?[0-9\s-]{7,15}'
+                                title='Voer een geldig telefoonnummer in (7–15 cijfers)'
+                                className='bg-white/50 border border-navy-900/15 placeholder-navy-900/40 px-4 py-2.5 text-xs text-navy-900 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal rounded-lg transition-all w-full'
+                            />
+                            <input
+                                type='email'
+                                placeholder={t.placeholderEmail}
+                                required
+                                className='bg-white/50 border border-navy-900/15 placeholder-navy-900/40 px-4 py-2.5 text-xs text-navy-900 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal rounded-lg transition-all w-full'
+                            />
+                            <button
+                                type='submit'
+                                className='bg-navy-900 hover:btn-gradient text-white font-bold text-[10px] uppercase tracking-wider px-6 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer w-full'
                             >
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    d='M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5'
-                                />
-                            </svg>
-                        </button>
-                    </form>
+                                <span>{t.sendButton}</span>
+                                <svg
+                                    className='h-3.5 w-3.5 shrink-0'
+                                    fill='none'
+                                    viewBox='0 0 24 24'
+                                    stroke='currentColor'
+                                    strokeWidth='2.5'
+                                >
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        d='M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5'
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 {/* 2. Main Footer Navigation Grid */}
@@ -209,7 +230,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 className='flex items-center gap-2 hover:text-teal-hover transition-colors'
                             >
                                 <svg
-                                    className='h-3.5 w-3.5 text-[#ff9400] shrink-0'
+                                    className='h-3.5 w-3.5 text-teal shrink-0'
                                     fill='none'
                                     viewBox='0 0 24 24'
                                     stroke='currentColor'
@@ -230,7 +251,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             </a>
                             <span className='flex items-center gap-2'>
                                 <svg
-                                    className='h-3.5 w-3.5 text-[#ff9400] shrink-0'
+                                    className='h-3.5 w-3.5 text-teal shrink-0'
                                     fill='none'
                                     viewBox='0 0 24 24'
                                     stroke='currentColor'
@@ -326,7 +347,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <li>
                                 <Link
                                     href={getPath('/box3-check')}
-                                    className='text-[#ff9400] font-semibold hover:underline'
+                                    className='text-teal font-semibold hover:underline'
                                 >
                                     {t.box3}
                                 </Link>

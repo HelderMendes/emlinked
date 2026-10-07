@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Sparkles, Star } from 'lucide-react';
 import { DemoModal } from './DemoModal';
+import { Badge } from '@/components/ui/Badge';
 
 interface StickyAnnouncementProps {
     locale?: string;
@@ -114,7 +115,7 @@ export default function StickyAnnouncement({
                                 damping: 20,
                                 stiffness: 300,
                             }}
-                            className='pointer-events-auto flex items-center gap-3 bg-white dark:bg-[#060e32] border border-black/20/60 shadow-xl rounded-full pl-4 pr-1.5 py-1.5 cursor-pointer hover:shadow-xl hover:scale-102 hover:border-teal/40 transition-all duration-200 group text-left'
+                            className='pointer-events-auto flex items-center gap-3 bg-white border border-teal shadow-xl rounded-2xl pl-4 pr-1.5 py-1.5 cursor-pointer hover:border-white/90 transition-all duration-200 group text-left hover:scale-106 hover:shadow-amber-600 hover:shadow-4xl'
                         >
                             <div className='flex items-center gap-2'>
                                 <span className='relative flex h-2 w-2'>
@@ -125,8 +126,8 @@ export default function StickyAnnouncement({
                                     {pillText}
                                 </span>
                             </div>
-                            <div className='h-9 w-9 rounded-full bg-[#060e32] dark:bg-white text-white dark:text-[#060e32] flex items-center justify-center relative overflow-hidden group-hover:bg-[#ff9400] group-hover:text-white transition-colors duration-300'>
-                                <Sparkles className='h-4.5 w-4.5 animate-pulse' />
+                            <div className='size-8.5 rounded-full  text-white  flex items-center justify-center relative overflow-hidden  group-hover:text-white transition-colors duration-300 btn-gradient-fire group-hover:bg-teal hover:bg-navy-900 hover:bg-image-none'>
+                                <Sparkles className='size-4 animate-pulse ' />
                             </div>
                         </motion.button>
                     ) : (
@@ -141,48 +142,52 @@ export default function StickyAnnouncement({
                                 damping: 22,
                                 stiffness: 280,
                             }}
-                            className='pointer-events-auto w-full max-w-[340px] rounded-lg border border-border/80 bg-white dark:bg-[#060e32] shadow-2xl overflow-hidden flex flex-col text-left'
+                            className='pointer-events-auto w-full max-w-[340px] rounded-2xl border border-navy-900/10 bg-white shadow-2xl overflow-hidden flex flex-col text-left relative'
                         >
-                            {/* Header Banner - Navy Blue Texture */}
-                            <div className='bg-texture-navy p-5 text-white relative border-b border-white/5'>
+                            {/* Header — light stone/hero style: white bg, teal glow, Badge eyebrow */}
+                            <div className='bg-stone-bg p-5 relative overflow-hidden'>
+                                <div className='absolute -top-10 -right-10 w-32 h-32 rounded-full bg-teal-pale/60 blur-2xl pointer-events-none' />
+
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         setIsOpen(false);
                                     }}
-                                    className='absolute top-3.5 right-3.5 h-6 w-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer z-10'
+                                    className='absolute top-3.5 right-3.5 h-6 w-6 rounded-full bg-navy-900/5 hover:bg-navy-900/10 flex items-center justify-center text-navy-900 transition-colors cursor-pointer z-10'
                                     aria-label='Close popup'
                                 >
                                     <X className='h-3.5 w-3.5' />
                                 </button>
 
-                                <div className='flex items-center mb-1.5'>
-                                    <span className='inline-flex items-center gap-1 bg-teal/20 border border-teal/35 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-teal'>
-                                        <span className='w-1 h-1 bg-teal rounded-full mr-1.5 animate-none' />
-                                        Platform
-                                    </span>
-                                </div>
-                                <h4 className='text-lg font-bold tracking-tight text-white'>
+                                <Badge
+                                    color='teal'
+                                    dot
+                                    uppercase
+                                    className='relative z-10 mb-2'
+                                >
+                                    Platform
+                                </Badge>
+                                <h4 className='relative z-10 text-lg font-display font-extrabold tracking-tight text-navy-900'>
                                     {title}
                                 </h4>
-                                <p className='text-[13px] text-white/70 font-light leading-relaxed mt-1'>
+                                <p className='relative z-10 text-[13px] text-navy-700 leading-relaxed mt-1'>
                                     {subtitle}
                                 </p>
 
                                 <button
                                     onClick={handleCtaClick}
-                                    className='mt-4 w-full h-9 rounded-md bg-[#ff9400] text-[#060e32] font-semibold text-xs hover:bg-white hover:text-[#060e32] active:scale-98 transition-all duration-200 cursor-pointer shadow-md'
+                                    className='relative z-10 mt-4 w-full h-9 rounded-lg bg-navy-900 hover:btn-gradient text-white font-semibold text-xs transition-colors duration-200 cursor-pointer'
                                 >
                                     {cta}
                                 </button>
                             </div>
 
                             {/* Reviews Block */}
-                            <div className='p-4.5 bg-slate-50 dark:bg-white/5 flex flex-col gap-3.5'>
+                            <div className='p-4.5 bg-white flex flex-col gap-3.5'>
                                 {reviews.map((rev: any, index: number) => (
                                     <div
                                         key={index}
-                                        className='flex flex-col gap-1 border-b border-border/40 last:border-0 pb-3 last:pb-0'
+                                        className='flex flex-col gap-1 border-b border-navy-900/10 last:border-0 pb-3 last:pb-0'
                                     >
                                         <div className='flex gap-0.5 text-teal'>
                                             {[...Array(5)].map((_, i) => (
@@ -192,10 +197,10 @@ export default function StickyAnnouncement({
                                                 />
                                             ))}
                                         </div>
-                                        <p className='text-[12px]/5 italic text-muted-foreground '>
+                                        <p className='text-[12px]/5 italic text-navy-700'>
                                             {rev.text}
                                         </p>
-                                        <span className='text-[11px] font-bold text-foreground/60 tracking-tight self-end'>
+                                        <span className='text-[11px] font-bold text-navy-900/60 tracking-tight self-end'>
                                             — {rev.author}
                                         </span>
                                     </div>

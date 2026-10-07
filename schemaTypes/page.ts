@@ -593,6 +593,31 @@ export const page = defineType({
                                 ),
                         }),
                         defineField({
+                            name: 'sectionImagePath',
+                            title: 'Section Image Path (Optional String)',
+                            type: 'string',
+                            description:
+                                'Relative path to image (e.g., /emlinked/example/example.jpg). Used only when no image is uploaded below.',
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.fiscalContext ||
+                                    (parent?.items && parent.items.length > 0),
+                                ),
+                        }),
+                        defineField({
+                            name: 'sectionImage',
+                            title: 'Section Image (shown next to the header)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description:
+                                'Takes priority over the path above.',
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.fiscalContext ||
+                                    (parent?.items && parent.items.length > 0),
+                                ),
+                        }),
+                        defineField({
                             name: 'features',
                             title: 'Features',
                             type: 'array',
@@ -1097,6 +1122,21 @@ export const page = defineType({
                             title: 'Intro Paragraph / Subtitle',
                             type: 'text',
                             rows: 3,
+                        }),
+                        defineField({
+                            name: 'diagramImagePath',
+                            title: 'Diagram Image Path (Optional String)',
+                            type: 'string',
+                            description:
+                                'Relative path to image (e.g., /emlinked/example/example.jpg). Used only when no image is uploaded below.',
+                        }),
+                        defineField({
+                            name: 'diagramImage',
+                            title: 'Diagram Image (centered, below the intro text)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description:
+                                'Replaces the hub-and-spoke diagram graphic with a Sanity-uploaded image. Takes priority over the path above.',
                         }),
                         defineField({
                             name: 'integrations',

@@ -157,22 +157,64 @@ export function PageBlockRenderer({
             const sectionTitle = block.sectionTitle || block.title || '';
             const features = block.features || block.items || [];
 
+            // Box3 lead-magnet block: 1/3 left-aligned header / 2/3 stacked
+            // cards instead of the centered header + 3-col grid every other
+            // featuresList block uses.
+            const isPortfolioHealth = block._key === 'box3-check-lead-magnet';
+
+            const resolvedSectionImg = getImageUrl(
+                block.sectionImage,
+                block.sectionImagePath,
+            );
+
             return (
                 <section
                     key={block._key}
                     className='px-6 py-24 bg-background relative overflow-hidden'
                 >
-                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-14 relative z-10'>
-                        <div className='max-w-3xl mx-auto flex flex-col gap-4 text-center'>
+                    <div
+                        className={cn(
+                            'mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10',
+                            isPortfolioHealth
+                                ? 'grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12 items-start'
+                                : 'text-center flex flex-col gap-10',
+                        )}
+                    >
+                        <div
+                            className={cn(
+                                'flex flex-col gap-4',
+                                isPortfolioHealth
+                                    ? 'lg:col-span-2 items-start text-left'
+                                    : 'max-w-3xl mx-auto text-center',
+                            )}
+                        >
                             {sectionTag && (
-                                <div className='flex justify-center mb-1'>
-                                    <Badge color='teal' uppercase>
+                                <div
+                                    className={cn(
+                                        'flex',
+                                        isPortfolioHealth
+                                            ? 'justify-start'
+                                            : 'justify-center mb-1',
+                                    )}
+                                >
+                                    <Badge
+                                        color='teal'
+                                        uppercase
+                                        dot={isPortfolioHealth}
+                                    >
                                         {sectionTag}
                                     </Badge>
                                 </div>
                             )}
                             {sectionTitle && (
-                                <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-foreground'>
+                                <h2
+                                    className={cn(
+                                        'font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight',
+                                        isPortfolioHealth
+                                            ? 'bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'
+                                            : 'text-foreground',
+                                    )}
+                                >
                                     {sectionTitle}
                                 </h2>
                             )}
@@ -181,9 +223,27 @@ export function PageBlockRenderer({
                                     {sectionSubtitle}
                                 </p>
                             )}
+                            {resolvedSectionImg && (
+                                <div className='relative w-full aspect-video mt-2 rounded-xl overflow-hidden'>
+                                    <Image
+                                        src={resolvedSectionImg}
+                                        alt={sectionTitle}
+                                        fill
+                                        sizes='(max-width: 1024px) 100vw, 33vw'
+                                        className='object-cover'
+                                    />
+                                </div>
+                            )}
                         </div>
 
-                        <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-left'>
+                        <div
+                            className={cn(
+                                'text-left',
+                                isPortfolioHealth
+                                    ? 'lg:col-span-1 flex flex-col gap-2'
+                                    : 'grid grid-cols-1 md:grid-cols-3 gap-8',
+                            )}
+                        >
                             {features.map((feature: any, idx: number) => {
                                 // The hardcoded "three apps" screenshots and
                                 // links only belong to the homepage apps
@@ -254,7 +314,11 @@ export function PageBlockRenderer({
                                         key={feature._key || idx}
                                         className={cn(
                                             'rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group relative',
-                                            cardWash[idx % cardWash.length],
+                                            isPortfolioHealth
+                                                ? 'bg-navy-50/60'
+                                                : cardWash[
+                                                      idx % cardWash.length
+                                                  ],
                                         )}
                                     >
                                         {linkTarget && (
@@ -265,74 +329,98 @@ export function PageBlockRenderer({
                                             />
                                         )}
 
-                                        <div
-                                            className={cn(
-                                                'absolute top-4 right-4 z-30 w-11 h-11 rounded-lg shadow-md flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 pointer-events-none',
-                                                iconColor[
-                                                    idx % iconColor.length
-                                                ],
-                                            )}
-                                        >
-                                            {resolvedIconBadge ? (
-                                                <div className='relative w-7 h-7'>
-                                                    <Image
-                                                        src={resolvedIconBadge}
-                                                        alt={
-                                                            feature.title ||
-                                                            'Icon'
-                                                        }
-                                                        fill
-                                                        className='object-contain'
-                                                    />
-                                                </div>
-                                            ) : (
-                                                <DefaultIcon className='w-6 h-6' />
-                                            )}
-                                        </div>
+                                        {!isPortfolioHealth && (
+                                            <div
+                                                className={cn(
+                                                    'absolute top-4 right-4 z-30 w-11 h-11 rounded-md shadow-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 pointer-events-none ',
+                                                    iconColor[
+                                                        idx % iconColor.length
+                                                    ],
+                                                )}
+                                            >
+                                                {resolvedIconBadge ? (
+                                                    <div className='relative w-7 h-7'>
+                                                        <Image
+                                                            src={
+                                                                resolvedIconBadge
+                                                            }
+                                                            alt={
+                                                                feature.title ||
+                                                                'Icon'
+                                                            }
+                                                            fill
+                                                            className='object-contain'
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <DefaultIcon className='w-6 h-6' />
+                                                )}
+                                            </div>
+                                        )}
 
-                                        <div className='flex flex-col gap-4 p-6 md:p-8 pb-4 z-10 pointer-events-none'>
-                                            <h3 className='text-xl font-bold text-navy-900 group-hover:text-teal transition-colors pr-12'>
+                                        <div className='flex flex-col gap-3 p-4  z-10 pointer-events-none'>
+                                            <h3
+                                                className={cn(
+                                                    'text-xl font-bold transition-colors group-hover:bg-linear-to-br group-hover:from-[#f12711] group-hover:to-[#f5af19] group-hover:bg-clip-text group-hover:text-transparent',
+                                                    isPortfolioHealth
+                                                        ? 'pr-0'
+                                                        : 'pr-12',
+                                                    linkColor[
+                                                        idx % linkColor.length
+                                                    ],
+                                                )}
+                                            >
                                                 {feature.title}
                                             </h3>
 
                                             <p className='text-sm text-navy-600 leading-relaxed font-light'>
                                                 {feature.description}
                                             </p>
-
-                                            <div
-                                                className={cn(
-                                                    'inline-flex items-center gap-1.5 text-sm font-semibold group-hover:translate-x-0.5 transition-all duration-200 w-min whitespace-nowrap',
-                                                    linkColor[
-                                                        idx % linkColor.length
-                                                    ],
-                                                )}
-                                            >
-                                                <span>
-                                                    {feature.ctaLabel ||
-                                                        (isEn
-                                                            ? 'Discover more'
-                                                            : 'Bekijk module')}
-                                                </span>
-                                                <ArrowRight className='w-3.5 h-3.5' />
-                                            </div>
                                         </div>
 
-                                        {cardImg && (
-                                            <div className='relative w-full h-56 px-4 pb-4 mt-2'>
-                                                <div className='relative w-full h-full rounded-xl overflow-hidden'>
-                                                    <Image
-                                                        src={cardImg}
-                                                        alt={
-                                                            feature.title ||
-                                                            'Module'
-                                                        }
-                                                        fill
-                                                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                                                        className='object-cover group-hover:scale-105 transition-transform duration-500'
-                                                    />
+                                        {/* mt-auto pins image + link to the card's
+                                            bottom edge regardless of how much the
+                                            description above wraps. */}
+                                        <div className='flex flex-col mt-auto'>
+                                            {cardImg && (
+                                                <div className='relative w-full h-56 px-4 pb-4'>
+                                                    <div className='relative w-full h-full rounded-xl overflow-hidden'>
+                                                        <Image
+                                                            src={cardImg}
+                                                            alt={
+                                                                feature.title ||
+                                                                'Module'
+                                                            }
+                                                            fill
+                                                            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                                                            className='object-cover group-hover:scale-105 transition-transform duration-500'
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )}
+                                            )}
+
+                                            {!isPortfolioHealth && (
+                                                <div className='flex justify-end px-6 md:px-8 pb-4 z-10 pointer-events-none'>
+                                                    <div
+                                                        className={cn(
+                                                            'inline-flex items-center gap-1.5 text-sm font-semibold group-hover:translate-x-0.5 transition-all duration-200 w-min whitespace-nowrap',
+                                                            linkColor[
+                                                                idx %
+                                                                    linkColor.length
+                                                            ],
+                                                        )}
+                                                    >
+                                                        <span>
+                                                            {feature.ctaLabel ||
+                                                                (isEn
+                                                                    ? 'Discover more'
+                                                                    : 'Bekijk module')}
+                                                        </span>
+                                                        <ArrowRight className='w-3.5 h-3.5' />
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 );
                             })}
@@ -363,100 +451,93 @@ export function PageBlockRenderer({
             // place of a flat dark-glass treatment.
             const cardWash = ['bg-teal-pale/50', 'bg-emerald-50', 'bg-navy-50'];
 
-            const diagramIcons = [Database, FileText, Cpu];
-            const diagramPos = [
-                'top-0 left-0',
-                'top-6 right-0',
-                'bottom-0 right-6',
-            ];
-            const connectorRotate = [
-                '-rotate-[143deg]',
-                '-rotate-[34deg]',
-                'rotate-[38deg]',
-            ];
+            const resolvedDiagramImg = getImageUrl(
+                block.diagramImage,
+                block.diagramImagePath,
+            );
 
             return (
                 <section
                     key={block._key}
                     className='px-6 py-24 bg-stone-bg text-navy-900 border-b border-navy-900/10 relative overflow-hidden'
                 >
-                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 flex flex-col gap-14 relative z-10'>
-                        {/* Hub-and-spoke hero: Emlinked as the connected
-                            center of the ERP, not a bolt-on integration —
-                            the site's one deliberate dark section, giving
-                            this claim visual weight against the light pages
-                            around it (frontpage/v4 layout reference). */}
-                        <div className='rounded-3xl bg-navy-900 text-white p-8 sm:p-12 md:p-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center overflow-hidden relative'>
-                            <div className='absolute -top-24 -left-24 w-72 h-72 rounded-full bg-teal/10 blur-3xl pointer-events-none' />
+                    <div className='absolute -top-24 -left-24 w-96 h-96 rounded-full bg-teal-pale/40 blur-3xl pointer-events-none' />
 
-                            <div className='flex flex-col gap-5 text-left relative z-10'>
+                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col gap-14'>
+                        {/* Centered header + diagram — one Sanity section,
+                            not a dark header card stitched to a light body.
+                            Two states, not three: centered stack below lg,
+                            then at lg a 2/3 (badge+title+intro, left) / 1/3
+                            (image) split — only when there's an image to
+                            split against, otherwise stay centered so lg
+                            doesn't leave a dead empty column. */}
+                        {resolvedDiagramImg ? (
+                            <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center lg:items-end'>
+                                <div className='flex flex-col items-center lg:items-start gap-5 text-center lg:text-left max-w-3xl mx-auto lg:max-w-none lg:mx-0'>
+                                    {sectionTag && (
+                                        <>
+                                            <div className='flex justify-center lg:hidden'>
+                                                <Badge color='teal' uppercase>
+                                                    {sectionTag}
+                                                </Badge>
+                                            </div>
+                                            <div className='hidden lg:flex lg:justify-start'>
+                                                <Badge
+                                                    color='teal'
+                                                    uppercase
+                                                    dot
+                                                >
+                                                    {sectionTag}
+                                                </Badge>
+                                            </div>
+                                        </>
+                                    )}
+                                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text'>
+                                        {sectionTitle}
+                                    </h2>
+                                    {sectionSubtitle && (
+                                        <p className='text-navy-700 leading-relaxed text-base md:text-lg font-light'>
+                                            {sectionSubtitle}
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div className='relative w-full max-w-xl aspect-video lg:col-span-1 lg:justify-self-end'>
+                                    <Image
+                                        src={resolvedDiagramImg}
+                                        alt={sectionTitle}
+                                        fill
+                                        sizes='(max-width: 1024px) 100vw, 33vw'
+                                        className='object-contain rounded-lg'
+                                    />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className='max-w-3xl mx-auto flex flex-col items-center gap-5 text-center'>
                                 {sectionTag && (
-                                    <Badge color='teal' uppercase dot>
-                                        {sectionTag}
-                                    </Badge>
+                                    <div className='flex justify-center'>
+                                        <Badge color='teal' uppercase>
+                                            {sectionTag}
+                                        </Badge>
+                                    </div>
                                 )}
-                                <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-white'>
+                                <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
                                     {sectionTitle}
                                 </h2>
                                 {sectionSubtitle && (
-                                    <p className='text-white/70 leading-relaxed text-base md:text-lg font-light'>
+                                    <p className='text-navy-700 leading-relaxed text-base md:text-lg font-light'>
                                         {sectionSubtitle}
                                     </p>
                                 )}
                             </div>
-
-                            <div className='relative min-h-72 flex items-center justify-center z-10'>
-                                {[0, 1, 2].map((i) => (
-                                    <div
-                                        key={i}
-                                        className={cn(
-                                            'absolute top-1/2 left-1/2 w-32 border-t border-dashed border-white/25 origin-left pointer-events-none',
-                                            connectorRotate[i],
-                                        )}
-                                    />
-                                ))}
-
-                                <div className='relative z-10 w-40 text-center rounded-2xl bg-teal border border-teal p-4'>
-                                    <span className='w-8 h-8 mx-auto rounded-full bg-white text-teal font-black text-lg flex items-center justify-center'>
-                                        e
-                                    </span>
-                                    <b className='block text-xs font-bold mt-2'>
-                                        Emlinked
-                                    </b>
-                                    <small className='block text-[10px] text-white/85 mt-1'>
-                                        {isEn
-                                            ? 'Real estate platform'
-                                            : 'Vastgoedplatform'}
-                                    </small>
-                                </div>
-
-                                {integrations
-                                    .slice(0, 3)
-                                    .map((item: any, idx: number) => {
-                                        const NodeIcon = diagramIcons[idx];
-                                        return (
-                                            <div
-                                                key={item._key || idx}
-                                                className={cn(
-                                                    'absolute z-10 min-w-36 rounded-2xl bg-[#1d3b62] border border-white/10 p-3.5',
-                                                    diagramPos[idx],
-                                                )}
-                                            >
-                                                <NodeIcon className='w-4.5 h-4.5 text-teal' />
-                                                <b className='block text-[11px] font-bold mt-1.5'>
-                                                    {item.title}
-                                                </b>
-                                                <small className='block text-[9px] text-white/60 mt-1'>
-                                                    {item.badge}
-                                                </small>
-                                            </div>
-                                        );
-                                    })}
-                            </div>
-                        </div>
+                        )}
 
                         <div className='relative grid grid-cols-1 lg:grid-cols-3 gap-8 text-left'>
                             {integrations.map((item: any, idx: number) => {
+                                const cardIconImg = getImageUrl(
+                                    item.image,
+                                    undefined,
+                                );
                                 const footerSpec =
                                     item.footerSpec ||
                                     (idx === 0
@@ -488,8 +569,23 @@ export function PageBlockRenderer({
                                     >
                                         <div className='flex flex-col gap-4 z-10'>
                                             <div className='flex items-center justify-between'>
-                                                <div className='h-12 w-12 rounded-xl bg-white border border-teal/35 flex items-center justify-center text-teal font-bold text-lg shadow-xs'>
-                                                    {idx === 0 ? (
+                                                <div className='h-12 w-12 rounded-xl bg-white border border-teal/35 flex items-center justify-center text-teal font-bold text-lg shadow-xs overflow-hidden'>
+                                                    {cardIconImg ? (
+                                                        <div className='relative w-full h-full'>
+                                                            <Image
+                                                                src={
+                                                                    cardIconImg
+                                                                }
+                                                                alt={
+                                                                    item.title ||
+                                                                    'Integration'
+                                                                }
+                                                                fill
+                                                                sizes='48px'
+                                                                className='object-contain p-1.5'
+                                                            />
+                                                        </div>
+                                                    ) : idx === 0 ? (
                                                         <Database className='h-6 w-6' />
                                                     ) : idx === 1 ? (
                                                         <FileText className='h-6 w-6' />
@@ -567,7 +663,7 @@ export function PageBlockRenderer({
                     className='px-6 py-24 bg-background relative overflow-hidden'
                 >
                     <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                        <div className='border border-teal/30 rounded-3xl bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 text-navy-900 p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg'>
+                        <div className='border border-teal/15 rounded-lg bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 text-navy-900 p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.20)] transition-all duration-500 relative overflow-hidden group shadow-md'>
                             <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                                 <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                     {tag && (
@@ -580,8 +676,16 @@ export function PageBlockRenderer({
                                             {tag}
                                         </Badge>
                                     )}
-                                    <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight'>
-                                        {title}
+                                    <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight relative'>
+                                        <span className='text-navy-900 group-hover:opacity-0 transition-opacity duration-500'>
+                                            {title}
+                                        </span>
+                                        <span
+                                            aria-hidden
+                                            className='absolute inset-0 text-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500'
+                                        >
+                                            {title}
+                                        </span>
                                     </h2>
                                     <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
                                         {subtitle}
@@ -589,7 +693,7 @@ export function PageBlockRenderer({
                                     {buttonLabel && buttonLink && (
                                         <GlowingLink
                                             href={getPath(buttonLink)}
-                                            className='h-14 px-12 text-base mr-auto font-bold shadow-xl hover:shadow-teal/30'
+                                            className='py-3 px-12 text-base mr-auto font-bold shadow-xl transition-all duration-500 group-hover:bg-none group-hover:bg-navy-900 group-hover:border-navy-900 group-hover:shadow-[0_8px_28px_rgba(11,17,41,0.35)] mt-2'
                                         >
                                             {buttonLabel}
                                         </GlowingLink>
@@ -653,8 +757,11 @@ export function PageBlockRenderer({
             return (
                 <TestimonialSlider
                     key={block._key}
+                    locale={locale}
+                    tag={block.tag || block.sectionTag}
                     title={block.title || block.sectionTitle}
                     subtitle={block.subtitle || block.sectionSubtitle}
+                    customTestimonials={block.testimonials}
                 />
             );
         }

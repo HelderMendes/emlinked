@@ -1,3 +1,13 @@
 {
-    "chat.useClaudeHooks": true
+    "chat.useClaudeHooks": true,
+    "editor.fontSize": 11.5,
+    "chat.editor.fontSize": 12,
+    "chat.fontSize": 12,
+    "debug.console.fontSize": 11,
+    "scm.inputFontSize": 11,
+    "terminal.integrated.fontSize": 12,
+    "markdown.preview.fontSize": 12,
+    "tailwindCSS.rootFontSize": 12,
+    "markdown.preview.lineHeight": 1.5,
+    "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace"
 }

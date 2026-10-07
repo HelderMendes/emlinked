@@ -56,7 +56,7 @@ export function Box3CtaBanner({
                             <div className='flex flex-col sm:flex-row gap-4 pt-2'>
                                 <Link
                                     href={ctaButtonLink}
-                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-navy-900 hover:bg-black px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
+                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
                                 >
                                     <span className='flex items-center justify-center gap-2 text-white'>
                                         <span>{ctaButtonText}</span>

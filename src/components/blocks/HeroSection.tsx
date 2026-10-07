@@ -132,7 +132,7 @@ export function HeroSection({
                                 {ctaLabel && ctaLink && (
                                     <Link
                                         href={getPath(ctaLink)}
-                                        className='inline-flex items-center gap-2 justify-center rounded-lg bg-navy-900 hover:bg-black py-3 px-4 text-sm font-semibold text-white transition-colors whitespace-nowrap'
+                                        className='inline-flex items-center gap-2 justify-center rounded-lg bg-navy-900 hover:btn-gradient py-3 px-4 text-sm font-semibold text-white transition-colors whitespace-nowrap'
                                     >
                                         {ctaLabel}
                                         <ArrowUpRight className='w-4 h-4' />

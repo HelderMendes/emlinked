@@ -390,7 +390,7 @@ export function TeamBlock({
                                                         }
                                                         target='_blank'
                                                         rel='noopener noreferrer'
-                                                        className='px-4 py-2.5 rounded-xl bg-navy-900 hover:bg-black text-white border border-navy-900/10 font-semibold transition-all inline-flex items-center gap-2 text-xs shadow-sm'
+                                                        className='px-4 py-2.5 rounded-xl bg-navy-900 hover:btn-gradient text-white border border-navy-900/10 font-semibold transition-all inline-flex items-center gap-2 text-xs shadow-sm'
                                                     >
                                                         <svg
                                                             className='w-4 h-4 fill-teal'

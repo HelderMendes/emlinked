@@ -462,7 +462,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-4'>
                         <Link
                             href={b?.primaryCtaUrl || '#demo'}
-                            className='inline-flex h-14 items-center justify-center rounded-2xl bg-navy-900 hover:bg-black px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
+                            className='inline-flex h-14 items-center justify-center rounded-2xl bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
                         >
                             <span className='flex items-center justify-center gap-2 text-white'>
                                 <span>

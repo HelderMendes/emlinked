@@ -125,9 +125,15 @@ async function getHomepageData(locale: string) {
                         image { asset-> { _id, url } },
                         iconImage { asset-> { _id, url } }
                     },
+                    sectionImage { asset-> { _id, url } },
                     integrations[] {
                         ...,
                         image { asset-> { _id, url } }
+                    },
+                    diagramImage { asset-> { _id, url } },
+                    testimonials[] {
+                        ...,
+                        avatar { asset-> { _id, url } }
                     },
                     partners[] {
                         ...,

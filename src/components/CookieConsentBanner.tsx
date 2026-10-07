@@ -101,17 +101,17 @@ export default function CookieConsentBanner({
 
     return (
         <div className='fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-xl z-50 animate-in fade-in slide-in-from-bottom-5 duration-300'>
-            <div className='bg-slate-900/95 border border-teal/30 text-white rounded-2xl p-5 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl relative overflow-hidden'>
-                {/* Top Ambient Glow */}
-                <div className='absolute top-0 right-0 w-32 h-32 bg-teal/10 rounded-full blur-2xl pointer-events-none' />
+            <div className='bg-white border border-navy-900/10 text-navy-900 rounded-2xl p-5 md:p-6 shadow-2xl relative overflow-hidden'>
+                {/* Top Ambient Glow — same teal wash as the hero art */}
+                <div className='absolute top-0 right-0 w-32 h-32 bg-teal-pale/50 rounded-full blur-2xl pointer-events-none' />
 
                 {/* HEADER ROW */}
-                <div className='flex items-start justify-between gap-4 mb-3'>
+                <div className='flex items-start justify-between gap-4 mb-3 relative z-10'>
                     <div className='flex items-center gap-2.5'>
-                        <div className='p-2 rounded-xl bg-teal/15 border border-teal/30 text-teal shadow-xs shrink-0'>
+                        <div className='p-2 rounded-lg bg-teal-pale text-teal shrink-0'>
                             <Cookie className='w-5 h-5' />
                         </div>
-                        <h3 className='font-bold text-base md:text-lg text-white'>
+                        <h3 className='font-bold text-base md:text-lg text-navy-900'>
                             {isEn
                                 ? 'Cookie & Privacy Settings'
                                 : 'Cookie- & Privacyinstellingen'}
@@ -120,7 +120,7 @@ export default function CookieConsentBanner({
 
                     <button
                         onClick={() => setIsVisible(false)}
-                        className='text-slate-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10'
+                        className='text-navy-400 hover:text-navy-900 transition-colors p-1 rounded-lg hover:bg-navy-900/5'
                         aria-label={isEn ? 'Dismiss banner' : 'Sluit banner'}
                     >
                         <X className='w-4 h-4' />
@@ -130,7 +130,7 @@ export default function CookieConsentBanner({
                 {/* EXPLANATORY TEXT */}
                 {!showPreferences ? (
                     <>
-                        <p className='text-xs md:text-sm text-slate-300 leading-relaxed font-light mb-4'>
+                        <p className='text-xs md:text-sm text-navy-600 leading-relaxed font-light mb-4 relative z-10'>
                             {isEn
                                 ? 'We use cookies to ensure optimal functionality of our platform and to analyze traffic. Non-essential cookies are disabled until you consent.'
                                 : 'Wij gebruiken cookies voor een optimale werking van ons vastgoedplatform en het analyseren van paginaverkeer. Niet-noodzakelijke cookies worden pas geladen na jouw toestemming.'}
@@ -147,10 +147,10 @@ export default function CookieConsentBanner({
                         </p>
 
                         {/* EQUAL WEIGHT ACTION BUTTONS (GDPR Compliant: Accept All vs Reject Non-Essential) */}
-                        <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1'>
+                        <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 relative z-10'>
                             <button
                                 onClick={handleRejectNonEssential}
-                                className='w-full h-11 px-4 rounded-xl border border-white/20 hover:border-white/40 bg-slate-800/80 hover:bg-slate-800 text-xs md:text-sm font-semibold text-white transition-all duration-200 shadow-sm flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]'
+                                className='w-full h-11 px-4 rounded-lg border border-navy-900/15 hover:bg-navy-900/5 text-xs md:text-sm font-semibold text-navy-900 transition-colors flex items-center justify-center gap-2'
                             >
                                 <span>
                                     {isEn
@@ -161,7 +161,7 @@ export default function CookieConsentBanner({
 
                             <button
                                 onClick={handleAcceptAll}
-                                className='w-full h-11 px-4 rounded-xl border border-teal/50 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 text-xs md:text-sm font-bold text-white transition-all duration-200 shadow-md shadow-orange-500/20 flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]'
+                                className='w-full h-11 px-4 rounded-lg bg-navy-900 hover:btn-gradient text-xs md:text-sm font-bold text-white transition-colors flex items-center justify-center gap-2'
                             >
                                 <Check className='w-4 h-4' />
                                 <span>
@@ -170,10 +170,10 @@ export default function CookieConsentBanner({
                             </button>
                         </div>
 
-                        <div className='pt-3 text-center sm:text-right'>
+                        <div className='pt-3 text-center sm:text-right relative z-10'>
                             <button
                                 onClick={() => setShowPreferences(true)}
-                                className='text-xs text-teal hover:text-teal-light underline font-medium inline-flex items-center gap-1.5 transition-colors'
+                                className='text-xs text-teal hover:text-teal-hover underline font-medium inline-flex items-center gap-1.5 transition-colors'
                             >
                                 <Settings className='w-3.5 h-3.5' />
                                 <span>
@@ -186,45 +186,45 @@ export default function CookieConsentBanner({
                     </>
                 ) : (
                     /* SECOND LAYER: GRANULAR PREFERENCE DRAWER */
-                    <div className='space-y-4 pt-1 animate-in fade-in duration-200'>
-                        <p className='text-xs text-slate-300 leading-relaxed font-light'>
+                    <div className='space-y-4 pt-1 animate-in fade-in duration-200 relative z-10'>
+                        <p className='text-xs text-navy-600 leading-relaxed font-light'>
                             {isEn
                                 ? 'Customize your cookie settings below. Essential cookies are required to deliver the core service.'
                                 : 'Pas jouw cookie-voorkeuren aan. Noodzakelijke cookies zijn vereist voor de basisfunctionaliteit.'}
                         </p>
 
-                        <div className='space-y-3 bg-slate-950/60 border border-white/10 rounded-xl p-3.5'>
+                        <div className='space-y-3 bg-navy-50 border border-navy-900/10 rounded-xl p-3.5'>
                             {/* Functional (Locked Always Active) */}
-                            <div className='flex items-center justify-between gap-3 pb-3 border-b border-white/10'>
+                            <div className='flex items-center justify-between gap-3 pb-3 border-b border-navy-900/10'>
                                 <div>
-                                    <div className='flex items-center gap-1.5 text-xs font-bold text-white'>
-                                        <Lock className='w-3 h-3 text-emerald-400' />
+                                    <div className='flex items-center gap-1.5 text-xs font-bold text-navy-900'>
+                                        <Lock className='w-3 h-3 text-emerald-600' />
                                         <span>
                                             {isEn
                                                 ? 'Functional (Mandatory)'
                                                 : 'Noodzakelijk & Functioneel'}
                                         </span>
                                     </div>
-                                    <p className='text-[11px] text-slate-400 font-light mt-0.5'>
+                                    <p className='text-[11px] text-navy-500 font-light mt-0.5'>
                                         {isEn
                                             ? 'Core ERP functionality, session tokens, and language preferences.'
                                             : 'Noodzakelijk voor navigatie, taalvoorkeur en beveiliging.'}
                                     </p>
                                 </div>
-                                <span className='text-[11px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md shrink-0'>
+                                <span className='text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md shrink-0'>
                                     {isEn ? 'Active' : 'Altijd actief'}
                                 </span>
                             </div>
 
                             {/* Analytics (Default Off) */}
-                            <div className='flex items-center justify-between gap-3 pb-3 border-b border-white/10'>
+                            <div className='flex items-center justify-between gap-3 pb-3 border-b border-navy-900/10'>
                                 <div>
-                                    <div className='text-xs font-bold text-white'>
+                                    <div className='text-xs font-bold text-navy-900'>
                                         {isEn
                                             ? 'Analytical Cookies'
                                             : 'Analytische Cookies'}
                                     </div>
-                                    <p className='text-[11px] text-slate-400 font-light mt-0.5'>
+                                    <p className='text-[11px] text-navy-500 font-light mt-0.5'>
                                         {isEn
                                             ? 'Anonymous website usage stats to improve speed & user experience.'
                                             : 'Anonieme statistieken om de snelheid en gebruikerservaring te verbeteren.'}
@@ -239,19 +239,19 @@ export default function CookieConsentBanner({
                                             analytics: e.target.checked,
                                         }))
                                     }
-                                    className='w-5 h-5 accent-tealrounded-md cursor-pointer shrink-0'
+                                    className='w-5 h-5 accent-teal rounded-md cursor-pointer shrink-0'
                                 />
                             </div>
 
                             {/* Marketing (Default Off) */}
                             <div className='flex items-center justify-between gap-3'>
                                 <div>
-                                    <div className='text-xs font-bold text-white'>
+                                    <div className='text-xs font-bold text-navy-900'>
                                         {isEn
                                             ? 'Marketing & Targeting'
                                             : 'Marketing & Tracking'}
                                     </div>
-                                    <p className='text-[11px] text-slate-400 font-light mt-0.5'>
+                                    <p className='text-[11px] text-navy-500 font-light mt-0.5'>
                                         {isEn
                                             ? 'Relevant commercial updates and software integration news.'
                                             : 'Relevant nieuws over vastgoedbeheer en software-integraties.'}
@@ -275,14 +275,14 @@ export default function CookieConsentBanner({
                         <div className='flex items-center justify-between gap-3 pt-1'>
                             <button
                                 onClick={() => setShowPreferences(false)}
-                                className='text-xs text-slate-400 hover:text-white underline transition-colors'
+                                className='text-xs text-navy-500 hover:text-navy-900 underline transition-colors'
                             >
                                 {isEn ? '← Back' : '← Terug'}
                             </button>
 
                             <button
                                 onClick={handleSaveCustom}
-                                className='h-10 px-5 rounded-xl border border-teal/40 bg-teal/15 hover:bg-teal text-xs font-bold text-teal hover:text-slate-950 transition-all duration-200 shadow-sm'
+                                className='h-10 px-5 rounded-lg bg-navy-900 hover:btn-gradient text-xs font-bold text-white transition-colors'
                             >
                                 {isEn
                                     ? 'Save preferences'

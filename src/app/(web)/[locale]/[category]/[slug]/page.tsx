@@ -1059,7 +1059,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                     <div className='flex flex-wrap items-center justify-center gap-4 relative z-10 pt-2'>
                         <Link
                             href={`/${locale}/contact`}
-                            className='px-8 py-4 rounded-xl bg-navy-900 hover:bg-black text-white font-bold text-sm flex items-center gap-2 transition-all shadow-xl hover:scale-105'
+                            className='px-8 py-4 rounded-xl bg-navy-900 hover:btn-gradient text-white font-bold text-sm flex items-center gap-2 transition-all shadow-xl hover:scale-105'
                         >
                             <span>
                                 {content.cta.primary ||

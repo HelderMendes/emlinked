@@ -655,7 +655,16 @@
               {
                 "name": "bgImagePath",
                 "type": "string",
-                "title": "Background Image Path"
+                "title": "Background Image Path (Fallback String)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "description": "Upload custom graphic directly to Sanity CDN",
+                "name": "bgImage",
+                "type": "image",
+                "title": "Background Image (Sanity Asset Upload)"
               }
             ],
             "type": "object",
@@ -700,9 +709,18 @@
                     "title": "Text Description"
                   },
                   {
-                    "name": "image",
+                    "name": "imagePath",
                     "type": "string",
-                    "title": "Image Path"
+                    "title": "Image Path (Fallback String)"
+                  },
+                  {
+                    "options": {
+                      "hotspot": true
+                    },
+                    "description": "Upload custom graphic directly to Sanity CDN",
+                    "name": "image",
+                    "type": "image",
+                    "title": "Image (Sanity Asset Upload)"
                   }
                 ],
                 "hidden": "conditional",
@@ -753,6 +771,23 @@
                 "title": "Intro Paragraph / Subtitle"
               },
               {
+                "description": "Relative path to image (e.g., /emlinked/example/example.jpg). Used only when no image is uploaded below.",
+                "hidden": "conditional",
+                "name": "sectionImagePath",
+                "type": "string",
+                "title": "Section Image Path (Optional String)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "description": "Takes priority over the path above.",
+                "hidden": "conditional",
+                "name": "sectionImage",
+                "type": "image",
+                "title": "Section Image (shown next to the header)"
+              },
+              {
                 "of": [
                   {
                     "fields": [
@@ -783,13 +818,31 @@
                         "description": "Pad naar de grote preview afbeelding (bijv. \"/emlinked/apps/vastgoedbeheer-sopftware_modules.jpg\")",
                         "name": "imagePath",
                         "type": "string",
-                        "title": "Main Module Image Path (Grote Afbeelding)"
+                        "title": "Main Module Image Path (Fallback String)"
+                      },
+                      {
+                        "options": {
+                          "hotspot": true
+                        },
+                        "description": "Upload de grote preview afbeelding rechtstreeks naar Sanity CDN",
+                        "name": "image",
+                        "type": "image",
+                        "title": "Main Module Image (Sanity Asset Upload)"
                       },
                       {
                         "description": "Pad naar het PNG-icoontje rechtsboven op de kaart (bijv. \"/emlinked/apps/vastgoedbeheer.png\")",
                         "name": "iconPath",
                         "type": "string",
                         "title": "Top-Right PNG Icon Badge Path (Icoontje)"
+                      },
+                      {
+                        "options": {
+                          "hotspot": true
+                        },
+                        "description": "Upload het PNG-icoontje rechtsboven op de kaart rechtstreeks naar Sanity CDN",
+                        "name": "iconImage",
+                        "type": "image",
+                        "title": "Top-Right PNG Icon Badge (Sanity Asset Upload)"
                       },
                       {
                         "of": [
@@ -1102,7 +1155,16 @@
                         "description": "Relative path in public directory (e.g. /emlinked/partners/Continia-e1670413209950.png)",
                         "name": "logoUrl",
                         "type": "string",
-                        "title": "Logo Image Path"
+                        "title": "Logo Image Path (Fallback String)"
+                      },
+                      {
+                        "options": {
+                          "hotspot": true
+                        },
+                        "description": "Upload partner logo directly to Sanity CDN",
+                        "name": "logo",
+                        "type": "image",
+                        "title": "Logo (Sanity Asset Upload)"
                       },
                       {
                         "rows": 3,
@@ -1157,6 +1219,21 @@
                 "title": "Intro Paragraph / Subtitle"
               },
               {
+                "description": "Relative path to image (e.g., /emlinked/example/example.jpg). Used only when no image is uploaded below.",
+                "name": "diagramImagePath",
+                "type": "string",
+                "title": "Diagram Image Path (Optional String)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "description": "Replaces the hub-and-spoke diagram graphic with a Sanity-uploaded image. Takes priority over the path above.",
+                "name": "diagramImage",
+                "type": "image",
+                "title": "Diagram Image (centered, below the intro text)"
+              },
+              {
                 "of": [
                   {
                     "fields": [
@@ -1179,7 +1256,16 @@
                         "description": "e.g. BC-Integration-Flowchart.webp",
                         "name": "imagePlaceholder",
                         "type": "string",
-                        "title": "Image Placeholder Name"
+                        "title": "Image Placeholder Name (Fallback String)"
+                      },
+                      {
+                        "options": {
+                          "hotspot": true
+                        },
+                        "description": "Upload custom graphic directly to Sanity CDN",
+                        "name": "image",
+                        "type": "image",
+                        "title": "Image (Sanity Asset Upload)"
                       },
                       {
                         "of": [
@@ -1681,6 +1767,21 @@
                 "name": "secondaryCtaUrl",
                 "type": "string",
                 "title": "Secondary CTA URL"
+              },
+              {
+                "description": "Relatief pad naar banner afbeelding (bijv. /emlinked/home/Vastgoedbeheer_automatiseren.jpg)",
+                "name": "imagePath",
+                "type": "string",
+                "title": "Afbeelding Pad (Fallback String)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "description": "Upload de banner afbeelding rechtstreeks naar de Sanity CDN",
+                "name": "image",
+                "type": "image",
+                "title": "Banner Afbeelding (Upload naar Sanity CDN)"
               }
             ],
             "type": "object",
@@ -3065,9 +3166,18 @@
               },
               {
                 "description": "Relative path to image (e.g.,/emlinked/apps/huurdersportaal/Huurdersportaal.webp)",
-                "name": "heroImage",
+                "name": "heroImagePath",
                 "type": "string",
-                "title": "Hero Image Path"
+                "title": "Hero Image Path (Fallback String)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "description": "Upload custom graphic directly to Sanity CDN",
+                "name": "heroImage",
+                "type": "image",
+                "title": "Hero Image (Sanity Asset Upload)"
               }
             ],
             "type": "object",
@@ -3199,7 +3309,15 @@
                       {
                         "name": "imagePath",
                         "type": "string",
-                        "title": "Feature Image Path"
+                        "title": "Feature Image Path (Fallback String)"
+                      },
+                      {
+                        "options": {
+                          "hotspot": true
+                        },
+                        "name": "image",
+                        "type": "image",
+                        "title": "Feature Image (Sanity Asset Upload)"
                       }
                     ],
                     "type": "object"
@@ -3339,6 +3457,21 @@
                 "name": "secondaryButtonText",
                 "type": "string",
                 "title": "Secondary Button Label"
+              },
+              {
+                "description": "Relatief pad naar banner afbeelding (bijv. /emlinked/apps/payment/automatiseren_payment.jpg)",
+                "name": "imagePath",
+                "type": "string",
+                "title": "Afbeelding Pad (Fallback String)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "description": "Upload de banner afbeelding rechtstreeks naar de Sanity CDN",
+                "name": "image",
+                "type": "image",
+                "title": "Banner Afbeelding (Upload naar Sanity CDN)"
               }
             ],
             "type": "object",
@@ -3376,7 +3509,15 @@
               {
                 "name": "imagePath",
                 "type": "string",
-                "title": "Illustration Image Path"
+                "title": "Illustration Image Path (Fallback String)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "Illustration Image (Sanity Asset Upload)"
               }
             ],
             "type": "object",

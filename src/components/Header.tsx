@@ -911,9 +911,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             colorVariant='ocean'
                             strength={1}
                         >
+                            {/* <button
+                                onClick={() => setIsDemoModalOpen(true)}
+                                className='inline-flex items-center gap-1.5 px-5 py-2.5 font-semibold rounded-lg border border-navy-900 transition-all duration-300 bg-navy-900 text-white cursor-pointer shadow-xs text-sm hover:btn-gradient'
+                            > */}
                             <button
                                 onClick={() => setIsDemoModalOpen(true)}
-                                className='inline-flex items-center gap-1.5 px-5 py-2.5 font-semibold rounded-lg border border-navy-900 transition-all duration-300 bg-navy-900 text-white cursor-pointer shadow-xs text-sm hover:bg-black hover:border-black'
+                                className='inline-flex items-center gap-1.5 px-5 py-2.5 font-semibold rounded-lg border border-navy-900 transition-all duration-300 bg-navy-900 text-white cursor-pointer shadow-xs text-sm hover:btn-gradient '
                             >
                                 {isEn ? 'Request a Demo' : 'Demo aanvragen'}
                             </button>

@@ -53,7 +53,7 @@ export function GlowingButton({
                 } as React.CSSProperties
             }
             className={`
-                relative inline-flex h-11 items-center justify-center overflow-hidden rounded-md border border-r-0 px-6 text-sm font-bold transition-all duration-300 select-none cursor-pointer
+                relative inline-flex h-11 items-center justify-center overflow-hidden rounded-lg border border-r-0 px-6 text-sm font-bold transition-all duration-300 select-none cursor-pointer
                 border-[#ff9400] bg-linear-to-tl text-white
                 from-[#f12711] to-[#f5af19] hover:opacity-95 active:scale-[0.98]
                 ${className}

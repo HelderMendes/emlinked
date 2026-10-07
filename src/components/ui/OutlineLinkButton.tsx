@@ -32,7 +32,7 @@ export function OutlineLinkButton({
         <Link
             href={href}
             className={cn(
-                'inline-flex h-11 items-center gap-1.5 justify-center rounded-lg border bg-transparent px-6 text-sm font-semibold transition-colors',
+                'inline-flex h-11 items-center gap-1.5 justify-center rounded-lg border bg-transparent px-6 text-sm font-semibold transition-colors hover:border-teal hover:text-teal-900',
                 colorClasses[color],
                 className,
             )}
