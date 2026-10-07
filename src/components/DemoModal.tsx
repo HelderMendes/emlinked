@@ -304,24 +304,24 @@ export function DemoModal({
                             damping: 25,
                             stiffness: 350,
                         }}
-                        className='relative w-full max-w-4xl bg-[#FFFDF9] border border-teal/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
+                        className='relative w-full max-w-4xl bg-white border border-navy-900/10 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
                     >
                         {/* Close button */}
                         <button
                             onClick={handleClose}
-                            className='absolute top-4 right-4 h-8 w-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-[#060e32] transition-colors z-20 cursor-pointer shadow-sm'
+                            className='absolute top-4 right-4 h-8 w-8 rounded-full bg-navy-900/5 hover:bg-navy-900/10 flex items-center justify-center text-navy-900 transition-colors z-20 cursor-pointer'
                             aria-label='Sluit modal'
                         >
                             <X className='h-4 w-4' />
                         </button>
 
                         {/* Left Column - Contact Details (Aesthetic Brand Panel) */}
-                        <div className='w-full md:w-[320px] bg-gradient-to-br from-[#060e32] to-[#0c1a52] text-white p-8 flex flex-col justify-between relative overflow-hidden shrink-0'>
-                            <div className='absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,var(--color-primary)/8,transparent_50%)] pointer-events-none' />
+                        <div className='w-full md:w-[320px] bg-navy-900 text-white p-8 flex flex-col justify-between relative overflow-hidden shrink-0'>
+                            <div className='absolute -top-24 -left-24 w-72 h-72 rounded-full bg-teal/10 blur-3xl pointer-events-none' />
 
                             <div className='space-y-8 relative z-10 text-left'>
                                 <div>
-                                    <h3 className='font-display font-extrabold text-2xl tracking-tight text-white uppercase'>
+                                    <h3 className='font-display font-extrabold text-2xl tracking-tight text-white'>
                                         {t.title}
                                     </h3>
                                     <p className='text-xs text-slate-300 mt-2 leading-relaxed'>
@@ -332,7 +332,7 @@ export function DemoModal({
                                 <div className='space-y-6 pt-4 border-t border-white/10'>
                                     {/* Email */}
                                     <div className='flex gap-4 items-start'>
-                                        <div className='h-9 w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#ff9400] shrink-0'>
+                                        <div className='h-9 w-9 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-teal shrink-0'>
                                             <Mail className='h-4.5 w-4.5' />
                                         </div>
                                         <div>
@@ -344,7 +344,7 @@ export function DemoModal({
                                             </p>
                                             <a
                                                 href={`mailto:${emailDisplay}`}
-                                                className='text-xs font-semibold text-[#ff9400] hover:underline mt-1 block'
+                                                className='text-xs font-semibold text-teal hover:text-teal-hover hover:underline mt-1 block'
                                             >
                                                 {emailDisplay}
                                             </a>
@@ -353,7 +353,7 @@ export function DemoModal({
 
                                     {/* Office */}
                                     <div className='flex gap-4 items-start'>
-                                        <div className='h-9 w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#ff9400] shrink-0'>
+                                        <div className='h-9 w-9 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-teal shrink-0'>
                                             <MapPin className='h-4.5 w-4.5' />
                                         </div>
                                         <div>
@@ -371,7 +371,7 @@ export function DemoModal({
 
                                     {/* Phone */}
                                     <div className='flex gap-4 items-start'>
-                                        <div className='h-9 w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#ff9400] shrink-0'>
+                                        <div className='h-9 w-9 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-teal shrink-0'>
                                             <Phone className='h-4.5 w-4.5' />
                                         </div>
                                         <div>
@@ -383,7 +383,7 @@ export function DemoModal({
                                             </p>
                                             <a
                                                 href={`tel:${phoneDisplay.replace(/[^\d+]/g, '')}`}
-                                                className='text-xs font-semibold text-[#ff9400] hover:underline mt-1 block'
+                                                className='text-xs font-semibold text-teal hover:text-teal-hover hover:underline mt-1 block'
                                             >
                                                 {phoneDisplay}
                                             </a>
@@ -402,7 +402,7 @@ export function DemoModal({
                                         }
                                         target='_blank'
                                         rel='noopener noreferrer'
-                                        className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-[#ff9400] transition-colors'
+                                        className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-teal transition-colors'
                                         aria-label='LinkedIn'
                                     >
                                         <BsLinkedin className='h-3.5 w-3.5' />
@@ -414,7 +414,7 @@ export function DemoModal({
                                         }
                                         target='_blank'
                                         rel='noopener noreferrer'
-                                        className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-[#ff9400] transition-colors'
+                                        className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-teal transition-colors'
                                         aria-label='X (Twitter)'
                                     >
                                         <BsTwitterX className='h-3 w-3' />
@@ -434,17 +434,17 @@ export function DemoModal({
                         </div>
 
                         {/* Right Column - Form */}
-                        <div className='flex-1 bg-[#FFFDF9] p-8 flex flex-col justify-center text-left overflow-y-auto max-h-[90vh] md:max-h-none text-[#060e32]'>
+                        <div className='flex-1 bg-white p-8 flex flex-col justify-center text-left overflow-y-auto max-h-[90vh] md:max-h-none text-navy-900'>
                             {status === 'success' ? (
                                 <div className='text-center py-12 max-w-md mx-auto space-y-5 animate-scaleIn'>
                                     <div className='h-14 w-14 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto border border-emerald-500/20'>
                                         <Check className='h-6 w-6' />
                                     </div>
                                     <div className='space-y-2'>
-                                        <h4 className='font-bold text-xl text-[#060e32]'>
+                                        <h4 className='font-display font-bold text-xl text-navy-900'>
                                             {t.successTitle}
                                         </h4>
-                                        <p className='text-xs text-[#060e32]/75 leading-relaxed'>
+                                        <p className='text-xs text-navy-700 leading-relaxed'>
                                             {t.successMessage.replace(
                                                 '{name}',
                                                 `${firstName} ${lastName}`.trim(),
@@ -454,7 +454,7 @@ export function DemoModal({
                                     <div className='pt-4'>
                                         <button
                                             onClick={handleClose}
-                                            className='h-10 px-6 border border-gray-300 hover:bg-gray-100 text-[#060e32] text-xs font-semibold rounded-lg transition-all cursor-pointer'
+                                            className='h-10 px-6 border border-navy-900/15 hover:bg-navy-900/5 text-navy-900 text-xs font-semibold rounded-lg transition-all cursor-pointer'
                                         >
                                             {t.closeBtn}
                                         </button>
@@ -466,10 +466,10 @@ export function DemoModal({
                                     className='space-y-6'
                                 >
                                     <div>
-                                        <h4 className='font-extrabold text-xl text-[#060e32] tracking-tight'>
+                                        <h4 className='font-display font-extrabold text-xl text-navy-900 tracking-tight'>
                                             {t.formTitle}
                                         </h4>
-                                        <p className='text-xs text-[#060e32]/75 mt-1.5 leading-relaxed'>
+                                        <p className='text-xs text-navy-700 mt-1.5 leading-relaxed'>
                                             {t.formSubtitle}
                                         </p>
                                     </div>
@@ -484,7 +484,7 @@ export function DemoModal({
                                     {/* Name Fields */}
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
                                                 {t.firstNameLabel}{' '}
                                                 <span className='text-teal'>
                                                     *
@@ -499,7 +499,7 @@ export function DemoModal({
                                                 placeholder={
                                                     t.placeholderFirstName
                                                 }
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-navy-900/15 bg-white text-xs text-navy-900 placeholder:text-navy-900/40 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                                                 required
                                                 disabled={
                                                     status === 'submitting'
@@ -507,7 +507,7 @@ export function DemoModal({
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
                                                 {t.lastNameLabel}{' '}
                                                 <span className='text-teal'>
                                                     *
@@ -522,7 +522,7 @@ export function DemoModal({
                                                 placeholder={
                                                     t.placeholderLastName
                                                 }
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-navy-900/15 bg-white text-xs text-navy-900 placeholder:text-navy-900/40 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                                                 required
                                                 disabled={
                                                     status === 'submitting'
@@ -534,7 +534,7 @@ export function DemoModal({
                                     {/* Contact Fields */}
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
                                                 {t.emailLabel}{' '}
                                                 <span className='text-teal'>
                                                     *
@@ -547,7 +547,7 @@ export function DemoModal({
                                                     setEmail(e.target.value)
                                                 }
                                                 placeholder={t.placeholderEmail}
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-navy-900/15 bg-white text-xs text-navy-900 placeholder:text-navy-900/40 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                                                 required
                                                 disabled={
                                                     status === 'submitting'
@@ -555,7 +555,7 @@ export function DemoModal({
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
                                                 {t.phoneLabel}{' '}
                                                 <span className='text-teal'>
                                                     *
@@ -568,7 +568,7 @@ export function DemoModal({
                                                     setPhone(e.target.value)
                                                 }
                                                 placeholder={t.placeholderPhone}
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-navy-900/15 bg-white text-xs text-navy-900 placeholder:text-navy-900/40 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                                                 required
                                                 disabled={
                                                     status === 'submitting'
@@ -580,7 +580,7 @@ export function DemoModal({
                                     {/* Company & Portfolio size */}
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
                                                 {t.companyLabel}{' '}
                                                 <span className='text-teal'>
                                                     *
@@ -595,7 +595,7 @@ export function DemoModal({
                                                 placeholder={
                                                     t.placeholderCompany
                                                 }
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-navy-900/15 bg-white text-xs text-navy-900 placeholder:text-navy-900/40 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                                                 required
                                                 disabled={
                                                     status === 'submitting'
@@ -603,7 +603,7 @@ export function DemoModal({
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
                                                 {t.portfolioLabel}
                                             </label>
                                             <select
@@ -613,32 +613,32 @@ export function DemoModal({
                                                         e.target.value,
                                                     )
                                                 }
-                                                className='w-full h-10 px-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
+                                                className='w-full h-10 px-3 rounded-lg border border-navy-900/15 bg-white text-xs text-navy-900 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                                                 disabled={
                                                     status === 'submitting'
                                                 }
                                             >
                                                 <option
                                                     value={t.portfolioOption1}
-                                                    className='bg-white text-[#060e32]'
+                                                    className='bg-white text-navy-900'
                                                 >
                                                     {t.portfolioOption1}
                                                 </option>
                                                 <option
                                                     value={t.portfolioOption2}
-                                                    className='bg-white text-[#060e32]'
+                                                    className='bg-white text-navy-900'
                                                 >
                                                     {t.portfolioOption2}
                                                 </option>
                                                 <option
                                                     value={t.portfolioOption3}
-                                                    className='bg-white text-[#060e32]'
+                                                    className='bg-white text-navy-900'
                                                 >
                                                     {t.portfolioOption3}
                                                 </option>
                                                 <option
                                                     value={t.portfolioOption4}
-                                                    className='bg-white text-[#060e32]'
+                                                    className='bg-white text-navy-900'
                                                 >
                                                     {t.portfolioOption4}
                                                 </option>
@@ -648,7 +648,7 @@ export function DemoModal({
 
                                     {/* Message */}
                                     <div className='flex flex-col gap-1.5'>
-                                        <label className='text-[10px] font-extrabold text-[#060e32] uppercase tracking-wider font-mono'>
+                                        <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
                                             {t.messageLabel}
                                         </label>
                                         <textarea
@@ -658,7 +658,7 @@ export function DemoModal({
                                             }
                                             placeholder={t.placeholderMessage}
                                             rows={3}
-                                            className='w-full p-3 rounded-lg border border-gray-300 bg-white text-xs text-[#060e32] placeholder:text-gray-400 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal shadow-xs'
+                                            className='w-full p-3 rounded-lg border border-navy-900/15 bg-white text-xs text-navy-900 placeholder:text-navy-900/40 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
                                             disabled={status === 'submitting'}
                                         />
                                     </div>
@@ -677,7 +677,7 @@ export function DemoModal({
                                     <button
                                         type='submit'
                                         disabled={status === 'submitting'}
-                                        className='w-full h-10 bg-primary hover:bg-primary/95 text-primary-foreground text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:scale-[1.01] active:scale-[0.99] duration-150'
+                                        className='w-full h-10 bg-navy-900 hover:btn-gradient text-white text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:scale-[1.01] active:scale-[0.99] duration-150'
                                     >
                                         {status === 'submitting' ? (
                                             <>

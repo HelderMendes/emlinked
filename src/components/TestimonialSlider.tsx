@@ -24,37 +24,6 @@ interface TestimonialSliderProps {
     customTestimonials?: any[];
 }
 
-export const defaultTestimonials: TestimonialItem[] = [
-    {
-        id: 'vgbr',
-        quote: 'Emlinked is de schakel tussen de beheerder en het vastgoed. Wij zijn zeer enthousiast over emlinked en raden dit ook zeker aan andere partijen aan.',
-        author: 'Levi Bosboom',
-        role: 'Eigenaar - Vastgoedbeheer Rotterdam (VGBR)',
-        initials: 'LB',
-    },
-    {
-        id: 'van-overhagen',
-        quote: 'Emlinked is een zeer gebruikersvriendelijk en overzichtelijk vastgoedbeheerpakket. We zijn al ruim 5 jaar een tevreden gebruiker.',
-        author: 'Angelique van Doorn-Franke',
-        role: 'Vastgoedbeheerder - Van Overhagen Vastgoed B.V.',
-        initials: 'AD',
-    },
-    {
-        id: 'm2-capital',
-        quote: 'Als commercieel vastgoedbeheerder is emlinked voor ons een grote toegevoegde waarde. Snel, scherp en meedenkend!',
-        author: 'Michel De Waal',
-        role: 'Directeur - M2 Capital Real Estate B.V.',
-        initials: 'MW',
-    },
-    {
-        id: 'baetland',
-        quote: 'Wij hebben gekozen voor emlinked doordat het volledig in de cloud is gebouwd door vastgoed- en Microsoft-specialisten. Geen spijt van onze keuze.',
-        author: 'Sander Bot',
-        role: 'Manager Vastgoedbeheer - Baetland Vastgoed B.V.',
-        initials: 'SB',
-    },
-];
-
 const nameColor = [
     'text-teal-hover',
     'text-emerald-600',
@@ -69,39 +38,27 @@ export function TestimonialSlider({
     subtitle,
     customTestimonials,
 }: TestimonialSliderProps) {
-    const isEn = locale === 'en';
+    const testimonials: TestimonialItem[] = (customTestimonials || []).map(
+        (t, idx) => ({
+            id: t._key || String(idx),
+            quote: t.quote || '',
+            author: t.author || '',
+            role: t.role || '',
+            initials: t.author
+                ? t.author
+                      .split(' ')
+                      .map((n: string) => n[0])
+                      .join('')
+                      .slice(0, 2)
+                      .toUpperCase()
+                : 'EM',
+            avatar: t.avatar,
+        }),
+    );
 
-    const testimonials: TestimonialItem[] =
-        customTestimonials && customTestimonials.length > 0
-            ? customTestimonials.map((t, idx) => ({
-                  id: t._key || String(idx),
-                  quote: t.quote || '',
-                  author: t.author || 'Vastgoedbeheerder',
-                  role: t.role || '',
-                  initials: t.author
-                      ? t.author
-                            .split(' ')
-                            .map((n: string) => n[0])
-                            .join('')
-                            .slice(0, 2)
-                            .toUpperCase()
-                      : 'EM',
-                  avatar: t.avatar,
-              }))
-            : defaultTestimonials;
-
-    const activeTag =
-        tag || (isEn ? 'CLIENT REVIEWS' : 'KLANTEN & REFERENTIES');
-    const activeTitle =
-        title ||
-        (isEn
-            ? 'Trusted by leading real estate managers'
-            : 'Vertrouwd door toonaangevende vastgoedbeheerders');
-    const activeSubtitle =
-        subtitle ||
-        (isEn
-            ? 'Discover how professional property managers and controllers automate operations daily with Emlinked.'
-            : 'Ontdek hoe professionele beheerders en controllers dagelijks tijd besparen en geautomatiseerd werken met Emlinked.');
+    const activeTag = tag || '';
+    const activeTitle = title || '';
+    const activeSubtitle = subtitle || '';
 
     const getPath = (path: string) => {
         if (locale === 'nl') return path;
@@ -118,7 +75,8 @@ export function TestimonialSlider({
                             {activeTag}
                         </Badge>
                     </div>
-                    <h2 className='font-display font-bold text-2xl md:text-4xl bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent tracking-tight'>
+                    {/* <h2 className='font-display font-bold text-2xl md:text-4xl bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent tracking-tight'> */}
+                    <h2 className='font-display font-bold text-2xl md:text-4xl text-navy-900 tracking-tight'>
                         {activeTitle}
                     </h2>
                     <p className='text-sm md:text-base text-[#060e32]/75 leading-relaxed font-light'>

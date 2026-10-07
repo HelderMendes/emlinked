@@ -26,6 +26,10 @@ export interface HeroSectionProps {
     locale?: string;
     titleClassName?: string;
     customGraphic?: React.ReactNode;
+    /** Centered single-column layout (copy above, smaller image below)
+     *  instead of the default left-copy/right-image split. Opt-in per
+     *  page — most heroes keep the default split. */
+    centered?: boolean;
 }
 
 export function formatHeroTitle(
@@ -65,11 +69,11 @@ export function formatHeroTitle(
  * the specific dashboard illustration used there, not real per-page data).
  */
 export function HeroSection({
-    label = 'DE STANDAARD VOOR MODERN VASTGOEDBEHEER',
+    label,
     title,
     subtitle,
-    ctaLabel = 'Gratis demo aanvragen',
-    ctaLink = '/contact',
+    ctaLabel,
+    ctaLink,
     secondaryCtaLabel,
     secondaryCtaLink,
     showProof = true,
@@ -81,15 +85,11 @@ export function HeroSection({
     locale = 'nl',
     titleClassName,
     customGraphic,
+    centered = false,
 }: HeroSectionProps) {
     const isEn = locale === 'en';
     const effectiveHeroImg = getImageUrl(image, imagePath);
-    const effectiveProofText =
-        proofText !== undefined
-            ? proofText
-            : isEn
-              ? 'Trusted by professional real estate managers & controllers'
-              : 'Vertrouwd door professionele vastgoedbeheerders en controllers';
+    const effectiveProofText = proofText || '';
 
     const getPath = (path: string) => {
         if (!path) return isEn ? '/en' : '/';
@@ -103,10 +103,22 @@ export function HeroSection({
 
     return (
         <section className='relative bg-stone-bg text-navy-900 overflow-hidden'>
-            <div className='w-full px-4 sm:px-6 lg:px-12 xl:px-24 py-14 lg:py-24'>
-                <div className='grid grid-cols-1 lg:grid-cols-[0.91fr_1.09fr] gap-12 lg:gap-10 items-center'>
-                    {/* Left: copy */}
-                    <div className='flex flex-col text-center lg:text-left items-center lg:items-start'>
+            <div className='w-full px-4 sm:px-6 lg:px-12 xl:px-24 py-14 lg:pt-24 lg:pb-12'>
+                <div
+                    className={cn(
+                        'grid grid-cols-1 gap-12 lg:gap-10 items-center',
+                        centered
+                            ? 'justify-items-center'
+                            : 'lg:grid-cols-[0.91fr_1.09fr]',
+                    )}
+                >
+                    {/* Left: copy (centered: just "copy", full width, no lg left-align) */}
+                    <div
+                        className={cn(
+                            'flex flex-col items-center text-center',
+                            !centered && 'lg:text-left lg:items-start',
+                        )}
+                    >
                         {label && (
                             <Badge color='navy' dot className='mb-6'>
                                 {label}
@@ -128,7 +140,12 @@ export function HeroSection({
                         )}
 
                         {(ctaLabel || secondaryCtaLabel) && (
-                            <div className='flex flex-wrap gap-3 mt-8 justify-center lg:justify-start'>
+                            <div
+                                className={cn(
+                                    'flex flex-wrap gap-3 mt-8 justify-center',
+                                    !centered && 'lg:justify-start',
+                                )}
+                            >
                                 {ctaLabel && ctaLink && (
                                     <Link
                                         href={getPath(ctaLink)}
@@ -186,8 +203,15 @@ export function HeroSection({
                         )}
                     </div>
 
-                    {/* Right: hero art — decorative orbs + framed illustration */}
-                    <div className='relative min-h-[340px] lg:min-h-140 flex items-center justify-center'>
+                    {/* Right: hero art — decorative orbs + framed illustration.
+                        Centered variant shrinks this to 2/3 width, stacked
+                        below the copy instead of sitting beside it. */}
+                    <div
+                        className={cn(
+                            'relative min-h-[340px] lg:min-h-140 flex items-center justify-center',
+                            centered && 'w-full lg:w-2/3',
+                        )}
+                    >
                         <div className='absolute w-140 h-140 rounded-full bg-teal-pale/50 blur-3xl -right-10 top-0 pointer-events-none' />
                         <div className='absolute w-28 h-28 rounded-full bg-teal-ultra blur-2xl left-4 bottom-4 pointer-events-none' />
 

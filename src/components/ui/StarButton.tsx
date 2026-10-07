@@ -76,7 +76,7 @@ export function StarButton({
             }
             ref={buttonRef}
             className={`
-                group/star-button relative z-[3] inline-flex h-10 items-center justify-center gap-2 overflow-hidden rounded-md px-6 py-2 text-xs font-bold whitespace-nowrap transition-all select-none cursor-pointer
+                group/star-button relative z-3 inline-flex h-10 items-center justify-center gap-2 overflow-hidden rounded-md px-6 py-2 text-xs font-bold whitespace-nowrap transition-all select-none cursor-pointer
                 bg-white border border-neutral-200 dark:border-white/10 dark:bg-[#060e32] hover:opacity-90 active:scale-[0.98] shadow-sm
                 ${className}
             `}
@@ -102,7 +102,7 @@ export function StarButton({
                 <StarBackground />
             </div>
             {/* Button Text */}
-            <span className='relative z-10 inline-block bg-gradient-to-t from-neutral-950 to-neutral-600 dark:from-white dark:to-neutral-400 bg-clip-text text-transparent transition-all'>
+            <span className='relative z-10 inline-block bg-linear-to-t from-neutral-950 to-neutral-600 dark:from-white dark:to-neutral-400 bg-clip-text text-transparent transition-all'>
                 {children}
             </span>
         </button>
@@ -155,7 +155,7 @@ export function StarLink({
             }
             ref={linkRef}
             className={`
-                group/star-button relative z-[3] inline-flex h-11 items-center justify-center gap-2 overflow-hidden rounded-md px-6 py-2 text-xs font-bold whitespace-nowrap transition-all select-none cursor-pointer
+                group/star-button relative z-3 inline-flex h-11 items-center justify-center gap-2 overflow-hidden rounded-md px-6 py-2 text-xs font-bold whitespace-nowrap transition-all select-none cursor-pointer
                 bg-white border border-neutral-200 dark:border-white/10 dark:bg-[#060e32] hover:scale-[1.02] active:scale-[0.98] shadow-sm
                 ${className}
             `}
@@ -174,14 +174,14 @@ export function StarLink({
             />
             {/* Starry Backdrop Overlay */}
             <div
-                className='absolute inset-0 z-[4] overflow-hidden rounded-[inherit] pointer-events-none'
+                className='absolute inset-0 z-4 overflow-hidden rounded-[inherit] pointer-events-none'
                 style={{ borderWidth: 'var(--border-width)' }}
                 aria-hidden='true'
             >
                 <StarBackground />
             </div>
             {/* Button Text */}
-            <span className='relative z-10 inline-block bg-gradient-to-t from-neutral-950 to-neutral-600 dark:from-white dark:to-neutral-400 bg-clip-text text-transparent transition-all'>
+            <span className='relative z-10 inline-block bg-linear-to-t from-neutral-950 to-neutral-600 dark:from-white dark:to-neutral-400 bg-clip-text text-transparent transition-all'>
                 {children}
             </span>
         </Link>

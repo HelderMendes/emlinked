@@ -1,29 +1,12 @@
 import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { GlowingLink } from '@/components/ui/GlowingButton';
 import { client } from '@/sanity/client';
-import { getImageUrl } from '@/sanity/image';
 import { HugeiconsIcon } from '@hugeicons/react';
 import {
     AiSecurity01Icon,
     CheckmarkBadge03Icon,
     StarAward01Icon,
 } from '@hugeicons/core-free-icons';
-import {
-    AlertCircle,
-    Info,
-    FileText,
-    Cpu,
-    Database,
-    CheckCircle2,
-    CreditCard,
-    RefreshCw,
-    Zap,
-    ArrowDownRight,
-    ArrowRight,
-    Layers,
-} from 'lucide-react';
+import { AlertCircle, Info } from 'lucide-react';
 import { Metadata } from 'next';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
 

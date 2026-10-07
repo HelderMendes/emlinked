@@ -11,7 +11,7 @@ import {
     CheckCircle2,
     XCircle,
 } from 'lucide-react';
-import { GlowingLink } from '@/components/ui/GlowingButton';
+import Link from 'next/link';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { formatHeroTitle } from '@/components/blocks/HeroSection';
 import { BorderBeam } from 'border-beam';
@@ -406,13 +406,13 @@ export function VastgoedbeheerSoftwareModule({
 
                             {/* Primary & Secondary Action Buttons */}
                             <div className='flex flex-col sm:flex-row gap-4 mt-2'>
-                                <GlowingLink
+                                <Link
                                     href={
                                         heroBlock?.primaryCtaUrl ||
                                         heroBlock?.ctaLink ||
                                         '#demo'
                                     }
-                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
+                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
                                 >
                                     <span className='flex items-center justify-center gap-2 text-white'>
                                         <span>
@@ -424,7 +424,7 @@ export function VastgoedbeheerSoftwareModule({
                                         </span>
                                         <ArrowRight className='w-5 h-5 text-white' />
                                     </span>
-                                </GlowingLink>
+                                </Link>
 
                                 <OutlineLinkButton
                                     href={
@@ -534,17 +534,17 @@ export function VastgoedbeheerSoftwareModule({
             </section>
 
             {/* Trust Signals (Single Full-Width Line) */}
-            <section className='bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] animate-none dark:text-[#060e32] dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-2 px-6 md:px-10 shadow-sm'>
+            <section className='bg-background animate-none border-b border-gray-200 py-2 px-6 md:px-10 shadow-sm'>
                 <div className='max-w-7xl mx-auto flex items-center justify-center gap-9 flex-wrap'>
-                    <div className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-teal dark:hover:text-teal transition-colors tracking-wide'>
+                    <div className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 hover:text-teal transition-colors tracking-wide'>
                         <CheckCircle2 className='w-4 h-4 shrink-0' />
                         <span>Portefeuilles &gt; 50 verhuureenheden</span>
                     </div>
-                    <div className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-teal dark:hover:text-teal transition-colors tracking-wide'>
+                    <div className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 hover:text-teal transition-colors tracking-wide'>
                         <CheckCircle2 className='w-4 h-4 shrink-0' />
                         <span>100% Business Central Native</span>
                     </div>
-                    <div className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-teal dark:hover:text-teal transition-colors tracking-wide'>
+                    <div className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 hover:text-teal transition-colors tracking-wide'>
                         <CheckCircle2 className='w-4 h-4 shrink-0' />
                         <span>Geen schaduwbestanden</span>
                     </div>
@@ -556,7 +556,7 @@ export function VastgoedbeheerSoftwareModule({
     const renderComparison = (block: any, key: any) => (
         <section
             key={key}
-            className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/10 relative z-10'
+            className='px-6 py-20 bg-background text-navy-900 border-b border-teal/10 relative z-10'
         >
             <div className='max-w-7xl mx-auto space-y-16'>
                 {/* Header */}
@@ -572,14 +572,14 @@ export function VastgoedbeheerSoftwareModule({
                         </Badge>
                     </div>
 
-                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-[#060e32]'>
+                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-navy-900'>
                         {comparisonBlock?.title ||
                             (isEn
                                 ? 'Why traditional real estate management software falls short'
                                 : 'Waarom traditionele vastgoed administratie software tekortschiet')}
                     </h2>
 
-                    <p className='text-[#060e32]/75 text-base md:text-lg leading-relaxed font-light'>
+                    <p className='text-navy-900/75 text-base md:text-lg leading-relaxed font-light'>
                         {comparisonBlock?.desc ||
                             (isEn
                                 ? 'Many property managers waste precious hours weekly manually syncing property data with accounting ledgers. Emlinked bridges the gap between daily operations and your GL.'
@@ -606,7 +606,7 @@ export function VastgoedbeheerSoftwareModule({
                                 </h3>
                             </div>
 
-                            <ul className='space-y-4 text-sm text-[#060e32]/80'>
+                            <ul className='space-y-4 text-sm text-navy-900/80'>
                                 {comparisonBlock?.leftItems &&
                                 comparisonBlock.leftItems.length > 0 ? (
                                     comparisonBlock.leftItems.map(
@@ -617,7 +617,7 @@ export function VastgoedbeheerSoftwareModule({
                                             >
                                                 <XCircle className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                                                 <div className='space-y-0.5'>
-                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                    <strong className='text-navy-900 block font-semibold text-sm'>
                                                         {item.title}
                                                     </strong>
                                                     <span className='text-slate-600 text-xs leading-relaxed block'>
@@ -632,7 +632,7 @@ export function VastgoedbeheerSoftwareModule({
                                         <li className='flex items-start gap-3'>
                                             <XCircle className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                                             <div className='space-y-0.5'>
-                                                <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                <strong className='text-navy-900 block font-semibold text-sm'>
                                                     {isEn
                                                         ? 'Manual Excel indexation imports'
                                                         : 'Handmatige Excel-imports voor indexaties'}
@@ -647,7 +647,7 @@ export function VastgoedbeheerSoftwareModule({
                                         <li className='flex items-start gap-3'>
                                             <XCircle className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                                             <div className='space-y-0.5'>
-                                                <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                <strong className='text-navy-900 block font-semibold text-sm'>
                                                     {isEn
                                                         ? 'API sync errors between tools and ERP'
                                                         : 'API-fouten tussen losse tools en ERP'}
@@ -662,7 +662,7 @@ export function VastgoedbeheerSoftwareModule({
                                         <li className='flex items-start gap-3'>
                                             <XCircle className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                                             <div className='space-y-0.5'>
-                                                <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                <strong className='text-navy-900 block font-semibold text-sm'>
                                                     {isEn
                                                         ? 'Delayed financial reporting'
                                                         : 'Vertraagde financiële rapportages'}
@@ -698,7 +698,7 @@ export function VastgoedbeheerSoftwareModule({
                                 </h3>
                             </div>
 
-                            <ul className='space-y-4 text-sm text-[#060e32]'>
+                            <ul className='space-y-4 text-sm text-navy-900'>
                                 {comparisonBlock?.rightItems &&
                                 comparisonBlock.rightItems.length > 0 ? (
                                     comparisonBlock.rightItems.map(
@@ -709,7 +709,7 @@ export function VastgoedbeheerSoftwareModule({
                                             >
                                                 <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                                                 <div className='space-y-0.5'>
-                                                    <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                    <strong className='text-navy-900 block font-semibold text-sm'>
                                                         {item.title}
                                                     </strong>
                                                     <span className='text-slate-600 text-xs leading-relaxed block'>
@@ -724,7 +724,7 @@ export function VastgoedbeheerSoftwareModule({
                                         <li className='flex items-start gap-3'>
                                             <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                                             <div className='space-y-0.5'>
-                                                <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                <strong className='text-navy-900 block font-semibold text-sm'>
                                                     {isEn
                                                         ? 'Automated CPI indexations & rent invoicing'
                                                         : 'Automatische CPI-indexatie & huurprolongatie'}
@@ -739,7 +739,7 @@ export function VastgoedbeheerSoftwareModule({
                                         <li className='flex items-start gap-3'>
                                             <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                                             <div className='space-y-0.5'>
-                                                <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                <strong className='text-navy-900 block font-semibold text-sm'>
                                                     {isEn
                                                         ? '100% Native Business Central processing'
                                                         : '100% native verwerking in Business Central'}
@@ -754,7 +754,7 @@ export function VastgoedbeheerSoftwareModule({
                                         <li className='flex items-start gap-3'>
                                             <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                                             <div className='space-y-0.5'>
-                                                <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                <strong className='text-navy-900 block font-semibold text-sm'>
                                                     {isEn
                                                         ? 'Real-time portfolio visibility'
                                                         : 'Realtime inzicht in je totale portefeuille'}
@@ -779,7 +779,7 @@ export function VastgoedbeheerSoftwareModule({
     const renderFeatureTabs = (block: any, key: any) => (
         <section
             key={key}
-            className='py-20 px-6 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/10 relative overflow-hidden'
+            className='py-20 px-6 bg-background text-navy-900 border-b border-teal/10 relative overflow-hidden'
         >
             <div className='max-w-7xl mx-auto space-y-8 relative z-10'>
                 {/* Header */}
@@ -788,7 +788,7 @@ export function VastgoedbeheerSoftwareModule({
                         {featureTabsBlock?.badge ||
                             (isEn ? 'FUNCTIONALITIES' : 'FUNCTIONALITEITEN')}
                     </Badge>
-                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-[#060e32]'>
+                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-navy-900'>
                         {featureTabsBlock?.title ||
                             (isEn ? (
                                 <>
@@ -806,7 +806,7 @@ export function VastgoedbeheerSoftwareModule({
                                 </>
                             ))}
                     </h2>
-                    <p className='text-[#060e32]/75 text-base md:text-lg font-light'>
+                    <p className='text-navy-900/75 text-base md:text-lg font-light'>
                         {isEn
                             ? 'Built to effortlessly streamline complex lease structures, retail-chain floor areas, and housing corporation settlements.'
                             : 'Ontwikkeld om ingewikkelde contractvormen, retailketen-metrages en corporatie-afrekeningen moeiteloos te stroomlijnen.'}
@@ -824,7 +824,7 @@ export function VastgoedbeheerSoftwareModule({
                                 className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
                                     activeTab === tab.tabId
                                         ? 'border-teal text-teal bg-teal/15 rounded-t-lg'
-                                        : 'border-transparent text-[#060e32]/60 hover:text-[#060e32]'
+                                        : 'border-transparent text-navy-900/60 hover:text-navy-900'
                                 }`}
                             >
                                 <TabIcon className='w-4 h-4' />
@@ -841,13 +841,13 @@ export function VastgoedbeheerSoftwareModule({
                             activeTab === tab.tabId && (
                                 <React.Fragment key={tab.tabId}>
                                     <div className='lg:col-span-6 space-y-6'>
-                                        <h3 className='text-2xl sm:text-3xl font-bold text-[#060e32]'>
+                                        <h3 className='text-2xl sm:text-3xl font-bold text-navy-900'>
                                             {tab.title}
                                         </h3>
-                                        <p className='text-[#060e32]/80 leading-relaxed text-base font-light'>
+                                        <p className='text-navy-900/80 leading-relaxed text-base font-light'>
                                             {tab.text}
                                         </p>
-                                        <ul className='space-y-2.5 text-sm text-[#060e32]/85'>
+                                        <ul className='space-y-2.5 text-sm text-navy-900/85'>
                                             {tab.bullets.map(
                                                 (
                                                     bullet: string,
@@ -896,7 +896,7 @@ export function VastgoedbeheerSoftwareModule({
     const renderArchitecture = (block: any, key: any) => (
         <section
             key={key}
-            className='px-6 py-20 md:py-24 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/10 relative z-10 overflow-hidden'
+            className='px-6 py-20 md:py-24 bg-background text-navy-900 border-b border-teal/10 relative z-10 overflow-hidden'
         >
             <div className='max-w-7xl mx-auto relative z-10'>
                 <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
@@ -906,11 +906,11 @@ export function VastgoedbeheerSoftwareModule({
                             {archTag}
                         </Badge>
 
-                        <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#060e32] leading-tight'>
+                        <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight'>
                             {archTitle}
                         </h2>
 
-                        <p className='text-[#060e32]/75 text-base md:text-lg font-light leading-relaxed'>
+                        <p className='text-navy-900/75 text-base md:text-lg font-light leading-relaxed'>
                             {archDesc}
                         </p>
 
@@ -923,9 +923,9 @@ export function VastgoedbeheerSoftwareModule({
                                     <div className='w-6 h-6 rounded-full border border-teal/40 bg-teal/15 flex items-center justify-center shrink-0 mt-0.5 shadow-xs'>
                                         <Check className='w-3.5 h-3.5 text-teal' />
                                     </div>
-                                    <div className='text-sm md:text-base text-[#060e32]/85 leading-relaxed'>
+                                    <div className='text-sm md:text-base text-navy-900/85 leading-relaxed'>
                                         {bullet.bold && (
-                                            <strong className='text-[#060e32] font-semibold mr-1'>
+                                            <strong className='text-navy-900 font-semibold mr-1'>
                                                 {bullet.bold}
                                             </strong>
                                         )}
@@ -957,7 +957,7 @@ export function VastgoedbeheerSoftwareModule({
     const renderCta = (block: any, key: any) => (
         <section
             key={key}
-            className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'
+            className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-background relative z-10'
         >
             <div className='mx-auto max-w-8xl px-0'>
                 <div className='border border-teal/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
@@ -990,9 +990,9 @@ export function VastgoedbeheerSoftwareModule({
 
                             {/* Primary & Secondary Action Buttons */}
                             <div className='flex flex-col sm:flex-row gap-4 pt-2'>
-                                <GlowingLink
+                                <Link
                                     href='#demo'
-                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98]'
+                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
                                 >
                                     <span className='flex items-center justify-center gap-2 text-white'>
                                         <span>
@@ -1004,7 +1004,7 @@ export function VastgoedbeheerSoftwareModule({
                                         </span>
                                         <ArrowRight className='h-5 w-5 text-white' />
                                     </span>
-                                </GlowingLink>
+                                </Link>
 
                                 <OutlineLinkButton
                                     href={isEn ? '/en/apps' : '/apps'}

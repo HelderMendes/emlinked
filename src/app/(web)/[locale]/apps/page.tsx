@@ -12,6 +12,7 @@ import { HeroSection } from '@/components/blocks/HeroSection';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
 import { TestimonialSlider } from '@/components/TestimonialSlider';
 import { getImageUrl } from '@/sanity/image';
+import { cn } from '@/lib/utils';
 
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { Badge } from '@/components/ui/Badge';
@@ -116,11 +117,20 @@ export default async function AppsPage({ params }: AppsPageProps) {
         '/emlinked/apps/payment_engine_negatief.png',
     ];
 
+    // Same pastel-wash / accent-color rotation as the homepage's
+    // "Drie apps, één workflow" cards.
+    const cardWash = ['bg-teal-pale/50', 'bg-emerald-50', 'bg-navy-50'];
+    const iconColor = [
+        'text-teal bg-white',
+        'text-emerald-600 bg-white',
+        'text-navy-700 bg-white',
+    ];
+
     // Checkmark colors per app module
     const checkmarkColors = [
         'text-teal',
-        'text-cyan-500 dark:text-cyan-400',
-        'text-emerald-500 dark:text-emerald-400',
+        'text-emerald-600',
+        'text-navy-700',
     ];
 
     const rawFeatures = featuresBlock?.features || [];
@@ -170,7 +180,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                         ) || '/emlinked/apps/hero-apps.jpg'
                     }
                     customGraphic={
-                        <div className='relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 dark:border-teal/20 group'>
+                        <>
                             <Image
                                 src={
                                     getImageUrl(
@@ -182,73 +192,74 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                     blk.title ||
                                     'emlinked Modular Apps Platform'
                                 }
-                                width={600}
-                                height={400}
-                                className='w-full h-auto object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700'
+                                fill
+                                sizes='(max-width: 1024px) 100vw, 55vw'
+                                className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
                                 priority
                             />
-                            <div className='absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/20 to-transparent p-4 sm:p-5 flex flex-col justify-between pointer-events-none'>
-                                <div className='flex justify-end items-end'>
-                                    <span className='px-3 py-1 rounded-full bg-slate-900/90 border border-teal/40 text-teal font-mono text-[11px] font-bold shadow-md backdrop-blur-md flex items-center gap-2.5'>
-                                        Microsoft Business Central Core Hub
-                                        <span className='h-2 w-2 rounded-full bg-emerald-400 animate-none' />
-                                    </span>
-                                </div>
-                                <div className='grid grid-cols-3 gap-2 sm:gap-3 pt-1'>
-                                    <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-teal/40 text-center backdrop-blur-md shadow-xl hover:border-teal transition-colors flex flex-col items-center justify-center'>
-                                        <div className='relative w-6 h-6 my-1 '>
-                                            <Image
-                                                src='/emlinked/apps/vastgoedbeheer.png'
-                                                alt='Vastgoedbeheer'
-                                                fill
-                                                sizes='24px'
-                                                className='object-contain'
-                                            />
-                                        </div>
-                                        <span className='text-[10px] sm:text-[11px] font-bold text-white block leading-tight truncate'>
-                                            Vastgoedbeheer
-                                        </span>
-                                        <span className='text-[8px] sm:text-[9px] text-teal font-mono block uppercase tracking-wider font-semibold'>
-                                            01 • Core Engine
-                                        </span>
-                                    </div>
-                                    <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-teal/40 text-center backdrop-blur-md shadow-xl hover:border-cyan-400 transition-colors flex flex-col items-center justify-center'>
-                                        <div className='relative w-6 h-6 my-1 '>
-                                            <Image
-                                                src='/emlinked/apps/huurdersportaal.png'
-                                                alt='Huurdersportaal'
-                                                fill
-                                                sizes='24px'
-                                                className='object-contain'
-                                            />
-                                        </div>
-                                        <span className='text-[10px] sm:text-[11px] font-bold text-white block leading-tight truncate'>
-                                            Huurdersportaal
-                                        </span>
-                                        <span className='text-[8px] sm:text-[9px] text-cyan-400 font-mono block uppercase tracking-wider font-semibold'>
-                                            02 • Self-Service
-                                        </span>
-                                    </div>
-                                    <div className='p-1 sm:p-2 rounded-xl bg-slate-900/85 border border-teal/40 text-center backdrop-blur-md shadow-xl hover:border-emerald-400 transition-colors flex flex-col items-center justify-center'>
-                                        <div className='relative w-6 h-6 my-1 '>
-                                            <Image
-                                                src='/emlinked/apps/payment_engine.png'
-                                                alt='Payment Engine'
-                                                fill
-                                                sizes='24px'
-                                                className='object-contain'
-                                            />
-                                        </div>
-                                        <span className='text-[10px] sm:text-[11px] font-bold text-white block leading-tight truncate'>
-                                            Payment Engine
-                                        </span>
-                                        <span className='text-[8px] sm:text-[9px] text-emerald-400 font-mono block uppercase tracking-wider font-semibold'>
-                                            03 • Automated SEPA
-                                        </span>
-                                    </div>
+
+                            {/* Floating module chips — same recipe as the
+                                homepage hero's stat chips. */}
+                            <div className='absolute z-20 left-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
+                                <span className='w-7 h-7 rounded-lg bg-teal-pale flex items-center justify-center shrink-0 relative'>
+                                    <Image
+                                        src='/emlinked/apps/vastgoedbeheer.png'
+                                        alt='Vastgoedbeheer'
+                                        fill
+                                        sizes='20px'
+                                        className='object-contain p-1'
+                                    />
+                                </span>
+                                <div>
+                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
+                                        Vastgoedbeheer
+                                    </p>
+                                    <p className='text-[9px] text-navy-500 mt-1'>
+                                        01 · Core Engine
+                                    </p>
                                 </div>
                             </div>
-                        </div>
+
+                            <div className='absolute z-20 right-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
+                                <span className='w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0 relative'>
+                                    <Image
+                                        src='/emlinked/apps/huurdersportaal.png'
+                                        alt='Huurdersportaal'
+                                        fill
+                                        sizes='20px'
+                                        className='object-contain p-1'
+                                    />
+                                </span>
+                                <div>
+                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
+                                        Huurdersportaal
+                                    </p>
+                                    <p className='text-[9px] text-navy-500 mt-1'>
+                                        02 · Self-Service
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className='absolute z-20 right-0 bottom-8 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
+                                <span className='w-7 h-7 rounded-lg bg-navy-50 flex items-center justify-center shrink-0 relative'>
+                                    <Image
+                                        src='/emlinked/apps/payment_engine.png'
+                                        alt='Payment Engine'
+                                        fill
+                                        sizes='20px'
+                                        className='object-contain p-1'
+                                    />
+                                </span>
+                                <div>
+                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
+                                        Payment Engine
+                                    </p>
+                                    <p className='text-[9px] text-navy-500 mt-1'>
+                                        03 · Automated SEPA
+                                    </p>
+                                </div>
+                            </div>
+                        </>
                     }
                     isHomepage={false}
                     locale={locale}
@@ -263,7 +274,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
         return (
             <section
                 key={key}
-                className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] dark:bg-navy-dark border-b border-teal/10 relative z-10'
+                className='px-6 py-24 bg-background relative z-10'
             >
                 <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8'>
                     {/* Section Header */}
@@ -278,14 +289,14 @@ export default async function AppsPage({ params }: AppsPageProps) {
                         )}
                         {(featuresBlock.sectionTitle ||
                             featuresBlock.title) && (
-                            <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.7rem]/12 tracking-tight text-[#060e32] dark:text-white'>
+                            <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.7rem]/12 tracking-tight text-navy-900'>
                                 {featuresBlock.sectionTitle ||
                                     featuresBlock.title}
                             </h2>
                         )}
                         {(featuresBlock.sectionSubtitle ||
                             featuresBlock.subtitle) && (
-                            <p className='text-sm sm:text-base text-[#060e32]/75 dark:text-slate-300 leading-relaxed font-light'>
+                            <p className='text-sm sm:text-base text-navy-900/75 leading-relaxed font-light'>
                                 {featuresBlock.sectionSubtitle ||
                                     featuresBlock.subtitle}
                             </p>
@@ -316,17 +327,9 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                           : '/apps/payment-software');
                                 const ctaLabel =
                                     feature.ctaLabel ||
-                                    (isEn
-                                        ? 'Ontdek Module ➔'
-                                        : 'Ontdek Module ➔');
+                                    (isEn ? 'Discover module' : 'Ontdek module');
                                 const bullets = feature.bullets || [];
-                                const badge =
-                                    feature.badge ||
-                                    (index === 0
-                                        ? 'Core Operatie & Admin'
-                                        : index === 1
-                                          ? 'Self-Service & Communicatie'
-                                          : 'Financiële Automatisering');
+                                const badge = feature.badge || '';
                                 const checkColor =
                                     checkmarkColors[index] ||
                                     checkmarkColors[0];
@@ -340,24 +343,11 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                 return (
                                     <div
                                         key={feature._key || index}
-                                        className='relative p-6 rounded-2xl border border-black/20 bg-white dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:border-teal/50 space-y-5 flex flex-col justify-between transition-all duration-300 group'
+                                        className={cn(
+                                            'rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group relative',
+                                            cardWash[index % cardWash.length],
+                                        )}
                                     >
-                                        {/* Floating PNG Icon Badge on top-right corner (Enlarged) */}
-                                        <div className='absolute -top-6 -right-6 sm:-top-7 sm:-right-7 z-30 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200/95 dark:bg-slate-800 border-2 sm:border-3 border-teal shadow-2xl flex items-center justify-center p-2 group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
-                                            <div className='relative w-10 h-10 sm:w-13 sm:h-13'>
-                                                <Image
-                                                    src={cardIcon}
-                                                    alt={
-                                                        feature.title ||
-                                                        'App Module'
-                                                    }
-                                                    fill
-                                                    sizes='52px'
-                                                    className='object-contain'
-                                                />
-                                            </div>
-                                        </div>
-
                                         {/* Whole-card overlay link for optimal UX */}
                                         <Link
                                             href={getPath(appUrl)}
@@ -367,46 +357,46 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                             }
                                         />
 
-                                        <div className='space-y-5'>
-                                            {/* 1. TOP IMAGE PREVIEW CONTAINER WITH TOP-LEFT OVERLAY CATEGORY BADGE */}
-                                            {imagePath && (
-                                                <div className='relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-slate-950 border border-gray-200 dark:border-white/10 group-hover:border-teal/30 transition-colors'>
-                                                    <Image
-                                                        src={imagePath}
-                                                        alt={
-                                                            feature.title ||
-                                                            'Module Preview'
-                                                        }
-                                                        fill
-                                                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                                                        priority={index === 0}
-                                                        className='object-cover opacity-95 group-hover:scale-105 transition-transform duration-500'
-                                                    />
-
-                                                    {/* Category Badge Pill Overlay inside Top-Left of Image */}
-                                                    {badge && (
-                                                        <div className='absolute top-3 left-3 z-20 pointer-events-none'>
-                                                            <span className='px-3 py-1 text-[11px] font-bold rounded-full bg-slate-900/90 border border-teal/30 text-teal shadow-lg backdrop-blur-md tracking-wide'>
-                                                                {badge}
-                                                            </span>
-                                                        </div>
-                                                    )}
-                                                </div>
+                                        <div
+                                            className={cn(
+                                                'absolute top-4 right-4 z-30 w-11 h-11 rounded-md shadow-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 pointer-events-none',
+                                                iconColor[
+                                                    index % iconColor.length
+                                                ],
                                             )}
-
-                                            {/* 2. TITLE & DESCRIPTION */}
-                                            <div className='space-y-2 pt-1'>
-                                                <h3 className='text-2xl font-bold font-display text-[#060e32] dark:text-white group-hover:text-teal transition-colors'>
-                                                    {feature.title}
-                                                </h3>
-                                                <p className='text-sm text-[#060e32]/75 dark:text-slate-300 leading-relaxed font-light'>
-                                                    {feature.description}
-                                                </p>
+                                        >
+                                            <div className='relative w-6 h-6'>
+                                                <Image
+                                                    src={cardIcon}
+                                                    alt={
+                                                        feature.title ||
+                                                        'App Module'
+                                                    }
+                                                    fill
+                                                    sizes='24px'
+                                                    className='object-contain'
+                                                />
                                             </div>
+                                        </div>
 
-                                            {/* 3. PRODUCT FEATURE BULLETS */}
+                                        <div className='flex flex-col gap-4 p-6 md:p-8 pb-4 z-10 pointer-events-none'>
+                                            <h3
+                                                className={cn(
+                                                    'text-xl font-bold font-display transition-colors pr-12 group-hover:bg-linear-to-br group-hover:from-[#f12711] group-hover:to-[#f5af19] group-hover:bg-clip-text group-hover:text-transparent',
+                                                    checkmarkColors[
+                                                        index %
+                                                            checkmarkColors.length
+                                                    ],
+                                                )}
+                                            >
+                                                {feature.title}
+                                            </h3>
+                                            <p className='text-sm text-navy-600 leading-relaxed font-light'>
+                                                {feature.description}
+                                            </p>
+
                                             {bullets.length > 0 && (
-                                                <ul className='space-y-2 pt-1'>
+                                                <ul className='flex flex-col gap-2'>
                                                     {bullets.map(
                                                         (
                                                             feat: string,
@@ -414,10 +404,13 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                         ) => (
                                                             <li
                                                                 key={fIdx}
-                                                                className='flex items-start gap-2.5 text-xs text-[#060e32]/85 dark:text-slate-200 font-medium'
+                                                                className='flex items-start gap-2.5 text-xs text-navy-700 font-medium'
                                                             >
                                                                 <CheckCircle2
-                                                                    className={`h-4 w-4 shrink-0 mt-0.5 ${checkColor}`}
+                                                                    className={cn(
+                                                                        'h-4 w-4 shrink-0 mt-0.5',
+                                                                        checkColor,
+                                                                    )}
                                                                 />
                                                                 <span className='leading-snug'>
                                                                     {feat}
@@ -429,22 +422,50 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                             )}
                                         </div>
 
-                                        {/* 4. SINGLE-LINE CARD FOOTER MATCHING FRONTPAGE & IMAGE */}
-                                        <div className='pt-3 border-t border-black/15 dark:border-white/10 flex items-center justify-between gap-4 z-30 mt-auto pointer-events-none'>
-                                            <div className='flex items-center gap-2 text-xs font-semibold text-[#060e32]/85 dark:text-slate-200 truncate'>
-                                                <CheckCircle2 className='w-4 h-4 text-teal shrink-0' />
-                                                <span className='truncate'>
-                                                    {index === 0
-                                                        ? 'Primary operational'
-                                                        : index === 1
-                                                          ? 'Self-service'
-                                                          : 'Primary operational'}
-                                                </span>
-                                            </div>
+                                        {/* mt-auto pins image + link to the
+                                            card's bottom edge, matching the
+                                            homepage featuresList cards. */}
+                                        <div className='flex flex-col mt-auto'>
+                                            {imagePath && (
+                                                <div className='relative w-full h-56 px-4 pb-4'>
+                                                    <div className='relative w-full h-full rounded-xl overflow-hidden'>
+                                                        <Image
+                                                            src={imagePath}
+                                                            alt={
+                                                                feature.title ||
+                                                                'Module Preview'
+                                                            }
+                                                            fill
+                                                            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                                                            priority={
+                                                                index === 0
+                                                            }
+                                                            className='object-cover group-hover:scale-105 transition-transform duration-500'
+                                                        />
+                                                        {badge && (
+                                                            <div className='absolute top-3 left-3 z-20 pointer-events-none'>
+                                                                <span className='px-3 py-1 text-[11px] font-bold rounded-full bg-white/90 text-navy-900 shadow-md backdrop-blur-sm tracking-wide'>
+                                                                    {badge}
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
 
-                                            <div className='inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal group-hover:text-[#060e32] dark:group-hover:text-white group-hover:translate-x-0.5 transition-all duration-200 shrink-0'>
-                                                <span>MODULE</span>
-                                                <ArrowRight className='w-3.5 h-3.5' />
+                                            <div className='flex justify-end px-6 md:px-8 pb-4 z-10 pointer-events-none'>
+                                                <div
+                                                    className={cn(
+                                                        'inline-flex items-center gap-1.5 text-sm font-semibold group-hover:translate-x-0.5 transition-all duration-200 w-min whitespace-nowrap',
+                                                        checkmarkColors[
+                                                            index %
+                                                                checkmarkColors.length
+                                                        ],
+                                                    )}
+                                                >
+                                                    <span>{ctaLabel}</span>
+                                                    <ArrowRight className='w-3.5 h-3.5' />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -501,24 +522,31 @@ export default async function AppsPage({ params }: AppsPageProps) {
         return (
             <section
                 key={key}
-                className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative overflow-hidden z-10'
+                className='px-6 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'
             >
-                <div className='mx-auto max-w-8xl px-0'>
-                    <div className='border border-teal/30 rounded-3xl bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 text-navy-900 p-6 sm:p-10 md:p-14 hover:shadow-lg transition-all duration-500 relative overflow-hidden group shadow-md'>
+                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
+                    <div className='text-navy-900 p-10 md:p-16 relative overflow-hidden'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                             {/* Left Column: Copy & Action Triggers */}
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
-                                <Badge color='teal' uppercase dot dotPulse>
-                                    {ctaBlock.tag || 'START MET AUTOMATISEREN'}
-                                </Badge>
-                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight'>
-                                    {ctaBlock.title ||
-                                        'Klaar om je vastgoedbeheer te digitaliseren?'}
+                                {ctaBlock.tag && (
+                                    <Badge
+                                        color='teal'
+                                        uppercase
+                                        dot
+                                        dotPulse
+                                    >
+                                        {ctaBlock.tag}
+                                    </Badge>
+                                )}
+                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
+                                    {ctaBlock.title}
                                 </h2>
-                                <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
-                                    {ctaBlock.subtitle ||
-                                        'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd en kiezen voor 100% realtime controle binnen Business Central.'}
-                                </p>
+                                {ctaBlock.subtitle && (
+                                    <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
+                                        {ctaBlock.subtitle}
+                                    </p>
+                                )}
 
                                 {/* Primary & Secondary Action Buttons */}
                                 <div className='flex flex-col sm:flex-row gap-4 pt-2'>

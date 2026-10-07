@@ -39,62 +39,14 @@ export function AppsArchitectureSection({
     calloutImage,
     calloutImagePath = '/emlinked/apps/samenwerken-binnen-ERP.jpg',
 }: AppsArchitectureSectionProps) {
-    const isEn = locale === 'en';
+    const activeBullets = customBullets || [];
+    const activeTag = tag || '';
+    const activeTitle = title || '';
+    const activeSubtitle = subtitle || '';
 
-    const defaultBullets = [
-        {
-            bold: isEn
-                ? 'Één centrale bron van waarheid:'
-                : 'Één centrale bron van waarheid:',
-            text: isEn
-                ? 'No separate databases or fragile API sync scripts.'
-                : 'Geen losse databases, Excel-sheets of gevaarlijke API-koppelingen.',
-        },
-        {
-            bold: isEn ? 'Nul dubbele invoer:' : 'Nul dubbele invoer:',
-            text: isEn
-                ? 'Indexations and invoices post straight into GL ledger journals.'
-                : 'Huurovereenkomsten, indexaties en facturen landen direct als gevalideerde journaalposten in je grootboek.',
-        },
-        {
-            bold: isEn
-                ? '100% Realtime data-integriteit:'
-                : '100% Realtime data-integriteit:',
-            text: isEn
-                ? 'Instant reliable insights for auditors, executives, and property managers.'
-                : 'Direct betrouwbaar inzicht voor accountant, directie en beheerteam.',
-        },
-    ];
-
-    const activeBullets = customBullets || defaultBullets;
-    const activeTag =
-        tag || (isEn ? 'SEAMLESS INTEGRATION' : 'NAADLOZE INTEGRATIE');
-    const activeTitle =
-        title ||
-        (isEn
-            ? 'How our applications work together inside your ERP'
-            : 'Hoe onze applicaties samenwerken binnen uw ERP');
-    const activeSubtitle =
-        subtitle ||
-        (isEn
-            ? 'Unlike traditional real estate software that relies on complex API integrations and periodic batch imports, Emlinked software runs native inside Microsoft Dynamics 365 Business Central. That means: one central source of truth, zero duplicate data entry, and 100% realtime data integrity.'
-            : 'In tegenstelling tot traditionele vastgoedsoftware die werkt met ingewikkelde API-koppelingen en periodieke batch-imports, draait de software van Emlinked native binnen Microsoft Dynamics 365 Business Central. Dat betekent: één centrale bron van waarheid, nul dubbele invoer en 100% realtime data-integriteit.');
-
-    const activeSectionTag =
-        sectionTag ||
-        (isEn
-            ? 'MICROSOFT BUSINESS CENTRAL'
-            : 'MICROSOFT BUSINESS CENTRAL INTEGRATIE');
-    const activeSectionTitle =
-        sectionTitle ||
-        (isEn
-            ? '100% Realtime Control & Automatic Posting'
-            : '100% Realtime controle en automatische aflettering');
-    const activeSectionSubtitle =
-        sectionSubtitle ||
-        (isEn
-            ? 'Manage all your real estate operations natively inside Business Central with zero latency or shadow file risks.'
-            : 'Beheer al je vastgoedprocessen native in Microsoft Dynamics 365 Business Central zonder vertraging of risico van schaduwbestanden.');
+    const activeSectionTag = sectionTag || '';
+    const activeSectionTitle = sectionTitle || '';
+    const activeSectionSubtitle = sectionSubtitle || '';
 
     const resolvedBgImage = getImageUrl(bgImage, bgImagePath);
     const resolvedDiagramImage = getImageUrl(diagramImage, diagramImagePath);

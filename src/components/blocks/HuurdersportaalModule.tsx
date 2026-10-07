@@ -15,7 +15,7 @@ import {
     Clock,
     Users,
 } from 'lucide-react';
-import { GlowingLink } from '@/components/ui/GlowingButton';
+import Link from 'next/link';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { formatHeroTitle } from '@/components/blocks/HeroSection';
 import { BorderBeam } from 'border-beam';
@@ -206,13 +206,13 @@ export function HuurdersportaalModule({
                         </p>
 
                         <div className='flex flex-col sm:flex-row gap-4 mt-2'>
-                            <GlowingLink
+                            <Link
                                 href={
                                     heroBlock?.primaryCtaUrl ||
                                     heroBlock?.ctaLink ||
                                     '#demo'
                                 }
-                                className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
+                                className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
                             >
                                 <span className='flex items-center justify-center gap-2 text-white'>
                                     <span>
@@ -224,7 +224,7 @@ export function HuurdersportaalModule({
                                     </span>
                                     <ArrowRight className='w-5 h-5 text-white' />
                                 </span>
-                            </GlowingLink>
+                            </Link>
 
                             <OutlineLinkButton
                                 href={
@@ -339,7 +339,7 @@ export function HuurdersportaalModule({
         // ── BLOCK 2: OPERATIONAL BOTTLENECKS ── */}
         <section
             key={key}
-            className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/10 relative z-10'
+            className='px-6 py-20 bg-background text-navy-900 border-b border-teal/10 relative z-10'
         >
             <div className='max-w-7xl mx-auto space-y-16'>
                 {/* Header */}
@@ -354,7 +354,7 @@ export function HuurdersportaalModule({
                         </Badge>
                     </div>
 
-                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-[#060e32]'>
+                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-navy-900'>
                         {comparisonBlock?.title ||
                             doc?.comparisonSection?.title ||
                             (isEn
@@ -362,7 +362,7 @@ export function HuurdersportaalModule({
                                 : 'Waarom een verouderde communicatiestroom tijd en geld kost')}
                     </h2>
 
-                    <p className='text-[#060e32]/75 text-base md:text-lg leading-relaxed font-light'>
+                    <p className='text-navy-900/75 text-base md:text-lg leading-relaxed font-light'>
                         {comparisonBlock?.desc ||
                             doc?.comparisonSection?.desc ||
                             (isEn
@@ -392,7 +392,7 @@ export function HuurdersportaalModule({
                                 </h3>
                             </div>
 
-                            <ul className='space-y-4 text-sm text-[#060e32]/80'>
+                            <ul className='space-y-4 text-sm text-navy-900/80'>
                                 {(
                                     comparisonBlock?.leftItems ||
                                     doc?.comparisonSection?.leftItems ||
@@ -446,7 +446,7 @@ export function HuurdersportaalModule({
                                         >
                                             <XCircle className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                                             <div className='space-y-0.5'>
-                                                <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                <strong className='text-navy-900 block font-semibold text-sm'>
                                                     {titleText}
                                                 </strong>
                                                 {descText && (
@@ -481,7 +481,7 @@ export function HuurdersportaalModule({
                                 </h3>
                             </div>
 
-                            <ul className='space-y-4 text-sm text-[#060e32]/80'>
+                            <ul className='space-y-4 text-sm text-navy-900/80'>
                                 {(
                                     comparisonBlock?.rightItems ||
                                     doc?.comparisonSection?.rightItems ||
@@ -540,7 +540,7 @@ export function HuurdersportaalModule({
                                         >
                                             <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
                                             <div className='space-y-0.5'>
-                                                <strong className='text-[#060e32] block font-semibold text-sm'>
+                                                <strong className='text-navy-900 block font-semibold text-sm'>
                                                     {titleText}
                                                 </strong>
                                                 {descText && (
@@ -901,7 +901,7 @@ export function HuurdersportaalModule({
         return (
             <section
                 key={key}
-                className='px-6 py-20 md:py-24 text-[#060e32] relative z-10 overflow-hidden bg-linear-to-bl from-[#FFF3D4] via-[#FFFDF9] to-[#FFFBEF]'
+                className='px-6 py-20 md:py-24 text-navy-900 relative z-10 overflow-hidden bg-background'
             >
                 <div className='max-w-7xl mx-auto relative z-10'>
                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
@@ -909,10 +909,10 @@ export function HuurdersportaalModule({
                             <Badge color='teal' uppercase dot>
                                 {bTag}
                             </Badge>
-                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#060e32] leading-tight'>
+                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight'>
                                 {bTitle}
                             </h2>
-                            <p className='text-[#060e32]/75 text-base md:text-lg font-light leading-relaxed'>
+                            <p className='text-navy-900/75 text-base md:text-lg font-light leading-relaxed'>
                                 {bDesc}
                             </p>
                             <div className='space-y-4 pt-2'>
@@ -924,9 +924,9 @@ export function HuurdersportaalModule({
                                         <div className='w-6 h-6 rounded-full border border-teal/40 bg-teal/15 flex items-center justify-center shrink-0 mt-0.5 shadow-xs'>
                                             <Check className='w-3.5 h-3.5 text-teal' />
                                         </div>
-                                        <div className='text-sm md:text-base text-[#060e32]/85 leading-relaxed'>
+                                        <div className='text-sm md:text-base text-navy-900/85 leading-relaxed'>
                                             {bullet.bold && (
-                                                <strong className='text-[#060e32] font-semibold mr-1'>
+                                                <strong className='text-navy-900 font-semibold mr-1'>
                                                     {bullet.bold}
                                                 </strong>
                                             )}
@@ -958,7 +958,7 @@ export function HuurdersportaalModule({
         // ── BLOCK 4: CALL TO ACTION BANNER ── */}
         <section
             key={key}
-            className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'
+            className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-background relative z-10'
         >
             <div className='mx-auto max-w-8xl px-0'>
                 <div className='border border-teal/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
@@ -987,9 +987,9 @@ export function HuurdersportaalModule({
                             </p>
 
                             <div className='flex flex-col sm:flex-row gap-4 pt-4'>
-                                <GlowingLink
+                                <Link
                                     href='#demo'
-                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98]'
+                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
                                 >
                                     <span className='flex items-center justify-center gap-2 text-white'>
                                         <span>
@@ -1001,7 +1001,7 @@ export function HuurdersportaalModule({
                                         </span>
                                         <ArrowRight className='h-5 w-5 text-white' />
                                     </span>
-                                </GlowingLink>
+                                </Link>
 
                                 <OutlineLinkButton
                                     href={isEn ? '/en/apps' : '/apps'}

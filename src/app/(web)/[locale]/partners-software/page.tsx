@@ -118,6 +118,7 @@ export default async function PartnersSoftwarePage({
                 image={b?.image || b?.heroImage}
                 imagePath={b?.imagePath}
                 locale={locale}
+                centered
             />
         </React.Fragment>
     );

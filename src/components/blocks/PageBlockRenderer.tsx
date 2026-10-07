@@ -9,7 +9,6 @@ import { Box3SolutionWorkflow } from '@/components/blocks/box3/Box3SolutionWorkf
 import { TestimonialSlider } from '@/components/TestimonialSlider';
 import { TeamBlock } from '@/components/blocks/TeamBlock';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
-import { GlowingLink } from '@/components/ui/GlowingButton';
 import { getImageUrl } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/lib/utils';
@@ -208,7 +207,7 @@ export function PageBlockRenderer({
                             )}
 
                             {isPortfolioHealth && features.length > 0 && (
-                                <div className='flex flex-col gap-3 text-left w-full max-w-[600px] mt-6'>
+                                <div className='flex flex-col gap-3 text-left w-full max-w-200 mt-6'>
                                     {features.map(
                                         (feature: any, idx: number) => (
                                             <div
@@ -436,19 +435,9 @@ export function PageBlockRenderer({
         }
 
         case 'integrationsList': {
-            const sectionTag =
-                block.sectionTag ||
-                (isEn ? 'ERP INTEGRATION' : 'ERP INTEGRATIE');
-            const sectionTitle =
-                block.sectionTitle ||
-                (isEn
-                    ? 'Native connection with Microsoft Dynamics 365 Business Central'
-                    : 'De directe koppeling met Microsoft Dynamics 365 Business Central');
-            const sectionSubtitle =
-                block.sectionSubtitle ||
-                (isEn
-                    ? 'Many platforms promise an integration, but emlinked runs natively inside your ERP environment.'
-                    : 'Veel platformen beloven een koppeling, maar emlinked werkt native binnen uw ERP-omgeving.');
+            const sectionTag = block.sectionTag || '';
+            const sectionTitle = block.sectionTitle || '';
+            const sectionSubtitle = block.sectionSubtitle || '';
             const integrations = block.integrations || block.items || [];
 
             // version02: soft light-warm canvas instead of the dark navy
@@ -464,76 +453,41 @@ export function PageBlockRenderer({
             return (
                 <section
                     key={block._key}
-                    className='px-6 py-24 bg-stone-bg text-navy-900 border-b border-navy-900/10 relative overflow-hidden'
+                    // className='px-6 py-24 bg-stone-bg text-navy-900 border-b border-navy-900/10 relative overflow-hidden'
+                    className='px-6 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden'
                 >
                     <div className='absolute -top-24 -left-24 w-96 h-96 rounded-full bg-teal-pale/40 blur-3xl pointer-events-none' />
 
                     <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col gap-14'>
                         {/* Centered header + diagram — one Sanity section,
-                            not a dark header card stitched to a light body.
-                            Two states, not three: centered stack below lg,
-                            then at lg a 2/3 (badge+title+intro, left) / 1/3
-                            (image) split — only when there's an image to
-                            split against, otherwise stay centered so lg
-                            doesn't leave a dead empty column. */}
-                        {resolvedDiagramImg ? (
-                            <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center lg:items-end'>
-                                <div className='flex flex-col items-center lg:items-start gap-5 text-center lg:text-left max-w-3xl mx-auto lg:max-w-none lg:mx-0'>
-                                    {sectionTag && (
-                                        <>
-                                            <div className='flex justify-center lg:hidden'>
-                                                <Badge color='teal' uppercase>
-                                                    {sectionTag}
-                                                </Badge>
-                                            </div>
-                                            <div className='hidden lg:flex lg:justify-start'>
-                                                <Badge
-                                                    color='teal'
-                                                    uppercase
-                                                    dot
-                                                >
-                                                    {sectionTag}
-                                                </Badge>
-                                            </div>
-                                        </>
-                                    )}
-                                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text'>
-                                        {sectionTitle}
-                                    </h2>
-                                    {sectionSubtitle && (
-                                        <p className='text-navy-700 leading-relaxed text-base md:text-lg font-light'>
-                                            {sectionSubtitle}
-                                        </p>
-                                    )}
+                            not a dark header card stitched to a light body. */}
+                        <div className='max-w-3xl mx-auto flex flex-col items-center gap-5 text-center'>
+                            {sectionTag && (
+                                <div className='flex justify-center'>
+                                    <Badge color='teal' uppercase>
+                                        {sectionTag}
+                                    </Badge>
                                 </div>
+                            )}
+                            <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text '>
+                                {sectionTitle}
+                            </h2>
+                            {sectionSubtitle && (
+                                <p className='text-navy-700 leading-relaxed text-base md:text-lg font-light'>
+                                    {sectionSubtitle}
+                                </p>
+                            )}
+                        </div>
 
-                                <div className='relative w-full max-w-xl aspect-video lg:col-span-1 lg:justify-self-end'>
-                                    <Image
-                                        src={resolvedDiagramImg}
-                                        alt={sectionTitle}
-                                        fill
-                                        sizes='(max-width: 1024px) 100vw, 33vw'
-                                        className='object-contain rounded-lg'
-                                    />
-                                </div>
-                            </div>
-                        ) : (
-                            <div className='max-w-3xl mx-auto flex flex-col items-center gap-5 text-center'>
-                                {sectionTag && (
-                                    <div className='flex justify-center'>
-                                        <Badge color='teal' uppercase>
-                                            {sectionTag}
-                                        </Badge>
-                                    </div>
-                                )}
-                                <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
-                                    {sectionTitle}
-                                </h2>
-                                {sectionSubtitle && (
-                                    <p className='text-navy-700 leading-relaxed text-base md:text-lg font-light'>
-                                        {sectionSubtitle}
-                                    </p>
-                                )}
+                        {resolvedDiagramImg && (
+                            <div className='relative w-full max-w-2xl mx-auto aspect-video -mt-5'>
+                                <Image
+                                    src={resolvedDiagramImg}
+                                    alt={sectionTitle}
+                                    fill
+                                    sizes='(max-width: 1024px) 100vw, 672px'
+                                    className='object-contain rounded-lg'
+                                />
                             </div>
                         )}
 
@@ -633,35 +587,19 @@ export function PageBlockRenderer({
         case 'ctaBanner':
         case 'ctaBlock':
         case 'cta': {
-            const tag =
-                block.tag ||
-                block.badge ||
-                (isEn ? 'DIGITALIZATION' : 'DIGITALISERING');
-            const title =
-                block.title ||
-                (isEn
-                    ? 'Ready to digitize your property management?'
-                    : 'Klaar om uw vastgoedbeheer te digitaliseren?');
-            const subtitle =
-                block.subtitle ||
-                (isEn
-                    ? 'Join leading property managers who eliminated manual tasks.'
-                    : 'Sluit aan bij de professionele beheerders die handmatig werk hebben geëlimineerd.');
-            const buttonLabel =
-                block.buttonLabel ||
-                block.buttonText ||
-                (isEn
-                    ? 'Request a free demo'
-                    : 'Vraag een live demonstratie aan');
-            const buttonLink = block.buttonLink || '/contact';
+            const tag = block.tag || block.badge || '';
+            const title = block.title || '';
+            const subtitle = block.subtitle || '';
+            const buttonLabel = block.buttonLabel || block.buttonText || '';
+            const buttonLink = block.buttonLink || '';
 
             return (
                 <section
                     key={block._key}
-                    className='px-6 py-24 bg-background relative overflow-hidden'
+                    className='p-6 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden'
                 >
                     <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                        <div className='border border-teal/15 rounded-lg bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 text-navy-900 p-10 md:p-16 hover:shadow-[0_25px_60px_rgba(245,158,11,0.20)] transition-all duration-500 relative overflow-hidden group shadow-md'>
+                        <div className='text-navy-900 p-10 md:p-16 relative overflow-hidden'>
                             <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                                 <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                     {tag && (
@@ -674,23 +612,15 @@ export function PageBlockRenderer({
                                             {tag}
                                         </Badge>
                                     )}
-                                    <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight relative'>
-                                        <span className='text-navy-900 group-hover:opacity-0 transition-opacity duration-500'>
-                                            {title}
-                                        </span>
-                                        <span
-                                            aria-hidden
-                                            className='absolute inset-0 text-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500'
-                                        >
-                                            {title}
-                                        </span>
+                                    <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
+                                        {title}
                                     </h2>
                                     <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
                                         {subtitle}
                                     </p>
                                     {block.bullets &&
                                         block.bullets.length > 0 && (
-                                            <div className='flex flex-col gap-3 max-w-2xl'>
+                                            <div className='flex flex-col gap-3 max-w-2xl ml-6 mb-2'>
                                                 {block.bullets.map(
                                                     (b: any, i: number) => (
                                                         <div
@@ -716,12 +646,12 @@ export function PageBlockRenderer({
                                             </div>
                                         )}
                                     {buttonLabel && buttonLink && (
-                                        <GlowingLink
+                                        <Link
                                             href={getPath(buttonLink)}
-                                            className='py-3 px-12 text-base mr-auto font-bold shadow-xl transition-all duration-500 group-hover:bg-none group-hover:bg-navy-900 group-hover:border-navy-900 group-hover:shadow-[0_8px_28px_rgba(11,17,41,0.35)] mt-2'
+                                            className='inline-flex items-center justify-center rounded-lg bg-navy-900 hover:btn-gradient py-3 px-12 text-base font-bold text-white shadow-xl transition-colors mr-auto mt-3'
                                         >
                                             {buttonLabel}
-                                        </GlowingLink>
+                                        </Link>
                                     )}
                                 </div>
                                 <div className='lg:col-span-4 flex justify-start lg:justify-end'>
@@ -735,8 +665,8 @@ export function PageBlockRenderer({
                                         }
                                         alt={title}
                                         width={700}
-                                        height={500}
-                                        className='w-full h-[350px] max-h-[350px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
+                                        height={900}
+                                        className='w-full lg:w-112 h-120 mt-6 max-w-xl mx-auto object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-lg'
                                         priority
                                     />
                                 </div>
