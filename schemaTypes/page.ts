@@ -618,6 +618,28 @@ export const page = defineType({
                                 ),
                         }),
                         defineField({
+                            name: 'sectionCtaLabel',
+                            title: 'Section CTA Button Label',
+                            type: 'string',
+                            description:
+                                'Shown as a button right after the intro paragraph.',
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.fiscalContext ||
+                                    (parent?.items && parent.items.length > 0),
+                                ),
+                        }),
+                        defineField({
+                            name: 'sectionCtaLink',
+                            title: 'Section CTA Button Link',
+                            type: 'string',
+                            hidden: ({ parent }) =>
+                                Boolean(
+                                    parent?.fiscalContext ||
+                                    (parent?.items && parent.items.length > 0),
+                                ),
+                        }),
+                        defineField({
                             name: 'features',
                             title: 'Features',
                             type: 'array',
@@ -860,6 +882,28 @@ export const page = defineType({
                             title: 'Subtitle',
                             type: 'text',
                             rows: 2,
+                        }),
+                        defineField({
+                            name: 'bullets',
+                            title: 'Bullet Points (shown between subtitle and button)',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Bold Lead-in',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'text',
+                                            title: 'Text',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
                         }),
                         defineField({
                             name: 'buttonText',

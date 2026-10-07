@@ -788,6 +788,19 @@
                 "title": "Section Image (shown next to the header)"
               },
               {
+                "description": "Shown as a button right after the intro paragraph.",
+                "hidden": "conditional",
+                "name": "sectionCtaLabel",
+                "type": "string",
+                "title": "Section CTA Button Label"
+              },
+              {
+                "hidden": "conditional",
+                "name": "sectionCtaLink",
+                "type": "string",
+                "title": "Section CTA Button Link"
+              },
+              {
                 "of": [
                   {
                     "fields": [
@@ -980,6 +993,27 @@
                 "rows": 2,
                 "name": "subtitle",
                 "type": "text"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "title": "Bold Lead-in"
+                      },
+                      {
+                        "name": "text",
+                        "type": "string"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "bullets",
+                "type": "array",
+                "title": "Bullet Points (shown between subtitle and button)"
               },
               {
                 "name": "buttonText",

@@ -28,6 +28,7 @@ import {
     Layers,
     Building2,
     ShieldCheck,
+    CheckCircle2,
 } from 'lucide-react';
 
 interface PageBlockRendererProps {
@@ -157,9 +158,9 @@ export function PageBlockRenderer({
             const sectionTitle = block.sectionTitle || block.title || '';
             const features = block.features || block.items || [];
 
-            // Box3 lead-magnet block: 1/3 left-aligned header / 2/3 stacked
-            // cards instead of the centered header + 3-col grid every other
-            // featuresList block uses.
+            // Box3 lead-magnet block: centered header, with its 3 features
+            // rendered as bullet points between the intro text and the CTA
+            // button instead of a 3-col card grid.
             const isPortfolioHealth = block._key === 'box3-check-lead-magnet';
 
             const resolvedSectionImg = getImageUrl(
@@ -172,36 +173,18 @@ export function PageBlockRenderer({
                     key={block._key}
                     className='px-6 py-24 bg-background relative overflow-hidden'
                 >
-                    <div
-                        className={cn(
-                            'mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 relative z-10',
-                            isPortfolioHealth
-                                ? 'grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12 items-start'
-                                : 'text-center flex flex-col gap-10',
-                        )}
-                    >
+                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-10 relative z-10'>
                         <div
                             className={cn(
-                                'flex flex-col gap-4',
+                                'flex flex-col gap-6 items-center text-center',
                                 isPortfolioHealth
-                                    ? 'lg:col-span-2 items-start text-left'
-                                    : 'max-w-3xl mx-auto text-center',
+                                    ? 'max-w-[850px] mx-auto'
+                                    : 'max-w-4xl mx-auto',
                             )}
                         >
                             {sectionTag && (
-                                <div
-                                    className={cn(
-                                        'flex',
-                                        isPortfolioHealth
-                                            ? 'justify-start'
-                                            : 'justify-center mb-1',
-                                    )}
-                                >
-                                    <Badge
-                                        color='teal'
-                                        uppercase
-                                        dot={isPortfolioHealth}
-                                    >
+                                <div className='flex justify-center mb-1'>
+                                    <Badge color='teal' uppercase>
                                         {sectionTag}
                                     </Badge>
                                 </div>
@@ -223,6 +206,43 @@ export function PageBlockRenderer({
                                     {sectionSubtitle}
                                 </p>
                             )}
+
+                            {isPortfolioHealth && features.length > 0 && (
+                                <div className='flex flex-col gap-3 text-left w-full max-w-[600px] mt-6'>
+                                    {features.map(
+                                        (feature: any, idx: number) => (
+                                            <div
+                                                key={feature._key || idx}
+                                                className='flex items-start gap-3'
+                                            >
+                                                <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
+                                                <div className='text-sm leading-relaxed'>
+                                                    {feature.title && (
+                                                        <strong className='text-navy-900 font-semibold mr-1.5'>
+                                                            {feature.title}:
+                                                        </strong>
+                                                    )}
+                                                    <span className='font-light text-navy-600'>
+                                                        {feature.description}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        ),
+                                    )}
+                                </div>
+                            )}
+
+                            {block.sectionCtaLabel && block.sectionCtaLink && (
+                                <Link
+                                    href={getPath(block.sectionCtaLink)}
+                                    className={cn(
+                                        'inline-flex h-11 items-center gap-1.5 justify-center rounded-lg border bg-transparent px-6 text-sm font-semibold transition-colors hover:border-teal hover:text-teal-900 border-navy-900 text-navy-900 hover:bg-navy-900/5 whitespace-nowrap',
+                                        isPortfolioHealth ? 'mt-8' : 'mt-2',
+                                    )}
+                                >
+                                    {block.sectionCtaLabel}
+                                </Link>
+                            )}
                             {resolvedSectionImg && (
                                 <div className='relative w-full aspect-video mt-2 rounded-xl overflow-hidden'>
                                     <Image
@@ -236,100 +256,89 @@ export function PageBlockRenderer({
                             )}
                         </div>
 
-                        <div
-                            className={cn(
-                                'text-left',
-                                isPortfolioHealth
-                                    ? 'lg:col-span-1 flex flex-col gap-2'
-                                    : 'grid grid-cols-1 md:grid-cols-3 gap-8',
-                            )}
-                        >
-                            {features.map((feature: any, idx: number) => {
-                                // The hardcoded "three apps" screenshots and
-                                // links only belong to the homepage apps
-                                // grid — every other featuresList block on
-                                // the site (Box3 lead magnet, differentiator
-                                // cards, ...) reuses this same schema/case
-                                // and must NOT inherit unrelated app
-                                // screenshots or /apps/* links as a fallback.
-                                const isAppsGrid =
-                                    block._key === 'features-core-block';
+                        {!isPortfolioHealth && (
+                            <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-left'>
+                                {features.map((feature: any, idx: number) => {
+                                    // The hardcoded "three apps" screenshots and
+                                    // links only belong to the homepage apps
+                                    // grid — every other featuresList block on
+                                    // the site (Box3 lead magnet, differentiator
+                                    // cards, ...) reuses this same schema/case
+                                    // and must NOT inherit unrelated app
+                                    // screenshots or /apps/* links as a fallback.
+                                    const isAppsGrid =
+                                        block._key === 'features-core-block';
 
-                                const resolvedImg = getImageUrl(
-                                    feature.image,
-                                    feature.imagePath || feature.photoPath,
-                                );
-                                const fallbackImg = isAppsGrid
-                                    ? idx === 0
-                                        ? '/emlinked/home/DrieKrachtigeApps01_VastgoedbeheerSoftware.webp'
-                                        : idx === 1
-                                          ? '/emlinked/home/DrieKrachtigeApps02_Huurdersportaal.webp'
-                                          : '/emlinked/home/DrieKrachtigeApps03_PaymentSoftware.webp'
-                                    : undefined;
-                                const cardImg = resolvedImg || fallbackImg;
+                                    const resolvedImg = getImageUrl(
+                                        feature.image,
+                                        feature.imagePath || feature.photoPath,
+                                    );
+                                    const fallbackImg = isAppsGrid
+                                        ? idx === 0
+                                            ? '/emlinked/home/DrieKrachtigeApps01_VastgoedbeheerSoftware.webp'
+                                            : idx === 1
+                                              ? '/emlinked/home/DrieKrachtigeApps02_Huurdersportaal.webp'
+                                              : '/emlinked/home/DrieKrachtigeApps03_PaymentSoftware.webp'
+                                        : undefined;
+                                    const cardImg = resolvedImg || fallbackImg;
 
-                                const resolvedIconBadge = getImageUrl(
-                                    feature.iconImage,
-                                    feature.iconPath,
-                                );
+                                    const resolvedIconBadge = getImageUrl(
+                                        feature.iconImage,
+                                        feature.iconPath,
+                                    );
 
-                                const appsGridLink = isAppsGrid
-                                    ? idx === 0
-                                        ? '/apps/vastgoedbeheer-software'
-                                        : idx === 1
-                                          ? '/apps/huurdersportaal'
-                                          : '/apps/payment-software'
-                                    : undefined;
-                                const linkTarget =
-                                    feature.ctaLink || appsGridLink;
+                                    const appsGridLink = isAppsGrid
+                                        ? idx === 0
+                                            ? '/apps/vastgoedbeheer-software'
+                                            : idx === 1
+                                              ? '/apps/huurdersportaal'
+                                              : '/apps/payment-software'
+                                        : undefined;
+                                    const linkTarget =
+                                        feature.ctaLink || appsGridLink;
 
-                                // version02: card wash rotation lifted from
-                                // the integrationsList section below — teal /
-                                // emerald / navy pastel per card, matching
-                                // the frontpage's layout (v4) recolored with
-                                // our own accent instead of v4's orange/blue.
-                                const cardWash = [
-                                    'bg-teal-pale/50',
-                                    'bg-emerald-50',
-                                    'bg-navy-50',
-                                ];
-                                const iconColor = [
-                                    'text-teal bg-white',
-                                    'text-emerald-600 bg-white',
-                                    'text-navy-700 bg-white',
-                                ];
-                                const linkColor = [
-                                    'text-teal',
-                                    'text-emerald-600',
-                                    'text-navy-700',
-                                ];
-                                const DefaultIcon = [
-                                    Building2,
-                                    ShieldCheck,
-                                    Zap,
-                                ][idx % 3];
+                                    // version02: card wash rotation lifted from
+                                    // the integrationsList section below — teal /
+                                    // emerald / navy pastel per card, matching
+                                    // the frontpage's layout (v4) recolored with
+                                    // our own accent instead of v4's orange/blue.
+                                    const cardWash = [
+                                        'bg-teal-pale/50',
+                                        'bg-emerald-50',
+                                        'bg-navy-50',
+                                    ];
+                                    const iconColor = [
+                                        'text-teal bg-white',
+                                        'text-emerald-600 bg-white',
+                                        'text-navy-700 bg-white',
+                                    ];
+                                    const linkColor = [
+                                        'text-teal',
+                                        'text-emerald-600',
+                                        'text-navy-700',
+                                    ];
+                                    const DefaultIcon = [
+                                        Building2,
+                                        ShieldCheck,
+                                        Zap,
+                                    ][idx % 3];
 
-                                return (
-                                    <div
-                                        key={feature._key || idx}
-                                        className={cn(
-                                            'rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group relative',
-                                            isPortfolioHealth
-                                                ? 'bg-navy-50/60'
-                                                : cardWash[
-                                                      idx % cardWash.length
-                                                  ],
-                                        )}
-                                    >
-                                        {linkTarget && (
-                                            <Link
-                                                href={getPath(linkTarget)}
-                                                className='absolute inset-0 z-20'
-                                                aria-label={feature.title}
-                                            />
-                                        )}
+                                    return (
+                                        <div
+                                            key={feature._key || idx}
+                                            className={cn(
+                                                'rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group relative',
+                                                cardWash[idx % cardWash.length],
+                                            )}
+                                        >
+                                            {linkTarget && (
+                                                <Link
+                                                    href={getPath(linkTarget)}
+                                                    className='absolute inset-0 z-20'
+                                                    aria-label={feature.title}
+                                                />
+                                            )}
 
-                                        {!isPortfolioHealth && (
                                             <div
                                                 className={cn(
                                                     'absolute top-4 right-4 z-30 w-11 h-11 rounded-md shadow-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 pointer-events-none ',
@@ -356,50 +365,46 @@ export function PageBlockRenderer({
                                                     <DefaultIcon className='w-6 h-6' />
                                                 )}
                                             </div>
-                                        )}
 
-                                        <div className='flex flex-col gap-3 p-4  z-10 pointer-events-none'>
-                                            <h3
-                                                className={cn(
-                                                    'text-xl font-bold transition-colors group-hover:bg-linear-to-br group-hover:from-[#f12711] group-hover:to-[#f5af19] group-hover:bg-clip-text group-hover:text-transparent',
-                                                    isPortfolioHealth
-                                                        ? 'pr-0'
-                                                        : 'pr-12',
-                                                    linkColor[
-                                                        idx % linkColor.length
-                                                    ],
-                                                )}
-                                            >
-                                                {feature.title}
-                                            </h3>
+                                            <div className='flex flex-col gap-3 p-4  z-10 pointer-events-none'>
+                                                <h3
+                                                    className={cn(
+                                                        'text-xl font-bold transition-colors group-hover:bg-linear-to-br group-hover:from-[#f12711] group-hover:to-[#f5af19] group-hover:bg-clip-text group-hover:text-transparent pr-12',
+                                                        linkColor[
+                                                            idx %
+                                                                linkColor.length
+                                                        ],
+                                                    )}
+                                                >
+                                                    {feature.title}
+                                                </h3>
 
-                                            <p className='text-sm text-navy-600 leading-relaxed font-light'>
-                                                {feature.description}
-                                            </p>
-                                        </div>
+                                                <p className='text-sm text-navy-600 leading-relaxed font-light'>
+                                                    {feature.description}
+                                                </p>
+                                            </div>
 
-                                        {/* mt-auto pins image + link to the card's
+                                            {/* mt-auto pins image + link to the card's
                                             bottom edge regardless of how much the
                                             description above wraps. */}
-                                        <div className='flex flex-col mt-auto'>
-                                            {cardImg && (
-                                                <div className='relative w-full h-56 px-4 pb-4'>
-                                                    <div className='relative w-full h-full rounded-xl overflow-hidden'>
-                                                        <Image
-                                                            src={cardImg}
-                                                            alt={
-                                                                feature.title ||
-                                                                'Module'
-                                                            }
-                                                            fill
-                                                            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                                                            className='object-cover group-hover:scale-105 transition-transform duration-500'
-                                                        />
+                                            <div className='flex flex-col mt-auto'>
+                                                {cardImg && (
+                                                    <div className='relative w-full h-56 px-4 pb-4'>
+                                                        <div className='relative w-full h-full rounded-xl overflow-hidden'>
+                                                            <Image
+                                                                src={cardImg}
+                                                                alt={
+                                                                    feature.title ||
+                                                                    'Module'
+                                                                }
+                                                                fill
+                                                                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                                                                className='object-cover group-hover:scale-105 transition-transform duration-500'
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )}
+                                                )}
 
-                                            {!isPortfolioHealth && (
                                                 <div className='flex justify-end px-6 md:px-8 pb-4 z-10 pointer-events-none'>
                                                     <div
                                                         className={cn(
@@ -419,12 +424,12 @@ export function PageBlockRenderer({
                                                         <ArrowRight className='w-3.5 h-3.5' />
                                                     </div>
                                                 </div>
-                                            )}
+                                            </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
                 </section>
             );
@@ -545,13 +550,6 @@ export function PageBlockRenderer({
                                         : idx === 1
                                           ? 'Continia OCR Engine'
                                           : 'PSD2 / ISO 20022');
-                                const statusText =
-                                    item.statusText ||
-                                    (idx === 0
-                                        ? 'Core Database'
-                                        : idx === 1
-                                          ? 'Auto-Matching'
-                                          : 'Live Reconciled');
                                 const nodeLabel =
                                     idx === 0
                                         ? '2-Way Sync'
@@ -568,34 +566,34 @@ export function PageBlockRenderer({
                                         )}
                                     >
                                         <div className='flex flex-col gap-4 z-10'>
-                                            <div className='flex items-center justify-between'>
-                                                <div className='h-12 w-12 rounded-xl bg-white border border-teal/35 flex items-center justify-center text-teal font-bold text-lg shadow-xs overflow-hidden'>
-                                                    {cardIconImg ? (
-                                                        <div className='relative w-full h-full'>
-                                                            <Image
-                                                                src={
-                                                                    cardIconImg
-                                                                }
-                                                                alt={
-                                                                    item.title ||
-                                                                    'Integration'
-                                                                }
-                                                                fill
-                                                                sizes='48px'
-                                                                className='object-contain p-1.5'
-                                                            />
-                                                        </div>
-                                                    ) : idx === 0 ? (
-                                                        <Database className='h-6 w-6' />
-                                                    ) : idx === 1 ? (
-                                                        <FileText className='h-6 w-6' />
-                                                    ) : (
-                                                        <Cpu className='h-6 w-6' />
-                                                    )}
-                                                </div>
-                                                <Badge color='teal' uppercase>
-                                                    {nodeLabel}
-                                                </Badge>
+                                            <div
+                                                className={cn(
+                                                    'flex items-center justify-center text-teal font-bold text-lg overflow-hidden',
+                                                    cardIconImg
+                                                        ? 'h-24 w-full px-6'
+                                                        : 'h-12 w-12 rounded-xl bg-white border border-teal/35 shadow-xs',
+                                                )}
+                                            >
+                                                {cardIconImg ? (
+                                                    <div className='relative w-full h-full'>
+                                                        <Image
+                                                            src={cardIconImg}
+                                                            alt={
+                                                                item.title ||
+                                                                'Integration'
+                                                            }
+                                                            fill
+                                                            sizes='(max-width: 768px) 100vw, 33vw'
+                                                            className='object-contain object-left'
+                                                        />
+                                                    </div>
+                                                ) : idx === 0 ? (
+                                                    <Database className='h-6 w-6' />
+                                                ) : idx === 1 ? (
+                                                    <FileText className='h-6 w-6' />
+                                                ) : (
+                                                    <Cpu className='h-6 w-6' />
+                                                )}
                                             </div>
 
                                             <div className='flex flex-col gap-1 mt-2'>
@@ -620,7 +618,7 @@ export function PageBlockRenderer({
                                             </span>
                                             <span className='text-emerald-700 font-semibold text-[11px] flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md'>
                                                 <span className='w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse' />
-                                                {statusText}
+                                                {nodeLabel}
                                             </span>
                                         </div>
                                     </div>
@@ -690,6 +688,33 @@ export function PageBlockRenderer({
                                     <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
                                         {subtitle}
                                     </p>
+                                    {block.bullets &&
+                                        block.bullets.length > 0 && (
+                                            <div className='flex flex-col gap-3 max-w-2xl'>
+                                                {block.bullets.map(
+                                                    (b: any, i: number) => (
+                                                        <div
+                                                            key={b._key || i}
+                                                            className='flex items-start gap-3'
+                                                        >
+                                                            <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
+                                                            <div className='text-sm leading-relaxed'>
+                                                                {b.title && (
+                                                                    <strong className='text-navy-900 font-semibold mr-1.5'>
+                                                                        {
+                                                                            b.title
+                                                                        }
+                                                                    </strong>
+                                                                )}
+                                                                <span className='font-light text-navy-700'>
+                                                                    {b.text}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    ),
+                                                )}
+                                            </div>
+                                        )}
                                     {buttonLabel && buttonLink && (
                                         <GlowingLink
                                             href={getPath(buttonLink)}
