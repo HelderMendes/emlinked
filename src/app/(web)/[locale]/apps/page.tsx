@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
+import { ColorIcon } from '@/components/ui/ColorIcon';
 
 interface AppsPageProps {
     params: Promise<{ locale: string }>;
@@ -127,11 +128,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
     ];
 
     // Checkmark colors per app module
-    const checkmarkColors = [
-        'text-teal',
-        'text-emerald-600',
-        'text-navy-700',
-    ];
+    const checkmarkColors = ['text-teal', 'text-emerald-600', 'text-navy-700'];
 
     const rawFeatures = featuresBlock?.features || [];
 
@@ -274,9 +271,10 @@ export default async function AppsPage({ params }: AppsPageProps) {
         return (
             <section
                 key={key}
-                className='px-6 py-24 bg-background relative z-10'
+                className='px-6 py-24 bg-background relative overflow-hidden
+'
             >
-                <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8'>
+                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-10 relative z-10'>
                     {/* Section Header */}
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
                         {(featuresBlock.sectionTag || featuresBlock.tag) && (
@@ -327,7 +325,9 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                           : '/apps/payment-software');
                                 const ctaLabel =
                                     feature.ctaLabel ||
-                                    (isEn ? 'Discover module' : 'Ontdek module');
+                                    (isEn
+                                        ? 'Discover module'
+                                        : 'Ontdek module');
                                 const bullets = feature.bullets || [];
                                 const badge = feature.badge || '';
                                 const checkColor =
@@ -365,18 +365,15 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                 ],
                                             )}
                                         >
-                                            <div className='relative w-6 h-6'>
-                                                <Image
-                                                    src={cardIcon}
-                                                    alt={
-                                                        feature.title ||
-                                                        'App Module'
-                                                    }
-                                                    fill
-                                                    sizes='24px'
-                                                    className='object-contain'
-                                                />
-                                            </div>
+                                            <ColorIcon
+                                                src={cardIcon}
+                                                alt={
+                                                    feature.title ||
+                                                    'App Module'
+                                                }
+                                                className='w-6 h-6'
+                                                sizePx={24}
+                                            />
                                         </div>
 
                                         <div className='flex flex-col gap-4 p-6 md:p-8 pb-4 z-10 pointer-events-none'>
@@ -530,12 +527,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                             {/* Left Column: Copy & Action Triggers */}
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                 {ctaBlock.tag && (
-                                    <Badge
-                                        color='teal'
-                                        uppercase
-                                        dot
-                                        dotPulse
-                                    >
+                                    <Badge color='teal' uppercase dot dotPulse>
                                         {ctaBlock.tag}
                                     </Badge>
                                 )}

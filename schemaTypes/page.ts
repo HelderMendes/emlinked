@@ -666,13 +666,6 @@ export const page = defineType({
                                             rows: 3,
                                         }),
                                         defineField({
-                                            name: 'icon',
-                                            title: 'Feature Icon',
-                                            type: 'string',
-                                            description:
-                                                'Lucide icon identifier',
-                                        }),
-                                        defineField({
                                             name: 'imagePath',
                                             title: 'Main Module Image Path (Fallback String)',
                                             type: 'string',

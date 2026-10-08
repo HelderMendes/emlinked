@@ -822,12 +822,6 @@
                         "title": "Feature Description"
                       },
                       {
-                        "description": "Lucide icon identifier",
-                        "name": "icon",
-                        "type": "string",
-                        "title": "Feature Icon"
-                      },
-                      {
                         "description": "Pad naar de grote preview afbeelding (bijv. \"/emlinked/apps/vastgoedbeheer-sopftware_modules.jpg\")",
                         "name": "imagePath",
                         "type": "string",

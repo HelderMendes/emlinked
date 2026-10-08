@@ -11,6 +11,7 @@ import { TeamBlock } from '@/components/blocks/TeamBlock';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
 import { getImageUrl } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
+import { ColorIcon } from '@/components/ui/ColorIcon';
 import { cn } from '@/lib/utils';
 import { HugeiconsIcon } from '@hugeicons/react';
 import {
@@ -340,29 +341,23 @@ export function PageBlockRenderer({
 
                                             <div
                                                 className={cn(
-                                                    'absolute top-4 right-4 z-30 w-11 h-11 rounded-md shadow-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 pointer-events-none ',
+                                                    'absolute top-1 right-1 z-30 w-11 h-11 rounded-md shadow-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 pointer-events-none ',
                                                     iconColor[
                                                         idx % iconColor.length
                                                     ],
                                                 )}
                                             >
-                                                {resolvedIconBadge ? (
-                                                    <div className='relative w-7 h-7'>
-                                                        <Image
-                                                            src={
-                                                                resolvedIconBadge
-                                                            }
-                                                            alt={
-                                                                feature.title ||
-                                                                'Icon'
-                                                            }
-                                                            fill
-                                                            className='object-contain'
-                                                        />
-                                                    </div>
-                                                ) : (
-                                                    <DefaultIcon className='w-6 h-6' />
-                                                )}
+                                                <ColorIcon
+                                                    src={resolvedIconBadge}
+                                                    alt={
+                                                        feature.title || 'Icon'
+                                                    }
+                                                    className='w-7 h-7'
+                                                    sizePx={28}
+                                                    fallback={
+                                                        <DefaultIcon className='size-7' />
+                                                    }
+                                                />
                                             </div>
 
                                             <div className='flex flex-col gap-3 p-4  z-10 pointer-events-none'>
