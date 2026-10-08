@@ -18,6 +18,7 @@ import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 import { ColorIcon } from '@/components/ui/ColorIcon';
+import { findIndex } from 'sanity';
 
 interface AppsPageProps {
     params: Promise<{ locale: string }>;
@@ -359,7 +360,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
 
                                         <div
                                             className={cn(
-                                                'absolute top-4 right-4 z-30 w-11 h-11 rounded-md shadow-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 pointer-events-none',
+                                                'absolute top-1 right-1 z-30 w-12 h-12 rounded-md shadow-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 pointer-events-none',
                                                 iconColor[
                                                     index % iconColor.length
                                                 ],
@@ -371,8 +372,8 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                     feature.title ||
                                                     'App Module'
                                                 }
-                                                className='w-6 h-6'
-                                                sizePx={24}
+                                                className='size-9'
+                                                sizePx={20}
                                             />
                                         </div>
 

@@ -481,7 +481,7 @@ export function PageBlockRenderer({
                                     alt={sectionTitle}
                                     fill
                                     sizes='(max-width: 1024px) 100vw, 672px'
-                                    className='object-contain rounded-lg'
+                                    className='object-cover rounded-2xl shad'
                                 />
                             </div>
                         )}
