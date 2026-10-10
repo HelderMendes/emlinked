@@ -17,8 +17,6 @@ interface AppsArchitectureSectionProps {
     bullets?: Array<{ bold?: string; text: string }>;
     bgImage?: any;
     bgImagePath?: string;
-    diagramImage?: any;
-    diagramImagePath?: string;
     calloutImage?: any;
     calloutImagePath?: string;
 }
@@ -34,8 +32,6 @@ export function AppsArchitectureSection({
     bullets: customBullets,
     bgImage,
     bgImagePath = '/emlinked/apps/bg_naadloze_integratie_section.jpg',
-    diagramImage,
-    diagramImagePath = '/emlinked/apps/naadloze-intergratie.png',
     calloutImage,
     calloutImagePath = '/emlinked/apps/samenwerken-binnen-ERP.jpg',
 }: AppsArchitectureSectionProps) {
@@ -49,32 +45,22 @@ export function AppsArchitectureSection({
     const activeSectionSubtitle = sectionSubtitle || '';
 
     const resolvedBgImage = getImageUrl(bgImage, bgImagePath);
-    const resolvedDiagramImage = getImageUrl(diagramImage, diagramImagePath);
     const resolvedCalloutImage = getImageUrl(calloutImage, calloutImagePath);
 
     return (
-        <section className='relative px-6 py-20 text-navy-900 border-b border-navy-900/10 overflow-hidden bg-stone-bg'>
-            {/* Custom Section Background Image - faint, light wash on top */}
-            <Image
-                src={resolvedBgImage}
-                alt={activeTitle}
-                fill
-                priority
-                sizes='100vw'
-                className='object-cover object-center opacity-10 pointer-events-none'
-            />
-            <div className='absolute inset-0 bg-linear-to-b from-stone-bg/60 via-stone-bg/85 to-stone-bg pointer-events-none' />
-
+        <section className='relative px-6 py-20 text-navy-900 overflow-hidden bg-stone-bg'>
             {/* Ambient Background Radial Glows */}
             <div className='absolute top-0 right-1/4 w-200 h-200 bg-teal-pale/40 blur-3xl pointer-events-none rounded-full opacity-90' />
             <div className='absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-teal-ultra blur-3xl pointer-events-none rounded-full opacity-60' />
 
             <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 relative z-10'>
                 {/* ── 1. TOP PART: CENTERED HEADER & SMALLER TOP PNG DIAGRAM ── */}
-                <div className='max-w-4xl mx-auto flex flex-col items-center text-center space-y-6'>
-                    <Badge color='teal' uppercase>
-                        {activeTag}
-                    </Badge>
+                <div className='max-w-4xl mx-auto flex flex-col items-center text-center space-y-6 '>
+                    {activeTag && (
+                        <Badge color='teal' uppercase className='self-center'>
+                            {activeTag}
+                        </Badge>
+                    )}
 
                     <h2 className='font-display text-3xl md:text-4xl lg:text-[2.7rem]/12 font-bold tracking-tight text-navy-900'>
                         {activeTitle}
@@ -84,26 +70,28 @@ export function AppsArchitectureSection({
                         {activeSubtitle}
                     </p>
 
-                    {/* Centered Transparent PNG Architecture Diagram on Dark Background */}
-                    <div className='relative w-full max-w-90 h-90 items-center justify-center mx-auto transition-all duration-300 mb-2'>
+                    {/* Section image — shown directly, no diagram overlay */}
+                    <div className='relative w-full max-w-xl aspect-video mx-auto mb-2 rounded-xl overflow-hidden shadow-md'>
                         <Image
-                            src={resolvedDiagramImage}
+                            src={resolvedBgImage}
                             alt={activeTitle}
                             fill
-                            sizes='360px'
-                            className='object-contain hover:scale-105 transition-transform duration-500 drop-shadow-[0_15px_35px_rgba(0,0,0,0.25)] bg-transparent rounded-full'
+                            sizes='(max-width: 768px) 100vw, 672px'
+                            className='object-cover object-center'
                             priority
                         />
                     </div>
                 </div>
 
                 {/* ── 2. BOTTOM PART: BOX 3 STYLE BULLETS & 3D VISUAL ──────── */}
-                <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-4 border-t border-navy-900/10'>
+                <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-4 '>
                     {/* Left Column: Title, Subtitle & Bullets matching Box 3 check styling */}
-                    <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
-                        <Badge color='teal' uppercase>
-                            {activeSectionTag}
-                        </Badge>
+                    <div className='lg:col-span-7 flex flex-col gap-6 text-left mt-12'>
+                        {activeSectionTag && (
+                            <Badge color='teal' uppercase>
+                                {activeSectionTag}
+                            </Badge>
+                        )}
 
                         <h3 className='font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-navy-900 leading-tight'>
                             {activeSectionTitle}
@@ -114,7 +102,7 @@ export function AppsArchitectureSection({
                         </p>
 
                         {/* Bullets matching Frontpage Box 3 check styling */}
-                        <div className='flex flex-col gap-4 my-1'>
+                        <div className='flex flex-col gap-4 my-1 ml-6'>
                             {activeBullets.map((b, idx) => (
                                 <div
                                     key={idx}
@@ -140,15 +128,14 @@ export function AppsArchitectureSection({
 
                     {/* Right Column: 3D Visual Workspace Image */}
                     <div className='lg:col-span-5 flex justify-center items-center'>
-                        <div className='relative w-full max-w-md aspect-4/3 sm:aspect-square rounded-2xl overflow-hidden border border-navy-900/10 shadow-xl group flex items-center justify-center hover:border-teal/60 transition-all duration-500'>
+                        <div className='relative w-full max-w-md aspect-5.5/5  rounded-2xl overflow-hidden border border-navy-900/10 shadow-xl group flex items-center justify-center hover:border-teal/60 transition-all duration-500 '>
                             <Image
                                 src={resolvedCalloutImage}
                                 alt='Samenwerken binnen Business Central ERP'
                                 fill
-                                sizes='(max-width: 1024px) 100vw, 40vw'
-                                className='object-cover object-center group-hover:scale-105 transition-transform duration-700'
+                                sizes='100vw, 40vw'
+                                className='object-cover object-center group-hover:scale-105 transition-transform duration-700 '
                             />
-                            <div className='absolute inset-0 bg-linear-to-t from-[#060e32]/50 via-transparent to-transparent pointer-events-none' />
                         </div>
                     </div>
                 </div>

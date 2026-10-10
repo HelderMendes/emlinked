@@ -16,12 +16,18 @@ async function getSiteSettings(locale: string) {
         return await client.fetch(
             `*[_id == $id][0] {
                 announcementActive,
+                announcementMode,
                 announcementText,
                 announcementTitle,
                 announcementCtaLabel,
                 announcementPillText,
                 announcementReviews,
                 announcementLink,
+                announcementNewsItems[]-> {
+                    title,
+                    excerpt,
+                    "slug": slug.current
+                },
                 phone,
                 email,
                 address,

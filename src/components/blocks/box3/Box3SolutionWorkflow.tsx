@@ -26,7 +26,7 @@ export function Box3SolutionWorkflow({
     return (
         <section
             id='wat-het-doet'
-            className='py-20 px-6 bg-stone-bg text-navy-900 border-b border-navy-900/10 relative overflow-hidden'
+            className='py-20 px-6 bg-stone-bg text-navy-900  relative overflow-hidden'
         >
             <div className='max-w-7xl mx-auto space-y-12'>
                 <div className='text-center max-w-3xl mx-auto space-y-4'>

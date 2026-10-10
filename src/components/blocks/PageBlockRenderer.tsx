@@ -182,13 +182,6 @@ export function PageBlockRenderer({
                                     : 'max-w-4xl mx-auto',
                             )}
                         >
-                            {sectionTag && (
-                                <div className='flex justify-center mb-1'>
-                                    <Badge color='teal' uppercase>
-                                        {sectionTag}
-                                    </Badge>
-                                </div>
-                            )}
                             {sectionTitle && (
                                 <h2
                                     className={cn(

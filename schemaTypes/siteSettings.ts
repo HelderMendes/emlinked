@@ -33,17 +33,48 @@ export const siteSettings = defineType({
             initialValue: true,
         }),
         defineField({
+            name: 'announcementMode',
+            title: 'Announcement Content Source',
+            type: 'string',
+            description:
+                'Write custom copy below, or pick one or more News articles to display instead.',
+            options: {
+                list: [
+                    { title: 'Custom text', value: 'custom' },
+                    { title: 'From news item(s)', value: 'news' },
+                ],
+                layout: 'radio',
+            },
+            initialValue: 'custom',
+        }),
+        defineField({
+            name: 'announcementNewsItems',
+            title: 'Announcement News Items',
+            type: 'array',
+            description:
+                'First item becomes the card heading/excerpt; any further items are listed below it.',
+            of: [
+                defineArrayMember({
+                    type: 'reference',
+                    to: [{ type: 'article' }],
+                }),
+            ],
+            hidden: ({ parent }) => parent?.announcementMode !== 'news',
+        }),
+        defineField({
             name: 'announcementText',
             title: 'Announcement Subtitle / Text',
             type: 'string',
             description:
                 'Body description text shown inside the announcement card.',
+            hidden: ({ parent }) => parent?.announcementMode === 'news',
         }),
         defineField({
             name: 'announcementTitle',
             title: 'Announcement Title',
             type: 'string',
             description: 'Main heading title inside the announcement card.',
+            hidden: ({ parent }) => parent?.announcementMode === 'news',
         }),
         defineField({
             name: 'announcementCtaLabel',
@@ -51,6 +82,7 @@ export const siteSettings = defineType({
             type: 'string',
             description:
                 'Text shown on the action button (e.g. "Gratis demo aanvragen").',
+            hidden: ({ parent }) => parent?.announcementMode === 'news',
         }),
         defineField({
             name: 'announcementPillText',
@@ -90,13 +122,15 @@ export const siteSettings = defineType({
                     },
                 }),
             ],
+            hidden: ({ parent }) => parent?.announcementMode === 'news',
         }),
         defineField({
             name: 'announcementLink',
             title: 'Announcement Link Target',
             type: 'string',
             description:
-                'Optional link destination (use "#demo" to open the demo form).',
+                'Optional link destination (use "#demo" to open the demo form). Ignored in News mode — links to the first selected article instead.',
+            hidden: ({ parent }) => parent?.announcementMode === 'news',
         }),
         defineField({
             name: 'phone',

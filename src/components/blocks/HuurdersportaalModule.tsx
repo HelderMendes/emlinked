@@ -958,10 +958,10 @@ export function HuurdersportaalModule({
         // ── BLOCK 4: CALL TO ACTION BANNER ── */}
         <section
             key={key}
-            className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-background relative z-10'
+            className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'
         >
-            <div className='mx-auto max-w-8xl px-0'>
-                <div className='border border-teal/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+            <div className='border border-teal/30 rounded-3xl bg-white/50 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg backdrop-blur-xl lg:px-8'>
+                <div className='text-navy-900 p-8 md:py-16 md:px-10 relative overflow-hidden'>
                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                         <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                             <Badge color='teal' uppercase dot dotPulse>
@@ -970,7 +970,7 @@ export function HuurdersportaalModule({
                                     (isEn ? 'REQUEST DEMO' : 'DEMO AANVRAGEN')}
                             </Badge>
 
-                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
                                 {ctaBlock?.title ||
                                     doc?.cta?.title ||
                                     (isEn
@@ -978,7 +978,7 @@ export function HuurdersportaalModule({
                                         : 'Klaar om je huurdercommunicatie te digitaliseren?')}
                             </h2>
 
-                            <p className='text-white/75 text-base md:text-lg font-light leading-relaxed max-w-2xl'>
+                            <p className='text-navy-700 text-base md:text-lg font-light leading-relaxed max-w-2xl'>
                                 {ctaBlock?.desc ||
                                     doc?.cta?.desc ||
                                     (isEn
@@ -986,29 +986,27 @@ export function HuurdersportaalModule({
                                         : 'Ontdek hoe ons huurdersportaal de communicatie stroomlijnt en je beheerders uren handmatig werk bespaart.')}
                             </p>
 
-                            <div className='flex flex-col sm:flex-row gap-4 pt-4'>
+                            <div className='flex flex-col sm:flex-row gap-4 pt-2'>
                                 <Link
                                     href='#demo'
-                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
+                                    className='inline-flex h-11 items-center gap-1.5 justify-center rounded-lg bg-navy-900 hover:btn-gradient px-6 text-sm font-semibold text-white transition-colors'
                                 >
-                                    <span className='flex items-center justify-center gap-2 text-white'>
-                                        <span>
-                                            {ctaBlock?.primaryButtonText ||
-                                                doc?.cta?.primary ||
-                                                (isEn
-                                                    ? 'Request Demo'
-                                                    : 'Demo aanvragen')}
-                                        </span>
-                                        <ArrowRight className='h-5 w-5 text-white' />
+                                    <span>
+                                        {ctaBlock?.primaryButtonText ||
+                                            doc?.cta?.primary ||
+                                            (isEn
+                                                ? 'Request Demo'
+                                                : 'Demo aanvragen')}
                                     </span>
+                                    <ArrowRight className='h-4 w-4 text-white' />
                                 </Link>
 
                                 <OutlineLinkButton
                                     href={isEn ? '/en/apps' : '/apps'}
-                                    color='white'
+                                    color='navy'
                                 >
                                     <span>
-                                        {isEn ? 'All Apps →' : 'Alle apps →'}
+                                        {isEn ? 'All Apps' : 'Alle apps'}
                                     </span>
                                 </OutlineLinkButton>
                             </div>

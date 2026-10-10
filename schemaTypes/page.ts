@@ -439,6 +439,21 @@ export const page = defineType({
                             description:
                                 'Upload custom graphic directly to Sanity CDN',
                         }),
+                        defineField({
+                            name: 'calloutImagePath',
+                            title: 'Callout Image Path (Fallback String)',
+                            type: 'string',
+                            description:
+                                'Right-column 3D visual, below the bullets.',
+                        }),
+                        defineField({
+                            name: 'calloutImage',
+                            title: 'Callout Image (Sanity Asset Upload)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description:
+                                'Upload custom graphic directly to Sanity CDN',
+                        }),
                     ],
                     preview: {
                         select: {
@@ -911,6 +926,18 @@ export const page = defineType({
                         defineField({
                             name: 'buttonLink',
                             title: 'Button Link',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'secondaryButtonLabel',
+                            title: 'Secondary Button Label (Optional)',
+                            type: 'string',
+                            description:
+                                'Leave empty to show only the primary button.',
+                        }),
+                        defineField({
+                            name: 'secondaryButtonLink',
+                            title: 'Secondary Button Link',
                             type: 'string',
                         }),
                         defineField({

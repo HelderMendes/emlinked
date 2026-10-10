@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Sparkles, Star } from 'lucide-react';
 import { DemoModal } from './DemoModal';
 import { Badge } from '@/components/ui/Badge';
+import { cn } from '@/lib/utils';
 
 interface StickyAnnouncementProps {
     locale?: string;
@@ -31,7 +32,7 @@ const content = {
     },
     en: {
         pillText: 'Important announcement',
-        title: 'Emlinked Property Mgmt',
+        title: 'Emlinked Property Management',
         subtitle:
             'Manage leases, indexations, and expenses native in one single system.',
         cta: 'Request a Free Demo',
@@ -78,6 +79,18 @@ export default function StickyAnnouncement({
 
     // Only render if announcement is active in settings
     if (!shouldShow || settings?.announcementActive === false) return null;
+
+    // News mode: the announcement card lists real News articles instead of
+    // hand-written copy, all shown uniformly (no "featured" first item).
+    const isNewsMode = settings?.announcementMode === 'news';
+    const newsItems: any[] = settings?.announcementNewsItems || [];
+
+    const newsHref = (slug?: string) =>
+        slug
+            ? locale === 'en'
+                ? `/en/nieuws/${slug}`
+                : `/nieuws/${slug}`
+            : '/nieuws';
 
     // Resolve dynamic values from Sanity settings with local fallbacks
     const pillText = settings?.announcementPillText || t.pillText;
@@ -163,49 +176,85 @@ export default function StickyAnnouncement({
                                     color='teal'
                                     dot
                                     uppercase
-                                    className='relative z-10 mb-2'
+                                    className={cn(
+                                        'relative z-10',
+                                        isNewsMode ? '' : 'mb-4',
+                                    )}
                                 >
-                                    Platform
+                                    {isNewsMode
+                                        ? locale === 'en'
+                                            ? 'Latest news'
+                                            : 'Laatste nieuws'
+                                        : 'Platform'}
                                 </Badge>
-                                <h4 className='relative z-10 text-lg font-display font-extrabold tracking-tight text-navy-900'>
-                                    {title}
-                                </h4>
-                                <p className='relative z-10 text-[13px] text-navy-700 leading-relaxed mt-1'>
-                                    {subtitle}
-                                </p>
 
-                                <button
-                                    onClick={handleCtaClick}
-                                    className='relative z-10 mt-4 w-full h-9 rounded-lg bg-navy-900 hover:btn-gradient text-white font-semibold text-xs transition-colors duration-200 cursor-pointer'
-                                >
-                                    {cta}
-                                </button>
-                            </div>
-
-                            {/* Reviews Block */}
-                            <div className='p-4.5 bg-white flex flex-col gap-3.5'>
-                                {reviews.map((rev: any, index: number) => (
-                                    <div
-                                        key={index}
-                                        className='flex flex-col gap-1 border-b border-navy-900/10 last:border-0 pb-3 last:pb-0'
-                                    >
-                                        <div className='flex gap-0.5 text-teal'>
-                                            {[...Array(5)].map((_, i) => (
-                                                <Star
-                                                    key={i}
-                                                    className='h-2.5 w-2.5 fill-teal'
-                                                />
-                                            ))}
-                                        </div>
-                                        <p className='text-[12px]/5 italic text-navy-700'>
-                                            {rev.text}
+                                {!isNewsMode && (
+                                    <>
+                                        <h4 className='relative z-10 text-lg font-display font-extrabold leading-snug tracking-tight text-navy-900'>
+                                            {title}
+                                        </h4>
+                                        <p className='relative z-10 text-[13px] text-navy-700 leading-relaxed mt-1'>
+                                            {subtitle}
                                         </p>
-                                        <span className='text-[11px] font-bold text-navy-900/60 tracking-tight self-end'>
-                                            — {rev.author}
-                                        </span>
-                                    </div>
-                                ))}
+                                        <button
+                                            onClick={handleCtaClick}
+                                            className='relative z-10 mt-4 w-full h-9 rounded-lg bg-navy-900 hover:btn-gradient text-white font-semibold text-xs transition-colors duration-200 cursor-pointer'
+                                        >
+                                            {cta}
+                                        </button>
+                                    </>
+                                )}
                             </div>
+
+                            {/* News list (news mode, all items uniform) or Reviews Block (custom mode) */}
+                            {isNewsMode ? (
+                                newsItems.length > 0 && (
+                                    <div className='p-4.5 bg-white flex flex-col gap-3.5'>
+                                        {newsItems.map(
+                                            (item: any, index: number) => (
+                                                <a
+                                                    key={index}
+                                                    href={newsHref(item.slug)}
+                                                    className='flex flex-col gap-1 border-b border-navy-900/10 last:border-0 pb-3 last:pb-0 hover:opacity-80 transition-opacity'
+                                                >
+                                                    <span className='text-[12px] font-bold text-navy-900 leading-snug'>
+                                                        {item.title}
+                                                    </span>
+                                                    {item.excerpt && (
+                                                        <p className='text-[11px]/5 text-navy-700 line-clamp-2'>
+                                                            {item.excerpt}
+                                                        </p>
+                                                    )}
+                                                </a>
+                                            ),
+                                        )}
+                                    </div>
+                                )
+                            ) : (
+                                <div className='p-4.5 bg-white flex flex-col gap-3.5'>
+                                    {reviews.map((rev: any, index: number) => (
+                                        <div
+                                            key={index}
+                                            className='flex flex-col gap-1 border-b border-navy-900/10 last:border-0 pb-3 last:pb-0'
+                                        >
+                                            <div className='flex gap-0.5 text-teal'>
+                                                {[...Array(5)].map((_, i) => (
+                                                    <Star
+                                                        key={i}
+                                                        className='h-2.5 w-2.5 fill-teal'
+                                                    />
+                                                ))}
+                                            </div>
+                                            <p className='text-[12px]/5 italic text-navy-700'>
+                                                {rev.text}
+                                            </p>
+                                            <span className='text-[11px] font-bold text-navy-900/60 tracking-tight self-end'>
+                                                — {rev.author}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </motion.div>
                     )}
                 </AnimatePresence>

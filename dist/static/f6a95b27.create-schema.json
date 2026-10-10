@@ -665,6 +665,21 @@
                 "name": "bgImage",
                 "type": "image",
                 "title": "Background Image (Sanity Asset Upload)"
+              },
+              {
+                "description": "Right-column 3D visual, below the bullets.",
+                "name": "calloutImagePath",
+                "type": "string",
+                "title": "Callout Image Path (Fallback String)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "description": "Upload custom graphic directly to Sanity CDN",
+                "name": "calloutImage",
+                "type": "image",
+                "title": "Callout Image (Sanity Asset Upload)"
               }
             ],
             "type": "object",
@@ -1021,6 +1036,16 @@
               },
               {
                 "name": "buttonLink",
+                "type": "string"
+              },
+              {
+                "description": "Leave empty to show only the primary button.",
+                "name": "secondaryButtonLabel",
+                "type": "string",
+                "title": "Secondary Button Label (Optional)"
+              },
+              {
+                "name": "secondaryButtonLink",
                 "type": "string"
               },
               {
@@ -2748,18 +2773,58 @@
         "title": "Show Bottom Announcement Pill"
       },
       {
+        "options": {
+          "list": [
+            {
+              "title": "Custom text",
+              "value": "custom"
+            },
+            {
+              "title": "From news item(s)",
+              "value": "news"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "custom",
+        "description": "Write custom copy below, or pick one or more News articles to display instead.",
+        "name": "announcementMode",
+        "type": "string",
+        "title": "Announcement Content Source"
+      },
+      {
+        "description": "First item becomes the card heading/excerpt; any further items are listed below it.",
+        "of": [
+          {
+            "to": [
+              {
+                "type": "article"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to article"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "announcementNewsItems",
+        "type": "array"
+      },
+      {
         "description": "Body description text shown inside the announcement card.",
+        "hidden": "conditional",
         "name": "announcementText",
         "type": "string",
         "title": "Announcement Subtitle / Text"
       },
       {
         "description": "Main heading title inside the announcement card.",
+        "hidden": "conditional",
         "name": "announcementTitle",
         "type": "string"
       },
       {
         "description": "Text shown on the action button (e.g. \"Gratis demo aanvragen\").",
+        "hidden": "conditional",
         "name": "announcementCtaLabel",
         "type": "string",
         "title": "Announcement CTA Button Label"
@@ -2814,12 +2879,14 @@
             "title": "Review Item"
           }
         ],
+        "hidden": "conditional",
         "name": "announcementReviews",
         "type": "array",
         "title": "Announcement Card Reviews"
       },
       {
-        "description": "Optional link destination (use \"#demo\" to open the demo form).",
+        "description": "Optional link destination (use \"#demo\" to open the demo form). Ignored in News mode — links to the first selected article instead.",
+        "hidden": "conditional",
         "name": "announcementLink",
         "type": "string",
         "title": "Announcement Link Target"
