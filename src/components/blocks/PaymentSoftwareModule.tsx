@@ -55,6 +55,9 @@ export function PaymentSoftwareModule({
     const comparisonBlock = pageBlocks.find(
         (b: any) => b._type === 'comparisonBlock',
     );
+    const architectureBlock = pageBlocks.find(
+        (b: any) => b._type === 'architectureBlock',
+    );
     const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock');
 
     const heroBadge =
@@ -108,6 +111,57 @@ export function PaymentSoftwareModule({
     const ctaImageUrl = getImageUrl(
         ctaBlock?.image,
         ctaBlock?.imagePath ||
+            '/emlinked/apps/payment/automatiseren_payment.jpg',
+    );
+
+    const archTag =
+        architectureBlock?.tag ||
+        (isEn ? 'ERP INTEGRATION' : 'ERP INTEGRATIE');
+    const archTitle =
+        architectureBlock?.title ||
+        (isEn
+            ? '100% Real-Time Banking Sync in Business Central'
+            : '100% Realtime Bankkoppeling in Business Central');
+    const archDesc =
+        architectureBlock?.desc ||
+        (isEn
+            ? "The Emlinked Payment Engine isn't a disconnected tool. Every SEPA collection, bank reconciliation, and dunning notice syncs directly with your central Business Central database."
+            : 'De Emlinked Payment Engine staat niet los van je boekhouding. Elke SEPA-incasso, bankaflettering en aanmaning wordt direct gesynchroniseerd met je centrale Business Central database.');
+    const defaultArchBullets = isEn
+        ? [
+              {
+                  bold: 'One central source of truth:',
+                  text: 'No separate banking portals or shadow files next to your ERP.',
+              },
+              {
+                  bold: 'Zero duplicate entry:',
+                  text: 'Collections, reconciliations, and reminders post directly as validated journal entries.',
+              },
+              {
+                  bold: '100% real-time data integrity:',
+                  text: 'Instantly reliable insight for accountants, management, and your team.',
+              },
+          ]
+        : [
+              {
+                  bold: 'Één centrale bron van waarheid:',
+                  text: 'Geen losse bankportalen of schaduwbestanden naast je ERP.',
+              },
+              {
+                  bold: 'Nul dubbele invoer:',
+                  text: "Incasso's, afletteringen en aanmaningen landen direct als gevalideerde journaalposten.",
+              },
+              {
+                  bold: '100% Realtime data-integriteit:',
+                  text: 'Direct betrouwbaar inzicht voor accountant, directie en beheerteam.',
+              },
+          ];
+    const archBullets = architectureBlock?.bullets?.length
+        ? architectureBlock.bullets.map((text: string) => ({ bold: '', text }))
+        : defaultArchBullets;
+    const archImage = getImageUrl(
+        architectureBlock?.image,
+        architectureBlock?.imagePath ||
             '/emlinked/apps/payment/automatiseren_payment.jpg',
     );
 
@@ -839,6 +893,67 @@ export function PaymentSoftwareModule({
         </section>
     );
 
+    const renderArchitecture = (block: any, key: any) => (
+        <section
+            key={key}
+            className='px-6 py-20 md:py-24 bg-background text-navy-900 border-b border-teal/10 relative z-10 overflow-hidden'
+        >
+            <div className='max-w-7xl mx-auto relative z-10'>
+                <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
+                    {/* Left Column: Copy & Bullets */}
+                    <div className='lg:col-span-6 flex flex-col gap-6 text-left'>
+                        <Badge color='teal' uppercase dot>
+                            {archTag}
+                        </Badge>
+
+                        <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight'>
+                            {archTitle}
+                        </h2>
+
+                        <p className='text-navy-900/75 text-base md:text-lg font-light leading-relaxed'>
+                            {archDesc}
+                        </p>
+
+                        <div className='space-y-4 pt-2'>
+                            {archBullets.map((bullet: any, bIdx: number) => (
+                                <div
+                                    key={bIdx}
+                                    className='flex items-start gap-3.5'
+                                >
+                                    <div className='w-6 h-6 rounded-full border border-teal/40 bg-teal/15 flex items-center justify-center shrink-0 mt-0.5 shadow-xs'>
+                                        <Check className='w-3.5 h-3.5 text-teal' />
+                                    </div>
+                                    <div className='text-sm md:text-base text-navy-900/85 leading-relaxed'>
+                                        {bullet.bold && (
+                                            <strong className='text-navy-900 font-semibold mr-1'>
+                                                {bullet.bold}
+                                            </strong>
+                                        )}
+                                        {bullet.text}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Right Column: Requested Image Asset */}
+                    <div className='lg:col-span-6 flex justify-center lg:justify-end'>
+                        <div className='relative w-full rounded-2xl overflow-hidden border border-black/10 shadow-sm group bg-white'>
+                            <Image
+                                src={archImage}
+                                alt={archTitle}
+                                width={1200}
+                                height={800}
+                                className='w-full h-auto object-cover rounded-2xl group-hover:scale-[1.01] transition-transform duration-500 border border-teal/40'
+                                priority
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+
     const renderCta = (block: any, key: any) => (
         <section
             key={key}
@@ -921,6 +1036,7 @@ export function PaymentSoftwareModule({
                   { _type: 'heroBlock', _key: 'default_hero' },
                   { _type: 'comparisonBlock', _key: 'default_comp' },
                   { _type: 'featureTabsBlock', _key: 'default_tabs' },
+                  { _type: 'architectureBlock', _key: 'default_arch' },
                   { _type: 'ctaBlock', _key: 'default_cta' },
               ];
 
@@ -944,6 +1060,8 @@ export function PaymentSoftwareModule({
                         return renderComparison(block, key);
                     case 'featureTabsBlock':
                         return renderFeatureTabs(block, key);
+                    case 'architectureBlock':
+                        return renderArchitecture(block, key);
                     case 'ctaBlock':
                     case 'ctaBanner':
                     case 'cta':
