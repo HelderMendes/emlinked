@@ -16,40 +16,22 @@ import {
     Users,
 } from 'lucide-react';
 import Link from 'next/link';
-import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
-import { formatHeroTitle } from '@/components/blocks/HeroSection';
-import { BorderBeam } from 'border-beam';
+import { HeroSection } from '@/components/blocks/HeroSection';
 import { DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
+import { ColorIcon } from '@/components/ui/ColorIcon';
 
-function CardBadge({
-    imageSrc,
-    alt,
-    isLegacy = false,
-}: {
-    imageSrc: string;
-    alt: string;
-    isLegacy?: boolean;
-}) {
+function CardBadge({ icon, alt }: { icon: string; alt: string }) {
     return (
-        <div
-            className={`absolute -top-6 -right-6 sm:-top-7 sm:-right-7 z-30 w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 sm:border-3 ${
-                isLegacy
-                    ? 'border-slate-300 bg-slate-200/95 shadow-xl'
-                    : 'border-teal bg-slate-200/95 shadow-xl'
-            } flex items-center justify-center p-2 group-hover:scale-110 transition-transform duration-300 pointer-events-none`}
-        >
-            <div className='relative w-10 h-10 sm:w-13 sm:h-13 rounded-full overflow-hidden'>
-                <Image
-                    src={imageSrc}
-                    alt={alt}
-                    fill
-                    sizes='52px'
-                    className='object-cover object-center scale-105'
-                />
-            </div>
+        <div className='absolute -top-5 -right-5 sm:-top-6 sm:-right-6 z-30 size-12 sm:size-14 rounded-xl bg-teal text-white flex items-center justify-center shadow-sm border-2 border-white pointer-events-none'>
+            <ColorIcon
+                src={icon}
+                alt={alt}
+                className='w-6 h-6 sm:w-7 sm:h-7 text-white'
+                sizePx={28}
+            />
         </div>
     );
 }
@@ -71,6 +53,33 @@ export function HuurdersportaalModule({
     const featureTabsBlock = pageBlocks.find(
         (b: any) => b._type === 'featureTabsBlock',
     );
+    const maintenanceTab =
+        featureTabsBlock?.tabs?.find(
+            (t: any) => t.tabId === 'maintenance',
+        ) || featureTabsBlock?.tabs?.[0];
+    const invoicesTab =
+        featureTabsBlock?.tabs?.find((t: any) => t.tabId === 'invoices') ||
+        featureTabsBlock?.tabs?.[1];
+    const documentsTab =
+        featureTabsBlock?.tabs?.find((t: any) => t.tabId === 'documents') ||
+        featureTabsBlock?.tabs?.[2];
+
+    const tab0Img = getImageUrl(
+        maintenanceTab?.image,
+        maintenanceTab?.imagePath ||
+            '/emlinked/apps/huurdersportaal/tab01_reparatie-onderhoudsbeheer.jpg',
+    );
+    const tab1Img = getImageUrl(
+        invoicesTab?.image,
+        invoicesTab?.imagePath ||
+            '/emlinked/apps/huurdersportaal/tab02_facturen-betalingshistorie.jpg',
+    );
+    const tab2Img = getImageUrl(
+        documentsTab?.image,
+        documentsTab?.imagePath ||
+            '/emlinked/apps/huurdersportaal/tab03_centraal-documentenarchief.jpg',
+    );
+
     const comparisonBlock = pageBlocks.find(
         (b: any) => b._type === 'comparisonBlock',
     );
@@ -78,6 +87,11 @@ export function HuurdersportaalModule({
         (b: any) => b._type === 'architectureBlock',
     );
     const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock');
+    const ctaImageUrl = getImageUrl(
+        ctaBlock?.image,
+        ctaBlock?.imagePath ||
+            '/emlinked/apps/huurdersportaal/automatiseren_huurdersportaal.jpg',
+    );
 
     const heroBadge =
         heroBlock?.badge ||
@@ -172,167 +186,91 @@ export function HuurdersportaalModule({
     >('maintenance');
 
     const renderHero = (block: any, key: any) => (
-        // ── BLOCK 1: HERO SECTION ── */}
-        <section
+        <HeroSection
             key={key}
-            className='relative px-6 py-12 md:py-20 overflow-hidden bg-texture-navy text-white border-b border-white/10'
-        >
-            <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
+            locale={locale}
+            label={heroBadge}
+            title={
+                heroTagline ||
+                (isEn
+                    ? 'A digital tenant portal for efficient communication & maintenance'
+                    : 'Digitaal huurdersportaal voor efficiënte communicatie & onderhoud')
+            }
+            titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
+            subtitle={
+                heroDescription ||
+                (isEn
+                    ? 'Reduce the call load on your management team and increase tenant satisfaction. Our tenant portal lets residents and commercial tenants submit maintenance requests, view invoices, and communicate 24/7 — fully synced with your central real estate administration.'
+                    : 'Verlaag de telefoondruk op je beheerteam en verhoog de tevredenheid van je huurders. Met onze huurdersportaal software regelen je bewoners en zakelijke huurders 24/7 zelf hun reparatieverzoeken, inzien van huurfacturen en communicatie. Volledig gesynchroniseerd met je centrale vastgoedadministratie.')
+            }
+            ctaLabel={
+                heroBlock?.primaryCtaLabel ||
+                heroBlock?.ctaLabel ||
+                (isEn ? 'Request a demo' : 'Vraag een demonstratie aan')
+            }
+            ctaLink={heroBlock?.primaryCtaUrl || heroBlock?.ctaLink || '#demo'}
+            secondaryCtaLabel={
+                heroBlock?.secondaryCtaLabel ||
+                (isEn ? 'All Apps' : 'Alle apps')
+            }
+            secondaryCtaLink={
+                heroBlock?.secondaryCtaUrl ||
+                heroBlock?.secondaryCtaLink ||
+                (isEn ? '/en/apps' : '/apps')
+            }
+            showProof
+            showProofAvatars={false}
+            proofText={
+                heroBlock?.proofText ||
+                doc?.proofText ||
+                (isEn
+                    ? 'Trusted by professional real estate managers and investors in Europe'
+                    : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')
+            }
+            customGraphic={
+                <>
+                    <Image
+                        src={heroImageUrl}
+                        alt={
+                            heroBlock?.title ||
+                            'Emlinked Huurdersportaal Software'
+                        }
+                        fill
+                        sizes='(max-width: 1024px) 100vw, 55vw'
+                        className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
+                        priority
+                    />
 
-            <div className='mx-auto max-w-7xl relative z-10'>
-                <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
-                    {/* Left Copy */}
-                    <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
-                        <Badge color='teal' uppercase dot dotPulse>
-                            {heroBadge}
-                        </Badge>
-
-                        <h1 className='font-display font-bold tracking-tight text-white leading-[1.1] text-3xl sm:text-4xl lg:text-[2.75rem] text-balance'>
-                            {heroTagline ? (
-                                formatHeroTitle(heroTagline)
-                            ) : (
-                                <>
-                                    Digitaal huurdersportaal voor{' '}
-                                    <span className='text-teal font-extrabold'>
-                                        efficiënte communicatie & onderhoud
-                                    </span>
-                                </>
-                            )}
-                        </h1>
-
-                        <p className='text-lg md:text-xl text-white/70 leading-relaxed font-light max-w-2xl'>
-                            {heroDescription ||
-                                'Verlaag de telefoondruk op je beheerteam en verhoog de tevredenheid van je huurders. Met onze huurdersportaal software regelen je bewoners en zakelijke huurders 24/7 zelf hun reparatieverzoeken, inzien van huurfacturen en communicatie. Volledig gesynchroniseerd met je centrale vastgoedadministratie.'}
-                        </p>
-
-                        <div className='flex flex-col sm:flex-row gap-4 mt-2'>
-                            <Link
-                                href={
-                                    heroBlock?.primaryCtaUrl ||
-                                    heroBlock?.ctaLink ||
-                                    '#demo'
-                                }
-                                className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
-                            >
-                                <span className='flex items-center justify-center gap-2 text-white'>
-                                    <span>
-                                        {heroBlock?.primaryCtaLabel ||
-                                            heroBlock?.ctaLabel ||
-                                            (isEn
-                                                ? 'Request a demo'
-                                                : 'Vraag een demonstratie aan')}
-                                    </span>
-                                    <ArrowRight className='w-5 h-5 text-white' />
-                                </span>
-                            </Link>
-
-                            <OutlineLinkButton
-                                href={
-                                    heroBlock?.secondaryCtaUrl ||
-                                    heroBlock?.secondaryCtaLink ||
-                                    (isEn ? '/en/apps' : '/apps')
-                                }
-                                color='white'
-                            >
-                                {heroBlock?.secondaryCtaLabel ||
-                                    (isEn ? 'All Apps →' : 'Alle apps →')}
-                            </OutlineLinkButton>
-                        </div>
-
-                        {/* Social Proof Text Bar (Clean Text Only) */}
-                        <div className='flex items-center gap-3 pt-4 border-t border-white/10 mt-1'>
-                            <span className='w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0' />
-                            <span className='text-xs sm:text-sm text-white/80 font-light leading-snug'>
-                                {heroBlock?.proofText ||
-                                    doc?.proofText ||
-                                    (isEn
-                                        ? 'Trusted by professional real estate managers and investors in Europe'
-                                        : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')}
-                            </span>
+                    <div className='absolute z-20 left-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
+                        <span className='w-7 h-7 rounded-lg bg-teal-pale text-teal flex items-center justify-center shrink-0'>
+                            <Smartphone className='w-3.5 h-3.5' />
+                        </span>
+                        <div>
+                            <p className='text-[11px] font-bold text-navy-900 leading-none'>
+                                24/7 Active
+                            </p>
+                            <p className='text-[9px] text-navy-500 mt-1'>
+                                {isEn ? 'Portal Status' : 'Portaal Status'}
+                            </p>
                         </div>
                     </div>
 
-                    {/* Right Column: High-Tech Graphic Card with Mockup Header & Metric Footer */}
-                    <div className='lg:col-span-5 hover:scale-[1.01] transition-transform duration-300 flex justify-center items-center relative'>
-                        <BorderBeam
-                            size='md'
-                            colorVariant='orange'
-                            strength={1.2}
-                            className='w-full'
-                        >
-                            <div className='relative w-full rounded-2xl bg-slate-950/90 backdrop-blur-xl shadow-2xl group overflow-hidden border border-white/15'>
-                                <div className='absolute -inset-1 bg-linear-to-r from-teal/30 via-indigo-500/20 to-teal/30 blur-xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none' />
-
-                                {/* Mockup Top Navigation Header */}
-                                <div className='relative z-10 flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-slate-950/90 text-xs text-white/70 font-mono'>
-                                    <div className='flex items-center gap-2'>
-                                        <div className='w-3 h-3 rounded-full bg-rose-500' />
-                                        <div className='w-3 h-3 rounded-full bg-teal' />
-                                        <div className='w-3 h-3 rounded-full bg-emerald-500' />
-                                        <span className='ml-2 text-[11px] text-white/80 font-bold'>
-                                            huurdersportaal_v2.0
-                                        </span>
-                                    </div>
-                                    <div className='inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] border border-emerald-500/40'>
-                                        <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-none' />
-                                        <span>24/7 Live Self-Service</span>
-                                    </div>
-                                </div>
-
-                                {/* Taller Showcase Image Container */}
-                                <div className='relative aspect-[1.08] w-full overflow-hidden bg-slate-950 flex flex-col justify-end items-center'>
-                                    <Image
-                                        src={heroImageUrl}
-                                        alt={
-                                            heroBlock?.title ||
-                                            'Emlinked Huurdersportaal Software'
-                                        }
-                                        width={1200}
-                                        height={1300}
-                                        className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-700'
-                                        priority
-                                    />
-
-                                    {/* Bottom Metric Badges Footer */}
-                                    <div className='absolute bottom-3 left-3 right-3 grid grid-cols-3 gap-2 backdrop-blur-md bg-slate-950/90 p-3 rounded-xl border border-white/15 shadow-xl z-20'>
-                                        <div>
-                                            <div className='text-[10px] uppercase text-white/50 font-mono'>
-                                                {isEn
-                                                    ? 'Portal Status'
-                                                    : 'Portaal Status'}
-                                            </div>
-                                            <div className='text-xs sm:text-sm font-bold text-emerald-400'>
-                                                24/7 Active
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className='text-[10px] uppercase text-white/50 font-mono'>
-                                                {isEn
-                                                    ? 'Avg Response'
-                                                    : 'Gem. Responstijd'}
-                                            </div>
-                                            <div className='text-xs sm:text-sm font-bold text-teal'>
-                                                &lt; 15 min
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className='text-[10px] uppercase text-white/50 font-mono'>
-                                                {isEn
-                                                    ? 'Tenant Rating'
-                                                    : 'Huurderscore'}
-                                            </div>
-                                            <div className='text-xs sm:text-sm font-bold text-white'>
-                                                9.4 / 10
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </BorderBeam>
+                    <div className='absolute z-20 right-0 bottom-8 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
+                        <span className='w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0'>
+                            <Clock className='w-3.5 h-3.5' />
+                        </span>
+                        <div>
+                            <p className='text-[11px] font-bold text-navy-900 leading-none'>
+                                &lt; 15 min
+                            </p>
+                            <p className='text-[9px] text-navy-500 mt-1'>
+                                {isEn ? 'Avg Response' : 'Gem. Responstijd'}
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </>
+            }
+        />
     );
 
     const renderComparison = (block: any, key: any) => (
@@ -376,9 +314,12 @@ export function HuurdersportaalModule({
                     {/* Left Card: Legacy Pain */}
                     <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                         <CardBadge
-                            imageSrc='/emlinked/apps/vastgoedbeheer-software/traditionele_vastgoedsoftware.jpg'
-                            alt='Traditionele Vastgoedsoftware'
-                            isLegacy={true}
+                            icon='/emlinked/apps/traditional–Property–software.svg'
+                            alt={
+                                isEn
+                                    ? 'Traditional Property Software'
+                                    : 'Traditionele Vastgoedsoftware'
+                            }
                         />
 
                         <div className='space-y-6'>
@@ -465,9 +406,12 @@ export function HuurdersportaalModule({
                     {/* Right Card: Emlinked Native Solution */}
                     <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                         <CardBadge
-                            imageSrc='/emlinked/apps/huurdersportaal/automatiseren_huurdersportaal.jpg'
-                            alt='Emlinked Digitaal Huurdersportaal'
-                            isLegacy={false}
+                            icon='/emlinked/apps/native_ERP.svg'
+                            alt={
+                                isEn
+                                    ? 'Emlinked Native ERP'
+                                    : 'Emlinked Native ERP'
+                            }
                         />
 
                         <div className='space-y-6'>
@@ -564,23 +508,21 @@ export function HuurdersportaalModule({
         // ── BLOCK 3: CORE FUNCTIONALITIES ── */}
         <section
             key={key}
-            className='py-20 px-6 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'
+            className='py-20 px-6 bg-background text-navy-900 border-b border-teal/10 relative overflow-hidden'
         >
-            <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
-
             <div className='max-w-7xl mx-auto space-y-8 relative z-10'>
                 <div className='text-center max-w-3xl mx-auto space-y-4 flex flex-col items-center'>
-                    <Badge color='teal' uppercase dot dotPulse>
+                    <Badge color='teal' uppercase className='self-center'>
                         {featureTabsBlock?.badge ||
                             (isEn ? 'CAPABILITIES' : 'FUNCTIONALITEITEN')}
                     </Badge>
-                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-white'>
+                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-navy-900'>
                         {featureTabsBlock?.title ||
                             (isEn
                                 ? 'Everything your tenants expect in one digital portal'
                                 : 'Alles wat je huurder verwacht in één online omgeving')}
                     </h2>
-                    <p className='text-white/80 leading-relaxed text-base md:text-lg font-light max-w-3xl'>
+                    <p className='text-navy-900/75 text-base md:text-lg font-light max-w-3xl'>
                         {featureTabsBlock?.desc ||
                             doc?.featuresSectionDesc ||
                             (isEn
@@ -590,20 +532,24 @@ export function HuurdersportaalModule({
                 </div>
 
                 {/* Feature Tabs Bar */}
-                <div className='flex justify-center border-b border-white/10 gap-2 sm:gap-4 overflow-x-auto pb-px'>
+                <div className='flex justify-center border-b border-black/10 gap-2 sm:gap-4 overflow-x-auto pb-px'>
                     <button
                         onClick={() => setActiveTab('maintenance')}
                         className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
                             activeTab === 'maintenance'
                                 ? 'border-teal text-teal bg-teal/15 rounded-t-lg'
-                                : 'border-transparent text-white/60 hover:text-white'
+                                : 'border-transparent text-navy-900/60 hover:text-navy-900'
                         }`}
                     >
                         <Wrench className='w-4 h-4' />
                         <span>
-                            {isEn
-                                ? '1. Repair & Maintenance'
-                                : '1. Reparatie- & Onderhoudsbeheer'}
+                            1.{' '}
+                            {(
+                                maintenanceTab?.tabTitle ||
+                                (isEn
+                                    ? 'Repair & Maintenance'
+                                    : 'Reparatie- & Onderhoudsbeheer')
+                            ).replace(/^\d+\.\s*/, '')}
                         </span>
                     </button>
                     <button
@@ -611,14 +557,18 @@ export function HuurdersportaalModule({
                         className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
                             activeTab === 'invoices'
                                 ? 'border-teal text-teal bg-teal/15 rounded-t-lg'
-                                : 'border-transparent text-white/60 hover:text-white'
+                                : 'border-transparent text-navy-900/60 hover:text-navy-900'
                         }`}
                     >
                         <FileText className='w-4 h-4' />
                         <span>
-                            {isEn
-                                ? '2. Invoices & Payment History'
-                                : '2. Facturen & Betalingshistorie'}
+                            2.{' '}
+                            {(
+                                invoicesTab?.tabTitle ||
+                                (isEn
+                                    ? 'Invoices & Payment History'
+                                    : 'Facturen & Betalingshistorie')
+                            ).replace(/^\d+\.\s*/, '')}
                         </span>
                     </button>
                     <button
@@ -626,14 +576,18 @@ export function HuurdersportaalModule({
                         className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
                             activeTab === 'documents'
                                 ? 'border-teal text-teal bg-teal/15 rounded-t-lg'
-                                : 'border-transparent text-white/60 hover:text-white'
+                                : 'border-transparent text-navy-900/60 hover:text-navy-900'
                         }`}
                     >
                         <MessageSquare className='w-4 h-4' />
                         <span>
-                            {isEn
-                                ? '3. Central Document Vault'
-                                : '3. Centraal Documentenarchief'}
+                            3.{' '}
+                            {(
+                                documentsTab?.tabTitle ||
+                                (isEn
+                                    ? 'Central Document Vault'
+                                    : 'Centraal Documentenarchief')
+                            ).replace(/^\d+\.\s*/, '')}
                         </span>
                     </button>
                 </div>
@@ -642,62 +596,82 @@ export function HuurdersportaalModule({
                 <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center'>
                     {activeTab === 'maintenance' && (
                         <>
-                            <div className='lg:col-span-6 space-y-6'>
-                                <h3 className='text-2xl sm:text-3xl font-bold text-white'>
-                                    {doc?.features?.[0]?.title ||
+                            <div className='lg:col-span-6 space-y-6 px-3'>
+                                <h3 className='font-semibold text-2xl md:text-3xl lg:text-4xl tracking-tight text-teal leading-tight'>
+                                    {maintenanceTab?.title ||
+                                        doc?.features?.[0]?.title ||
                                         (isEn
                                             ? 'Digital Repair & Maintenance Management'
                                             : 'Digitaal Reparatie- & Onderhoudsbeheer')}
                                 </h3>
-                                <p className='text-white/70 leading-relaxed text-base font-light'>
-                                    {doc?.features?.[0]?.text ||
+                                <p className='text-navy-900/75 text-base md:text-lg font-light leading-relaxed'>
+                                    {maintenanceTab?.text ||
+                                        doc?.features?.[0]?.text ||
                                         (isEn
                                             ? 'Tenants report damage or maintenance requests 24/7 via their smartphone. They select the category, attach photos, and track contractor progress live in the portal.'
                                             : 'Huurders melden 24/7 schade of onderhoud via hun smartphone. Ze selecteren de categorie, voegen foto’s toe en volgen de status van de ingeschakelde aannemer live in het portaal.')}
                                 </p>
-                                <ul className='space-y-2.5 text-sm text-white/80'>
-                                    <li className='flex items-center gap-2.5'>
-                                        <Check className='w-4 h-4 text-teal shrink-0' />
-                                        <span>
-                                            {isEn
-                                                ? 'Submit maintenance tickets with photo attachments'
-                                                : 'Storingsmeldingen indienen inclusief fotobijlagen'}
-                                        </span>
-                                    </li>
-                                    <li className='flex items-center gap-2.5'>
-                                        <Check className='w-4 h-4 text-teal shrink-0' />
-                                        <span>
-                                            {isEn
-                                                ? 'Real-time progress timeline per repair ticket'
-                                                : 'Realtime voortgangs-timeline per herstelverzoek'}
-                                        </span>
-                                    </li>
-                                    <li className='flex items-center gap-2.5'>
-                                        <Check className='w-4 h-4 text-teal shrink-0' />
-                                        <span>
-                                            {isEn
-                                                ? 'Direct integration with contractors & maintenance planning'
-                                                : 'Directe koppeling met aannemers & onderhoudsplanning'}
-                                        </span>
-                                    </li>
+                                <ul className='text-navy-900/85 ml-4'>
+                                    {maintenanceTab?.bullets?.length ? (
+                                        maintenanceTab.bullets.map(
+                                            (b: string, i: number) => (
+                                                <li
+                                                    key={i}
+                                                    className='flex items-start gap-2.5 mb-2.5'
+                                                >
+                                                    <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                    <span>{b}</span>
+                                                </li>
+                                            ),
+                                        )
+                                    ) : (
+                                        <>
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                <span>
+                                                    {isEn
+                                                        ? 'Submit maintenance tickets with photo attachments'
+                                                        : 'Storingsmeldingen indienen inclusief fotobijlagen'}
+                                                </span>
+                                            </li>
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                <span>
+                                                    {isEn
+                                                        ? 'Real-time progress timeline per repair ticket'
+                                                        : 'Realtime voortgangs-timeline per herstelverzoek'}
+                                                </span>
+                                            </li>
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                <span>
+                                                    {isEn
+                                                        ? 'Direct integration with contractors & maintenance planning'
+                                                        : 'Directe koppeling met aannemers & onderhoudsplanning'}
+                                                </span>
+                                            </li>
+                                        </>
+                                    )}
                                 </ul>
                             </div>
                             <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
-                                <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-teal-400 via-teal-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
-                                    <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                        APP
-                                    </span>
-                                    <span className='text-xl sm:text-2xl font-black leading-none'>
-                                        01
+                                {/* Square with round corners Top-Right Floating Badge */}
+                                <div className='absolute top-0 right-0 z-20 w-22 h-12 rounded-xl bg-teal text-white flex items-center justify-center gap-1 shadow-xl border-2 border-white pointer-events-none opacity-75'>
+                                    <Wrench className='size-6.5 -mr-1' />
+                                    <span className='font-light text-2xl tracking-tighter ml-1.5'>
+                                        1.
                                     </span>
                                 </div>
-                                <div className='rounded-xl overflow-hidden shadow-2xl'>
+                                <div className='rounded-xl overflow-hidden shadow-sm'>
                                     <Image
-                                        src='/emlinked/apps/huurdersportaal/tab01_reparatie-onderhoudsbeheer.jpg'
-                                        alt='Reparatie en Onderhoudsbeheer UI Preview'
+                                        src={tab0Img}
+                                        alt={
+                                            maintenanceTab?.title ||
+                                            'Reparatie en Onderhoudsbeheer UI Preview'
+                                        }
                                         width={1200}
                                         height={675}
-                                        className='w-full h-auto rounded-xl'
+                                        className='w-full h-auto rounded-lg border border-white/10'
                                     />
                                 </div>
                             </div>
@@ -706,62 +680,82 @@ export function HuurdersportaalModule({
 
                     {activeTab === 'invoices' && (
                         <>
-                            <div className='lg:col-span-6 space-y-6'>
-                                <h3 className='text-2xl sm:text-3xl font-bold text-white'>
-                                    {doc?.features?.[1]?.title ||
+                            <div className='lg:col-span-6 space-y-6 px-3'>
+                                <h3 className='font-semibold text-2xl md:text-3xl lg:text-4xl tracking-tight text-teal leading-tight'>
+                                    {invoicesTab?.title ||
+                                        doc?.features?.[1]?.title ||
                                         (isEn
                                             ? 'Insight into Invoices & Payment History'
                                             : 'Inzicht in Facturen & Betalingshistorie')}
                                 </h3>
-                                <p className='text-white/70 leading-relaxed text-base font-light'>
-                                    {doc?.features?.[1]?.text ||
+                                <p className='text-navy-900/75 text-base md:text-lg font-light leading-relaxed'>
+                                    {invoicesTab?.text ||
+                                        doc?.features?.[1]?.text ||
                                         (isEn
                                             ? 'Provide tenants instant visibility into their current rent invoices, service cost breakdowns, and payment statuses. This prevents unnecessary inquiries to finance teams.'
                                             : 'Geef huurders direct inzicht in hun actuele huurfacturen, specificaties van de servicekosten en betalingsstatus. Dit voorkomt onnodige vragen aan de financiële afdeling.')}
                                 </p>
-                                <ul className='space-y-2.5 text-sm text-white/80'>
-                                    <li className='flex items-center gap-2.5'>
-                                        <Check className='w-4 h-4 text-teal shrink-0' />
-                                        <span>
-                                            {isEn
-                                                ? 'Monthly rent specifications & service cost overviews'
-                                                : 'Maandelijkse huurspecificaties & servicekostenoverzichten'}
-                                        </span>
-                                    </li>
-                                    <li className='flex items-center gap-2.5'>
-                                        <Check className='w-4 h-4 text-teal shrink-0' />
-                                        <span>
-                                            {isEn
-                                                ? 'Payment status (Paid / Pending) instantly visible'
-                                                : 'Betalingsstatus (Voldaan / In afwachting) direct zichtbaar'}
-                                        </span>
-                                    </li>
-                                    <li className='flex items-center gap-2.5'>
-                                        <Check className='w-4 h-4 text-teal shrink-0' />
-                                        <span>
-                                            {isEn
-                                                ? 'Downloadable PDF invoices for accounting'
-                                                : 'Downloadbare PDF-facturen voor administratie'}
-                                        </span>
-                                    </li>
+                                <ul className='text-navy-900/85 ml-4'>
+                                    {invoicesTab?.bullets?.length ? (
+                                        invoicesTab.bullets.map(
+                                            (b: string, i: number) => (
+                                                <li
+                                                    key={i}
+                                                    className='flex items-start gap-2.5 mb-2.5'
+                                                >
+                                                    <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                    <span>{b}</span>
+                                                </li>
+                                            ),
+                                        )
+                                    ) : (
+                                        <>
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                <span>
+                                                    {isEn
+                                                        ? 'Monthly rent specifications & service cost overviews'
+                                                        : 'Maandelijkse huurspecificaties & servicekostenoverzichten'}
+                                                </span>
+                                            </li>
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                <span>
+                                                    {isEn
+                                                        ? 'Payment status (Paid / Pending) instantly visible'
+                                                        : 'Betalingsstatus (Voldaan / In afwachting) direct zichtbaar'}
+                                                </span>
+                                            </li>
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                <span>
+                                                    {isEn
+                                                        ? 'Downloadable PDF invoices for accounting'
+                                                        : 'Downloadbare PDF-facturen voor administratie'}
+                                                </span>
+                                            </li>
+                                        </>
+                                    )}
                                 </ul>
                             </div>
                             <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
-                                <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-teal-400 via-teal-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
-                                    <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                        APP
-                                    </span>
-                                    <span className='text-xl sm:text-2xl font-black leading-none'>
-                                        02
+                                {/* Square with round corners Top-Right Floating Badge */}
+                                <div className='absolute top-0 right-0 z-20 w-22 h-12 rounded-xl bg-teal text-white flex items-center justify-center gap-1 shadow-xl border-2 border-white pointer-events-none opacity-75'>
+                                    <FileText className='size-6.5 -mr-1' />
+                                    <span className='font-light text-2xl tracking-tighter ml-1.5'>
+                                        2.
                                     </span>
                                 </div>
-                                <div className='rounded-xl overflow-hidden shadow-2xl'>
+                                <div className='rounded-xl overflow-hidden shadow-sm'>
                                     <Image
-                                        src='/emlinked/apps/huurdersportaal/tab02_facturen-betalingshistorie.jpg'
-                                        alt='Facturen en Betalingshistorie UI Preview'
+                                        src={tab1Img}
+                                        alt={
+                                            invoicesTab?.title ||
+                                            'Facturen en Betalingshistorie UI Preview'
+                                        }
                                         width={1200}
                                         height={675}
-                                        className='w-full h-auto rounded-xl'
+                                        className='w-full h-auto rounded-lg border border-white/10'
                                     />
                                 </div>
                             </div>
@@ -770,62 +764,82 @@ export function HuurdersportaalModule({
 
                     {activeTab === 'documents' && (
                         <>
-                            <div className='lg:col-span-6 space-y-6'>
-                                <h3 className='text-2xl sm:text-3xl font-bold text-white'>
-                                    {doc?.features?.[2]?.title ||
+                            <div className='lg:col-span-6 space-y-6 px-3'>
+                                <h3 className='font-semibold text-2xl md:text-3xl lg:text-4xl tracking-tight text-teal leading-tight'>
+                                    {documentsTab?.title ||
+                                        doc?.features?.[2]?.title ||
                                         (isEn
                                             ? 'Central Document Archive'
                                             : 'Centraal Documentenarchief')}
                                 </h3>
-                                <p className='text-white/70 leading-relaxed text-base font-light'>
-                                    {doc?.features?.[2]?.text ||
+                                <p className='text-navy-900/75 text-base md:text-lg font-light leading-relaxed'>
+                                    {documentsTab?.text ||
+                                        doc?.features?.[2]?.text ||
                                         (isEn
                                             ? 'From lease agreements and handover reports to general terms and house rules: all relevant documents stored securely in a personal digital file.'
                                             : 'Van huurovereenkomsten en opleverrapporten tot algemene voorwaarden en huisregels: alle relevante documenten staan veilig opgeslagen in een persoonlijk digitaal dossier.')}
                                 </p>
-                                <ul className='space-y-2.5 text-sm text-white/80'>
-                                    <li className='flex items-center gap-2.5'>
-                                        <Check className='w-4 h-4 text-teal shrink-0' />
-                                        <span>
-                                            {isEn
-                                                ? 'Secure 24/7 encrypted storage of contracts'
-                                                : 'Veilige 24/7 versleutelde opslag van contracten'}
-                                        </span>
-                                    </li>
-                                    <li className='flex items-center gap-2.5'>
-                                        <Check className='w-4 h-4 text-teal shrink-0' />
-                                        <span>
-                                            {isEn
-                                                ? 'Handover reports, deed documents, and house rules'
-                                                : 'Opleverrapporten, splitsingsakten en huisregels'}
-                                        </span>
-                                    </li>
-                                    <li className='flex items-center gap-2.5'>
-                                        <Check className='w-4 h-4 text-teal shrink-0' />
-                                        <span>
-                                            {isEn
-                                                ? 'No more manual email requests for documents'
-                                                : 'Geen handmatige e-mailverzoeken meer voor documenten'}
-                                        </span>
-                                    </li>
+                                <ul className='text-navy-900/85 ml-4'>
+                                    {documentsTab?.bullets?.length ? (
+                                        documentsTab.bullets.map(
+                                            (b: string, i: number) => (
+                                                <li
+                                                    key={i}
+                                                    className='flex items-start gap-2.5 mb-2.5'
+                                                >
+                                                    <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                    <span>{b}</span>
+                                                </li>
+                                            ),
+                                        )
+                                    ) : (
+                                        <>
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                <span>
+                                                    {isEn
+                                                        ? 'Secure 24/7 encrypted storage of contracts'
+                                                        : 'Veilige 24/7 versleutelde opslag van contracten'}
+                                                </span>
+                                            </li>
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                <span>
+                                                    {isEn
+                                                        ? 'Handover reports, deed documents, and house rules'
+                                                        : 'Opleverrapporten, splitsingsakten en huisregels'}
+                                                </span>
+                                            </li>
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
+                                                <span>
+                                                    {isEn
+                                                        ? 'No more manual email requests for documents'
+                                                        : 'Geen handmatige e-mailverzoeken meer voor documenten'}
+                                                </span>
+                                            </li>
+                                        </>
+                                    )}
                                 </ul>
                             </div>
                             <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
-                                <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-teal-400 via-teal-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
-                                    <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                        APP
-                                    </span>
-                                    <span className='text-xl sm:text-2xl font-black leading-none'>
-                                        03
+                                {/* Square with round corners Top-Right Floating Badge */}
+                                <div className='absolute top-0 right-0 z-20 w-22 h-12 rounded-xl bg-teal text-white flex items-center justify-center gap-1 shadow-xl border-2 border-white pointer-events-none opacity-75'>
+                                    <MessageSquare className='size-6.5 -mr-1' />
+                                    <span className='font-light text-2xl tracking-tighter ml-1.5'>
+                                        3.
                                     </span>
                                 </div>
-                                <div className='rounded-xl overflow-hidden shadow-2xl'>
+                                <div className='rounded-xl overflow-hidden shadow-sm'>
                                     <Image
-                                        src='/emlinked/apps/huurdersportaal/tab03_centraal-documentenarchief.jpg'
-                                        alt='Documentenarchief UI Preview'
+                                        src={tab2Img}
+                                        alt={
+                                            documentsTab?.title ||
+                                            'Documentenarchief UI Preview'
+                                        }
                                         width={1200}
                                         height={675}
-                                        className='w-full h-auto rounded-xl'
+                                        className='w-full h-auto rounded-lg border border-white/10'
                                     />
                                 </div>
                             </div>
@@ -937,13 +951,13 @@ export function HuurdersportaalModule({
                             </div>
                         </div>
                         <div className='lg:col-span-6 flex justify-center lg:justify-end'>
-                            <div className='relative w-full rounded-2xl overflow-hidden border border-black/10 shadow-2xl group bg-white'>
+                            <div className='relative w-full rounded-2xl overflow-hidden border border-black/10 shadow-sm group bg-white'>
                                 <Image
                                     src={bImage}
                                     alt={bTitle}
                                     width={1200}
                                     height={800}
-                                    className='w-full h-auto object-cover rounded-2xl group-hover:scale-[1.01] transition-transform duration-500'
+                                    className='w-full h-auto object-cover rounded-2xl group-hover:scale-[1.01] transition-transform duration-500 border border-teal/40'
                                     priority
                                 />
                             </div>
@@ -1014,8 +1028,11 @@ export function HuurdersportaalModule({
 
                         <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                             <Image
-                                src='/emlinked/apps/huurdersportaal/automatiseren_huurdersportaal.jpg'
-                                alt='Huurdersportaal Illustratie'
+                                src={ctaImageUrl}
+                                alt={
+                                    ctaBlock?.title ||
+                                    'Huurdersportaal Illustratie'
+                                }
                                 width={700}
                                 height={500}
                                 className='w-full h-[350px] max-h-[350px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'

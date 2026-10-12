@@ -233,6 +233,12 @@ export const solutionPage = defineType({
                             type: 'string',
                         }),
                         defineField({
+                            name: 'desc',
+                            title: 'Section Description',
+                            type: 'text',
+                            rows: 3,
+                        }),
+                        defineField({
                             name: 'tabs',
                             title: 'Feature Tabs',
                             type: 'array',
@@ -451,6 +457,11 @@ export const solutionPage = defineType({
                     title: 'CTA Banner Block',
                     type: 'object',
                     fields: [
+                        defineField({
+                            name: 'tag',
+                            title: 'Pill Badge Tag',
+                            type: 'string',
+                        }),
                         defineField({
                             name: 'title',
                             title: 'CTA Title',

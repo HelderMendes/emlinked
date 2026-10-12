@@ -15,40 +15,22 @@ import {
     Database,
 } from 'lucide-react';
 import Link from 'next/link';
-import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
-import { formatHeroTitle } from '@/components/blocks/HeroSection';
-import { BorderBeam } from 'border-beam';
+import { HeroSection } from '@/components/blocks/HeroSection';
 import { DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
+import { ColorIcon } from '@/components/ui/ColorIcon';
 
-function CardBadge({
-    imageSrc,
-    alt,
-    isLegacy = false,
-}: {
-    imageSrc: string;
-    alt: string;
-    isLegacy?: boolean;
-}) {
+function CardBadge({ icon, alt }: { icon: string; alt: string }) {
     return (
-        <div
-            className={`absolute -top-6 -right-6 sm:-top-7 sm:-right-7 z-30 w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 sm:border-3 ${
-                isLegacy
-                    ? 'border-slate-300 bg-slate-200/95 shadow-xl'
-                    : 'border-teal bg-slate-200/95 shadow-xl'
-            } flex items-center justify-center p-2 group-hover:scale-110 transition-transform duration-300 pointer-events-none`}
-        >
-            <div className='relative w-10 h-10 sm:w-13 sm:h-13 rounded-full overflow-hidden'>
-                <Image
-                    src={imageSrc}
-                    alt={alt}
-                    fill
-                    sizes='52px'
-                    className='object-cover object-center scale-105'
-                />
-            </div>
+        <div className='absolute -top-5 -right-5 sm:-top-6 sm:-right-6 z-30 size-12 sm:size-14 rounded-xl bg-teal text-white flex items-center justify-center shadow-sm border-2 border-white pointer-events-none'>
+            <ColorIcon
+                src={icon}
+                alt={alt}
+                className='w-6 h-6 sm:w-7 sm:h-7 text-white'
+                sizePx={28}
+            />
         </div>
     );
 }
@@ -198,166 +180,88 @@ export function PaymentSoftwareModule({
     >('sepa');
 
     const renderHero = (block: any, key: any) => (
-        <section
+        <HeroSection
             key={key}
-            className='relative px-6 py-12 md:py-20 overflow-hidden bg-texture-navy text-white border-b border-white/10'
-        >
-            <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
+            locale={locale}
+            label={heroBadge}
+            title={
+                heroTagline ||
+                (isEn
+                    ? 'Automated rent collection & bank reconciliation inside your ERP'
+                    : 'Geautomatiseerde huurincasso & bankaflettering direct in je ERP')
+            }
+            titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
+            subtitle={
+                heroDescription ||
+                (isEn
+                    ? 'No more manual bank statement reconciliation. Our payment software automates SEPA direct debits, payment reminders, and matching incoming payments with your general ledger. Natively integrated with Microsoft Dynamics 365 Business Central and Direct Banking.'
+                    : 'Geen handmatige aflettering van bankafschriften meer. Onze huurincasso software automatiseert het volledige proces van SEPA-incasso’s, herinneringen en het matchen van inkomende huurbetalingen met je grootboek. Native geïntegreerd met Microsoft Dynamics 365 Business Central en Direct Banking.')
+            }
+            ctaLabel={
+                heroBlock?.primaryCtaLabel ||
+                heroBlock?.ctaLabel ||
+                (isEn ? 'Request a demo' : 'Vraag een demonstratie aan')
+            }
+            ctaLink={heroBlock?.primaryCtaUrl || heroBlock?.ctaLink || '#demo'}
+            secondaryCtaLabel={
+                heroBlock?.secondaryCtaLabel ||
+                (isEn ? 'All Apps' : 'Alle apps')
+            }
+            secondaryCtaLink={
+                heroBlock?.secondaryCtaUrl ||
+                heroBlock?.secondaryCtaLink ||
+                (isEn ? '/en/apps' : '/apps')
+            }
+            showProof
+            showProofAvatars={false}
+            proofText={
+                heroBlock?.proofText ||
+                doc?.proofText ||
+                (isEn
+                    ? 'Trusted by professional real estate managers and investors in Europe'
+                    : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')
+            }
+            customGraphic={
+                <>
+                    <Image
+                        src={heroImageUrl}
+                        alt={heroBlock?.title || 'Emlinked Payment Software'}
+                        fill
+                        sizes='(max-width: 1024px) 100vw, 55vw'
+                        className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
+                        priority
+                    />
 
-            <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10'>
-                <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
-                    {/* Left Copy */}
-                    <div className='lg:col-span-7 flex flex-col gap-6 text-left'>
-                        <Badge color='teal' uppercase dot dotPulse>
-                            {heroBadge}
-                        </Badge>
-
-                        <h1 className='font-display font-bold tracking-tight text-white leading-[1.1] text-3xl sm:text-4xl lg:text-[2.75rem] text-balance'>
-                            {heroTagline ? (
-                                formatHeroTitle(heroTagline)
-                            ) : (
-                                <>
-                                    Geautomatiseerde huurincasso &{' '}
-                                    <span className='text-teal font-extrabold'>
-                                        bankaflettering direct in je ERP
-                                    </span>
-                                </>
-                            )}
-                        </h1>
-
-                        <p className='text-lg md:text-xl text-white/70 leading-relaxed font-light max-w-2xl'>
-                            {heroDescription ||
-                                'Geen handmatige aflettering van bankafschriften meer. Onze huurincasso software automatiseert het volledige proces van SEPA-incasso’s, herinneringen en het matchen van inkomende huurbetalingen met je grootboek. Native geïntegreerd met Microsoft Dynamics 365 Business Central en Direct Banking.'}
-                        </p>
-
-                        <div className='flex flex-col sm:flex-row gap-4 mt-2'>
-                            <Link
-                                href={
-                                    heroBlock?.primaryCtaUrl ||
-                                    heroBlock?.ctaLink ||
-                                    '#demo'
-                                }
-                                className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
-                            >
-                                <span className='flex items-center justify-center gap-2 text-white'>
-                                    <span>
-                                        {heroBlock?.primaryCtaLabel ||
-                                            heroBlock?.ctaLabel ||
-                                            (isEn
-                                                ? 'Request a demo'
-                                                : 'Vraag een demonstratie aan')}
-                                    </span>
-                                    <ArrowRight className='w-5 h-5 text-white' />
-                                </span>
-                            </Link>
-
-                            <OutlineLinkButton
-                                href={
-                                    heroBlock?.secondaryCtaUrl ||
-                                    heroBlock?.secondaryCtaLink ||
-                                    (isEn ? '/en/apps' : '/apps')
-                                }
-                                color='white'
-                            >
-                                {heroBlock?.secondaryCtaLabel ||
-                                    (isEn ? 'All Apps →' : 'Alle apps →')}
-                            </OutlineLinkButton>
-                        </div>
-
-                        {/* Social Proof Text Bar (Clean Text Only) */}
-                        <div className='flex items-center gap-3 pt-4 border-t border-white/10 mt-1'>
-                            <span className='w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0' />
-                            <span className='text-xs sm:text-sm text-white/80 font-light leading-snug'>
-                                {heroBlock?.proofText ||
-                                    doc?.proofText ||
-                                    (isEn
-                                        ? 'Trusted by professional real estate managers and investors in Europe'
-                                        : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')}
-                            </span>
+                    <div className='absolute z-20 left-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
+                        <span className='w-7 h-7 rounded-lg bg-teal-pale text-teal flex items-center justify-center shrink-0'>
+                            <ShieldCheck className='w-3.5 h-3.5' />
+                        </span>
+                        <div>
+                            <p className='text-[11px] font-bold text-navy-900 leading-none'>
+                                Geautomatiseerd
+                            </p>
+                            <p className='text-[9px] text-navy-500 mt-1'>
+                                {isEn ? 'Direct Debit' : 'SEPA Incasso'}
+                            </p>
                         </div>
                     </div>
 
-                    {/* Right Column: High-Tech Graphic Card with Mockup Header & Metric Footer */}
-                    <div className='lg:col-span-5 hover:scale-[1.01] transition-transform duration-300 flex justify-center items-center relative'>
-                        <BorderBeam
-                            size='md'
-                            colorVariant='orange'
-                            strength={1.2}
-                            className='w-full'
-                        >
-                            <div className='relative w-full rounded-2xl bg-slate-950/90 backdrop-blur-xl shadow-2xl group overflow-hidden border border-white/15'>
-                                <div className='absolute -inset-1 bg-linear-to-r from-teal/30 via-indigo-500/20 to-teal/30 blur-xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none' />
-
-                                {/* Mockup Top Navigation Header */}
-                                <div className='relative z-10 flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-slate-950/90 text-xs text-white/70 font-mono'>
-                                    <div className='flex items-center gap-2'>
-                                        <div className='w-3 h-3 rounded-full bg-rose-500' />
-                                        <div className='w-3 h-3 rounded-full bg-teal' />
-                                        <div className='w-3 h-3 rounded-full bg-emerald-500' />
-                                        <span className='ml-2 text-[11px] text-white/80 font-bold'>
-                                            payment_engine_v3.1
-                                        </span>
-                                    </div>
-                                    <div className='inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] border border-emerald-500/40'>
-                                        <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-none' />
-                                        <span>100% Direct Banking Sync</span>
-                                    </div>
-                                </div>
-
-                                {/* Taller Showcase Image Container */}
-                                <div className='relative aspect-[1.08] w-full overflow-hidden bg-slate-950 flex flex-col justify-end items-center'>
-                                    <Image
-                                        src={heroImageUrl}
-                                        alt={
-                                            heroBlock?.title ||
-                                            'Emlinked Payment Software'
-                                        }
-                                        width={1200}
-                                        height={1300}
-                                        className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-700'
-                                        priority
-                                    />
-
-                                    {/* Bottom Metric Badges Footer */}
-                                    <div className='absolute bottom-3 left-3 right-3 grid grid-cols-3 gap-2 backdrop-blur-md bg-slate-950/90 p-3 rounded-xl border border-white/15 shadow-xl z-20'>
-                                        <div>
-                                            <div className='text-[10px] uppercase text-white/50 font-mono'>
-                                                {isEn
-                                                    ? 'Direct Debit'
-                                                    : 'SEPA Incasso'}
-                                            </div>
-                                            <div className='text-xs sm:text-sm font-bold text-emerald-400'>
-                                                Geautomatiseerd
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className='text-[10px] uppercase text-white/50 font-mono'>
-                                                {isEn
-                                                    ? 'Reconciliation'
-                                                    : 'Aflettering'}
-                                            </div>
-                                            <div className='text-xs sm:text-sm font-bold text-teal'>
-                                                95% Match
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className='text-[10px] uppercase text-white/50 font-mono'>
-                                                {isEn
-                                                    ? 'Banking API'
-                                                    : 'Bankkoppeling'}
-                                            </div>
-                                            <div className='text-xs sm:text-sm font-bold text-white'>
-                                                CAMT.053 / PSD2
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </BorderBeam>
+                    <div className='absolute z-20 right-0 bottom-8 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
+                        <span className='w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0'>
+                            <Database className='w-3.5 h-3.5' />
+                        </span>
+                        <div>
+                            <p className='text-[11px] font-bold text-navy-900 leading-none'>
+                                95% Match
+                            </p>
+                            <p className='text-[9px] text-navy-500 mt-1'>
+                                {isEn ? 'Reconciliation' : 'Aflettering'}
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </>
+            }
+        />
     );
 
     const renderComparison = (block: any, key: any) => (
@@ -400,9 +304,12 @@ export function PaymentSoftwareModule({
                     {/* Left Card: Legacy Pain */}
                     <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                         <CardBadge
-                            imageSrc='/emlinked/apps/vastgoedbeheer-software/traditionele_vastgoedsoftware.jpg'
-                            alt='Handmatige Bankaflettering'
-                            isLegacy={true}
+                            icon='/emlinked/apps/traditional–Property–software.svg'
+                            alt={
+                                isEn
+                                    ? 'Traditional Property Software'
+                                    : 'Traditionele Vastgoedsoftware'
+                            }
                         />
 
                         <div className='space-y-6'>
@@ -489,9 +396,12 @@ export function PaymentSoftwareModule({
                     {/* Right Card: Emlinked Native Solution */}
                     <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                         <CardBadge
-                            imageSrc={ctaImageUrl}
-                            alt='Emlinked Payment Engine'
-                            isLegacy={false}
+                            icon='/emlinked/apps/native_ERP.svg'
+                            alt={
+                                isEn
+                                    ? 'Emlinked Native ERP'
+                                    : 'Emlinked Native ERP'
+                            }
                         />
 
                         <div className='space-y-6'>
@@ -587,23 +497,21 @@ export function PaymentSoftwareModule({
     const renderFeatureTabs = (block: any, key: any) => (
         <section
             key={key}
-            className='py-20 px-6 bg-texture-navy text-white border-b border-white/10 relative overflow-hidden'
+            className='py-20 px-6 bg-background text-navy-900 border-b border-teal/10 relative overflow-hidden'
         >
-            <DataGridCanvas className='pointer-events-none absolute inset-0 h-full w-full opacity-70 z-999' />
-
             <div className='max-w-7xl mx-auto space-y-8 relative z-10'>
                 <div className='text-center max-w-3xl mx-auto space-y-4 flex flex-col items-center'>
-                    <Badge color='teal' uppercase dot dotPulse>
+                    <Badge color='teal' uppercase className='self-center'>
                         {featureTabsBlock?.badge ||
                             (isEn ? 'CAPABILITIES' : 'FUNCTIONALITEITEN')}
                     </Badge>
-                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-white'>
+                    <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem]/12 font-bold tracking-tight text-navy-900'>
                         {featureTabsBlock?.title ||
                             (isEn
                                 ? 'Complete control over your rent collection flow'
                                 : 'Volledige controle over je huurincassostroom')}
                     </h2>
-                    <p className='text-white/80 leading-relaxed text-base md:text-lg font-light max-w-3xl'>
+                    <p className='text-navy-900/75 text-base md:text-lg font-light max-w-3xl'>
                         {featureTabsBlock?.desc ||
                             doc?.featuresSectionDesc ||
                             (isEn
@@ -613,21 +521,24 @@ export function PaymentSoftwareModule({
                 </div>
 
                 {/* Feature Tabs Bar */}
-                <div className='flex justify-center border-b border-white/10 gap-2 sm:gap-4 overflow-x-auto pb-px'>
+                <div className='flex justify-center border-b border-black/10 gap-2 sm:gap-4 overflow-x-auto pb-px'>
                     <button
                         onClick={() => setActiveTab('sepa')}
                         className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
                             activeTab === 'sepa'
                                 ? 'border-teal text-teal bg-teal/15 rounded-t-lg'
-                                : 'border-transparent text-white/60 hover:text-white'
+                                : 'border-transparent text-navy-900/60 hover:text-navy-900'
                         }`}
                     >
                         <CreditCard className='w-4 h-4' />
                         <span>
-                            {sepaTab?.tabTitle ||
+                            1.{' '}
+                            {(
+                                sepaTab?.tabTitle ||
                                 (isEn
-                                    ? '1. SEPA Direct Debit Collection'
-                                    : '1. SEPA Direct Debit Incasso')}
+                                    ? 'SEPA Direct Debit Collection'
+                                    : 'SEPA Direct Debit Incasso')
+                            ).replace(/^\d+\.\s*/, '')}
                         </span>
                     </button>
                     <button
@@ -635,15 +546,18 @@ export function PaymentSoftwareModule({
                         className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
                             activeTab === 'reconciliation'
                                 ? 'border-teal text-teal bg-teal/15 rounded-t-lg'
-                                : 'border-transparent text-white/60 hover:text-white'
+                                : 'border-transparent text-navy-900/60 hover:text-navy-900'
                         }`}
                     >
                         <RefreshCw className='w-4 h-4' />
                         <span>
-                            {reconciliationTab?.tabTitle ||
+                            2.{' '}
+                            {(
+                                reconciliationTab?.tabTitle ||
                                 (isEn
-                                    ? '2. Real-time Bank Reconciliation'
-                                    : '2. Realtime Bankreconciliatie')}
+                                    ? 'Real-time Bank Reconciliation'
+                                    : 'Realtime Bankreconciliatie')
+                            ).replace(/^\d+\.\s*/, '')}
                         </span>
                     </button>
                     <button
@@ -651,15 +565,18 @@ export function PaymentSoftwareModule({
                         className={`px-5 py-3 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
                             activeTab === 'dunning'
                                 ? 'border-teal text-teal bg-teal/15 rounded-t-lg'
-                                : 'border-transparent text-white/60 hover:text-white'
+                                : 'border-transparent text-navy-900/60 hover:text-navy-900'
                         }`}
                     >
                         <BarChart3 className='w-4 h-4' />
                         <span>
-                            {dunningTab?.tabTitle ||
+                            3.{' '}
+                            {(
+                                dunningTab?.tabTitle ||
                                 (isEn
-                                    ? '3. Reversal & Dunning Management'
-                                    : '3. Storneer- & Aanmaningsbeheer')}
+                                    ? 'Reversal & Dunning Management'
+                                    : 'Storneer- & Aanmaningsbeheer')
+                            ).replace(/^\d+\.\s*/, '')}
                         </span>
                     </button>
                 </div>
@@ -668,54 +585,54 @@ export function PaymentSoftwareModule({
                 <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center'>
                     {activeTab === 'sepa' && (
                         <>
-                            <div className='lg:col-span-6 space-y-6'>
-                                <h3 className='text-2xl sm:text-3xl font-bold text-white'>
+                            <div className='lg:col-span-6 space-y-6 px-3'>
+                                <h3 className='font-semibold text-2xl md:text-3xl lg:text-4xl tracking-tight text-teal leading-tight'>
                                     {sepaTab?.title ||
                                         doc?.features?.[0]?.title ||
                                         (isEn
                                             ? 'SEPA Direct Debit & Collection Automation'
                                             : 'SEPA Direct Debit & Incasso-automatisering')}
                                 </h3>
-                                <p className='text-white/70 leading-relaxed text-base font-light'>
+                                <p className='text-navy-900/75 text-base md:text-lg font-light leading-relaxed'>
                                     {sepaTab?.text ||
                                         doc?.features?.[0]?.text ||
                                         (isEn
                                             ? 'Generate and submit all monthly SEPA collection files to your bank with a single click. The software handles chargebacks automatically and schedules retries.'
                                             : 'Genereer en verstuur maandelijks met één druk op de knop alle SEPA-incassobestanden naar je bank. De software verwerkt storneringen automatisch en plant herhalingen in.')}
                                 </p>
-                                <ul className='space-y-2.5 text-sm text-white/80'>
+                                <ul className='text-navy-900/85 ml-4'>
                                     {sepaTab?.bullets?.length ? (
                                         sepaTab.bullets.map(
                                             (b: string, i: number) => (
                                                 <li
                                                     key={i}
-                                                    className='flex items-center gap-2.5'
+                                                    className='flex items-start gap-2.5 mb-2.5'
                                                 >
-                                                    <Check className='w-4 h-4 text-teal shrink-0' />
+                                                    <Check className='size-5 text-teal shrink-0 mt-2' />
                                                     <span>{b}</span>
                                                 </li>
                                             ),
                                         )
                                     ) : (
                                         <>
-                                            <li className='flex items-center gap-2.5'>
-                                                <Check className='w-4 h-4 text-teal shrink-0' />
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
                                                 <span>
                                                     {isEn
                                                         ? 'Automated generation of SEPA XML collection files'
                                                         : 'Automatische generatie van SEPA XML incassobestanden'}
                                                 </span>
                                             </li>
-                                            <li className='flex items-center gap-2.5'>
-                                                <Check className='w-4 h-4 text-teal shrink-0' />
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
                                                 <span>
                                                     {isEn
                                                         ? 'Direct debits automatically retried upon failure'
                                                         : 'Storneringen automatisch gedetecteerd & heraangeboden'}
                                                 </span>
                                             </li>
-                                            <li className='flex items-center gap-2.5'>
-                                                <Check className='w-4 h-4 text-teal shrink-0' />
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
                                                 <span>
                                                     {isEn
                                                         ? 'Integration with all major European banks'
@@ -727,15 +644,14 @@ export function PaymentSoftwareModule({
                                 </ul>
                             </div>
                             <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
-                                <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-teal-400 via-teal-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
-                                    <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                        APP
-                                    </span>
-                                    <span className='text-xl sm:text-2xl font-black leading-none'>
-                                        01
+                                {/* Square with round corners Top-Right Floating Badge */}
+                                <div className='absolute top-0 right-0 z-20 w-22 h-12 rounded-xl bg-teal text-white flex items-center justify-center gap-1 shadow-xl border-2 border-white pointer-events-none'>
+                                    <CreditCard className='size-6.5 -mr-1' />
+                                    <span className='font-light text-2xl tracking-tighter ml-1.5'>
+                                        1.
                                     </span>
                                 </div>
-                                <div className='rounded-xl overflow-hidden shadow-2xl'>
+                                <div className='rounded-xl overflow-hidden shadow-sm'>
                                     <Image
                                         src={tab0Img}
                                         alt={
@@ -744,7 +660,7 @@ export function PaymentSoftwareModule({
                                         }
                                         width={1200}
                                         height={675}
-                                        className='w-full h-auto rounded-xl'
+                                        className='w-full h-auto rounded-lg border border-white/10'
                                     />
                                 </div>
                             </div>
@@ -753,54 +669,54 @@ export function PaymentSoftwareModule({
 
                     {activeTab === 'reconciliation' && (
                         <>
-                            <div className='lg:col-span-6 space-y-6'>
-                                <h3 className='text-2xl sm:text-3xl font-bold text-white'>
+                            <div className='lg:col-span-6 space-y-6 px-3'>
+                                <h3 className='font-semibold text-2xl md:text-3xl lg:text-4xl tracking-tight text-teal leading-tight'>
                                     {reconciliationTab?.title ||
                                         doc?.features?.[1]?.title ||
                                         (isEn
                                             ? 'Real-time Bank Reconciliation via Direct Banking'
                                             : 'Realtime Bankreconciliatie via Direct Banking')}
                                 </h3>
-                                <p className='text-white/70 leading-relaxed text-base font-light'>
+                                <p className='text-navy-900/75 text-base md:text-lg font-light leading-relaxed'>
                                     {reconciliationTab?.text ||
                                         doc?.features?.[1]?.text ||
                                         (isEn
                                             ? 'Connect your bank account directly via Direct Banking or PSD2. Incoming rent payments are instantly matched against open invoices in your ledger.'
                                             : 'Koppel je bankrekening rechtstreeks via Direct Banking of PSD2. Inkomende betalingen worden op basis van kenmerk en bedrag direct gematcht met de openstaande posten in je boekhouding.')}
                                 </p>
-                                <ul className='space-y-2.5 text-sm text-white/80'>
+                                <ul className='text-navy-900/85 ml-4'>
                                     {reconciliationTab?.bullets?.length ? (
                                         reconciliationTab.bullets.map(
                                             (b: string, i: number) => (
                                                 <li
                                                     key={i}
-                                                    className='flex items-center gap-2.5'
+                                                    className='flex items-start gap-2.5 mb-2.5'
                                                 >
-                                                    <Check className='w-4 h-4 text-teal shrink-0' />
+                                                    <Check className='size-5 text-teal shrink-0 mt-2' />
                                                     <span>{b}</span>
                                                 </li>
                                             ),
                                         )
                                     ) : (
                                         <>
-                                            <li className='flex items-center gap-2.5'>
-                                                <Check className='w-4 h-4 text-teal shrink-0' />
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
                                                 <span>
                                                     {isEn
                                                         ? 'Direct Banking & CAMT.053 bank feeds imported automatically'
                                                         : 'Direct Banking & CAMT.053 bankafschriften automatisch ingelezen'}
                                                 </span>
                                             </li>
-                                            <li className='flex items-center gap-2.5'>
-                                                <Check className='w-4 h-4 text-teal shrink-0' />
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
                                                 <span>
                                                     {isEn
                                                         ? '100% accurate matching engine per lease & tenant'
                                                         : '100% accurate matche-engine op huurcontract en debiteurnummer'}
                                                 </span>
                                             </li>
-                                            <li className='flex items-center gap-2.5'>
-                                                <Check className='w-4 h-4 text-teal shrink-0' />
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
                                                 <span>
                                                     {isEn
                                                         ? 'Split payments across owners and management fees'
@@ -812,15 +728,14 @@ export function PaymentSoftwareModule({
                                 </ul>
                             </div>
                             <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
-                                <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-teal-400 via-teal-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
-                                    <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                        APP
-                                    </span>
-                                    <span className='text-xl sm:text-2xl font-black leading-none'>
-                                        02
+                                {/* Square with round corners Top-Right Floating Badge */}
+                                <div className='absolute top-0 right-0 z-20 w-22 h-12 rounded-xl bg-teal text-white flex items-center justify-center gap-1 shadow-xl border-2 border-white pointer-events-none'>
+                                    <RefreshCw className='size-6.5 -mr-1' />
+                                    <span className='font-light text-2xl tracking-tighter ml-1.5'>
+                                        2.
                                     </span>
                                 </div>
-                                <div className='rounded-xl overflow-hidden shadow-2xl'>
+                                <div className='rounded-xl overflow-hidden shadow-sm'>
                                     <Image
                                         src={tab1Img}
                                         alt={
@@ -829,7 +744,7 @@ export function PaymentSoftwareModule({
                                         }
                                         width={1200}
                                         height={675}
-                                        className='w-full h-auto rounded-xl'
+                                        className='w-full h-auto rounded-lg border border-white/10'
                                     />
                                 </div>
                             </div>
@@ -838,54 +753,54 @@ export function PaymentSoftwareModule({
 
                     {activeTab === 'dunning' && (
                         <>
-                            <div className='lg:col-span-6 space-y-6'>
-                                <h3 className='text-2xl sm:text-3xl font-bold text-white'>
+                            <div className='lg:col-span-6 space-y-6 px-3'>
+                                <h3 className='font-semibold text-2xl md:text-3xl lg:text-4xl tracking-tight text-teal leading-tight'>
                                     {dunningTab?.title ||
                                         doc?.features?.[2]?.title ||
                                         (isEn
                                             ? 'Automated Credit Management & Dunning'
                                             : 'Geautomatiseerd Debiteurenbeheer')}
                                 </h3>
-                                <p className='text-white/70 leading-relaxed text-base font-light'>
+                                <p className='text-navy-900/75 text-base md:text-lg font-light leading-relaxed'>
                                     {dunningTab?.text ||
                                         doc?.features?.[2]?.text ||
                                         (isEn
                                             ? 'Prevent accumulating rent arrears. Configure flexible dunning workflows for automated email and SMS reminders when payments are overdue.'
                                             : 'Voorkom oplopende betalingsachterstanden. Stel flexibele herinneringsschema’s in voor automatische herinneringen per e-mail of SMS zodra een betalingstermijn verstrijkt.')}
                                 </p>
-                                <ul className='space-y-2.5 text-sm text-white/80'>
+                                <ul className='text-navy-900/85 ml-4'>
                                     {dunningTab?.bullets?.length ? (
                                         dunningTab.bullets.map(
                                             (b: string, i: number) => (
                                                 <li
                                                     key={i}
-                                                    className='flex items-center gap-2.5'
+                                                    className='flex items-start gap-2.5 mb-2.5'
                                                 >
-                                                    <Check className='w-4 h-4 text-teal shrink-0' />
+                                                    <Check className='size-5 text-teal shrink-0 mt-2' />
                                                     <span>{b}</span>
                                                 </li>
                                             ),
                                         )
                                     ) : (
                                         <>
-                                            <li className='flex items-center gap-2.5'>
-                                                <Check className='w-4 h-4 text-teal shrink-0' />
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
                                                 <span>
                                                     {isEn
                                                         ? 'Automated reminder & dunning flows via email / SMS'
                                                         : 'Automatische herinneringen & aanmaningsflows per e-mail / SMS'}
                                                 </span>
                                             </li>
-                                            <li className='flex items-center gap-2.5'>
-                                                <Check className='w-4 h-4 text-teal shrink-0' />
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
                                                 <span>
                                                     {isEn
                                                         ? 'Clear accounts receivable aging reports per property'
                                                         : 'Inzichtelijke debiteuren-aging rapportage per object'}
                                                 </span>
                                             </li>
-                                            <li className='flex items-center gap-2.5'>
-                                                <Check className='w-4 h-4 text-teal shrink-0' />
+                                            <li className='flex items-start gap-2.5 mb-2.5'>
+                                                <Check className='size-5 text-teal shrink-0 mt-2' />
                                                 <span>
                                                     {isEn
                                                         ? 'Full audit trail in Business Central & tenant file'
@@ -897,15 +812,14 @@ export function PaymentSoftwareModule({
                                 </ul>
                             </div>
                             <div className='lg:col-span-6 relative pt-4 pr-4 sm:pt-6 sm:pr-6'>
-                                <div className='absolute top-0 right-0 z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-teal-400 via-teal-500 to-orange-500 text-white flex flex-col items-center justify-center shadow-xl border-2 border-white pointer-events-none'>
-                                    <span className='text-[9px] sm:text-[10px] font-bold tracking-widest uppercase opacity-95 leading-none mb-0.5'>
-                                        APP
-                                    </span>
-                                    <span className='text-xl sm:text-2xl font-black leading-none'>
-                                        03
+                                {/* Square with round corners Top-Right Floating Badge */}
+                                <div className='absolute top-0 right-0 z-20 w-22 h-12 rounded-xl bg-teal text-white flex items-center justify-center gap-1 shadow-xl border-2 border-white pointer-events-none'>
+                                    <BarChart3 className='size-6.5 -mr-1' />
+                                    <span className='font-light text-2xl tracking-tighter ml-1.5'>
+                                        3.
                                     </span>
                                 </div>
-                                <div className='rounded-xl overflow-hidden shadow-2xl'>
+                                <div className='rounded-xl overflow-hidden shadow-sm'>
                                     <Image
                                         src={tab2Img}
                                         alt={
@@ -914,7 +828,7 @@ export function PaymentSoftwareModule({
                                         }
                                         width={1200}
                                         height={675}
-                                        className='w-full h-auto rounded-xl'
+                                        className='w-full h-auto rounded-lg border border-white/10'
                                     />
                                 </div>
                             </div>

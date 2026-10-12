@@ -3367,6 +3367,12 @@
                 "title": "Section Title"
               },
               {
+                "rows": 3,
+                "name": "desc",
+                "type": "text",
+                "title": "Section Description"
+              },
+              {
                 "of": [
                   {
                     "fields": [
@@ -3532,6 +3538,11 @@
           },
           {
             "fields": [
+              {
+                "name": "tag",
+                "type": "string",
+                "title": "Pill Badge Tag"
+              },
               {
                 "name": "title",
                 "type": "string",
