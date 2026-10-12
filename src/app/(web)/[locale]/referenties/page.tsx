@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -7,7 +8,6 @@ export const revalidate = 0;
 
 import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
-import { GlowingLink } from '@/components/ui/GlowingButton';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl } from '@/sanity/image';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
@@ -242,10 +242,53 @@ export default async function ReferentiesPage({
                     secondaryCtaLink=''
                     showProof={false}
                     proofText=''
-                    imagePath={heroImageUrl}
                     isHomepage={false}
                     locale={locale}
                     titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
+                    customGraphic={
+                        <>
+                            <Image
+                                src={heroImageUrl}
+                                alt={b?.title || 'Emlinked Referenties'}
+                                fill
+                                sizes='(max-width: 1024px) 100vw, 55vw'
+                                className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
+                                priority
+                            />
+
+                            <div className='absolute z-20 left-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
+                                <span className='w-7 h-7 rounded-lg bg-teal-pale text-teal flex items-center justify-center shrink-0'>
+                                    <Sparkles className='w-3.5 h-3.5' />
+                                </span>
+                                <div>
+                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
+                                        100%
+                                    </p>
+                                    <p className='text-[9px] text-navy-500 mt-1'>
+                                        {isEn
+                                            ? 'Real estate focus'
+                                            : 'Focus vastgoedsoftware'}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className='absolute z-20 right-0 bottom-8 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
+                                <span className='w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0'>
+                                    <Building2 className='w-3.5 h-3.5' />
+                                </span>
+                                <div>
+                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
+                                        Enterprise
+                                    </p>
+                                    <p className='text-[9px] text-navy-500 mt-1'>
+                                        {isEn
+                                            ? 'ERP integrations'
+                                            : 'ERP-integraties'}
+                                    </p>
+                                </div>
+                            </div>
+                        </>
+                    }
                 />
 
                 {/* Trust bar directly below the hero, light-styled to match */}
@@ -625,11 +668,11 @@ export default async function ReferentiesPage({
         return (
             <section
                 key={key}
-                className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'
+                className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'
                 id='contact'
             >
-                <div className='mx-auto max-w-8xl px-0'>
-                    <div className='border border-teal/30 rounded-3xl bg-texture-navy text-white p-6 sm:p-10 md:p-14 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-2xl backdrop-blur-xl'>
+                <div className='border border-teal/30 rounded-3xl bg-white/50 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg backdrop-blur-xl lg:px-8'>
+                    <div className='text-navy-900 p-8 md:py-16 md:px-10 relative overflow-hidden'>
                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                             <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                                 <Badge color='teal' uppercase dot dotPulse>
@@ -639,37 +682,35 @@ export default async function ReferentiesPage({
                                             : 'ADVIESGESPREK')}
                                 </Badge>
 
-                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight'>
+                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
                                     {b?.title ||
                                         (isEn
                                             ? 'Ready to elevate your property management?'
                                             : 'Klaar om je vastgoedadministratie naar het volgende niveau te tillen?')}
                                 </h2>
 
-                                <p className='text-white/75 text-base md:text-lg font-light leading-relaxed max-w-2xl'>
+                                <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
                                     {b?.subtitle ||
                                         (isEn
                                             ? 'Discuss your case with our specialists and discover immediate automation gains.'
                                             : 'Bespreek je casus met onze specialisten en ontdek direct waar automatiseringswinst te behalen valt.')}
                                 </p>
 
-                                <div className='pt-4 flex flex-col sm:flex-row gap-4'>
-                                    <GlowingLink
+                                <div className='pt-2 flex flex-col sm:flex-row gap-4'>
+                                    <Link
                                         href={getPath(
                                             b?.buttonLink || '/contact',
                                         )}
-                                        className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98]'
+                                        className='inline-flex h-11 items-center gap-1.5 justify-center rounded-lg bg-navy-900 hover:btn-gradient px-6 text-sm font-semibold text-white transition-colors'
                                     >
-                                        <span className='flex items-center justify-center gap-2 text-white'>
-                                            <span>
-                                                {b?.buttonLabel ||
-                                                    (isEn
-                                                        ? 'Request a live demo'
-                                                        : 'Vraag een demonstratie aan')}
-                                            </span>
-                                            <ArrowRight className='h-5 w-5 text-white' />
+                                        <span>
+                                            {b?.buttonLabel ||
+                                                (isEn
+                                                    ? 'Request a live demo'
+                                                    : 'Vraag een demonstratie aan')}
                                         </span>
-                                    </GlowingLink>
+                                        <ArrowRight className='h-4 w-4 text-white' />
+                                    </Link>
                                 </div>
                             </div>
 
@@ -679,7 +720,8 @@ export default async function ReferentiesPage({
                                     alt='Emlinked Consultation'
                                     width={700}
                                     height={500}
-                                    className='w-full h-[320px] max-h-[320px] object-cover object-top rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl border border-white/15'
+                                    className='w-full h-[310px] max-h-[310px] object-cover object-top rounded-lg group-hover:scale-105 transition-transform duration-500 shadow-lg border border-amber-600/40'
+                                    priority
                                 />
                             </div>
                         </div>

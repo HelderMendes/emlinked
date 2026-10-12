@@ -582,7 +582,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                     alt={ctaBlock.title || 'Bewezen resultaat'}
                                     width={700}
                                     height={500}
-                                    className='w-full h-[350px] max-h-[350px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
+                                    className='w-full h-[310px] max-h-[310px] object-cover object-center rounded-lg group-hover:scale-105 transition-transform duration-500 shadow-lg border border-amber-600/40'
                                     priority
                                 />
                             </div>

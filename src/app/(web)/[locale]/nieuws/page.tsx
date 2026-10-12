@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { ArrowRight, Mail } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
@@ -8,7 +9,6 @@ import {
     NewsArticleItem,
 } from '@/components/nieuws/NewsArticlesSection';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
-import { GlowingLink } from '@/components/ui/GlowingButton';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
@@ -202,43 +202,41 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
             />
 
             {/* ── CTA CONVERSION BANNER ── */}
-            <section className='px-6 py-20 relative z-10 max-w-7xl mx-auto'>
-                <div className='relative rounded-3xl border border-teal/40 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-2xl text-white'>
-                    <div className='absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-teal/10 rounded-full blur-[120px] pointer-events-none' />
+            <section className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'>
+                <div className='border border-teal/30 rounded-3xl bg-white/50 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg backdrop-blur-xl lg:px-8 max-w-5xl mx-auto'>
+                    <div className='text-navy-900 p-8 md:py-16 md:px-10 relative overflow-hidden text-center'>
+                        <div className='relative z-10 space-y-5 max-w-3xl mx-auto'>
+                            <Badge color='teal' uppercase className='mx-auto'>
+                                <Mail className='w-3.5 h-3.5 text-teal' />
+                                {isEn ? 'STAY INFORMED' : 'BLIJF OP DE HOOGTE'}
+                            </Badge>
 
-                    <div className='relative z-10 space-y-6 max-w-3xl mx-auto'>
-                        <Badge color='teal' uppercase>
-                            <Mail className='w-3.5 h-3.5 text-teal' />
-                            {isEn ? 'STAY INFORMED' : 'BLIJF OP DE HOOGTE'}
-                        </Badge>
+                            <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
+                                {ctaTitle}
+                            </h2>
 
-                        <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] text-white leading-tight'>
-                            {ctaTitle}
-                        </h2>
+                            <p className='text-navy-700 text-base md:text-lg leading-relaxed font-light'>
+                                {ctaSub}
+                            </p>
 
-                        <p className='text-slate-300 text-base md:text-lg leading-relaxed font-light'>
-                            {ctaSub}
-                        </p>
-
-                        <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-4'>
-                            <GlowingLink
-                                href={isEn ? '/en/contact' : '/contact'}
-                                className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-gradient-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-8 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
-                            >
-                                <span className='flex items-center justify-center gap-2 text-white'>
+                            <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-2'>
+                                <Link
+                                    href={isEn ? '/en/contact' : '/contact'}
+                                    className='inline-flex h-11 items-center gap-1.5 justify-center rounded-lg bg-navy-900 hover:btn-gradient px-6 text-sm font-semibold text-white transition-colors'
+                                >
                                     <span>{ctaBtn}</span>
-                                    <ArrowRight className='w-5 h-5 text-white' />
-                                </span>
-                            </GlowingLink>
+                                    <ArrowRight className='h-4 w-4 text-white' />
+                                </Link>
 
-                            <OutlineLinkButton
-                                href={isEn ? '/en/apps' : '/apps'}
-                                color='white'
-                            >
-                                {isEn
-                                    ? 'Explore our solutions →'
-                                    : 'Bekijk onze oplossingen →'}
-                            </OutlineLinkButton>
+                                <OutlineLinkButton
+                                    href={isEn ? '/en/apps' : '/apps'}
+                                    color='navy'
+                                >
+                                    {isEn
+                                        ? 'Explore our solutions'
+                                        : 'Bekijk onze oplossingen'}
+                                </OutlineLinkButton>
+                            </div>
                         </div>
                     </div>
                 </div>

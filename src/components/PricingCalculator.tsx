@@ -1116,11 +1116,11 @@ export function PricingCalculator({
 
                     {/* Right Column: Sticky Total Summary Card */}
                     <div className='lg:col-span-5 sticky top-24'>
-                        <div className='rounded-2xl border-2 border-teal/40 bg-texture-navy text-white p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden backdrop-blur-xl'>
-                            <div className='absolute -right-16 -top-16 w-32 h-32 bg-teal/20 rounded-full blur-2xl pointer-events-none' />
+                        <div className='rounded-2xl border border-teal/30 bg-white text-navy-900 p-6 sm:p-8 shadow-lg space-y-6 relative overflow-hidden'>
+                            <div className='absolute -right-16 -top-16 w-32 h-32 bg-teal-pale/50 rounded-full blur-2xl pointer-events-none' />
 
-                            <div className='flex items-center justify-between border-b border-white/10 pb-4'>
-                                <h3 className='text-xl font-bold text-white tracking-tight flex items-center gap-2'>
+                            <div className='flex items-center justify-between border-b border-navy-900/10 pb-4'>
+                                <h3 className='text-xl font-bold text-navy-900 tracking-tight flex items-center gap-2'>
                                     <span>
                                         {isEn
                                             ? 'Total Summary'
@@ -1133,28 +1133,28 @@ export function PricingCalculator({
                             </div>
 
                             {/* Itemized Table Breakdown */}
-                            <div className='space-y-2.5 text-xs text-white/80 font-mono'>
-                                <div className='flex justify-between items-center py-1 border-b border-white/5'>
+                            <div className='space-y-2.5 text-xs text-navy-700 font-mono'>
+                                <div className='flex justify-between items-center py-1 border-b border-navy-900/10'>
                                     <span>
                                         {isEn
                                             ? 'Base Subscription'
                                             : 'Basisabonnement'}
                                     </span>
-                                    <span className='font-semibold text-white'>
+                                    <span className='font-semibold text-navy-900'>
                                         {formatEur(baseMonthlyPrice)}
                                     </span>
                                 </div>
 
                                 {/* 2. Extra Contracten (only when selected) */}
                                 {extraContractsTier > 0 && (
-                                    <div className='py-1 border-b border-white/5'>
+                                    <div className='py-1 border-b border-navy-900/10'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
                                                     ? 'Extra Contracts'
                                                     : 'Extra Contracten'}
                                             </span>
-                                            <span className='font-semibold text-white'>
+                                            <span className='font-semibold text-navy-900'>
                                                 {formatEur(extraContractsCost)}
                                             </span>
                                         </div>
@@ -1173,14 +1173,14 @@ export function PricingCalculator({
 
                                 {/* 3. Huurdersportaal (only when selected) */}
                                 {tenantPortalTier > 0 && (
-                                    <div className='py-1 border-b border-white/5'>
+                                    <div className='py-1 border-b border-navy-900/10'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
                                                     ? 'Tenant Portal'
                                                     : 'Huurdersportaal'}
                                             </span>
-                                            <span className='font-semibold text-white'>
+                                            <span className='font-semibold text-navy-900'>
                                                 {formatEur(tenantPortalCost)}
                                             </span>
                                         </div>
@@ -1199,14 +1199,14 @@ export function PricingCalculator({
 
                                 {/* 4. Extra Gebruikers (only when > 0) */}
                                 {extraUsers > 0 && (
-                                    <div className='py-1 border-b border-white/5'>
+                                    <div className='py-1 border-b border-navy-900/10'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
                                                     ? 'Extra Users / Month'
                                                     : 'Extra Gebruikers/Maand'}
                                             </span>
-                                            <span className='font-semibold text-white'>
+                                            <span className='font-semibold text-navy-900'>
                                                 {formatEur(extraUsersCost)}
                                             </span>
                                         </div>
@@ -1227,14 +1227,14 @@ export function PricingCalculator({
 
                                 {/* 5. Leesrechten (only when > 0) */}
                                 {teamUsers > 0 && (
-                                    <div className='py-1 border-b border-white/5'>
+                                    <div className='py-1 border-b border-navy-900/10'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
                                                     ? 'Team Member Users'
                                                     : 'Leesrechten Voor Team Member'}
                                             </span>
-                                            <span className='font-semibold text-white'>
+                                            <span className='font-semibold text-navy-900'>
                                                 {formatEur(teamUsersCost)}
                                             </span>
                                         </div>
@@ -1253,14 +1253,14 @@ export function PricingCalculator({
 
                                 {/* 6. Direct Banking (only when selected) */}
                                 {directBankingTier > 0 && (
-                                    <div className='py-1 border-b border-white/5'>
+                                    <div className='py-1 border-b border-navy-900/10'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
                                                     ? 'Direct Banking'
                                                     : 'Direct Banking: Elektronisch Bankieren'}
                                             </span>
-                                            <span className='font-semibold text-white'>
+                                            <span className='font-semibold text-navy-900'>
                                                 {formatEur(directBankingCost)}
                                             </span>
                                         </div>
@@ -1279,7 +1279,7 @@ export function PricingCalculator({
 
                                 {/* 7. Strippenkaarten (only when selected) */}
                                 {strippenkaartenCost > 0 && (
-                                    <div className='py-1 border-b border-white/5 text-teal'>
+                                    <div className='py-1 border-b border-navy-900/10 text-teal'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1328,7 +1328,7 @@ export function PricingCalculator({
 
                                 {/* 8. Opstartkosten (only when selected) */}
                                 {opstartkostenCost > 0 && (
-                                    <div className='py-1 border-b border-white/5 text-teal'>
+                                    <div className='py-1 border-b border-navy-900/10 text-teal'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1399,7 +1399,7 @@ export function PricingCalculator({
 
                                 {/* 9. XML/TXT Export (only when selected) */}
                                 {isAnyXmlSelected && (
-                                    <div className='py-1 border-b border-white/5 text-teal'>
+                                    <div className='py-1 border-b border-navy-900/10 text-teal'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1467,7 +1467,7 @@ export function PricingCalculator({
 
                                 {/* 10. Extra Integratie (only when selected) */}
                                 {isAnyExtraIntegrationSelected && (
-                                    <div className='py-1 border-b border-white/5 text-teal'>
+                                    <div className='py-1 border-b border-navy-900/10 text-teal'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1515,29 +1515,29 @@ export function PricingCalculator({
 
                                 {/* Calculation Totals */}
                                 <div className='pt-3 space-y-2 border-t border-teal/30 text-sm'>
-                                    <div className='flex justify-between items-center text-white/90'>
+                                    <div className='flex justify-between items-center text-navy-900'>
                                         <span className='font-sans font-medium text-xs'>
                                             {isEn
                                                 ? 'emlinked Base Monthly Subscription'
                                                 : 'emlinked Basis Maand Abonnement'}
                                         </span>
-                                        <span className='font-bold text-white'>
+                                        <span className='font-bold text-navy-900'>
                                             {formatEur(baseMonthlyPrice)}
                                         </span>
                                     </div>
 
-                                    <div className='flex justify-between items-center text-white/90'>
+                                    <div className='flex justify-between items-center text-navy-900'>
                                         <span className='font-sans font-medium text-xs'>
                                             {isEn
                                                 ? 'Monthly Subscriptions – Extra Services'
                                                 : 'Maand Abonnement – Extra Diensten'}
                                         </span>
-                                        <span className='font-bold text-white'>
+                                        <span className='font-bold text-navy-900'>
                                             {formatEur(monthlyAdditions)}
                                         </span>
                                     </div>
 
-                                    <div className='flex justify-between items-center text-white/90'>
+                                    <div className='flex justify-between items-center text-navy-900'>
                                         <span className='font-sans font-medium text-xs'>
                                             {isEn
                                                 ? 'Support Fee (20%)'
@@ -1548,7 +1548,7 @@ export function PricingCalculator({
                                         </span>
                                     </div>
 
-                                    <div className='flex justify-between items-center text-teal text-xs pt-1 border-t border-white/10'>
+                                    <div className='flex justify-between items-center text-teal text-xs pt-1 border-t border-navy-900/10'>
                                         <span className='font-sans font-semibold'>
                                             {isEn
                                                 ? 'Total One-time Setup Services'
@@ -1559,15 +1559,15 @@ export function PricingCalculator({
                                         </span>
                                     </div>
 
-                                    <div className='flex justify-between items-center text-base pt-3 border-t border-teal/40 text-white'>
+                                    <div className='flex justify-between items-center text-base pt-3 border-t border-teal/40 text-navy-900'>
                                         <span className='font-sans font-extrabold uppercase tracking-wide text-xs text-teal'>
                                             {isEn
                                                 ? 'Total Monthly Subscription'
                                                 : 'Totaal – Maand Abonnement'}
                                         </span>
-                                        <span className='font-bold text-xl text-white font-mono'>
+                                        <span className='font-bold text-xl text-navy-900 font-mono'>
                                             {formatEur(totalMonthly)}{' '}
-                                            <span className='text-xs text-white/60 font-sans'>
+                                            <span className='text-xs text-navy-500 font-sans'>
                                                 / mnd
                                             </span>
                                         </span>
@@ -1579,7 +1579,7 @@ export function PricingCalculator({
                             <button
                                 type='button'
                                 onClick={() => setIsModalOpen(true)}
-                                className='w-full h-14 rounded-md border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-6 text-sm font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer mt-4'
+                                className='w-full h-14 rounded-lg border-0 bg-navy-900 hover:btn-gradient px-6 text-sm font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer mt-4'
                             >
                                 <span>
                                     {isEn
@@ -1589,7 +1589,7 @@ export function PricingCalculator({
                                 <ArrowRight className='w-4 h-4 text-white' />
                             </button>
 
-                            <p className='text-[11px] text-center text-white/60 font-light leading-tight'>
+                            <p className='text-[11px] text-center text-navy-500 font-light leading-tight'>
                                 {isEn
                                     ? 'No commitment required. We send a non-binding PDF specification directly to your email.'
                                     : 'Vrijblijvend en zonder verplichtingen. Je ontvangt direct een PDF-specificatie in je mailbox.'}

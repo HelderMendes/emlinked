@@ -452,7 +452,7 @@ export function PageBlockRenderer({
                         <div className='max-w-3xl mx-auto flex flex-col items-center gap-5 text-center'>
                             {sectionTag && (
                                 <div className='flex justify-center'>
-                                    <Badge color='teal' uppercase>
+                                    <Badge color='teal' uppercase dot dotPulse>
                                         {sectionTag}
                                     </Badge>
                                 </div>

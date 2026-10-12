@@ -1034,52 +1034,60 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
             </section>
 
             {/* ── Rich Frontpage-style Pre-Footer Conversion CTA Banner ───── */}
-            <section className='px-6 py-20 bg-background max-w-5xl mx-auto text-center'>
-                <div className='p-10 md:p-16 rounded-3xl border border-teal/30 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 text-navy-900 space-y-8 relative overflow-hidden shadow-md'>
-                    <div className='space-y-4 max-w-2xl mx-auto relative z-10'>
-                        <Badge color='teal' uppercase>
-                            {isEn
-                                ? 'START AUTOMATING TODAY'
-                                : 'START MET AUTOMATISEREN'}
-                        </Badge>
-                        <h2 className='font-display font-extrabold text-3xl sm:text-4xl text-navy-900 tracking-tight'>
-                            {content.cta.title ||
-                                (isEn
-                                    ? 'Ready to modernize your property software?'
-                                    : 'Klaar om je vastgoedbeheer te moderniseren?')}
-                        </h2>
-                        <p className='text-sm sm:text-base text-navy-700 leading-relaxed font-light'>
-                            {content.cta.desc ||
-                                (isEn
-                                    ? 'Experience how Emlinked halves administrative workloads and boosts financial control directly inside Business Central.'
-                                    : 'Ervaar zelf hoe Emlinked je administratieve lasten halveren en je financiële controle vergroten.')}
-                        </p>
-                    </div>
+            <section className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'>
+                <div className='border border-teal/30 rounded-3xl bg-white/50 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg backdrop-blur-xl lg:px-8 max-w-5xl mx-auto'>
+                    <div className='text-navy-900 p-8 md:py-16 md:px-10 relative overflow-hidden text-center'>
+                        <div className='space-y-5 max-w-2xl mx-auto relative z-10'>
+                            <Badge
+                                color='teal'
+                                uppercase
+                                dot
+                                dotPulse
+                                className='mx-auto'
+                            >
+                                {isEn
+                                    ? 'START AUTOMATING TODAY'
+                                    : 'START MET AUTOMATISEREN'}
+                            </Badge>
+                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
+                                {content.cta.title ||
+                                    (isEn
+                                        ? 'Ready to modernize your property software?'
+                                        : 'Klaar om je vastgoedbeheer te moderniseren?')}
+                            </h2>
+                            <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg'>
+                                {content.cta.desc ||
+                                    (isEn
+                                        ? 'Experience how Emlinked halves administrative workloads and boosts financial control directly inside Business Central.'
+                                        : 'Ervaar zelf hoe Emlinked je administratieve lasten halveren en je financiële controle vergroten.')}
+                            </p>
+                        </div>
 
-                    <div className='flex flex-wrap items-center justify-center gap-4 relative z-10 pt-2'>
-                        <Link
-                            href={`/${locale}/contact`}
-                            className='px-8 py-4 rounded-xl bg-navy-900 hover:btn-gradient text-white font-bold text-sm flex items-center gap-2 transition-all shadow-xl hover:scale-105'
-                        >
-                            <span>
-                                {content.cta.primary ||
-                                    (isEn
-                                        ? 'Request a Demo'
-                                        : 'Gratis demo aanvragen')}
-                            </span>
-                            <ArrowRight className='h-4 w-4' />
-                        </Link>
-                        <OutlineLinkButton
-                            href={`/${locale}/apps`}
-                            color='navy'
-                        >
-                            <span>
-                                {content.cta.secondary ||
-                                    (isEn
-                                        ? 'View all 3 apps'
-                                        : 'Bekijk alle 3 de apps')}
-                            </span>
-                        </OutlineLinkButton>
+                        <div className='flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10 pt-5'>
+                            <Link
+                                href={`/${locale}/contact`}
+                                className='inline-flex h-11 items-center gap-1.5 justify-center rounded-lg bg-navy-900 hover:btn-gradient px-6 text-sm font-semibold text-white transition-colors'
+                            >
+                                <span>
+                                    {content.cta.primary ||
+                                        (isEn
+                                            ? 'Request a Demo'
+                                            : 'Gratis demo aanvragen')}
+                                </span>
+                                <ArrowRight className='h-4 w-4 text-white' />
+                            </Link>
+                            <OutlineLinkButton
+                                href={`/${locale}/apps`}
+                                color='navy'
+                            >
+                                <span>
+                                    {content.cta.secondary ||
+                                        (isEn
+                                            ? 'View all 3 apps'
+                                            : 'Bekijk alle 3 de apps')}
+                                </span>
+                            </OutlineLinkButton>
+                        </div>
                     </div>
                 </div>
             </section>

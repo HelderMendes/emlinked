@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Scale } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
+import { getImageUrl } from '@/sanity/image';
 
 interface Box3VoorWieSectionProps {
     voorWieBadge: string;
@@ -10,6 +11,8 @@ interface Box3VoorWieSectionProps {
     fiscalContextBadge: string;
     fiscalContextTitle: string;
     fiscalContextText: string;
+    fiscalContextImage?: any;
+    fiscalContextImagePath?: string;
     voorWieItems: Array<{
         icon: React.ReactNode;
         title: string;
@@ -24,8 +27,14 @@ export function Box3VoorWieSection({
     fiscalContextBadge,
     fiscalContextTitle,
     fiscalContextText,
+    fiscalContextImage,
+    fiscalContextImagePath,
     voorWieItems,
 }: Box3VoorWieSectionProps) {
+    const resolvedFiscalContextImage = getImageUrl(
+        fiscalContextImage,
+        fiscalContextImagePath || '/emlinked/box3/box3-fiscalContext.jpg',
+    );
     return (
         <section
             id='voor-wie'
@@ -56,10 +65,10 @@ export function Box3VoorWieSection({
                     {/* Left: Fiscale Context Info */}
                     <div className='lg:col-span-6 p-8 md:p-10 flex flex-col justify-center gap-5 text-left relative z-10'>
                         <div className='flex items-center justify-between w-full'>
-                            <div className='w-12 h-12 rounded-full bg-linear-to-br from-teal-400 via-teal-500 to-orange-500 text-white shrink-0 shadow-lg shadow-orange-500/20 border border-white/40 flex items-center justify-center'>
-                                <Scale className='w-6 h-6 text-white' />
+                            <div className='w-12 h-12 rounded-lg bg-teal text-white shrink-0 shadow-lg shadow-orange-500/20 border border-white/40 flex items-center justify-center'>
+                                <Scale className='size-8 text-white' />
                             </div>
-                            <span className='px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-widest bg-[#FFEED8] text-[#D97706] border border-[#FCD34D] shadow-xs'>
+                            <span className='px-3.5 py-1 rounded-lg text-[11px] font-extrabold uppercase tracking-widest bg-teal/30 text-teals border border-teal/30 shadow-xs'>
                                 {fiscalContextBadge}
                             </span>
                         </div>
@@ -76,8 +85,11 @@ export function Box3VoorWieSection({
                     {/* Right: Integrated Image */}
                     <div className='lg:col-span-6 relative min-h-[300px] lg:min-h-full overflow-hidden bg-slate-950'>
                         <Image
-                            src='/emlinked/box3/box3-fiscalContext.jpg'
-                            alt='Wet werkelijk rendement box 3 - Fiscale Context'
+                            src={resolvedFiscalContextImage}
+                            alt={
+                                fiscalContextTitle ||
+                                'Wet werkelijk rendement box 3 - Fiscale Context'
+                            }
                             fill
                             sizes='(max-width: 1024px) 100vw, 50vw'
                             className='object-cover object-center group-hover:scale-105 transition-transform duration-700'
@@ -95,14 +107,14 @@ export function Box3VoorWieSection({
                                 className='px-4 py-5 lg:py-2 flex flex-col items-start justify-start text-left space-y-3 group'
                             >
                                 <div className='flex items-center gap-3 w-full'>
-                                    <div className='w-10 h-10 rounded-full border-2 border-teal bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-teal-hover transition-all duration-300'>
+                                    <div className='w-10 h-10 rounded-lg border-2 border-teal/60 bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-teal-hover transition-all duration-300'>
                                         {item.icon}
                                     </div>
                                     <h3 className='text-sm md:text-base font-bold text-[#060e32] text-left leading-tight'>
                                         {item.title}
                                     </h3>
                                 </div>
-                                <p className='text-xs text-[#060e32]/75 leading-relaxed font-light text-left'>
+                                <p className='text-sm leading-relaxed font-light text-left'>
                                     {item.text}
                                 </p>
                             </div>

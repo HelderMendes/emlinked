@@ -91,7 +91,7 @@ export function Box3EcosystemSection({
                     </p>
                 </div>
                 <div className='lg:col-span-5 flex justify-center'>
-                    <div className='relative w-full max-w-md p-8 rounded-3xl bg-white text-navy-900 border border-navy-900/10 shadow-xl space-y-6'>
+                    <div className='relative w-full max-w-md p-8 rounded-3xl bg-white text-navy-900 border border-navy-900/10 shadow-md space-y-6'>
                         <div className='flex items-center gap-4 border-b border-navy-900/10 pb-4 relative'>
                             <Image
                                 src='/emlinked/box3/CERT-Associate-Dynamics365-Business-Central-Functional-Consultant.webp'

@@ -39,8 +39,8 @@ export function Box3CalculatorCard({
             {/* Header */}
             <div className='flex items-center justify-between border-b border-teal/20 pb-4 mb-6'>
                 <div className='flex items-center gap-3'>
-                    <div className='p-2.5 rounded-xl bg-teal/15 border border-teal/30 text-teal shadow-xs'>
-                        <Calculator className='w-5 h-5' />
+                    <div className='p-1.5 rounded-lg bg-teal/15 border border-teal/30 text-teal shadow-xs'>
+                        <Calculator className='size-7' />
                     </div>
                     <div>
                         <h3 className='text-lg font-bold text-[#060e32]'>
@@ -64,7 +64,7 @@ export function Box3CalculatorCard({
                     <label className='block text-xs font-semibold text-[#060e32]/70 mb-1.5 tracking-wider'>
                         {isEn ? 'WOZ Property Value' : 'WOZ-waarde pand (€)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             €
                         </span>
@@ -87,7 +87,7 @@ export function Box3CalculatorCard({
                             ? 'Gross Rent / year'
                             : 'Bruto huurinkomsten / jr (€)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             €
                         </span>
@@ -110,7 +110,7 @@ export function Box3CalculatorCard({
                             ? 'Maintenance Costs / year'
                             : 'Onderhoudskosten / jr (€)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             €
                         </span>
@@ -133,7 +133,7 @@ export function Box3CalculatorCard({
                             ? 'Mortgage Interest / year'
                             : 'Hypotheekrente / jr (€)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             €
                         </span>
@@ -156,7 +156,7 @@ export function Box3CalculatorCard({
                             ? 'Mortgage Debt Total'
                             : 'Hypotheekschuld totaal (€)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             €
                         </span>
@@ -177,7 +177,7 @@ export function Box3CalculatorCard({
                     <label className='block text-xs font-semibold text-[#060e32]/70 mb-1.5 tracking-wider'>
                         {isEn ? 'Value Growth (%/yr)' : 'Waardestijging (%/jr)'}
                     </label>
-                    <div className='flex items-center bg-white border border-slate-300 rounded-xl overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
+                    <div className='flex items-center bg-white border border-slate-300 rounded-lg overflow-hidden focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20 transition-all shadow-xs'>
                         <span className='px-3 text-sm text-[#060e32]/50 border-r border-slate-200 bg-slate-50 font-mono'>
                             %
                         </span>
@@ -225,7 +225,7 @@ export function Box3CalculatorCard({
                                         option.val as VerhuurStatus,
                                     )
                                 }
-                                className={`py-2.5 px-3 text-xs rounded-xl border transition-all duration-200 text-center font-medium ${
+                                className={`py-2.5 px-3 text-xs rounded-lg border transition-all duration-200 text-center font-medium ${
                                     inputs.verhuurPct === option.val
                                         ? 'border-teal bg-teal/15 text-teal font-bold shadow-xs'
                                         : 'border-slate-200 bg-white text-[#060e32]/70 hover:border-teal/50 hover:text-[#060e32]'
@@ -264,7 +264,7 @@ export function Box3CalculatorCard({
                 </div>
 
                 <div className='grid grid-cols-2 gap-3 my-4'>
-                    <div className='bg-white p-3.5 rounded-xl text-center border border-teal/20 shadow-xs'>
+                    <div className='bg-white p-3.5 rounded-lg text-center border border-teal/20 shadow-xs'>
                         <div className='text-[11px] text-[#060e32]/60 uppercase tracking-wider font-semibold'>
                             {isEn
                                 ? 'Tax Current (Forfait)'
@@ -274,7 +274,7 @@ export function Box3CalculatorCard({
                             {formatCurrency(results.belastingNu)}
                         </div>
                     </div>
-                    <div className='bg-white p-3.5 rounded-xl text-center border border-teal/20 shadow-xs'>
+                    <div className='bg-white p-3.5 rounded-lg text-center border border-teal/20 shadow-xs'>
                         <div className='text-[11px] text-[#060e32]/60 uppercase tracking-wider font-semibold'>
                             {isEn
                                 ? 'Tax 2028 (Actual Yield)'
@@ -291,7 +291,7 @@ export function Box3CalculatorCard({
                 </p>
             </div>
 
-            <p className='text-center text-[11px] text-[#060e32]/50 mt-4'>
+            <p className='text-center text-sm text-[#060e32]/50 mt-4'>
                 {isEn
                     ? 'Indicative calculation · High Court guidelines · No formal tax advice'
                     : 'Indicatief · Eerste Kamer akkoord in behandeling · Geen formeel belastingadvies'}

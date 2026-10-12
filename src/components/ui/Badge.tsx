@@ -41,7 +41,7 @@ export function Badge({
     return (
         <span
             className={cn(
-                'inline-flex items-center self-start gap-1.5 rounded-[7px] border bg-transparent min-h-6 max-w-full px-2.5 py-1 text-xs font-semibold tracking-wide',
+                'inline-flex items-center self-start gap-1.5 rounded-[7px] border bg-transparent min-h-6 max-w-full px-2.5 py-1 text-xs font-semibold tracking-wide justify-end ',
                 colorClasses[color],
                 uppercase && 'uppercase',
                 className,

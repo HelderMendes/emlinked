@@ -17,7 +17,7 @@ export function Box3UrgencyBar({
     return (
         <section className='bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/20 py-3.5 px-4 sm:px-6 lg:px-8 shadow-xs relative z-20'>
             <div className='max-w-7xl mx-auto flex items-center justify-center gap-3 sm:gap-6 flex-wrap text-center'>
-                <span className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal text-[#060e32] font-mono font-bold text-[11px] uppercase tracking-wider shadow-xs'>
+                <span className='inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-teal text-white font-mono font-bold text-[11px] uppercase tracking-wider shadow-xs'>
                     <Zap className='w-3.5 h-3.5 fill-current' />
                     {announcementBadge}
                 </span>

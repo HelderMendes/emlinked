@@ -437,56 +437,61 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     };
 
     const renderCta = (b: any, key: any) => (
-        <section key={key} className='px-6 py-20 relative z-10 bg-background'>
-            <div className='relative rounded-3xl border border-teal/30 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 p-8 md:p-14 overflow-hidden text-center max-w-5xl mx-auto shadow-md text-navy-900'>
-                <div className='relative z-10 space-y-6 max-w-3xl mx-auto'>
-                    <Badge color='teal' uppercase className='mx-auto'>
-                        <Users className='w-3.5 h-3.5 text-teal' />
-                        {isEn ? 'START THE CONVERSATION' : 'GA HET GESPREK AAN'}
-                    </Badge>
+        <section
+            key={key}
+            className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'
+        >
+            <div className='border border-teal/30 rounded-3xl bg-white/50 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg backdrop-blur-xl lg:px-8 max-w-5xl mx-auto'>
+                <div className='text-navy-900 p-8 md:py-16 md:px-10 relative overflow-hidden text-center'>
+                    <div className='relative z-10 space-y-5 max-w-3xl mx-auto'>
+                        <Badge color='teal' uppercase className='mx-auto'>
+                            <Users className='w-3.5 h-3.5 text-teal' />
+                            {isEn
+                                ? 'START THE CONVERSATION'
+                                : 'GA HET GESPREK AAN'}
+                        </Badge>
 
-                    <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] text-navy-900 leading-tight'>
-                        {b?.title ||
-                            (isEn
-                                ? 'Ready to strengthen your organization or career?'
-                                : 'Klaar om je organisatie of carrière te versterken?')}
-                    </h2>
+                        <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
+                            {b?.title ||
+                                (isEn
+                                    ? 'Ready to strengthen your organization or career?'
+                                    : 'Klaar om je organisatie of carrière te versterken?')}
+                        </h2>
 
-                    <p className='text-navy-700 text-base md:text-lg leading-relaxed font-light'>
-                        {b?.subtitle ||
-                            (isEn
-                                ? 'Discover how our targeted approach makes the difference for your interim capacity or next career move.'
-                                : 'Ontdek hoe onze gerichte aanpak het verschil maakt voor je interim-capaciteit of volgende carrièrestap.')}
-                    </p>
+                        <p className='text-navy-700 text-base md:text-lg leading-relaxed font-light'>
+                            {b?.subtitle ||
+                                (isEn
+                                    ? 'Discover how our targeted approach makes the difference for your interim capacity or next career move.'
+                                    : 'Ontdek hoe onze gerichte aanpak het verschil maakt voor je interim-capaciteit of volgende carrièrestap.')}
+                        </p>
 
-                    <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-4'>
-                        <Link
-                            href={b?.primaryCtaUrl || '#demo'}
-                            className='inline-flex h-14 items-center justify-center rounded-2xl bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
-                        >
-                            <span className='flex items-center justify-center gap-2 text-white'>
+                        <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-2'>
+                            <Link
+                                href={b?.primaryCtaUrl || '#demo'}
+                                className='inline-flex h-11 items-center gap-1.5 justify-center rounded-lg bg-navy-900 hover:btn-gradient px-6 text-sm font-semibold text-white transition-colors'
+                            >
                                 <span>
                                     {b?.primaryCtaLabel ||
                                         (isEn
                                             ? 'Get in touch directly'
                                             : 'Neem direct contact op')}
                                 </span>
-                                <ArrowRight className='w-5 h-5 text-white' />
-                            </span>
-                        </Link>
+                                <ArrowRight className='h-4 w-4 text-white' />
+                            </Link>
 
-                        <OutlineLinkButton
-                            href={
-                                b?.secondaryCtaUrl ||
-                                (isEn ? '/en/apps' : '/apps')
-                            }
-                            color='navy'
-                        >
-                            {b?.secondaryCtaLabel ||
-                                (isEn
-                                    ? 'Explore our solutions →'
-                                    : 'Bekijk onze oplossingen →')}
-                        </OutlineLinkButton>
+                            <OutlineLinkButton
+                                href={
+                                    b?.secondaryCtaUrl ||
+                                    (isEn ? '/en/apps' : '/apps')
+                                }
+                                color='navy'
+                            >
+                                {b?.secondaryCtaLabel ||
+                                    (isEn
+                                        ? 'Explore our solutions'
+                                        : 'Bekijk onze oplossingen')}
+                            </OutlineLinkButton>
+                        </div>
                     </div>
                 </div>
             </div>

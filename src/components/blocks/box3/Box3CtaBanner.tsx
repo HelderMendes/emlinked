@@ -37,16 +37,16 @@ export function Box3CtaBanner({
     );
 
     return (
-        <section className='py-10 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] relative z-10'>
-            <div className='mx-auto max-w-8xl px-0'>
-                <div className='border border-teal/30 rounded-3xl bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 text-navy-900 p-6 sm:p-10 md:p-14 hover:shadow-lg transition-all duration-500 relative overflow-hidden group shadow-md'>
+        <section className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'>
+            <div className='border border-teal/30 rounded-3xl bg-white/50 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg backdrop-blur-xl lg:px-8'>
+                <div className='text-navy-900 p-8 md:py-16 md:px-10 relative overflow-hidden'>
                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                         {/* Left Column: Copy & Actions */}
                         <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
                             <Badge color='teal' uppercase dot dotPulse>
                                 {ctaBadge}
                             </Badge>
-                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight'>
+                            <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
                                 {ctaTitle}
                             </h2>
                             <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
@@ -56,12 +56,10 @@ export function Box3CtaBanner({
                             <div className='flex flex-col sm:flex-row gap-4 pt-2'>
                                 <Link
                                     href={ctaButtonLink}
-                                    className='inline-flex h-14 items-center justify-center rounded-2xl border-0 bg-navy-900 hover:btn-gradient px-8 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98]'
+                                    className='inline-flex h-11 items-center gap-1.5 justify-center rounded-lg bg-navy-900 hover:btn-gradient px-6 text-sm font-semibold text-white transition-colors'
                                 >
-                                    <span className='flex items-center justify-center gap-2 text-white'>
-                                        <span>{ctaButtonText}</span>
-                                        <ArrowRight className='h-5 w-5 text-white' />
-                                    </span>
+                                    <span>{ctaButtonText}</span>
+                                    <ArrowRight className='h-4 w-4 text-white' />
                                 </Link>
                                 {secondaryButtonText && secondaryButtonLink && (
                                     <OutlineLinkButton
@@ -81,7 +79,7 @@ export function Box3CtaBanner({
                                 alt={ctaTitle || 'emlinked CTA'}
                                 width={700}
                                 height={500}
-                                className='w-full h-[350px] max-h-[350px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
+                                className='w-full h-[310px] max-h-[310px] object-cover object-center rounded-lg group-hover:scale-105 transition-transform duration-500 shadow-lg border border-amber-600/40'
                                 priority
                             />
                         </div>

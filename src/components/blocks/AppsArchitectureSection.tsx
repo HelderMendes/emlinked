@@ -57,7 +57,13 @@ export function AppsArchitectureSection({
                 {/* ── 1. TOP PART: CENTERED HEADER & SMALLER TOP PNG DIAGRAM ── */}
                 <div className='max-w-4xl mx-auto flex flex-col items-center text-center space-y-6 '>
                     {activeTag && (
-                        <Badge color='teal' uppercase className='self-center'>
+                        <Badge
+                            color='teal'
+                            uppercase
+                            dot
+                            dotPulse
+                            className='self-center'
+                        >
                             {activeTag}
                         </Badge>
                     )}

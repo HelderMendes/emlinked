@@ -663,7 +663,13 @@ export function VastgoedbeheerSoftwareModule({
             <div className='max-w-7xl mx-auto space-y-8 relative z-10'>
                 {/* Header */}
                 <div className='text-center max-w-3xl mx-auto space-y-4 flex flex-col items-center'>
-                    <Badge color='teal' uppercase className='self-center'>
+                    <Badge
+                        color='teal'
+                        uppercase
+                        dot
+                        dotPulse
+                        className='self-center'
+                    >
                         {featureTabsBlock?.badge ||
                             (isEn ? 'FUNCTIONALITIES' : 'FUNCTIONALITEITEN')}
                     </Badge>
@@ -908,7 +914,7 @@ export function VastgoedbeheerSoftwareModule({
                                 }
                                 width={700}
                                 height={500}
-                                className='w-full h-[350px] max-h-[350px] object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-xl'
+                                className='w-full h-[310px] max-h-[310px] object-cover object-center rounded-lg group-hover:scale-105 transition-transform duration-500 shadow-lg border border-amber-600/40'
                                 priority
                             />
                         </div>

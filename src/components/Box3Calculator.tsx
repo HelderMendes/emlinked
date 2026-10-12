@@ -232,7 +232,7 @@ export function Box3Calculator({
 
             <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10'>
                 {/* Left Information Column */}
-                <div className='lg:col-span-5 flex flex-col justify-between space-y-8'>
+                <div className='lg:col-span-5 flex flex-col justify-between space-y-4'>
                     <div>
                         <Badge color='teal' uppercase className='mb-4'>
                             <Sparkles className='w-3.5 h-3.5' />
@@ -246,12 +246,12 @@ export function Box3Calculator({
                         </p>
                     </div>
 
-                    <div className='space-y-4 pt-2'>
+                    <div className='space-y-4'>
                         <h3 className='text-lg md:text-xl mb-5 font-bold text-teal flex items-center gap-2.5'>
                             <ShieldCheck className='w-6 h-6 text-teal shrink-0' />
                             <span>{leftFeatureTitle}</span>
                         </h3>
-                        <div className='space-y-3.5'>
+                        <div className='space-y-4.5 ml-7'>
                             {featureList.map((item: string, idx: number) => (
                                 <div
                                     key={idx}

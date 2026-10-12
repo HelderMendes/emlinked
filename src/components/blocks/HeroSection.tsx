@@ -120,7 +120,14 @@ export function HeroSection({
                         )}
                     >
                         {label && (
-                            <Badge color='navy' dot className='mb-6'>
+                            <Badge
+                                color='navy'
+                                dot
+                                className={cn(
+                                    'self-center mb-4',
+                                    !centered && 'lg:self-start',
+                                )}
+                            >
                                 {label}
                             </Badge>
                         )}
