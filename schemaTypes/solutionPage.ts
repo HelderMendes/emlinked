@@ -103,6 +103,44 @@ export const solutionPage = defineType({
                                 'Social proof message (e.g. "Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland")',
                         }),
                         defineField({
+                            name: 'floatingLabels',
+                            title: 'Floating Stat Chips (Over Hero Image)',
+                            type: 'array',
+                            description:
+                                'Up to 2 small chips floating over the hero image. Icon, position, and styling are fixed in code — only the text here is editable.',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    name: 'floatingLabel',
+                                    fields: [
+                                        defineField({
+                                            name: 'value',
+                                            title: 'Value (bold line)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'label',
+                                            title: 'Label (light line)',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                    preview: {
+                                        select: {
+                                            value: 'value',
+                                            label: 'label',
+                                        },
+                                        prepare({ value, label }) {
+                                            return {
+                                                title: value || 'Untitled chip',
+                                                subtitle: label,
+                                            };
+                                        },
+                                    },
+                                }),
+                            ],
+                            validation: (Rule) => Rule.max(2),
+                        }),
+                        defineField({
                             name: 'heroImagePath',
                             title: 'Hero Image Path (Fallback String)',
                             type: 'string',

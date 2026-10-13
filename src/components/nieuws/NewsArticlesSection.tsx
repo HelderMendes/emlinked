@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -163,7 +163,7 @@ export function NewsArticlesSection({
             {featuredArticle && (
                 <div className='rounded-3xl border border-teal/30 bg-slate-950 text-white overflow-hidden shadow-2xl group transition-all hover:border-teal/60'>
                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch'>
-                        <div className='lg:col-span-6 relative min-h-[300px] lg:min-h-[420px] bg-slate-900 overflow-hidden'>
+                        <div className='lg:col-span-6 relative min-h-100 lg:min-h-140 bg-slate-900 overflow-hidden'>
                             <Image
                                 src={getImageUrl(
                                     featuredArticle.mainImage,
@@ -176,7 +176,7 @@ export function NewsArticlesSection({
                                 className='object-cover object-center group-hover:scale-105 transition-transform duration-700'
                                 priority
                             />
-                            <div className='absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent lg:hidden' />
+                            <div className='absolute inset-0 bg-linear-to-t from-slate-950/80 via-transparent to-transparent lg:hidden' />
                             <div className='absolute top-4 left-4'>
                                 <span className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal text-slate-950 font-mono text-[11px] font-bold uppercase shadow-md'>
                                     <Sparkles className='w-3 h-3' />

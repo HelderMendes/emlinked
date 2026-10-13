@@ -53,13 +53,13 @@ export function TeamBlock({
     const defaultTitle =
         sectionTitle ||
         (isEn
-            ? 'The Specialists Behind the Connection'
-            : 'De specialisten achter de verbinding');
+            ? 'The team behind emlinked'
+            : 'Het team achter emlinked');
     const defaultSubtitle =
         sectionSubtitle ||
         (isEn
-            ? 'Our multidisciplinary team combines executive search, recruitment automation, and personal guidance to deliver the perfect match.'
-            : 'Ons multidisciplinaire team combineert executive search, recruitment automation en persoonlijke begeleiding om de juiste match te realiseren.');
+            ? 'Our multidisciplinary team combines real estate expertise, Business Central engineering, and hands-on support to help property managers every day.'
+            : 'Ons multidisciplinaire team combineert vastgoedexpertise, Business Central engineering en persoonlijke begeleiding om vastgoedbeheerders dagelijks verder te helpen.');
 
     const activeMember = selectedIndex !== null ? members[selectedIndex] : null;
 
@@ -267,7 +267,7 @@ export function TeamBlock({
                                                                 : 'border-transparent text-navy-500 hover:text-navy-900 hover:bg-white'
                                                         }`}
                                                     >
-                                                        <div className='relative w-10 h-10 rounded-full overflow-hidden shrink-0 border border-navy-900/10 bg-white'>
+                                                        <div className='relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-navy-900/10 bg-white'>
                                                             <Image
                                                                 src={mAvatar}
                                                                 alt={m.name}
@@ -306,7 +306,7 @@ export function TeamBlock({
                                         <div className='space-y-6'>
                                             {/* Member Header */}
                                             <div className='flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 border-b border-navy-900/10 pb-6 pr-8'>
-                                                <div className='relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-3 border-teal shadow-xl p-1 overflow-hidden shrink-0 bg-white'>
+                                                <div className='relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-2 border-teal/60 shadow-xl overflow-hidden shrink-0 bg-white'>
                                                     <Image
                                                         src={getImageUrl(
                                                             activeMember.image,
@@ -316,7 +316,7 @@ export function TeamBlock({
                                                         alt={activeMember.name}
                                                         fill
                                                         sizes='112px'
-                                                        className='object-cover object-center rounded-full'
+                                                        className='object-cover object-center'
                                                     />
                                                 </div>
 
@@ -345,7 +345,7 @@ export function TeamBlock({
 
                                                     {activeMember.focusArea && (
                                                         <div className='text-xs text-navy-500 font-mono pt-0.5 flex items-center justify-center sm:justify-start gap-1.5'>
-                                                            <CheckCircle2 className='w-3.5 h-3.5 text-emerald-400 shrink-0' />
+                                                            <CheckCircle2 className='w-3.5 h-3.5 text-teal shrink-0' />
                                                             <span>
                                                                 {
                                                                     activeMember.focusArea
@@ -373,14 +373,14 @@ export function TeamBlock({
 
                                         {/* Bottom Direct Action Bar */}
                                         <div className='pt-6 border-t border-navy-900/10 flex flex-wrap items-center justify-between gap-4 mt-auto'>
-                                            <div className='flex items-center gap-2 text-xs font-mono text-navy-500'>
-                                                <UserCheck className='w-4 h-4 text-emerald-500' />
+                                            <Badge color='teal' uppercase>
+                                                <UserCheck className='w-3 h-3 text-teal' />
                                                 <span>
                                                     {isEn
                                                         ? 'Direct Team Contact'
-                                                        : 'Direct Team Contact'}
+                                                        : 'Direct Teamcontact'}
                                                 </span>
-                                            </div>
+                                            </Badge>
 
                                             <div className='flex items-center gap-3'>
                                                 {activeMember.linkedin && (
@@ -390,10 +390,10 @@ export function TeamBlock({
                                                         }
                                                         target='_blank'
                                                         rel='noopener noreferrer'
-                                                        className='px-4 py-2.5 rounded-xl bg-navy-900 hover:btn-gradient text-white border border-navy-900/10 font-semibold transition-all inline-flex items-center gap-2 text-xs shadow-sm'
+                                                        className='h-11 px-4 rounded-lg border border-navy-900 bg-transparent text-navy-900 font-semibold transition-colors hover:border-teal hover:text-teal-900 inline-flex items-center gap-2 text-xs'
                                                     >
                                                         <svg
-                                                            className='w-4 h-4 fill-teal'
+                                                            className='w-4 h-4 fill-current'
                                                             viewBox='0 0 24 24'
                                                         >
                                                             <path d='M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z' />
@@ -405,7 +405,7 @@ export function TeamBlock({
                                                 {activeMember.email && (
                                                     <a
                                                         href={`mailto:${activeMember.email}`}
-                                                        className='px-4 py-2.5 rounded-xl bg-teal hover:bg-teal-hover text-slate-950 font-bold transition-all inline-flex items-center gap-2 text-xs shadow-md'
+                                                        className='h-11 px-4 rounded-lg bg-navy-900 hover:btn-gradient text-white font-semibold transition-all inline-flex items-center gap-2 text-xs shadow-sm'
                                                     >
                                                         <Mail className='w-4 h-4' />
                                                         <span>

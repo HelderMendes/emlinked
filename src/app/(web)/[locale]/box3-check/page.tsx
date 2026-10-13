@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import {
     FileSpreadsheet,
     Link2Off,
@@ -10,7 +9,6 @@ import {
     Building2,
 } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
-import { getImageUrl } from '@/sanity/image';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { Box3Calculator } from '@/components/Box3Calculator';
 import { Box3UrgencyBar } from '@/components/blocks/box3/Box3UrgencyBar';
@@ -148,72 +146,45 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
 
     const blocksToRender = pageBlocks.length > 0 ? pageBlocks : defaultBlocks;
 
-    const renderHero = (b: any, key: any) => {
-        const heroImageUrl = getImageUrl(
-            b?.image,
-            b?.imagePath || '/emlinked/hero/vastgoedportfeuille_aangifte-klaar.jpg',
-        );
-        return (
-            <React.Fragment key={key}>
-                <HeroSection
-                    label={b?.label}
-                    title={b?.title}
-                    subtitle={b?.subtitle}
-                    ctaLabel={b?.ctaLabel}
-                    ctaLink={b?.ctaLink}
-                    secondaryCtaLabel={b?.secondaryCtaLabel}
-                    secondaryCtaLink={b?.secondaryCtaLink}
-                    showProof={b?.showProof ?? true}
-                    showProofAvatars={false}
-                    proofText={b?.proofText}
-                    customGraphic={
-                        <>
-                            <Image
-                                src={heroImageUrl}
-                                alt={b?.title || 'Box 3 Vastgoed Check'}
-                                fill
-                                sizes='(max-width: 1024px) 100vw, 55vw'
-                                className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
-                                priority
-                            />
-
-                            <div className='absolute z-20 left-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                                <span className='w-7 h-7 rounded-lg bg-teal-pale text-teal flex items-center justify-center shrink-0'>
-                                    <ShieldCheck className='w-3.5 h-3.5' />
-                                </span>
-                                <div>
-                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                        {b?.heroCard?.status ||
-                                            (isEn
-                                                ? 'Audit-ready'
-                                                : 'Aangifte-klaar')}
-                                    </p>
-                                    <p className='text-[9px] text-navy-500 mt-1'>
-                                        {isEn ? 'Box 3 Status' : 'Box 3-Status'}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className='absolute z-20 right-0 bottom-8 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                                <span className='w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0'>
-                                    <Building2 className='w-3.5 h-3.5' />
-                                </span>
-                                <div>
-                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                        100% Synced
-                                    </p>
-                                    <p className='text-[9px] text-navy-500 mt-1'>
-                                        {b?.heroCard?.badge ||
-                                            'Business Central'}
-                                    </p>
-                                </div>
-                            </div>
-                        </>
-                    }
-                />
-            </React.Fragment>
-        );
-    };
+    const renderHero = (b: any, key: any) => (
+        <React.Fragment key={key}>
+            <HeroSection
+                label={b?.label}
+                title={b?.title}
+                subtitle={b?.subtitle}
+                ctaLabel={b?.ctaLabel}
+                ctaLink={b?.ctaLink}
+                secondaryCtaLabel={b?.secondaryCtaLabel}
+                secondaryCtaLink={b?.secondaryCtaLink}
+                showProof={b?.showProof ?? true}
+                showProofAvatars={false}
+                proofText={b?.proofText}
+                image={b?.image}
+                imagePath={
+                    b?.imagePath ||
+                    '/emlinked/hero/vastgoedportfeuille_aangifte-klaar.jpg'
+                }
+                floatingLabels={[
+                    {
+                        icon: <ShieldCheck className='w-3.5 h-3.5' />,
+                        value:
+                            b?.floatingLabels?.[0]?.value ||
+                            (isEn ? 'Audit-ready' : 'Aangifte-klaar'),
+                        label:
+                            b?.floatingLabels?.[0]?.label ||
+                            (isEn ? 'Box 3 Status' : 'Box 3-Status'),
+                    },
+                    {
+                        icon: <Building2 className='w-3.5 h-3.5' />,
+                        value: b?.floatingLabels?.[1]?.value || '100% Synced',
+                        label:
+                            b?.floatingLabels?.[1]?.label ||
+                            'Business Central',
+                    },
+                ]}
+            />
+        </React.Fragment>
+    );
 
     const renderUrgency = (b: any, key: any) => (
         <React.Fragment key={key}>

@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -11,9 +10,9 @@ import { HeroSection } from '@/components/blocks/HeroSection';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl } from '@/sanity/image';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
+import { Box3CtaBanner } from '@/components/blocks/box3/Box3CtaBanner';
 import { Badge } from '@/components/ui/Badge';
 import {
-    ArrowRight,
     Building2,
     ShieldCheck,
     Check,
@@ -129,16 +128,6 @@ export default async function ReferentiesPage({
     const isEn = locale === 'en';
     const pageData = await getSanityPageData(locale);
 
-    const getPath = (path: string) => {
-        if (!path) return isEn ? '/en' : '/';
-        if (path.startsWith('#')) return path;
-        if (isEn) {
-            if (path.startsWith('/en')) return path;
-            return `/en${path === '/' ? '' : path}`;
-        }
-        return path;
-    };
-
     const blocks = pageData?.pageBlocks || [];
     const heroBlock = blocks.find(
         (b: any) => b._type === 'hero' || b._type === 'heroBlock',
@@ -205,11 +194,6 @@ export default async function ReferentiesPage({
     };
 
     const renderHero = (b: any, key: any) => {
-        const heroImageUrl = getImageUrl(
-            b?.image || b?.heroImage,
-            b?.imagePath || '/emlinked/referenties/beheerders_referencties.jpg',
-        );
-
         return (
             <React.Fragment key={key}>
                 <HeroSection
@@ -245,54 +229,36 @@ export default async function ReferentiesPage({
                     isHomepage={false}
                     locale={locale}
                     titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
-                    customGraphic={
-                        <>
-                            <Image
-                                src={heroImageUrl}
-                                alt={b?.title || 'Emlinked Referenties'}
-                                fill
-                                sizes='(max-width: 1024px) 100vw, 55vw'
-                                className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
-                                priority
-                            />
-
-                            <div className='absolute z-20 left-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                                <span className='w-7 h-7 rounded-lg bg-teal-pale text-teal flex items-center justify-center shrink-0'>
-                                    <Sparkles className='w-3.5 h-3.5' />
-                                </span>
-                                <div>
-                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                        100%
-                                    </p>
-                                    <p className='text-[9px] text-navy-500 mt-1'>
-                                        {isEn
-                                            ? 'Real estate focus'
-                                            : 'Focus vastgoedsoftware'}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className='absolute z-20 right-0 bottom-8 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                                <span className='w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0'>
-                                    <Building2 className='w-3.5 h-3.5' />
-                                </span>
-                                <div>
-                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                        Enterprise
-                                    </p>
-                                    <p className='text-[9px] text-navy-500 mt-1'>
-                                        {isEn
-                                            ? 'ERP integrations'
-                                            : 'ERP-integraties'}
-                                    </p>
-                                </div>
-                            </div>
-                        </>
+                    image={b?.image || b?.heroImage}
+                    imagePath={
+                        b?.imagePath ||
+                        '/emlinked/referenties/beheerders_referencties.jpg'
                     }
+                    floatingLabels={[
+                        {
+                            icon: <Sparkles className='w-3.5 h-3.5' />,
+                            value: b?.floatingLabels?.[0]?.value || '100%',
+                            label:
+                                b?.floatingLabels?.[0]?.label ||
+                                (isEn
+                                    ? 'Real estate focus'
+                                    : 'Focus vastgoedsoftware'),
+                        },
+                        {
+                            icon: <Building2 className='w-3.5 h-3.5' />,
+                            value:
+                                b?.floatingLabels?.[1]?.value || 'Enterprise',
+                            label:
+                                b?.floatingLabels?.[1]?.label ||
+                                (isEn
+                                    ? 'ERP integrations'
+                                    : 'ERP-integraties'),
+                        },
+                    ]}
                 />
 
                 {/* Trust bar directly below the hero, light-styled to match */}
-                <div className='bg-stone-bg border-t border-navy-900/10 px-4 sm:px-6 lg:px-8 py-10'>
+                <div className='bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/20 py-3.5 px-4 sm:px-6 lg:px-8 shadow-xs relative z-20'>
                     <div className='mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-navy-900/10'>
                         <div className='flex flex-col items-center p-3 space-y-1.5'>
                             <span className='font-display text-xl lg:text-2xl font-extrabold text-teal tracking-tight flex items-center gap-2'>
@@ -347,22 +313,33 @@ export default async function ReferentiesPage({
             >
                 <div className='max-w-7xl mx-auto space-y-16'>
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
-                        <div className='flex justify-center mb-3'>
-                            <Badge color='teal' uppercase>
-                                <Award className='w-3.5 h-3.5 text-teal' />
-                                {b?.badge ||
-                                    (isEn
-                                        ? 'CUSTOMER CASES & EXPERIENCES'
-                                        : 'KLANTCASES & ERVARINGEN')}
-                            </Badge>
-                        </div>
+                        <Badge
+                            color='teal'
+                            uppercase
+                            dot
+                            dotPulse
+                            className='mx-auto'
+                        >
+                            <Award className='w-3.5 h-3.5 text-teal' />
+                            {b?.badge ||
+                                (isEn
+                                    ? 'CUSTOMER CASES & EXPERIENCES'
+                                    : 'KLANTCASES & ERVARINGEN')}
+                        </Badge>
 
-                        <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-darkblue dark:text-white'>
+                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem] font-bold text-navy-900 leading-tight tracking-tight text-center'>
                             {b?.title ||
                                 (isEn
                                     ? '5 Proven Case Studies in Property Management'
                                     : '5 Bewezen Praktijkcases in Vastgoedbeheer')}
                         </h2>
+
+                        <p className='text-navy-900/80 text-base md:text-lg leading-relaxed font-light text-center max-w-2xl mx-auto'>
+                            {b?.subtitle ||
+                                (isEn
+                                    ? 'Real results from property managers, investors, and accounting firms running on emlinked.'
+                                    : 'Echte resultaten van vastgoedbeheerders, beleggers en administratiekantoren die werken met emlinked.')}
+                        </p>
                     </div>
 
                     <div className='space-y-12'>
@@ -383,7 +360,7 @@ export default async function ReferentiesPage({
                             return (
                                 <div
                                     key={c._key || index}
-                                    className='rounded-xl border border-black/10 bg-white/80 p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-teal/40 transition-all duration-300'
+                                    className='rounded-2xl border border-black/10 bg-white/80 p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-teal/40 transition-all duration-300'
                                 >
                                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 items-center'>
                                         <div className='lg:col-span-7 space-y-6'>
@@ -397,7 +374,7 @@ export default async function ReferentiesPage({
                                                         }
                                                         width={80}
                                                         height={80}
-                                                        className='w-20 h-20 rounded-2xl object-cover border-2 border-teal/50 shadow-lg shrink-0'
+                                                        className='w-20 h-20 rounded-xl object-cover border-2 border-teal/50 shadow-lg shrink-0'
                                                     />
                                                 )}
                                                 <div className='space-y-1'>
@@ -417,13 +394,13 @@ export default async function ReferentiesPage({
 
                                             {/* Key Metric Banner */}
                                             {metricVal && (
-                                                <div className='p-4 rounded-xl bg-teal/10 border border-teal/30 flex items-center gap-4 text-darkblue dark:text-white leading-tight'>
+                                                <div className='p-4 border-y-1 border-y-teal/60 flex items-center gap-4 text-darkblue leading-tight text-teal'>
                                                     <Zap className='w-7 h-7 text-teal shrink-0' />
                                                     <div>
-                                                        <span className='text-[11px] font-mono font-bold text-teal uppercase block mb-1'>
+                                                        <span className='text-sm font-mono font-bold  text-black/65 uppercase block '>
                                                             {metricLbl}
                                                         </span>
-                                                        <span className='text-sm font-bold'>
+                                                        <span className='font-medium mt-0.5'>
                                                             {metricVal}
                                                         </span>
                                                     </div>
@@ -436,7 +413,7 @@ export default async function ReferentiesPage({
                                                     <Quote className='w-4 h-4 text-teal/40 absolute -left-2.5 -top-1' />
                                                     {c.quote}
                                                     {c.author && (
-                                                        <footer className='text-xs font-bold text-teal not-italic mt-2'>
+                                                        <footer className='text-sm font-bold text-teal not-italic mt-2'>
                                                             — {c.author}
                                                             {c.role
                                                                 ? `, ${c.role}`
@@ -449,14 +426,14 @@ export default async function ReferentiesPage({
 
                                         {/* Right Column Visual Card: Official Company Logo & Technical Specs */}
                                         <div className='lg:col-span-5 relative'>
-                                            <div className='relative rounded-2xl bg-texture-navy p-6 text-white border border-white/15 shadow-2xl space-y-5 overflow-hidden'>
+                                            <div className='relative rounded-xl bg-gray-100 p-6 text-navy-900 border border-navy-900/10 shadow-md space-y-5 overflow-hidden'>
                                                 {/* Header Bar */}
-                                                <div className='flex items-center justify-between border-b border-white/10 pb-3'>
+                                                <div className='flex items-center justify-between border-b border-navy-900/10 pb-3'>
                                                     <span className='text-xs font-mono text-teal font-bold uppercase tracking-wider truncate max-w-[200px]'>
                                                         {companyName}
                                                     </span>
-                                                    <span className='px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold uppercase flex items-center gap-1.5 shrink-0'>
-                                                        <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse' />
+                                                    <span className='px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-mono font-bold uppercase flex items-center gap-1.5 shrink-0'>
+                                                        <span className='w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse' />
                                                         {isEn
                                                             ? 'Verified'
                                                             : 'Geverifieerd'}
@@ -466,7 +443,7 @@ export default async function ReferentiesPage({
                                                 {/* Logo */}
                                                 <div className='flex flex-col items-center justify-center -mt-6'>
                                                     {logoUrl ? (
-                                                        <div className='relative my-3 w-full bg-transparent rounded-xl flex items-center justify-center shadow-lg group-hover:bg-transparent transition-all duration-300'>
+                                                        <div className='relative my-3 w-full bg-white rounded-xl flex items-center justify-center shadow-sm group-hover:bg-transparent transition-all duration-300'>
                                                             <Image
                                                                 src={logoUrl}
                                                                 alt={
@@ -483,7 +460,7 @@ export default async function ReferentiesPage({
                                                         </div>
                                                     )}
                                                     <div className='flex items-center justify-between w-full text-[11px] font-mono'>
-                                                        <span className='text-slate-300 font-semibold truncate'>
+                                                        <span className='text-navy-500 font-semibold truncate'>
                                                             {c.author ||
                                                                 (isEn
                                                                     ? 'Verified Customer'
@@ -498,7 +475,7 @@ export default async function ReferentiesPage({
                                                 {/* Case-Specific Technical Highlights */}
                                                 {tags.length > 0 && (
                                                     <div className='space-y-2 pt-1'>
-                                                        <div className='text-[11px] font-mono text-white/60 uppercase tracking-wider flex items-center justify-between'>
+                                                        <div className='text-[11px] font-mono text-navy-500 uppercase tracking-wider flex items-center justify-between'>
                                                             <span>
                                                                 {isEn
                                                                     ? 'Specifications & Tags'
@@ -508,7 +485,7 @@ export default async function ReferentiesPage({
                                                                 Business Central
                                                             </span>
                                                         </div>
-                                                        <div className='grid grid-cols-2 gap-2 text-xs font-medium text-white/90'>
+                                                        <div className='grid grid-cols-2 gap-2 text-xs font-medium text-navy-700'>
                                                             {tags.map(
                                                                 (
                                                                     tag: string,
@@ -518,7 +495,7 @@ export default async function ReferentiesPage({
                                                                         key={
                                                                             tIdx
                                                                         }
-                                                                        className='flex items-center gap-1.5 bg-white/5 px-2.5 py-1.5 rounded-lg border border-white/10 hover:border-teal/30 transition-colors'
+                                                                        className='flex items-center gap-1.5 bg-stone-bg px-2.5 py-1.5 rounded-lg border border-navy-900/10 hover:border-teal/30 transition-colors'
                                                                     >
                                                                         <Check className='w-3.5 h-3.5 text-teal shrink-0' />
                                                                         <span className='truncate text-[11px]'>
@@ -549,11 +526,11 @@ export default async function ReferentiesPage({
         return (
             <section
                 key={key}
-                className='px-6 py-20 bg-texture-navy text-white border-b border-white/10 relative z-10 overflow-hidden'
+                className='px-6 py-20 bg-stone-bg text-navy-900 border-b border-navy-900/10 relative overflow-hidden'
             >
                 <div className='max-w-7xl mx-auto space-y-12 text-center relative z-10'>
                     <div className='max-w-3xl mx-auto space-y-4'>
-                        <Badge color='teal' uppercase>
+                        <Badge color='teal' uppercase className='mx-auto'>
                             <Layers className='w-3.5 h-3.5 text-teal' />
                             {b?.badge ||
                                 (isEn
@@ -561,14 +538,14 @@ export default async function ReferentiesPage({
                                     : 'ONZE PARTNERS & ECOSYSTEEM')}
                         </Badge>
 
-                        <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-white'>
+                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem] font-bold text-navy-900 leading-tight tracking-tight'>
                             {b?.title ||
                                 (isEn
                                     ? 'Certified Integrations & Tech Synergies'
                                     : 'Gecertificeerde integraties & technologische synergie')}
                         </h2>
 
-                        <p className='text-white/80 text-base md:text-lg font-light leading-relaxed max-w-3xl mx-auto'>
+                        <p className='text-navy-700 text-base md:text-lg font-light leading-relaxed max-w-3xl mx-auto'>
                             {b?.subtitle ||
                                 (isEn
                                     ? 'Our software works seamlessly connected. We build robust two-way integrations with top financial platforms, bank feeds, and specialized tools.'
@@ -577,16 +554,16 @@ export default async function ReferentiesPage({
                     </div>
 
                     {partnerItems.length > 0 && (
-                        <div className='bg-slate-900/80 rounded-2xl border border-white/10 shadow-xl backdrop-blur-md overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 divide-y sm:divide-y-0 md:divide-x divide-white/10 text-center max-w-7xl mx-auto py-6'>
+                        <div className='bg-white rounded-xl border border-navy-900/10 shadow-md overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 divide-y sm:divide-y-0 md:divide-x divide-navy-900/10 text-center max-w-7xl mx-auto py-6'>
                             {partnerItems.map((p: any, idx: number) => (
                                 <div
                                     key={p._key || idx}
-                                    className='px-6 flex flex-col items-center justify-center gap-2 group hover:bg-white/5 transition-colors duration-300'
+                                    className='px-6 flex flex-col items-center justify-center gap-2 group hover:bg-stone-bg transition-colors duration-300'
                                 >
                                     <span className='text-xs font-mono font-bold text-teal uppercase tracking-wider'>
                                         {p.tag || p.category || 'Integration'}
                                     </span>
-                                    <span className='text-sm md:text-base text-white/80 text-center group-hover:text-teal transition-colors leading-snug'>
+                                    <span className='text-sm md:text-base text-navy-700 text-center group-hover:text-teal transition-colors leading-snug'>
                                         {p.name || p.title}
                                     </span>
                                 </div>
@@ -607,7 +584,13 @@ export default async function ReferentiesPage({
             >
                 <div className='max-w-7xl mx-auto space-y-12'>
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
-                        <Badge color='teal' uppercase>
+                        <Badge
+                            color='teal'
+                            uppercase
+                            dot
+                            dotPulse
+                            className='mx-auto'
+                        >
                             <TrendingUp className='w-3.5 h-3.5 text-teal' />
                             {b?.tag ||
                                 (isEn
@@ -615,7 +598,7 @@ export default async function ReferentiesPage({
                                     : 'WAAROM MARKTLEIDERS KIEZEN VOOR EMLINKED')}
                         </Badge>
 
-                        <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-darkblue dark:text-white'>
+                        <h2 className='font-display text-3xl md:text-4xl lg:text-[2.5rem] font-bold text-navy-900 leading-tight tracking-tight'>
                             {b?.title ||
                                 (isEn
                                     ? 'Designed for Complex Portfolios'
@@ -624,7 +607,7 @@ export default async function ReferentiesPage({
                     </div>
 
                     {whyBullets.length > 0 && (
-                        <div className='bg-white/80 rounded-xl border border-black/10 shadow-sm p-5 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
+                        <div className='bg-white/80 rounded-2xl border border-black/10 shadow-sm p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
                             {whyBullets.map((bItem: any, idx: number) => {
                                 const titleStr = bItem.bold
                                     ? bItem.bold.replace(/:$/, '')
@@ -632,21 +615,21 @@ export default async function ReferentiesPage({
                                 return (
                                     <div
                                         key={bItem._key || idx}
-                                        className='px-4 py-5 md:py-2 md:px-6 flex flex-col items-start justify-start text-left space-y-2 group'
+                                        className='px-4 py-5 md:py-2 md:px-6 flex flex-col items-start justify-start text-left space-y-3 group'
                                     >
                                         <div className='flex items-center gap-3 w-full'>
-                                            <div className='w-10 h-10 rounded-full border-2 border-teal bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-teal-hover transition-all duration-300 text-black'>
+                                            <div className='w-10 h-10 rounded-lg border-2 border-teal/60 bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-teal-hover transition-all duration-300 text-navy-900'>
                                                 {
                                                     whyIcons[
                                                         idx % whyIcons.length
                                                     ]
                                                 }
                                             </div>
-                                            <h3 className='text-sm md:text-base font-bold text-[#060e32] dark:text-white text-left leading-tight'>
+                                            <h3 className='text-sm md:text-base font-bold text-[#060e32] text-left leading-tight'>
                                                 {titleStr}
                                             </h3>
                                         </div>
-                                        <p className='text-xs md:text-sm text-[#060e32]/75 dark:text-muted-foreground leading-relaxed font-light text-left'>
+                                        <p className='text-sm leading-relaxed font-light text-left'>
                                             {bItem.text}
                                         </p>
                                     </div>
@@ -659,80 +642,42 @@ export default async function ReferentiesPage({
         );
     };
 
-    const renderCta = (b: any, key: any) => {
-        const ctaImageUrl = getImageUrl(
-            b?.image,
-            b?.imagePath || '/emlinked/referenties/adviesgesprek.jpg',
-        );
-
-        return (
-            <section
-                key={key}
-                className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'
-                id='contact'
-            >
-                <div className='border border-teal/30 rounded-3xl bg-white/50 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg backdrop-blur-xl lg:px-8'>
-                    <div className='text-navy-900 p-8 md:py-16 md:px-10 relative overflow-hidden'>
-                        <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
-                            <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
-                                <Badge color='teal' uppercase dot dotPulse>
-                                    {b?.tag ||
-                                        (isEn
-                                            ? 'CONSULTATION'
-                                            : 'ADVIESGESPREK')}
-                                </Badge>
-
-                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
-                                    {b?.title ||
-                                        (isEn
-                                            ? 'Ready to elevate your property management?'
-                                            : 'Klaar om je vastgoedadministratie naar het volgende niveau te tillen?')}
-                                </h2>
-
-                                <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
-                                    {b?.subtitle ||
-                                        (isEn
-                                            ? 'Discuss your case with our specialists and discover immediate automation gains.'
-                                            : 'Bespreek je casus met onze specialisten en ontdek direct waar automatiseringswinst te behalen valt.')}
-                                </p>
-
-                                <div className='pt-2 flex flex-col sm:flex-row gap-4'>
-                                    <Link
-                                        href={getPath(
-                                            b?.buttonLink || '/contact',
-                                        )}
-                                        className='inline-flex h-11 items-center gap-1.5 justify-center rounded-lg bg-navy-900 hover:btn-gradient px-6 text-sm font-semibold text-white transition-colors'
-                                    >
-                                        <span>
-                                            {b?.buttonLabel ||
-                                                (isEn
-                                                    ? 'Request a live demo'
-                                                    : 'Vraag een demonstratie aan')}
-                                        </span>
-                                        <ArrowRight className='h-4 w-4 text-white' />
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div className='lg:col-span-4 flex justify-start lg:justify-end'>
-                                <Image
-                                    src={ctaImageUrl}
-                                    alt='Emlinked Consultation'
-                                    width={700}
-                                    height={500}
-                                    className='w-full h-[310px] max-h-[310px] object-cover object-top rounded-lg group-hover:scale-105 transition-transform duration-500 shadow-lg border border-amber-600/40'
-                                    priority
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        );
-    };
+    const renderCta = (b: any, key: any) => (
+        <div id='contact' key={key}>
+            <Box3CtaBanner
+                ctaBadge={b?.tag || (isEn ? 'CONSULTATION' : 'ADVIESGESPREK')}
+                ctaTitle={
+                    b?.title ||
+                    (isEn
+                        ? 'Ready to elevate your property management?'
+                        : 'Klaar om je vastgoedadministratie naar het volgende niveau te tillen?')
+                }
+                ctaSubtitle={
+                    b?.subtitle ||
+                    (isEn
+                        ? 'Discuss your case with our specialists and discover immediate automation gains.'
+                        : 'Bespreek je casus met onze specialisten en ontdek direct waar automatiseringswinst te behalen valt.')
+                }
+                ctaButtonText={
+                    b?.buttonLabel ||
+                    (isEn
+                        ? 'Request a live demo'
+                        : 'Vraag een demonstratie aan')
+                }
+                ctaButtonLink={
+                    b?.buttonLink || (isEn ? '/en/contact' : '/contact')
+                }
+                isEn={isEn}
+                image={b?.image}
+                imagePath={
+                    b?.imagePath || '/emlinked/referenties/adviesgesprek.jpg'
+                }
+            />
+        </div>
+    );
 
     return (
-        <div className='flex flex-col min-h-screen bg-background text-foreground'>
+        <main className='flex-1 text-navy-900 bg-stone-bg'>
             {/* JSON-LD Structured Data */}
             <script
                 type='application/ld+json'
@@ -784,6 +729,6 @@ export default async function ReferentiesPage({
                     />
                 );
             })}
-        </div>
+        </main>
     );
 }

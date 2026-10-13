@@ -30,7 +30,34 @@ export interface HeroSectionProps {
      *  instead of the default left-copy/right-image split. Opt-in per
      *  page — most heroes keep the default split. */
     centered?: boolean;
+    /** 2-3 floating stat/fact chips over the hero image (generic version
+     *  of the homepage-only badges below). Ignored when `customGraphic`
+     *  is passed — build any badges directly into the custom graphic
+     *  instead. Position defaults to alternating top-left/bottom-right
+     *  by index when omitted; iconVariant defaults to alternating
+     *  teal-square/emerald-circle by index, matching the established
+     *  site convention (first chip teal, second emerald). */
+    floatingLabels?: Array<{
+        icon: React.ReactNode;
+        value: string;
+        label: string;
+        position?: 'top-left' | 'bottom-right' | 'top-right' | 'bottom-left';
+        iconVariant?: 'teal' | 'emerald' | 'navy';
+    }>;
 }
+
+const floatingLabelIconClasses: Record<string, string> = {
+    teal: 'rounded-lg bg-teal-pale text-teal',
+    emerald: 'rounded-full bg-emerald-50 text-emerald-600',
+    navy: 'rounded-lg bg-navy-50 text-navy-900',
+};
+
+const floatingLabelPositionClasses: Record<string, string> = {
+    'top-left': 'top-10 left-0',
+    'top-right': 'top-10 -right-4',
+    'bottom-left': 'bottom-8 -left-2',
+    'bottom-right': 'bottom-8 -right-4',
+};
 
 export function formatHeroTitle(
     titleText?: string | React.ReactNode,
@@ -86,6 +113,7 @@ export function HeroSection({
     titleClassName,
     customGraphic,
     centered = false,
+    floatingLabels,
 }: HeroSectionProps) {
     const isEn = locale === 'en';
     const effectiveHeroImg = getImageUrl(image, imagePath);
@@ -103,7 +131,7 @@ export function HeroSection({
 
     return (
         <section className='relative bg-stone-bg text-navy-900 overflow-hidden'>
-            <div className='w-full px-4 sm:px-6 lg:px-12 xl:px-24 py-14 lg:pt-24 lg:pb-12'>
+            <div className='w-full px-4 sm:px-6 lg:px-12 xl:px-24 pt-12 pb-8'>
                 <div
                     className={cn(
                         'grid grid-cols-1 gap-12 lg:gap-10 items-center',
@@ -222,7 +250,16 @@ export function HeroSection({
                         <div className='absolute w-140 h-140 rounded-full bg-teal-pale/50 blur-3xl -right-10 top-0 pointer-events-none' />
                         <div className='absolute w-28 h-28 rounded-full bg-teal-ultra blur-2xl left-4 bottom-4 pointer-events-none' />
 
-                        <div className='relative z-10 w-full aspect-4/3'>
+                        <div
+                            className={cn(
+                                'relative z-10 w-full',
+                                isHomepage ||
+                                    (floatingLabels &&
+                                        floatingLabels.length > 0)
+                                    ? 'absolute inset-x-0 top-[57px] bottom-[49px]'
+                                    : 'aspect-7/5 lg:aspect-video',
+                            )}
+                        >
                             {customGraphic ? (
                                 customGraphic
                             ) : (
@@ -237,49 +274,43 @@ export function HeroSection({
                             )}
                         </div>
 
-                        {isHomepage && (
-                            <>
-                                <div className='absolute z-20 left-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                                    <span className='w-7 h-7 rounded-lg bg-teal-pale text-teal flex items-center justify-center shrink-0'>
-                                        <ArrowUpRight className='w-3.5 h-3.5' />
+                        {!customGraphic &&
+                            floatingLabels?.map((item, idx) => (
+                                <div
+                                    key={idx}
+                                    className={cn(
+                                        'absolute z-20 flex items-center gap-2.5 bg-white rounded-lg px-3.5 py-3 shadow-md',
+                                        floatingLabelPositionClasses[
+                                            item.position ||
+                                                (idx % 2 === 0
+                                                    ? 'top-left'
+                                                    : 'bottom-right')
+                                        ],
+                                    )}
+                                >
+                                    <span
+                                        className={cn(
+                                            'relative w-7 h-7 flex items-center justify-center shrink-0',
+                                            floatingLabelIconClasses[
+                                                item.iconVariant ||
+                                                    (idx % 2 === 0
+                                                        ? 'teal'
+                                                        : 'emerald')
+                                            ],
+                                        )}
+                                    >
+                                        {item.icon}
                                     </span>
                                     <div>
-                                        <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                            € 2,45M
+                                        <p className='text-[12px] font-bold text-navy-900 leading-none'>
+                                            {item.value}
                                         </p>
-                                        <p className='text-[9px] text-navy-500 mt-1'>
-                                            Portefeuillewaarde
+                                        <p className='text-[11px] text-navy-500 mt-0.5'>
+                                            {item.label}
                                         </p>
                                     </div>
                                 </div>
-
-                                <div className='absolute z-20 right-0 bottom-8 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                                    <span className='w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0'>
-                                        <svg
-                                            className='w-3.5 h-3.5'
-                                            fill='none'
-                                            viewBox='0 0 24 24'
-                                            stroke='currentColor'
-                                            strokeWidth='3'
-                                        >
-                                            <path
-                                                strokeLinecap='round'
-                                                strokeLinejoin='round'
-                                                d='M4.5 12.75l6 6 9-13.5'
-                                            />
-                                        </svg>
-                                    </span>
-                                    <div>
-                                        <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                            Bankaflettering
-                                        </p>
-                                        <p className='text-[9px] text-navy-500 mt-1'>
-                                            100% Synced
-                                        </p>
-                                    </div>
-                                </div>
-                            </>
-                        )}
+                            ))}
                     </div>
                 </div>
             </div>

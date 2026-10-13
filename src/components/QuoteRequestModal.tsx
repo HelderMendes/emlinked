@@ -89,6 +89,7 @@ export function QuoteRequestModal({
             const win = window as any;
             if (
                 win.grecaptcha &&
+                typeof win.grecaptcha.render === 'function' &&
                 recaptchaContainerRef.current &&
                 recaptchaWidgetIdRef.current === null
             ) {
@@ -110,8 +111,8 @@ export function QuoteRequestModal({
         };
 
         const win = window as any;
-        if (win.grecaptcha) {
-            renderWidget();
+        if (win.grecaptcha && typeof win.grecaptcha.ready === 'function') {
+            win.grecaptcha.ready(renderWidget);
         } else {
             window.addEventListener('recaptcha-ready', renderWidget);
         }

@@ -6,7 +6,7 @@ import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { PricingCalculator } from '@/components/PricingCalculator';
 import { StrippenkaartenSection } from '@/components/StrippenkaartenSection';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, TrendingUp, ShieldCheck, Users } from 'lucide-react';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl } from '@/sanity/image';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
@@ -114,6 +114,53 @@ export default async function PricingPage({ params }: PricingPageProps) {
 
     const blocksToRender = blocks.length > 0 ? blocks : defaultBlocks;
 
+    // Up to 3 slots — icon, position, and color variant fixed in code;
+    // editors only control value/label text via Sanity. Slots 0-1 fall back
+    // to the original hardcoded copy when empty; slot 2 only appears once
+    // an editor adds a 3rd item.
+    const prijzenFloatingLabelPresets = [
+        {
+            position: 'top-left' as const,
+            iconVariant: 'teal' as const,
+            icon: <TrendingUp className='w-3.5 h-3.5' />,
+            fallbackValue: '€ 173,76',
+            fallbackLabel: isEn ? 'From per month' : 'Vanaf per maand',
+        },
+        {
+            position: 'bottom-right' as const,
+            iconVariant: 'emerald' as const,
+            icon: <ShieldCheck className='w-3.5 h-3.5' />,
+            fallbackValue: '100%',
+            fallbackLabel: isEn
+                ? 'Transparent pricing'
+                : 'Transparante prijzen',
+        },
+        {
+            position: 'top-right' as const,
+            iconVariant: 'navy' as const,
+            icon: <Users className='w-3.5 h-3.5' />,
+            fallbackValue: undefined as string | undefined,
+            fallbackLabel: undefined as string | undefined,
+        },
+    ];
+
+    const getPrijzenFloatingLabels = (b: any) => {
+        const items =
+            b?.floatingLabels?.length > 0
+                ? b.floatingLabels
+                : prijzenFloatingLabelPresets.slice(0, 2);
+        return items.slice(0, 3).map((item: any, idx: number) => {
+            const preset = prijzenFloatingLabelPresets[idx];
+            return {
+                icon: preset.icon,
+                position: preset.position,
+                iconVariant: preset.iconVariant,
+                value: item.value || preset.fallbackValue,
+                label: item.label || preset.fallbackLabel,
+            };
+        });
+    };
+
     const renderHero = (b: any, key: any) => {
         const heroImageUrl = getImageUrl(
             b?.image || b?.heroImage,
@@ -167,6 +214,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                     isHomepage={false}
                     locale={locale}
                     titleClassName='text-3xl sm:text-4xl lg:text-[2.75rem]'
+                    floatingLabels={getPrijzenFloatingLabels(b)}
                 />
             </React.Fragment>
         );

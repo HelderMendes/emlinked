@@ -6,7 +6,13 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import {
+    CheckCircle2,
+    ArrowRight,
+    Building2,
+    Users,
+    CreditCard,
+} from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
@@ -178,88 +184,41 @@ export default async function AppsPage({ params }: AppsPageProps) {
                             blk.imagePath,
                         ) || '/emlinked/apps/hero-apps.jpg'
                     }
-                    customGraphic={
-                        <>
-                            <Image
-                                src={
-                                    getImageUrl(
-                                        blk.image || blk.heroImage,
-                                        blk.imagePath,
-                                    ) || '/emlinked/apps/hero-apps.jpg'
-                                }
-                                alt={
-                                    blk.title ||
-                                    'emlinked Modular Apps Platform'
-                                }
-                                fill
-                                sizes='(max-width: 1024px) 100vw, 55vw'
-                                className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
-                                priority
-                            />
-
-                            {/* Floating module chips — same recipe as the
-                                homepage hero's stat chips. */}
-                            <div className='absolute z-20 left-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                                <span className='w-7 h-7 rounded-lg bg-teal-pale flex items-center justify-center shrink-0 relative'>
-                                    <Image
-                                        src='/emlinked/apps/vastgoedbeheer.png'
-                                        alt='Vastgoedbeheer'
-                                        fill
-                                        sizes='20px'
-                                        className='object-contain p-1'
-                                    />
-                                </span>
-                                <div>
-                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                        Vastgoedbeheer
-                                    </p>
-                                    <p className='text-[9px] text-navy-500 mt-1'>
-                                        01 · Core Engine
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className='absolute z-20 right-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                                <span className='w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0 relative'>
-                                    <Image
-                                        src='/emlinked/apps/huurdersportaal.png'
-                                        alt='Huurdersportaal'
-                                        fill
-                                        sizes='20px'
-                                        className='object-contain p-1'
-                                    />
-                                </span>
-                                <div>
-                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                        Huurdersportaal
-                                    </p>
-                                    <p className='text-[9px] text-navy-500 mt-1'>
-                                        02 · Self-Service
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className='absolute z-20 right-0 bottom-8 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                                <span className='w-7 h-7 rounded-lg bg-navy-50 flex items-center justify-center shrink-0 relative'>
-                                    <Image
-                                        src='/emlinked/apps/payment_engine.png'
-                                        alt='Payment Engine'
-                                        fill
-                                        sizes='20px'
-                                        className='object-contain p-1'
-                                    />
-                                </span>
-                                <div>
-                                    <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                        Payment Engine
-                                    </p>
-                                    <p className='text-[9px] text-navy-500 mt-1'>
-                                        03 · Automated SEPA
-                                    </p>
-                                </div>
-                            </div>
-                        </>
-                    }
+                    floatingLabels={[
+                        {
+                            icon: <Building2 className='w-3.5 h-3.5' />,
+                            value:
+                                blk.floatingLabels?.[0]?.value ||
+                                'Vastgoedbeheer',
+                            label:
+                                blk.floatingLabels?.[0]?.label ||
+                                '01 · Core Engine',
+                            position: 'top-left',
+                            iconVariant: 'teal',
+                        },
+                        {
+                            icon: <Users className='w-3.5 h-3.5' />,
+                            value:
+                                blk.floatingLabels?.[1]?.value ||
+                                'Huurdersportaal',
+                            label:
+                                blk.floatingLabels?.[1]?.label ||
+                                '02 · Self-Service',
+                            position: 'top-right',
+                            iconVariant: 'emerald',
+                        },
+                        {
+                            icon: <CreditCard className='w-3.5 h-3.5' />,
+                            value:
+                                blk.floatingLabels?.[2]?.value ||
+                                'Payment Engine',
+                            label:
+                                blk.floatingLabels?.[2]?.label ||
+                                '03 · Automated SEPA',
+                            position: 'bottom-right',
+                            iconVariant: 'navy',
+                        },
+                    ]}
                     isHomepage={false}
                     locale={locale}
                 />

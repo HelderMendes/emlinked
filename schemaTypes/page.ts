@@ -76,8 +76,7 @@ export const page = defineType({
                             name: 'title',
                             title: 'Hero Title',
                             type: 'string',
-                            description:
-                                'tekst tussen *deze text is emlinked orange*',
+                            description: 'tekst tussen *is in accentkleur*',
                         }),
                         defineField({
                             name: 'subtitle',
@@ -118,26 +117,42 @@ export const page = defineType({
                             description: 'Text displayed next to avatars',
                         }),
                         defineField({
-                            name: 'heroCard',
-                            title: 'Right Column Hero Preview Card',
-                            type: 'object',
-                            fields: [
-                                defineField({
-                                    name: 'badge',
-                                    title: 'Badge Tag',
-                                    type: 'string',
-                                }),
-                                defineField({
-                                    name: 'title',
-                                    title: 'Card Title',
-                                    type: 'string',
-                                }),
-                                defineField({
-                                    name: 'status',
-                                    title: 'Sync Status Text',
-                                    type: 'string',
+                            name: 'floatingLabels',
+                            title: 'Floating Stat Chips (Over Hero Image)',
+                            type: 'array',
+                            description:
+                                'Up to 2-3 small chips floating over the hero image. Icon, position, and styling are fixed in code — only the text here is editable.',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    name: 'floatingLabel',
+                                    fields: [
+                                        defineField({
+                                            name: 'value',
+                                            title: 'Value (bold line)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'label',
+                                            title: 'Label (light line)',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                    preview: {
+                                        select: {
+                                            value: 'value',
+                                            label: 'label',
+                                        },
+                                        prepare({ value, label }) {
+                                            return {
+                                                title: value || 'Untitled chip',
+                                                subtitle: label,
+                                            };
+                                        },
+                                    },
                                 }),
                             ],
+                            validation: (Rule) => Rule.max(4),
                         }),
                         defineField({
                             name: 'imagePath',
@@ -159,13 +174,15 @@ export const page = defineType({
                         select: {
                             title: 'title',
                             label: 'label',
+                            media: 'image',
                         },
-                        prepare({ title, label }) {
+                        prepare({ title, label, media }) {
                             return {
                                 title: `Hero: ${title || label || 'Untitled Hero'}`,
                                 subtitle: label
                                     ? `Label: ${label}`
                                     : 'Hero Block',
+                                media,
                             };
                         },
                     },
@@ -316,11 +333,13 @@ export const page = defineType({
                         select: {
                             title: 'title',
                             badge: 'badge',
+                            media: 'items.0.photo',
                         },
-                        prepare({ title, badge }) {
+                        prepare({ title, badge, media }) {
                             return {
                                 title: `Workflow: ${title || badge || 'Solution Steps'}`,
                                 subtitle: badge || 'Workflow Steps Block',
+                                media,
                             };
                         },
                     },
@@ -459,11 +478,13 @@ export const page = defineType({
                         select: {
                             title: 'title',
                             tag: 'tag',
+                            media: 'calloutImage',
                         },
-                        prepare({ title, tag }) {
+                        prepare({ title, tag, media }) {
                             return {
                                 title: `Architecture: ${title || 'Seamless Integration'}`,
                                 subtitle: tag || 'System Architecture Block',
+                                media,
                             };
                         },
                     },
@@ -624,8 +645,7 @@ export const page = defineType({
                             title: 'Section Image (shown next to the header)',
                             type: 'image',
                             options: { hotspot: true },
-                            description:
-                                'Takes priority over the path above.',
+                            description: 'Takes priority over the path above.',
                             hidden: ({ parent }) =>
                                 Boolean(
                                     parent?.fiscalContext ||
@@ -740,7 +760,8 @@ export const page = defineType({
                                         prepare({ title, subtitle, media }) {
                                             return {
                                                 title: title || 'Feature Card',
-                                                subtitle: subtitle || 'Module Card',
+                                                subtitle:
+                                                    subtitle || 'Module Card',
                                                 media,
                                             };
                                         },
@@ -755,8 +776,9 @@ export const page = defineType({
                             sectionTitle: 'sectionTitle',
                             badge: 'badge',
                             tag: 'sectionTag',
+                            media: 'fiscalContext.image',
                         },
-                        prepare({ title, sectionTitle, badge, tag }) {
+                        prepare({ title, sectionTitle, badge, tag, media }) {
                             const mainTitle =
                                 title ||
                                 sectionTitle ||
@@ -769,6 +791,7 @@ export const page = defineType({
                                     badge || tag
                                         ? `Badge: ${badge || tag}`
                                         : 'Features Block',
+                                media,
                             };
                         },
                     },
@@ -864,6 +887,20 @@ export const page = defineType({
                             ],
                         }),
                     ],
+                    preview: {
+                        select: {
+                            title: 'sectionTitle',
+                            subtitle: 'sectionTag',
+                            media: 'testimonials.0.avatar',
+                        },
+                        prepare({ title, subtitle, media }) {
+                            return {
+                                title: title || 'Testimonials Section',
+                                subtitle,
+                                media,
+                            };
+                        },
+                    },
                 }),
                 defineArrayMember({
                     name: 'ctaBanner',
@@ -956,6 +993,20 @@ export const page = defineType({
                                 'Upload banner graphic directly to Sanity CDN',
                         }),
                     ],
+                    preview: {
+                        select: {
+                            title: 'title',
+                            subtitle: 'badge',
+                            media: 'image',
+                        },
+                        prepare({ title, subtitle, media }) {
+                            return {
+                                title: title || 'CTA Banner',
+                                subtitle,
+                                media,
+                            };
+                        },
+                    },
                 }),
                 defineArrayMember({
                     name: 'ecosystemSection',
@@ -1156,12 +1207,14 @@ export const page = defineType({
                         select: {
                             title: 'title',
                             badge: 'badge',
+                            media: 'partners.0.logo',
                         },
-                        prepare({ title, badge }) {
+                        prepare({ title, badge, media }) {
                             return {
                                 title: `Partners: ${title || badge || 'Partners Section'}`,
                                 subtitle:
                                     badge || 'Partners & Integrations Block',
+                                media,
                             };
                         },
                     },
@@ -1261,6 +1314,20 @@ export const page = defineType({
                             ],
                         }),
                     ],
+                    preview: {
+                        select: {
+                            title: 'sectionTitle',
+                            subtitle: 'sectionTag',
+                            media: 'diagramImage',
+                        },
+                        prepare({ title, subtitle, media }) {
+                            return {
+                                title: title || 'Integrations List',
+                                subtitle,
+                                media,
+                            };
+                        },
+                    },
                 }),
                 defineArrayMember({
                     name: 'calculatorBlock',
@@ -1562,6 +1629,19 @@ export const page = defineType({
                             ],
                         }),
                     ],
+                    preview: {
+                        select: {
+                            title: 'sectionTitle',
+                            media: 'members.0.image',
+                        },
+                        prepare({ title, media }) {
+                            return {
+                                title: title || 'Team Block',
+                                subtitle: 'Team Block',
+                                media,
+                            };
+                        },
+                    },
                 }),
                 defineArrayMember({
                     name: 'heroBlock',
@@ -1577,6 +1657,8 @@ export const page = defineType({
                             name: 'tagline',
                             title: 'Tagline / Headline',
                             type: 'string',
+                            description:
+                                'Tekst tussen *heeft een accentkleur*.',
                         }),
                         defineField({
                             name: 'description',
@@ -1610,6 +1692,44 @@ export const page = defineType({
                             type: 'string',
                         }),
                         defineField({
+                            name: 'floatingLabels',
+                            title: 'Floating Stat Chips (Over Hero Image)',
+                            type: 'array',
+                            description:
+                                'Up to 2 small chips floating over the hero image. Icon, position, and styling are fixed in code — only the text here is editable.',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    name: 'floatingLabel',
+                                    fields: [
+                                        defineField({
+                                            name: 'value',
+                                            title: 'Value (bold line)',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'label',
+                                            title: 'Label (light line)',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                    preview: {
+                                        select: {
+                                            value: 'value',
+                                            label: 'label',
+                                        },
+                                        prepare({ value, label }) {
+                                            return {
+                                                title: value || 'Untitled chip',
+                                                subtitle: label,
+                                            };
+                                        },
+                                    },
+                                }),
+                            ],
+                            validation: (Rule) => Rule.max(2),
+                        }),
+                        defineField({
                             name: 'imagePath',
                             title: 'Image File Path (Optional)',
                             type: 'string',
@@ -1625,11 +1745,13 @@ export const page = defineType({
                         select: {
                             title: 'tagline',
                             subtitle: 'badge',
+                            media: 'image',
                         },
-                        prepare({ title, subtitle }) {
+                        prepare({ title, subtitle, media }) {
                             return {
                                 title: `Hero Block: ${title || 'Untitled'}`,
                                 subtitle: subtitle || 'Hero Section',
+                                media,
                             };
                         },
                     },
@@ -1674,14 +1796,16 @@ export const page = defineType({
                             name: 'imagePath',
                             title: 'Afbeelding Pad (Fallback String)',
                             type: 'string',
-                            description: 'Relatief pad naar banner afbeelding (bijv. /emlinked/home/Vastgoedbeheer_automatiseren.jpg)',
+                            description:
+                                'Relatief pad naar banner afbeelding (bijv. /emlinked/home/Vastgoedbeheer_automatiseren.jpg)',
                         }),
                         defineField({
                             name: 'image',
                             title: 'Banner Afbeelding (Upload naar Sanity CDN)',
                             type: 'image',
                             options: { hotspot: true },
-                            description: 'Upload de banner afbeelding rechtstreeks naar de Sanity CDN',
+                            description:
+                                'Upload de banner afbeelding rechtstreeks naar de Sanity CDN',
                         }),
                     ],
                     preview: {

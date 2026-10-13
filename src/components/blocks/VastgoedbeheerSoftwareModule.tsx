@@ -379,49 +379,27 @@ export function VastgoedbeheerSoftwareModule({
                         ? 'Trusted by professional real estate managers and investors in Europe'
                         : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')
                 }
-                customGraphic={
-                    <>
-                        <Image
-                            src={heroImageUrl}
-                            alt={
-                                heroBlock?.title ||
-                                'Emlinked Core Vastgoedbeheer Software'
-                            }
-                            fill
-                            sizes='(max-width: 1024px) 100vw, 55vw'
-                            className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
-                            priority
-                        />
-
-                        <div className='absolute z-20 left-0 top-10 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                            <span className='w-7 h-7 rounded-lg bg-teal-pale text-teal flex items-center justify-center shrink-0'>
-                                <Building2 className='w-3.5 h-3.5' />
-                            </span>
-                            <div>
-                                <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                    142 Eenheden
-                                </p>
-                                <p className='text-[9px] text-navy-500 mt-1'>
-                                    Portefeuille
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className='absolute z-20 right-0 bottom-8 flex items-center gap-2.5 bg-white rounded-xl px-3.5 py-3 shadow-xl'>
-                            <span className='w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0'>
-                                <BarChart3 className='w-3.5 h-3.5' />
-                            </span>
-                            <div>
-                                <p className='text-[11px] font-bold text-navy-900 leading-none'>
-                                    +3.8% (CBS)
-                                </p>
-                                <p className='text-[9px] text-navy-500 mt-1'>
-                                    CPI Indexatie
-                                </p>
-                            </div>
-                        </div>
-                    </>
-                }
+                imagePath={heroImageUrl}
+                floatingLabels={[
+                    {
+                        icon: <Building2 className='w-3.5 h-3.5' />,
+                        value:
+                            heroBlock?.floatingLabels?.[0]?.value ||
+                            '142 Eenheden',
+                        label:
+                            heroBlock?.floatingLabels?.[0]?.label ||
+                            'Portefeuille',
+                    },
+                    {
+                        icon: <BarChart3 className='w-3.5 h-3.5' />,
+                        value:
+                            heroBlock?.floatingLabels?.[1]?.value ||
+                            '+3.8% (CBS)',
+                        label:
+                            heroBlock?.floatingLabels?.[1]?.label ||
+                            'CPI Indexatie',
+                    },
+                ]}
             />
         </React.Fragment>
     );

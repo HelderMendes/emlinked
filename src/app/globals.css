@@ -200,7 +200,7 @@
     --shadow-xl: var(--shadow-xl);
     --shadow-glow-teal: var(--shadow-glow-teal);
 
-    --color-orange: hsl(var(--teal));
+    --color-teal: hsl(var(--teal));
     --color-darkBlue: oklch(0.1846 0.0722 268.08);
     --color-emlinkedblue: var(--color-darkBlue);
 

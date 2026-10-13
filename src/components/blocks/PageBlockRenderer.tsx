@@ -25,6 +25,7 @@ import {
     Database,
     Zap,
     ArrowRight,
+    ArrowUpRight,
     Layers,
     Building2,
     ShieldCheck,
@@ -35,6 +36,73 @@ interface PageBlockRendererProps {
     block: any;
     locale?: string;
     isHomepage?: boolean;
+}
+
+// Up to 4 slots — icon, position, and color variant are fixed in code;
+// editors only control value/label text via Sanity's floatingLabels array.
+// Slots 0-1 keep the original homepage copy as a fallback when editors
+// haven't filled anything in yet; slots 2-3 only appear once an editor
+// actually adds a 3rd/4th item.
+const HOMEPAGE_FLOATING_LABEL_PRESETS = [
+    {
+        position: 'top-left' as const,
+        iconVariant: 'teal' as const,
+        icon: <ArrowUpRight className='w-3.5 h-3.5' />,
+        fallbackValue: '€ 2,45M',
+        fallbackLabel: 'Portefeuillewaarde',
+    },
+    {
+        position: 'bottom-right' as const,
+        iconVariant: 'emerald' as const,
+        icon: (
+            <svg
+                className='w-3.5 h-3.5'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+                strokeWidth='3'
+            >
+                <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M4.5 12.75l6 6 9-13.5'
+                />
+            </svg>
+        ),
+        fallbackValue: 'Bankaflettering',
+        fallbackLabel: '100% Synced',
+    },
+    {
+        position: 'top-right' as const,
+        iconVariant: 'navy' as const,
+        icon: <Building2 className='w-3.5 h-3.5' />,
+        fallbackValue: undefined,
+        fallbackLabel: undefined,
+    },
+    {
+        position: 'bottom-left' as const,
+        iconVariant: 'teal' as const,
+        icon: <ShieldCheck className='w-3.5 h-3.5' />,
+        fallbackValue: undefined,
+        fallbackLabel: undefined,
+    },
+];
+
+function getHomepageFloatingLabels(block: any) {
+    const items =
+        block.floatingLabels?.length > 0
+            ? block.floatingLabels
+            : HOMEPAGE_FLOATING_LABEL_PRESETS.slice(0, 2);
+    return items.slice(0, 4).map((item: any, idx: number) => {
+        const preset = HOMEPAGE_FLOATING_LABEL_PRESETS[idx];
+        return {
+            icon: preset.icon,
+            position: preset.position,
+            iconVariant: preset.iconVariant,
+            value: item.value || preset.fallbackValue,
+            label: item.label || preset.fallbackLabel,
+        };
+    });
 }
 
 function getTrustIcon(iconName: string) {
@@ -117,11 +185,22 @@ export function PageBlockRenderer({
                     }
                     isHomepage={isHomepage}
                     locale={locale}
+                    floatingLabels={
+                        isHomepage
+                            ? getHomepageFloatingLabels(block)
+                            : block.floatingLabels?.length
+                              ? block.floatingLabels.map((item: any) => ({
+                                    icon: <CheckCircle2 className='w-3.5 h-3.5' />,
+                                    value: item.value,
+                                    label: item.label,
+                                }))
+                              : undefined
+                    }
                 />
             );
         }
 
-        case 'trustBar':
+        // case 'trustBar':
         case 'trust': {
             const items = block.items || [];
             if (!items.length) return null;
@@ -452,7 +531,7 @@ export function PageBlockRenderer({
                         <div className='max-w-3xl mx-auto flex flex-col items-center gap-5 text-center'>
                             {sectionTag && (
                                 <div className='flex justify-center'>
-                                    <Badge color='teal' uppercase dot dotPulse>
+                                    <Badge color='teal' uppercase>
                                         {sectionTag}
                                     </Badge>
                                 </div>

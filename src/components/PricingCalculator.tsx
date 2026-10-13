@@ -222,168 +222,152 @@ export function PricingCalculator({
     const oneTimeItems: QuoteItem[] = [];
     const monthlyItems: QuoteItem[] = [];
 
-        // One-time costs first — matches the calculator UI, where these are
-        // grouped and shown above the recurring monthly items.
-        if (strippenkaartenCost > 0) {
-            const labels: string[] = [];
-            if (strippenkaart5u)
-                labels.push(
-                    isEn
-                        ? 'Support Pack – (5 hours)'
-                        : 'Strippenkaart – (5 uur)',
-                );
-            if (strippenkaart10u)
-                labels.push(
-                    isEn
-                        ? 'Support Pack – (10 hours)'
-                        : 'Strippenkaart – (10 uur)',
-                );
-            if (strippenkaart20u)
-                labels.push(
-                    isEn
-                        ? 'Support Pack – (20 hours)'
-                        : 'Strippenkaart – (20 uur)',
-                );
-            oneTimeItems.push({
-                category: isEn ? 'Support Packs (One-time)' : 'Strippenkaarten',
-                label: labels.join(', '),
-                priceFormatted: formatEur(strippenkaartenCost),
-            });
-        }
-        if (opstartkostenCost > 0) {
-            const labels: string[] = [];
-            if (tenantSetup)
-                labels.push(
-                    isEn
-                        ? 'Tenant setup & configuration'
-                        : 'Opzetten/inrichten emlinked Tenant',
-                );
-            if (directBankingSetup)
-                labels.push(
-                    isEn ? 'Setup Direct Banking' : 'Setup Direct Banking',
-                );
-            if (docCaptureSetup)
-                labels.push(
-                    isEn
-                        ? 'Initial Document Capture Setup'
-                        : 'Initiële installatie Document Capture',
-                );
-            if (trainingVastgoed)
-                labels.push(
-                    isEn
-                        ? 'emlinked Property Training (1 day)'
-                        : 'Training emlinked Vastgoed (1 dag)',
-                );
-            if (trainingFinance)
-                labels.push(
-                    isEn
-                        ? 'emlinked Finance Training (1 day)'
-                        : 'Training emlinked Finance (1 dag)',
-                );
-            oneTimeItems.push({
-                category: isEn
-                    ? 'Setup Fees (One-time)'
-                    : 'Opstartkosten (Eenmalig)',
-                label: labels.join(', '),
-                priceFormatted: formatEur(opstartkostenCost),
-            });
-        }
-        if (isAnyXmlSelected) {
-            const labels: string[] = [];
-            if (inkoopFactuurXml)
-                labels.push(isEn ? 'Purchase Invoice' : 'Inkoop factuur');
-            if (inkoopCreditFactuurXml)
-                labels.push(
-                    isEn ? 'Purchase Credit Memo' : 'Inkoop creditfactuur',
-                );
-            if (verkoopFactuurXml)
-                labels.push(isEn ? 'Sales Invoice' : 'Verkoop factuur');
-            if (verkoopCreditNotaXml)
-                labels.push(isEn ? 'Sales Credit Memo' : 'Verkoop credit nota');
-            if (bankpostenXml)
-                labels.push(isEn ? 'Bank Ledger Entries' : 'Bankposten');
-            oneTimeItems.push({
-                category: isEn
-                    ? 'XML/TXT Export File'
-                    : 'XML/TXT Export Bestand',
-                label: labels.join(', '),
-                priceFormatted: isEn ? 'Upon calculation' : 'Na berekening',
-            });
-        }
-        if (isAnyExtraIntegrationSelected) {
-            const labels: string[] = [];
-            if (officeIntegratieSetup)
-                labels.push(
-                    isEn
-                        ? 'Office Integration & Setup'
-                        : 'Office integratie en setup',
-                );
-            if (bankIntegratieSetup)
-                labels.push(
-                    isEn
-                        ? 'Bank Integration & Setup'
-                        : 'Bank integratie en setup',
-                );
-            if (docCaptureCustomSetup) labels.push('Document Capture');
-            oneTimeItems.push({
-                category: isEn
-                    ? 'Extra Integration & Setup'
-                    : 'Extra Integratie En Setup',
-                label: labels.join(', '),
-                priceFormatted: isEn ? 'Upon calculation' : 'Na berekening',
-            });
-        }
+    // One-time costs first — matches the calculator UI, where these are
+    // grouped and shown above the recurring monthly items.
+    if (strippenkaartenCost > 0) {
+        const labels: string[] = [];
+        if (strippenkaart5u)
+            labels.push(
+                isEn ? 'Support Pack – (5 hours)' : 'Strippenkaart – (5 uur)',
+            );
+        if (strippenkaart10u)
+            labels.push(
+                isEn ? 'Support Pack – (10 hours)' : 'Strippenkaart – (10 uur)',
+            );
+        if (strippenkaart20u)
+            labels.push(
+                isEn ? 'Support Pack – (20 hours)' : 'Strippenkaart – (20 uur)',
+            );
+        oneTimeItems.push({
+            category: isEn ? 'Support Packs (One-time)' : 'Strippenkaarten',
+            label: labels.join(', '),
+            priceFormatted: formatEur(strippenkaartenCost),
+        });
+    }
+    if (opstartkostenCost > 0) {
+        const labels: string[] = [];
+        if (tenantSetup)
+            labels.push(
+                isEn
+                    ? 'Tenant setup & configuration'
+                    : 'Opzetten/inrichten emlinked Tenant',
+            );
+        if (directBankingSetup)
+            labels.push(isEn ? 'Setup Direct Banking' : 'Setup Direct Banking');
+        if (docCaptureSetup)
+            labels.push(
+                isEn
+                    ? 'Initial Document Capture Setup'
+                    : 'Initiële installatie Document Capture',
+            );
+        if (trainingVastgoed)
+            labels.push(
+                isEn
+                    ? 'emlinked Property Training (1 day)'
+                    : 'Training emlinked Vastgoed (1 dag)',
+            );
+        if (trainingFinance)
+            labels.push(
+                isEn
+                    ? 'emlinked Finance Training (1 day)'
+                    : 'Training emlinked Finance (1 dag)',
+            );
+        oneTimeItems.push({
+            category: isEn
+                ? 'Setup Fees (One-time)'
+                : 'Opstartkosten (Eenmalig)',
+            label: labels.join(', '),
+            priceFormatted: formatEur(opstartkostenCost),
+        });
+    }
+    if (isAnyXmlSelected) {
+        const labels: string[] = [];
+        if (inkoopFactuurXml)
+            labels.push(isEn ? 'Purchase Invoice' : 'Inkoop factuur');
+        if (inkoopCreditFactuurXml)
+            labels.push(isEn ? 'Purchase Credit Memo' : 'Inkoop creditfactuur');
+        if (verkoopFactuurXml)
+            labels.push(isEn ? 'Sales Invoice' : 'Verkoop factuur');
+        if (verkoopCreditNotaXml)
+            labels.push(isEn ? 'Sales Credit Memo' : 'Verkoop credit nota');
+        if (bankpostenXml)
+            labels.push(isEn ? 'Bank Ledger Entries' : 'Bankposten');
+        oneTimeItems.push({
+            category: isEn ? 'XML/TXT Export File' : 'XML/TXT Export Bestand',
+            label: labels.join(', '),
+            priceFormatted: isEn ? 'Upon calculation' : 'Na berekening',
+        });
+    }
+    if (isAnyExtraIntegrationSelected) {
+        const labels: string[] = [];
+        if (officeIntegratieSetup)
+            labels.push(
+                isEn
+                    ? 'Office Integration & Setup'
+                    : 'Office integratie en setup',
+            );
+        if (bankIntegratieSetup)
+            labels.push(
+                isEn ? 'Bank Integration & Setup' : 'Bank integratie en setup',
+            );
+        if (docCaptureCustomSetup) labels.push('Document Capture');
+        oneTimeItems.push({
+            category: isEn
+                ? 'Extra Integration & Setup'
+                : 'Extra Integratie En Setup',
+            label: labels.join(', '),
+            priceFormatted: isEn ? 'Upon calculation' : 'Na berekening',
+        });
+    }
 
-        // Recurring monthly items.
-        if (extraContractsTier > 0) {
-            monthlyItems.push({
-                category: isEn ? 'Extra Contracts' : 'Extra Contracten',
-                label: extraContractLabels[extraContractsTier].split(' (+')[0],
-                priceFormatted: formatEur(extraContractsCost),
-            });
-        }
-        if (tenantPortalTier > 0) {
-            monthlyItems.push({
-                category: isEn ? 'Tenant Portal' : 'Huurdersportaal',
-                label: tenantPortalLabels[tenantPortalTier].split(' (+')[0],
-                priceFormatted: formatEur(tenantPortalCost),
-            });
-        }
-        if (extraUsers > 0) {
-            monthlyItems.push({
-                category: isEn
-                    ? 'Extra Users / Month'
-                    : 'Extra Gebruikers/Maand',
-                label: `${extraUsers} ${
-                    isEn
-                        ? extraUsers === 1
-                            ? 'user'
-                            : 'users'
-                        : extraUsers === 1
-                          ? 'gebruiker'
-                          : 'gebruikers'
-                }`,
-                priceFormatted: formatEur(extraUsersCost),
-            });
-        }
-        if (teamUsers > 0) {
-            monthlyItems.push({
-                category: isEn
-                    ? 'Team Member Users'
-                    : 'Leesrechten Voor Team Member',
-                label: `${teamUsers} team members`,
-                priceFormatted: formatEur(teamUsersCost),
-            });
-        }
-        if (directBankingTier > 0) {
-            monthlyItems.push({
-                category: isEn
-                    ? 'Direct Banking'
-                    : 'Direct Banking: Elektronisch Bankieren',
-                label: directBankingLabels[directBankingTier].split(' (+')[0],
-                priceFormatted: formatEur(directBankingCost),
-            });
-        }
+    // Recurring monthly items.
+    if (extraContractsTier > 0) {
+        monthlyItems.push({
+            category: isEn ? 'Extra Contracts' : 'Extra Contracten',
+            label: extraContractLabels[extraContractsTier].split(' (+')[0],
+            priceFormatted: formatEur(extraContractsCost),
+        });
+    }
+    if (tenantPortalTier > 0) {
+        monthlyItems.push({
+            category: isEn ? 'Tenant Portal' : 'Huurdersportaal',
+            label: tenantPortalLabels[tenantPortalTier].split(' (+')[0],
+            priceFormatted: formatEur(tenantPortalCost),
+        });
+    }
+    if (extraUsers > 0) {
+        monthlyItems.push({
+            category: isEn ? 'Extra Users / Month' : 'Extra Gebruikers/Maand',
+            label: `${extraUsers} ${
+                isEn
+                    ? extraUsers === 1
+                        ? 'user'
+                        : 'users'
+                    : extraUsers === 1
+                      ? 'gebruiker'
+                      : 'gebruikers'
+            }`,
+            priceFormatted: formatEur(extraUsersCost),
+        });
+    }
+    if (teamUsers > 0) {
+        monthlyItems.push({
+            category: isEn
+                ? 'Team Member Users'
+                : 'Leesrechten Voor Team Member',
+            label: `${teamUsers} team members`,
+            priceFormatted: formatEur(teamUsersCost),
+        });
+    }
+    if (directBankingTier > 0) {
+        monthlyItems.push({
+            category: isEn
+                ? 'Direct Banking'
+                : 'Direct Banking: Elektronisch Bankieren',
+            label: directBankingLabels[directBankingTier].split(' (+')[0],
+            priceFormatted: formatEur(directBankingCost),
+        });
+    }
 
     return (
         <section
