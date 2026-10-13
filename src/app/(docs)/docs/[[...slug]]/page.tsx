@@ -197,7 +197,7 @@ export default async function DocPage({ params }: DocPageProps) {
     return (
         <div className='space-y-6'>
             <div className='border-b border-black/20 pb-6'>
-                <div className='text-[10px] font-bold tracking-widest text-primary uppercase mb-1'>
+                <div className='text-[10px] font-bold tracking-widest text-primary uppercase mb-3'>
                     {categoryLabel}
                 </div>
                 <h1 className='text-3xl font-bold tracking-tight text-foreground'>

@@ -342,7 +342,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
         >
             <div className='max-w-7xl mx-auto space-y-16'>
                 <div className='text-center max-w-3xl mx-auto space-y-4 mb-12'>
-                    <div className='flex justify-center mb-1'>
+                    <div className='flex justify-center mb-3'>
                         <Badge color='teal' uppercase>
                             <Layers className='w-3.5 h-3.5 text-teal' />
                             {isEn ? 'CORE PILLARS' : 'ONZE KERNWAARDEN'}

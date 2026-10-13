@@ -120,7 +120,7 @@ export function PartnersSectionComponent({
         >
             <div className='max-w-7xl mx-auto space-y-16'>
                 {/* Header Title Block */}
-                <div className='text-center max-w-3xl mx-auto space-y-5'>
+                <div className='text-center max-w-3xl mx-auto space-y-4'>
                     <Badge color='teal' uppercase>
                         <Sparkles className='w-3.5 h-3.5' />
                         {secBadge}

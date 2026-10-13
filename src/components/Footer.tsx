@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
+import { PhoneInput } from '@/components/ui/PhoneInput';
 
 interface FooterProps {
     locale?: string;
@@ -92,6 +94,7 @@ const translations = {
 
 export default function Footer({ locale = 'nl', settings }: FooterProps) {
     const t = translations[locale as 'nl' | 'en'] || translations.nl;
+    const [footerPhone, setFooterPhone] = useState('');
 
     // Helper to prepend locale for links and translate categories/slugs
     const getPath = (path: string) => {
@@ -168,13 +171,13 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 required
                                 className='bg-white/50 border border-navy-900/15 placeholder-navy-900/40 px-4 py-2.5 text-xs text-navy-900 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal rounded-lg transition-all w-full'
                             />
-                            <input
-                                type='tel'
+                            <PhoneInput
+                                value={footerPhone}
+                                onChange={setFooterPhone}
+                                locale={locale}
                                 placeholder={t.placeholderPhone}
                                 required
-                                pattern='\+?[0-9\s-]{7,15}'
-                                title='Voer een geldig telefoonnummer in (7–15 cijfers)'
-                                className='bg-white/50 border border-navy-900/15 placeholder-navy-900/40 px-4 py-2.5 text-xs text-navy-900 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal rounded-lg transition-all w-full'
+                                className='bg-white/50 h-full'
                             />
                             <input
                                 type='email'

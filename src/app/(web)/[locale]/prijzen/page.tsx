@@ -187,9 +187,9 @@ export default async function PricingPage({ params }: PricingPageProps) {
             key={key}
             className='px-6 py-20 bg-card border-b border-black/20 text-foreground relative z-10'
         >
-            <div className='max-w-7xl mx-auto space-y-16'>
+            <div className='max-w-7xl mx-auto space-y-12'>
                 <div className='text-center max-w-3xl mx-auto space-y-4'>
-                    <div className='flex justify-center mb-1'>
+                    <div className='flex justify-center mb-3'>
                         <Badge color='teal' uppercase dot>
                             {b?.sectionTag ||
                                 (isEn

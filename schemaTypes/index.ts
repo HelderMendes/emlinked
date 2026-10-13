@@ -5,6 +5,7 @@ import { article } from './article'
 import { doc } from './doc';
 import { siteSettings } from './siteSettings';
 import { solutionPage } from './solutionPage';
+import { quoteSubmission } from './quoteSubmission';
 
 export const schemaTypes = [
     seoFields,
@@ -14,5 +15,6 @@ export const schemaTypes = [
     doc,
     siteSettings,
     solutionPage,
+    quoteSubmission,
 ];
 

@@ -347,7 +347,7 @@ export default async function ReferentiesPage({
             >
                 <div className='max-w-7xl mx-auto space-y-16'>
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
-                        <div className='flex justify-center mb-1'>
+                        <div className='flex justify-center mb-3'>
                             <Badge color='teal' uppercase>
                                 <Award className='w-3.5 h-3.5 text-teal' />
                                 {b?.badge ||

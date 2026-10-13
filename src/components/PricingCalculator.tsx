@@ -1,7 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import Script from 'next/script';
+import {
+    createQuoteContactSchema,
+    flattenQuoteContactErrors,
+    type QuoteContactFieldErrors,
+} from '@/lib/validation/quote';
 import {
     CheckCircle2,
     ChevronDown,
@@ -17,13 +23,12 @@ import {
     X,
     Building2,
     Mail,
-    Phone,
     User,
     ArrowRight,
     Loader2,
 } from 'lucide-react';
-import { GlowingLink } from '@/components/ui/GlowingButton';
 import { Badge } from '@/components/ui/Badge';
+import { PhoneInput } from '@/components/ui/PhoneInput';
 
 interface PricingCalculatorProps {
     locale?: string;
@@ -61,7 +66,7 @@ export function PricingCalculator({
     const [strippenkaart10u, setStrippenkaart10u] = useState<boolean>(false);
     const [strippenkaart20u, setStrippenkaart20u] = useState<boolean>(false);
 
-    const [tenantSetup, setTenantSetup] = useState<boolean>(false);
+    const [tenantSetup, setTenantSetup] = useState<boolean>(true);
     const [directBankingSetup, setDirectBankingSetup] =
         useState<boolean>(false);
     const [docCaptureSetup, setDocCaptureSetup] = useState<boolean>(false);
@@ -99,6 +104,7 @@ export function PricingCalculator({
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
+    const [fieldErrors, setFieldErrors] = useState<QuoteContactFieldErrors>({});
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -106,6 +112,59 @@ export function PricingCalculator({
         company: '',
         notes: '',
     });
+    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+    const recaptchaContainerRef = useRef<HTMLDivElement>(null);
+    const recaptchaWidgetIdRef = useRef<number | null>(null);
+    const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+    // reCAPTCHA script load + widget render, gated on the modal being open
+    // (same pattern as DemoModal).
+    useEffect(() => {
+        if (!isModalOpen || !recaptchaSiteKey || !mounted) return;
+
+        const renderWidget = () => {
+            const win = window as any;
+            if (
+                win.grecaptcha &&
+                recaptchaContainerRef.current &&
+                recaptchaWidgetIdRef.current === null
+            ) {
+                try {
+                    recaptchaWidgetIdRef.current = win.grecaptcha.render(
+                        recaptchaContainerRef.current,
+                        {
+                            sitekey: recaptchaSiteKey,
+                            callback: (token: string) =>
+                                setRecaptchaToken(token),
+                            'expired-callback': () => setRecaptchaToken(null),
+                            'error-callback': () => setRecaptchaToken(null),
+                        },
+                    );
+                } catch (err) {
+                    console.error('reCAPTCHA render error:', err);
+                }
+            }
+        };
+
+        const win = window as any;
+        if (win.grecaptcha) {
+            renderWidget();
+        } else {
+            window.addEventListener('recaptcha-ready', renderWidget);
+        }
+
+        return () => {
+            window.removeEventListener('recaptcha-ready', renderWidget);
+            const win = window as any;
+            if (win.grecaptcha && recaptchaWidgetIdRef.current !== null) {
+                try {
+                    win.grecaptcha.reset(recaptchaWidgetIdRef.current);
+                } catch (e) {}
+                recaptchaWidgetIdRef.current = null;
+            }
+            setRecaptchaToken(null);
+        };
+    }, [isModalOpen, recaptchaSiteKey, mounted]);
 
     // ── Calculations ──
     const baseMonthlyPrice = 144.8; // Inclusief 1 gebruiker & tot 100 contracten
@@ -233,64 +292,48 @@ export function PricingCalculator({
 
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmitting(true);
         setSubmitError(null);
+        setFieldErrors({});
 
-        const selectedItems: Array<{
+        const contactSchema = createQuoteContactSchema(isEn);
+        const validation = contactSchema.safeParse({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            company: formData.company,
+        });
+
+        if (!validation.success) {
+            setFieldErrors(flattenQuoteContactErrors(validation.error));
+            setSubmitError(
+                isEn
+                    ? 'Please check the highlighted fields.'
+                    : 'Controleer de gemarkeerde velden.',
+            );
+            return;
+        }
+
+        if (recaptchaSiteKey && !recaptchaToken) {
+            setSubmitError(
+                isEn
+                    ? 'Please complete the reCAPTCHA check.'
+                    : 'Voltooi de reCAPTCHA-controle.',
+            );
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        type QuoteItem = {
             category: string;
             label?: string;
             priceFormatted: string;
-        }> = [];
+        };
+        const oneTimeItems: QuoteItem[] = [];
+        const monthlyItems: QuoteItem[] = [];
 
-        if (extraContractsTier > 0) {
-            selectedItems.push({
-                category: isEn ? 'Extra Contracts' : 'Extra Contracten',
-                label: extraContractLabels[extraContractsTier].split(' (+')[0],
-                priceFormatted: formatEur(extraContractsCost),
-            });
-        }
-        if (tenantPortalTier > 0) {
-            selectedItems.push({
-                category: isEn ? 'Tenant Portal' : 'Huurdersportaal',
-                label: tenantPortalLabels[tenantPortalTier].split(' (+')[0],
-                priceFormatted: formatEur(tenantPortalCost),
-            });
-        }
-        if (extraUsers > 0) {
-            selectedItems.push({
-                category: isEn
-                    ? 'Extra Users / Month'
-                    : 'Extra Gebruikers/Maand',
-                label: `${extraUsers} ${
-                    isEn
-                        ? extraUsers === 1
-                            ? 'user'
-                            : 'users'
-                        : extraUsers === 1
-                          ? 'gebruiker'
-                          : 'gebruikers'
-                }`,
-                priceFormatted: formatEur(extraUsersCost),
-            });
-        }
-        if (teamUsers > 0) {
-            selectedItems.push({
-                category: isEn
-                    ? 'Team Member Users'
-                    : 'Leesrechten Voor Team Member',
-                label: `${teamUsers} team members`,
-                priceFormatted: formatEur(teamUsersCost),
-            });
-        }
-        if (directBankingTier > 0) {
-            selectedItems.push({
-                category: isEn
-                    ? 'Direct Banking'
-                    : 'Direct Banking: Elektronisch Bankieren',
-                label: directBankingLabels[directBankingTier].split(' (+')[0],
-                priceFormatted: formatEur(directBankingCost),
-            });
-        }
+        // One-time costs first — matches the calculator UI, where these are
+        // grouped and shown above the recurring monthly items.
         if (strippenkaartenCost > 0) {
             const labels: string[] = [];
             if (strippenkaart5u)
@@ -311,7 +354,7 @@ export function PricingCalculator({
                         ? 'Support Pack – (20 hours)'
                         : 'Strippenkaart – (20 uur)',
                 );
-            selectedItems.push({
+            oneTimeItems.push({
                 category: isEn ? 'Support Packs (One-time)' : 'Strippenkaarten',
                 label: labels.join(', '),
                 priceFormatted: formatEur(strippenkaartenCost),
@@ -347,7 +390,7 @@ export function PricingCalculator({
                         ? 'emlinked Finance Training (1 day)'
                         : 'Training emlinked Finance (1 dag)',
                 );
-            selectedItems.push({
+            oneTimeItems.push({
                 category: isEn
                     ? 'Setup Fees (One-time)'
                     : 'Opstartkosten (Eenmalig)',
@@ -369,7 +412,7 @@ export function PricingCalculator({
                 labels.push(isEn ? 'Sales Credit Memo' : 'Verkoop credit nota');
             if (bankpostenXml)
                 labels.push(isEn ? 'Bank Ledger Entries' : 'Bankposten');
-            selectedItems.push({
+            oneTimeItems.push({
                 category: isEn
                     ? 'XML/TXT Export File'
                     : 'XML/TXT Export Bestand',
@@ -392,12 +435,63 @@ export function PricingCalculator({
                         : 'Bank integratie en setup',
                 );
             if (docCaptureCustomSetup) labels.push('Document Capture');
-            selectedItems.push({
+            oneTimeItems.push({
                 category: isEn
                     ? 'Extra Integration & Setup'
                     : 'Extra Integratie En Setup',
                 label: labels.join(', '),
                 priceFormatted: isEn ? 'Upon calculation' : 'Na berekening',
+            });
+        }
+
+        // Recurring monthly items.
+        if (extraContractsTier > 0) {
+            monthlyItems.push({
+                category: isEn ? 'Extra Contracts' : 'Extra Contracten',
+                label: extraContractLabels[extraContractsTier].split(' (+')[0],
+                priceFormatted: formatEur(extraContractsCost),
+            });
+        }
+        if (tenantPortalTier > 0) {
+            monthlyItems.push({
+                category: isEn ? 'Tenant Portal' : 'Huurdersportaal',
+                label: tenantPortalLabels[tenantPortalTier].split(' (+')[0],
+                priceFormatted: formatEur(tenantPortalCost),
+            });
+        }
+        if (extraUsers > 0) {
+            monthlyItems.push({
+                category: isEn
+                    ? 'Extra Users / Month'
+                    : 'Extra Gebruikers/Maand',
+                label: `${extraUsers} ${
+                    isEn
+                        ? extraUsers === 1
+                            ? 'user'
+                            : 'users'
+                        : extraUsers === 1
+                          ? 'gebruiker'
+                          : 'gebruikers'
+                }`,
+                priceFormatted: formatEur(extraUsersCost),
+            });
+        }
+        if (teamUsers > 0) {
+            monthlyItems.push({
+                category: isEn
+                    ? 'Team Member Users'
+                    : 'Leesrechten Voor Team Member',
+                label: `${teamUsers} team members`,
+                priceFormatted: formatEur(teamUsersCost),
+            });
+        }
+        if (directBankingTier > 0) {
+            monthlyItems.push({
+                category: isEn
+                    ? 'Direct Banking'
+                    : 'Direct Banking: Elektronisch Bankieren',
+                label: directBankingLabels[directBankingTier].split(' (+')[0],
+                priceFormatted: formatEur(directBankingCost),
             });
         }
 
@@ -410,18 +504,23 @@ export function PricingCalculator({
                     email: formData.email,
                     phone: formData.phone,
                     company: formData.company,
-                    selectedItems,
+                    oneTimeItems,
+                    monthlyItems,
                     baseMonthlyPrice: formatEur(baseMonthlyPrice),
                     monthlyAdditions: formatEur(monthlyAdditions),
                     supportFee: formatEur(supportFee),
                     totalOneTime: formatEur(totalOneTime),
                     totalMonthly: formatEur(totalMonthly),
                     locale,
+                    recaptchaToken,
                 }),
             });
 
             if (!res.ok) {
                 const errData = await res.json();
+                if (errData.fieldErrors) {
+                    setFieldErrors(errData.fieldErrors);
+                }
                 throw new Error(
                     errData.error ||
                         (isEn
@@ -452,7 +551,7 @@ export function PricingCalculator({
             <div className='max-w-7xl mx-auto space-y-12'>
                 {/* Section Header */}
                 <div className='text-center max-w-3xl mx-auto space-y-4'>
-                    <div className='flex justify-center mb-1'>
+                    <div className='flex justify-center mb-3'>
                         <Badge color='teal' uppercase dot dotPulse>
                             {sectionTag ||
                                 (isEn
@@ -1116,7 +1215,7 @@ export function PricingCalculator({
 
                     {/* Right Column: Sticky Total Summary Card */}
                     <div className='lg:col-span-5 sticky top-24'>
-                        <div className='rounded-2xl border border-teal/30 bg-white text-navy-900 p-6 sm:p-8 shadow-lg space-y-6 relative overflow-hidden'>
+                        <div className='rounded-2xl border border-teal/30 bg-white text-navy-900 p-6 sm:p-8 shadow-lg space-y-0.5 relative overflow-hidden'>
                             <div className='absolute -right-16 -top-16 w-32 h-32 bg-teal-pale/50 rounded-full blur-2xl pointer-events-none' />
 
                             <div className='flex items-center justify-between border-b border-navy-900/10 pb-4'>
@@ -1132,13 +1231,276 @@ export function PricingCalculator({
                                 </span>
                             </div>
 
-                            {/* Itemized Table Breakdown */}
-                            <div className='space-y-2.5 text-xs text-navy-700 font-mono'>
-                                <div className='flex justify-between items-center py-1 border-b border-navy-900/10'>
-                                    <span>
+                            {/* One-time costs — moved above the recurring items and
+                                visually de-emphasized (neutral gray, no teal accent)
+                                so the monthly total stays the focal point. Its own
+                                total row sits inside this box, smaller than the
+                                monthly grand total, instead of a separate box. */}
+                            {(strippenkaartenCost > 0 ||
+                                opstartkostenCost > 0 ||
+                                isAnyXmlSelected ||
+                                isAnyExtraIntegrationSelected) && (
+                                <div className='rounded-xl bg-slate-100 border border-slate-200 p-4 space-y-3 text-xs text-navy-700 font-mono'>
+                                    <span className='block font-bold uppercase tracking-wider text-teal text-[13px]'>
                                         {isEn
-                                            ? 'Base Subscription'
-                                            : 'Basisabonnement'}
+                                            ? 'One-time Costs'
+                                            : 'Eenmalige Kosten'}
+                                    </span>
+
+                                    {/* 7. Strippenkaarten (only when selected) */}
+                                    {strippenkaartenCost > 0 && (
+                                        <div className='pb-1 border-b border-navy-900/10'>
+                                            <div className='flex justify-between items-center font-medium text-navy-900'>
+                                                <span>
+                                                    {isEn
+                                                        ? 'Support Packs (One-time)'
+                                                        : 'Strippenkaarten'}
+                                                </span>
+                                                <span className='font-semibold'>
+                                                    {formatEur(
+                                                        strippenkaartenCost,
+                                                    )}
+                                                </span>
+                                            </div>
+                                            {strippenkaart5u && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Support Pack – (5 hours)'
+                                                            : 'Strippenkaart – (5 uur)'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {strippenkaart10u && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Support Pack – (10 hours)'
+                                                            : 'Strippenkaart – (10 uur)'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {strippenkaart20u && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Support Pack – (20 hours)'
+                                                            : 'Strippenkaart – (20 uur)'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* 8. Opstartkosten (only when selected) */}
+                                    {opstartkostenCost > 0 && (
+                                        <div className='py-1 border-b border-navy-900/10'>
+                                            <div className='flex justify-between items-center font-medium text-navy-900'>
+                                                <span>
+                                                    {isEn
+                                                        ? 'Setup Fees (One-time)'
+                                                        : 'Opstartkosten (Eenmalig)'}
+                                                </span>
+                                                <span className='font-semibold'>
+                                                    {formatEur(
+                                                        opstartkostenCost,
+                                                    )}
+                                                </span>
+                                            </div>
+                                            {tenantSetup && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Tenant setup & configuration'
+                                                            : 'Opzetten/inrichten emlinked Tenant'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {directBankingSetup && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Setup Direct Banking'
+                                                            : 'Setup Direct Banking'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {docCaptureSetup && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Initial Document Capture Setup'
+                                                            : 'Initiële installatie Document Capture'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {trainingVastgoed && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'emlinked Property Training (1 day)'
+                                                            : 'Training emlinked Vastgoed (1 dag)'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {trainingFinance && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'emlinked Finance Training (1 day)'
+                                                            : 'Training emlinked Finance (1 dag)'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* 9. XML/TXT Export (only when selected) */}
+                                    {isAnyXmlSelected && (
+                                        <div className='py-1 border-b border-navy-900/10'>
+                                            <div className='flex justify-between items-center font-medium text-navy-900'>
+                                                <span>
+                                                    {isEn
+                                                        ? 'XML/TXT Export File'
+                                                        : 'XML/TXT Export Bestand'}
+                                                </span>
+                                                <span className='font-semibold'>
+                                                    {isEn
+                                                        ? 'Upon calculation'
+                                                        : 'Na berekening'}
+                                                </span>
+                                            </div>
+                                            {inkoopFactuurXml && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Purchase Invoice'
+                                                            : 'Inkoop factuur'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {inkoopCreditFactuurXml && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Purchase Credit Memo'
+                                                            : 'Inkoop creditfactuur'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {verkoopFactuurXml && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Sales Invoice'
+                                                            : 'Verkoop factuur'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {verkoopCreditNotaXml && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Sales Credit Memo'
+                                                            : 'Verkoop credit nota'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {bankpostenXml && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Bank Ledger Entries'
+                                                            : 'Bankposten'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* 10. Extra Integratie (only when selected) */}
+                                    {isAnyExtraIntegrationSelected && (
+                                        <div className='py-1'>
+                                            <div className='flex justify-between items-center font-medium text-navy-900'>
+                                                <span>
+                                                    {isEn
+                                                        ? 'Extra Integration & Setup'
+                                                        : 'Extra Integratie En Setup'}
+                                                </span>
+                                                <span className='font-semibold'>
+                                                    {isEn
+                                                        ? 'Upon calculation'
+                                                        : 'Na berekening'}
+                                                </span>
+                                            </div>
+                                            {officeIntegratieSetup && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Office Integration & Setup'
+                                                            : 'Office integratie en setup'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {bankIntegratieSetup && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Bank Integration & Setup'
+                                                            : 'Bank integratie en setup'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {docCaptureCustomSetup && (
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                    <span>
+                                                        •{' '}
+                                                        {isEn
+                                                            ? 'Document Capture'
+                                                            : 'Document Capture'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {totalOneTime > 0 && (
+                                        <div className='flex justify-between items-center pt-2 border-t border-slate-300'>
+                                            <span className='text-[11px] font-semibold uppercase tracking-wide text-navy-700'>
+                                                {isEn
+                                                    ? 'Total One-time Costs'
+                                                    : 'Totaal – Eenmalige Kosten'}
+                                            </span>
+                                            <span className='text-sm font-bold text-navy-900'>
+                                                {formatEur(totalOneTime)}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Monthly / recurring items */}
+                            <div className='divide-y divide-navy-900/10 text-xs text-navy-700 font-mono mt-4'>
+                                <div className='flex justify-between items-center py-1'>
+                                    <span className='block font-bold uppercase tracking-wider text-teal text-[13px]'>
+                                        {isEn
+                                            ? 'Monthly Subscription'
+                                            : 'Maand Abonnement'}
                                     </span>
                                     <span className='font-semibold text-navy-900'>
                                         {formatEur(baseMonthlyPrice)}
@@ -1147,7 +1509,7 @@ export function PricingCalculator({
 
                                 {/* 2. Extra Contracten (only when selected) */}
                                 {extraContractsTier > 0 && (
-                                    <div className='py-1 border-b border-navy-900/10'>
+                                    <div className='py-1'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1173,7 +1535,7 @@ export function PricingCalculator({
 
                                 {/* 3. Huurdersportaal (only when selected) */}
                                 {tenantPortalTier > 0 && (
-                                    <div className='py-1 border-b border-navy-900/10'>
+                                    <div className='py-1'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1199,7 +1561,7 @@ export function PricingCalculator({
 
                                 {/* 4. Extra Gebruikers (only when > 0) */}
                                 {extraUsers > 0 && (
-                                    <div className='py-1 border-b border-navy-900/10'>
+                                    <div className='py-1'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1227,7 +1589,7 @@ export function PricingCalculator({
 
                                 {/* 5. Leesrechten (only when > 0) */}
                                 {teamUsers > 0 && (
-                                    <div className='py-1 border-b border-navy-900/10'>
+                                    <div className='py-1'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1253,7 +1615,7 @@ export function PricingCalculator({
 
                                 {/* 6. Direct Banking (only when selected) */}
                                 {directBankingTier > 0 && (
-                                    <div className='py-1 border-b border-navy-900/10'>
+                                    <div className='py-1'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
                                                 {isEn
@@ -1274,242 +1636,6 @@ export function PricingCalculator({
                                                 }
                                             </span>
                                         </div>
-                                    </div>
-                                )}
-
-                                {/* 7. Strippenkaarten (only when selected) */}
-                                {strippenkaartenCost > 0 && (
-                                    <div className='py-1 border-b border-navy-900/10 text-teal'>
-                                        <div className='flex justify-between items-center font-medium'>
-                                            <span>
-                                                {isEn
-                                                    ? 'Support Packs (One-time)'
-                                                    : 'Strippenkaarten'}
-                                            </span>
-                                            <span className='font-semibold'>
-                                                {formatEur(strippenkaartenCost)}
-                                            </span>
-                                        </div>
-                                        {strippenkaart5u && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Support Pack – (5 hours)'
-                                                        : 'Strippenkaart – (5 uur)'}
-                                                </span>
-                                                <span>€ 550,00</span>
-                                            </div>
-                                        )}
-                                        {strippenkaart10u && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Support Pack – (10 hours)'
-                                                        : 'Strippenkaart – (10 uur)'}
-                                                </span>
-                                                <span>€ 899,00</span>
-                                            </div>
-                                        )}
-                                        {strippenkaart20u && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Support Pack – (20 hours)'
-                                                        : 'Strippenkaart – (20 uur)'}
-                                                </span>
-                                                <span>€ 1.599,00</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-
-                                {/* 8. Opstartkosten (only when selected) */}
-                                {opstartkostenCost > 0 && (
-                                    <div className='py-1 border-b border-navy-900/10 text-teal'>
-                                        <div className='flex justify-between items-center font-medium'>
-                                            <span>
-                                                {isEn
-                                                    ? 'Setup Fees (One-time)'
-                                                    : 'Opstartkosten (Eenmalig)'}
-                                            </span>
-                                            <span className='font-semibold'>
-                                                {formatEur(opstartkostenCost)}
-                                            </span>
-                                        </div>
-                                        {tenantSetup && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Tenant setup & configuration'
-                                                        : 'Opzetten/inrichten emlinked Tenant'}
-                                                </span>
-                                                <span>€ 300,00</span>
-                                            </div>
-                                        )}
-                                        {directBankingSetup && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Setup Direct Banking'
-                                                        : 'Setup Direct Banking'}
-                                                </span>
-                                                <span>€ 300,00</span>
-                                            </div>
-                                        )}
-                                        {docCaptureSetup && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Initial Document Capture Setup'
-                                                        : 'Initiële installatie Document Capture'}
-                                                </span>
-                                                <span>€ 300,00</span>
-                                            </div>
-                                        )}
-                                        {trainingVastgoed && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'emlinked Property Training (1 day)'
-                                                        : 'Training emlinked Vastgoed (1 dag)'}
-                                                </span>
-                                                <span>€ 799,00</span>
-                                            </div>
-                                        )}
-                                        {trainingFinance && (
-                                            <div className='flex justify-between items-center pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'emlinked Finance Training (1 day)'
-                                                        : 'Training emlinked Finance (1 dag)'}
-                                                </span>
-                                                <span>€ 998,00</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-
-                                {/* 9. XML/TXT Export (only when selected) */}
-                                {isAnyXmlSelected && (
-                                    <div className='py-1 border-b border-navy-900/10 text-teal'>
-                                        <div className='flex justify-between items-center font-medium'>
-                                            <span>
-                                                {isEn
-                                                    ? 'XML/TXT Export File'
-                                                    : 'XML/TXT Export Bestand'}
-                                            </span>
-                                            <span className='font-semibold'>
-                                                {isEn
-                                                    ? 'Upon calculation'
-                                                    : 'Na berekening'}
-                                            </span>
-                                        </div>
-                                        {inkoopFactuurXml && (
-                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Purchase Invoice'
-                                                        : 'Inkoop factuur'}
-                                                </span>
-                                            </div>
-                                        )}
-                                        {inkoopCreditFactuurXml && (
-                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Purchase Credit Memo'
-                                                        : 'Inkoop creditfactuur'}
-                                                </span>
-                                            </div>
-                                        )}
-                                        {verkoopFactuurXml && (
-                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Sales Invoice'
-                                                        : 'Verkoop factuur'}
-                                                </span>
-                                            </div>
-                                        )}
-                                        {verkoopCreditNotaXml && (
-                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Sales Credit Memo'
-                                                        : 'Verkoop credit nota'}
-                                                </span>
-                                            </div>
-                                        )}
-                                        {bankpostenXml && (
-                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Bank Ledger Entries'
-                                                        : 'Bankposten'}
-                                                </span>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-
-                                {/* 10. Extra Integratie (only when selected) */}
-                                {isAnyExtraIntegrationSelected && (
-                                    <div className='py-1 border-b border-navy-900/10 text-teal'>
-                                        <div className='flex justify-between items-center font-medium'>
-                                            <span>
-                                                {isEn
-                                                    ? 'Extra Integration & Setup'
-                                                    : 'Extra Integratie En Setup'}
-                                            </span>
-                                            <span className='font-semibold'>
-                                                {isEn
-                                                    ? 'Upon calculation'
-                                                    : 'Na berekening'}
-                                            </span>
-                                        </div>
-                                        {officeIntegratieSetup && (
-                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Office Integration & Setup'
-                                                        : 'Office integratie en setup'}
-                                                </span>
-                                            </div>
-                                        )}
-                                        {bankIntegratieSetup && (
-                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Bank Integration & Setup'
-                                                        : 'Bank integratie en setup'}
-                                                </span>
-                                            </div>
-                                        )}
-                                        {docCaptureCustomSetup && (
-                                            <div className='pl-3 pt-1 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Document Capture'
-                                                        : 'Document Capture'}
-                                                </span>
-                                            </div>
-                                        )}
                                     </div>
                                 )}
 
@@ -1548,17 +1674,6 @@ export function PricingCalculator({
                                         </span>
                                     </div>
 
-                                    <div className='flex justify-between items-center text-teal text-xs pt-1 border-t border-navy-900/10'>
-                                        <span className='font-sans font-semibold'>
-                                            {isEn
-                                                ? 'Total One-time Setup Services'
-                                                : 'Totaal Eenmalige Extra Diensten'}
-                                        </span>
-                                        <span className='font-bold'>
-                                            {formatEur(totalOneTime)}
-                                        </span>
-                                    </div>
-
                                     <div className='flex justify-between items-center text-base pt-3 border-t border-teal/40 text-navy-900'>
                                         <span className='font-sans font-extrabold uppercase tracking-wide text-xs text-teal'>
                                             {isEn
@@ -1579,7 +1694,7 @@ export function PricingCalculator({
                             <button
                                 type='button'
                                 onClick={() => setIsModalOpen(true)}
-                                className='w-full h-14 rounded-lg border-0 bg-navy-900 hover:btn-gradient px-6 text-sm font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer mt-4'
+                                className='w-full h-14 rounded-lg border-0 bg-navy-900 hover:btn-gradient px-6 text-sm font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer my-4'
                             >
                                 <span>
                                     {isEn
@@ -1589,10 +1704,15 @@ export function PricingCalculator({
                                 <ArrowRight className='w-4 h-4 text-white' />
                             </button>
 
-                            <p className='text-[11px] text-center text-navy-500 font-light leading-tight'>
+                            <p className='text-[12px] text-center text-navy-500 font-light leading-tight -mt-1'>
                                 {isEn
-                                    ? 'No commitment required. We send a non-binding PDF specification directly to your email.'
-                                    : 'Vrijblijvend en zonder verplichtingen. Je ontvangt direct een PDF-specificatie in je mailbox.'}
+                                    ? 'No commitment required.'
+                                    : 'Vrijblijvend en zonder verplichtingen. '}
+                            </p>
+                            <p className='text-[12px] text-center text-navy-500 font-light leading-tight mt-1'>
+                                {isEn
+                                    ? 'We send a non-binding PDF specification directly to your email.'
+                                    : 'Je ontvangt direct een PDF-specificatie in je mailbox.'}
                             </p>
                         </div>
                     </div>
@@ -1637,23 +1757,270 @@ export function PricingCalculator({
                                         </p>
                                     </div>
 
-                                    {/* Calculation Summary Box inside Modal (Only Selected Fields) */}
-                                    <div className='p-4 rounded-md bg-slate-50 border border-slate-200 space-y-2 text-xs font-mono max-h-60 overflow-y-auto text-left'>
-                                        {/* 1. Basisabonnement */}
-                                        <div className='flex justify-between items-center py-1 border-b border-slate-200/60 text-slate-700'>
-                                            <span>
+                                    {/* One-time costs — shown first and visually
+                                        de-emphasized (neutral gray) so the monthly
+                                        summary below stays the focal point. */}
+                                    {(strippenkaartenCost > 0 ||
+                                        opstartkostenCost > 0 ||
+                                        isAnyXmlSelected ||
+                                        isAnyExtraIntegrationSelected) && (
+                                        <div className='p-3 rounded-lg bg-slate-100 border border-slate-200 space-y-2 text-xs font-mono text-left'>
+                                            <span className='block text-[10px] font-bold uppercase tracking-wider text-slate-500'>
                                                 {isEn
-                                                    ? 'Base Subscription'
-                                                    : 'Basisabonnement'}
+                                                    ? 'One-time Costs'
+                                                    : 'Eenmalige Kosten'}
                                             </span>
-                                            <span className='font-semibold text-[#060e32]'>
-                                                {formatEur(baseMonthlyPrice)}
-                                            </span>
-                                        </div>
 
+                                            {strippenkaartenCost > 0 && (
+                                                <div className='py-1 border-b border-slate-200/60'>
+                                                    <div className='flex justify-between items-center font-medium text-[#060e32]'>
+                                                        <span>
+                                                            {isEn
+                                                                ? 'Support Packs (One-time)'
+                                                                : 'Strippenkaarten'}
+                                                        </span>
+                                                        <span className='font-semibold'>
+                                                            {formatEur(
+                                                                strippenkaartenCost,
+                                                            )}
+                                                        </span>
+                                                    </div>
+                                                    {strippenkaart5u && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Support Pack – (5 hours)'
+                                                                    : 'Strippenkaart – (5 uur)'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {strippenkaart10u && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Support Pack – (10 hours)'
+                                                                    : 'Strippenkaart – (10 uur)'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {strippenkaart20u && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Support Pack – (20 hours)'
+                                                                    : 'Strippenkaart – (20 uur)'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            {opstartkostenCost > 0 && (
+                                                <div className='py-1 border-b border-slate-200/60'>
+                                                    <div className='flex justify-between items-center font-medium text-[#060e32]'>
+                                                        <span>
+                                                            {isEn
+                                                                ? 'Setup Fees (One-time)'
+                                                                : 'Opstartkosten (Eenmalig)'}
+                                                        </span>
+                                                        <span className='font-semibold'>
+                                                            {formatEur(
+                                                                opstartkostenCost,
+                                                            )}
+                                                        </span>
+                                                    </div>
+                                                    {tenantSetup && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Tenant setup & configuration'
+                                                                    : 'Opzetten/inrichten emlinked Tenant'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {directBankingSetup && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Setup Direct Banking'
+                                                                    : 'Setup Direct Banking'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {docCaptureSetup && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Initial Document Capture Setup'
+                                                                    : 'Initiële installatie Document Capture'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {trainingVastgoed && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'emlinked Property Training (1 day)'
+                                                                    : 'Training emlinked Vastgoed (1 dag)'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {trainingFinance && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'emlinked Finance Training (1 day)'
+                                                                    : 'Training emlinked Finance (1 dag)'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            {isAnyXmlSelected && (
+                                                <div className='py-1 border-b border-slate-200/60'>
+                                                    <div className='flex justify-between items-center font-medium text-[#060e32]'>
+                                                        <span>
+                                                            {isEn
+                                                                ? 'XML/TXT Export File'
+                                                                : 'XML/TXT Export Bestand'}
+                                                        </span>
+                                                        <span className='font-semibold'>
+                                                            {isEn
+                                                                ? 'Upon calculation'
+                                                                : 'Na berekening'}
+                                                        </span>
+                                                    </div>
+                                                    {inkoopFactuurXml && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Purchase Invoice'
+                                                                    : 'Inkoop factuur'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {inkoopCreditFactuurXml && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Purchase Credit Memo'
+                                                                    : 'Inkoop creditfactuur'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {verkoopFactuurXml && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Sales Invoice'
+                                                                    : 'Verkoop factuur'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {verkoopCreditNotaXml && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Sales Credit Memo'
+                                                                    : 'Verkoop credit nota'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {bankpostenXml && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Bank Ledger Entries'
+                                                                    : 'Bankposten'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            {isAnyExtraIntegrationSelected && (
+                                                <div className='py-1'>
+                                                    <div className='flex justify-between items-center font-medium text-[#060e32]'>
+                                                        <span>
+                                                            {isEn
+                                                                ? 'Extra Integration & Setup'
+                                                                : 'Extra Integratie En Setup'}
+                                                        </span>
+                                                        <span className='font-semibold'>
+                                                            {isEn
+                                                                ? 'Upon calculation'
+                                                                : 'Na berekening'}
+                                                        </span>
+                                                    </div>
+                                                    {officeIntegratieSetup && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Office Integration & Setup'
+                                                                    : 'Office integratie en setup'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {bankIntegratieSetup && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Bank Integration & Setup'
+                                                                    : 'Bank integratie en setup'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {docCaptureCustomSetup && (
+                                                        <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                            <span>
+                                                                •{' '}
+                                                                {isEn
+                                                                    ? 'Document Capture'
+                                                                    : 'Document Capture'}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            {totalOneTime > 0 && (
+                                                <div className='flex justify-between items-center pt-2 border-t border-slate-300'>
+                                                    <span className='text-[10px] font-semibold uppercase tracking-wide text-navy-700'>
+                                                        {isEn
+                                                            ? 'Total One-time Costs'
+                                                            : 'Totaal – Eenmalige Kosten'}
+                                                    </span>
+                                                    <span className='text-xs font-bold text-[#060e32]'>
+                                                        {formatEur(
+                                                            totalOneTime,
+                                                        )}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* Calculation Summary Box inside Modal (Only Selected Fields) */}
+                                    <div className='p-4 rounded-lg bg-white border border-teal/30 divide-y divide-slate-200 text-xs font-mono max-h-60 overflow-y-auto text-left'>
                                         {/* 2. Extra Contracten (if selected) */}
                                         {extraContractsTier > 0 && (
-                                            <div className='py-1 border-b border-slate-200/60 text-slate-700'>
+                                            <div className='py-1 text-slate-700'>
                                                 <div className='flex justify-between items-center font-medium'>
                                                     <span>
                                                         {isEn
@@ -1681,7 +2048,7 @@ export function PricingCalculator({
 
                                         {/* 3. Huurdersportaal (if selected) */}
                                         {tenantPortalTier > 0 && (
-                                            <div className='py-1 border-b border-slate-200/60 text-slate-700'>
+                                            <div className='py-1 text-slate-700'>
                                                 <div className='flex justify-between items-center font-medium'>
                                                     <span>
                                                         {isEn
@@ -1709,7 +2076,7 @@ export function PricingCalculator({
 
                                         {/* 4. Extra Gebruikers (if selected) */}
                                         {extraUsers > 0 && (
-                                            <div className='py-1 border-b border-slate-200/60 text-slate-700'>
+                                            <div className='py-1 text-slate-700'>
                                                 <div className='flex justify-between items-center font-medium'>
                                                     <span>
                                                         {isEn
@@ -1739,7 +2106,7 @@ export function PricingCalculator({
 
                                         {/* 5. Leesrechten (if selected) */}
                                         {teamUsers > 0 && (
-                                            <div className='py-1 border-b border-slate-200/60 text-slate-700'>
+                                            <div className='py-1 text-slate-700'>
                                                 <div className='flex justify-between items-center font-medium'>
                                                     <span>
                                                         {isEn
@@ -1767,7 +2134,7 @@ export function PricingCalculator({
 
                                         {/* 6. Direct Banking (if selected) */}
                                         {directBankingTier > 0 && (
-                                            <div className='py-1 border-b border-slate-200/60 text-slate-700'>
+                                            <div className='py-1 text-slate-700'>
                                                 <div className='flex justify-between items-center font-medium'>
                                                     <span>
                                                         {isEn
@@ -1790,238 +2157,6 @@ export function PricingCalculator({
                                                         }
                                                     </span>
                                                 </div>
-                                            </div>
-                                        )}
-
-                                        {/* 7. Strippenkaarten (if selected) */}
-                                        {strippenkaartenCost > 0 && (
-                                            <div className='py-1 border-b border-slate-200/60 text-teal-700'>
-                                                <div className='flex justify-between items-center font-medium'>
-                                                    <span>
-                                                        {isEn
-                                                            ? 'Support Packs (One-time)'
-                                                            : 'Strippenkaarten'}
-                                                    </span>
-                                                    <span className='font-semibold'>
-                                                        {formatEur(
-                                                            strippenkaartenCost,
-                                                        )}
-                                                    </span>
-                                                </div>
-                                                {strippenkaart5u && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Support Pack – (5 hours)'
-                                                                : 'Strippenkaart – (5 uur)'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {strippenkaart10u && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Support Pack – (10 hours)'
-                                                                : 'Strippenkaart – (10 uur)'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {strippenkaart20u && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Support Pack – (20 hours)'
-                                                                : 'Strippenkaart – (20 uur)'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {/* 8. Opstartkosten (if selected) */}
-                                        {opstartkostenCost > 0 && (
-                                            <div className='py-1 border-b border-slate-200/60 text-teal-700'>
-                                                <div className='flex justify-between items-center font-medium'>
-                                                    <span>
-                                                        {isEn
-                                                            ? 'Setup Fees (One-time)'
-                                                            : 'Opstartkosten (Eenmalig)'}
-                                                    </span>
-                                                    <span className='font-semibold'>
-                                                        {formatEur(
-                                                            opstartkostenCost,
-                                                        )}
-                                                    </span>
-                                                </div>
-                                                {tenantSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Tenant setup & configuration'
-                                                                : 'Opzetten/inrichten emlinked Tenant'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {directBankingSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Setup Direct Banking'
-                                                                : 'Setup Direct Banking'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {docCaptureSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Initial Document Capture Setup'
-                                                                : 'Initiële installatie Document Capture'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {trainingVastgoed && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'emlinked Property Training (1 day)'
-                                                                : 'Training emlinked Vastgoed (1 dag)'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {trainingFinance && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'emlinked Finance Training (1 day)'
-                                                                : 'Training emlinked Finance (1 dag)'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {/* 9. XML/TXT Export (if selected) */}
-                                        {isAnyXmlSelected && (
-                                            <div className='py-1 border-b border-slate-200/60 text-teal-700'>
-                                                <div className='flex justify-between items-center font-medium'>
-                                                    <span>
-                                                        {isEn
-                                                            ? 'XML/TXT Export File'
-                                                            : 'XML/TXT Export Bestand'}
-                                                    </span>
-                                                    <span className='font-semibold'>
-                                                        {isEn
-                                                            ? 'Upon calculation'
-                                                            : 'Na berekening'}
-                                                    </span>
-                                                </div>
-                                                {inkoopFactuurXml && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Purchase Invoice'
-                                                                : 'Inkoop factuur'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {inkoopCreditFactuurXml && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Purchase Credit Memo'
-                                                                : 'Inkoop creditfactuur'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {verkoopFactuurXml && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Sales Invoice'
-                                                                : 'Verkoop factuur'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {verkoopCreditNotaXml && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Sales Credit Memo'
-                                                                : 'Verkoop credit nota'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {bankpostenXml && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Bank Ledger Entries'
-                                                                : 'Bankposten'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {/* 10. Extra Integratie (if selected) */}
-                                        {isAnyExtraIntegrationSelected && (
-                                            <div className='py-1 border-b border-slate-200/60 text-teal-700'>
-                                                <div className='flex justify-between items-center font-medium'>
-                                                    <span>
-                                                        {isEn
-                                                            ? 'Extra Integration & Setup'
-                                                            : 'Extra Integratie En Setup'}
-                                                    </span>
-                                                    <span className='font-semibold'>
-                                                        {isEn
-                                                            ? 'Upon calculation'
-                                                            : 'Na berekening'}
-                                                    </span>
-                                                </div>
-                                                {officeIntegratieSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Office Integration & Setup'
-                                                                : 'Office integratie en setup'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {bankIntegratieSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Bank Integration & Setup'
-                                                                : 'Bank integratie en setup'}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                {docCaptureCustomSetup && (
-                                                    <div className='pl-3 pt-0.5 text-[11px] text-teal-800 font-normal'>
-                                                        <span>
-                                                            •{' '}
-                                                            {isEn
-                                                                ? 'Document Capture'
-                                                                : 'Document Capture'}
-                                                        </span>
-                                                    </div>
-                                                )}
                                             </div>
                                         )}
 
@@ -2061,17 +2196,6 @@ export function PricingCalculator({
                                                 </span>
                                                 <span className='font-semibold'>
                                                     {formatEur(supportFee)}
-                                                </span>
-                                            </div>
-
-                                            <div className='flex justify-between text-teal-700 text-xs font-semibold pt-1 border-t border-slate-200/80'>
-                                                <span>
-                                                    {isEn
-                                                        ? 'Total One-time Setup Services'
-                                                        : 'Totaal Eenmalige Extra Diensten'}
-                                                </span>
-                                                <span>
-                                                    {formatEur(totalOneTime)}
                                                 </span>
                                             </div>
 
@@ -2116,9 +2240,18 @@ export function PricingCalculator({
                                                             ? 'e.g. John Doe'
                                                             : 'bijv. Jan de Vries'
                                                     }
-                                                    className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30'
+                                                    className={`w-full rounded-md border bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:outline-hidden focus:ring-2 ${
+                                                        fieldErrors.name
+                                                            ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
+                                                            : 'border-slate-300 focus:border-teal focus:ring-teal/30'
+                                                    }`}
                                                 />
                                             </div>
+                                            {fieldErrors.name && (
+                                                <p className='mt-1 text-[11px] text-red-600'>
+                                                    {fieldErrors.name}
+                                                </p>
+                                            )}
                                         </div>
 
                                         <div>
@@ -2141,34 +2274,48 @@ export function PricingCalculator({
                                                         })
                                                     }
                                                     placeholder='jan@organisatie.nl'
-                                                    className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30'
+                                                    className={`w-full rounded-md border bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:outline-hidden focus:ring-2 ${
+                                                        fieldErrors.email
+                                                            ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
+                                                            : 'border-slate-300 focus:border-teal focus:ring-teal/30'
+                                                    }`}
                                                 />
                                             </div>
+                                            {fieldErrors.email && (
+                                                <p className='mt-1 text-[11px] text-red-600'>
+                                                    {fieldErrors.email}
+                                                </p>
+                                            )}
                                         </div>
 
                                         <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                             <div>
                                                 <label className='block text-[10px] font-bold uppercase tracking-wider text-[#060e32]/80 mb-1'>
                                                     {isEn
-                                                        ? 'Phone Number'
-                                                        : 'Telefoonnummer'}
+                                                        ? 'Phone Number *'
+                                                        : 'Telefoonnummer *'}
                                                 </label>
-                                                <div className='relative'>
-                                                    <Phone className='w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400' />
-                                                    <input
-                                                        type='tel'
-                                                        value={formData.phone}
-                                                        onChange={(e) =>
-                                                            setFormData({
-                                                                ...formData,
-                                                                phone: e.target
-                                                                    .value,
-                                                            })
-                                                        }
-                                                        placeholder='+31 6 12345678'
-                                                        className='w-full rounded-md border border-slate-300 bg-white pl-10 pr-4 py-1.5 text-sm text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30'
-                                                    />
-                                                </div>
+                                                <PhoneInput
+                                                    value={formData.phone}
+                                                    onChange={(v) =>
+                                                        setFormData({
+                                                            ...formData,
+                                                            phone: v,
+                                                        })
+                                                    }
+                                                    locale={locale}
+                                                    required
+                                                    className={
+                                                        fieldErrors.phone
+                                                            ? 'rounded-md border-red-400 focus-within:border-red-400 focus-within:ring-red-200'
+                                                            : 'rounded-md border-slate-300'
+                                                    }
+                                                />
+                                                {fieldErrors.phone && (
+                                                    <p className='mt-1 text-[11px] text-red-600'>
+                                                        {fieldErrors.phone}
+                                                    </p>
+                                                )}
                                             </div>
 
                                             <div>
@@ -2202,6 +2349,15 @@ export function PricingCalculator({
                                         </div>
                                     </div>
 
+                                    {recaptchaSiteKey && (
+                                        <div className='py-1'>
+                                            <div
+                                                ref={recaptchaContainerRef}
+                                                className='g-recaptcha'
+                                            />
+                                        </div>
+                                    )}
+
                                     {submitError && (
                                         <div className='p-3 rounded-md bg-red-50 text-red-700 text-xs border border-red-200'>
                                             {submitError}
@@ -2211,7 +2367,7 @@ export function PricingCalculator({
                                     <button
                                         type='submit'
                                         disabled={isSubmitting}
-                                        className='w-full h-13 rounded-md border-0 bg-linear-to-r from-[#FF9500] via-[#FF5E00] to-[#FF3B00] hover:brightness-110 px-6 text-base font-bold text-white transition-all duration-200 shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed'
+                                        className='w-full h-13 rounded-lg border-0 bg-navy-900 hover:btn-gradient px-6 text-base font-bold text-white transition-all duration-200 shadow-lg hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed'
                                     >
                                         {isSubmitting ? (
                                             <>
@@ -2235,19 +2391,24 @@ export function PricingCalculator({
                                     </button>
                                 </form>
                             ) : (
-                                <div className='py-8 text-center space-y-4'>
+                                <div className='py-2 text-center space-y-4'>
                                     <div className='w-16 h-16 rounded-full bg-emerald-500/15 border-2 border-emerald-500 text-emerald-600 flex items-center justify-center mx-auto'>
                                         <Check className='w-8 h-8' />
                                     </div>
-                                    <h3 className='text-2xl font-bold text-[#060e32]'>
+                                    <h3 className='text-3xl font-bold text-[#060e32] mb-6'>
                                         {isEn
                                             ? 'Quote Sent Successfully!'
                                             : 'Offerte Succesvol Verzonden!'}
                                     </h3>
-                                    <p className='text-sm text-slate-600 font-light max-w-md mx-auto'>
+                                    <p className=' text-slate-800 font-semibold max-w-md mx-auto'>
                                         {isEn
-                                            ? 'Thank you! The customized PDF specification has been sent to your email. One of our specialists will reach out within 1 business day.'
-                                            : 'Bedankt! De offerte-specificatie is verzonden naar je mailbox. Een van onze vastgoedbeheerspecialisten neemt binnen 1 werkdag contact op.'}
+                                            ? 'Thank you!'
+                                            : 'Bedankt voor uw aanvraag!'}
+                                    </p>
+                                    <p className=' text-slate-600  max-w-md mx-auto  mb-8 -mt-2'>
+                                        {isEn
+                                            ? 'The customized PDF specification has been sent to your email. One of our specialists will reach out within 1 business day.'
+                                            : 'De offerte-specificatie is zojuist naar uw mailbox verzonden. Een van onze vastgoedbeheerspecialisten neemt zo snel mogelijk contact met u op.'}
                                     </p>
                                     <button
                                         type='button'
@@ -2255,7 +2416,7 @@ export function PricingCalculator({
                                             setIsModalOpen(false);
                                             setIsSubmitted(false);
                                         }}
-                                        className='inline-flex h-11 px-8 rounded-md bg-slate-900 text-white font-semibold text-sm items-center justify-center hover:bg-slate-800 transition-colors'
+                                        className='inline-flex h-11 px-8 rounded-md bg-slate-900 text-white font-semibold items-center justify-center hover:bg-slate-800 transition-colors'
                                     >
                                         {isEn ? 'Close' : 'Sluiten'}
                                     </button>
@@ -2265,6 +2426,29 @@ export function PricingCalculator({
                     </div>,
                     document.body,
                 )}
+
+            {recaptchaSiteKey && isModalOpen && (
+                <>
+                    <Script
+                        id='recaptcha-load-callback'
+                        strategy='afterInteractive'
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                                window.onRecaptchaLoad = function() {
+                                    window.dispatchEvent(new Event('recaptcha-ready'));
+                                };
+                            `,
+                        }}
+                    />
+                    <Script
+                        src='https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit'
+                        strategy='afterInteractive'
+                        onLoad={() => {
+                            window.dispatchEvent(new Event('recaptcha-ready'));
+                        }}
+                    />
+                </>
+            )}
         </section>
     );
 }

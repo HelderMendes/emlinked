@@ -864,8 +864,8 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
             {/* ── Related Modules / 3-Apps Suite Grid ─────────────────────── */}
             <section className='px-6 py-20 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] dark:bg-navy-dark border-t border-b border-teal/15 relative z-10'>
                 <div className='max-w-7xl mx-auto space-y-10'>
-                    <div className='text-center max-w-3xl mx-auto space-y-3'>
-                        <div className='flex justify-center mb-1'>
+                    <div className='text-center max-w-3xl mx-auto space-y-4'>
+                        <div className='flex justify-center mb-3'>
                             <Badge color='teal' uppercase dot>
                                 {isEn
                                     ? 'DE MODULAIRE SUITE'

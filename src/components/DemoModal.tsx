@@ -15,6 +15,7 @@ import {
 import { BsLinkedin, BsTwitterX } from 'react-icons/bs';
 import Script from 'next/script';
 import Image from 'next/image';
+import { PhoneInput } from '@/components/ui/PhoneInput';
 
 interface DemoModalProps {
     isOpen: boolean;
@@ -561,14 +562,12 @@ export function DemoModal({
                                                     *
                                                 </span>
                                             </label>
-                                            <input
-                                                type='tel'
+                                            <PhoneInput
                                                 value={phone}
-                                                onChange={(e) =>
-                                                    setPhone(e.target.value)
-                                                }
+                                                onChange={setPhone}
+                                                locale={locale}
                                                 placeholder={t.placeholderPhone}
-                                                className='w-full h-10 px-3 rounded-lg border border-navy-900/15 bg-white text-xs text-navy-900 placeholder:text-navy-900/40 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
+                                                className='h-10'
                                                 required
                                                 disabled={
                                                     status === 'submitting'

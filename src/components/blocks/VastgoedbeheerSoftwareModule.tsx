@@ -434,7 +434,7 @@ export function VastgoedbeheerSoftwareModule({
             <div className='max-w-7xl mx-auto space-y-16'>
                 {/* Header */}
                 <div className='text-center max-w-3xl mx-auto space-y-4'>
-                    <div className='flex justify-center  mb-1'>
+                    <div className='flex justify-center  mb-3'>
                         <Badge color='teal' uppercase dot dotPulse>
                             <span>
                                 {comparisonBlock?.badge ||

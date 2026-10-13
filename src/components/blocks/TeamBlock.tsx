@@ -84,7 +84,7 @@ export function TeamBlock({
         <section className='px-6 py-20 relative z-10 max-w-7xl mx-auto border-t border-navy-900/10'>
             {/* Section Header */}
             <div className='text-center max-w-3xl mx-auto space-y-4 mb-16'>
-                <div className='flex justify-center mb-1'>
+                <div className='flex justify-center mb-3'>
                     <Badge color='teal' uppercase dot dotPulse>
                         {isEn
                             ? 'OUR TEAM & SPECIALISTS'
