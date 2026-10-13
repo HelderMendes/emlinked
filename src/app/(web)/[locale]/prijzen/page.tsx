@@ -5,7 +5,8 @@ import { Metadata } from 'next';
 import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { PricingCalculator } from '@/components/PricingCalculator';
-import { Clock, ArrowRight } from 'lucide-react';
+import { StrippenkaartenSection } from '@/components/StrippenkaartenSection';
+import { ArrowRight } from 'lucide-react';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl } from '@/sanity/image';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
@@ -183,151 +184,13 @@ export default async function PricingPage({ params }: PricingPageProps) {
     );
 
     const renderStrippenkaarten = (b: any, key: any) => (
-        <section
+        <StrippenkaartenSection
             key={key}
-            className='px-6 py-20 bg-card border-b border-black/20 text-foreground relative z-10'
-        >
-            <div className='max-w-7xl mx-auto space-y-12'>
-                <div className='text-center max-w-3xl mx-auto space-y-4'>
-                    <div className='flex justify-center mb-3'>
-                        <Badge color='teal' uppercase dot>
-                            {b?.sectionTag ||
-                                (isEn
-                                    ? 'FLEXIBLE SUPPORT'
-                                    : 'FLEXIBELE ONDERSTEUNING')}
-                        </Badge>
-                    </div>
-
-                    <h2 className='font-display text-2xl md:text-3xl lg:text-3.5xl font-bold tracking-tight text-darkblue'>
-                        {b?.sectionTitle ||
-                            (isEn
-                                ? 'Prepaid Support Packs: The most cost-effective support'
-                                : 'Strippenkaarten: De voordeligste oplossing voor de beste support')}
-                    </h2>
-
-                    <p className='text-muted-foreground text-base md:text-lg leading-relaxed font-light'>
-                        {b?.sectionSubtitle ||
-                            (isEn
-                                ? 'All emlinked services and support can easily be paid using our prepaid support packs. Available in 5-hour, 10-hour, and 20-hour packs. The larger the pack, the higher the hourly discount.'
-                                : 'Alle diensten en ondersteuning van emlinked kunnen eenvoudig betaald worden met onze strippenkaart. Onze strippenkaarten zijn verkrijgbaar in 5 uur, 10 uur en 20 uur. Hoe groter de strippenkaart, hoe hoger de korting op het uurtarief.')}
-                    </p>
-                </div>
-
-                {/* 3 Strippenkaart Cards */}
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch'>
-                    {/* 5 Hours */}
-                    <div className='rounded-2xl border border-navy-900/10 bg-background p-8 space-y-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group'>
-                        <div className='space-y-4'>
-                            <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/15 text-teal text-xs font-mono font-bold uppercase'>
-                                <Clock className='w-3.5 h-3.5' />
-                                <span>5 {isEn ? 'Hours' : 'Uur'}</span>
-                            </div>
-                            <h3 className='text-2xl font-bold text-navy-900'>
-                                {isEn
-                                    ? '5 Hour Support Pack'
-                                    : '5 Uur Strippenkaart'}
-                            </h3>
-                            <div className='flex items-baseline gap-1.5'>
-                                <span className='text-4xl font-extrabold text-navy-900'>
-                                    € 550,-
-                                </span>
-                                <span className='text-xs text-navy-500'>
-                                    (€ 110,- / uur)
-                                </span>
-                            </div>
-                            <p className='text-sm text-navy-700 font-light leading-relaxed pt-2 border-t border-navy-900/10'>
-                                {isEn
-                                    ? 'Ideal for short questions, quick configurations, and light support.'
-                                    : 'Ideaal voor korte vragen, snelle instellingen en lichte ondersteuning.'}
-                            </p>
-                        </div>
-                        <Link
-                            href={getPath('/contact')}
-                            className='inline-flex h-12 items-center justify-center rounded-xl border border-navy-900/15 bg-transparent px-6 text-sm font-semibold text-navy-900 hover:bg-teal hover:text-navy-900 hover:border-teal transition-all duration-200 text-center'
-                        >
-                            {isEn
-                                ? 'Order Support Pack'
-                                : 'Bestel strippenkaart'}
-                        </Link>
-                    </div>
-
-                    {/* 10 Hours */}
-                    <div className='rounded-2xl border-2 border-teal/50 bg-background p-8 space-y-6 flex flex-col justify-between shadow-md relative overflow-hidden group hover:-translate-y-1 transition-all duration-300'>
-                        <div className='absolute top-0 right-0 bg-teal text-navy-900 font-mono text-[10px] font-extrabold uppercase px-3 py-1 rounded-bl-xl tracking-wider'>
-                            {isEn ? 'Popular Choice' : 'Meest gekozen'}
-                        </div>
-                        <div className='space-y-4'>
-                            <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/15 text-teal text-xs font-mono font-bold uppercase'>
-                                <Clock className='w-3.5 h-3.5' />
-                                <span>10 {isEn ? 'Hours' : 'Uur'}</span>
-                            </div>
-                            <h3 className='text-2xl font-bold text-navy-900'>
-                                {isEn
-                                    ? '10 Hour Support Pack'
-                                    : '10 Uur Strippenkaart'}
-                            </h3>
-                            <div className='flex items-baseline gap-1.5'>
-                                <span className='text-4xl font-extrabold text-navy-900'>
-                                    € 899,-
-                                </span>
-                                <span className='text-xs text-navy-500'>
-                                    (€ 89,90 / uur)
-                                </span>
-                            </div>
-                            <p className='text-sm text-navy-700 font-light leading-relaxed pt-2 border-t border-navy-900/10'>
-                                {isEn
-                                    ? 'Perfect for periodic guidance, custom setup, and ongoing operational support.'
-                                    : 'Perfect voor periodieke begeleiding en aanvullende inrichting.'}
-                            </p>
-                        </div>
-                        <Link
-                            href={getPath('/contact')}
-                            className='inline-flex h-12 items-center gap-1.5 justify-center rounded-lg bg-navy-900 hover:btn-gradient px-6 text-sm font-semibold text-white transition-colors text-center'
-                        >
-                            {isEn
-                                ? 'Order Support Pack'
-                                : 'Bestel strippenkaart'}
-                        </Link>
-                    </div>
-
-                    {/* 20 Hours */}
-                    <div className='rounded-2xl border border-navy-900/10 bg-background p-8 space-y-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group'>
-                        <div className='space-y-4'>
-                            <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/15 text-teal text-xs font-mono font-bold uppercase'>
-                                <Clock className='w-3.5 h-3.5' />
-                                <span>20 {isEn ? 'Hours' : 'Uur'}</span>
-                            </div>
-                            <h3 className='text-2xl font-bold text-navy-900'>
-                                {isEn
-                                    ? '20 Hour Support Pack'
-                                    : '20 Uur Strippenkaart'}
-                            </h3>
-                            <div className='flex items-baseline gap-1.5'>
-                                <span className='text-4xl font-extrabold text-navy-900'>
-                                    € 1.599,-
-                                </span>
-                                <span className='text-xs text-navy-500'>
-                                    (€ 79,95 / uur)
-                                </span>
-                            </div>
-                            <p className='text-sm text-navy-700 font-light leading-relaxed pt-2 border-t border-navy-900/10'>
-                                {isEn
-                                    ? 'Best value for extensive project support, team onboarding, and custom training.'
-                                    : 'De meest voordelige optie voor uitgebreide ondersteuning, projecten en trainingen op maat.'}
-                            </p>
-                        </div>
-                        <Link
-                            href={getPath('/contact')}
-                            className='inline-flex h-12 items-center justify-center rounded-xl border border-black/20 dark:border-white/20 bg-transparent px-6 text-sm font-semibold text-[#060e32] dark:text-white hover:bg-teal hover:text-[#060e32] hover:border-teal transition-all duration-200 text-center'
-                        >
-                            {isEn
-                                ? 'Order Support Pack'
-                                : 'Bestel strippenkaart'}
-                        </Link>
-                    </div>
-                </div>
-            </div>
-        </section>
+            locale={locale}
+            sectionTag={b?.sectionTag}
+            sectionTitle={b?.sectionTitle}
+            sectionSubtitle={b?.sectionSubtitle}
+        />
     );
 
     const renderCta = (b: any, key: any) => {

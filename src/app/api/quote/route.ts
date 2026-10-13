@@ -171,6 +171,9 @@ export async function POST(request: Request) {
                         : ''
                 }
 
+                ${
+                    monthlyItemsHtml
+                        ? `
                 <div style="background-color: #ffffff; color: #0f1329; padding: 16px; border-radius: 8px; margin-top: 20px; border: 1px solid #00b3b3;">
                     <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3; margin-bottom: 10px;">Maandelijks Abonnement</div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
@@ -190,6 +193,9 @@ export async function POST(request: Request) {
                         <span>${totalMonthly} / mnd</span>
                     </div>
                 </div>
+                `
+                        : ''
+                }
 
                 <div style="margin-top: 24px; font-size: 11px; color: #545b83; text-align: center; border-top: 1px solid #e5e7eb; padding-top: 12px;">
                     Automatisch verzonden vanuit het offerteformulier op emlinked.com
@@ -198,9 +204,13 @@ export async function POST(request: Request) {
         `;
 
         // ── 2. CONFIRMATION EMAIL TO PROSPECT ──
-        const prospectSubject = isEn
-            ? `Your emlinked Pricing Calculation - ${totalMonthly} / mo`
-            : `Je emlinked Offerte Berekening - ${totalMonthly} / mnd`;
+        const prospectSubject = monthlyItemsHtml
+            ? isEn
+                ? `Your emlinked Pricing Calculation - ${totalMonthly} / mo`
+                : `Je emlinked Offerte Berekening - ${totalMonthly} / mnd`
+            : isEn
+              ? `Your emlinked Order Confirmation - ${totalOneTime}`
+              : `Je emlinked Bestelbevestiging - ${totalOneTime}`;
 
         const prospectEmailHtml = `
             <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; padding: 24px; border: 1px solid #ccffff; border-radius: 12px; background-color: #fbfaf9;">
@@ -280,6 +290,9 @@ export async function POST(request: Request) {
                         : ''
                 }
 
+                ${
+                    monthlyItemsHtml
+                        ? `
                 <div style="background-color: #ffffff; color: #0f1329; padding: 20px; border-radius: 10px; margin-top: 20px; border: 1px solid #00b3b3;">
                     <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3; margin-bottom: 12px;">
                         ${isEn ? 'Monthly Subscription' : 'Maandelijks Abonnement'}
@@ -301,6 +314,9 @@ export async function POST(request: Request) {
                         <span style="float: right;">${totalMonthly} / mnd</span>
                     </div>
                 </div>
+                `
+                        : ''
+                }
 
                 <div style="margin-top: 32px; text-align: center;">
                     <a href="https://emlinked.com" style="display: inline-block; background-color: #0f1329; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-weight: bold; font-size: 14px;">
