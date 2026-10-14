@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { EMLINKED_LOGO_DATA_URI } from '@/lib/emailAssets';
+import { verifyRecaptcha } from '@/lib/recaptcha';
 
 export async function POST(request: Request) {
     try {
@@ -13,34 +15,17 @@ export async function POST(request: Request) {
             );
         }
 
-        // 2. Validate Google reCAPTCHA if secret key is present
-        const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
-        if (recaptchaSecret) {
-            if (!recaptchaToken) {
-                return NextResponse.json(
-                    { error: 'reCAPTCHA verificatie mislukt (geen token).' },
-                    { status: 400 }
-                );
-            }
-
-            try {
-                const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${recaptchaToken}`;
-                const verifyRes = await fetch(verifyUrl, { method: 'POST' });
-                const verifyJson = await verifyRes.json();
-                
-                if (!verifyJson.success) {
-                    return NextResponse.json(
-                        { error: 'reCAPTCHA verificatie mislukt. Probeer het opnieuw.' },
-                        { status: 400 }
-                    );
-                }
-            } catch (err) {
-                console.error('reCAPTCHA siteverify error:', err);
-                return NextResponse.json(
-                    { error: 'Fout bij reCAPTCHA verificatie.' },
-                    { status: 500 }
-                );
-            }
+        // 2. Validate Google reCAPTCHA (v3, score-based)
+        const recaptchaResult = await verifyRecaptcha(
+            recaptchaToken,
+            false,
+            'demo_request',
+        );
+        if (!recaptchaResult.success) {
+            return NextResponse.json(
+                { error: recaptchaResult.error },
+                { status: recaptchaResult.status },
+            );
         }
 
         // 3. Send email via Resend API
@@ -59,7 +44,7 @@ export async function POST(request: Request) {
         const emailHtml = `
             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #ffffff;">
                 <div style="text-align: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
-                    <img src="https://emlinked.com/emlinked/Emlinked_logo__liggend.svg" alt="emlinked" width="250" style="width: 250px; height: auto; max-width: 100%; display: inline-block;" />
+                    <img src="${EMLINKED_LOGO_DATA_URI}" alt="emlinked" width="250" style="width: 250px; height: auto; max-width: 100%; display: inline-block;" />
                 </div>
                 <h2 style="color: #060e32; border-bottom: 2px solid #ff9400; padding-bottom: 10px; margin-top: 0;">
                     Nieuwe Demo Aanvraag

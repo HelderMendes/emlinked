@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import Script from 'next/script';
+import { getRecaptchaToken, RecaptchaV3Script } from '@/components/RecaptchaV3';
 import {
     createQuoteContactSchema,
     flattenQuoteContactErrors,
@@ -77,58 +77,7 @@ export function QuoteRequestModal({
         company: '',
     });
 
-    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-    const recaptchaContainerRef = useRef<HTMLDivElement>(null);
-    const recaptchaWidgetIdRef = useRef<number | null>(null);
     const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-
-    useEffect(() => {
-        if (!isOpen || !recaptchaSiteKey || !mounted) return;
-
-        const renderWidget = () => {
-            const win = window as any;
-            if (
-                win.grecaptcha &&
-                typeof win.grecaptcha.render === 'function' &&
-                recaptchaContainerRef.current &&
-                recaptchaWidgetIdRef.current === null
-            ) {
-                try {
-                    recaptchaWidgetIdRef.current = win.grecaptcha.render(
-                        recaptchaContainerRef.current,
-                        {
-                            sitekey: recaptchaSiteKey,
-                            callback: (token: string) =>
-                                setRecaptchaToken(token),
-                            'expired-callback': () => setRecaptchaToken(null),
-                            'error-callback': () => setRecaptchaToken(null),
-                        },
-                    );
-                } catch (err) {
-                    console.error('reCAPTCHA render error:', err);
-                }
-            }
-        };
-
-        const win = window as any;
-        if (win.grecaptcha && typeof win.grecaptcha.ready === 'function') {
-            win.grecaptcha.ready(renderWidget);
-        } else {
-            window.addEventListener('recaptcha-ready', renderWidget);
-        }
-
-        return () => {
-            window.removeEventListener('recaptcha-ready', renderWidget);
-            const win = window as any;
-            if (win.grecaptcha && recaptchaWidgetIdRef.current !== null) {
-                try {
-                    win.grecaptcha.reset(recaptchaWidgetIdRef.current);
-                } catch (e) {}
-                recaptchaWidgetIdRef.current = null;
-            }
-            setRecaptchaToken(null);
-        };
-    }, [isOpen, recaptchaSiteKey, mounted]);
 
     const handleClose = () => {
         onClose();
@@ -155,17 +104,12 @@ export function QuoteRequestModal({
             return;
         }
 
-        if (recaptchaSiteKey && !recaptchaToken) {
-            setSubmitError(
-                isEn
-                    ? 'Please complete the reCAPTCHA check.'
-                    : 'Voltooi de reCAPTCHA-controle.',
-            );
-            return;
-        }
-
         setIsSubmitting(true);
         try {
+            const recaptchaToken = recaptchaSiteKey
+                ? await getRecaptchaToken(recaptchaSiteKey, 'quote_request')
+                : null;
+
             const res = await fetch('/api/quote', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -460,15 +404,6 @@ export function QuoteRequestModal({
                             </div>
                         </div>
 
-                        {recaptchaSiteKey && (
-                            <div className='py-1'>
-                                <div
-                                    ref={recaptchaContainerRef}
-                                    className='g-recaptcha'
-                                />
-                            </div>
-                        )}
-
                         {submitError && (
                             <div className='p-3 rounded-md bg-red-50 text-red-700 text-xs border border-red-200'>
                                 {submitError}
@@ -535,27 +470,10 @@ export function QuoteRequestModal({
 }
 
 export function QuoteRequestRecaptchaScripts({ active }: { active: boolean }) {
-    if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || !active) return null;
     return (
-        <>
-            <Script
-                id='recaptcha-load-callback'
-                strategy='afterInteractive'
-                dangerouslySetInnerHTML={{
-                    __html: `
-                        window.onRecaptchaLoad = function() {
-                            window.dispatchEvent(new Event('recaptcha-ready'));
-                        };
-                    `,
-                }}
-            />
-            <Script
-                src='https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit'
-                strategy='afterInteractive'
-                onLoad={() => {
-                    window.dispatchEvent(new Event('recaptcha-ready'));
-                }}
-            />
-        </>
+        <RecaptchaV3Script
+            siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            active={active}
+        />
     );
 }

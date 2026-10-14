@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -13,9 +13,9 @@ import {
     Loader2,
 } from 'lucide-react';
 import { BsLinkedin, BsTwitterX } from 'react-icons/bs';
-import Script from 'next/script';
 import Image from 'next/image';
 import { PhoneInput } from '@/components/ui/PhoneInput';
+import { getRecaptchaToken, RecaptchaV3Script } from '@/components/RecaptchaV3';
 
 interface DemoModalProps {
     isOpen: boolean;
@@ -142,10 +142,6 @@ export function DemoModal({
         t.portfolioOption2,
     );
     const [message, setMessage] = useState('');
-    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-
-    const recaptchaContainerRef = useRef<HTMLDivElement>(null);
-    const widgetIdRef = useRef<number | null>(null);
 
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -162,69 +158,17 @@ export function DemoModal({
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [onClose]);
 
-    // Handle reCAPTCHA script load and element rendering
-    useEffect(() => {
-        if (!isOpen || !siteKey || !mounted) return;
-
-        const renderWidget = () => {
-            const win = window as any;
-            if (
-                win.grecaptcha &&
-                typeof win.grecaptcha.render === 'function' &&
-                recaptchaContainerRef.current &&
-                widgetIdRef.current === null
-            ) {
-                try {
-                    widgetIdRef.current = win.grecaptcha.render(
-                        recaptchaContainerRef.current,
-                        {
-                            sitekey: siteKey,
-                            callback: (token: string) =>
-                                setRecaptchaToken(token),
-                            'expired-callback': () => setRecaptchaToken(null),
-                            'error-callback': () => setRecaptchaToken(null),
-                        },
-                    );
-                } catch (err) {
-                    console.error('reCAPTCHA render error:', err);
-                }
-            }
-        };
-
-        const win = window as any;
-        if (win.grecaptcha && typeof win.grecaptcha.ready === 'function') {
-            win.grecaptcha.ready(renderWidget);
-        } else {
-            window.addEventListener('recaptcha-ready', renderWidget);
-        }
-
-        return () => {
-            window.removeEventListener('recaptcha-ready', renderWidget);
-            const win = window as any;
-            if (win.grecaptcha && widgetIdRef.current !== null) {
-                try {
-                    // Reset widget on unmount to prevent duplicated render calls
-                    win.grecaptcha.reset(widgetIdRef.current);
-                } catch (e) {}
-                widgetIdRef.current = null;
-            }
-        };
-    }, [isOpen, siteKey, mounted]);
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        // reCAPTCHA client validation
-        if (siteKey && !recaptchaToken) {
-            setStatus('error');
-            setErrorMessage(t.errorRecaptcha);
-            return;
-        }
 
         setStatus('submitting');
         setErrorMessage('');
 
         try {
+            const recaptchaToken = siteKey
+                ? await getRecaptchaToken(siteKey, 'demo_request')
+                : null;
+
             const res = await fetch('/api/demo', {
                 method: 'POST',
                 headers: {
@@ -267,13 +211,6 @@ export function DemoModal({
         setCompany('');
         setPortfolioSize(t.portfolioOption2);
         setMessage('');
-        setRecaptchaToken(null);
-        const win = window as any;
-        if (win.grecaptcha && widgetIdRef.current !== null) {
-            try {
-                win.grecaptcha.reset(widgetIdRef.current);
-            } catch (e) {}
-        }
         onClose();
     };
 
@@ -286,7 +223,10 @@ export function DemoModal({
     return createPortal(
         <AnimatePresence>
             {isOpen && (
-                <div className='fixed inset-0 z-[99999] flex items-center justify-center p-4 overflow-y-auto'>
+                <div
+                    key='demo-modal'
+                    className='fixed inset-0 z-[99999] flex items-center justify-center p-4 overflow-y-auto'
+                >
                     {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -306,7 +246,7 @@ export function DemoModal({
                             damping: 25,
                             stiffness: 350,
                         }}
-                        className='relative w-full max-w-4xl bg-white border border-navy-900/10 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
+                        className='relative w-full max-w-4xl bg-white border border-navy-900/10 rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
                     >
                         {/* Close button */}
                         <button
@@ -326,14 +266,14 @@ export function DemoModal({
                                     <h3 className='font-display font-extrabold text-2xl tracking-tight text-white'>
                                         {t.title}
                                     </h3>
-                                    <p className='text-xs text-slate-300 mt-2 leading-relaxed'>
+                                    <p className='text-sm text-slate-300 mt-2 leading-relaxed'>
                                         {t.subtitle}
                                     </p>
                                 </div>
 
                                 <div className='space-y-6 pt-4 border-t border-white/10'>
                                     {/* Email */}
-                                    <div className='flex gap-4 items-start'>
+                                    <div className='flex gap-2 items-start'>
                                         <div className='h-9 w-9 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-teal shrink-0'>
                                             <Mail className='h-4.5 w-4.5' />
                                         </div>
@@ -341,12 +281,12 @@ export function DemoModal({
                                             <h4 className='text-xs font-bold text-white uppercase tracking-wider font-mono'>
                                                 {t.chatTitle}
                                             </h4>
-                                            <p className='text-[10px] text-slate-400 mt-0.5'>
+                                            <p className='text-xs text-slate-400 mt-0.5'>
                                                 {t.chatDesc}
                                             </p>
                                             <a
                                                 href={`mailto:${emailDisplay}`}
-                                                className='text-xs font-semibold text-teal hover:text-teal-hover hover:underline mt-1 block'
+                                                className='text-sm font-semibold text-teal hover:text-teal-hover hover:underline mt-1 block'
                                             >
                                                 {emailDisplay}
                                             </a>
@@ -354,7 +294,7 @@ export function DemoModal({
                                     </div>
 
                                     {/* Office */}
-                                    <div className='flex gap-4 items-start'>
+                                    <div className='flex gap-2 items-start'>
                                         <div className='h-9 w-9 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-teal shrink-0'>
                                             <MapPin className='h-4.5 w-4.5' />
                                         </div>
@@ -362,17 +302,17 @@ export function DemoModal({
                                             <h4 className='text-xs font-bold text-white uppercase tracking-wider font-mono'>
                                                 {t.officeTitle}
                                             </h4>
-                                            <p className='text-[10px] text-slate-400 mt-0.5'>
+                                            <p className='text-xs text-slate-400 mt-0.5'>
                                                 {t.officeDesc}
                                             </p>
-                                            <span className='text-xs font-semibold text-slate-200 mt-1 block leading-snug'>
+                                            <span className='text-sm font-semibold text-teal mt-1 block leading-snug'>
                                                 {addressDisplay}
                                             </span>
                                         </div>
                                     </div>
 
                                     {/* Phone */}
-                                    <div className='flex gap-4 items-start'>
+                                    <div className='flex gap-2 items-start'>
                                         <div className='h-9 w-9 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-teal shrink-0'>
                                             <Phone className='h-4.5 w-4.5' />
                                         </div>
@@ -380,12 +320,12 @@ export function DemoModal({
                                             <h4 className='text-xs font-bold text-white uppercase tracking-wider font-mono'>
                                                 {t.phoneTitle}
                                             </h4>
-                                            <p className='text-[10px] text-slate-400 mt-0.5'>
+                                            <p className='text-xs text-slate-400 mt-0.5'>
                                                 {t.phoneDesc}
                                             </p>
                                             <a
                                                 href={`tel:${phoneDisplay.replace(/[^\d+]/g, '')}`}
-                                                className='text-xs font-semibold text-teal hover:text-teal-hover hover:underline mt-1 block'
+                                                className='text-sm font-semibold text-teal hover:text-teal-hover hover:underline mt-1 block'
                                             >
                                                 {phoneDisplay}
                                             </a>
@@ -397,30 +337,28 @@ export function DemoModal({
                             {/* Socials & Brand tag */}
                             <div className='relative z-10 pt-8 border-t border-white/10 flex items-center justify-between mt-8'>
                                 <div className='flex gap-3'>
-                                    <a
-                                        href={
-                                            settings?.linkedinUrl ||
-                                            'https://linkedin.com'
-                                        }
-                                        target='_blank'
-                                        rel='noopener noreferrer'
-                                        className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-teal transition-colors'
-                                        aria-label='LinkedIn'
-                                    >
-                                        <BsLinkedin className='h-3.5 w-3.5' />
-                                    </a>
-                                    <a
-                                        href={
-                                            settings?.twitterUrl ||
-                                            'https://x.com'
-                                        }
-                                        target='_blank'
-                                        rel='noopener noreferrer'
-                                        className='h-7 w-7 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-teal transition-colors'
-                                        aria-label='X (Twitter)'
-                                    >
-                                        <BsTwitterX className='h-3 w-3' />
-                                    </a>
+                                    {settings?.linkedinUrl && (
+                                        <a
+                                            href={settings.linkedinUrl}
+                                            target='_blank'
+                                            rel='noopener noreferrer'
+                                            className='h-9 w-9 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-teal transition-colors'
+                                            aria-label='LinkedIn'
+                                        >
+                                            <BsLinkedin className='h-3.5 w-3.5' />
+                                        </a>
+                                    )}
+                                    {settings?.twitterUrl && (
+                                        <a
+                                            href={settings.twitterUrl}
+                                            target='_blank'
+                                            rel='noopener noreferrer'
+                                            className='h-9 w-9 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-teal transition-colors'
+                                            aria-label='X (Twitter)'
+                                        >
+                                            <BsTwitterX className='h-3 w-3' />
+                                        </a>
+                                    )}
                                 </div>
                                 <span className='text-[9px] font-bold text-slate-400 font-mono tracking-widest uppercase'>
                                     <Image
@@ -663,21 +601,12 @@ export function DemoModal({
                                         />
                                     </div>
 
-                                    {/* reCAPTCHA Checkbox Element */}
-                                    {siteKey && (
-                                        <div className='py-1.5'>
-                                            <div
-                                                ref={recaptchaContainerRef}
-                                                className='g-recaptcha'
-                                            />
-                                        </div>
-                                    )}
 
                                     {/* Submit Button */}
                                     <button
                                         type='submit'
                                         disabled={status === 'submitting'}
-                                        className='w-full h-10 bg-navy-900 hover:btn-gradient text-white text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:scale-[1.01] active:scale-[0.99] duration-150'
+                                        className='w-full h-10 bg-navy-900 hover:btn-gradient text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:scale-[1.01] active:scale-[0.99] duration-150'
                                     >
                                         {status === 'submitting' ? (
                                             <>
@@ -695,29 +624,9 @@ export function DemoModal({
                 </div>
             )}
 
-            {/* reCAPTCHA script loader callback config */}
-            {siteKey && isOpen && (
-                <>
-                    <Script
-                        id='recaptcha-load-callback'
-                        strategy='afterInteractive'
-                        dangerouslySetInnerHTML={{
-                            __html: `
-                                window.onRecaptchaLoad = function() {
-                                    window.dispatchEvent(new Event('recaptcha-ready'));
-                                };
-                            `,
-                        }}
-                    />
-                    <Script
-                        src='https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit'
-                        strategy='afterInteractive'
-                        onLoad={() => {
-                            window.dispatchEvent(new Event('recaptcha-ready'));
-                        }}
-                    />
-                </>
-            )}
+            <React.Fragment key='recaptcha-script'>
+                <RecaptchaV3Script siteKey={siteKey} active={isOpen} />
+            </React.Fragment>
         </AnimatePresence>,
         document.body,
     );

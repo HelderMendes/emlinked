@@ -30,7 +30,11 @@ export async function POST(request: Request) {
         } = body;
         const isEn = locale === 'en';
 
-        const recaptchaResult = await verifyRecaptcha(recaptchaToken, isEn);
+        const recaptchaResult = await verifyRecaptcha(
+            recaptchaToken,
+            isEn,
+            'quote_request',
+        );
         if (!recaptchaResult.success) {
             return NextResponse.json(
                 { error: recaptchaResult.error },
