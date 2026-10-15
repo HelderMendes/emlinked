@@ -15,12 +15,11 @@ import {
 import { BsLinkedin, BsTwitterX } from 'react-icons/bs';
 import Image from 'next/image';
 import { PhoneInput } from '@/components/ui/PhoneInput';
-import { getRecaptchaToken, RecaptchaV3Script } from '@/components/RecaptchaV3';
+import { getRecaptchaToken, RecaptchaV3Script, RecaptchaAttribution } from '@/components/RecaptchaV3';
 
 interface DemoModalProps {
     isOpen: boolean;
     onClose: () => void;
-    calendlyUrl?: string;
     locale?: string;
     settings?: {
         phone?: string;
@@ -51,6 +50,7 @@ const translations = {
         placeholderLastName: 'de Bruijn',
         placeholderEmail: 'sander@bedrijf.nl',
         placeholderPhone: '+31 (0) 6 12345678',
+        placeholderPhoneHint: 'Liever gebeld? Vul je nummer in',
         placeholderCompany: 'Vastgoedbeheer B.V.',
         placeholderMessage: 'Laat een bericht achter...',
 
@@ -93,6 +93,7 @@ const translations = {
         placeholderLastName: 'Smith',
         placeholderEmail: 'alex@company.com',
         placeholderPhone: '+31 (0) 6 12345678',
+        placeholderPhoneHint: 'Prefer a call? Enter your number',
         placeholderCompany: 'Property Management Ltd.',
         placeholderMessage: 'Leave us a message...',
 
@@ -225,7 +226,7 @@ export function DemoModal({
             {isOpen && (
                 <div
                     key='demo-modal'
-                    className='fixed inset-0 z-[99999] flex items-center justify-center p-4 overflow-y-auto'
+                    className='fixed inset-0 z-[999999] flex items-center justify-center p-4 sm:p-6 lg:p-8 overflow-y-auto'
                 >
                     {/* Backdrop */}
                     <motion.div
@@ -233,7 +234,7 @@ export function DemoModal({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={handleClose}
-                        className='fixed inset-0 bg-white/80 backdrop-blur-sm pointer-events-auto'
+                        className='fixed inset-0 bg-navy-900/40 backdrop-blur-md pointer-events-auto'
                     />
 
                     {/* Modal Box */}
@@ -242,46 +243,43 @@ export function DemoModal({
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 15 }}
                         transition={{
-                            type: 'spring',
-                            damping: 25,
-                            stiffness: 350,
+                            duration: 0.25,
+                            ease: 'easeOut',
                         }}
-                        className='relative w-full max-w-4xl bg-white border border-navy-900/10 rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
+                        className='relative w-full max-w-4xl bg-white border border-navy-900/10 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row pointer-events-auto z-10 my-8'
                     >
                         {/* Close button */}
                         <button
                             onClick={handleClose}
-                            className='absolute top-4 right-4 h-8 w-8 rounded-full bg-navy-900/5 hover:bg-navy-900/10 flex items-center justify-center text-navy-900 transition-colors z-20 cursor-pointer'
+                            className='absolute top-4 right-4 z-30 w-9 h-9 rounded-full bg-navy-50 hover:bg-teal hover:text-white text-navy-500 flex items-center justify-center transition-all cursor-pointer shadow-md'
                             aria-label='Sluit modal'
                         >
-                            <X className='h-4 w-4' />
+                            <X className='w-5 h-5' />
                         </button>
 
-                        {/* Left Column - Contact Details (Aesthetic Brand Panel) */}
-                        <div className='w-full md:w-[320px] bg-navy-900 text-white p-8 flex flex-col justify-between relative overflow-hidden shrink-0'>
-                            <div className='absolute -top-24 -left-24 w-72 h-72 rounded-full bg-teal/10 blur-3xl pointer-events-none' />
-
+                        {/* Left Column - Contact Details (light sidebar, matching TeamBlock's modal) */}
+                        <div className='w-full md:w-[320px] bg-navy-50 border-b md:border-b-0 md:border-r border-navy-900/10 text-navy-900 p-8 flex flex-col justify-between relative overflow-hidden shrink-0'>
                             <div className='space-y-8 relative z-10 text-left'>
                                 <div>
-                                    <h3 className='font-display font-extrabold text-2xl tracking-tight text-white'>
+                                    <h3 className='font-display font-extrabold text-2xl tracking-tight text-navy-900'>
                                         {t.title}
                                     </h3>
-                                    <p className='text-sm text-slate-300 mt-2 leading-relaxed'>
+                                    <p className='text-sm text-navy-500 mt-2 leading-relaxed'>
                                         {t.subtitle}
                                     </p>
                                 </div>
 
-                                <div className='space-y-6 pt-4 border-t border-white/10'>
+                                <div className='space-y-6 pt-4 border-t border-navy-900/10'>
                                     {/* Email */}
                                     <div className='flex gap-2 items-start'>
-                                        <div className='h-9 w-9 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-teal shrink-0'>
+                                        <div className='h-9 w-9 rounded-lg bg-white border border-navy-900/10 flex items-center justify-center text-teal shrink-0'>
                                             <Mail className='h-4.5 w-4.5' />
                                         </div>
                                         <div>
-                                            <h4 className='text-xs font-bold text-white uppercase tracking-wider font-mono'>
+                                            <h4 className='text-xs font-bold text-navy-900 uppercase tracking-wider font-mono'>
                                                 {t.chatTitle}
                                             </h4>
-                                            <p className='text-xs text-slate-400 mt-0.5'>
+                                            <p className='text-xs text-navy-500 mt-0.5'>
                                                 {t.chatDesc}
                                             </p>
                                             <a
@@ -295,14 +293,14 @@ export function DemoModal({
 
                                     {/* Office */}
                                     <div className='flex gap-2 items-start'>
-                                        <div className='h-9 w-9 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-teal shrink-0'>
+                                        <div className='h-9 w-9 rounded-lg bg-white border border-navy-900/10 flex items-center justify-center text-teal shrink-0'>
                                             <MapPin className='h-4.5 w-4.5' />
                                         </div>
                                         <div>
-                                            <h4 className='text-xs font-bold text-white uppercase tracking-wider font-mono'>
+                                            <h4 className='text-xs font-bold text-navy-900 uppercase tracking-wider font-mono'>
                                                 {t.officeTitle}
                                             </h4>
-                                            <p className='text-xs text-slate-400 mt-0.5'>
+                                            <p className='text-xs text-navy-500 mt-0.5'>
                                                 {t.officeDesc}
                                             </p>
                                             <span className='text-sm font-semibold text-teal mt-1 block leading-snug'>
@@ -313,14 +311,14 @@ export function DemoModal({
 
                                     {/* Phone */}
                                     <div className='flex gap-2 items-start'>
-                                        <div className='h-9 w-9 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-teal shrink-0'>
+                                        <div className='h-9 w-9 rounded-lg bg-white border border-navy-900/10 flex items-center justify-center text-teal shrink-0'>
                                             <Phone className='h-4.5 w-4.5' />
                                         </div>
                                         <div>
-                                            <h4 className='text-xs font-bold text-white uppercase tracking-wider font-mono'>
+                                            <h4 className='text-xs font-bold text-navy-900 uppercase tracking-wider font-mono'>
                                                 {t.phoneTitle}
                                             </h4>
-                                            <p className='text-xs text-slate-400 mt-0.5'>
+                                            <p className='text-xs text-navy-500 mt-0.5'>
                                                 {t.phoneDesc}
                                             </p>
                                             <a
@@ -335,14 +333,14 @@ export function DemoModal({
                             </div>
 
                             {/* Socials & Brand tag */}
-                            <div className='relative z-10 pt-8 border-t border-white/10 flex items-center justify-between mt-8'>
+                            <div className='relative z-10 pt-8 border-t border-navy-900/10 flex items-center justify-between mt-8'>
                                 <div className='flex gap-3'>
                                     {settings?.linkedinUrl && (
                                         <a
                                             href={settings.linkedinUrl}
                                             target='_blank'
                                             rel='noopener noreferrer'
-                                            className='h-9 w-9 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-teal transition-colors'
+                                            className='h-9 w-9 rounded-md border border-navy-900/10 bg-white flex items-center justify-center text-navy-600 hover:text-teal transition-colors'
                                             aria-label='LinkedIn'
                                         >
                                             <BsLinkedin className='h-3.5 w-3.5' />
@@ -353,23 +351,21 @@ export function DemoModal({
                                             href={settings.twitterUrl}
                                             target='_blank'
                                             rel='noopener noreferrer'
-                                            className='h-9 w-9 rounded-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-teal transition-colors'
+                                            className='h-9 w-9 rounded-md border border-navy-900/10 bg-white flex items-center justify-center text-navy-600 hover:text-teal transition-colors'
                                             aria-label='X (Twitter)'
                                         >
                                             <BsTwitterX className='h-3 w-3' />
                                         </a>
                                     )}
                                 </div>
-                                <span className='text-[9px] font-bold text-slate-400 font-mono tracking-widest uppercase'>
-                                    <Image
-                                        src='/emlinked/Emlinked_logo__liggend_white.png'
-                                        alt='emlinked - Vastgoedbeheer software homepage'
-                                        className='w-auto h-7 transition-opacity hover:opacity-90'
-                                        width={128}
-                                        height={32}
-                                        priority
-                                    />
-                                </span>
+                                <Image
+                                    src='/emlinked/Emlinked_logo__liggend.svg'
+                                    alt='emlinked - Vastgoedbeheer software homepage'
+                                    className='w-auto h-7 transition-opacity hover:opacity-80'
+                                    width={128}
+                                    height={32}
+                                    priority
+                                />
                             </div>
                         </div>
 
@@ -448,10 +444,7 @@ export function DemoModal({
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
-                                                {t.lastNameLabel}{' '}
-                                                <span className='text-teal'>
-                                                    *
-                                                </span>
+                                                {t.lastNameLabel}
                                             </label>
                                             <input
                                                 type='text'
@@ -463,7 +456,6 @@ export function DemoModal({
                                                     t.placeholderLastName
                                                 }
                                                 className='w-full h-10 px-3 rounded-lg border border-navy-900/15 bg-white text-xs text-navy-900 placeholder:text-navy-900/40 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
-                                                required
                                                 disabled={
                                                     status === 'submitting'
                                                 }
@@ -496,18 +488,14 @@ export function DemoModal({
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
-                                                {t.phoneLabel}{' '}
-                                                <span className='text-teal'>
-                                                    *
-                                                </span>
+                                                {t.phoneLabel}
                                             </label>
                                             <PhoneInput
                                                 value={phone}
                                                 onChange={setPhone}
                                                 locale={locale}
-                                                placeholder={t.placeholderPhone}
+                                                placeholder={t.placeholderPhoneHint}
                                                 className='h-10'
-                                                required
                                                 disabled={
                                                     status === 'submitting'
                                                 }
@@ -519,10 +507,7 @@ export function DemoModal({
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
                                             <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
-                                                {t.companyLabel}{' '}
-                                                <span className='text-teal'>
-                                                    *
-                                                </span>
+                                                {t.companyLabel}
                                             </label>
                                             <input
                                                 type='text'
@@ -534,7 +519,6 @@ export function DemoModal({
                                                     t.placeholderCompany
                                                 }
                                                 className='w-full h-10 px-3 rounded-lg border border-navy-900/15 bg-white text-xs text-navy-900 placeholder:text-navy-900/40 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal'
-                                                required
                                                 disabled={
                                                     status === 'submitting'
                                                 }
@@ -601,7 +585,6 @@ export function DemoModal({
                                         />
                                     </div>
 
-
                                     {/* Submit Button */}
                                     <button
                                         type='submit'
@@ -617,6 +600,7 @@ export function DemoModal({
                                             <span>{t.submitBtn}</span>
                                         )}
                                     </button>
+                                    <RecaptchaAttribution locale={locale} />
                                 </form>
                             )}
                         </div>

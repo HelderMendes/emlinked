@@ -27,6 +27,29 @@ export const siteSettings = defineType({
             validation: (Rule) => Rule.required(),
         }),
         defineField({
+            name: 'defaultSeoTitle',
+            title: 'Website-Wide Default SEO Title',
+            type: 'string',
+            description:
+                'Fallback title used when a page has no title of its own set. Does not override page-level SEO.',
+        }),
+        defineField({
+            name: 'defaultSeoDescription',
+            title: 'Website-Wide Default SEO Description',
+            type: 'text',
+            rows: 3,
+            description:
+                'Fallback meta description used when a page has no description of its own set. Does not override page-level SEO.',
+        }),
+        defineField({
+            name: 'defaultOgImage',
+            title: 'Website-Wide Default Social Share Image',
+            type: 'image',
+            options: { hotspot: true },
+            description:
+                'Fallback image for social previews (Facebook, LinkedIn, X) when a page has no image of its own set.',
+        }),
+        defineField({
             name: 'announcementActive',
             title: 'Show Bottom Announcement Pill',
             type: 'boolean',
@@ -161,14 +184,6 @@ export const siteSettings = defineType({
             title: 'X / Twitter Profile URL',
             type: 'url',
             initialValue: 'https://x.com',
-        }),
-        defineField({
-            name: 'calendlyUrl',
-            title: 'Calendly Booking URL',
-            type: 'url',
-            description:
-                'The URL for scheduling meetings (e.g. https://calendly.com/your-team).',
-            initialValue: 'https://calendly.com',
         }),
         defineField({
             name: 'navigationMenu',

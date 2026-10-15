@@ -176,7 +176,7 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
                     },
                     {
                         icon: <Building2 className='w-3.5 h-3.5' />,
-                        value: b?.floatingLabels?.[1]?.value || '100% Synced',
+                        value: b?.floatingLabels?.[1]?.value || 'Automatisch',
                         label:
                             b?.floatingLabels?.[1]?.label ||
                             'Business Central',

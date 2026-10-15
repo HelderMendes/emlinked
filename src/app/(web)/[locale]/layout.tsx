@@ -33,7 +33,6 @@ async function getSiteSettings(locale: string) {
                 address,
                 linkedinUrl,
                 twitterUrl,
-                calendlyUrl,
                 navigationMenu
             }`,
             { id },

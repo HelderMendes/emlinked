@@ -490,3 +490,10 @@ navy-900/950 CTA buttons across the site. */
     color: #fff;
     border-color: #ff9400;
 }
+
+/* reCAPTCHA v3 badge hidden per Google's own documented option — the
+required attribution text (RecaptchaAttribution component) is shown near
+every protected form instead, per Google's ToS. */
+.grecaptcha-badge {
+    visibility: hidden;
+}

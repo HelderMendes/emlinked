@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
+import { client } from '@/sanity/client';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import './globals.css';
 import { Inter } from "next/font/google";
@@ -25,43 +27,75 @@ const zodiak = localFont({
 });
 
 
-// export const metadata: Metadata = {
-//     title: 'Emlinked | Estate Management Linked',
-//     description: 'Premium software voor het beheer van vastgoedportefeuilles.',
-// };
-
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
     ? process.env.NEXT_PUBLIC_SITE_URL
     : process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : 'https://emlinked.com';
 
-export const metadata: Metadata = {
-    metadataBase: new URL(baseUrl),
-    title: {
-        default: 'Emlinked | Vastgoedsoftware voor Business Central',
-        template: '%s | emlinked',
-    },
-    description:
-        'Emlinked helpt vastgoedprofessionals met software voor commercieel portefeuillebeheer in Microsoft Business Central.',
-    alternates: {
-        canonical: './',
-    },
-    openGraph: {
-        siteName: 'emlinked',
-        locale: 'nl_NL',
-        type: 'website',
-    },
-};
+async function getDefaultSeoSettings(locale: string) {
+    try {
+        return await client.fetch(
+            `*[_type == "siteSettings" && language == $locale][0]{
+                defaultSeoTitle,
+                defaultSeoDescription,
+                defaultOgImage { asset-> { url } }
+            }`,
+            { locale },
+            { cache: 'no-store' },
+        );
+    } catch (e) {
+        console.error('Error fetching default SEO settings from Sanity:', e);
+        return null;
+    }
+}
 
-export default function RootLayout({
+export async function generateMetadata(): Promise<Metadata> {
+    const headersList = await headers();
+    const locale = headersList.get('x-locale') === 'en' ? 'en' : 'nl';
+    const settings = await getDefaultSeoSettings(locale);
+
+    const fallbackTitle =
+        locale === 'en'
+            ? 'Emlinked | Real Estate Software for Business Central'
+            : 'Emlinked | Vastgoedsoftware voor Business Central';
+    const fallbackDescription =
+        locale === 'en'
+            ? 'Emlinked helps real estate professionals with software for commercial portfolio management in Microsoft Business Central.'
+            : 'Emlinked helpt vastgoedprofessionals met software voor commercieel portefeuillebeheer in Microsoft Business Central.';
+
+    return {
+        metadataBase: new URL(baseUrl),
+        title: {
+            default: settings?.defaultSeoTitle || fallbackTitle,
+            template: '%s | emlinked',
+        },
+        description: settings?.defaultSeoDescription || fallbackDescription,
+        alternates: {
+            canonical: './',
+        },
+        openGraph: {
+            siteName: 'emlinked',
+            locale: locale === 'en' ? 'en_US' : 'nl_NL',
+            type: 'website',
+            ...(settings?.defaultOgImage?.asset?.url
+                ? { images: [{ url: settings.defaultOgImage.asset.url }] }
+                : {}),
+        },
+    };
+}
+
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const headersList = await headers();
+    const lang = headersList.get('x-locale') === 'en' ? 'en' : 'nl';
+
     return (
         <html
-            lang='nl'
+            lang={lang}
             className={cn(
                 'h-full antialiased',
                 'font-sans',

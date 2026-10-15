@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { getRecaptchaToken, RecaptchaV3Script } from '@/components/RecaptchaV3';
+import { getRecaptchaToken, RecaptchaV3Script, RecaptchaAttribution } from '@/components/RecaptchaV3';
 import {
     createQuoteContactSchema,
     flattenQuoteContactErrors,
@@ -435,6 +435,7 @@ export function QuoteRequestModal({
                                 </>
                             )}
                         </button>
+                        <RecaptchaAttribution locale={locale} />
                     </form>
                 ) : (
                     <div className='py-2 text-center space-y-4'>

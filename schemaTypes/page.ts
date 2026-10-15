@@ -242,6 +242,94 @@ export const page = defineType({
                             type: 'string',
                         }),
                         defineField({
+                            name: 'subtitle',
+                            title: 'Section Subtitle / Intro Paragraph',
+                            type: 'text',
+                            rows: 3,
+                        }),
+                        defineField({
+                            name: 'philosophyCard',
+                            title: 'Philosophy Callout Card (e.g. "Over Ons" Synergy Card)',
+                            description:
+                                'Standalone highlight card shown alongside the section intro, with an icon, pill badge, title, text, and quote. Used by pages like over-ons instead of the Workflow Steps list below.',
+                            type: 'object',
+                            fields: [
+                                defineField({
+                                    name: 'badge',
+                                    title: 'Pill Badge (e.g. "KERNFILOSOFIE")',
+                                    type: 'string',
+                                }),
+                                defineField({
+                                    name: 'title',
+                                    title: 'Card Title',
+                                    type: 'string',
+                                }),
+                                defineField({
+                                    name: 'text',
+                                    title: 'Card Text',
+                                    type: 'text',
+                                    rows: 3,
+                                }),
+                                defineField({
+                                    name: 'quote',
+                                    title: 'Quote',
+                                    type: 'text',
+                                    rows: 2,
+                                }),
+                                defineField({
+                                    name: 'signatureName',
+                                    title: 'Signature Name (e.g. "emlinked Management")',
+                                    type: 'string',
+                                }),
+                                defineField({
+                                    name: 'signatureRole',
+                                    title: 'Signature Role / Tagline',
+                                    type: 'string',
+                                }),
+                            ],
+                        }),
+                        defineField({
+                            name: 'featureHighlights',
+                            title: 'Feature Highlight Boxes (e.g. "Betrouwbare Automatisering")',
+                            description:
+                                'Small highlight boxes shown below the philosophy card. Icon is fixed in code — only title/description are editable.',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    name: 'featureHighlight',
+                                    fields: [
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'description',
+                                            title: 'Description',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                }),
+                            ],
+                            validation: (Rule) => Rule.max(4),
+                        }),
+                        defineField({
+                            name: 'imagePath',
+                            title: 'Side Afbeelding Pad (Fallback String)',
+                            type: 'string',
+                            description:
+                                'Relatief pad naar de afbeelding naast de philosophy card (bijv. /emlinked/referenties/beheerders_referencties.jpg)',
+                        }),
+                        defineField({
+                            name: 'image',
+                            title: 'Side Afbeelding (Upload naar Sanity CDN)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description:
+                                'Upload de afbeelding naast de philosophy card rechtstreeks naar de Sanity CDN',
+                        }),
+                        defineField({
                             name: 'items',
                             title: 'Workflow Steps',
                             type: 'array',
@@ -350,6 +438,49 @@ export const page = defineType({
                     type: 'object',
                     fields: [
                         defineField({
+                            name: 'badge',
+                            title: 'Section Badge',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'title',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+                        defineField({
+                            name: 'subtitle',
+                            title: 'Section Subtitle',
+                            type: 'text',
+                            rows: 2,
+                        }),
+                        defineField({
+                            name: 'cards',
+                            title: 'Value Cards (e.g. "Transparantie & Integriteit")',
+                            description:
+                                'Up to 3 cards. Icon is fixed in code (rotates through a preset set) — only title/description are editable.',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    name: 'trustCard',
+                                    fields: [
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Title',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'description',
+                                            title: 'Description',
+                                            type: 'text',
+                                            rows: 2,
+                                        }),
+                                    ],
+                                }),
+                            ],
+                            validation: (Rule) => Rule.max(3),
+                        }),
+                        defineField({
                             name: 'items',
                             title: 'Trust Items',
                             type: 'array',
@@ -378,10 +509,14 @@ export const page = defineType({
                         }),
                     ],
                     preview: {
-                        prepare() {
+                        select: {
+                            title: 'title',
+                            badge: 'badge',
+                        },
+                        prepare({ title, badge }) {
                             return {
-                                title: 'Trust Bar',
-                                subtitle: 'Partner & Trust Bar Items',
+                                title: title || 'Trust Bar',
+                                subtitle: badge || 'Partner & Trust Bar Items',
                             };
                         },
                     },

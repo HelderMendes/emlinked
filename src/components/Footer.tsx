@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { PhoneInput } from '@/components/ui/PhoneInput';
-import { getRecaptchaToken, RecaptchaV3Script } from '@/components/RecaptchaV3';
+import { getRecaptchaToken, RecaptchaV3Script, RecaptchaAttribution } from '@/components/RecaptchaV3';
 
 interface FooterProps {
     locale?: string;
@@ -22,22 +22,23 @@ const translations = {
             'Emlinked brengt commercieel, technisch en administratief vastgoedbeheer samen in één overzichtelijk platform. Zo werk je efficiënter, met minder fouten en meer grip op je portefeuille.',
         phone: '+31 (0) 88 707 7000',
         address: 'Gooimeer 12, 1411 DE Naarden',
-        demoLabel: 'Vraag vrijblijvend een demo aan',
+        demoLabel: 'Plan een demo van 30 minuten',
         contactLabel: 'Direct contact',
         placeholderName: 'Naam',
         placeholderPhone: 'Telefoon',
         placeholderEmail: 'Email',
         placeholderMessage: 'Vraag of toelichting (optioneel)',
-        sendButton: 'Stuur',
+        sendButton: 'Verstuur aanvraag',
         formSuccessTitle: 'Bedankt!',
-        formSuccessText: 'We hebben je aanvraag ontvangen en nemen snel contact op.',
+        formSuccessText:
+            'We hebben je aanvraag ontvangen en nemen snel contact op.',
         formErrorFallback: 'Er is iets misgegaan. Probeer het later opnieuw.',
         formRecaptchaRequired: 'Voltooi de reCAPTCHA-controle.',
         rights: '© 2010 - 2026 Emlinked. Alle rechten voorbehouden.',
         disclaimer: 'Privacybeleid',
         terms: 'Algemene voorwaarden',
-        support: 'Help & Ondersteuning',
-        docs: 'Documentatie center',
+        support: 'Help en ondersteuning',
+        docs: 'Documentatiecenter',
 
         // Navigation headers
         product: 'Product',
@@ -46,17 +47,17 @@ const translations = {
         resources: 'Support & Info',
 
         // Link labels
-        vastgoedbeheer: 'Vastgoedbeheer Software',
+        vastgoedbeheer: 'Vastgoedbeheer software',
         huurdersportaal: 'Huurdersportaal',
         payment: 'Payment Software',
-        businessCentral: 'Dynamics 365 ERP Sync',
+        businessCentral: 'Business Central',
         documentCapture: 'Document Capture (OCR)',
         directBanking: 'Direct Banking (PSD2)',
-        box3: 'Box 3 Calculator ⚡',
-        team: 'Het Team',
+        box3: 'Box 3-check',
+        team: 'Het team',
         referenties: 'Referenties',
-        blog: 'Nieuws & Blog',
-        contact: 'Contact Opnemen',
+        blog: 'Nieuws',
+        contact: 'Contact opnemen',
     },
     en: {
         tagline:
@@ -71,14 +72,15 @@ const translations = {
         placeholderMessage: 'Question or note (optional)',
         sendButton: 'Send',
         formSuccessTitle: 'Thank you!',
-        formSuccessText: "We've received your request and will be in touch shortly.",
+        formSuccessText:
+            "We've received your request and will be in touch shortly.",
         formErrorFallback: 'Something went wrong. Please try again later.',
         formRecaptchaRequired: 'Please complete the reCAPTCHA check.',
         rights: '© 2010 - 2026 Emlinked. All rights reserved.',
         disclaimer: 'Privacy Policy',
         terms: 'Terms & Conditions',
         support: 'Help & Support',
-        docs: 'Docs Portal',
+        docs: 'Documentation',
 
         // Navigation headers
         product: 'Product',
@@ -90,10 +92,10 @@ const translations = {
         vastgoedbeheer: 'Property Management',
         huurdersportaal: 'Tenant Portal',
         payment: 'Payment Software',
-        businessCentral: 'Dynamics 365 ERP Sync',
+        businessCentral: 'Business Central',
         documentCapture: 'Document Capture (OCR)',
         directBanking: 'Direct Banking (PSD2)',
-        box3: 'Box 3 Calculator ⚡',
+        box3: 'Box 3-check',
         team: 'Our Team',
         referenties: 'References',
         blog: 'News & Blog',
@@ -314,6 +316,10 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                     </p>
                                 )}
                             </div>
+                            <RecaptchaAttribution
+                                locale={locale}
+                                className='text-[10px] text-navy-500/70 leading-relaxed lg:col-start-2 lg:col-span-2'
+                            />
                         </form>
                     )}
                 </div>

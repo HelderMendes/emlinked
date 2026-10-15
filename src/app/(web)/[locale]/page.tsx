@@ -9,6 +9,7 @@ import {
 import { AlertCircle, Info } from 'lucide-react';
 import { Metadata } from 'next';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
+import { DEFAULT_DOMAIN, getHreflangAlternates } from '@/lib/seo';
 
 interface HomePageProps {
     params: Promise<{ locale: string }>;
@@ -39,8 +40,8 @@ export async function generateMetadata({
     const title =
         seoData?.seoTitle ||
         (isEn
-            ? 'emlinked — Professional Real Estate Management for Box 3 & Microsoft BC'
-            : 'emlinked — Professionele Vastgoedbeheer Software voor Box 3 & Microsoft BC');
+            ? 'emlinked — Professional Real Estate Management for Box 3 & Business Central'
+            : 'emlinked — Professionele Vastgoedbeheer Software voor Box 3 & Business Central');
 
     const description =
         seoData?.seoDescription ||
@@ -49,6 +50,9 @@ export async function generateMetadata({
             : 'Beheer uw vastgoedportefeuille native binnen Microsoft Dynamics 365 Business Central. Geen handmatige exports, wel geautomatiseerde CPI-indexaties en aflettering.');
 
     const robots = seoData?.noIndex ? 'noindex, nofollow' : 'index, follow';
+    const canonical =
+        seoData?.canonical ||
+        `${DEFAULT_DOMAIN}${isEn ? '/en' : '/'}`;
 
     return {
         title: {
@@ -57,7 +61,8 @@ export async function generateMetadata({
         description,
         robots,
         alternates: {
-            canonical: seoData?.canonical || (isEn ? '/en' : '/'),
+            canonical,
+            languages: getHreflangAlternates(canonical),
         },
     };
 }
@@ -206,7 +211,54 @@ export default async function HomePage({ params }: HomePageProps) {
             b._type !== 'ecosystemSection' && b._type !== 'ecosystem',
     );
 
-    const structuredData = pageData?.seo?.structuredData;
+    const defaultStructuredData = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'Organization',
+                '@id': `${DEFAULT_DOMAIN}/#organization`,
+                name: 'emlinked',
+                url: DEFAULT_DOMAIN,
+                logo: `${DEFAULT_DOMAIN}/emlinked/Emlinked_logo__liggend.svg`,
+                email: 'support@emlinked.com',
+                telephone: '+31 (0)88 707 7000',
+                address: {
+                    '@type': 'PostalAddress',
+                    streetAddress: 'Gooimeer 12',
+                    postalCode: '1411 DE',
+                    addressLocality: 'Naarden',
+                    addressCountry: 'NL',
+                },
+                sameAs: ['https://www.linkedin.com/company/emlinked'],
+            },
+            {
+                '@type': 'WebSite',
+                '@id': `${DEFAULT_DOMAIN}/#website`,
+                url: DEFAULT_DOMAIN,
+                name: 'emlinked',
+                publisher: { '@id': `${DEFAULT_DOMAIN}/#organization` },
+                inLanguage: isEn ? 'en-US' : 'nl-NL',
+            },
+            {
+                '@type': 'SoftwareApplication',
+                name: 'emlinked',
+                applicationCategory: 'BusinessApplication',
+                operatingSystem: 'Web',
+                url: DEFAULT_DOMAIN,
+                description: isEn
+                    ? 'Manage your real estate portfolio natively inside Microsoft Dynamics 365 Business Central. No manual exports, automated CPI indexation and bank reconciliation.'
+                    : 'Beheer uw vastgoedportefeuille native binnen Microsoft Dynamics 365 Business Central. Geen handmatige exports, wel geautomatiseerde CPI-indexaties en aflettering.',
+                offers: {
+                    '@type': 'Offer',
+                    availability: 'https://schema.org/InStock',
+                },
+            },
+        ],
+    };
+
+    const structuredData =
+        pageData?.seo?.structuredData ||
+        JSON.stringify(defaultStructuredData);
 
     return (
         <div className='flex flex-col min-h-screen'>

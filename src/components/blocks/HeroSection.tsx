@@ -59,6 +59,11 @@ const floatingLabelPositionClasses: Record<string, string> = {
     'bottom-right': 'bottom-8 -right-4',
 };
 
+export function stripHeroTitleMarkup(titleText?: string): string {
+    if (!titleText) return '';
+    return titleText.replace(/\*/g, '');
+}
+
 export function formatHeroTitle(
     titleText?: string | React.ReactNode,
     boldAccent: boolean = true,
@@ -265,7 +270,7 @@ export function HeroSection({
                             ) : (
                                 <Image
                                     src={effectiveHeroImg}
-                                    alt={title}
+                                    alt={stripHeroTitleMarkup(title)}
                                     fill
                                     sizes='(max-width: 1024px) 100vw, 55vw'
                                     className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'

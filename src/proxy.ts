@@ -147,7 +147,11 @@ export function proxy(request: NextRequest) {
                 `/nl${normalizedPathname}${url.search}`,
                 request.url,
             );
-            const response = NextResponse.rewrite(rewriteUrl);
+            const requestHeaders = new Headers(request.headers);
+            requestHeaders.set('x-locale', 'nl');
+            const response = NextResponse.rewrite(rewriteUrl, {
+                request: { headers: requestHeaders },
+            });
             // If they didn't have a cookie, initialize it to 'nl'
             if (!localeCookie) {
                 response.cookies.set('emlinked_locale', 'nl', { path: '/', maxAge: 31536000, sameSite: 'lax' });
@@ -196,13 +200,17 @@ export function proxy(request: NextRequest) {
             internalPath = internalPath.replace('/en/docs', '/docs');
 
         const localeCookie = request.cookies.get('emlinked_locale')?.value;
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set('x-locale', 'en');
 
         if (internalPath !== normalizedPathname) {
             const rewriteUrl = new URL(
                 `${internalPath}${url.search}`,
                 request.url,
             );
-            const response = NextResponse.rewrite(rewriteUrl);
+            const response = NextResponse.rewrite(rewriteUrl, {
+                request: { headers: requestHeaders },
+            });
             if (localeCookie !== 'en') {
                 response.cookies.set('emlinked_locale', 'en', {
                     path: '/',
@@ -213,7 +221,9 @@ export function proxy(request: NextRequest) {
             return response;
         }
 
-        const response = NextResponse.next();
+        const response = NextResponse.next({
+            request: { headers: requestHeaders },
+        });
         if (localeCookie !== 'en') {
             response.cookies.set('emlinked_locale', 'en', { path: '/', maxAge: 31536000, sameSite: 'lax' });
         }

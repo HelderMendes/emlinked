@@ -11,6 +11,7 @@ import {
     Building2,
 } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
+import { getImageUrl } from '@/sanity/image';
 import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { TeamBlock, TeamMember } from '@/components/blocks/TeamBlock';
@@ -280,25 +281,29 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                 <Target className='size-6 text-white' />
                             </div>
                             <span className='px-3.5 py-1 rounded-lg text-[11px] font-extrabold uppercase tracking-widest bg-teal/15 text-teal border border-teal/30 shadow-xs'>
-                                {isEn ? 'OUR PHILOSOPHY' : 'KERNFILOSOFIE'}
+                                {b?.philosophyCard?.badge ||
+                                    (isEn ? 'OUR PHILOSOPHY' : 'KERNFILOSOFIE')}
                             </span>
                         </div>
                         <div className='space-y-3'>
                             <h3 className='text-xl md:text-2xl font-bold text-[#060e32] tracking-tight'>
-                                {isEn
-                                    ? 'Synergy Between Expertise & Technology'
-                                    : 'Synergie tussen Vakkennis & Technologie'}
+                                {b?.philosophyCard?.title ||
+                                    (isEn
+                                        ? 'Synergy Between Expertise & Technology'
+                                        : 'Synergie tussen Vakkennis & Technologie')}
                             </h3>
                             <p className='text-sm md:text-base text-[#060e32]/80 leading-relaxed font-light'>
-                                {isEn
-                                    ? 'Whether it concerns complex contract administration or building native Business Central extensions: we eliminate operational friction with clarity.'
-                                    : 'Of het nu gaat om complexe contractadministratie of het bouwen van native Business Central extensies: wij elimineren operationele frictie met helderheid.'}
+                                {b?.philosophyCard?.text ||
+                                    (isEn
+                                        ? 'Whether it concerns complex contract administration or building native Business Central extensions: we eliminate operational friction with clarity.'
+                                        : 'Of het nu gaat om complexe contractadministratie of het bouwen van native Business Central extensies: wij elimineren operationele frictie met helderheid.')}
                             </p>
                         </div>
                         <blockquote className='text-xs italic text-[#060e32]/80 border-l-2 border-teal pl-4 py-1.5 bg-teal/5 rounded-r-lg'>
-                            {isEn
-                                ? '"True alignment comes from understanding both the technical details and the human context."'
-                                : '"Echte verbinding ontstaat wanneer vakkennis, menselijke maat en transparantie samenkomen."'}
+                            {b?.philosophyCard?.quote ||
+                                (isEn
+                                    ? '"True alignment comes from understanding both the technical details and the human context."'
+                                    : '"Echte verbinding ontstaat wanneer vakkennis, menselijke maat en transparantie samenkomen."')}
                         </blockquote>
                         <div className='flex items-center gap-3 pt-2 border-t border-black/10'>
                             <div className='w-8 h-8 rounded-full bg-teal/15 flex items-center justify-center text-teal text-xs font-bold font-mono'>
@@ -306,59 +311,69 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                             </div>
                             <div>
                                 <div className='text-xs font-bold text-[#060e32]'>
-                                    emlinked Management
+                                    {b?.philosophyCard?.signatureName ||
+                                        'emlinked Management'}
                                 </div>
                                 <div className='text-[11px] text-teal font-mono mt-0.5'>
-                                    {isEn
-                                        ? 'Property Management Software'
-                                        : 'Software voor Vastgoedbeheer'}
+                                    {b?.philosophyCard?.signatureRole ||
+                                        (isEn
+                                            ? 'Property Management Software'
+                                            : 'Software voor Vastgoedbeheer')}
                                 </div>
                             </div>
                         </div>
 
-                        {/* 2 Feature Highlights */}
+                        {/* Feature Highlights */}
                         <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                            <div className='flex items-start gap-3 p-4 rounded-xl border border-black/10 bg-white/80 shadow-xs'>
-                                <div className='w-9 h-9 rounded-lg border-2 border-teal/60 bg-[#F4F7FA] flex items-center justify-center shrink-0'>
-                                    <CheckCircle2 className='w-4.5 h-4.5 text-teal' />
+                            {(b?.featureHighlights?.length
+                                ? b.featureHighlights
+                                : [
+                                      {
+                                          title: isEn
+                                              ? 'Reliable Automation'
+                                              : 'Betrouwbare Automatisering',
+                                          description: isEn
+                                              ? 'Less manual work, fewer errors'
+                                              : 'Minder handwerk, minder fouten',
+                                      },
+                                      {
+                                          title: isEn
+                                              ? 'Tangible Results'
+                                              : 'Concrete Resultaten',
+                                          description: isEn
+                                              ? 'Measurable time savings'
+                                              : 'Meetbare tijdswinst',
+                                      },
+                                  ]
+                            ).map((item: any, idx: number) => (
+                                <div
+                                    key={idx}
+                                    className='flex items-start gap-3 p-4 rounded-xl border border-black/10 bg-white/80 shadow-xs'
+                                >
+                                    <div className='w-9 h-9 rounded-lg border-2 border-teal/60 bg-[#F4F7FA] flex items-center justify-center shrink-0'>
+                                        <CheckCircle2 className='w-4.5 h-4.5 text-teal' />
+                                    </div>
+                                    <div className='space-y-0.5 text-left'>
+                                        <h4 className='text-xs font-bold text-[#060e32]'>
+                                            {item.title}
+                                        </h4>
+                                        <p className='text-[11px] text-[#060e32]/70'>
+                                            {item.description}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className='space-y-0.5 text-left'>
-                                    <h4 className='text-xs font-bold text-[#060e32]'>
-                                        {isEn
-                                            ? 'Reliable Automation'
-                                            : 'Betrouwbare Automatisering'}
-                                    </h4>
-                                    <p className='text-[11px] text-[#060e32]/70'>
-                                        {isEn
-                                            ? 'Less manual work, fewer errors'
-                                            : 'Minder handwerk, minder fouten'}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className='flex items-start gap-3 p-4 rounded-xl border border-black/10 bg-white/80 shadow-xs'>
-                                <div className='w-9 h-9 rounded-lg border-2 border-teal/60 bg-[#F4F7FA] flex items-center justify-center shrink-0'>
-                                    <CheckCircle2 className='w-4.5 h-4.5 text-teal' />
-                                </div>
-                                <div className='space-y-0.5 text-left'>
-                                    <h4 className='text-xs font-bold text-[#060e32]'>
-                                        {isEn
-                                            ? 'Tangible Results'
-                                            : 'Concrete Resultaten'}
-                                    </h4>
-                                    <p className='text-[11px] text-[#060e32]/70'>
-                                        {isEn
-                                            ? 'Measurable time savings'
-                                            : 'Meetbare tijdswinst'}
-                                    </p>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
 
                     {/* Right: Integrated Image, height matches left column */}
                     <div className='lg:col-span-5 relative min-h-[300px] overflow-hidden bg-slate-950'>
                         <Image
-                            src='/emlinked/referenties/beheerders_referencties.jpg'
+                            src={getImageUrl(
+                                b?.image,
+                                b?.imagePath ||
+                                    '/emlinked/referenties/beheerders_referencties.jpg',
+                            )}
                             alt={
                                 isEn
                                     ? 'emlinked property management specialists'
@@ -385,7 +400,8 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     <div className='flex justify-center mb-3'>
                         <Badge color='teal' uppercase>
                             <Layers className='w-3.5 h-3.5 text-teal' />
-                            {isEn ? 'CORE PILLARS' : 'ONZE KERNWAARDEN'}
+                            {b?.badge ||
+                                (isEn ? 'CORE PILLARS' : 'ONZE KERNWAARDEN')}
                         </Badge>
                     </div>
 
@@ -403,56 +419,53 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                 </div>
 
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                    {/* Card 1 */}
-                    <div className='px-8 pt-8 pb-7 rounded-3xl bg-white border border-navy-900/10 hover:border-teal/40 hover:shadow-lg transition-all duration-300 space-y-4 group relative'>
-                        <div className='absolute -top-3.5 -right-3 z-30 size-12 sm:size-14 rounded-xl bg-teal text-white shadow-lg border-2 border-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
-                            <ShieldCheck className='w-6 h-6' />
-                        </div>
-                        <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-teal transition-colors'>
-                            {isEn
-                                ? 'Transparency & Integrity'
-                                : 'Transparantie & Integriteit'}
-                        </h3>
-                        <p className='text-xs md:text-sm text-[#060e32]/80 leading-relaxed font-light'>
-                            {isEn
-                                ? 'No vague promises, but data-driven and honest communication at every stage of implementation and support.'
-                                : 'Geen vage beloftes, maar datagedreven en eerlijke communicatie in elke fase van implementatie en support.'}
-                        </p>
-                    </div>
-
-                    {/* Card 2 */}
-                    <div className='px-8 pt-8 pb-7 rounded-3xl bg-white border border-navy-900/10 hover:border-teal/40 hover:shadow-lg transition-all duration-300 space-y-4 group relative'>
-                        <div className='absolute -top-3.5 -right-3 z-30 size-12 sm:size-14 rounded-xl bg-teal text-white shadow-lg border-2 border-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
-                            <Layers className='w-6 h-6' />
-                        </div>
-                        <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-teal transition-colors'>
-                            {isEn
-                                ? 'Sector-Specific Expertise'
-                                : 'Sectorspecifieke Expertise'}
-                        </h3>
-                        <p className='text-xs md:text-sm text-[#060e32]/80 leading-relaxed font-light'>
-                            {isEn
-                                ? 'Deep domain knowledge in real estate and Business Central ensures software that truly fits daily practice.'
-                                : 'Diepe domeinkennis binnen vastgoed en Business Central zorgt voor software die naadloos aansluit op de dagelijkse praktijk.'}
-                        </p>
-                    </div>
-
-                    {/* Card 3 */}
-                    <div className='px-8 pt-8 pb-7 rounded-3xl bg-white border border-navy-900/10 hover:border-teal/40 hover:shadow-lg transition-all duration-300 space-y-4 group relative'>
-                        <div className='absolute -top-3.5 -right-3 z-30 size-12 sm:size-14 rounded-xl bg-teal text-white shadow-lg border-2 border-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
-                            <Zap className='w-6 h-6' />
-                        </div>
-                        <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-teal transition-colors'>
-                            {isEn
-                                ? 'Agility & Custom Work'
-                                : 'Wendbaarheid & Maatwerk'}
-                        </h3>
-                        <p className='text-xs md:text-sm text-[#060e32]/80 leading-relaxed font-light'>
-                            {isEn
-                                ? 'Proactive development and flexible configuration that immediately respond to evolving organizational needs.'
-                                : 'Proactieve doorontwikkeling en flexibele configuratie die direct inspelen op veranderende organisatiebehoeften.'}
-                        </p>
-                    </div>
+                    {(b?.cards?.length
+                        ? b.cards
+                        : [
+                              {
+                                  title: isEn
+                                      ? 'Transparency & Integrity'
+                                      : 'Transparantie & Integriteit',
+                                  description: isEn
+                                      ? 'No vague promises, but data-driven and honest communication at every stage of implementation and support.'
+                                      : 'Geen vage beloftes, maar datagedreven en eerlijke communicatie in elke fase van implementatie en support.',
+                              },
+                              {
+                                  title: isEn
+                                      ? 'Sector-Specific Expertise'
+                                      : 'Sectorspecifieke Expertise',
+                                  description: isEn
+                                      ? 'Deep domain knowledge in real estate and Business Central ensures software that truly fits daily practice.'
+                                      : 'Diepe domeinkennis binnen vastgoed en Business Central zorgt voor software die naadloos aansluit op de dagelijkse praktijk.',
+                              },
+                              {
+                                  title: isEn
+                                      ? 'Agility & Custom Work'
+                                      : 'Wendbaarheid & Maatwerk',
+                                  description: isEn
+                                      ? 'Proactive development and flexible configuration that immediately respond to evolving organizational needs.'
+                                      : 'Proactieve doorontwikkeling en flexibele configuratie die direct inspelen op veranderende organisatiebehoeften.',
+                              },
+                          ]
+                    ).map((card: any, idx: number) => {
+                        const Icon = [ShieldCheck, Layers, Zap][idx % 3];
+                        return (
+                            <div
+                                key={idx}
+                                className='px-8 pt-8 pb-7 rounded-3xl bg-white border border-navy-900/10 hover:border-teal/40 hover:shadow-lg transition-all duration-300 space-y-4 group relative'
+                            >
+                                <div className='absolute -top-3.5 -right-3 z-30 size-12 sm:size-14 rounded-xl bg-teal text-white shadow-lg border-2 border-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300 pointer-events-none'>
+                                    <Icon className='w-6 h-6' />
+                                </div>
+                                <h3 className='font-display font-bold text-xl text-[#060e32] group-hover:text-teal transition-colors'>
+                                    {card.title}
+                                </h3>
+                                <p className='text-xs md:text-sm text-[#060e32]/80 leading-relaxed font-light'>
+                                    {card.description}
+                                </p>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </section>

@@ -30,7 +30,7 @@ export function PartnersHeroCard({ isEn = false }: PartnersHeroCardProps) {
                     </div>
                     <span className='px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5'>
                         <span className='w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse' />
-                        100% Synced
+                        Automatisch
                     </span>
                 </div>
 

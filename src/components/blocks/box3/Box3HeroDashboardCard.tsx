@@ -106,7 +106,7 @@ export function Box3HeroDashboardCard({
             <div className='pt-3 border-t border-white/10 flex items-center justify-between text-xs text-white/50'>
                 <span>Microsoft Business Central</span>
                 <span className='text-teal font-mono font-bold'>
-                    100% Synced
+                    Automatisch
                 </span>
             </div>
         </div>

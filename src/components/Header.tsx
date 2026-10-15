@@ -77,7 +77,7 @@ const translations = {
         payment: 'Payment Software',
         paymentDesc: 'Geautomatiseerde betalingstransacties.',
         team: 'Het Team',
-        box3: 'Box 3 Check ⚡',
+        box3: 'Box 3-check',
         integrations: 'Integraties',
         referenties: 'Referenties',
         docs: 'Documentatie',
@@ -99,7 +99,7 @@ const translations = {
         payment: 'Payment Software',
         paymentDesc: 'Automated billing transactions.',
         team: 'Our Team',
-        box3: 'Box 3 Calculator ⚡',
+        box3: 'Box 3-check',
         integrations: 'Integrations',
         referenties: 'References',
         docs: 'Docs Portal',
@@ -146,7 +146,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
               },
               {
                   _type: 'menuLink',
-                  title: 'Box3-check ⚡',
+                  title: 'Box3-check',
                   path: '/box3-check',
               },
               {
@@ -187,7 +187,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
               },
               {
                   _type: 'menuLink',
-                  title: 'Box3-check ⚡',
+                  title: 'Box3-check',
                   path: '/box3-check',
               },
               {

@@ -70,7 +70,7 @@ const HOMEPAGE_FLOATING_LABEL_PRESETS = [
             </svg>
         ),
         fallbackValue: 'Bankaflettering',
-        fallbackLabel: '100% Synced',
+        fallbackLabel: 'Automatisch',
     },
     {
         position: 'top-right' as const,
@@ -261,6 +261,13 @@ export function PageBlockRenderer({
                                     : 'max-w-4xl mx-auto',
                             )}
                         >
+                            {sectionTag && (
+                                <div className='flex justify-center'>
+                                    <Badge color='teal' uppercase>
+                                        {sectionTag}
+                                    </Badge>
+                                </div>
+                            )}
                             {sectionTitle && (
                                 <h2
                                     className={cn(
@@ -291,7 +298,7 @@ export function PageBlockRenderer({
                                                 <div className='text-sm leading-relaxed'>
                                                     {feature.title && (
                                                         <strong className='text-navy-900 font-semibold mr-1.5'>
-                                                            {feature.title}:
+                                                            {feature.title}
                                                         </strong>
                                                     )}
                                                     <span className='font-light text-navy-600'>
@@ -567,16 +574,16 @@ export function PageBlockRenderer({
                                 const footerSpec =
                                     item.footerSpec ||
                                     (idx === 0
-                                        ? 'Direct DB Schema'
+                                        ? 'Microsoft-platform'
                                         : idx === 1
                                           ? 'Continia OCR Engine'
-                                          : 'PSD2 / ISO 20022');
+                                          : 'PSD2');
                                 const nodeLabel =
                                     idx === 0
-                                        ? '2-Way Sync'
+                                        ? ''
                                         : idx === 1
-                                          ? 'Inbound Feed'
-                                          : 'Realtime Feed';
+                                          ? ''
+                                          : 'Ponto';
 
                                 return (
                                     <div
@@ -637,10 +644,12 @@ export function PageBlockRenderer({
                                                 <Layers className='h-3.5 w-3.5 text-teal/80' />
                                                 {footerSpec}
                                             </span>
-                                            <span className='text-emerald-700 font-semibold text-[11px] flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md'>
-                                                <span className='w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse' />
-                                                {nodeLabel}
-                                            </span>
+                                            {nodeLabel && (
+                                                <span className='text-emerald-700 font-semibold text-[11px] flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md'>
+                                                    <span className='w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse' />
+                                                    {nodeLabel}
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
                                 );
