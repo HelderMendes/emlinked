@@ -18,29 +18,41 @@ export const doc = defineType({
             options: {
                 source: 'title',
                 maxLength: 96,
+                isUnique: async (slug, context) => {
+                    const { document, getClient } = context;
+                    if (!document) return true;
+                    const client = getClient({ apiVersion: '2023-01-01' });
+                    const id = document._id.replace(/^drafts\./, '');
+                    const params = {
+                        draft: `drafts.${id}`,
+                        published: id,
+                        slug,
+                        language: (document as any).language,
+                    };
+                    const query = `!defined(*[_type == "doc" && !(_id in [$draft, $published]) && slug.current == $slug && language == $language][0]._id)`;
+                    return await client.fetch(query, params);
+                },
             },
             validation: (Rule) => Rule.required(),
         }),
         defineField({
             name: 'category',
             title: 'Category',
+            type: 'reference',
+            to: [{ type: 'docCategory' }],
+            validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+            name: 'language',
+            title: 'Language',
             type: 'string',
             options: {
                 list: [
-                    { title: 'Releases', value: 'releases' },
-                    { title: 'Vastgoed Beheer', value: 'vastgoed-beheer' },
-                    { title: 'Financieel Beheer', value: 'financieel-beheer' },
-                    {
-                        title: 'Kosten Administratie',
-                        value: 'kosten-administratie',
-                    },
-                    { title: 'Service Beheer', value: 'service-beheer' },
-                    {
-                        title: 'Instellen Emlinked',
-                        value: 'instellen-emlinked',
-                    },
+                    { title: 'Nederlands', value: 'nl' },
+                    { title: 'English', value: 'en' },
                 ],
             },
+            initialValue: 'nl',
             validation: (Rule) => Rule.required(),
         }),
         defineField({
@@ -49,6 +61,13 @@ export const doc = defineType({
             type: 'number',
             description: 'Used to sort pages inside the sidebar category list.',
             validation: (Rule) => Rule.min(0),
+        }),
+        defineField({
+            name: 'pdfFile',
+            title: 'PDF Attachment',
+            type: 'file',
+            options: { accept: '.pdf' },
+            description: 'Use for release notes or any manual page distributed as a PDF.',
         }),
         defineField({
             name: 'body',
@@ -120,6 +139,54 @@ export const doc = defineType({
                             validation: (Rule) => Rule.required(),
                         },
                     ],
+                },
+                {
+                    type: 'object',
+                    name: 'imageGrid',
+                    title: 'Image Grid (2 columns)',
+                    fields: [
+                        defineField({
+                            name: 'items',
+                            title: 'Images',
+                            type: 'array',
+                            of: [
+                                {
+                                    type: 'object',
+                                    name: 'item',
+                                    fields: [
+                                        defineField({
+                                            name: 'image',
+                                            title: 'Image',
+                                            type: 'image',
+                                            options: { hotspot: true },
+                                            validation: (Rule) =>
+                                                Rule.required(),
+                                        }),
+                                        defineField({
+                                            name: 'caption',
+                                            title: 'Caption',
+                                            type: 'string',
+                                        }),
+                                    ],
+                                    preview: {
+                                        select: {
+                                            media: 'image',
+                                            title: 'caption',
+                                        },
+                                    },
+                                },
+                            ],
+                            validation: (Rule) => Rule.min(2).max(4),
+                        }),
+                    ],
+                    preview: {
+                        select: { items: 'items' },
+                        prepare({ items }) {
+                            return {
+                                title: `Image Grid (${items?.length || 0} images)`,
+                            };
+                        },
+                    },
                 },
                 {
                     type: 'object',

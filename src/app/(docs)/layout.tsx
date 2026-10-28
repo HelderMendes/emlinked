@@ -1,192 +1,136 @@
 import React from 'react';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
 import { client } from '@/sanity/client';
+import DocsLocaleSwitch from '@/components/docs/DocsLocaleSwitch';
+import DocsSidebarNav from '@/components/docs/DocsSidebarNav';
 
 interface DocsLayoutProps {
     children: React.ReactNode;
 }
 
+interface DocCategoryEntry {
+    title: string;
+    slug: string;
+    order: number | null;
+}
+
 interface DocNavEntry {
     title: string;
     slug: string;
-    category: string;
+    order: number | null;
+    categorySlug: string | null;
 }
 
-const slugify = (text: string) =>
-    text
-        .toLowerCase()
-        .trim()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/[\s_-]+/g, '-')
-        .replace(/^-+|-+$/g, '');
-
-const fallbackCategories = [
-    {
-        name: 'Releases',
-        key: 'releases',
-        items: [
-            'ReleaseNotes Emlinked 23',
-            'ReleaseNotes Emlinked 23.009',
-            'ReleaseNotes Emlinked 23.010',
-        ],
-    },
-    {
-        name: 'Vastgoed Beheer',
-        key: 'vastgoed-beheer',
-        items: [
-            'Aanmaken huurcontract',
-            'Aanmaken object',
-            'Aanmaken Verhuureenheid',
-            'Beheer factuur maken',
-            'Creditnota aanmaken',
-            'Huurcontract op meerdere verhuureenheden',
-            'Huurcontractindexatie',
-            'Huurindexatie terugdraaien',
-            'Huurprolongatie',
-            'Kosten factuur maken',
-            'Nieuwe functionaliteit kopieëren kostenverdeling',
-            'Rentefactuur',
-            'Vermelding indexatie percentage',
-        ],
-    },
-    {
-        name: 'Financieel Beheer',
-        key: 'financieel-beheer',
-        items: [
-            'Aanpassing onderwerp regel inkooporder',
-            'Betalingsverplichtingen beheren',
-            'BTW-Verlegging',
-            'Het grootboek en het rekeningschema begrijpen',
-            'RDLC of Word rapport',
-            'Tegoed beheren',
-            'Telebankieren betaling klaar zetten',
-            'Vooruitbetalingen factureren',
-            'Aanmaningen maken en versturen',
-            'Instructies inlezen of bijwerken WVS puntentellinglijst',
-            'Nieuwe contacten',
-            'Nieuwe eigenaar registreren',
-            'Nieuwe huurder registreren',
-            'Verkopen factureren',
-            'Verschillende e-mailadressen gebruiken',
-        ],
-    },
-    {
-        name: 'Kosten Administratie',
-        key: 'kosten-administratie',
-        items: [
-            'Betalingen aanmaken en/of leveranciers betalen',
-            'Inkopen vastleggen',
-            'Kosten doorbelasten toewijzen',
-            'Service kosten afrekenfactuur',
-        ],
-    },
-    {
-        name: 'Service Beheer',
-        key: 'service-beheer',
-        items: [
-            'Aanmaken service registratie',
-            'Een inkoop order maken',
-            'Meldingen registreren',
-        ],
-    },
-    {
-        name: 'Instellen Emlinked',
-        key: 'instellen-emlinked',
-        items: [
-            'Beheer van BCC',
-            'Betalingsmethoden instellen',
-            'Boekingsgroepen instellen',
-            'De rekeningschema’s instellen',
-            'EMLinked op uw mobiele apparaat krijgen',
-        ],
-    },
-];
-
-export default async function DocsLayout({ children }: DocsLayoutProps) {
-    let sanityDocs: DocNavEntry[] = [];
-
+async function getDocCategories(locale: string) {
     try {
-        sanityDocs = await client.fetch<DocNavEntry[]>(
-            `*[_type == "doc"] | order(order asc) {
-        title,
-        "slug": slug.current,
-        category
-      }`,
+        return await client.fetch<DocCategoryEntry[]>(
+            `*[_type == "docCategory" && language == $locale] | order(order asc) {
+                title,
+                "slug": slug.current,
+                order
+            }`,
+            { locale },
         );
     } catch (err) {
-        console.error(
-            'Sanity docs fetch failed, using fallback static TOC:',
-            err,
-        );
+        console.error('Sanity docCategory fetch failed:', err);
+        return [];
     }
+}
 
-    // Group documentation pages
-    const sections = fallbackCategories.map((cat) => {
-        // Check if there are matching pages in Sanity for this category
-        const sanityItems = sanityDocs.filter((d) => d.category === cat.key);
+async function getDocEntries(locale: string) {
+    try {
+        return await client.fetch<DocNavEntry[]>(
+            `*[_type == "doc" && language == $locale] | order(order asc) {
+                title,
+                "slug": slug.current,
+                order,
+                "categorySlug": category->slug.current
+            }`,
+            { locale },
+        );
+    } catch (err) {
+        console.error('Sanity doc fetch failed:', err);
+        return [];
+    }
+}
 
-        const items =
-            sanityItems.length > 0
-                ? sanityItems.map((d) => ({
-                      title: d.title,
-                      path: `/docs/${cat.key}/${d.slug}`,
-                  }))
-                : cat.items.map((title) => ({
-                      title,
-                      path: `/docs/${cat.key}/${slugify(title)}`,
-                  }));
+export default async function DocsLayout({ children }: DocsLayoutProps) {
+    const cookieStore = await cookies();
+    const locale =
+        cookieStore.get('emlinked_locale')?.value === 'en' ? 'en' : 'nl';
 
-        return {
-            name: cat.name,
-            key: cat.key,
-            items,
-        };
-    });
+    const [categories, docs] = await Promise.all([
+        getDocCategories(locale),
+        getDocEntries(locale),
+    ]);
+
+    const sections = categories.map((cat) => ({
+        name: cat.title,
+        key: cat.slug,
+        items: docs
+            .filter((d) => d.categorySlug === cat.slug)
+            .map((d) => ({
+                title: d.title,
+                path: `/docs/${cat.slug}/${d.slug}`,
+            })),
+    }));
+
+    const copy =
+        locale === 'en'
+            ? {
+                  badge: 'Manuals',
+                  emptyLabel: 'No categories published yet.',
+                  emptyItemsLabel: "No pages yet",
+                  search: 'Search manuals...',
+                  backToSite: 'Back to website',
+                  landingTitle: 'My emlinked / Manuals',
+                  landingBody:
+                      'Browse the manuals for Emlinked property management software. Pick a category in the menu to open a page.',
+              }
+            : {
+                  badge: 'Handleidingen',
+                  emptyLabel: 'Nog geen categorieën aangemaakt.',
+                  emptyItemsLabel: "Nog geen pagina's",
+                  search: 'Zoek in handleidingen...',
+                  backToSite: 'Terug naar website',
+                  landingTitle: 'Mijn emlinked / Handleidingen',
+                  landingBody:
+                      'Blader door de handleidingen voor de Emlinked vastgoedbeheer software. Kies een categorie in het menu om een pagina te openen.',
+              };
 
     return (
-        <div className='flex h-screen bg-background text-foreground font-sans overflow-hidden'>
+        <div className='flex h-screen bg-stone-bg text-navy-900 font-sans overflow-hidden'>
             {/* Sidebar Navigation */}
-            <aside className='w-80 border-r border-black/20 bg-card flex flex-col h-full shrink-0'>
+            <aside className='w-80 border-r border-navy-900/10 bg-card flex flex-col h-full shrink-0'>
                 {/* Sidebar Header */}
-                <div className='h-16 border-b border-black/20 px-6 flex items-center justify-between shrink-0 bg-muted/20'>
-                    <Link href='/' className='flex items-center gap-2'>
-                        <span className='font-display text-lg font-bold tracking-tight text-primary'>
-                            em<span className='text-foreground'>linked</span>
-                        </span>
-                        <span className='text-[10px] font-bold tracking-widest bg-muted px-2 py-0.5 rounded text-muted-foreground uppercase'>
-                            Docs
+                <div className='h-16 border-b border-navy-900/10 px-6 flex items-center shrink-0 bg-teal-ultra/40'>
+                    <Link href='/' className='flex items-center gap-2.5'>
+                        <img
+                            src='/emlinked/Emlinked_logo__liggend.svg?v=2'
+                            alt='emlinked'
+                            className='h-7 w-auto'
+                        />
+                        <span className='text-[10px] font-bold tracking-widest bg-teal/15 text-teal-700 px-2 py-0.5 rounded-full uppercase'>
+                            {copy.badge}
                         </span>
                     </Link>
                 </div>
 
                 {/* Sidebar Content (Scrollable Categories) */}
                 <nav className='grow overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-border'>
-                    {sections.map((section, idx) => (
-                        <div key={idx} className='space-y-2'>
-                            <h4 className='text-xs font-bold uppercase tracking-wider text-muted-foreground/80'>
-                                {section.name}
-                            </h4>
-                            <ul className='space-y-1 pl-1'>
-                                {section.items.map((item, itemIdx) => (
-                                    <li key={itemIdx}>
-                                        <Link
-                                            href={item.path}
-                                            className='block py-1.5 px-2 rounded-md text-xs font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-colors truncate'
-                                        >
-                                            {item.title}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
+                    <DocsSidebarNav
+                        sections={sections}
+                        emptyLabel={copy.emptyLabel}
+                        emptyItemsLabel={copy.emptyItemsLabel}
+                    />
                 </nav>
             </aside>
 
             {/* Main Content Area */}
             <div className='grow flex flex-col h-full overflow-hidden'>
                 {/* Top Navbar */}
-                <header className='h-16 border-b border-black/20 bg-card px-8 flex items-center justify-between shrink-0'>
+                <header className='h-16 border-b border-navy-900/10 bg-card px-8 flex items-center justify-between shrink-0'>
                     <div className='w-96 relative'>
                         <span className='absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-foreground'>
                             <svg
@@ -205,26 +149,24 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
                         </span>
                         <input
                             type='search'
-                            placeholder='Search documentation...'
-                            className='w-full h-9 pl-9 pr-4 rounded-md border border-black/20 bg-background text-xs text-foreground focus:outline-none focus:border-primary transition-all'
+                            placeholder={copy.search}
+                            className='w-full h-9 pl-9 pr-4 rounded-full border border-navy-900/15 bg-stone-bg text-xs text-navy-900 focus:outline-none focus:border-teal transition-all'
                         />
                     </div>
-                    <div className='flex items-center gap-4 text-xs font-semibold'>
+                    <div className='flex items-center gap-4'>
+                        <DocsLocaleSwitch locale={locale} />
+                        <span className='text-navy-900/15'>|</span>
                         <Link
                             href='/'
-                            className='text-muted-foreground hover:text-foreground transition-colors'
+                            className='text-xs font-semibold text-navy-700 hover:text-teal-700 transition-colors'
                         >
-                            Public Portal
+                            {copy.backToSite}
                         </Link>
-                        <span className='text-muted-foreground'>|</span>
-                        <span className='text-primary font-bold'>
-                            Authenticated User
-                        </span>
                     </div>
                 </header>
 
                 {/* Scrollable Document Container */}
-                <main className='grow overflow-y-auto bg-background/50 p-12 scrollbar-thin'>
+                <main className='grow overflow-y-auto bg-stone-bg/60 p-12 scrollbar-thin'>
                     <div className='max-w-3xl mx-auto'>{children}</div>
                 </main>
             </div>

@@ -108,6 +108,103 @@ export default defineConfig({
                             ),
                         S.divider(),
                         S.listItem()
+                            .title('Mijn emlinked / Handleidingen (NL)')
+                            .icon(() => '📚')
+                            .child(
+                                S.list()
+                                    .title('Mijn emlinked / Handleidingen (NL)')
+                                    .items([
+                                        S.listItem()
+                                            .title('Categorieën')
+                                            .child(
+                                                S.documentList()
+                                                    .title('Categorieën (NL)')
+                                                    .filter(
+                                                        '_type == "docCategory" && language == "nl"',
+                                                    )
+                                                    .apiVersion('2024-07-01')
+                                                    .schemaType('docCategory')
+                                                    .defaultOrdering([
+                                                        {
+                                                            field: 'order',
+                                                            direction: 'asc',
+                                                        },
+                                                    ])
+                                                    .child((categoryId) =>
+                                                        S.documentList()
+                                                            .title(
+                                                                'Handleidingen',
+                                                            )
+                                                            .filter(
+                                                                '_type == "doc" && references($categoryId)',
+                                                            )
+                                                            .params({
+                                                                categoryId,
+                                                            })
+                                                            .apiVersion(
+                                                                '2024-07-01',
+                                                            )
+                                                            .schemaType('doc')
+                                                            .defaultOrdering([
+                                                                {
+                                                                    field: 'order',
+                                                                    direction:
+                                                                        'asc',
+                                                                },
+                                                            ]),
+                                                    ),
+                                            ),
+                                    ]),
+                            ),
+                        S.listItem()
+                            .title('My emlinked / Manuals (EN)')
+                            .icon(() => '📚')
+                            .child(
+                                S.list()
+                                    .title('My emlinked / Manuals (EN)')
+                                    .items([
+                                        S.listItem()
+                                            .title('Categories')
+                                            .child(
+                                                S.documentList()
+                                                    .title('Categories (EN)')
+                                                    .filter(
+                                                        '_type == "docCategory" && language == "en"',
+                                                    )
+                                                    .apiVersion('2024-07-01')
+                                                    .schemaType('docCategory')
+                                                    .defaultOrdering([
+                                                        {
+                                                            field: 'order',
+                                                            direction: 'asc',
+                                                        },
+                                                    ])
+                                                    .child((categoryId) =>
+                                                        S.documentList()
+                                                            .title('Manuals')
+                                                            .filter(
+                                                                '_type == "doc" && references($categoryId)',
+                                                            )
+                                                            .params({
+                                                                categoryId,
+                                                            })
+                                                            .apiVersion(
+                                                                '2024-07-01',
+                                                            )
+                                                            .schemaType('doc')
+                                                            .defaultOrdering([
+                                                                {
+                                                                    field: 'order',
+                                                                    direction:
+                                                                        'asc',
+                                                                },
+                                                            ]),
+                                                    ),
+                                            ),
+                                    ]),
+                            ),
+                        S.divider(),
+                        S.listItem()
                             .title('Auteurs / Authors')
                             .child(
                                 S.documentTypeList('author').title('Auteurs'),

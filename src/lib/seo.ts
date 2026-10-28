@@ -63,9 +63,11 @@ function toEnPath(nlPath: string): string {
  * Works without per-page wiring: NL and EN paths mostly mirror each other 1:1
  * except for a small set of locale-specific slugs (see NL_EN_PATH_MAP above).
  */
-export function getHreflangAlternates(
-    canonicalUrl: string,
-): { nl: string; en: string; 'x-default': string } {
+export function getHreflangAlternates(canonicalUrl: string): {
+    nl: string;
+    en: string;
+    'x-default': string;
+} {
     let pathname: string;
     try {
         pathname = new URL(canonicalUrl, DEFAULT_DOMAIN).pathname;
