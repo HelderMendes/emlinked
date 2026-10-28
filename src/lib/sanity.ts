@@ -14,6 +14,11 @@ export const sanityClient = createClient({
     apiVersion: '2024-07-01', // keep pinned; update intentionally
     useCdn: false, // false = bypass CDN for authenticated / draft reads
     token: process.env.SANITY_API_TOKEN,
+    // Without this, an authenticated client defaults to returning drafts
+    // alongside their published counterpart as separate documents (same
+    // content, different _id) — this is the public site, it must only
+    // ever show published content.
+    perspective: 'published',
 });
 
 /**

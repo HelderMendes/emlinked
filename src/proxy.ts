@@ -34,9 +34,17 @@ export function proxy(request: NextRequest) {
     const legacyAbsoluteUrl = `https://www.emlinked.nl${normalizedPathname}${url.search}`;
     const legacyAbsoluteUrlNoSearch = `https://www.emlinked.nl${normalizedPathname}`;
 
-    let redirect: { destination: string; status: number } | undefined =
+    const potentialAbsoluteRedirect =
         redirectsMap[legacyAbsoluteUrl] ||
         redirectsMap[legacyAbsoluteUrlNoSearch];
+
+    // Only apply legacy-domain-keyed redirects when actually visiting the
+    // legacy .nl domain — these paths are matched purely on pathname, so
+    // without this guard they'd also fire on localhost/preview/the new
+    // .com domain itself whenever a route happens to share the old path
+    // (e.g. /contact exists on both the old and new site).
+    let redirect: { destination: string; status: number } | undefined =
+        isLegacyDomain ? potentialAbsoluteRedirect : undefined;
 
     // Only apply relative path redirects if on legacy domain or if destination is a local relative route
     if (!redirect && redirectsMap[normalizedPathname]) {

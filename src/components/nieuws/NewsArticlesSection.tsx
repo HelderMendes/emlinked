@@ -61,6 +61,12 @@ export function NewsArticlesSection({
                     ? 'ERP & Business Central'
                     : 'ERP & Business Central',
             },
+            {
+                id: 'Beleggen & Portefeuille',
+                label: isEn
+                    ? 'Investing & Portfolio'
+                    : 'Beleggen & Portefeuille',
+            },
         ];
     }, [isEn]);
 
@@ -132,9 +138,9 @@ export function NewsArticlesSection({
                             <button
                                 key={cat.id}
                                 onClick={() => setSelectedCategory(cat.id)}
-                                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold tracking-wide transition-all duration-200 whitespace-nowrap ${
+                                className={`px-2 py-2 rounded-xl text-xs font-mono font-bold tracking-wide transition-all duration-200 whitespace-nowrap ${
                                     isActive
-                                        ? 'bg-darkblue text-white shadow-md'
+                                        ? 'bg-slate-50 text-teal shadow-md'
                                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-darkblue'
                                 }`}
                             >
@@ -163,7 +169,7 @@ export function NewsArticlesSection({
             {featuredArticle && (
                 <div className='rounded-3xl border border-teal/30 bg-slate-950 text-white overflow-hidden shadow-2xl group transition-all hover:border-teal/60'>
                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch'>
-                        <div className='lg:col-span-6 relative min-h-100 lg:min-h-140 bg-slate-900 overflow-hidden'>
+                        <div className='lg:col-span-6 relative min-h-100  bg-slate-900 overflow-hidden'>
                             <Image
                                 src={getImageUrl(
                                     featuredArticle.mainImage,

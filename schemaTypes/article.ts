@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity';
+import { ReadTimeInput } from './components/ReadTimeInput';
 
 export const article = defineType({
   name: 'article',
@@ -50,6 +51,7 @@ export const article = defineType({
           { title: 'Wet & Regelgeving', value: 'Wet & Regelgeving' },
           { title: 'Vastgoedbeheer', value: 'Vastgoedbeheer' },
           { title: 'ERP & Business Central', value: 'ERP & Business Central' },
+          { title: 'Beleggen & Portefeuille', value: 'Beleggen & Portefeuille' },
         ],
       },
     }),
@@ -70,7 +72,11 @@ export const article = defineType({
       name: 'readTime',
       title: 'Estimated Read Time',
       type: 'string',
-      description: 'e.g. "4 min leestijd"',
+      description:
+        'e.g. "4 min leestijd". Click "Bereken leestijd automatisch" to calculate from the Body field (225 words/min + image viewing time), or type your own.',
+      components: {
+        input: ReadTimeInput,
+      },
     }),
     defineField({
       name: 'publishedAt',

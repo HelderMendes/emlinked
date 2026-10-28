@@ -1,7 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import Link from 'next/link';
-import { ArrowRight, Mail } from 'lucide-react';
+import { Landmark, Scale, Users } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import {
@@ -9,8 +8,6 @@ import {
     NewsArticleItem,
 } from '@/components/nieuws/NewsArticlesSection';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
-import { Badge } from '@/components/ui/Badge';
-import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -52,6 +49,22 @@ async function getSanityNewsPageData(locale: string) {
                 _id,
                 title,
                 "slug": slug.current,
+                pageBlocks[] {
+                    _key,
+                    _type,
+                    label,
+                    title,
+                    subtitle,
+                    ctaLabel,
+                    ctaLink,
+                    primaryCtaLabel,
+                    primaryCtaUrl,
+                    secondaryCtaLabel,
+                    secondaryCtaUrl,
+                    floatingLabels[] { value, label },
+                    imagePath,
+                    image { asset-> { url } }
+                },
                 featuredArticle->{
                     _id,
                     title,
@@ -92,11 +105,11 @@ export async function generateMetadata({
     const pageData = await getSanityNewsPageData(locale);
 
     const fallbackTitle = isEn
-        ? 'News & Knowledge Base Real Estate Management'
-        : 'Nieuws & Kennisbank Vastgoedbeheer';
+        ? 'Real Estate News & Insights'
+        : 'Vastgoed Nieuws & Inzichten';
     const fallbackDescription = isEn
-        ? 'Stay informed with the latest news on real estate software, Box 3 legislation updates, and Microsoft Dynamics 365 developments.'
-        : 'Blijf op de hoogte van het laatste nieuws rondom vastgoedbeheer software, wetgeving, Box 3-ontwikkelingen en Microsoft Dynamics updates.';
+        ? 'Stay informed on real estate management, investing, and property ownership: software news, Box 3 legislation updates, and Microsoft Dynamics 365 developments — for managers, owners, and investors.'
+        : 'Nieuws en inzichten over vastgoedbeheer, beleggen en eigendom: software, wetgeving, Box 3-ontwikkelingen en Microsoft Dynamics updates — voor vastgoedbeheerders, eigenaren en beleggers.';
     const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/news' : '/nieuws'}`;
 
     return buildMetadata({
@@ -118,40 +131,62 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
     const heroBlock = pageBlocks.find(
         (b: any) => b._type === 'heroBlock' || b._type === 'hero',
     );
-    const ctaBlock = pageBlocks.find(
-        (b: any) =>
-            b._type === 'ctaBlock' ||
-            b._type === 'ctaBanner' ||
-            b._type === 'cta',
-    );
 
     const heroLabel =
-        heroBlock?.badge ||
-        (isEn ? 'KNOWLEDGE BASE & INSIGHTS' : 'KENNISBANK & INZICHTEN');
+        heroBlock?.label ||
+        (isEn
+            ? 'PROPERTY MANAGEMENT KNOWLEDGE BASE'
+            : 'VASTGOEDBEHEER KENNISBANK');
     const heroTitle =
-        heroBlock?.tagline ||
+        heroBlock?.title ||
         (isEn
             ? 'News, insights, and *property management tips*'
             : 'Nieuws, inzichten en *vastgoedbeheer tips*');
     const heroSub =
-        heroBlock?.description ||
+        heroBlock?.subtitle ||
         (isEn
-            ? 'Stay informed with the latest news on real estate software, Box 3 legislation updates, and Microsoft Dynamics 365 developments.'
-            : 'Blijf op de hoogte van het laatste nieuws rondom vastgoedbeheer software, wetgeving, Box 3-ontwikkelingen en Microsoft Dynamics updates.');
+            ? 'Stay informed on real estate management, investing, and property ownership: software news, Box 3 legislation updates, and Microsoft Dynamics 365 developments — for managers, owners, and investors.'
+            : 'Nieuws en inzichten over vastgoedbeheer, beleggen en eigendom: software, wetgeving, Box 3-ontwikkelingen en Microsoft Dynamics updates — voor vastgoedbeheerders, eigenaren en beleggers.');
+    const heroCtaLabel =
+        heroBlock?.ctaLabel || (isEn ? 'Book a demo' : 'Plan een demo');
+    const heroCtaLink = heroBlock?.ctaLink || '#demo';
 
-    const ctaTitle =
-        ctaBlock?.title ||
-        (isEn
-            ? 'Stay ahead in the real estate market'
-            : 'Blijf voorop lopen in de vastgoedmarkt');
-    const ctaSub =
-        ctaBlock?.subtitle ||
-        (isEn
-            ? 'Want to discuss software, legislation, or the latest features in Business Central? Connect with our experts directly.'
-            : 'Wil je sparren over software, wetgeving of de nieuwste functies in Business Central? Neem direct contact op met onze experts.');
-    const ctaBtn =
-        ctaBlock?.primaryCtaLabel ||
-        (isEn ? 'Get in touch' : 'Neem direct contact op');
+    const floatingLabelPresets = [
+        {
+            position: 'top-left' as const,
+            iconVariant: 'teal' as const,
+            icon: <Landmark className='w-3.5 h-3.5' />,
+            fallbackValue: isEn ? '€15 billion+' : '€15 miljard+',
+            fallbackLabel: isEn
+                ? 'Real estate under management'
+                : 'Vastgoed onder beheer',
+        },
+        {
+            position: 'top-right' as const,
+            iconVariant: 'emerald' as const,
+            icon: <Scale className='w-3.5 h-3.5' />,
+            fallbackValue: isEn ? 'Box 3 & Legislation' : 'Box 3 & Wetgeving',
+            fallbackLabel: isEn ? 'Latest updates' : 'Actuele updates',
+        },
+        {
+            position: 'bottom-right' as const,
+            iconVariant: 'navy' as const,
+            icon: <Users className='w-3.5 h-3.5' />,
+            fallbackValue: isEn
+                ? 'Managers & Investors'
+                : 'Beheerders & Beleggers',
+            fallbackLabel: isEn
+                ? 'For the whole real estate chain'
+                : 'Voor de hele vastgoedketen',
+        },
+    ];
+    const heroFloatingLabels = floatingLabelPresets.map((preset, idx) => ({
+        icon: preset.icon,
+        position: preset.position,
+        iconVariant: preset.iconVariant,
+        value: heroBlock?.floatingLabels?.[idx]?.value || preset.fallbackValue,
+        label: heroBlock?.floatingLabels?.[idx]?.label || preset.fallbackLabel,
+    }));
 
     // JSON-LD CollectionPage Schema
     const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/news' : '/nieuws'}`;
@@ -163,14 +198,24 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
                 '@id': `${canonicalPageUrl}#webpage`,
                 url: canonicalPageUrl,
                 name: isEn
-                    ? 'News & Knowledge Base | emlinked'
-                    : 'Nieuws & Kennisbank | emlinked',
+                    ? 'Real Estate News & Insights | emlinked'
+                    : 'Vastgoed Nieuws & Inzichten | emlinked',
                 description: heroSub,
                 inLanguage: isEn ? 'en-US' : 'nl-NL',
                 isPartOf: {
                     '@type': 'WebSite',
                     '@id': `${DEFAULT_DOMAIN}/#website`,
                 },
+            },
+            {
+                '@type': 'ItemList',
+                '@id': `${canonicalPageUrl}#itemlist`,
+                itemListElement: articles.map((article, index) => ({
+                    '@type': 'ListItem',
+                    position: index + 1,
+                    url: `${DEFAULT_DOMAIN}${isEn ? '/en/news' : '/nieuws'}/${article.slug}`,
+                    name: article.title,
+                })),
             },
         ],
     });
@@ -184,13 +229,18 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
             />
 
             {/* ── HERO SECTION (DARK TEXTURE NAVY) ── */}
-            <div className='bg-texture-navy text-white relative border-b border-white/10'>
+            <div className='bg-texture-navy text-white relative'>
                 <HeroSection
                     label={heroLabel}
                     title={heroTitle}
                     subtitle={heroSub}
+                    ctaLabel={heroCtaLabel}
+                    ctaLink={heroCtaLink}
+                    image={heroBlock?.image}
+                    imagePath={heroBlock?.imagePath}
                     locale={locale}
                     showProof={false}
+                    floatingLabels={heroFloatingLabels}
                 />
             </div>
 
@@ -200,47 +250,6 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
                 pinnedArticle={pageData?.featuredArticle}
                 locale={locale}
             />
-
-            {/* ── CTA CONVERSION BANNER ── */}
-            <section className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'>
-                <div className='border border-teal/30 rounded-3xl bg-white/50 hover:shadow-[0_25px_60px_rgba(245,158,11,0.15)] transition-all duration-500 relative overflow-hidden group shadow-lg backdrop-blur-xl lg:px-8 max-w-5xl mx-auto'>
-                    <div className='text-navy-900 p-8 md:py-16 md:px-10 relative overflow-hidden text-center'>
-                        <div className='relative z-10 space-y-5 max-w-3xl mx-auto'>
-                            <Badge color='teal' uppercase className='mx-auto'>
-                                <Mail className='w-3.5 h-3.5 text-teal' />
-                                {isEn ? 'STAY INFORMED' : 'BLIJF OP DE HOOGTE'}
-                            </Badge>
-
-                            <h2 className='font-display font-bold text-3xl md:text-4xl lg:text-[2.75rem] leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
-                                {ctaTitle}
-                            </h2>
-
-                            <p className='text-navy-700 text-base md:text-lg leading-relaxed font-light'>
-                                {ctaSub}
-                            </p>
-
-                            <div className='flex flex-col sm:flex-row justify-center items-center gap-4 pt-2'>
-                                <Link
-                                    href={isEn ? '/en/contact' : '/contact'}
-                                    className='inline-flex h-11 items-center gap-1.5 justify-center rounded-lg bg-navy-900 hover:btn-gradient px-6 text-sm font-semibold text-white transition-colors'
-                                >
-                                    <span>{ctaBtn}</span>
-                                    <ArrowRight className='h-4 w-4 text-white' />
-                                </Link>
-
-                                <OutlineLinkButton
-                                    href={isEn ? '/en/apps' : '/apps'}
-                                    color='navy'
-                                >
-                                    {isEn
-                                        ? 'Explore our solutions'
-                                        : 'Bekijk onze oplossingen'}
-                                </OutlineLinkButton>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </main>
     );
 }

@@ -33,6 +33,20 @@ export const page = defineType({
             options: {
                 source: 'title',
                 maxLength: 96,
+                isUnique: async (slug, context) => {
+                    const { document, getClient } = context;
+                    if (!document) return true;
+                    const client = getClient({ apiVersion: '2023-01-01' });
+                    const id = document._id.replace(/^drafts\./, '');
+                    const params = {
+                        draft: `drafts.${id}`,
+                        published: id,
+                        slug,
+                        language: (document as any).language,
+                    };
+                    const query = `!defined(*[_type == "page" && !(_id in [$draft, $published]) && slug.current == $slug && language == $language][0]._id)`;
+                    return await client.fetch(query, params);
+                },
             },
             validation: (Rule) => Rule.required(),
         }),
@@ -1831,7 +1845,7 @@ export const page = defineType({
                             title: 'Floating Stat Chips (Over Hero Image)',
                             type: 'array',
                             description:
-                                'Up to 2 small chips floating over the hero image. Icon, position, and styling are fixed in code — only the text here is editable.',
+                                'Up to 2-3 small chips floating over the hero image. Icon, position, and styling are fixed in code — only the text here is editable.',
                             of: [
                                 defineArrayMember({
                                     type: 'object',
@@ -1862,7 +1876,7 @@ export const page = defineType({
                                     },
                                 }),
                             ],
-                            validation: (Rule) => Rule.max(2),
+                            validation: (Rule) => Rule.max(4),
                         }),
                         defineField({
                             name: 'imagePath',

@@ -35,7 +35,24 @@ export const solutionPage = defineType({
             type: 'slug',
             description:
                 'The URL path for this page (e.g. apps/huurdersportaal or apps/vastgoedbeheer-software)',
-            options: { source: 'title', maxLength: 96 },
+            options: {
+                source: 'title',
+                maxLength: 96,
+                isUnique: async (slug, context) => {
+                    const { document, getClient } = context;
+                    if (!document) return true;
+                    const client = getClient({ apiVersion: '2023-01-01' });
+                    const id = document._id.replace(/^drafts\./, '');
+                    const params = {
+                        draft: `drafts.${id}`,
+                        published: id,
+                        slug,
+                        language: (document as any).language,
+                    };
+                    const query = `!defined(*[_type == "solutionPage" && !(_id in [$draft, $published]) && slug.current == $slug && language == $language][0]._id)`;
+                    return await client.fetch(query, params);
+                },
+            },
             validation: (Rule) => Rule.required(),
         }),
 

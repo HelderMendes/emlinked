@@ -1,40 +1,28 @@
 import React from 'react';
+import type { Metadata } from 'next';
+import { MapPin, Phone, Mail } from 'lucide-react';
+import { BsLinkedin } from 'react-icons/bs';
+import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
+import { ContactForm } from '@/components/contact/ContactForm';
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 
 interface ContactPageProps {
     params: Promise<{ locale: string }>;
 }
 
-const content = {
-    nl: {
-        title: 'Vraag een Demo aan',
-        tagline: 'Ontdek hoe emlinked uw vastgoedbeheer kan automatiseren.',
-        formTitle: 'Demo Aanvragen',
-        nameLabel: 'Naam',
-        emailLabel: 'E-mailadres',
-        portfolioLabel: 'Portefeuille omvang',
-        messageLabel: 'Bericht / Vraag',
-        submitButton: 'Verstuur aanvraag',
-        successMsg:
-            'Dank voor uw aanvraag. Wij nemen binnen 24 uur contact met u op.',
-    },
-    en: {
-        title: 'Request a Demo',
-        tagline:
-            'Discover how emlinked can automate your real estate operations.',
-        formTitle: 'Demo Request',
-        nameLabel: 'Full Name',
-        emailLabel: 'Email Address',
-        portfolioLabel: 'Portfolio Size',
-        messageLabel: 'Message / Query',
-        submitButton: 'Submit request',
-        successMsg:
-            'Thank you for your request. We will contact you within 24 hours.',
-    },
-} as const;
-
-import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
-import type { Metadata } from 'next';
+async function getSiteSettings(locale: string) {
+    try {
+        const id = `siteSettings-${locale}`;
+        return await client.fetch(
+            `*[_id == $id][0] { phone, email, address, linkedinUrl }`,
+            { id },
+        );
+    } catch (e) {
+        console.error('Error fetching site settings from Sanity:', e);
+        return null;
+    }
+}
 
 export async function generateMetadata({
     params,
@@ -61,73 +49,112 @@ export async function generateMetadata({
 
 export default async function ContactPage({ params }: ContactPageProps) {
     const { locale } = await params;
-    const t = content[locale as 'nl' | 'en'] || content.nl;
+    const isEn = locale === 'en';
+    const settings = await getSiteSettings(locale);
+
+    const phone = settings?.phone || '+31 (0)88 707 7000';
+    const email = settings?.email || 'support@emlinked.com';
+    const address = settings?.address || 'Gooimeer 12, 1411 DE Naarden';
+    const linkedinUrl =
+        settings?.linkedinUrl || 'https://www.linkedin.com/company/emlinked';
+    const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+
+    const infoCards = [
+        {
+            icon: <MapPin className='w-5 h-5' />,
+            label: isEn ? 'Address' : 'Adres',
+            value: address,
+            href: mapsHref,
+        },
+        {
+            icon: <Phone className='w-5 h-5' />,
+            label: isEn ? 'Phone' : 'Telefoon',
+            value: phone,
+            href: `tel:${phone.replace(/[^+\d]/g, '')}`,
+        },
+        {
+            icon: <Mail className='w-5 h-5' />,
+            label: isEn ? 'Email' : 'E-mail',
+            value: email,
+            href: `mailto:${email}`,
+        },
+        {
+            icon: <BsLinkedin className='w-5 h-5' />,
+            label: 'LinkedIn',
+            value: isEn ? 'emlinked on LinkedIn' : 'emlinked op LinkedIn',
+            href: linkedinUrl,
+        },
+    ];
 
     return (
         <div className='flex flex-col min-h-screen'>
-            {/* Hero Section */}
             <HeroSection
-                label={locale === 'en' ? 'GET IN TOUCH' : 'DEMO AANVRAGEN'}
-                title={t.title}
-                subtitle={t.tagline}
+                label={isEn ? 'CONTACT' : 'CONTACT'}
+                title={isEn ? 'Get in touch' : 'Neem contact op'}
+                subtitle={
+                    isEn
+                        ? 'How can we help you? Ask your question about property management, Business Central, or book a demo directly.'
+                        : 'Hoe kunnen we u helpen? Stel uw vraag over vastgoedbeheer, Business Central, of plan direct een demo.'
+                }
                 locale={locale}
+                showProof={false}
+                centered
+                hideImage
             />
 
-            {/* Form Container */}
-            <section className='px-6 py-20 bg-card border-b border-black/20'>
-                <div className='mx-auto max-w-xl px-4 sm:px-6 lg:px-8'>
-                    <div className='p-8 rounded-xl border border-black/20 bg-background shadow-md'>
-                        <h2 className='text-xl font-bold text-foreground mb-6'>
-                            {t.formTitle}
-                        </h2>
-                        <form className='flex flex-col gap-4'>
-                            <div className='flex flex-col gap-1.5'>
-                                <label className='text-sm font-semibold text-muted-foreground'>
-                                    {t.nameLabel}
-                                </label>
-                                <input
-                                    type='text'
-                                    required
-                                    className='h-10 px-3 rounded-md border border-black/20 bg-card text-sm text-foreground focus:outline-none focus:border-primary'
-                                />
-                            </div>
-                            <div className='flex flex-col gap-1.5'>
-                                <label className='text-sm font-semibold text-muted-foreground'>
-                                    {t.emailLabel}
-                                </label>
-                                <input
-                                    type='email'
-                                    required
-                                    className='h-10 px-3 rounded-md border border-black/20 bg-card text-sm text-foreground focus:outline-none focus:border-primary'
-                                />
-                            </div>
-                            <div className='flex flex-col gap-1.5'>
-                                <label className='text-sm font-semibold text-muted-foreground'>
-                                    {t.portfolioLabel}
-                                </label>
-                                <select className='h-10 px-3 rounded-md border border-black/20 bg-card text-sm text-foreground focus:outline-none focus:border-primary'>
-                                    <option>&lt; 50 VHE (Units)</option>
-                                    <option>50 - 250 VHE (Units)</option>
-                                    <option>250 - 1000 VHE (Units)</option>
-                                    <option>&gt; 1000 VHE (Units)</option>
-                                </select>
-                            </div>
-                            <div className='flex flex-col gap-1.5'>
-                                <label className='text-sm font-semibold text-muted-foreground'>
-                                    {t.messageLabel}
-                                </label>
-                                <textarea
-                                    rows={4}
-                                    className='p-3 rounded-md border border-black/20 bg-card text-sm text-foreground focus:outline-none focus:border-primary'
-                                />
-                            </div>
-                            <button
-                                type='submit'
-                                className='h-11 rounded-md bg-primary text-primary-foreground font-semibold hover:bg-primary/95 transition-all text-sm mt-4'
-                            >
-                                {t.submitButton}
-                            </button>
-                        </form>
+            <section className='px-6 py-20 bg-background border-b border-black/10'>
+                <div className='mx-auto max-w-5xl space-y-12'>
+                    <div className='grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8 items-start'>
+                        {/* Left: info cards, stacked */}
+                        <div className='flex flex-col gap-4'>
+                            {infoCards.map((card) => (
+                                <a
+                                    key={card.label}
+                                    href={card.href}
+                                    target={
+                                        card.href.startsWith('http')
+                                            ? '_blank'
+                                            : undefined
+                                    }
+                                    rel={
+                                        card.href.startsWith('http')
+                                            ? 'noopener noreferrer'
+                                            : undefined
+                                    }
+                                    className='flex items-center gap-4 p-5 rounded-xl border border-navy-900/10 bg-white hover:border-teal/40 hover:shadow-md transition-all duration-200'
+                                >
+                                    <div className='w-10 h-10 rounded-lg bg-teal/10 text-teal flex items-center justify-center shrink-0'>
+                                        {card.icon}
+                                    </div>
+                                    <div>
+                                        <p className='text-[10px] font-extrabold text-navy-500 uppercase tracking-wider font-mono mb-0.5'>
+                                            {card.label}
+                                        </p>
+                                        <p className='text-sm font-semibold text-navy-900 break-words'>
+                                            {card.value}
+                                        </p>
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+
+                        {/* Right: form */}
+                        <div className='p-8 rounded-2xl border border-navy-900/10 bg-white shadow-sm'>
+                            <ContactForm locale={locale} />
+                        </div>
+                    </div>
+
+                    {/* Map */}
+                    <div className='rounded-2xl overflow-hidden border border-navy-900/10 shadow-sm aspect-video lg:aspect-21/9'>
+                        <iframe
+                            title={isEn ? 'Office location' : 'Kantoorlocatie'}
+                            src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
+                            width='100%'
+                            height='100%'
+                            style={{ border: 0 }}
+                            loading='lazy'
+                            referrerPolicy='no-referrer-when-downgrade'
+                        />
                     </div>
                 </div>
             </section>

@@ -30,6 +30,10 @@ export interface HeroSectionProps {
      *  instead of the default left-copy/right-image split. Opt-in per
      *  page — most heroes keep the default split. */
     centered?: boolean;
+    /** Skips the entire image column (photo, decorative orbs, floating
+     *  chips) for a pure-text hero. Forces single-column centered layout
+     *  regardless of `centered`. */
+    hideImage?: boolean;
     /** 2-3 floating stat/fact chips over the hero image (generic version
      *  of the homepage-only badges below). Ignored when `customGraphic`
      *  is passed — build any badges directly into the custom graphic
@@ -118,6 +122,7 @@ export function HeroSection({
     titleClassName,
     customGraphic,
     centered = false,
+    hideImage = false,
     floatingLabels,
 }: HeroSectionProps) {
     const isEn = locale === 'en';
@@ -140,7 +145,7 @@ export function HeroSection({
                 <div
                     className={cn(
                         'grid grid-cols-1 gap-12 lg:gap-10 items-center',
-                        centered
+                        centered || hideImage
                             ? 'justify-items-center'
                             : 'lg:grid-cols-[0.91fr_1.09fr]',
                     )}
@@ -149,7 +154,8 @@ export function HeroSection({
                     <div
                         className={cn(
                             'flex flex-col items-center text-center',
-                            !centered && 'lg:text-left lg:items-start',
+                            !(centered || hideImage) &&
+                                'lg:text-left lg:items-start',
                         )}
                     >
                         {label && (
@@ -158,7 +164,8 @@ export function HeroSection({
                                 dot
                                 className={cn(
                                     'self-center mb-4',
-                                    !centered && 'lg:self-start',
+                                    !(centered || hideImage) &&
+                                        'lg:self-start',
                                 )}
                             >
                                 {label}
@@ -183,7 +190,8 @@ export function HeroSection({
                             <div
                                 className={cn(
                                     'flex flex-wrap gap-3 mt-8 justify-center',
-                                    !centered && 'lg:justify-start',
+                                    !(centered || hideImage) &&
+                                        'lg:justify-start',
                                 )}
                             >
                                 {ctaLabel && ctaLink && (
@@ -245,7 +253,9 @@ export function HeroSection({
 
                     {/* Right: hero art — decorative orbs + framed illustration.
                         Centered variant shrinks this to 2/3 width, stacked
-                        below the copy instead of sitting beside it. */}
+                        below the copy instead of sitting beside it.
+                        Skipped entirely when hideImage is set. */}
+                    {!hideImage && (
                     <div
                         className={cn(
                             'relative min-h-[340px] lg:min-h-140 flex items-center justify-center',
@@ -317,6 +327,7 @@ export function HeroSection({
                                 </div>
                             ))}
                     </div>
+                    )}
                 </div>
             </div>
         </section>

@@ -8,9 +8,9 @@ export async function POST(request: Request) {
         const { name, email, phone, company, portfolioSize, message, recaptchaToken } = body;
 
         // 1. Basic validation
-        if (!name || !email || !phone) {
+        if (!name || !email) {
             return NextResponse.json(
-                { error: 'Naam, e-mail en telefoonnummer zijn verplicht.' },
+                { error: 'Naam en e-mail zijn verplicht.' },
                 { status: 400 }
             );
         }
@@ -60,7 +60,7 @@ export async function POST(request: Request) {
                     </tr>
                     <tr>
                         <td style="padding: 8px 0; font-weight: bold; color: #475569;">Telefoonnummer:</td>
-                        <td style="padding: 8px 0; color: #0f172a;"><a href="tel:${phone}">${phone}</a></td>
+                        <td style="padding: 8px 0; color: #0f172a;">${phone ? `<a href="tel:${phone}">${phone}</a>` : 'Niet ingevuld'}</td>
                     </tr>
                     <tr>
                         <td style="padding: 8px 0; font-weight: bold; color: #475569;">Organisatie:</td>
