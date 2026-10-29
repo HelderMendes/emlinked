@@ -1,0 +1,1 @@
+import{t as e}from"./rolldown-runtime-XKyaHtl9.js";import*as t from"react-dom";var n=e(((e,n)=>{n.exports=Object.prototype.hasOwnProperty.call(t,`module.exports`)?t[`module.exports`]:{...t}}));export{n as t};
