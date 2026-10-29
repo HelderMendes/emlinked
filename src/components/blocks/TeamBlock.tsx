@@ -13,7 +13,7 @@ import {
     CheckCircle2,
     User,
 } from 'lucide-react';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 
 export interface TeamMember {
@@ -24,7 +24,7 @@ export interface TeamMember {
     focusArea?: string;
     badge?: string;
     photoPath?: string;
-    image?: any;
+    image?: SanityImageLike;
     linkedin?: string;
     email?: string;
 }

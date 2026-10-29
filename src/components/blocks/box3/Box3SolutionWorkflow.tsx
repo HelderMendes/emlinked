@@ -39,7 +39,7 @@ export function Box3SolutionWorkflow({
                 </div>
 
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                    {workflowItems.map((card: any, idx: number) => (
+                    {workflowItems.map((card, idx: number) => (
                         <div
                             key={card._key || idx}
                             className='px-8 pt-8 pb-4 rounded-3xl bg-white border border-navy-900/10 hover:border-teal/40 hover:shadow-lg transition-all duration-300 space-y-4 flex flex-col justify-between group relative'

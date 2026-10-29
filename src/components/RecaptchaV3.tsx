@@ -2,6 +2,14 @@
 
 import Script from 'next/script';
 
+interface Grecaptcha {
+    ready: (callback: () => void) => void;
+    execute: (
+        siteKey: string,
+        options: { action: string },
+    ) => Promise<string>;
+}
+
 /**
  * Fetches a fresh v3 token right before a submit. v3 has no visible
  * widget and no "complete the challenge" step — grecaptcha.ready()
@@ -13,13 +21,14 @@ export function getRecaptchaToken(
     action: string,
 ): Promise<string | null> {
     return new Promise((resolve) => {
-        const win = window as any;
-        if (!win.grecaptcha || typeof win.grecaptcha.ready !== 'function') {
+        const grecaptcha = (window as Window & { grecaptcha?: Grecaptcha })
+            .grecaptcha;
+        if (!grecaptcha || typeof grecaptcha.ready !== 'function') {
             resolve(null);
             return;
         }
-        win.grecaptcha.ready(() => {
-            win.grecaptcha
+        grecaptcha.ready(() => {
+            grecaptcha
                 .execute(siteKey, { action })
                 .then((token: string) => resolve(token))
                 .catch(() => resolve(null));

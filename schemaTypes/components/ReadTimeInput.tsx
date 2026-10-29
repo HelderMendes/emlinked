@@ -18,23 +18,28 @@ function calculateReadTime(text: string, imageCount: number = 0): number {
     return Math.max(1, totalMinutes);
 }
 
+interface PortableTextItemLike {
+    _type?: string;
+    children?: { text?: string }[];
+}
+
 // Portable Text blocks hold their text in `children[].text`; everything
 // else (images, custom objects) is skipped for the word count.
 function extractPlainText(body: unknown): string {
     if (!Array.isArray(body)) return '';
-    return body
-        .filter((item: any) => item?._type === 'block')
-        .map((block: any) =>
-            (block.children || [])
-                .map((child: any) => child.text || '')
-                .join(''),
+    return (body as PortableTextItemLike[])
+        .filter((item) => item?._type === 'block')
+        .map((block) =>
+            (block.children || []).map((child) => child.text || '').join(''),
         )
         .join(' ');
 }
 
 function countImages(body: unknown): number {
     if (!Array.isArray(body)) return 0;
-    return body.filter((item: any) => item?._type === 'image').length;
+    return (body as PortableTextItemLike[]).filter(
+        (item) => item?._type === 'image',
+    ).length;
 }
 
 export function ReadTimeInput(props: StringInputProps) {

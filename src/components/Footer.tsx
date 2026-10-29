@@ -162,8 +162,10 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
             setFooterEmail('');
             setFooterPhone('');
             setFooterMessage('');
-        } catch (err: any) {
-            setSubmitError(err.message || t.formErrorFallback);
+        } catch (err) {
+            setSubmitError(
+                (err instanceof Error && err.message) || t.formErrorFallback,
+            );
         } finally {
             setIsSubmitting(false);
         }

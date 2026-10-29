@@ -139,10 +139,10 @@ export function QuoteRequestModal({
             }
 
             setIsSubmitted(true);
-        } catch (err: any) {
+        } catch (err) {
             console.error('Submit quote error:', err);
             setSubmitError(
-                err.message ||
+                (err instanceof Error && err.message) ||
                     (isEn
                         ? 'An unexpected error occurred.'
                         : 'Er is een onverwachte fout opgetreden.'),

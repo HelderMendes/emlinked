@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, type SanityImageLike } from '@/sanity/image';
 import { cn } from '@/lib/utils';
 import { ArrowUpRight } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
@@ -20,7 +20,7 @@ export interface HeroSectionProps {
     showProof?: boolean;
     showProofAvatars?: boolean;
     proofText?: string;
-    image?: any;
+    image?: SanityImageLike;
     imagePath?: string;
     isHomepage?: boolean;
     locale?: string;

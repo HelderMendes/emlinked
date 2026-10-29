@@ -430,7 +430,7 @@ export async function POST(request: Request) {
         }
 
         return NextResponse.json({ success: true });
-    } catch (error: any) {
+    } catch (error) {
         console.error('Quote calculation submission error:', error);
         return NextResponse.json(
             { error: 'Interne serverfout bij het verzenden van de offerte.' },

@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 
 interface AppsArchitectureSectionProps {
@@ -15,9 +15,9 @@ interface AppsArchitectureSectionProps {
     sectionTitle?: string;
     sectionSubtitle?: string;
     bullets?: Array<{ bold?: string; text: string }>;
-    bgImage?: any;
+    bgImage?: SanityImageLike;
     bgImagePath?: string;
-    calloutImage?: any;
+    calloutImage?: SanityImageLike;
     calloutImagePath?: string;
 }
 

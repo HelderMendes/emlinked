@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Scale } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, type SanityImageLike } from '@/sanity/image';
 
 interface Box3VoorWieSectionProps {
     voorWieBadge: string;
@@ -11,7 +11,7 @@ interface Box3VoorWieSectionProps {
     fiscalContextBadge: string;
     fiscalContextTitle: string;
     fiscalContextText: string;
-    fiscalContextImage?: any;
+    fiscalContextImage?: SanityImageLike;
     fiscalContextImagePath?: string;
     voorWieItems: Array<{
         icon: React.ReactNode;
@@ -101,7 +101,7 @@ export function Box3VoorWieSection({
                 {/* 4 Pain Points: Single Outer Box Container with Vertical Dividers */}
                 {voorWieItems && voorWieItems.length > 0 && (
                     <div className='bg-white/80 rounded-2xl border border-black/10 shadow-sm p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
-                        {voorWieItems.map((item: any, idx: number) => (
+                        {voorWieItems.map((item, idx: number) => (
                             <div
                                 key={idx}
                                 className='px-4 py-5 lg:py-2 flex flex-col items-start justify-start text-left space-y-3 group'

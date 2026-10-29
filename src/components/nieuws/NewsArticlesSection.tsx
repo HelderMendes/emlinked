@@ -11,7 +11,7 @@ import {
     Clock,
     User,
 } from 'lucide-react';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, type SanityImageLike } from '@/sanity/image';
 
 export interface NewsArticleItem {
     _id?: string;
@@ -23,7 +23,7 @@ export interface NewsArticleItem {
     publishedAt?: string;
     authorName?: string;
     imagePath?: string;
-    mainImage?: any;
+    mainImage?: SanityImageLike;
     isFeatured?: boolean;
     featured?: boolean;
 }

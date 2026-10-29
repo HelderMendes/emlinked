@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
@@ -15,7 +15,7 @@ interface Box3CtaBannerProps {
     secondaryButtonText?: string;
     secondaryButtonLink?: string;
     isEn: boolean;
-    image?: any;
+    image?: SanityImageLike;
     imagePath?: string;
 }
 

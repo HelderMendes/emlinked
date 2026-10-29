@@ -47,7 +47,7 @@ export const solutionPage = defineType({
                         draft: `drafts.${id}`,
                         published: id,
                         slug,
-                        language: (document as any).language,
+                        language: (document as { language?: string }).language,
                     };
                     const query = `!defined(*[_type == "solutionPage" && !(_id in [$draft, $published]) && slug.current == $slug && language == $language][0]._id)`;
                     return await client.fetch(query, params);

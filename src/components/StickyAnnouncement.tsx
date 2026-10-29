@@ -7,9 +7,38 @@ import { DemoModal } from './DemoModal';
 import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/lib/utils';
 
+interface AnnouncementNewsItem {
+    slug?: string;
+    title?: string;
+    excerpt?: string;
+}
+
+interface AnnouncementReview {
+    text: string;
+    author: string;
+}
+
+interface AnnouncementSettings {
+    announcementActive?: boolean;
+    announcementMode?: 'news' | string;
+    announcementNewsItems?: AnnouncementNewsItem[];
+    announcementPillText?: string;
+    announcementTitle?: string;
+    announcementText?: string;
+    announcementCtaLabel?: string;
+    announcementReviews?: AnnouncementReview[];
+    announcementLink?: string;
+    // Shared siteSettings fields, forwarded as-is to <DemoModal settings={settings} />
+    phone?: string;
+    email?: string;
+    address?: string;
+    linkedinUrl?: string;
+    twitterUrl?: string;
+}
+
 interface StickyAnnouncementProps {
     locale?: string;
-    settings?: any;
+    settings?: AnnouncementSettings;
 }
 
 const content = {
@@ -83,7 +112,7 @@ export default function StickyAnnouncement({
     // News mode: the announcement card lists real News articles instead of
     // hand-written copy, all shown uniformly (no "featured" first item).
     const isNewsMode = settings?.announcementMode === 'news';
-    const newsItems: any[] = settings?.announcementNewsItems || [];
+    const newsItems: AnnouncementNewsItem[] = settings?.announcementNewsItems || [];
 
     const newsHref = (slug?: string) =>
         slug
@@ -211,7 +240,7 @@ export default function StickyAnnouncement({
                                 newsItems.length > 0 && (
                                     <div className='p-4.5 bg-white flex flex-col gap-3.5'>
                                         {newsItems.map(
-                                            (item: any, index: number) => (
+                                            (item: AnnouncementNewsItem, index: number) => (
                                                 <a
                                                     key={index}
                                                     href={newsHref(item.slug)}
@@ -232,7 +261,7 @@ export default function StickyAnnouncement({
                                 )
                             ) : (
                                 <div className='p-4.5 bg-white flex flex-col gap-3.5'>
-                                    {reviews.map((rev: any, index: number) => (
+                                    {reviews.map((rev: AnnouncementReview, index: number) => (
                                         <div
                                             key={index}
                                             className='flex flex-col gap-1 border-b border-navy-900/10 last:border-0 pb-3 last:pb-0'

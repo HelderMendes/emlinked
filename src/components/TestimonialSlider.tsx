@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, type SanityImageLike } from '@/sanity/image';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/Badge';
 
@@ -13,7 +13,15 @@ export interface TestimonialItem {
     author: string;
     role: string;
     initials: string;
-    avatar?: any;
+    avatar?: SanityImageLike;
+}
+
+interface RawTestimonialInput {
+    _key?: string;
+    quote?: string;
+    author?: string;
+    role?: string;
+    avatar?: SanityImageLike;
 }
 
 interface TestimonialSliderProps {
@@ -21,7 +29,7 @@ interface TestimonialSliderProps {
     tag?: string;
     title?: string;
     subtitle?: string;
-    customTestimonials?: any[];
+    customTestimonials?: RawTestimonialInput[];
 }
 
 const nameColor = [

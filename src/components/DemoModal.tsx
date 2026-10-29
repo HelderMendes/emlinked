@@ -193,10 +193,11 @@ export function DemoModal({
             }
 
             setStatus('success');
-        } catch (err: any) {
+        } catch (err) {
             setStatus('error');
             setErrorMessage(
-                err.message || 'Verzending mislukt. Probeer het later opnieuw.',
+                (err instanceof Error && err.message) ||
+                    'Verzending mislukt. Probeer het later opnieuw.',
             );
         }
     };

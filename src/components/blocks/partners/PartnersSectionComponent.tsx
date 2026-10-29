@@ -10,7 +10,7 @@ import {
     Cpu,
     Layers,
 } from 'lucide-react';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 
 export interface PartnerItem {
@@ -18,7 +18,7 @@ export interface PartnerItem {
     name: string;
     badge: string;
     logoUrl: string;
-    logo?: any;
+    logo?: SanityImageLike;
     description: string;
     featureTitle?: string;
     featureText?: string;

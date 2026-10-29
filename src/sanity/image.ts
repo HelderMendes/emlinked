@@ -27,7 +27,21 @@ function parseStringPath(str: string): string {
     return str;
 }
 
-export function getImageUrl(image: any, fallback: string = ''): string {
+export type SanityImageLike =
+    | string
+    | {
+          asset?: { url?: string; _ref?: string; _id?: string };
+          url?: string;
+          _ref?: string;
+          _id?: string;
+      }
+    | null
+    | undefined;
+
+export function getImageUrl(
+    image: SanityImageLike,
+    fallback: string = '',
+): string {
     const cleanFallback = parseStringPath(fallback);
     if (!image) return cleanFallback;
     if (typeof image === 'string') {
