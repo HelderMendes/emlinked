@@ -321,7 +321,7 @@ export function PageBlockRenderer({
                                         isPortfolioHealth ? 'mt-8' : 'mt-2',
                                     )}
                                 >
-                                    {/* {block.sectionCtaLabel} */}
+                                    {block.sectionCtaLabel}
                                 </Link>
                             )}
                             {resolvedSectionImg && (
