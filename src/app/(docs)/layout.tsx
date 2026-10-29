@@ -1,9 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
+import { BsRocketTakeoff } from 'react-icons/bs';
 import { client } from '@/sanity/client';
 import DocsLocaleSwitch from '@/components/docs/DocsLocaleSwitch';
 import DocsSidebarNav from '@/components/docs/DocsSidebarNav';
+import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
 interface DocsLayoutProps {
     children: React.ReactNode;
@@ -79,9 +81,9 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
     const copy =
         locale === 'en'
             ? {
-                  badge: 'Manuals',
+                  pageTitle: 'Manuals',
                   emptyLabel: 'No categories published yet.',
-                  emptyItemsLabel: "No pages yet",
+                  emptyItemsLabel: 'No pages yet',
                   search: 'Search manuals...',
                   backToSite: 'Back to website',
                   landingTitle: 'My emlinked / Manuals',
@@ -89,7 +91,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
                       'Browse the manuals for Emlinked property management software. Pick a category in the menu to open a page.',
               }
             : {
-                  badge: 'Handleidingen',
+                  pageTitle: 'Handleidingen',
                   emptyLabel: 'Nog geen categorieën aangemaakt.',
                   emptyItemsLabel: "Nog geen pagina's",
                   search: 'Zoek in handleidingen...',
@@ -102,18 +104,15 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
     return (
         <div className='flex h-screen bg-stone-bg text-navy-900 font-sans overflow-hidden'>
             {/* Sidebar Navigation */}
-            <aside className='w-80 border-r border-navy-900/10 bg-card flex flex-col h-full shrink-0'>
+            <aside className='w-88 border-r border-navy-900/10 bg-card flex flex-col h-full shrink-0'>
                 {/* Sidebar Header */}
                 <div className='h-16 border-b border-navy-900/10 px-6 flex items-center shrink-0 bg-teal-ultra/40'>
-                    <Link href='/' className='flex items-center gap-2.5'>
+                    <Link href='/' className='flex items-center'>
                         <img
-                            src='/emlinked/Emlinked_logo__liggend.svg?v=2'
+                            src='/emlinked/Emlinked_logo__liggend.svg'
                             alt='emlinked'
-                            className='h-7 w-auto'
+                            className='h-10 w-auto'
                         />
-                        <span className='text-[10px] font-bold tracking-widest bg-teal/15 text-teal-700 px-2 py-0.5 rounded-full uppercase'>
-                            {copy.badge}
-                        </span>
                     </Link>
                 </div>
 
@@ -130,8 +129,8 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
             {/* Main Content Area */}
             <div className='grow flex flex-col h-full overflow-hidden'>
                 {/* Top Navbar */}
-                <header className='h-16 border-b border-navy-900/10 bg-card px-8 flex items-center justify-between shrink-0'>
-                    <div className='w-96 relative'>
+                <header className='h-16 border-b border-navy-900/10 bg-card px-8 flex items-center shrink-0'>
+                    <div className='w-96 relative shrink-0'>
                         <span className='absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-foreground'>
                             <svg
                                 className='h-4 w-4'
@@ -147,18 +146,29 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
                                 />
                             </svg>
                         </span>
+
                         <input
                             type='search'
                             placeholder={copy.search}
                             className='w-full h-9 pl-9 pr-4 rounded-full border border-navy-900/15 bg-stone-bg text-xs text-navy-900 focus:outline-none focus:border-teal transition-all'
                         />
                     </div>
-                    <div className='flex items-center gap-4'>
+                    <div className='grow flex items-center justify-center'>
+                        <OutlineLinkButton href='/docs' color='navy'>
+                            <BsRocketTakeoff className='h-4 w-4 shrink-0' />
+                            <span>
+                                {locale === 'en'
+                                    ? 'My emlinked'
+                                    : 'Mijn emlinked'}{' '}
+                                – {copy.pageTitle}
+                            </span>
+                        </OutlineLinkButton>
+                    </div>
+                    <div className='flex items-center gap-4 shrink-0'>
                         <DocsLocaleSwitch locale={locale} />
-                        <span className='text-navy-900/15'>|</span>
                         <Link
                             href='/'
-                            className='text-xs font-semibold text-navy-700 hover:text-teal-700 transition-colors'
+                            className='inline-flex items-center px-4 py-2 rounded-lg border border-navy-900 bg-navy-900 text-white text-xs font-semibold shadow-xs transition-all duration-300 hover:btn-gradient'
                         >
                             {copy.backToSite}
                         </Link>
@@ -167,7 +177,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
 
                 {/* Scrollable Document Container */}
                 <main className='grow overflow-y-auto bg-stone-bg/60 p-12 scrollbar-thin'>
-                    <div className='max-w-3xl mx-auto'>{children}</div>
+                    <div className='max-w-4xl mx-auto'>{children}</div>
                 </main>
             </div>
         </div>

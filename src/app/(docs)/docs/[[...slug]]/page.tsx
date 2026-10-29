@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { cookies } from 'next/headers';
 import { PortableText, PortableTextComponents } from 'next-sanity';
 import { client } from '@/sanity/client';
@@ -15,53 +16,52 @@ interface SanityDocResult {
     pdfFile?: { url: string; originalFilename: string } | null;
 }
 
-function getNativeImageWidth(value: any): number | null {
+function getNativeDimensions(
+    value: any,
+): { width: number; height: number } | null {
     const ref: string | undefined = value?.asset?._ref;
     if (!ref) return null;
     const match = ref.match(/-(\d+)x(\d+)-/);
-    return match ? parseInt(match[1], 10) : null;
+    if (!match) return null;
+    return { width: parseInt(match[1], 10), height: parseInt(match[2], 10) };
 }
 
 const portableTextComponents: PortableTextComponents = {
     block: {
         h2: ({ children }) => (
-            <h2 className='text-xl font-bold text-navy-900 pt-6 pb-2'>
+            <h2 className='text-2xl font-bold text-navy-900 pt-6 py-4'>
                 {children}
             </h2>
         ),
         h3: ({ children }) => (
-            <h3 className='text-lg font-bold text-navy-900 pt-4 pb-2'>
+            <h3 className='text-xl font-bold text-navy-900 pt-4 pb-2'>
                 {children}
             </h3>
         ),
         h4: ({ children }) => (
-            <h4 className='text-base font-bold text-navy-900 pt-3 pb-1'>
+            <h4 className='text-lg font-bold text-navy-900 pt-3 pb-1'>
                 {children}
             </h4>
         ),
         normal: ({ children }) => (
-            <p className='text-sm leading-relaxed text-navy-700 my-3'>
-                {children}
-            </p>
+            <p className='text-md text-navy-700 my-3'>{children}</p>
         ),
     },
     list: {
         bullet: ({ children }) => (
-            <ul className='list-disc list-inside space-y-1.5 my-3 text-sm text-navy-700'>
+            <ul className='list-disc list-inside space-y-1.5 my-3 text-md text-navy-700 pl-8 '>
                 {children}
             </ul>
         ),
         number: ({ children }) => (
-            <ol className='list-decimal list-inside space-y-1.5 my-3 text-sm text-navy-700'>
+            <ol className='list-decimal list-inside space-y-1.5 my-3 text-md text-navy-700 pl-8'>
                 {children}
             </ol>
         ),
     },
     marks: {
         strong: ({ children }) => (
-            <strong className='font-semibold text-navy-900'>
-                {children}
-            </strong>
+            <strong className='font-semibold text-navy-900'>{children}</strong>
         ),
         link: ({ value, children }) => {
             const href = value?.href || '#';
@@ -82,18 +82,19 @@ const portableTextComponents: PortableTextComponents = {
         image: ({ value }) => {
             const src = getImageUrl(value, undefined);
             if (!src) return null;
-            const nativeWidth = getNativeImageWidth(value);
-            // eslint-disable-next-line @next/next/no-img-element
+            const dims = getNativeDimensions(value);
             return (
-                <img
+                <Image
                     src={src}
                     alt={value?.alt || ''}
-                    style={
-                        nativeWidth
-                            ? { maxWidth: `min(100%, ${nativeWidth}px)` }
-                            : undefined
-                    }
-                    className='rounded-lg border border-navy-900/10 my-6 w-auto h-auto mx-auto block'
+                    width={dims?.width ?? 1200}
+                    height={dims?.height ?? 800}
+                    style={{
+                        width: '100%',
+                        height: 'auto',
+                        maxWidth: dims ? `min(100%, ${dims.width}px)` : '100%',
+                    }}
+                    className='rounded-lg border border-navy-900/10 my-6 mx-auto block'
                 />
             );
         },
@@ -110,12 +111,16 @@ const portableTextComponents: PortableTextComponents = {
                     {items.map((item: any, idx: number) => {
                         const src = getImageUrl(item?.image, undefined);
                         if (!src) return null;
+                        const dims = getNativeDimensions(item?.image);
                         return (
                             <figure key={idx} className='m-0'>
-                                <img
+                                <Image
                                     src={src}
                                     alt={item?.caption || ''}
-                                    className='rounded-lg border border-navy-900/10 w-full'
+                                    width={dims?.width ?? 1200}
+                                    height={dims?.height ?? 800}
+                                    style={{ width: '100%', height: 'auto' }}
+                                    className='rounded-lg border border-navy-900/10'
                                 />
                                 {item?.caption && (
                                     <figcaption className='text-xs text-navy-700 mt-2 text-center'>
@@ -161,8 +166,16 @@ export default async function DocPage({ params }: DocPageProps) {
         locale === 'en'
             ? {
                   landingTitle: 'Documentation Center',
+                  landingSubtitle: 'Turning ideas into reality',
+                  landingIntro:
+                      'Welcome to my emlinked, your emlinked! This is the place where you can find all kinds of information that matters to you as an emlinked user.',
                   landingBody:
-                      'Welcome to the Emlinked manuals. Pick a category in the menu to open a page.',
+                      "Want to perform an action in emlinked but can't quite figure it out? In my emlinked you'll find user manuals, the latest news, and release notes with the newest features. This way you can get started quickly and efficiently!",
+                  landingMsPrefix:
+                      'Emlinked is built on Microsoft Dynamics 365 Business Central. For more background information and additional documentation, visit the official Microsoft page: ',
+                  landingMsLinkLabel: 'Microsoft Dynamics 365',
+                  landingMsHref:
+                      'https://www.microsoft.com/en-us/dynamics-365/products/business-central',
                   notFoundTitle: 'Page not found',
                   notFoundBody: "This manual page doesn't exist yet in Sanity.",
                   noContent: 'Content for this page has not been added yet.',
@@ -170,11 +183,20 @@ export default async function DocPage({ params }: DocPageProps) {
               }
             : {
                   landingTitle: 'Documentation Center',
+                  landingSubtitle: 'Ideeën omzetten in realiteit',
+                  landingIntro:
+                      'Welkom op mijn emlinked, jouw emlinked! Dit is de plek waar je allerlei informatie kunt vinden die belangrijk is voor jou als emlinked gebruiker.',
                   landingBody:
-                      'Welkom bij de Emlinked documentatie. Kies een categorie in het menu om een handleiding te openen.',
+                      'Wil je in emlinked een actie uitvoeren, maar kom je er even niet uit? In mijn emlinked vind je gebruikershandleidingen, de laatste nieuwtjes en release notes met de nieuwste functionaliteiten. Zo kun je snel en efficiënt aan de slag!',
+                  landingMsPrefix:
+                      'Emlinked is ontwikkeld op basis van Microsoft Dynamics 365 Business Central. Voor meer achtergrondinformatie en aanvullende documentatie kun je terecht op de officiële Microsoft-pagina: ',
+                  landingMsLinkLabel: 'Microsoft Dynamics 365',
+                  landingMsHref:
+                      'https://www.microsoft.com/nl-nl/dynamics-365/products/business-central',
                   notFoundTitle: 'Pagina niet gevonden',
                   notFoundBody: 'Deze handleiding bestaat nog niet in Sanity.',
-                  noContent: 'Inhoud voor deze handleiding is nog niet toegevoegd.',
+                  noContent:
+                      'Inhoud voor deze handleiding is nog niet toegevoegd.',
                   downloadLabel: 'Downloaden',
               };
 
@@ -182,14 +204,37 @@ export default async function DocPage({ params }: DocPageProps) {
     if (slugArray.length === 0) {
         return (
             <div className='space-y-8'>
-                <div className='border-b border-navy-900/10 pb-6'>
-                    <h1 className='font-display text-3xl font-bold tracking-tight text-navy-900'>
+                <div className='border-b border-teal pb-2'>
+                    <div className='text-lg font-bold tracking-widest text-teal-700 uppercase my-2'>
+                        {copy.landingSubtitle}
+                    </div>
+                    <h1 className='font-display text-4xl font-bold tracking-tight text-navy-900'>
                         {copy.landingTitle}
                     </h1>
-                    <p className='text-sm text-navy-700 mt-2'>
+                </div>
+                <article className='max-w-none space-y-3 pt-4'>
+                    <h2 className='text-2xl font-bold text-navy-900'>
+                        {copy.landingSubtitle}
+                    </h2>
+                    <p className='text-md leading-relaxed text-navy-700'>
+                        {copy.landingIntro}
+                    </p>
+                    <p className='text-md leading-relaxed text-navy-700'>
                         {copy.landingBody}
                     </p>
-                </div>
+                    <p className='text-md leading-relaxed text-navy-700'>
+                        {copy.landingMsPrefix}
+                        <a
+                            href={copy.landingMsHref}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='text-teal-700 underline hover:no-underline'
+                        >
+                            {copy.landingMsLinkLabel}
+                        </a>
+                        .
+                    </p>
+                </article>
             </div>
         );
     }
@@ -216,7 +261,7 @@ export default async function DocPage({ params }: DocPageProps) {
     if (!sanityDoc) {
         return (
             <div className='space-y-6'>
-                <div className='border-b border-navy-900/10 pb-6'>
+                <div className='border-b border-teal pb-2'>
                     <h1 className='font-display text-2xl font-bold tracking-tight text-navy-900'>
                         {copy.notFoundTitle}
                     </h1>
@@ -230,16 +275,16 @@ export default async function DocPage({ params }: DocPageProps) {
 
     return (
         <div className='space-y-6'>
-            <div className='border-b border-navy-900/10 pb-6'>
-                <div className='text-[10px] font-bold tracking-widest text-teal-700 uppercase mb-1'>
+            <div className='border-b border-teal pb-2'>
+                <div className='text-lg font-bold tracking-widest text-teal-700 uppercase my-2'>
                     {sanityDoc.categoryTitle}
                 </div>
-                <h1 className='font-display text-3xl font-bold tracking-tight text-navy-900'>
+                <h1 className='font-display text-4xl font-bold tracking-tight text-navy-900'>
                     {sanityDoc.title}
                 </h1>
             </div>
 
-            <article className='max-w-none'>
+            <article className='max-w-none pt-4'>
                 {sanityDoc.pdfFile?.url && (
                     <div className='mb-8 flex items-center justify-between gap-4 rounded-xl border border-teal/30 bg-teal-pale/40 px-5 py-4'>
                         <div className='flex items-center gap-3 min-w-0'>

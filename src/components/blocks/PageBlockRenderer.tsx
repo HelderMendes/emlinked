@@ -190,7 +190,9 @@ export function PageBlockRenderer({
                             ? getHomepageFloatingLabels(block)
                             : block.floatingLabels?.length
                               ? block.floatingLabels.map((item: any) => ({
-                                    icon: <CheckCircle2 className='w-3.5 h-3.5' />,
+                                    icon: (
+                                        <CheckCircle2 className='w-3.5 h-3.5' />
+                                    ),
                                     value: item.value,
                                     label: item.label,
                                 }))
@@ -319,7 +321,7 @@ export function PageBlockRenderer({
                                         isPortfolioHealth ? 'mt-8' : 'mt-2',
                                     )}
                                 >
-                                    {block.sectionCtaLabel}
+                                    {/* {block.sectionCtaLabel} */}
                                 </Link>
                             )}
                             {resolvedSectionImg && (
@@ -579,11 +581,7 @@ export function PageBlockRenderer({
                                           ? 'Continia OCR Engine'
                                           : 'PSD2');
                                 const nodeLabel =
-                                    idx === 0
-                                        ? ''
-                                        : idx === 1
-                                          ? ''
-                                          : 'Ponto';
+                                    idx === 0 ? '' : idx === 1 ? '' : 'Ponto';
 
                                 return (
                                     <div
