@@ -1,1 +1,0 @@
-import{t as e}from"../../static/rolldown-runtime-XKyaHtl9.js";const t=e((e=>{e.Fragment=Symbol.for(`react.fragment`),e.jsxDEV=void 0}))();export default t;export const Fragment=t.Fragment;export const jsxDEV=t.jsxDEV;

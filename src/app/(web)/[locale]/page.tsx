@@ -184,16 +184,6 @@ export default async function HomePage({ params }: HomePageProps) {
     const { locale } = await params;
     const isEn = locale === 'en';
     const pageData = await getHomepageData(locale);
-    console.log(
-        '🔍 [HomePage Debug] locale:',
-        locale,
-        'fetched document _id:',
-        pageData?._id,
-        'title:',
-        pageData?.title,
-        'blocks count:',
-        pageData?.pageBlocks?.length,
-    );
 
     const getPath = (path: string) => {
         if (locale === 'nl') return path;

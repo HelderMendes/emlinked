@@ -1,1 +1,0 @@
-import{t as e}from"../../static/react-dom-server-legacy.browser.production-Byd6yZzV.js";const t=e();export default t;export const renderToStaticMarkup=t.renderToStaticMarkup;export const renderToString=t.renderToString;export const version=t.version;

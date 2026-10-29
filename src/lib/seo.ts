@@ -108,7 +108,7 @@ export function buildMetadata({
     rawTitle = rawTitle.replace(/&amp;/g, '&');
 
     // Split on brand separator (| emlinked, - emlinked, etc.) and take the core title
-    let title = rawTitle.split(/\s*(?:\||-|—|–)\s*emlinked/i)[0].trim();
+    const title = rawTitle.split(/\s*(?:\||-|—|–)\s*emlinked/i)[0].trim();
 
     const description =
         seo?.seoDescription || seo?.description || fallbackDescription;
