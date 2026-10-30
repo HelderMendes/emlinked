@@ -5,11 +5,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { Box3EcosystemSection } from '@/components/blocks/box3/Box3EcosystemSection';
-import { Box3SolutionWorkflow } from '@/components/blocks/box3/Box3SolutionWorkflow';
-import { TestimonialSlider } from '@/components/TestimonialSlider';
-import { TeamBlock } from '@/components/blocks/TeamBlock';
+import {
+    Box3SolutionWorkflow,
+    type WorkflowItem,
+} from '@/components/blocks/box3/Box3SolutionWorkflow';
+import {
+    TestimonialSlider,
+    type RawTestimonialInput,
+} from '@/components/TestimonialSlider';
+import { TeamBlock, type TeamMember } from '@/components/blocks/TeamBlock';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { ColorIcon } from '@/components/ui/ColorIcon';
 import { cn } from '@/lib/utils';
@@ -32,17 +38,190 @@ import {
     CheckCircle2,
 } from 'lucide-react';
 
+interface FloatingLabelInput {
+    value?: string;
+    label?: string;
+}
+
+interface TrustItem {
+    _key?: string;
+    icon?: string;
+    text?: string;
+}
+
+interface FeatureItem {
+    _key?: string;
+    title?: string;
+    description?: string;
+    image?: SanityImageLike;
+    imagePath?: string;
+    photoPath?: string;
+    iconImage?: SanityImageLike;
+    iconPath?: string;
+    ctaLink?: string;
+    ctaLabel?: string;
+}
+
+interface IntegrationItem {
+    _key?: string;
+    image?: SanityImageLike;
+    footerSpec?: string;
+    badge?: string;
+    title?: string;
+    description?: string;
+}
+
+interface BulletItem {
+    _key?: string;
+    title?: string;
+    text?: string;
+}
+
+interface HeroBlockData {
+    _type: 'hero' | 'heroBlock';
+    _key?: string;
+    label?: string;
+    tagline?: string;
+    title?: string;
+    subtitle?: string;
+    description?: string;
+    ctaLabel?: string;
+    ctaLink?: string;
+    secondaryCtaLabel?: string;
+    secondaryCtaLink?: string;
+    showProof?: boolean;
+    proofText?: string;
+    image?: SanityImageLike;
+    heroImage?: SanityImageLike;
+    imagePath?: string;
+    floatingLabels?: FloatingLabelInput[];
+}
+
+interface TrustBlockData {
+    _type: 'trust';
+    _key?: string;
+    items?: TrustItem[];
+}
+
+interface FeaturesListBlockData {
+    _type: 'featuresList';
+    _key?: string;
+    sectionTag?: string;
+    badge?: string;
+    sectionSubtitle?: string;
+    subtitle?: string;
+    sectionTitle?: string;
+    title?: string;
+    features?: FeatureItem[];
+    items?: FeatureItem[];
+    sectionImage?: SanityImageLike;
+    sectionImagePath?: string;
+    sectionCtaLabel?: string;
+    sectionCtaLink?: string;
+}
+
+interface IntegrationsListBlockData {
+    _type: 'integrationsList';
+    _key?: string;
+    sectionTag?: string;
+    sectionTitle?: string;
+    sectionSubtitle?: string;
+    integrations?: IntegrationItem[];
+    items?: IntegrationItem[];
+    diagramImage?: SanityImageLike;
+    diagramImagePath?: string;
+}
+
+interface CtaBlockData {
+    _type: 'ctaBanner' | 'ctaBlock' | 'cta';
+    _key?: string;
+    tag?: string;
+    badge?: string;
+    title?: string;
+    subtitle?: string;
+    buttonLabel?: string;
+    buttonText?: string;
+    buttonLink?: string;
+    bullets?: BulletItem[];
+    image?: SanityImageLike;
+    imagePath?: string;
+}
+
+interface EcosystemBlockData {
+    _type: 'ecosystemSection' | 'ecosystem';
+    _key?: string;
+    badge?: string;
+    title?: string;
+    subtitle?: string;
+    cardTitle?: string;
+    cardSubtitle?: string;
+    cardPoints?: string[];
+    trustItems?: Array<{ title: string; desc: string }>;
+}
+
+interface WorkflowBlockData {
+    _type: 'workflow' | 'workflowBlock';
+    _key?: string;
+    badge?: string;
+    title?: string;
+    items?: WorkflowItem[];
+}
+
+interface TestimonialBlockData {
+    _type: 'testimonialSection' | 'testimonial';
+    _key?: string;
+    tag?: string;
+    sectionTag?: string;
+    title?: string;
+    sectionTitle?: string;
+    subtitle?: string;
+    sectionSubtitle?: string;
+    testimonials?: RawTestimonialInput[];
+}
+
+interface TeamBlockData {
+    _type: 'teamBlock' | 'team';
+    _key?: string;
+    title?: string;
+    sectionTitle?: string;
+    subtitle?: string;
+    sectionSubtitle?: string;
+    members?: TeamMember[];
+}
+
+interface ArchitectureBlockData {
+    _type: 'architectureSection';
+    _key?: string;
+    tag?: string;
+    badge?: string;
+    title?: string;
+    sectionTitle?: string;
+    subtitle?: string;
+    sectionSubtitle?: string;
+    sectionTag?: string;
+    bullets?: Array<{ bold?: string; text: string }>;
+    bgImage?: SanityImageLike;
+    bgImagePath?: string;
+}
+
+type PageBlock =
+    | HeroBlockData
+    | TrustBlockData
+    | FeaturesListBlockData
+    | IntegrationsListBlockData
+    | CtaBlockData
+    | EcosystemBlockData
+    | WorkflowBlockData
+    | TestimonialBlockData
+    | TeamBlockData
+    | ArchitectureBlockData;
+
 interface PageBlockRendererProps {
-    block: any;
+    block: PageBlock;
     locale?: string;
     isHomepage?: boolean;
 }
 
-// Up to 4 slots — icon, position, and color variant are fixed in code;
-// editors only control value/label text via Sanity's floatingLabels array.
-// Slots 0-1 keep the original homepage copy as a fallback when editors
-// haven't filled anything in yet; slots 2-3 only appear once an editor
-// actually adds a 3rd/4th item.
 const HOMEPAGE_FLOATING_LABEL_PRESETS = [
     {
         position: 'top-left' as const,
@@ -88,19 +267,24 @@ const HOMEPAGE_FLOATING_LABEL_PRESETS = [
     },
 ];
 
-function getHomepageFloatingLabels(block: any) {
-    const items =
-        block.floatingLabels?.length > 0
+function getHomepageFloatingLabels(block: {
+    floatingLabels?: FloatingLabelInput[];
+}) {
+    const items: FloatingLabelInput[] =
+        block.floatingLabels && block.floatingLabels.length > 0
             ? block.floatingLabels
-            : HOMEPAGE_FLOATING_LABEL_PRESETS.slice(0, 2);
-    return items.slice(0, 4).map((item: any, idx: number) => {
+            : HOMEPAGE_FLOATING_LABEL_PRESETS.slice(0, 2).map((p) => ({
+                  value: p.fallbackValue,
+                  label: p.fallbackLabel,
+              }));
+    return items.slice(0, 4).map((item, idx: number) => {
         const preset = HOMEPAGE_FLOATING_LABEL_PRESETS[idx];
         return {
             icon: preset.icon,
             position: preset.position,
             iconVariant: preset.iconVariant,
-            value: item.value || preset.fallbackValue,
-            label: item.label || preset.fallbackLabel,
+            value: item.value || preset.fallbackValue || '',
+            label: item.label || preset.fallbackLabel || '',
         };
     });
 }
@@ -161,7 +345,7 @@ export function PageBlockRenderer({
                 <HeroSection
                     key={block._key}
                     label={block.label || block.tagline}
-                    title={block.title}
+                    title={block.title || ''}
                     titleClassName={
                         isHomepage
                             ? 'text-3xl sm:text-4xl lg:text-[2.75rem]'
@@ -189,12 +373,12 @@ export function PageBlockRenderer({
                         isHomepage
                             ? getHomepageFloatingLabels(block)
                             : block.floatingLabels?.length
-                              ? block.floatingLabels.map((item: any) => ({
+                              ? block.floatingLabels.map((item) => ({
                                     icon: (
                                         <CheckCircle2 className='w-3.5 h-3.5' />
                                     ),
-                                    value: item.value,
-                                    label: item.label,
+                                    value: item.value || '',
+                                    label: item.label || '',
                                 }))
                               : undefined
                     }
@@ -212,12 +396,12 @@ export function PageBlockRenderer({
                     className='bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] animate-none dark:text-[#060e32] dark:bg-navy-dark border-b border-gray-200 dark:border-white/5 py-3 px-4 sm:px-6 lg:px-8 shadow-sm'
                 >
                     <div className='max-w-7xl mx-auto flex items-center justify-center gap-6 sm:gap-9 flex-wrap'>
-                        {items.map((item: any) => (
+                        {items.map((item) => (
                             <div
                                 key={item._key || item.text}
                                 className='flex items-center gap-2 text-xs font-mono font-semibold text-darkBlue/75 dark:text-white/90 hover:text-teal dark:hover:text-teal transition-colors tracking-wide'
                             >
-                                {getTrustIcon(item.icon)}
+                                {getTrustIcon(item.icon || '')}
                                 <span>{item.text}</span>
                             </div>
                         ))}
@@ -239,9 +423,7 @@ export function PageBlockRenderer({
             const sectionTitle = block.sectionTitle || block.title || '';
             const features = block.features || block.items || [];
 
-            // Box3 lead-magnet block: centered header, with its 3 features
-            // rendered as bullet points between the intro text and the CTA
-            // button instead of a 3-col card grid.
+            // Box3 lead-magnet block: centered header, with its 3 bullet points between the intro text and the CTA button instead of a 3-col card grid.
             const isPortfolioHealth = block._key === 'box3-check-lead-magnet';
 
             const resolvedSectionImg = getImageUrl(
@@ -291,7 +473,7 @@ export function PageBlockRenderer({
                             {isPortfolioHealth && features.length > 0 && (
                                 <div className='flex flex-col gap-3 text-left w-full max-w-200 mt-6'>
                                     {features.map(
-                                        (feature: any, idx: number) => (
+                                        (feature, idx: number) => (
                                             <div
                                                 key={feature._key || idx}
                                                 className='flex items-start gap-3'
@@ -339,14 +521,7 @@ export function PageBlockRenderer({
 
                         {!isPortfolioHealth && (
                             <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-left'>
-                                {features.map((feature: any, idx: number) => {
-                                    // The hardcoded "three apps" screenshots and
-                                    // links only belong to the homepage apps
-                                    // grid — every other featuresList block on
-                                    // the site (Box3 lead magnet, differentiator
-                                    // cards, ...) reuses this same schema/case
-                                    // and must NOT inherit unrelated app
-                                    // screenshots or /apps/* links as a fallback.
+                                {features.map((feature, idx: number) => {
                                     const isAppsGrid =
                                         block._key === 'features-core-block';
 
@@ -459,9 +634,6 @@ export function PageBlockRenderer({
                                                 </p>
                                             </div>
 
-                                            {/* mt-auto pins image + link to the card's
-                                            bottom edge regardless of how much the
-                                            description above wraps. */}
                                             <div className='flex flex-col mt-auto'>
                                                 {cardImg && (
                                                     <div className='relative w-full h-56 px-4 pb-4'>
@@ -568,7 +740,7 @@ export function PageBlockRenderer({
                         )}
 
                         <div className='relative grid grid-cols-1 lg:grid-cols-3 gap-8 text-left'>
-                            {integrations.map((item: any, idx: number) => {
+                            {integrations.map((item, idx: number) => {
                                 const cardIconImg = getImageUrl(
                                     item.image,
                                     undefined,
@@ -696,7 +868,7 @@ export function PageBlockRenderer({
                                         block.bullets.length > 0 && (
                                             <div className='flex flex-col gap-3 max-w-2xl ml-6 mb-2'>
                                                 {block.bullets.map(
-                                                    (b: any, i: number) => (
+                                                    (b, i: number) => (
                                                         <div
                                                             key={b._key || i}
                                                             className='flex items-start gap-3'
@@ -773,9 +945,9 @@ export function PageBlockRenderer({
             return (
                 <Box3SolutionWorkflow
                     key={block._key}
-                    workflowBadge={block.badge}
-                    workflowTitle={block.title}
-                    workflowItems={block.items}
+                    workflowBadge={block.badge || ''}
+                    workflowTitle={block.title || ''}
+                    workflowItems={block.items || []}
                     isEn={isEn}
                 />
             );

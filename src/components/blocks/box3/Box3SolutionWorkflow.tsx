@@ -2,18 +2,20 @@ import React from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 
+export interface WorkflowItem {
+    _key?: string;
+    step?: string;
+    title: string;
+    text?: string;
+    description?: string;
+    feature?: string;
+    subtitle?: string;
+}
+
 interface Box3SolutionWorkflowProps {
     workflowBadge: string;
     workflowTitle: string;
-    workflowItems: Array<{
-        _key?: string;
-        step?: string;
-        title: string;
-        text?: string;
-        description?: string;
-        feature?: string;
-        subtitle?: string;
-    }>;
+    workflowItems: WorkflowItem[];
     isEn: boolean;
 }
 

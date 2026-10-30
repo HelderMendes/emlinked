@@ -16,7 +16,7 @@ export interface TestimonialItem {
     avatar?: SanityImageLike;
 }
 
-interface RawTestimonialInput {
+export interface RawTestimonialInput {
     _key?: string;
     quote?: string;
     author?: string;
