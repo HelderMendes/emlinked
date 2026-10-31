@@ -287,8 +287,7 @@ export function PaymentSoftwareModule({
                 },
                 {
                     icon: <Database className='w-3.5 h-3.5' />,
-                    value:
-                        heroBlock?.floatingLabels?.[1]?.value || '95% Match',
+                    value: heroBlock?.floatingLabels?.[1]?.value || '95% Match',
                     label:
                         heroBlock?.floatingLabels?.[1]?.label ||
                         (isEn ? 'Reconciliation' : 'Aflettering'),
@@ -335,7 +334,7 @@ export function PaymentSoftwareModule({
                 {/* Side-by-Side Comparison Matrix */}
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch'>
                     {/* Left Card: Legacy Pain */}
-                    <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
+                    <div className='relative rounded-xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                         <CardBadge
                             icon='/emlinked/apps/traditional–Property–software.svg'
                             alt={
@@ -427,7 +426,7 @@ export function PaymentSoftwareModule({
                     </div>
 
                     {/* Right Card: Emlinked Native Solution */}
-                    <div className='relative rounded-2xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
+                    <div className='relative rounded-xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                         <CardBadge
                             icon='/emlinked/apps/native_ERP.svg'
                             alt={
@@ -923,13 +922,13 @@ export function PaymentSoftwareModule({
 
                     {/* Right Column: Requested Image Asset */}
                     <div className='lg:col-span-6 flex justify-center lg:justify-end'>
-                        <div className='relative w-full rounded-2xl overflow-hidden border border-black/10 shadow-sm group bg-white'>
+                        <div className='relative w-full rounded-xl overflow-hidden border border-black/10 shadow-sm group bg-white'>
                             <Image
                                 src={archImage}
                                 alt={archTitle}
                                 width={1200}
                                 height={800}
-                                className='w-full h-auto object-cover rounded-2xl group-hover:scale-[1.01] transition-transform duration-500 border border-teal/40'
+                                className='w-full h-auto object-cover rounded-xl group-hover:scale-[1.01] transition-transform duration-500 border border-teal/40'
                                 priority
                             />
                         </div>

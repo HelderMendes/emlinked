@@ -235,7 +235,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                 className='px-6 py-24 bg-background relative overflow-hidden
 '
             >
-                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-10 relative z-10'>
+                <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-4 relative z-10'>
                     {/* Section Header */}
                     <div className='text-center max-w-3xl mx-auto space-y-4'>
                         {(featuresBlock.sectionTag || featuresBlock.tag) && (
@@ -255,7 +255,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                         )}
                         {(featuresBlock.sectionSubtitle ||
                             featuresBlock.subtitle) && (
-                            <p className='text-sm sm:text-base text-navy-900/75 leading-relaxed font-light'>
+                            <p className='text-navy-700 leading-relaxed text-base md:text-lg font-light max-w-3x'>
                                 {featuresBlock.sectionSubtitle ||
                                     featuresBlock.subtitle}
                             </p>
@@ -305,7 +305,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                     <div
                                         key={feature._key || index}
                                         className={cn(
-                                            'rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group relative',
+                                            'rounded-xl overflow-hidden flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group relative',
                                             cardWash[index % cardWash.length],
                                         )}
                                     >
@@ -349,7 +349,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                             >
                                                 {feature.title}
                                             </h3>
-                                            <p className='text-sm text-navy-600 leading-relaxed font-light'>
+                                            <p className='text-sm leading-relaxed text-navy-600  font-light'>
                                                 {feature.description}
                                             </p>
 
@@ -362,7 +362,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                         ) => (
                                                             <li
                                                                 key={fIdx}
-                                                                className='flex items-start gap-2.5 text-xs text-navy-700 font-medium'
+                                                                className='flex items-start gap-2.5 text-[13px] font-regular text-navy-600 '
                                                             >
                                                                 <CheckCircle2
                                                                     className={cn(
@@ -370,7 +370,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                                         checkColor,
                                                                     )}
                                                                 />
-                                                                <span className='leading-snug'>
+                                                                <span className=''>
                                                                     {feat}
                                                                 </span>
                                                             </li>
@@ -385,7 +385,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                             homepage featuresList cards. */}
                                         <div className='flex flex-col mt-auto'>
                                             {imagePath && (
-                                                <div className='relative w-full h-56 px-4 pb-4'>
+                                                <div className='relative w-full aspect-video px-4 pb-4'>
                                                     <div className='relative w-full h-full rounded-xl overflow-hidden'>
                                                         <Image
                                                             src={imagePath}
@@ -398,7 +398,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                                             priority={
                                                                 index === 0
                                                             }
-                                                            className='object-cover group-hover:scale-105 transition-transform duration-500'
+                                                            className='object-cover object-center group-hover:scale-105 transition-transform duration-500'
                                                         />
                                                         {badge && (
                                                             <div className='absolute top-3 left-3 z-20 pointer-events-none'>

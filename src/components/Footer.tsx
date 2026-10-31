@@ -2,8 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PhoneInput } from '@/components/ui/PhoneInput';
-import { getRecaptchaToken, RecaptchaV3Script, RecaptchaAttribution } from '@/components/RecaptchaV3';
+import {
+    getRecaptchaToken,
+    RecaptchaV3Script,
+    RecaptchaAttribution,
+} from '@/components/RecaptchaV3';
 
 interface FooterProps {
     locale?: string;
@@ -149,6 +154,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     phone: footerPhone,
                     message: footerMessage,
                     recaptchaToken,
+                    action: 'footer_contact',
                 }),
             });
 
@@ -212,7 +218,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     matching the hub-and-spoke integration section's
                     deliberate dark contrast against the rest of this light
                     footer. */}
-                <div className='bg-white/30 backdrop-blur-sm border border-white/40 text-navy-900 p-6 md:p-8 rounded-2xl flex flex-col gap-6 mb-16 max-w-7xl mx-auto shadow-md relative overflow-hidden'>
+                <div className='bg-white/30 backdrop-blur-sm border border-white/40 text-navy-900 p-6 md:p-8 rounded-xl flex flex-col gap-6 mb-16 max-w-7xl mx-auto shadow-md relative overflow-hidden'>
                     <div className='absolute -top-20 -right-20 w-64 h-64 rounded-full bg-teal/20 blur-3xl pointer-events-none' />
 
                     {isSubmitted ? (
@@ -331,9 +337,11 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     {/* Brand Info (Col span 4) */}
                     <div className='md:col-span-4 flex flex-col gap-5'>
                         <Link href={getPath('/')} className='inline-flex'>
-                            <img
+                            <Image
                                 src='/emlinked/Emlinked_logo__liggend.svg'
                                 alt='emlinked - Vastgoedbeheer software homepage'
+                                width={187}
+                                height={48}
                                 className='w-auto h-12 transition-opacity hover:opacity-90'
                             />
                         </Link>

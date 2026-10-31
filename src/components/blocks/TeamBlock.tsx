@@ -11,7 +11,6 @@ import {
     X,
     ArrowRight,
     CheckCircle2,
-    User,
 } from 'lucide-react';
 import { getImageUrl, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
@@ -52,9 +51,7 @@ export function TeamBlock({
 
     const defaultTitle =
         sectionTitle ||
-        (isEn
-            ? 'The team behind emlinked'
-            : 'Het team achter emlinked');
+        (isEn ? 'The team behind emlinked' : 'Het team achter emlinked');
     const defaultSubtitle =
         sectionSubtitle ||
         (isEn
@@ -114,7 +111,7 @@ export function TeamBlock({
                         <div
                             key={idx}
                             onClick={() => setSelectedIndex(idx)}
-                            className='group relative rounded-2xl border border-navy-900/10 bg-white p-6 text-left flex flex-col justify-between hover:border-teal/50 hover:shadow-2xl hover:shadow-teal/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer'
+                            className='group relative rounded-xl border border-navy-900/10 bg-white p-6 text-left flex flex-col justify-between hover:border-teal/50 hover:shadow-2xl hover:shadow-teal/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer'
                         >
                             {/* Ambient Glow */}
                             <div className='absolute -top-12 -right-12 w-36 h-36 bg-teal/10 rounded-full blur-2xl group-hover:bg-teal/20 transition-all duration-500 pointer-events-none' />
@@ -122,7 +119,7 @@ export function TeamBlock({
                             <div className='space-y-5 relative z-10'>
                                 {/* Top Avatar & Badge Row */}
                                 <div className='flex items-start justify-between gap-4'>
-                                    <div className='relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-navy-900/10 group-hover:border-teal/60 transition-colors shrink-0 shadow-lg bg-navy-50'>
+                                    <div className='relative w-20 h-20 rounded-xl overflow-hidden border-2 border-navy-900/10 group-hover:border-teal/60 transition-colors shrink-0 shadow-lg bg-navy-50'>
                                         <Image
                                             src={avatarUrl}
                                             alt={member.name}
@@ -306,7 +303,7 @@ export function TeamBlock({
                                         <div className='space-y-6'>
                                             {/* Member Header */}
                                             <div className='flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 border-b border-navy-900/10 pb-6 pr-8'>
-                                                <div className='relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-2 border-teal/60 shadow-xl overflow-hidden shrink-0 bg-white'>
+                                                <div className='relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl border-2 border-teal/60 shadow-xl overflow-hidden shrink-0 bg-white'>
                                                     <Image
                                                         src={getImageUrl(
                                                             activeMember.image,

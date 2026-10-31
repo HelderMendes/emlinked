@@ -450,7 +450,7 @@ export default async function ArticleDetailPage({
                 <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
                     {/* Image Column: Left side on desktop (lg:order-1), Order-last on mobile/tablet (order-2, 70% centered on md) */}
                     <div className='order-2 lg:order-1 lg:col-span-5 xl:col-span-4 w-full md:w-[70%] lg:w-full mx-auto relative'>
-                        <div className='relative aspect-[4/3] rounded-2xl border-2 border-white/15 overflow-hidden shadow-2xl bg-slate-950 group'>
+                        <div className='relative aspect-[4/3] rounded-xl border-2 border-white/15 overflow-hidden shadow-2xl bg-slate-950 group'>
                             <Image
                                 src={heroImgUrl}
                                 alt={article.title}
@@ -587,7 +587,7 @@ export default async function ArticleDetailPage({
                 </div>
 
                 {/* Article Key Takeaways Card */}
-                <div className='rounded-2xl border border-teal/30 bg-teal/5 p-6 md:p-8 space-y-4'>
+                <div className='rounded-xl border border-teal/30 bg-teal/5 p-6 md:p-8 space-y-4'>
                     <h4 className='font-bold text-lg text-darkblue flex items-center gap-2'>
                         <Sparkles className='w-5 h-5 text-teal' />
                         <span>
@@ -662,7 +662,7 @@ export default async function ArticleDetailPage({
                             return (
                                 <div
                                     key={rel._id || rel.slug}
-                                    className='group rounded-2xl border border-slate-200 bg-white text-slate-900 flex flex-col justify-between hover:border-teal/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden text-left'
+                                    className='group rounded-xl border border-slate-200 bg-white text-slate-900 flex flex-col justify-between hover:border-teal/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden text-left'
                                 >
                                     <div className='relative w-full h-44 bg-slate-100 overflow-hidden'>
                                         <Image

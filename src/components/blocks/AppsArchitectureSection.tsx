@@ -76,8 +76,8 @@ export function AppsArchitectureSection({
                         {activeSubtitle}
                     </p>
 
-                    {/* Section image — shown directly, no diagram overlay */}
-                    <div className='relative w-full max-w-xl aspect-video mx-auto mb-2 rounded-xl overflow-hidden shadow-md'>
+                    {/* Section image */}
+                    <div className='relative w-full max-w-xl aspect-3/2 mx-auto my-4 rounded-xl overflow-hidden shadow-md'>
                         <Image
                             src={resolvedBgImage}
                             alt={activeTitle}
@@ -99,7 +99,7 @@ export function AppsArchitectureSection({
                             </Badge>
                         )}
 
-                        <h3 className='font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-navy-900 leading-tight'>
+                        <h3 className='font-display text-2xl md:text-3xl  font-bold tracking-tight text-navy-900 leading-tight'>
                             {activeSectionTitle}
                         </h3>
 
@@ -108,7 +108,7 @@ export function AppsArchitectureSection({
                         </p>
 
                         {/* Bullets matching Frontpage Box 3 check styling */}
-                        <div className='flex flex-col gap-4 my-1 ml-6'>
+                        <div className='flex flex-col gap-4 my-1 md:ml-6'>
                             {activeBullets.map((b, idx) => (
                                 <div
                                     key={idx}
@@ -134,7 +134,7 @@ export function AppsArchitectureSection({
 
                     {/* Right Column: 3D Visual Workspace Image */}
                     <div className='lg:col-span-5 flex justify-center items-center'>
-                        <div className='relative w-full max-w-md aspect-5.5/5  rounded-2xl overflow-hidden border border-navy-900/10 shadow-xl group flex items-center justify-center hover:border-teal/60 transition-all duration-500 '>
+                        <div className='relative w-full max-w-md aspect-5.5/5  rounded-xl overflow-hidden border border-navy-900/10 shadow-xl group flex items-center justify-center hover:border-teal/60 transition-all duration-500 '>
                             <Image
                                 src={resolvedCalloutImage}
                                 alt='Samenwerken binnen Business Central ERP'

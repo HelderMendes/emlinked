@@ -5,7 +5,16 @@ import { verifyRecaptcha } from '@/lib/recaptcha';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { name, email, phone, company, portfolioSize, message, recaptchaToken } = body;
+        const { name, email, phone, company, portfolioSize, message, recaptchaToken, action } = body;
+
+        const ALLOWED_RECAPTCHA_ACTIONS = [
+            'demo_request',
+            'contact_form',
+            'footer_contact',
+        ];
+        const expectedAction = ALLOWED_RECAPTCHA_ACTIONS.includes(action)
+            ? action
+            : 'demo_request';
 
         // 1. Basic validation
         if (!name || !email) {
@@ -19,7 +28,7 @@ export async function POST(request: Request) {
         const recaptchaResult = await verifyRecaptcha(
             recaptchaToken,
             false,
-            'demo_request',
+            expectedAction,
         );
         if (!recaptchaResult.success) {
             return NextResponse.json(

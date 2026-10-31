@@ -139,13 +139,13 @@ export default async function ContactPage({ params }: ContactPageProps) {
                         </div>
 
                         {/* Right: form */}
-                        <div className='p-8 rounded-2xl border border-navy-900/10 bg-white shadow-sm'>
+                        <div className='p-8 rounded-xl border border-navy-900/10 bg-white shadow-sm'>
                             <ContactForm locale={locale} />
                         </div>
                     </div>
 
                     {/* Map */}
-                    <div className='rounded-2xl overflow-hidden border border-navy-900/10 shadow-sm aspect-video lg:aspect-21/9'>
+                    <div className='rounded-xl overflow-hidden border border-navy-900/10 shadow-sm aspect-video lg:aspect-21/9'>
                         <iframe
                             title={isEn ? 'Office location' : 'Kantoorlocatie'}
                             src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}

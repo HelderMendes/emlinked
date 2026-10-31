@@ -421,6 +421,13 @@ export const page = defineType({
                                             type: 'string',
                                         }),
                                         defineField({
+                                            name: 'companyUrl',
+                                            title: "Company Website URL (e.g. https://vanoverhagenvastgoed.nl)",
+                                            type: 'url',
+                                            description:
+                                                'Links out to the customer\'s own website. Shown as a clickable company name/logo — a genuine outbound citation strengthens trust (E-E-A-T) signals.',
+                                        }),
+                                        defineField({
                                             name: 'tags',
                                             title: 'Technical Specification Tags',
                                             type: 'array',
@@ -913,6 +920,60 @@ export const page = defineType({
                                                     subtitle || 'Module Card',
                                                 media,
                                             };
+                                        },
+                                    },
+                                }),
+                            ],
+                        }),
+                        defineField({
+                            name: 'packs',
+                            title: 'Support Packs (Strippenkaarten Pricing Cards)',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+                                        defineField({
+                                            name: 'hours',
+                                            title: 'Hours',
+                                            type: 'number',
+                                        }),
+                                        defineField({
+                                            name: 'name',
+                                            title: 'Pack Name (e.g. "5 Hour Support Pack")',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'price',
+                                            title: 'Price (Display, e.g. "€ 550,-")',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'priceFormatted',
+                                            title: 'Price (Invoice Format, e.g. "€ 550,00")',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'perHour',
+                                            title: 'Per-Hour Rate (e.g. "(€ 110,- / uur)")',
+                                            type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'description',
+                                            title: 'Description',
+                                            type: 'text',
+                                            rows: 2,
+                                        }),
+                                        defineField({
+                                            name: 'featured',
+                                            title: 'Featured / Popular Choice',
+                                            type: 'boolean',
+                                        }),
+                                    ],
+                                    preview: {
+                                        select: {
+                                            title: 'name',
+                                            subtitle: 'price',
                                         },
                                     },
                                 }),

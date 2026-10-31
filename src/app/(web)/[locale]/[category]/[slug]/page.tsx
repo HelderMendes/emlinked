@@ -950,7 +950,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                             return (
                                 <div
                                     key={appItem.appSlug}
-                                    className={`relative p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between space-y-5 ${
+                                    className={`relative p-6 rounded-xl border transition-all duration-300 flex flex-col justify-between space-y-5 ${
                                         isCurrentApp
                                             ? 'border-teal bg-white dark:bg-slate-900 shadow-xl ring-2 ring-teal/30 scale-[1.01]'
                                             : 'border-black/15 bg-white dark:bg-slate-900/90 shadow-md hover:shadow-xl hover:border-teal/50'

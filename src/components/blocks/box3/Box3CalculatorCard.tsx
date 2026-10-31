@@ -240,7 +240,7 @@ export function Box3CalculatorCard({
 
             {/* Results Output Section */}
             <div
-                className={`mt-6 p-5 rounded-2xl border transition-all duration-300 ${
+                className={`mt-6 p-5 rounded-xl border transition-all duration-300 ${
                     results.verdictType === 'good'
                         ? 'bg-teal/15 border-teal/40 text-teal-hover'
                         : results.verdictType === 'neutral'

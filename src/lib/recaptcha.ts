@@ -66,7 +66,10 @@ export async function verifyRecaptcha(
 
         const score =
             typeof verifyJson.score === 'number' ? verifyJson.score : 1;
-        if (score < RECAPTCHA_SCORE_THRESHOLD) {
+        if (
+            score < RECAPTCHA_SCORE_THRESHOLD &&
+            process.env.NODE_ENV === 'production'
+        ) {
             console.warn('reCAPTCHA low score:', score, 'action:', expectedAction);
             return {
                 success: false,

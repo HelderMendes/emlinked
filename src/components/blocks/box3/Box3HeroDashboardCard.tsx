@@ -61,7 +61,7 @@ export function Box3HeroDashboardCard({
     ];
 
     return (
-        <div className='w-full p-6 md:p-8 rounded-2xl bg-slate-900/90 text-white border border-teal/30 shadow-2xl relative overflow-hidden group backdrop-blur-xl space-y-5'>
+        <div className='w-full p-6 md:p-8 rounded-xl bg-slate-900/90 text-white border border-teal/30 shadow-2xl relative overflow-hidden group backdrop-blur-xl space-y-5'>
             {/* Header Row */}
             <div className='flex items-start justify-between border-b border-white/10 pb-4'>
                 <div>

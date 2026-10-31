@@ -2,7 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { getRecaptchaToken, RecaptchaV3Script, RecaptchaAttribution } from '@/components/RecaptchaV3';
+import {
+    getRecaptchaToken,
+    RecaptchaV3Script,
+    RecaptchaAttribution,
+} from '@/components/RecaptchaV3';
 import {
     createQuoteContactSchema,
     flattenQuoteContactErrors,
@@ -156,7 +160,7 @@ export function QuoteRequestModal({
 
     return createPortal(
         <div className='fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fadeIn'>
-            <div className='relative w-full max-w-xl rounded-2xl bg-white p-6 sm:p-8 text-[#060e32] shadow-2xl border border-teal/30 max-h-[90vh] overflow-y-auto'>
+            <div className='relative w-full max-w-xl rounded-xl bg-white p-6 sm:p-8 text-[#060e32] shadow-2xl border border-teal/30 max-h-[90vh] overflow-y-auto'>
                 <button
                     type='button'
                     onClick={handleClose}
@@ -170,7 +174,9 @@ export function QuoteRequestModal({
                         <div className='space-y-2 text-left border-b border-slate-100 pb-4'>
                             <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/15 text-teal text-[10px] font-mono font-bold uppercase'>
                                 <Sparkles className='w-3.5 h-3.5' />
-                                {isEn ? 'QUOTE CONFIGURATION' : 'OFFERTE CONFIGURATIE'}
+                                {isEn
+                                    ? 'QUOTE CONFIGURATION'
+                                    : 'OFFERTE CONFIGURATIE'}
                             </div>
                             <h3 className='text-2xl font-bold text-[#060e32]'>
                                 {title ||
@@ -189,7 +195,9 @@ export function QuoteRequestModal({
                         {oneTimeItems.length > 0 && (
                             <div className='p-3 rounded-lg bg-slate-100 border border-slate-200 space-y-2 text-xs font-mono text-left'>
                                 <span className='block text-[10px] font-bold uppercase tracking-wider text-slate-500'>
-                                    {isEn ? 'One-time Costs' : 'Eenmalige Kosten'}
+                                    {isEn
+                                        ? 'One-time Costs'
+                                        : 'Eenmalige Kosten'}
                                 </span>
 
                                 <div className='divide-y divide-slate-200/60'>
@@ -226,7 +234,10 @@ export function QuoteRequestModal({
                         {monthlyItems.length > 0 && (
                             <div className='p-4 rounded-lg bg-white border border-teal/30 divide-y divide-slate-200 text-xs font-mono max-h-60 overflow-y-auto text-left'>
                                 {monthlyItems.map((item, idx) => (
-                                    <div key={idx} className='py-1 text-slate-700'>
+                                    <div
+                                        key={idx}
+                                        className='py-1 text-slate-700'
+                                    >
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>{item.category}</span>
                                             <span className='font-semibold text-[#060e32]'>
@@ -355,12 +366,17 @@ export function QuoteRequestModal({
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                 <div>
                                     <label className='block text-[10px] font-bold uppercase tracking-wider text-[#060e32]/80 mb-1'>
-                                        {isEn ? 'Phone Number *' : 'Telefoonnummer *'}
+                                        {isEn
+                                            ? 'Phone Number *'
+                                            : 'Telefoonnummer *'}
                                     </label>
                                     <PhoneInput
                                         value={formData.phone}
                                         onChange={(v) =>
-                                            setFormData({ ...formData, phone: v })
+                                            setFormData({
+                                                ...formData,
+                                                phone: v,
+                                            })
                                         }
                                         locale={locale}
                                         required

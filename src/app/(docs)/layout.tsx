@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { cookies } from 'next/headers';
 import { BsRocketTakeoff } from 'react-icons/bs';
 import { client } from '@/sanity/client';
@@ -108,9 +109,11 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
                 {/* Sidebar Header */}
                 <div className='h-16 border-b border-navy-900/10 px-6 flex items-center shrink-0 bg-teal-ultra/40'>
                     <Link href='/' className='flex items-center'>
-                        <img
+                        <Image
                             src='/emlinked/Emlinked_logo__liggend.svg'
                             alt='emlinked'
+                            width={156}
+                            height={40}
                             className='h-10 w-auto'
                         />
                     </Link>

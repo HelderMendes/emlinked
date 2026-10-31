@@ -26,21 +26,8 @@ export interface HeroSectionProps {
     locale?: string;
     titleClassName?: string;
     customGraphic?: React.ReactNode;
-    /** Centered single-column layout (copy above, smaller image below)
-     *  instead of the default left-copy/right-image split. Opt-in per
-     *  page — most heroes keep the default split. */
     centered?: boolean;
-    /** Skips the entire image column (photo, decorative orbs, floating
-     *  chips) for a pure-text hero. Forces single-column centered layout
-     *  regardless of `centered`. */
     hideImage?: boolean;
-    /** 2-3 floating stat/fact chips over the hero image (generic version
-     *  of the homepage-only badges below). Ignored when `customGraphic`
-     *  is passed — build any badges directly into the custom graphic
-     *  instead. Position defaults to alternating top-left/bottom-right
-     *  by index when omitted; iconVariant defaults to alternating
-     *  teal-square/emerald-circle by index, matching the established
-     *  site convention (first chip teal, second emerald). */
     floatingLabels?: Array<{
         icon: React.ReactNode;
         value: string;
@@ -57,15 +44,48 @@ const floatingLabelIconClasses: Record<string, string> = {
 };
 
 const floatingLabelPositionClasses: Record<string, string> = {
-    'top-left': 'top-10 left-0',
-    'top-right': 'top-10 -right-4',
-    'bottom-left': 'bottom-8 -left-2',
-    'bottom-right': 'bottom-8 -right-4',
+    'top-left': 'top-10 -left-5 lg:left-0',
+    'top-right': 'top-10 -right-5 lg:-right-4',
+    'bottom-left': 'bottom-8 -left-5 lg:-left-2',
+    'bottom-right': 'bottom-8 -right-5 lg:-right-4',
 };
+
+const PROOF_AVATARS = [
+    {
+        src: '/hero/levi-bosboom.png',
+        name: 'Levi Bosboom',
+        roleNl: 'Eigenaar - Vastgoedbeheer Rotterdam (VGBR)',
+        roleEn: 'Owner - Vastgoedbeheer Rotterdam (VGBR)',
+    },
+    {
+        src: '/hero/angelique.png',
+        name: 'Angelique van Doorn-Franke',
+        roleNl: 'Vastgoedbeheerder - Van Overhagen Vastgoed B.V.',
+        roleEn: 'Property Manager - Van Overhagen Vastgoed B.V.',
+    },
+    {
+        src: '/hero/MichelDeWaal.jpg',
+        name: 'Michel De Waal',
+        roleNl: 'Directeur - M2 Capital Real Estate B.V.',
+        roleEn: 'Director - M2 Capital Real Estate B.V.',
+    },
+];
 
 export function stripHeroTitleMarkup(titleText?: string): string {
     if (!titleText) return '';
     return titleText.replace(/\*/g, '');
+}
+
+// Sanity CDN URLs embed the asset's native pixel size (e.g. "...-1300x896.jpg"),
+// letting the illustration box match its real proportions below lg instead of
+// forcing a crop via a fixed aspect-ratio class.
+function getNativeImageDimensions(
+    imageUrl: string,
+): { width: number; height: number } | null {
+    const match = imageUrl.match(/-(\d+)x(\d+)\.\w+/);
+    return match
+        ? { width: parseInt(match[1], 10), height: parseInt(match[2], 10) }
+        : null;
 }
 
 export function formatHeroTitle(
@@ -97,13 +117,6 @@ export function formatHeroTitle(
     });
 }
 
-/**
- * Site-wide hero — light stone background, Expose/Zodiak type, teal accent,
- * framed illustration with decorative orbs. Originally a homepage-only
- * variant (version02); now the only template, used on every page. The
- * floating stat chips are homepage-only decoration (their copy is tied to
- * the specific dashboard illustration used there, not real per-page data).
- */
 export function HeroSection({
     label,
     title,
@@ -127,6 +140,7 @@ export function HeroSection({
 }: HeroSectionProps) {
     const isEn = locale === 'en';
     const effectiveHeroImg = getImageUrl(image, imagePath);
+    const heroImgDims = getNativeImageDimensions(effectiveHeroImg);
     const effectiveProofText = proofText || '';
 
     const getPath = (path: string) => {
@@ -140,7 +154,7 @@ export function HeroSection({
     };
 
     return (
-        <section className='relative bg-stone-bg text-navy-900 overflow-hidden'>
+        <section className='relative bg-stone-bg text-navy-900'>
             <div className='w-full px-4 sm:px-6 lg:px-12 xl:px-24 pt-12 pb-8'>
                 <div
                     className={cn(
@@ -164,8 +178,7 @@ export function HeroSection({
                                 dot
                                 className={cn(
                                     'self-center mb-4',
-                                    !(centered || hideImage) &&
-                                        'lg:self-start',
+                                    !(centered || hideImage) && 'lg:self-start',
                                 )}
                             >
                                 {label}
@@ -173,7 +186,7 @@ export function HeroSection({
                         )}
                         <h1
                             className={cn(
-                                'font-hero font-semibold leading-[1.1] tracking-[-0.02em] text-[#1D1C1B] max-w-xl',
+                                'font-hero font-semibold leading-[1.1] tracking-[-0.02em] text-[#1D1C1B] max-w-3xl',
                                 titleClassName || 'text-4xl sm:text-5xl',
                             )}
                         >
@@ -181,7 +194,7 @@ export function HeroSection({
                         </h1>
 
                         {subtitle && (
-                            <p className='font-hero-body text-lg text-navy-700 leading-relaxed max-w-[550px] mt-6'>
+                            <p className='font-hero-body text-lg text-navy-700 leading-relaxed max-w-3xl mt-6'>
                                 {subtitle}
                             </p>
                         )}
@@ -219,27 +232,39 @@ export function HeroSection({
                             <div className='flex items-center gap-3 mt-10'>
                                 {showProof && showProofAvatars ? (
                                     <div className='flex -space-x-2.5 overflow-visible relative shrink-0'>
-                                        <Image
-                                            src='/hero/levi-bosboom.png'
-                                            alt='Levi Bosboom'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-white object-cover object-top'
-                                        />
-                                        <Image
-                                            src='/hero/angelique.png'
-                                            alt='Angelique van Doorn-Franke'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-white object-cover object-top'
-                                        />
-                                        <Image
-                                            src='/hero/MichelDeWaal.jpg'
-                                            alt='Michel De Waal'
-                                            width={32}
-                                            height={32}
-                                            className='w-8 h-8 rounded-full border-2 border-white object-cover object-top'
-                                        />
+                                        {PROOF_AVATARS.map((person, idx) => (
+                                            <div
+                                                key={person.name}
+                                                className='relative group hover:z-50'
+                                                style={{
+                                                    zIndex:
+                                                        PROOF_AVATARS.length -
+                                                        idx,
+                                                }}
+                                            >
+                                                <Image
+                                                    src={person.src}
+                                                    alt={person.name}
+                                                    width={32}
+                                                    height={32}
+                                                    className='w-8 h-8 rounded-full border-2 border-white object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'
+                                                />
+                                                <div className='absolute top-full left-0 mt-1.5 w-max min-w-[190px] max-w-[240px] opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 z-50 p-2.5 rounded-lg bg-navy-900 border border-white/10 shadow-xl text-left'>
+                                                    <div className='text-[12px] font-bold text-teal leading-tight'>
+                                                        {person.name}
+                                                    </div>
+                                                    <div className='text-[11px] text-white/70 mt-0.5 leading-tight'>
+                                                        {isEn
+                                                            ? person.roleEn
+                                                            : person.roleNl}
+                                                    </div>
+                                                    <div className='text-[10px] text-teal mt-1'>
+                                                        ★★★★★
+                                                    </div>
+                                                    <div className='absolute bottom-full left-3 border-4 border-transparent border-b-navy-900' />
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 ) : (
                                     <span className='w-2 h-2 rounded-full bg-teal shrink-0' />
@@ -256,77 +281,99 @@ export function HeroSection({
                         below the copy instead of sitting beside it.
                         Skipped entirely when hideImage is set. */}
                     {!hideImage && (
-                    <div
-                        className={cn(
-                            'relative min-h-[340px] lg:min-h-140 flex items-center justify-center',
-                            centered && 'w-full lg:w-2/3',
-                        )}
-                    >
-                        <div className='absolute w-140 h-140 rounded-full bg-teal-pale/50 blur-3xl -right-10 top-0 pointer-events-none' />
-                        <div className='absolute w-28 h-28 rounded-full bg-teal-ultra blur-2xl left-4 bottom-4 pointer-events-none' />
-
                         <div
                             className={cn(
-                                'relative z-10 w-full',
-                                isHomepage ||
-                                    (floatingLabels &&
-                                        floatingLabels.length > 0)
-                                    ? 'absolute inset-x-0 top-[57px] bottom-[49px]'
-                                    : 'aspect-7/5 lg:aspect-video',
+                                'relative w-full lg:min-h-140 lg:flex lg:items-center lg:justify-center lg:max-w-none lg:mx-0',
+                                centered && 'w-full lg:w-2/3',
                             )}
                         >
+                            {/* Mobile/tablet (<lg): plain intrinsic-sized image.
+                                Self-sizes from its own width via h-auto — never
+                                depends on an ancestor having a resolved height,
+                                unlike the fill-based desktop version below. */}
                             {customGraphic ? (
-                                customGraphic
+                                <div className='w-full max-w-2xl mx-auto lg:hidden'>
+                                    {customGraphic}
+                                </div>
                             ) : (
                                 <Image
                                     src={effectiveHeroImg}
                                     alt={stripHeroTitleMarkup(title)}
-                                    fill
-                                    sizes='(max-width: 1024px) 100vw, 55vw'
-                                    className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
+                                    width={heroImgDims?.width ?? 1300}
+                                    height={heroImgDims?.height ?? 896}
+                                    sizes='100vw'
+                                    className='w-full max-w-2xl mx-auto h-auto rounded-xl lg:hidden'
                                     priority
                                 />
                             )}
-                        </div>
 
-                        {!customGraphic &&
-                            floatingLabels?.map((item, idx) => (
+                            <div className='hidden lg:block absolute inset-0 overflow-hidden'>
+                                <div className='absolute w-140 h-140 rounded-full bg-teal-pale/50 blur-3xl -right-10 top-0 pointer-events-none' />
+                                <div className='absolute w-28 h-28 rounded-full bg-teal-ultra blur-2xl left-4 bottom-4 pointer-events-none' />
+
                                 <div
-                                    key={idx}
                                     className={cn(
-                                        'absolute z-20 flex items-center gap-2.5 bg-white rounded-lg px-3.5 py-3 shadow-md',
-                                        floatingLabelPositionClasses[
-                                            item.position ||
-                                                (idx % 2 === 0
-                                                    ? 'top-left'
-                                                    : 'bottom-right')
-                                        ],
+                                        'relative z-10 w-full',
+                                        isHomepage ||
+                                            (floatingLabels &&
+                                                floatingLabels.length > 0)
+                                            ? 'absolute inset-x-0 top-19 bottom-[49px]'
+                                            : 'aspect-video',
                                     )}
                                 >
-                                    <span
+                                    {customGraphic ? (
+                                        customGraphic
+                                    ) : (
+                                        <Image
+                                            src={effectiveHeroImg}
+                                            alt={stripHeroTitleMarkup(title)}
+                                            fill
+                                            sizes='55vw'
+                                            className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'
+                                            priority
+                                        />
+                                    )}
+                                </div>
+                            </div>
+
+                            {!customGraphic &&
+                                floatingLabels?.map((item, idx) => (
+                                    <div
+                                        key={idx}
                                         className={cn(
-                                            'relative w-7 h-7 flex items-center justify-center shrink-0',
-                                            floatingLabelIconClasses[
-                                                item.iconVariant ||
+                                            'absolute z-20 hidden md:flex items-center gap-2.5 bg-white rounded-lg px-3.5 py-3 shadow-md',
+                                            floatingLabelPositionClasses[
+                                                item.position ||
                                                     (idx % 2 === 0
-                                                        ? 'teal'
-                                                        : 'emerald')
+                                                        ? 'top-left'
+                                                        : 'bottom-right')
                                             ],
                                         )}
                                     >
-                                        {item.icon}
-                                    </span>
-                                    <div>
-                                        <p className='text-[12px] font-bold text-navy-900 leading-none'>
-                                            {item.value}
-                                        </p>
-                                        <p className='text-[11px] text-navy-500 mt-0.5'>
-                                            {item.label}
-                                        </p>
+                                        <span
+                                            className={cn(
+                                                'relative w-7 h-7 flex items-center justify-center shrink-0',
+                                                floatingLabelIconClasses[
+                                                    item.iconVariant ||
+                                                        (idx % 2 === 0
+                                                            ? 'teal'
+                                                            : 'emerald')
+                                                ],
+                                            )}
+                                        >
+                                            {item.icon}
+                                        </span>
+                                        <div>
+                                            <p className='text-[12px] font-bold text-navy-900 leading-none'>
+                                                {item.value}
+                                            </p>
+                                            <p className='text-[11px] text-navy-500 mt-0.5'>
+                                                {item.label}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                    </div>
+                                ))}
+                        </div>
                     )}
                 </div>
             </div>

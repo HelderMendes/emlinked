@@ -101,7 +101,7 @@ export default function CookieConsentBanner({
 
     return (
         <div className='fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-xl z-50 animate-in fade-in slide-in-from-bottom-5 duration-300'>
-            <div className='bg-white border border-navy-900/10 text-navy-900 rounded-2xl p-5 md:p-6 shadow-2xl relative overflow-hidden'>
+            <div className='bg-white border border-navy-900/10 text-navy-900 rounded-xl p-5 md:p-6 shadow-2xl relative overflow-hidden'>
                 {/* Top Ambient Glow — same teal wash as the hero art */}
                 <div className='absolute top-0 right-0 w-32 h-32 bg-teal-pale/50 rounded-full blur-2xl pointer-events-none' />
 

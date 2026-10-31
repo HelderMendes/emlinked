@@ -100,7 +100,7 @@ export function TestimonialSlider({
                             <Link
                                 key={t.id}
                                 href={getPath('/referenties')}
-                                className='p-6 rounded-2xl border border-navy-900/10 hover:border-teal/40 hover:shadow-lg transition-all duration-300 flex flex-col gap-4 group bg-white/95'
+                                className='p-6 rounded-xl border border-navy-900/10 hover:border-teal/40 hover:shadow-lg transition-all duration-300 flex flex-col gap-4 group bg-white/95'
                             >
                                 <p className='  text-navy-700/75 leading-relaxed font-medium text-center'>
                                     “{t.quote}”

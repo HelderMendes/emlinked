@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { HeroSection } from '@/components/blocks/HeroSection';
@@ -472,26 +471,24 @@ export function PageBlockRenderer({
 
                             {isPortfolioHealth && features.length > 0 && (
                                 <div className='flex flex-col gap-3 text-left w-full max-w-200 mt-6'>
-                                    {features.map(
-                                        (feature, idx: number) => (
-                                            <div
-                                                key={feature._key || idx}
-                                                className='flex items-start gap-3'
-                                            >
-                                                <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
-                                                <div className='text-sm leading-relaxed'>
-                                                    {feature.title && (
-                                                        <strong className='text-navy-900 font-semibold mr-1.5'>
-                                                            {feature.title}
-                                                        </strong>
-                                                    )}
-                                                    <span className='font-light text-navy-600'>
-                                                        {feature.description}
-                                                    </span>
-                                                </div>
+                                    {features.map((feature, idx: number) => (
+                                        <div
+                                            key={feature._key || idx}
+                                            className='flex items-start gap-3'
+                                        >
+                                            <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
+                                            <div className='text-sm leading-relaxed'>
+                                                {feature.title && (
+                                                    <strong className='text-navy-900 font-semibold mr-1.5'>
+                                                        {feature.title}
+                                                    </strong>
+                                                )}
+                                                <span className='font-light text-navy-600'>
+                                                    {feature.description}
+                                                </span>
                                             </div>
-                                        ),
-                                    )}
+                                        </div>
+                                    ))}
                                 </div>
                             )}
 
@@ -583,7 +580,7 @@ export function PageBlockRenderer({
                                         <div
                                             key={feature._key || idx}
                                             className={cn(
-                                                'rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group relative',
+                                                'rounded-xl overflow-hidden flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group relative',
                                                 cardWash[idx % cardWash.length],
                                             )}
                                         >
@@ -734,7 +731,7 @@ export function PageBlockRenderer({
                                     alt={sectionTitle}
                                     fill
                                     sizes='(max-width: 1024px) 100vw, 672px'
-                                    className='object-cover rounded-2xl shad'
+                                    className='object-cover rounded-xl shad'
                                 />
                             </div>
                         )}
@@ -759,7 +756,7 @@ export function PageBlockRenderer({
                                     <div
                                         key={item._key || idx}
                                         className={cn(
-                                            'p-8 rounded-2xl border border-navy-900/10 text-navy-900 hover:border-teal/40 hover:shadow-lg transition-all duration-300 relative overflow-hidden group flex flex-col justify-between gap-6 z-10',
+                                            'p-8 rounded-xl border border-navy-900/10 text-navy-900 hover:border-teal/40 hover:shadow-lg transition-all duration-300 relative overflow-hidden group flex flex-col justify-between gap-6 z-10',
                                             cardWash[idx % cardWash.length],
                                         )}
                                     >
@@ -842,80 +839,71 @@ export function PageBlockRenderer({
             return (
                 <section
                     key={block._key}
-                    className='p-6 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden'
+                    className='relative bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 overflow-hidden'
                 >
-                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8'>
-                        <div className='text-navy-900 p-10 md:p-16 relative overflow-hidden'>
-                            <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
-                                <div className='lg:col-span-8 flex flex-col gap-5 text-left'>
-                                    {tag && (
-                                        <Badge
-                                            color='teal'
-                                            uppercase
-                                            dot
-                                            dotPulse
-                                        >
-                                            {tag}
-                                        </Badge>
-                                    )}
-                                    <h2 className='font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
-                                        {title}
-                                    </h2>
-                                    <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-2xl'>
-                                        {subtitle}
-                                    </p>
-                                    {block.bullets &&
-                                        block.bullets.length > 0 && (
-                                            <div className='flex flex-col gap-3 max-w-2xl ml-6 mb-2'>
-                                                {block.bullets.map(
-                                                    (b, i: number) => (
-                                                        <div
-                                                            key={b._key || i}
-                                                            className='flex items-start gap-3'
-                                                        >
-                                                            <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
-                                                            <div className='text-sm leading-relaxed'>
-                                                                {b.title && (
-                                                                    <strong className='text-navy-900 font-semibold mr-1.5'>
-                                                                        {
-                                                                            b.title
-                                                                        }
-                                                                    </strong>
-                                                                )}
-                                                                <span className='font-light text-navy-700'>
-                                                                    {b.text}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    ),
-                                                )}
+                    <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-12 xl:px-24 py-24'>
+                        <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10'>
+                            {/* Text: 2/3 on lg */}
+                            <div className='min-w-0 lg:col-span-8 flex flex-col gap-5 text-left'>
+                                {tag && (
+                                    <Badge color='teal' uppercase dot dotPulse>
+                                        {tag}
+                                    </Badge>
+                                )}
+                                <h2 className='font-display text-3xl md:text-4xl lg:text-5xl/14 font-bold tracking-tight bg-linear-to-br from-[#f12711] to-[#f5af19] bg-clip-text text-transparent'>
+                                    {title}
+                                </h2>
+                                <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg max-w-3xl'>
+                                    {subtitle}
+                                </p>
+                                {block.bullets && block.bullets.length > 0 && (
+                                    <div className='flex flex-col gap-3 lg:mx-6 mb-2'>
+                                        {block.bullets.map((b, i: number) => (
+                                            <div
+                                                key={b._key || i}
+                                                className='flex items-start gap-3'
+                                            >
+                                                <CheckCircle2 className='w-5 h-5 text-teal shrink-0 mt-0.5' />
+                                                <div className='leading-relaxed'>
+                                                    {b.title && (
+                                                        <strong className='text-navy-900 font-semibold mr-1.5'>
+                                                            {b.title}
+                                                        </strong>
+                                                    )}
+                                                    <span className='font-light text-navy-700'>
+                                                        {b.text}
+                                                    </span>
+                                                </div>
                                             </div>
-                                        )}
-                                    {buttonLabel && buttonLink && (
-                                        <Link
-                                            href={getPath(buttonLink)}
-                                            className='inline-flex items-center justify-center rounded-lg bg-navy-900 hover:btn-gradient py-3 px-12 text-base font-bold text-white shadow-xl transition-colors mr-auto mt-3'
-                                        >
-                                            {buttonLabel}
-                                        </Link>
-                                    )}
-                                </div>
-                                <div className='lg:col-span-4 flex justify-start lg:justify-end'>
-                                    <Image
-                                        src={
-                                            getImageUrl(
-                                                block.image,
-                                                block.imagePath,
-                                            ) ||
-                                            '/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
-                                        }
-                                        alt={title}
-                                        width={700}
-                                        height={900}
-                                        className='w-full lg:w-112 h-120 mt-6 max-w-xl mx-auto object-cover object-center rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-lg'
-                                        priority
-                                    />
-                                </div>
+                                        ))}
+                                    </div>
+                                )}
+                                {buttonLabel && buttonLink && (
+                                    <Link
+                                        href={getPath(buttonLink)}
+                                        className='inline-flex items-center justify-center rounded-lg bg-navy-900 hover:btn-gradient py-3 px-12 text-base font-bold text-white shadow-xl transition-colors mr-auto mt-3'
+                                    >
+                                        {buttonLabel}
+                                    </Link>
+                                )}
+                            </div>
+
+                            {/* Image: 1/3 on lg */}
+                            <div className='min-w-0 lg:col-span-4 flex justify-start lg:justify-end'>
+                                <Image
+                                    src={
+                                        getImageUrl(
+                                            block.image,
+                                            block.imagePath,
+                                        ) ||
+                                        '/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
+                                    }
+                                    alt={title}
+                                    width={700}
+                                    height={900}
+                                    className='w-full max-w-2xl mx-auto h-auto lg:w-full lg:mx-0 mt-6 object-cover object-center rounded-xl group-hover:scale-105 transition-transform duration-500 shadow-lg'
+                                    priority
+                                />
                             </div>
                         </div>
                     </div>

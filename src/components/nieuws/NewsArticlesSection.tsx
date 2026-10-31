@@ -129,7 +129,7 @@ export function NewsArticlesSection({
     return (
         <section className='px-6 py-16 max-w-7xl mx-auto space-y-12 relative z-10'>
             {/* Filter & Search Controls */}
-            <div className='flex flex-col md:flex-row items-center justify-between gap-6 p-4 rounded-2xl border border-slate-200 bg-white shadow-sm'>
+            <div className='flex flex-col md:flex-row items-center justify-between gap-6 p-4 rounded-xl border border-slate-200 bg-white shadow-sm'>
                 {/* Category Pills */}
                 <div className='flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none'>
                     {categories.map((cat) => {
@@ -271,7 +271,7 @@ export function NewsArticlesSection({
                         return (
                             <div
                                 key={art._id || art.slug}
-                                className='group rounded-2xl border border-slate-200 bg-white text-slate-900 p-0 flex flex-col justify-between hover:border-teal/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden'
+                                className='group rounded-xl border border-slate-200 bg-white text-slate-900 p-0 flex flex-col justify-between hover:border-teal/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden'
                             >
                                 {/* Thumbnail Image */}
                                 <div className='relative w-full h-48 bg-slate-100 overflow-hidden'>
@@ -371,7 +371,7 @@ export function NewsArticlesSection({
                     })}
                 </div>
             ) : (
-                <div className='p-12 text-center rounded-2xl border border-slate-200 bg-white space-y-4'>
+                <div className='p-12 text-center rounded-xl border border-slate-200 bg-white space-y-4'>
                     <p className='text-slate-600 text-sm'>
                         {isEn
                             ? 'No articles found matching your query.'

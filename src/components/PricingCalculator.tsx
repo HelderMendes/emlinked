@@ -641,7 +641,7 @@ export function PricingCalculator({
                         </div>
 
                         {/* BLOCK 2: EXTRA INTEGRATIE & SETUP ACCORDION */}
-                        <div className='rounded-2xl border border-black/15 bg-white overflow-hidden shadow-xs transition-all'>
+                        <div className='rounded-xl border border-black/15 bg-white overflow-hidden shadow-xs transition-all'>
                             <button
                                 type='button'
                                 onClick={() =>
@@ -834,7 +834,7 @@ export function PricingCalculator({
                         </div>
 
                         {/* BLOCK 3: XML/TXT EXPORT BESTAND ACCORDION */}
-                        <div className='rounded-2xl border border-black/15 bg-white overflow-hidden shadow-xs transition-all'>
+                        <div className='rounded-xl border border-black/15 bg-white overflow-hidden shadow-xs transition-all'>
                             <button
                                 type='button'
                                 onClick={() => setXmlExportOpen(!xmlExportOpen)}
@@ -1041,7 +1041,7 @@ export function PricingCalculator({
 
                     {/* Right Column: Sticky Total Summary Card */}
                     <div className='lg:col-span-5 sticky top-24'>
-                        <div className='rounded-2xl border border-teal/30 bg-white text-navy-900 p-6 sm:p-8 shadow-lg space-y-0.5 relative overflow-hidden'>
+                        <div className='rounded-xl border border-teal/30 bg-white text-navy-900 p-6 sm:p-8 shadow-lg space-y-0.5 relative overflow-hidden'>
                             <div className='absolute -right-16 -top-16 w-32 h-32 bg-teal-pale/50 rounded-full blur-2xl pointer-events-none' />
 
                             <div className='flex items-center justify-between border-b border-navy-900/10 pb-4'>

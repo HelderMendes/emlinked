@@ -22,6 +22,7 @@ import {
     Award,
     Sparkles,
     TrendingUp,
+    ExternalLink,
 } from 'lucide-react';
 
 interface ReferentiesPageProps {
@@ -250,9 +251,7 @@ export default async function ReferentiesPage({
                                 b?.floatingLabels?.[1]?.value || 'Enterprise',
                             label:
                                 b?.floatingLabels?.[1]?.label ||
-                                (isEn
-                                    ? 'ERP integrations'
-                                    : 'ERP-integraties'),
+                                (isEn ? 'ERP integrations' : 'ERP-integraties'),
                         },
                     ]}
                 />
@@ -360,7 +359,7 @@ export default async function ReferentiesPage({
                             return (
                                 <div
                                     key={c._key || index}
-                                    className='rounded-2xl border border-black/10 bg-white/80 p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-teal/40 transition-all duration-300'
+                                    className='rounded-xl border border-black/10 bg-white/80 p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-teal/40 transition-all duration-300'
                                 >
                                     <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 items-center'>
                                         <div className='lg:col-span-7 space-y-6'>
@@ -429,7 +428,7 @@ export default async function ReferentiesPage({
                                             <div className='relative rounded-xl bg-gray-100 p-6 text-navy-900 border border-navy-900/10 shadow-md space-y-5 overflow-hidden'>
                                                 {/* Header Bar */}
                                                 <div className='flex items-center justify-between border-b border-navy-900/10 pb-3'>
-                                                    <span className='text-xs font-mono text-teal font-bold uppercase tracking-wider truncate max-w-[200px]'>
+                                                    <span className='text-xs font-mono text-teal font-bold uppercase tracking-wider'>
                                                         {companyName}
                                                     </span>
                                                     <span className='px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-mono font-bold uppercase flex items-center gap-1.5 shrink-0'>
@@ -443,7 +442,7 @@ export default async function ReferentiesPage({
                                                 {/* Logo */}
                                                 <div className='flex flex-col items-center justify-center -mt-6'>
                                                     {logoUrl ? (
-                                                        <div className='relative my-3 w-full bg-white rounded-xl flex items-center justify-center shadow-sm group-hover:bg-transparent transition-all duration-300'>
+                                                        <div className='relative my-3 w-full bg-white rounded-xl flex items-center justify-center  group-hover:bg-white transition-all duration-300'>
                                                             <Image
                                                                 src={logoUrl}
                                                                 alt={
@@ -451,7 +450,7 @@ export default async function ReferentiesPage({
                                                                 }
                                                                 width={400}
                                                                 height={200}
-                                                                className='w-[70%] h-auto object-contain transition-transform duration-300 group-hover:scale-105 p-3 bg-white rounded-md max-h-28'
+                                                                className='w-[70%] h-auto object-contain transition-transform duration-300 group-hover:scale-98 p-3 bg-white rounded-md max-h-28'
                                                             />
                                                         </div>
                                                     ) : (
@@ -507,6 +506,26 @@ export default async function ReferentiesPage({
                                                                 ),
                                                             )}
                                                         </div>
+                                                    </div>
+                                                )}
+
+                                                {c.companyUrl && (
+                                                    <div className='w-full pt-3 border-t border-navy-900/10 flex items-center justify-start'>
+                                                        <a
+                                                            href={c.companyUrl}
+                                                            target='_blank'
+                                                            rel='noopener noreferrer'
+                                                            className='inline-flex items-center gap-2 text-xs font-bold text-navy-900 hover:text-teal transition-colors group/link'
+                                                        >
+                                                            <span className='w-5 h-5 rounded-full bg-teal/15 text-teal border border-teal/40 flex items-center justify-center shrink-0 shadow-xs group-hover/link:bg-teal group-hover/link:text-white transition-colors'>
+                                                                <ExternalLink className='w-3 h-3' />
+                                                            </span>
+                                                            <span>
+                                                                {isEn
+                                                                    ? 'Visit company website'
+                                                                    : 'Bezoek bedrijfswebsite'}
+                                                            </span>
+                                                        </a>
                                                     </div>
                                                 )}
                                             </div>
@@ -607,7 +626,7 @@ export default async function ReferentiesPage({
                     </div>
 
                     {whyBullets.length > 0 && (
-                        <div className='bg-white/80 rounded-2xl border border-black/10 shadow-sm p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
+                        <div className='bg-white/80 rounded-xl border border-black/10 shadow-sm p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
                             {whyBullets.map((bItem: any, idx: number) => {
                                 const titleStr = bItem.bold
                                     ? bItem.bold.replace(/:$/, '')

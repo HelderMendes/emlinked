@@ -238,6 +238,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
             sectionTag={b?.sectionTag}
             sectionTitle={b?.sectionTitle}
             sectionSubtitle={b?.sectionSubtitle}
+            packs={b?.packs}
         />
     );
 

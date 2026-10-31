@@ -227,8 +227,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                         icon: <Building2 className='w-3.5 h-3.5' />,
                         value: b?.floatingLabels?.[1]?.value || 'Native',
                         label:
-                            b?.floatingLabels?.[1]?.label ||
-                            'Business Central',
+                            b?.floatingLabels?.[1]?.label || 'Business Central',
                     },
                 ]}
                 proofText={
@@ -273,7 +272,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                 </div>
 
                 {/* Unified Card: Synergy Info (Left) + Mission Intro (Right) */}
-                <div className='rounded-2xl bg-white/80 border border-black/10 grid grid-cols-1 lg:grid-cols-12 items-stretch group hover:border-teal/50 shadow-sm overflow-hidden transition-all duration-300 max-w-7xl mx-auto'>
+                <div className='rounded-xl bg-white/80 border border-black/10 grid grid-cols-1 lg:grid-cols-12 items-stretch group hover:border-teal/50 shadow-sm overflow-hidden transition-all duration-300 max-w-7xl mx-auto'>
                     {/* Left: Synergy Info */}
                     <div className='lg:col-span-7 p-8 md:p-10 flex flex-col justify-center gap-5 text-left relative z-10'>
                         <div className='flex items-center justify-between w-full'>

@@ -85,6 +85,7 @@ export function ContactForm({ locale = 'nl' }: ContactFormProps) {
                     company,
                     message: fullMessage,
                     recaptchaToken,
+                    action: 'contact_form',
                 }),
             });
 

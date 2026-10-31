@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { DemoModal } from '@/components/DemoModal';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -432,7 +433,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         return pathname?.startsWith(fullPath);
     };
 
-    const logoSrc = '/emlinked/Emlinked_logo__liggend.svg?v=2';
+    const logoSrc = '/emlinked/Emlinked_logo__liggend.svg';
 
     const toggleMobileSubmenu = (menu: string) => {
         setMobileSubmenu(mobileSubmenu === menu ? null : menu);
@@ -472,10 +473,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             aria-label='emlinked - Vastgoedbeheer Software'
                             title='emlinked - Vastgoedbeheer Software'
                         >
-                            <img
+                            <Image
                                 src={logoSrc}
                                 alt='emlinked - Vastgoedbeheer Software'
+                                width={140}
+                                height={36}
                                 className='w-auto h-8 transition-all'
+                                priority
                             />
                         </Link>
                     </div>
@@ -483,7 +487,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     {/* Middle: Centered Mobile Menu Pill Toggle */}
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className='inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal/10 border border-teal/30 text-teal font-semibold text-xs uppercase tracking-wider hover:bg-teal/20 active:scale-95 transition-all cursor-pointer'
+                        className='inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-teal/10 border border-teal/30 text-teal font-semibold text-xs uppercase tracking-wider hover:bg-teal/20 active:scale-95 transition-all cursor-pointer'
                         aria-label='Toggle Menu'
                     >
                         <svg
@@ -621,10 +625,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             aria-label='emlinked - Vastgoedbeheer Software'
                             title='emlinked - Vastgoedbeheer Software'
                         >
-                            <img
+                            <Image
                                 src={logoSrc}
                                 alt='emlinked - Vastgoedbeheer Software'
+                                width={140}
+                                height={36}
                                 className='w-auto h-9 transition-all'
+                                priority
                             />
                         </Link>
                     </div>

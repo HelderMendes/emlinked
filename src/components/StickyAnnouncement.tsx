@@ -112,7 +112,8 @@ export default function StickyAnnouncement({
     // News mode: the announcement card lists real News articles instead of
     // hand-written copy, all shown uniformly (no "featured" first item).
     const isNewsMode = settings?.announcementMode === 'news';
-    const newsItems: AnnouncementNewsItem[] = settings?.announcementNewsItems || [];
+    const newsItems: AnnouncementNewsItem[] =
+        settings?.announcementNewsItems || [];
 
     const newsHref = (slug?: string) =>
         slug
@@ -157,7 +158,7 @@ export default function StickyAnnouncement({
                                 damping: 20,
                                 stiffness: 300,
                             }}
-                            className='pointer-events-auto flex items-center gap-3 bg-white border border-teal shadow-xl rounded-2xl pl-4 pr-1.5 py-1.5 cursor-pointer hover:border-white/90 transition-all duration-200 group text-left hover:scale-106 hover:shadow-amber-600 hover:shadow-4xl'
+                            className='pointer-events-auto flex items-center gap-3 bg-white border border-teal shadow-xl rounded-xl pl-4 pr-1.5 py-1.5 cursor-pointer hover:border-white/90 transition-all duration-200 group text-left hover:scale-106 hover:shadow-amber-600 hover:shadow-4xl'
                         >
                             <div className='flex items-center gap-2'>
                                 <span className='relative flex h-2 w-2'>
@@ -184,7 +185,7 @@ export default function StickyAnnouncement({
                                 damping: 22,
                                 stiffness: 280,
                             }}
-                            className='pointer-events-auto w-full max-w-[340px] rounded-2xl border border-navy-900/10 bg-white shadow-2xl overflow-hidden flex flex-col text-left relative'
+                            className='pointer-events-auto w-full max-w-[340px] rounded-xl border border-navy-900/10 bg-white shadow-2xl overflow-hidden flex flex-col text-left relative'
                         >
                             {/* Header — light stone/hero style: white bg, teal glow, Badge eyebrow */}
                             <div className='bg-stone-bg p-5 relative overflow-hidden'>
@@ -240,7 +241,10 @@ export default function StickyAnnouncement({
                                 newsItems.length > 0 && (
                                     <div className='p-4.5 bg-white flex flex-col gap-3.5'>
                                         {newsItems.map(
-                                            (item: AnnouncementNewsItem, index: number) => (
+                                            (
+                                                item: AnnouncementNewsItem,
+                                                index: number,
+                                            ) => (
                                                 <a
                                                     key={index}
                                                     href={newsHref(item.slug)}
@@ -261,27 +265,34 @@ export default function StickyAnnouncement({
                                 )
                             ) : (
                                 <div className='p-4.5 bg-white flex flex-col gap-3.5'>
-                                    {reviews.map((rev: AnnouncementReview, index: number) => (
-                                        <div
-                                            key={index}
-                                            className='flex flex-col gap-1 border-b border-navy-900/10 last:border-0 pb-3 last:pb-0'
-                                        >
-                                            <div className='flex gap-0.5 text-teal'>
-                                                {[...Array(5)].map((_, i) => (
-                                                    <Star
-                                                        key={i}
-                                                        className='h-2.5 w-2.5 fill-teal'
-                                                    />
-                                                ))}
+                                    {reviews.map(
+                                        (
+                                            rev: AnnouncementReview,
+                                            index: number,
+                                        ) => (
+                                            <div
+                                                key={index}
+                                                className='flex flex-col gap-1 border-b border-navy-900/10 last:border-0 pb-3 last:pb-0'
+                                            >
+                                                <div className='flex gap-0.5 text-teal'>
+                                                    {[...Array(5)].map(
+                                                        (_, i) => (
+                                                            <Star
+                                                                key={i}
+                                                                className='h-2.5 w-2.5 fill-teal'
+                                                            />
+                                                        ),
+                                                    )}
+                                                </div>
+                                                <p className='text-[12px]/5 italic text-navy-700'>
+                                                    {rev.text}
+                                                </p>
+                                                <span className='text-[11px] font-bold text-navy-900/60 tracking-tight self-end'>
+                                                    — {rev.author}
+                                                </span>
                                             </div>
-                                            <p className='text-[12px]/5 italic text-navy-700'>
-                                                {rev.text}
-                                            </p>
-                                            <span className='text-[11px] font-bold text-navy-900/60 tracking-tight self-end'>
-                                                — {rev.author}
-                                            </span>
-                                        </div>
-                                    ))}
+                                        ),
+                                    )}
                                 </div>
                             )}
                         </motion.div>

@@ -183,6 +183,7 @@ export function DemoModal({
                     portfolioSize,
                     message,
                     recaptchaToken,
+                    action: 'demo_request',
                 }),
             });
 
