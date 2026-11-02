@@ -62,6 +62,17 @@ export default defineConfig({
                                                     .apiVersion('2024-07-01')
                                                     .schemaType('article'),
                                             ),
+                                        S.listItem()
+                                            .title('Disclaimer')
+                                            .child(
+                                                S.documentList()
+                                                    .title('Disclaimer (NL)')
+                                                    .filter(
+                                                        '_type == "legalPage" && language == "nl"',
+                                                    )
+                                                    .apiVersion('2024-07-01')
+                                                    .schemaType('legalPage'),
+                                            ),
                                     ]),
                             ),
                         S.listItem()
@@ -103,6 +114,17 @@ export default defineConfig({
                                                     )
                                                     .apiVersion('2024-07-01')
                                                     .schemaType('article'),
+                                            ),
+                                        S.listItem()
+                                            .title('Disclaimer')
+                                            .child(
+                                                S.documentList()
+                                                    .title('Disclaimer (EN)')
+                                                    .filter(
+                                                        '_type == "legalPage" && language == "en"',
+                                                    )
+                                                    .apiVersion('2024-07-01')
+                                                    .schemaType('legalPage'),
                                             ),
                                     ]),
                             ),
@@ -237,7 +259,7 @@ export default defineConfig({
                 { id: 'nl', title: 'Nederlands' },
                 { id: 'en', title: 'English' },
             ],
-            schemaTypes: ['solutionPage', 'page', 'article'],
+            schemaTypes: ['solutionPage', 'page', 'article', 'legalPage'],
             apiVersion: '2024-07-01',
         }),
     ],

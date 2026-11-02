@@ -207,6 +207,14 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
         translatedPath = translatedPath.replace('/nieuws', '/news');
         translatedPath = translatedPath.replace('/referenties', '/references');
         translatedPath = translatedPath.replace('/prijzen', '/pricing');
+        translatedPath = translatedPath.replace(
+            '/privacybeleid',
+            '/privacy-policy',
+        );
+        translatedPath = translatedPath.replace(
+            '/algemene-voorwaarden',
+            '/terms-and-conditions',
+        );
 
         return `/en${translatedPath === '/' ? '' : translatedPath}`;
     };
@@ -333,9 +341,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                 </div>
 
                 {/* 2. Main Footer Navigation Grid */}
-                <div className='grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 max-w-7xl mx-auto pb-12 border-b border-navy-900/10'>
-                    {/* Brand Info (Col span 4) */}
-                    <div className='md:col-span-4 flex flex-col gap-5'>
+                <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-12 gap-8 md:gap-12 max-w-7xl mx-auto pb-12 border-b border-navy-900/10'>
+                    {/* Brand Info (Col span 2 on mobile/md, 4 on desktop) */}
+                    <div className='col-span-2 lg:col-span-4 flex flex-col gap-5'>
                         <Link href={getPath('/')} className='inline-flex'>
                             <Image
                                 src='/emlinked/Emlinked_logo__liggend.svg'
@@ -403,8 +411,8 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     </div>
 
                     {/* Links Column 1: Product (Col span 2) */}
-                    <div className='md:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
+                    <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
+                        <h4 className='md:mt-17 mt-0 lg:mt-0 text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.product}
                         </h4>
                         <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
@@ -438,7 +446,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     </div>
 
                     {/* Links Column 2: Integrations (Col span 2) */}
-                    <div className='md:col-span-2 flex flex-col gap-4'>
+                    <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
                         <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.integrations}
                         </h4>
@@ -485,7 +493,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     </div>
 
                     {/* Links Column 3: Company (Col span 2) */}
-                    <div className='md:col-span-2 flex flex-col gap-4'>
+                    <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
                         <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.company}
                         </h4>
@@ -526,7 +534,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     </div>
 
                     {/* Links Column 4: Resources (Col span 2) */}
-                    <div className='md:col-span-2 flex flex-col gap-4'>
+                    <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
                         <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.resources}
                         </h4>
@@ -545,6 +553,22 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                     className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.support}
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href={getPath('/privacybeleid')}
+                                    className='hover:text-teal-hover transition-colors'
+                                >
+                                    {t.disclaimer}
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href={getPath('/algemene-voorwaarden')}
+                                    className='hover:text-teal-hover transition-colors'
+                                >
+                                    {t.terms}
                                 </Link>
                             </li>
                         </ul>

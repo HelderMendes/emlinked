@@ -268,31 +268,32 @@ const fallbackArticlesBySlug: Record<string, any> = {
         title: 'emlinked versterkt team en zet koers voor verdere groei in 2026',
         category: 'Organisatie',
         excerpt:
-            'Met de uitbreiding van ons team van wervingsspecialisten en software architecten versterkt emlinked haar marktpositie in vastgoedbeheer software en interim oplossingen.',
-        readTime: '4 min leestijd',
-        publishedAt: '2026-01-15T09:00:00Z',
+            'emlinked verwelkomt Iryna Samiliak terug als Operationeel Directeur en zet in 2026 in op persoonlijkere klantondersteuning en sterkere operationele processen.',
+        readTime: '3 min leestijd',
+        publishedAt: '2026-01-08T09:00:00Z',
         authorName: 'Raymond Perridon',
         imagePath:
             '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
         paragraphs: [
-            'Het nieuwe jaar staat bij emlinked in het teken van versnelde innovatie en verdere verdieping van onze dienstverlening. Door de aanhoudende vraag naar zowel gekwalificeerde interim specialisten als geavanceerde vastgoedbeheer apps op het Microsoft Dynamics 365 platform, breiden we ons kernteam verder uit.',
-            'Onze unieke formule – de combinatie van hoogwaardige wervings- en interim-oplossingen met eigen native Business Central software – stelt organisaties in staat om operationele knelpunten direct op te lossen. Met het versterkte team kunnen we interim functies sneller invullen en software-ontwikkelingen met nog kortere oplevertijden realiseren.',
-            'Als gespecialiseerde partner voor woningcorporaties, commerciële vastgoedbeheerders en publieke organisaties blijven we investeren in datagedreven recruitment en naadloze ERP-integraties.',
+            'Naarden, 8 januari 2026 — emlinked, toonaangevende Nederlandse leverancier van integrale online vastgoedmanagementsoftware, kijkt met enthousiasme vooruit op 2026 en maakt een belangrijke personele uitbreiding bekend. Met de terugkeer van Iryna Samiliak als Operationeel Directeur zet emlinked een volgende stap in het verder professionaliseren van haar dienstverlening aan vastgoedprofessionals.',
+            'emlinked spreekt allereerst haar waardering uit voor het vertrouwen en de samenwerking van klanten en partners in het afgelopen jaar. Met de versterking van het team en een heldere strategische focus is de organisatie klaar om de dienstverlening verder uit te bouwen en klanten nog beter te ondersteunen.',
+            'Met de komst van Iryna wil emlinked haar dienstverlening verder optimaliseren, met extra aandacht voor consistente en persoonlijke klantondersteuning, versterkte operationele processen en duurzame samenwerking met klanten en partners.',
         ],
     },
     'emlinked-expands-team-and-sets-course-for-2026-growth': {
         title: 'emlinked expands team and sets course for further growth in 2026',
         category: 'Organisatie',
         excerpt:
-            'With the expansion of our recruitment specialists and software architects, emlinked strengthens its position in real estate management software and interim solutions.',
-        readTime: '4 min read',
-        publishedAt: '2026-01-15T09:00:00Z',
+            'emlinked welcomes back Iryna Samiliak as Chief Operating Officer and focuses on more personal customer support and stronger operational processes in 2026.',
+        readTime: '3 min read',
+        publishedAt: '2026-01-08T09:00:00Z',
         authorName: 'Raymond Perridon',
         imagePath:
             '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
         paragraphs: [
-            'The new year at emlinked marks accelerated innovation and deeper client engagement. Driven by sustained demand for qualified interim specialists and native real estate management apps on Microsoft Dynamics 365 Business Central, we are expanding our core team.',
-            'Our unique formula – combining executive interim placement with proprietary Business Central extensions – allows property organizations to resolve operational bottlenecks immediately.',
+            'Naarden, January 8, 2026 — emlinked, a leading Dutch provider of integrated online real estate management software, looks ahead to 2026 with enthusiasm and announces a significant team expansion. With the return of Iryna Samiliak as Chief Operating Officer, emlinked takes the next step in further professionalizing its service to real estate professionals.',
+            'emlinked first wants to express its appreciation for the trust and collaboration of clients and partners over the past year. With a strengthened team and a clear strategic focus, the organization is ready to further build out its services and support clients even better.',
+            'With Iryna joining, emlinked wants to further optimize its service, with extra attention to consistent and personal customer support, strengthened operational processes, and lasting collaboration with clients and partners.',
         ],
     },
     'wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders': {
@@ -357,6 +358,69 @@ export async function generateMetadata({
     });
 }
 
+function blockPlainText(block: any): string {
+    if (!block?.children) return '';
+    return block.children
+        .map((c: any) => c.text || '')
+        .join('')
+        .trim();
+}
+
+// Extracts Q&A pairs from the body's "Veelgestelde vragen" / "Frequently
+// asked questions" section (if present) for FAQPage structured data —
+// H3 blocks are questions, the normal-style blocks right after are the
+// answer, up to the next H2/H3.
+function extractFaqFromBody(
+    body: any,
+): Array<{ question: string; answer: string }> {
+    if (!Array.isArray(body)) return [];
+
+    const faqHeadingIndex = body.findIndex(
+        (block: any) =>
+            block._type === 'block' &&
+            block.style === 'h2' &&
+            /veelgestelde vragen|frequently asked questions/i.test(
+                blockPlainText(block),
+            ),
+    );
+    if (faqHeadingIndex === -1) return [];
+
+    const faqs: Array<{ question: string; answer: string }> = [];
+    let currentQuestion: string | null = null;
+    let currentAnswerParts: string[] = [];
+
+    const flush = () => {
+        if (currentQuestion && currentAnswerParts.length > 0) {
+            faqs.push({
+                question: currentQuestion,
+                answer: currentAnswerParts.join(' '),
+            });
+        }
+        currentQuestion = null;
+        currentAnswerParts = [];
+    };
+
+    for (let i = faqHeadingIndex + 1; i < body.length; i++) {
+        const block = body[i];
+        if (block._type !== 'block') continue;
+
+        if (block.style === 'h2') {
+            flush();
+            break; // left the FAQ section
+        }
+        if (block.style === 'h3') {
+            flush();
+            currentQuestion = blockPlainText(block);
+        } else if (currentQuestion) {
+            const text = blockPlainText(block);
+            if (text) currentAnswerParts.push(text);
+        }
+    }
+    flush();
+
+    return faqs;
+}
+
 function calculateReadTime(
     body: any,
     isEn: boolean,
@@ -412,6 +476,8 @@ export default async function ArticleDetailPage({
         article.readTime,
     );
 
+    const articleFaqs = extractFaqFromBody(article.body);
+
     const jsonLdData = JSON.stringify({
         '@context': 'https://schema.org',
         '@graph': [
@@ -434,6 +500,22 @@ export default async function ArticleDetailPage({
                     logo: `${DEFAULT_DOMAIN}/emlinked/Emlinked_logo__liggend.svg`,
                 },
             },
+            ...(articleFaqs.length > 0
+                ? [
+                      {
+                          '@type': 'FAQPage',
+                          '@id': `${canonicalPageUrl}#faq`,
+                          mainEntity: articleFaqs.map((faq) => ({
+                              '@type': 'Question',
+                              name: faq.question,
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: faq.answer,
+                              },
+                          })),
+                      },
+                  ]
+                : []),
         ],
     });
 

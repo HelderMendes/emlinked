@@ -7,6 +7,7 @@ import { docCategory } from './docCategory';
 import { siteSettings } from './siteSettings';
 import { solutionPage } from './solutionPage';
 import { quoteSubmission } from './quoteSubmission';
+import { legalPage } from './legalPage';
 
 export const schemaTypes = [
     seoFields,
@@ -18,5 +19,6 @@ export const schemaTypes = [
     siteSettings,
     solutionPage,
     quoteSubmission,
+    legalPage,
 ];
 

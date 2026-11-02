@@ -380,6 +380,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             path = path.replace('/nieuws', '/news');
             path = path.replace('/referenties', '/references');
             path = path.replace('/prijzen', '/pricing');
+            path = path.replace('/privacybeleid', '/privacy-policy');
+            path = path.replace(
+                '/algemene-voorwaarden',
+                '/terms-and-conditions',
+            );
 
             if (!path.startsWith('/en')) {
                 path = `/en${path === '/' ? '' : path}`;
@@ -420,6 +425,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
             path = path.replace('/news', '/nieuws');
             path = path.replace('/references', '/referenties');
             path = path.replace('/pricing', '/prijzen');
+            path = path.replace('/privacy-policy', '/privacybeleid');
+            path = path.replace(
+                '/terms-and-conditions',
+                '/algemene-voorwaarden',
+            );
             return path;
         }
     };

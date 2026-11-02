@@ -11,9 +11,7 @@ import {
     XCircle,
     ArrowRight,
     Smartphone,
-    Shield,
     Clock,
-    Users,
 } from 'lucide-react';
 import Link from 'next/link';
 import { HeroSection } from '@/components/blocks/HeroSection';
@@ -22,6 +20,26 @@ import { getImageUrl } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 import { ColorIcon } from '@/components/ui/ColorIcon';
+import {
+    type SolutionPageDoc,
+    type SolutionPageBlock,
+    type ArchitectureBlockData,
+    type FeatureTabInput,
+    isHeroBlock,
+    isComparisonBlock,
+    isFeatureTabsBlock,
+    isArchitectureBlock,
+    isCtaBlock,
+} from '@/sanity/solutionPageBlocks';
+
+type ComparisonCardItem =
+    | string
+    | {
+          title?: string;
+          desc?: string;
+          benefit?: string;
+          description?: string;
+      };
 
 function CardBadge({ icon, alt }: { icon: string; alt: string }) {
     return (
@@ -37,7 +55,7 @@ function CardBadge({ icon, alt }: { icon: string; alt: string }) {
 }
 
 interface HuurdersportaalModuleProps {
-    doc?: any;
+    doc?: SolutionPageDoc;
     locale?: string;
 }
 
@@ -49,19 +67,20 @@ export function HuurdersportaalModule({
 
     // Extract Sanity modular pageBlocks
     const pageBlocks = doc?.pageBlocks || [];
-    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock');
-    const featureTabsBlock = pageBlocks.find(
-        (b: any) => b._type === 'featureTabsBlock',
-    );
+    const heroBlock = pageBlocks.find(isHeroBlock);
+    const featureTabsBlock = pageBlocks.find(isFeatureTabsBlock);
     const maintenanceTab =
-        featureTabsBlock?.tabs?.find((t: any) => t.tabId === 'maintenance') ||
-        featureTabsBlock?.tabs?.[0];
+        featureTabsBlock?.tabs?.find(
+            (t: FeatureTabInput) => t.tabId === 'maintenance',
+        ) || featureTabsBlock?.tabs?.[0];
     const invoicesTab =
-        featureTabsBlock?.tabs?.find((t: any) => t.tabId === 'invoices') ||
-        featureTabsBlock?.tabs?.[1];
+        featureTabsBlock?.tabs?.find(
+            (t: FeatureTabInput) => t.tabId === 'invoices',
+        ) || featureTabsBlock?.tabs?.[1];
     const documentsTab =
-        featureTabsBlock?.tabs?.find((t: any) => t.tabId === 'documents') ||
-        featureTabsBlock?.tabs?.[2];
+        featureTabsBlock?.tabs?.find(
+            (t: FeatureTabInput) => t.tabId === 'documents',
+        ) || featureTabsBlock?.tabs?.[2];
 
     const tab0Img = getImageUrl(
         maintenanceTab?.image,
@@ -79,13 +98,9 @@ export function HuurdersportaalModule({
             '/emlinked/apps/huurdersportaal/tab03_centraal-documentenarchief.jpg',
     );
 
-    const comparisonBlock = pageBlocks.find(
-        (b: any) => b._type === 'comparisonBlock',
-    );
-    const architectureBlock = pageBlocks.find(
-        (b: any) => b._type === 'architectureBlock',
-    );
-    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock');
+    const comparisonBlock = pageBlocks.find(isComparisonBlock);
+    const architectureBlock = pageBlocks.find(isArchitectureBlock);
+    const ctaBlock = pageBlocks.find(isCtaBlock);
     const ctaImageUrl = getImageUrl(
         ctaBlock?.image,
         ctaBlock?.imagePath ||
@@ -117,6 +132,10 @@ export function HuurdersportaalModule({
         );
 
     // Structured JSON-LD from Sanity or user-provided blueprint
+    const structuredDataPath = isEn
+        ? '/en/apps/tenant-portal'
+        : '/apps/huurdersportaal';
+    const structuredDataUrl = `${DEFAULT_DOMAIN}${structuredDataPath}`;
     const jsonLdData = doc?.seo?.structuredData
         ? typeof doc.seo.structuredData === 'string'
             ? doc.seo.structuredData
@@ -126,12 +145,15 @@ export function HuurdersportaalModule({
               '@graph': [
                   {
                       '@type': 'WebPage',
-                      '@id': `${DEFAULT_DOMAIN}/apps/huurdersportaal#webpage`,
-                      url: `${DEFAULT_DOMAIN}/apps/huurdersportaal`,
-                      name: 'Huurdersportaal Software — Self-Service voor uw Huurders | emlinked',
-                      description:
-                          'Verlaag de administratieve druk op uw beheerteam met ons digitale huurdersportaal.',
-                      inLanguage: 'nl-NL',
+                      '@id': `${structuredDataUrl}#webpage`,
+                      url: structuredDataUrl,
+                      name: isEn
+                          ? 'Tenant Portal Software — Self-Service for Your Tenants | emlinked'
+                          : 'Huurdersportaal Software — Self-Service voor je Huurders | emlinked',
+                      description: isEn
+                          ? 'Reduce the administrative load on your management team with our digital tenant portal.'
+                          : 'Verlaag de administratieve druk op je beheerteam met ons digitale huurdersportaal.',
+                      inLanguage: isEn ? 'en-US' : 'nl-NL',
                       isPartOf: {
                           '@type': 'WebSite',
                           '@id': `${DEFAULT_DOMAIN}/#website`,
@@ -139,43 +161,91 @@ export function HuurdersportaalModule({
                   },
                   {
                       '@type': 'BreadcrumbList',
-                      '@id': `${DEFAULT_DOMAIN}/apps/huurdersportaal#breadcrumb`,
+                      '@id': `${structuredDataUrl}#breadcrumb`,
                       itemListElement: [
                           {
                               '@type': 'ListItem',
                               position: 1,
                               name: 'Home',
-                              item: DEFAULT_DOMAIN,
+                              item: isEn
+                                  ? `${DEFAULT_DOMAIN}/en`
+                                  : DEFAULT_DOMAIN,
                           },
                           {
                               '@type': 'ListItem',
                               position: 2,
-                              name: 'Onze apps',
-                              item: `${DEFAULT_DOMAIN}/apps`,
+                              name: isEn ? 'Our Apps' : 'Onze apps',
+                              item: isEn
+                                  ? `${DEFAULT_DOMAIN}/en/apps`
+                                  : `${DEFAULT_DOMAIN}/apps`,
                           },
                           {
                               '@type': 'ListItem',
                               position: 3,
-                              name: 'Huurdersportaal',
-                              item: `${DEFAULT_DOMAIN}/apps/huurdersportaal`,
+                              name: isEn ? 'Tenant Portal' : 'Huurdersportaal',
+                              item: structuredDataUrl,
                           },
                       ],
                   },
                   {
                       '@type': 'SoftwareApplication',
-                      '@id': `${DEFAULT_DOMAIN}/apps/huurdersportaal#software`,
-                      name: 'Emlinked Huurdersportaal Software',
+                      '@id': `${structuredDataUrl}#software`,
+                      name: isEn
+                          ? 'Emlinked Tenant Portal Software'
+                          : 'Emlinked Huurdersportaal Software',
                       applicationCategory: 'BusinessApplication',
                       operatingSystem: 'Web-based, Mobile Responsive',
                       softwareRequirements:
                           'Microsoft Dynamics 365 Business Central',
-                      description:
-                          'Online huurdersportaal voor self-service communicatie, onderhoudsmeldingen en documentenbeheer direct gesynchroniseerd met de Emlinked vastgoedsoftware suite.',
+                      description: isEn
+                          ? 'Online tenant portal for self-service communication, maintenance requests, and document management, synced directly with the Emlinked property software suite.'
+                          : 'Online huurdersportaal voor self-service communicatie, onderhoudsmeldingen en documentenbeheer direct gesynchroniseerd met de Emlinked vastgoedsoftware suite.',
                       publisher: {
                           '@type': 'Organization',
                           name: 'Emlinked',
                           url: DEFAULT_DOMAIN,
                       },
+                  },
+                  {
+                      '@type': 'FAQPage',
+                      '@id': `${structuredDataUrl}#faq`,
+                      mainEntity: isEn
+                          ? [
+                                {
+                                    '@type': 'Question',
+                                    name: 'What can tenants do in the tenant portal?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Tenants can submit maintenance requests, view invoices and payment history, and access shared documents 24/7, fully synced with the central property administration.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'Is the tenant portal connected to my property administration?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: "Yes. The tenant portal is fully synced with Emlinked's central property administration inside Microsoft Dynamics 365 Business Central, so there's no duplicate data entry between the portal and your back office.",
+                                    },
+                                },
+                            ]
+                          : [
+                                {
+                                    '@type': 'Question',
+                                    name: 'Wat kunnen huurders doen in het huurdersportaal?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Huurders kunnen 24/7 reparatieverzoeken indienen, facturen en betalingshistorie inzien en gedeelde documenten raadplegen — volledig gesynchroniseerd met de centrale vastgoedadministratie.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'Is het huurdersportaal gekoppeld aan mijn vastgoedadministratie?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Ja. Het huurdersportaal is volledig gesynchroniseerd met de centrale vastgoedadministratie van emlinked binnen Microsoft Dynamics 365 Business Central, dus er is geen dubbele invoer tussen het portaal en je backoffice.',
+                                    },
+                                },
+                            ],
                   },
               ],
           });
@@ -184,7 +254,10 @@ export function HuurdersportaalModule({
         'maintenance' | 'invoices' | 'documents'
     >('maintenance');
 
-    const renderHero = (block: any, key: any) => (
+    const renderHero = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         <HeroSection
             key={key}
             locale={locale}
@@ -247,7 +320,10 @@ export function HuurdersportaalModule({
         />
     );
 
-    const renderComparison = (block: any, key: any) => (
+    const renderComparison = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         // ── BLOCK 2: OPERATIONAL BOTTLENECKS ── */}
         <section
             key={key}
@@ -348,7 +424,7 @@ export function HuurdersportaalModule({
                                                   desc: 'Geen directe integratie met het centrale ERP of de financiële administratie.',
                                               },
                                           ])
-                                ).map((item: any, idx: number) => {
+                                ).map((item: ComparisonCardItem, idx: number) => {
                                     const isObj =
                                         typeof item === 'object' &&
                                         item !== null;
@@ -441,7 +517,7 @@ export function HuurdersportaalModule({
                                                   desc: '100% gesynchroniseerd met Microsoft Dynamics 365 Business Central en je grootboek.',
                                               },
                                           ])
-                                ).map((item: any, idx: number) => {
+                                ).map((item: ComparisonCardItem, idx: number) => {
                                     const isObj =
                                         typeof item === 'object' &&
                                         item !== null;
@@ -478,7 +554,10 @@ export function HuurdersportaalModule({
         </section>
     );
 
-    const renderFeatureTabs = (block: any, key: any) => (
+    const renderFeatureTabs = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         // ── BLOCK 3: CORE FUNCTIONALITIES ── */}
         <section
             key={key}
@@ -830,7 +909,10 @@ export function HuurdersportaalModule({
         </section>
     );
 
-    const renderArchitecture = (block: any, key: any) => {
+    const renderArchitecture = (
+        block: ArchitectureBlockData,
+        key: string | number,
+    ) => {
         const defaultArchBullets = isEn
             ? [
                   {
@@ -910,7 +992,7 @@ export function HuurdersportaalModule({
                                 {bDesc}
                             </p>
                             <div className='space-y-4 pt-2'>
-                                {bBullets.map((bullet: any, bIdx: number) => (
+                                {bBullets.map((bullet: { bold: string; text: string }, bIdx: number) => (
                                     <div
                                         key={bIdx}
                                         className='flex items-start gap-3.5'
@@ -948,7 +1030,10 @@ export function HuurdersportaalModule({
         );
     };
 
-    const renderCta = (block: any, key: any) => (
+    const renderCta = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         // ── BLOCK 4: CALL TO ACTION BANNER ── */}
         <section
             key={key}
@@ -1025,7 +1110,7 @@ export function HuurdersportaalModule({
         </section>
     );
 
-    const blocksToRender =
+    const blocksToRender: SolutionPageBlock[] =
         pageBlocks.length > 0
             ? pageBlocks
             : [
@@ -1045,22 +1130,18 @@ export function HuurdersportaalModule({
                 />
             )}
 
-            {blocksToRender.map((block: any, idx: number) => {
+            {blocksToRender.map((block: SolutionPageBlock, idx: number) => {
                 const key = block._key || idx;
                 switch (block._type) {
                     case 'heroBlock':
-                    case 'hero':
                         return renderHero(block, key);
                     case 'comparisonBlock':
                         return renderComparison(block, key);
                     case 'featureTabsBlock':
                         return renderFeatureTabs(block, key);
                     case 'architectureBlock':
-                    case 'architectureSection':
                         return renderArchitecture(block, key);
                     case 'ctaBlock':
-                    case 'ctaBanner':
-                    case 'cta':
                         return renderCta(block, key);
                     default:
                         return null;

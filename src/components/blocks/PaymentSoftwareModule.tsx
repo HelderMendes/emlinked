@@ -21,6 +21,26 @@ import { getImageUrl } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 import { ColorIcon } from '@/components/ui/ColorIcon';
+import {
+    type SolutionPageDoc,
+    type SolutionPageBlock,
+    type ArchitectureBlockData,
+    type FeatureTabInput,
+    isHeroBlock,
+    isComparisonBlock,
+    isFeatureTabsBlock,
+    isArchitectureBlock,
+    isCtaBlock,
+} from '@/sanity/solutionPageBlocks';
+
+type ComparisonCardItem =
+    | string
+    | {
+          title?: string;
+          desc?: string;
+          benefit?: string;
+          description?: string;
+      };
 
 function CardBadge({ icon, alt }: { icon: string; alt: string }) {
     return (
@@ -36,7 +56,7 @@ function CardBadge({ icon, alt }: { icon: string; alt: string }) {
 }
 
 interface PaymentSoftwareModuleProps {
-    doc?: any;
+    doc?: SolutionPageDoc;
     locale?: string;
 }
 
@@ -48,17 +68,11 @@ export function PaymentSoftwareModule({
 
     // Extract Sanity modular pageBlocks
     const pageBlocks = doc?.pageBlocks || [];
-    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock');
-    const featureTabsBlock = pageBlocks.find(
-        (b: any) => b._type === 'featureTabsBlock',
-    );
-    const comparisonBlock = pageBlocks.find(
-        (b: any) => b._type === 'comparisonBlock',
-    );
-    const architectureBlock = pageBlocks.find(
-        (b: any) => b._type === 'architectureBlock',
-    );
-    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock');
+    const heroBlock = pageBlocks.find(isHeroBlock);
+    const featureTabsBlock = pageBlocks.find(isFeatureTabsBlock);
+    const comparisonBlock = pageBlocks.find(isComparisonBlock);
+    const architectureBlock = pageBlocks.find(isArchitectureBlock);
+    const ctaBlock = pageBlocks.find(isCtaBlock);
 
     const heroBadge =
         heroBlock?.badge ||
@@ -83,15 +97,17 @@ export function PaymentSoftwareModule({
     );
 
     const sepaTab =
-        featureTabsBlock?.tabs?.find((t: any) => t.tabId === 'sepa') ||
-        featureTabsBlock?.tabs?.[0];
+        featureTabsBlock?.tabs?.find(
+            (t: FeatureTabInput) => t.tabId === 'sepa',
+        ) || featureTabsBlock?.tabs?.[0];
     const reconciliationTab =
         featureTabsBlock?.tabs?.find(
-            (t: any) => t.tabId === 'reconciliation',
+            (t: FeatureTabInput) => t.tabId === 'reconciliation',
         ) || featureTabsBlock?.tabs?.[1];
     const dunningTab =
-        featureTabsBlock?.tabs?.find((t: any) => t.tabId === 'dunning') ||
-        featureTabsBlock?.tabs?.[2];
+        featureTabsBlock?.tabs?.find(
+            (t: FeatureTabInput) => t.tabId === 'dunning',
+        ) || featureTabsBlock?.tabs?.[2];
 
     const tab0Img = getImageUrl(
         sepaTab?.image,
@@ -165,6 +181,10 @@ export function PaymentSoftwareModule({
     );
 
     // Structured JSON-LD from Sanity or user blueprint
+    const structuredDataPath = isEn
+        ? '/en/apps/payment-software'
+        : '/apps/payment-software';
+    const structuredDataUrl = `${DEFAULT_DOMAIN}${structuredDataPath}`;
     const jsonLdData = doc?.seo?.structuredData
         ? typeof doc.seo.structuredData === 'string'
             ? doc.seo.structuredData
@@ -174,12 +194,15 @@ export function PaymentSoftwareModule({
               '@graph': [
                   {
                       '@type': 'WebPage',
-                      '@id': `${DEFAULT_DOMAIN}/apps/payment-software#webpage`,
-                      url: `${DEFAULT_DOMAIN}/apps/payment-software`,
-                      name: 'Payment Software — Automatische Huurincasso & Bankaflettering | emlinked',
-                      description:
-                          'Geautomatiseerde incasso van huurpenningen en automatische aflettering van bankafschriften direct in uw Microsoft Business Central administratie.',
-                      inLanguage: 'nl-NL',
+                      '@id': `${structuredDataUrl}#webpage`,
+                      url: structuredDataUrl,
+                      name: isEn
+                          ? 'Payment Software — Automated Rent Collection & Bank Reconciliation | emlinked'
+                          : 'Payment Software — Automatische Huurincasso & Bankaflettering | emlinked',
+                      description: isEn
+                          ? 'Automated rent collection and automatic bank statement reconciliation, directly inside your Microsoft Business Central administration.'
+                          : 'Geautomatiseerde incasso van huurpenningen en automatische aflettering van bankafschriften direct in je Microsoft Business Central administratie.',
+                      inLanguage: isEn ? 'en-US' : 'nl-NL',
                       isPartOf: {
                           '@type': 'WebSite',
                           '@id': `${DEFAULT_DOMAIN}/#website`,
@@ -187,43 +210,87 @@ export function PaymentSoftwareModule({
                   },
                   {
                       '@type': 'BreadcrumbList',
-                      '@id': `${DEFAULT_DOMAIN}/apps/payment-software#breadcrumb`,
+                      '@id': `${structuredDataUrl}#breadcrumb`,
                       itemListElement: [
                           {
                               '@type': 'ListItem',
                               position: 1,
                               name: 'Home',
-                              item: DEFAULT_DOMAIN,
+                              item: isEn ? `${DEFAULT_DOMAIN}/en` : DEFAULT_DOMAIN,
                           },
                           {
                               '@type': 'ListItem',
                               position: 2,
-                              name: 'Onze apps',
-                              item: `${DEFAULT_DOMAIN}/apps`,
+                              name: isEn ? 'Our Apps' : 'Onze apps',
+                              item: isEn
+                                  ? `${DEFAULT_DOMAIN}/en/apps`
+                                  : `${DEFAULT_DOMAIN}/apps`,
                           },
                           {
                               '@type': 'ListItem',
                               position: 3,
-                              name: 'Payment software',
-                              item: `${DEFAULT_DOMAIN}/apps/payment-software`,
+                              name: isEn ? 'Payment software' : 'Payment software',
+                              item: structuredDataUrl,
                           },
                       ],
                   },
                   {
                       '@type': 'SoftwareApplication',
-                      '@id': `${DEFAULT_DOMAIN}/apps/payment-software#software`,
+                      '@id': `${structuredDataUrl}#software`,
                       name: 'Emlinked Payment Software',
                       applicationCategory: 'BusinessApplication',
                       operatingSystem: 'Web-based, Direct Banking Integration',
                       softwareRequirements:
                           'Microsoft Dynamics 365 Business Central',
-                      description:
-                          'Geautomatiseerde huurincasso software met SEPA Direct Debit en realtime bankreconciliatie gekoppeld aan Microsoft Business Central.',
+                      description: isEn
+                          ? 'Automated rent collection software with SEPA Direct Debit and real-time bank reconciliation, connected to Microsoft Business Central.'
+                          : 'Geautomatiseerde huurincasso software met SEPA Direct Debit en realtime bankreconciliatie gekoppeld aan Microsoft Business Central.',
                       publisher: {
                           '@type': 'Organization',
                           name: 'Emlinked',
                           url: DEFAULT_DOMAIN,
                       },
+                  },
+                  {
+                      '@type': 'FAQPage',
+                      '@id': `${structuredDataUrl}#faq`,
+                      mainEntity: isEn
+                          ? [
+                                {
+                                    '@type': 'Question',
+                                    name: 'How does automated SEPA direct debit work with emlinked?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Rent collections run as SEPA Direct Debit batches and post directly as validated journal entries in Business Central — no separate banking portal or shadow file next to your ERP.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'Is bank reconciliation also processed automatically?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Yes. Every bank reconciliation and dunning notice syncs directly with your central Business Central database in real time, giving accountants, management, and your team instantly reliable insight.',
+                                    },
+                                },
+                            ]
+                          : [
+                                {
+                                    '@type': 'Question',
+                                    name: 'Hoe werkt automatische SEPA-incasso bij emlinked?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: "Huurincasso's lopen als SEPA Direct Debit-batches en landen direct als gevalideerde journaalposten in Business Central — geen los bankportaal of schaduwbestand naast je ERP.",
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'Wordt bankaflettering ook automatisch verwerkt?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Ja. Elke bankaflettering en aanmaning wordt direct en realtime gesynchroniseerd met je centrale Business Central database, voor direct betrouwbaar inzicht voor accountant, directie en beheerteam.',
+                                    },
+                                },
+                            ],
                   },
               ],
           });
@@ -232,7 +299,10 @@ export function PaymentSoftwareModule({
         'sepa' | 'reconciliation' | 'dunning'
     >('sepa');
 
-    const renderHero = (block: any, key: any) => (
+    const renderHero = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         <HeroSection
             key={key}
             locale={locale}
@@ -296,7 +366,10 @@ export function PaymentSoftwareModule({
         />
     );
 
-    const renderComparison = (block: any, key: any) => (
+    const renderComparison = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         <section
             key={key}
             className='px-6 py-20 bg-background text-navy-900 border-b border-teal/10 relative z-10'
@@ -396,7 +469,7 @@ export function PaymentSoftwareModule({
                                                   desc: 'Handmatig overtypen leidt tot dataverschillen en correctieboekingen aan het einde van de maand.',
                                               },
                                           ])
-                                ).map((item: any, idx: number) => {
+                                ).map((item: ComparisonCardItem, idx: number) => {
                                     const isObj =
                                         typeof item === 'object' &&
                                         item !== null;
@@ -489,7 +562,7 @@ export function PaymentSoftwareModule({
                                                   desc: 'Direct bijgewerkt in je ERP-grootboek zonder handmatige tussenkomst of schaduwbestanden.',
                                               },
                                           ])
-                                ).map((item: any, idx: number) => {
+                                ).map((item: ComparisonCardItem, idx: number) => {
                                     const isObj =
                                         typeof item === 'object' &&
                                         item !== null;
@@ -526,7 +599,10 @@ export function PaymentSoftwareModule({
         </section>
     );
 
-    const renderFeatureTabs = (block: any, key: any) => (
+    const renderFeatureTabs = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         <section
             key={key}
             className='py-20 px-6 bg-background text-navy-900 border-b border-teal/10 relative overflow-hidden'
@@ -877,7 +953,10 @@ export function PaymentSoftwareModule({
         </section>
     );
 
-    const renderArchitecture = (block: any, key: any) => (
+    const renderArchitecture = (
+        block: ArchitectureBlockData,
+        key: string | number,
+    ) => (
         <section
             key={key}
             className='px-6 py-20 md:py-24 bg-background text-navy-900 border-b border-teal/10 relative z-10 overflow-hidden'
@@ -899,7 +978,7 @@ export function PaymentSoftwareModule({
                         </p>
 
                         <div className='space-y-4 pt-2'>
-                            {archBullets.map((bullet: any, bIdx: number) => (
+                            {archBullets.map((bullet: { bold: string; text: string }, bIdx: number) => (
                                 <div
                                     key={bIdx}
                                     className='flex items-start gap-3.5'
@@ -938,7 +1017,10 @@ export function PaymentSoftwareModule({
         </section>
     );
 
-    const renderCta = (block: any, key: any) => (
+    const renderCta = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         <section
             key={key}
             className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'
@@ -1014,7 +1096,7 @@ export function PaymentSoftwareModule({
         </section>
     );
 
-    const blocksToRender =
+    const blocksToRender: SolutionPageBlock[] =
         pageBlocks.length > 0
             ? pageBlocks
             : [
@@ -1035,11 +1117,10 @@ export function PaymentSoftwareModule({
                 />
             )}
 
-            {blocksToRender.map((block: any, idx: number) => {
+            {blocksToRender.map((block: SolutionPageBlock, idx: number) => {
                 const key = block._key || idx;
                 switch (block._type) {
                     case 'heroBlock':
-                    case 'hero':
                         return renderHero(block, key);
                     case 'comparisonBlock':
                         return renderComparison(block, key);
@@ -1048,8 +1129,6 @@ export function PaymentSoftwareModule({
                     case 'architectureBlock':
                         return renderArchitecture(block, key);
                     case 'ctaBlock':
-                    case 'ctaBanner':
-                    case 'cta':
                         return renderCta(block, key);
                     default:
                         return null;

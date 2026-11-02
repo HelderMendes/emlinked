@@ -18,6 +18,17 @@ import { getImageUrl } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 import { ColorIcon } from '@/components/ui/ColorIcon';
+import {
+    type SolutionPageDoc,
+    type SolutionPageBlock,
+    type ArchitectureBlockData,
+    type ComparisonItemInput,
+    isHeroBlock,
+    isComparisonBlock,
+    isFeatureTabsBlock,
+    isArchitectureBlock,
+    isCtaBlock,
+} from '@/sanity/solutionPageBlocks';
 
 function CardBadge({ icon, alt }: { icon: string; alt: string }) {
     return (
@@ -34,7 +45,7 @@ function CardBadge({ icon, alt }: { icon: string; alt: string }) {
 }
 
 interface VastgoedbeheerSoftwareModuleProps {
-    doc?: any;
+    doc?: SolutionPageDoc;
     locale?: string;
 }
 
@@ -46,17 +57,11 @@ export function VastgoedbeheerSoftwareModule({
 
     // Extract Sanity modular pageBlocks
     const pageBlocks = doc?.pageBlocks || [];
-    const heroBlock = pageBlocks.find((b: any) => b._type === 'heroBlock');
-    const featureTabsBlock = pageBlocks.find(
-        (b: any) => b._type === 'featureTabsBlock',
-    );
-    const comparisonBlock = pageBlocks.find(
-        (b: any) => b._type === 'comparisonBlock',
-    );
-    const architectureBlock = pageBlocks.find(
-        (b: any) => b._type === 'architectureBlock',
-    );
-    const ctaBlock = pageBlocks.find((b: any) => b._type === 'ctaBlock');
+    const heroBlock = pageBlocks.find(isHeroBlock);
+    const featureTabsBlock = pageBlocks.find(isFeatureTabsBlock);
+    const comparisonBlock = pageBlocks.find(isComparisonBlock);
+    const architectureBlock = pageBlocks.find(isArchitectureBlock);
+    const ctaBlock = pageBlocks.find(isCtaBlock);
 
     const heroBadge =
         heroBlock?.badge ||
@@ -243,6 +248,10 @@ export function VastgoedbeheerSoftwareModule({
     );
 
     // Structured JSON-LD from Sanity or default blueprint fallback
+    const structuredDataPath = isEn
+        ? '/en/apps/property-management-software'
+        : '/apps/vastgoedbeheer-software';
+    const structuredDataUrl = `${DEFAULT_DOMAIN}${structuredDataPath}`;
     const jsonLdData = doc?.seo?.structuredData
         ? typeof doc.seo.structuredData === 'string'
             ? doc.seo.structuredData
@@ -252,12 +261,15 @@ export function VastgoedbeheerSoftwareModule({
               '@graph': [
                   {
                       '@type': 'WebPage',
-                      '@id': `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software#webpage`,
-                      url: `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software`,
-                      name: 'Vastgoedbeheer Software — Automatiseer je Portefeuillebeheer | emlinked',
-                      description:
-                          'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Microsoft Dynamics 365 Business Central.',
-                      inLanguage: 'nl-NL',
+                      '@id': `${structuredDataUrl}#webpage`,
+                      url: structuredDataUrl,
+                      name: isEn
+                          ? 'Property Management Software — Automate Your Portfolio Management | emlinked'
+                          : 'Vastgoedbeheer Software — Automatiseer je Portefeuillebeheer | emlinked',
+                      description: isEn
+                          ? 'Advanced property management software for managers, retail chains, and housing associations. Fully automated and natively integrated with Microsoft Dynamics 365 Business Central.'
+                          : 'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Microsoft Dynamics 365 Business Central.',
+                      inLanguage: isEn ? 'en-US' : 'nl-NL',
                       isPartOf: {
                           '@type': 'WebSite',
                           '@id': `${DEFAULT_DOMAIN}/#website`,
@@ -265,39 +277,46 @@ export function VastgoedbeheerSoftwareModule({
                   },
                   {
                       '@type': 'BreadcrumbList',
-                      '@id': `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software#breadcrumb`,
+                      '@id': `${structuredDataUrl}#breadcrumb`,
                       itemListElement: [
                           {
                               '@type': 'ListItem',
                               position: 1,
-                              name: 'Home',
-                              item: DEFAULT_DOMAIN,
+                              name: isEn ? 'Home' : 'Home',
+                              item: isEn ? `${DEFAULT_DOMAIN}/en` : DEFAULT_DOMAIN,
                           },
                           {
                               '@type': 'ListItem',
                               position: 2,
-                              name: 'Onze apps',
-                              item: `${DEFAULT_DOMAIN}/apps`,
+                              name: isEn ? 'Our Apps' : 'Onze apps',
+                              item: isEn
+                                  ? `${DEFAULT_DOMAIN}/en/apps`
+                                  : `${DEFAULT_DOMAIN}/apps`,
                           },
                           {
                               '@type': 'ListItem',
                               position: 3,
-                              name: 'Vastgoedbeheer software',
-                              item: `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software`,
+                              name: isEn
+                                  ? 'Property Management Software'
+                                  : 'Vastgoedbeheer software',
+                              item: structuredDataUrl,
                           },
                       ],
                   },
                   {
                       '@type': 'SoftwareApplication',
-                      '@id': `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software#software`,
-                      name: 'Emlinked Vastgoedbeheer Software',
+                      '@id': `${structuredDataUrl}#software`,
+                      name: isEn
+                          ? 'Emlinked Property Management Software'
+                          : 'Emlinked Vastgoedbeheer Software',
                       applicationCategory: 'BusinessApplication',
                       operatingSystem:
                           'Web-based, Microsoft Dynamics 365 Business Central',
                       softwareRequirements:
                           'Microsoft Dynamics 365 Business Central',
-                      description:
-                          'De core SaaS module voor vastgoedbeheer. Automatiseer contracten, CPI-indexaties, servicekosten en metragebeheer native in Business Central.',
+                      description: isEn
+                          ? 'The core SaaS module for property management. Automate leases, CPI indexations, service charges, and floor-area management natively in Business Central.'
+                          : 'De core SaaS module voor vastgoedbeheer. Automatiseer contracten, CPI-indexaties, servicekosten en metragebeheer native in Business Central.',
                       publisher: {
                           '@type': 'Organization',
                           name: 'Emlinked',
@@ -306,25 +325,44 @@ export function VastgoedbeheerSoftwareModule({
                   },
                   {
                       '@type': 'FAQPage',
-                      '@id': `${DEFAULT_DOMAIN}/apps/vastgoedbeheer-software#faq`,
-                      mainEntity: [
-                          {
-                              '@type': 'Question',
-                              name: 'Hoe werkt de koppeling met Microsoft Dynamics 365 Business Central?',
-                              acceptedAnswer: {
-                                  '@type': 'Answer',
-                                  text: "Emlinked draait 100% native binnen Business Central. Dat betekent dat er geen losse API-koppeling of schaduwdatabase nodig is. Alle journaalposten, huurincasso's en indexaties ontstaan direct in je ERP-grootboek.",
-                              },
-                          },
-                          {
-                              '@type': 'Question',
-                              name: 'Hoe worden CBS CPI-indexaties geautomatiseerd?',
-                              acceptedAnswer: {
-                                  '@type': 'Answer',
-                                  text: 'De software leest automatisch de nieuwste indexcijfers in van het Centraal Bureau voor de Statistiek (CBS), herberekent de huurtermijnen en verstuurt desgewenst automatisch de indexatiebrieven per e-mail en huurdersportaal.',
-                              },
-                          },
-                      ],
+                      '@id': `${structuredDataUrl}#faq`,
+                      mainEntity: isEn
+                          ? [
+                                {
+                                    '@type': 'Question',
+                                    name: 'How does the integration with Microsoft Dynamics 365 Business Central work?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Emlinked runs 100% natively inside Business Central. That means there is no separate API connection or shadow database needed. All journal entries, rent collections, and indexations are created directly in your ERP general ledger.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'How are CPI rent indexations automated?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: "The software automatically reads the latest index figures from Statistics Netherlands (CBS), recalculates the rent amounts, and can automatically send indexation letters by email and tenant portal.",
+                                    },
+                                },
+                            ]
+                          : [
+                                {
+                                    '@type': 'Question',
+                                    name: 'Hoe werkt de koppeling met Microsoft Dynamics 365 Business Central?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: "Emlinked draait 100% native binnen Business Central. Dat betekent dat er geen losse API-koppeling of schaduwdatabase nodig is. Alle journaalposten, huurincasso's en indexaties ontstaan direct in je ERP-grootboek.",
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'Hoe worden CBS CPI-indexaties geautomatiseerd?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'De software leest automatisch de nieuwste indexcijfers in van het Centraal Bureau voor de Statistiek (CBS), herberekent de huurtermijnen en verstuurt desgewenst automatisch de indexatiebrieven per e-mail en huurdersportaal.',
+                                    },
+                                },
+                            ],
                   },
               ],
           });
@@ -333,7 +371,10 @@ export function VastgoedbeheerSoftwareModule({
         featureTabs[0]?.tabId ?? 'indexation',
     );
 
-    const renderHero = (block: any, key: any) => (
+    const renderHero = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         <React.Fragment key={key}>
             <HeroSection
                 locale={locale}
@@ -404,7 +445,10 @@ export function VastgoedbeheerSoftwareModule({
         </React.Fragment>
     );
 
-    const renderComparison = (block: any, key: any) => (
+    const renderComparison = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         <section
             key={key}
             className='px-6 py-20 bg-background text-navy-900 border-b border-teal/10 relative z-10'
@@ -464,7 +508,7 @@ export function VastgoedbeheerSoftwareModule({
                                 {comparisonBlock?.leftItems &&
                                 comparisonBlock.leftItems.length > 0 ? (
                                     comparisonBlock.leftItems.map(
-                                        (item: any, idx: number) => (
+                                        (item: ComparisonItemInput, idx: number) => (
                                             <li
                                                 key={idx}
                                                 className='flex items-start gap-3'
@@ -559,7 +603,7 @@ export function VastgoedbeheerSoftwareModule({
                                 {comparisonBlock?.rightItems &&
                                 comparisonBlock.rightItems.length > 0 ? (
                                     comparisonBlock.rightItems.map(
-                                        (item: any, idx: number) => (
+                                        (item: ComparisonItemInput, idx: number) => (
                                             <li
                                                 key={idx}
                                                 className='flex items-start gap-3'
@@ -633,7 +677,10 @@ export function VastgoedbeheerSoftwareModule({
         </section>
     );
 
-    const renderFeatureTabs = (block: any, key: any) => (
+    const renderFeatureTabs = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         <section
             key={key}
             className='py-20 px-6 bg-background text-navy-900 border-b border-teal/10 relative overflow-hidden'
@@ -759,7 +806,10 @@ export function VastgoedbeheerSoftwareModule({
         </section>
     );
 
-    const renderArchitecture = (block: any, key: any) => (
+    const renderArchitecture = (
+        block: ArchitectureBlockData,
+        key: string | number,
+    ) => (
         <section
             key={key}
             className='px-6 py-20 md:py-24 bg-background text-navy-900 border-b border-teal/10 relative z-10 overflow-hidden'
@@ -781,7 +831,7 @@ export function VastgoedbeheerSoftwareModule({
                         </p>
 
                         <div className='space-y-4 pt-2 ml-4'>
-                            {archBullets.map((bullet: any, bIdx: number) => (
+                            {archBullets.map((bullet: { bold: string; text: string }, bIdx: number) => (
                                 <div
                                     key={bIdx}
                                     className='flex items-start gap-3.5'
@@ -820,7 +870,10 @@ export function VastgoedbeheerSoftwareModule({
         </section>
     );
 
-    const renderCta = (block: any, key: any) => (
+    const renderCta = (
+        block: SolutionPageBlock,
+        key: string | number,
+    ) => (
         <section
             key={key}
             className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'
@@ -902,7 +955,7 @@ export function VastgoedbeheerSoftwareModule({
         </section>
     );
 
-    const blocksToRender =
+    const blocksToRender: SolutionPageBlock[] =
         pageBlocks.length > 0
             ? pageBlocks
             : [
@@ -923,22 +976,18 @@ export function VastgoedbeheerSoftwareModule({
                 />
             )}
 
-            {blocksToRender.map((block: any, idx: number) => {
+            {blocksToRender.map((block: SolutionPageBlock, idx: number) => {
                 const key = block._key || idx;
                 switch (block._type) {
                     case 'heroBlock':
-                    case 'hero':
                         return renderHero(block, key);
                     case 'comparisonBlock':
                         return renderComparison(block, key);
                     case 'featureTabsBlock':
                         return renderFeatureTabs(block, key);
                     case 'architectureBlock':
-                    case 'architectureSection':
                         return renderArchitecture(block, key);
                     case 'ctaBlock':
-                    case 'ctaBanner':
-                    case 'cta':
                         return renderCta(block, key);
                     default:
                         return null;

@@ -31,6 +31,20 @@ export const article = defineType({
       options: {
         source: 'title',
         maxLength: 96,
+        isUnique: async (slug, context) => {
+          const { document, getClient } = context;
+          if (!document) return true;
+          const client = getClient({ apiVersion: '2023-01-01' });
+          const id = document._id.replace(/^drafts\./, '');
+          const params = {
+            draft: `drafts.${id}`,
+            published: id,
+            slug,
+            language: (document as { language?: string }).language,
+          };
+          const query = `!defined(*[_type == "article" && !(_id in [$draft, $published]) && slug.current == $slug && language == $language][0]._id)`;
+          return await client.fetch(query, params);
+        },
       },
       validation: (Rule) => Rule.required(),
     }),

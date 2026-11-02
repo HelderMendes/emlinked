@@ -231,13 +231,35 @@ export default async function HomePage({ params }: HomePageProps) {
             },
             {
                 '@type': 'SoftwareApplication',
+                '@id': `${DEFAULT_DOMAIN}/#software`,
                 name: 'emlinked',
                 applicationCategory: 'BusinessApplication',
-                operatingSystem: 'Web',
+                operatingSystem: 'Microsoft Dynamics 365 Business Central',
                 url: DEFAULT_DOMAIN,
                 description: isEn
                     ? 'Manage your real estate portfolio natively inside Microsoft Dynamics 365 Business Central. No manual exports, automated CPI indexation and bank reconciliation.'
                     : 'Beheer uw vastgoedportefeuille native binnen Microsoft Dynamics 365 Business Central. Geen handmatige exports, wel geautomatiseerde CPI-indexaties en aflettering.',
+                featureList: isEn
+                    ? [
+                          'Property management and lease administration',
+                          'CPI and point-based (WWS) rent indexations and renewals',
+                          'Financial administration in Business Central',
+                          'Automated bank reconciliation (PSD2)',
+                          'Document processing via OCR (Document Capture, Peppol)',
+                          'Tenant portal',
+                          'Payment software with QR code and payment link',
+                      ]
+                    : [
+                          'Vastgoedbeheer en huurcontractbeheer',
+                          'CPI- en WWS-indexaties en huurprolongaties',
+                          'Financiële administratie in Business Central',
+                          'Automatische bankaflettering (PSD2)',
+                          'Documentverwerking via OCR (Document Capture, Peppol)',
+                          'Huurdersportaal',
+                          'Betaalsoftware met QR-code en betaallink',
+                      ],
+                publisher: { '@id': `${DEFAULT_DOMAIN}/#organization` },
+                inLanguage: isEn ? 'en-US' : 'nl-NL',
                 offers: {
                     '@type': 'Offer',
                     availability: 'https://schema.org/InStock',
