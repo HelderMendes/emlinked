@@ -1,11 +1,22 @@
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
 import { EMLINKED_LOGO_DATA_URI } from '@/lib/emailAssets';
 import { verifyRecaptcha } from '@/lib/recaptcha';
+import { escapeHtml, sanitizeSubjectText } from '@/lib/validation/quote';
+
+const demoRequestSchema = z.object({
+    name: z.string().trim().min(1).max(120),
+    email: z.string().trim().email().max(254),
+    phone: z.string().trim().max(40).optional().or(z.literal('')),
+    company: z.string().trim().max(150).optional().or(z.literal('')),
+    portfolioSize: z.string().trim().max(120).optional().or(z.literal('')),
+    message: z.string().trim().max(4000).optional().or(z.literal('')),
+});
 
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { name, email, phone, company, portfolioSize, message, recaptchaToken, action } = body;
+        const { recaptchaToken, action } = body;
 
         const ALLOWED_RECAPTCHA_ACTIONS = [
             'demo_request',
@@ -16,13 +27,16 @@ export async function POST(request: Request) {
             ? action
             : 'demo_request';
 
-        // 1. Basic validation
-        if (!name || !email) {
+        // 1. Validate & bound input fields
+        const parsed = demoRequestSchema.safeParse(body);
+        if (!parsed.success) {
             return NextResponse.json(
-                { error: 'Naam en e-mail zijn verplicht.' },
+                { error: 'Controleer of je naam en een geldig e-mailadres zijn ingevuld.' },
                 { status: 400 }
             );
         }
+
+        const { name, email, phone, company, portfolioSize, message } = parsed.data;
 
         // 2. Validate Google reCAPTCHA (v3, score-based)
         const recaptchaResult = await verifyRecaptcha(
@@ -50,6 +64,13 @@ export async function POST(request: Request) {
         const mailFrom = process.env.MAIL_FROM_EMAIL || 'info@helderdesign.nl';
         const mailFromName = process.env.MAIL_FROM_NAME || 'Emlinked';
 
+        const safeName = escapeHtml(name);
+        const safeEmail = escapeHtml(email);
+        const safePhone = escapeHtml(phone);
+        const safeCompany = escapeHtml(company);
+        const safePortfolioSize = escapeHtml(portfolioSize);
+        const safeMessage = escapeHtml(message);
+
         const emailHtml = `
             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #ffffff;">
                 <div style="text-align: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
@@ -61,32 +82,32 @@ export async function POST(request: Request) {
                 <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
                     <tr>
                         <td style="padding: 8px 0; font-weight: bold; color: #475569; width: 180px;">Naam:</td>
-                        <td style="padding: 8px 0; color: #0f172a;">${name}</td>
+                        <td style="padding: 8px 0; color: #0f172a;">${safeName}</td>
                     </tr>
                     <tr>
                         <td style="padding: 8px 0; font-weight: bold; color: #475569;">E-mailadres:</td>
-                        <td style="padding: 8px 0; color: #0f172a;"><a href="mailto:${email}">${email}</a></td>
+                        <td style="padding: 8px 0; color: #0f172a;"><a href="mailto:${safeEmail}">${safeEmail}</a></td>
                     </tr>
                     <tr>
                         <td style="padding: 8px 0; font-weight: bold; color: #475569;">Telefoonnummer:</td>
-                        <td style="padding: 8px 0; color: #0f172a;">${phone ? `<a href="tel:${phone}">${phone}</a>` : 'Niet ingevuld'}</td>
+                        <td style="padding: 8px 0; color: #0f172a;">${safePhone ? `<a href="tel:${safePhone}">${safePhone}</a>` : 'Niet ingevuld'}</td>
                     </tr>
                     <tr>
                         <td style="padding: 8px 0; font-weight: bold; color: #475569;">Organisatie:</td>
-                        <td style="padding: 8px 0; color: #0f172a;">${company || 'Niet ingevuld'}</td>
+                        <td style="padding: 8px 0; color: #0f172a;">${safeCompany || 'Niet ingevuld'}</td>
                     </tr>
                     <tr>
                         <td style="padding: 8px 0; font-weight: bold; color: #475569;">Portefeuille omvang:</td>
-                        <td style="padding: 8px 0; color: #0f172a;">${portfolioSize || 'Niet gespecificeerd'}</td>
+                        <td style="padding: 8px 0; color: #0f172a;">${safePortfolioSize || 'Niet gespecificeerd'}</td>
                     </tr>
                 </table>
                 
                 ${
-                    message
+                    safeMessage
                         ? `
                 <div style="margin-top: 20px; padding: 15px; background-color: #f8fafc; border-left: 4px solid #ff9400; border-radius: 4px;">
                     <p style="margin: 0 0 8px 0; font-weight: bold; color: #475569;">Bericht:</p>
-                    <p style="margin: 0; color: #0f172a; white-space: pre-wrap; font-size: 14px; line-height: 1.5;">${message}</p>
+                    <p style="margin: 0; color: #0f172a; white-space: pre-wrap; font-size: 14px; line-height: 1.5;">${safeMessage}</p>
                 </div>
                 `
                         : ''
@@ -98,6 +119,9 @@ export async function POST(request: Request) {
             </div>
         `;
 
+        const subjectName = sanitizeSubjectText(name);
+        const subjectCompany = sanitizeSubjectText(company) || 'Geen bedrijf';
+
         const resendRes = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
@@ -108,7 +132,7 @@ export async function POST(request: Request) {
                 from: `${mailFromName} <${mailFrom}>`,
                 to: mailTo,
                 reply_to: email,
-                subject: `Demo Aanvraag: ${name} (${company || 'Geen bedrijf'})`,
+                subject: `Demo Aanvraag: ${subjectName} (${subjectCompany})`,
                 html: emailHtml
             })
         });

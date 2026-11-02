@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
 import {
     createQuoteContactSchema,
+    escapeHtml,
     flattenQuoteContactErrors,
+    quoteCalculationPayloadSchema,
+    sanitizeSubjectText,
 } from '@/lib/validation/quote';
 import { EMLINKED_LOGO_DATA_URI } from '@/lib/emailAssets';
 import { verifyRecaptcha } from '@/lib/recaptcha';
@@ -18,13 +21,6 @@ export async function POST(request: Request) {
     try {
         const body = await request.json();
         const {
-            oneTimeItems = [],
-            monthlyItems = [],
-            baseMonthlyPrice = '€ 144,80',
-            monthlyAdditions = '€ 0,00',
-            supportFee = '€ 28,96',
-            totalOneTime = '€ 0,00',
-            totalMonthly = '€ 173,76',
             locale = 'nl',
             recaptchaToken,
         } = body;
@@ -69,7 +65,38 @@ export async function POST(request: Request) {
             );
         }
 
+        const calcParsed = quoteCalculationPayloadSchema.safeParse(body);
+        if (!calcParsed.success) {
+            return NextResponse.json(
+                {
+                    error: isEn
+                        ? 'Invalid calculation payload.'
+                        : 'Ongeldige offerteberekening.',
+                },
+                { status: 400 },
+            );
+        }
+
         const { name, email, phone, company } = parsed.data;
+        const {
+            oneTimeItems,
+            monthlyItems,
+            baseMonthlyPrice,
+            monthlyAdditions,
+            supportFee,
+            totalOneTime,
+            totalMonthly,
+        } = calcParsed.data;
+
+        const safeName = escapeHtml(name);
+        const safeEmail = escapeHtml(email);
+        const safePhone = escapeHtml(phone);
+        const safeCompany = escapeHtml(company);
+        const safeBaseMonthlyPrice = escapeHtml(baseMonthlyPrice);
+        const safeMonthlyAdditions = escapeHtml(monthlyAdditions);
+        const safeSupportFee = escapeHtml(supportFee);
+        const safeTotalOneTime = escapeHtml(totalOneTime);
+        const safeTotalMonthly = escapeHtml(totalMonthly);
 
         const resendApiKey = process.env.RESEND_API_KEY;
         if (!resendApiKey) {
@@ -90,11 +117,11 @@ export async function POST(request: Request) {
         const renderItemRow = (item: SelectedItem, accentColor: string) => `
             <tr style="border-bottom: 1px solid #e2e8f0;">
                 <td style="padding: 8px 0; color: #0f1329;">
-                    <strong>${item.category}</strong>
-                    ${item.label ? `<br/><span style="color: ${accentColor}; font-size: 12px;">• ${item.label}</span>` : ''}
+                    <strong>${escapeHtml(item.category)}</strong>
+                    ${item.label ? `<br/><span style="color: ${accentColor}; font-size: 12px;">• ${escapeHtml(item.label)}</span>` : ''}
                 </td>
                 <td style="padding: 8px 0; text-align: right; font-weight: bold; color: #0f1329;">
-                    ${item.priceFormatted}
+                    ${escapeHtml(item.priceFormatted)}
                 </td>
             </tr>
         `;
@@ -121,19 +148,19 @@ export async function POST(request: Request) {
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px;">
                     <tr>
                         <td style="padding: 4px 12px; font-weight: bold; color: #545b83; width: 140px;">Naam:</td>
-                        <td style="padding: 4px 12px; color: #0f1329;">${name}</td>
+                        <td style="padding: 4px 12px; color: #0f1329;">${safeName}</td>
                     </tr>
                     <tr>
                         <td style="padding: 4px 12px; font-weight: bold; color: #545b83;">E-mailadres:</td>
-                        <td style="padding: 4px 12px; color: #0f1329;"><a href="mailto:${email}" style="color: #00b3b3; text-decoration: none;">${email}</a></td>
+                        <td style="padding: 4px 12px; color: #0f1329;"><a href="mailto:${safeEmail}" style="color: #00b3b3; text-decoration: none;">${safeEmail}</a></td>
                     </tr>
                     <tr>
                         <td style="padding: 4px 12px; font-weight: bold; color: #545b83;">Telefoon:</td>
-                        <td style="padding: 4px 12px; color: #0f1329;">${phone ? `<a href="tel:${phone}" style="color: #0f1329;">${phone}</a>` : 'Niet opgegeven'}</td>
+                        <td style="padding: 4px 12px; color: #0f1329;">${safePhone ? `<a href="tel:${safePhone}" style="color: #0f1329;">${safePhone}</a>` : 'Niet opgegeven'}</td>
                     </tr>
                     <tr>
                         <td style="padding: 4px 12px 8px; font-weight: bold; color: #545b83;">Bedrijf:</td>
-                        <td style="padding: 4px 12px 8px; color: #0f1329;">${company || 'Niet opgegeven'}</td>
+                        <td style="padding: 4px 12px 8px; color: #0f1329;">${safeCompany || 'Niet opgegeven'}</td>
                     </tr>
                 </table>
 
@@ -149,7 +176,7 @@ export async function POST(request: Request) {
                     </table>
                     <div style="display: flex; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid #cbd5e1;">
                         <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; color: #475569;">Totaal – Eenmalige Kosten</span>
-                        <span style="font-size: 13px; font-weight: bold; color: #0f1329;">${totalOneTime}</span>
+                        <span style="font-size: 13px; font-weight: bold; color: #0f1329;">${safeTotalOneTime}</span>
                     </div>
                 </div>
                 `
@@ -182,19 +209,19 @@ export async function POST(request: Request) {
                     <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3; margin-bottom: 10px;">Maandelijks Abonnement</div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
                         <span>emlinked Basis Maand Abonnement:</span>
-                        <span>${baseMonthlyPrice}</span>
+                        <span>${safeBaseMonthlyPrice}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
                         <span>Extra Maandelijke Diensten:</span>
-                        <span>${monthlyAdditions}</span>
+                        <span>${safeMonthlyAdditions}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; color: #00b3b3; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">
                         <span>Support Fee (20%):</span>
-                        <span>${supportFee}</span>
+                        <span>${safeSupportFee}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; color: #0f1329; pt: 4px;">
                         <span>TOTAAL MAAND ABONNEMENT:</span>
-                        <span>${totalMonthly} / mnd</span>
+                        <span>${safeTotalMonthly} / mnd</span>
                     </div>
                 </div>
                 `
@@ -208,13 +235,15 @@ export async function POST(request: Request) {
         `;
 
         // ── 2. CONFIRMATION EMAIL TO PROSPECT ──
+        const subjectMonthly = sanitizeSubjectText(totalMonthly);
+        const subjectOneTime = sanitizeSubjectText(totalOneTime);
         const prospectSubject = monthlyItemsHtml
             ? isEn
-                ? `Your emlinked Pricing Calculation - ${totalMonthly} / mo`
-                : `Je emlinked Offerte Berekening - ${totalMonthly} / mnd`
+                ? `Your emlinked Pricing Calculation - ${subjectMonthly} / mo`
+                : `Je emlinked Offerte Berekening - ${subjectMonthly} / mnd`
             : isEn
-              ? `Your emlinked Order Confirmation - ${totalOneTime}`
-              : `Je emlinked Bestelbevestiging - ${totalOneTime}`;
+              ? `Your emlinked Order Confirmation - ${subjectOneTime}`
+              : `Je emlinked Bestelbevestiging - ${subjectOneTime}`;
 
         const prospectEmailHtml = `
             <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; padding: 24px; border: 1px solid #ccffff; border-radius: 12px; background-color: #fbfaf9;">
@@ -226,7 +255,7 @@ export async function POST(request: Request) {
                         ${isEn ? 'Your Personal emlinked Quote' : 'Je Persoonlijke emlinked Offerte'}
                     </h2>
                     <p style="color: #545b83; font-size: 14px; margin: 6px 0 0 0;">
-                        ${isEn ? `Beste ${name}, thank you for your request.` : `Beste ${name}, bedankt voor je aanvraag.`}
+                        ${isEn ? `Dear ${safeName}, thank you for your request.` : `Beste ${safeName}, bedankt voor je aanvraag.`}
                     </p>
                 </div>
 
@@ -266,7 +295,7 @@ export async function POST(request: Request) {
                         <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; color: #475569;">
                             ${isEn ? 'Total One-time Costs' : 'Totaal – Eenmalige Kosten'}
                         </span>
-                        <span style="font-size: 13px; font-weight: bold; color: #0f1329;">${totalOneTime}</span>
+                        <span style="font-size: 13px; font-weight: bold; color: #0f1329;">${safeTotalOneTime}</span>
                     </div>
                 </div>
                 `
@@ -303,19 +332,19 @@ export async function POST(request: Request) {
                     </div>
                     <div style="margin-bottom: 8px; font-size: 13px; color: #1c234f;">
                         <span>${isEn ? 'Base Monthly Subscription:' : 'emlinked Basis Maand Abonnement:'}</span>
-                        <span style="float: right; font-weight: bold;">${baseMonthlyPrice}</span>
+                        <span style="float: right; font-weight: bold;">${safeBaseMonthlyPrice}</span>
                     </div>
                     <div style="margin-bottom: 8px; font-size: 13px; color: #1c234f;">
                         <span>${isEn ? 'Monthly Subscriptions – Extra Services:' : 'Maand Abonnement – Extra Diensten:'}</span>
-                        <span style="float: right; font-weight: bold;">${monthlyAdditions}</span>
+                        <span style="float: right; font-weight: bold;">${safeMonthlyAdditions}</span>
                     </div>
                     <div style="margin-bottom: 12px; font-size: 13px; color: #00b3b3; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px;">
                         <span>Support fee (20%):</span>
-                        <span style="float: right; font-weight: bold;">${supportFee}</span>
+                        <span style="float: right; font-weight: bold;">${safeSupportFee}</span>
                     </div>
                     <div style="font-size: 18px; font-weight: bold; color: #0f1329; padding-top: 4px;">
                         <span>${isEn ? 'TOTAL MONTHLY SUBSCRIPTION:' : 'TOTAAL MAAND ABONNEMENT:'}</span>
-                        <span style="float: right;">${totalMonthly} / mnd</span>
+                        <span style="float: right;">${safeTotalMonthly} / mnd</span>
                     </div>
                 </div>
                 `
@@ -335,6 +364,7 @@ export async function POST(request: Request) {
         `;
 
         // Send Email 1 (to Admin)
+        const adminSubjectTarget = sanitizeSubjectText(company || name);
         const resendAdminRes = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
@@ -345,7 +375,7 @@ export async function POST(request: Request) {
                 from: `${mailFromName} Calculator <${mailFrom}>`,
                 to: adminEmail,
                 reply_to: email,
-                subject: `Nieuwe Offerte Berekening: ${company || name}`,
+                subject: `Nieuwe Offerte Berekening: ${adminSubjectTarget}`,
                 html: adminEmailHtml,
             }),
         });

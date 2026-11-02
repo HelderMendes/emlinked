@@ -31,16 +31,28 @@ export default function LoginPage({ params }: LoginPageProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const callbackUrl = searchParams.get('callbackUrl') || '/docs';
+    const rawCallbackUrl = searchParams.get('callbackUrl');
+    const callbackUrl =
+        rawCallbackUrl &&
+        rawCallbackUrl.startsWith('/') &&
+        !rawCallbackUrl.startsWith('//') &&
+        !rawCallbackUrl.startsWith('/\\')
+            ? rawCallbackUrl
+            : '/docs';
     const t = content[locale as 'nl' | 'en'] || content.nl;
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Set cookie valid for 1 hour
-        document.cookie = 'emlinked_session=true; path=/; max-age=3600';
+        // Set cookie valid for 1 hour with SameSite protection
+        const secureFlag =
+            typeof window !== 'undefined' &&
+            window.location.protocol === 'https:'
+                ? '; Secure'
+                : '';
+        document.cookie = `emlinked_session=true; path=/; max-age=3600; SameSite=Lax${secureFlag}`;
 
-        // Redirect back to callback URL
+        // Redirect back to validated internal callback URL
         router.push(callbackUrl);
     };
 

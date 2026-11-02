@@ -13,8 +13,15 @@ interface ColorIconProps {
 
 const svgCache = new Map<string, string>();
 
-function recolor(svgMarkup: string): string {
+function sanitizeAndRecolorSvg(svgMarkup: string): string | null {
+    if (!/<svg[\s>]/i.test(svgMarkup)) {
+        return null;
+    }
     return svgMarkup
+        .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
+        .replace(/<foreignObject[\s\S]*?>[\s\S]*?<\/foreignObject>/gi, '')
+        .replace(/\son[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+        .replace(/(?:href|xlink:href)\s*=\s*(?:"\s*javascript:[^"]*"|'\s*javascript:[^']*')/gi, '')
         .replace(/fill="(?!none")[^"]*"/gi, '')
         .replace(/stroke="(?!none")[^"]*"/gi, '')
         .replace(/<svg /i, '<svg fill="currentColor" ');
@@ -49,7 +56,8 @@ export function ColorIcon({
         fetch(src)
             .then((res) => res.text())
             .then((text) => {
-                const colored = recolor(text);
+                const colored = sanitizeAndRecolorSvg(text);
+                if (!colored) return;
                 svgCache.set(src, colored);
                 if (!cancelled) setInlineSvg(colored);
             })

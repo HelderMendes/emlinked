@@ -15,7 +15,6 @@ export function proxy(request: NextRequest) {
         pathname.startsWith('/api') ||
         pathname.startsWith('/_next') ||
         pathname.startsWith('/studio') ||
-        pathname.startsWith('/docs') || // Bypasses locale prefixing for documentation
         pathname.includes('.') // matches favicon.ico, sitemap.xml, robots.txt, images, etc.
     ) {
         return NextResponse.next();
@@ -114,6 +113,9 @@ export function proxy(request: NextRequest) {
             );
             return NextResponse.redirect(loginUrl, 307);
         }
+
+        // Authenticated /docs requests bypass locale prefixing
+        return NextResponse.next();
     }
 
     // 4. Default Language Bypass & Locale Routing

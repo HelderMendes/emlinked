@@ -20,6 +20,18 @@ export async function verifyRecaptcha(
 > {
     const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
     if (!recaptchaSecret) {
+        if (process.env.NODE_ENV === 'production') {
+            console.error(
+                'RECAPTCHA_SECRET_KEY is missing in production environment.',
+            );
+            return {
+                success: false,
+                error: isEn
+                    ? 'Security verification is currently unavailable.'
+                    : 'Beveiligingsverificatie is momenteel niet beschikbaar.',
+                status: 503,
+            };
+        }
         return { success: true, score: 1 };
     }
 
@@ -34,8 +46,20 @@ export async function verifyRecaptcha(
     }
 
     try {
-        const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${token}`;
-        const verifyRes = await fetch(verifyUrl, { method: 'POST' });
+        const params = new URLSearchParams({
+            secret: recaptchaSecret,
+            response: token,
+        });
+        const verifyRes = await fetch(
+            'https://www.google.com/recaptcha/api/siteverify',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: params.toString(),
+            },
+        );
         const verifyJson = await verifyRes.json();
 
         if (!verifyJson.success) {
