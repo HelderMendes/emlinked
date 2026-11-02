@@ -213,5 +213,142 @@
     "/team": {
         "destination": "/over-ons",
         "status": 301
+    },
+
+    "/over-emlinked/vastgoedadministratie-software-referenties": {
+        "destination": "/referenties",
+        "status": 301
+    },
+    "/over-emlinked": {
+        "destination": "/over-ons",
+        "status": 301
+    },
+    "/over-emlinked/contact": {
+        "destination": "/contact",
+        "status": 301
+    },
+    "/over-ons/contact": {
+        "destination": "/contact",
+        "status": 301
+    },
+    "/over-emlinked/emlinked-team": {
+        "destination": "/over-ons",
+        "status": 301
+    },
+    "/vastgoedbeheer-software": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/software-oplossingen-voor-vastgoed-management/huurdersportaal": {
+        "destination": "/apps/huurdersportaal",
+        "status": 301
+    },
+    "/software-oplossingen/huurdersportaal": {
+        "destination": "/apps/huurdersportaal",
+        "status": 301
+    },
+    "/prijzen-vastgoed-beheer-software": {
+        "destination": "/prijzen",
+        "status": 301
+    },
+    "/diensten/strippenkaart": {
+        "destination": "/prijzen",
+        "status": 301
+    },
+    "/diensten/support_dienst": {
+        "destination": "/prijzen",
+        "status": 301
+    },
+    "/diensten/support": {
+        "destination": "/prijzen",
+        "status": 301
+    },
+    "/diensten": {
+        "destination": "/apps",
+        "status": 301
+    },
+    "/software-oplossingen-voor-vastgoed-management": {
+        "destination": "/apps",
+        "status": 301
+    },
+    "/software-oplossingen-voor-vastgoed-management/integrale-oplossingen": {
+        "destination": "/apps",
+        "status": 301
+    },
+    "/software-oplossingen/integrale-oplossingen": {
+        "destination": "/apps",
+        "status": 301
+    },
+    "/vastgoedadministratie-software": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/vastgoedmanagement-software": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/software-oplossingen-voor-vastgoed-management/administratief_beheer": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/diensten/administratie": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/software-oplossingen-voor-vastgoed-management/contract-beheer": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/software-oplossingen/contract-beheer": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/software-oplossingen-voor-vastgoed-management/portefeuille-beheer": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/software-oplossingen/portefeuille-beheer": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/diensten/vastgoedportefeuille_administratie": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/diensten/training-en-advies": {
+        "destination": "/contact",
+        "status": 301
+    },
+    "/help-en-ondersteuning": {
+        "destination": "/help",
+        "status": 301
+    },
+    "/disclaimer-en-privacy-statement": {
+        "destination": "/privacybeleid",
+        "status": 301
+    },
+    "/disclaimer-en-privacy-statemen": {
+        "destination": "/privacybeleid",
+        "status": 301
+    },
+    "/mijn-emlinked/welkom-mijn-emlinked": {
+        "destination": "/login",
+        "status": 301
+    },
+    "/mijn-emlinked/belangrijk-nieuws": {
+        "destination": "/login",
+        "status": 301
+    },
+    "/mijn-emlinked/handleiding-emlinked": {
+        "destination": "/login",
+        "status": 301
+    },
+    "/cbs-wijzigt-consumentenprijsindex-cpi-2": {
+        "destination": "/nieuws/cbs-wijzigt-consumentenprijsindex-cpi",
+        "status": 301
+    },
+    "/onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked": {
+        "destination": "/nieuws/our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked",
+        "status": 301
     }
 }
