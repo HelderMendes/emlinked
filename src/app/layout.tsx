@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { client } from '@/sanity/client';
+import { GoogleAnalytics } from '@/components/GoogleAnalytics';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import './globals.css';
 import { Inter } from "next/font/google";
@@ -106,6 +107,7 @@ export default async function RootLayout({
             suppressHydrationWarning
         >
             <body className='min-h-full flex flex-col'>
+                <GoogleAnalytics />
                 <ThemeProvider
                     attribute='class'
                     defaultTheme='light'
