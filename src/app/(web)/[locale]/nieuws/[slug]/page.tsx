@@ -19,8 +19,7 @@ import { getImageUrl } from '@/sanity/image';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { GlowingLink } from '@/components/ui/GlowingButton';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 const portableTextComponents: PortableTextComponents = {
     marks: {
@@ -421,6 +420,236 @@ function extractFaqFromBody(
     return faqs;
 }
 
+function getCuratedArticleFaqs(
+    slug: string,
+    isEn: boolean,
+): Array<{ question: string; answer: string }> {
+    const s = slug.toLowerCase();
+    if (s.includes('box-3') || s.includes('box3')) {
+        return isEn
+            ? [
+                  {
+                      question:
+                          'How does the Dutch Box 3 rebuttal scheme (tegenbewijsregeling) impact real estate investors?',
+                      answer:
+                          'Real estate investors can report their actual return instead of the statutory deemed return if their actual yield (rental income plus WOZ value change) is lower than the flat-rate assessment.',
+                  },
+                  {
+                      question:
+                          'Why is object-level accounting inside Business Central important for Box 3?',
+                      answer:
+                          'emlinked records rental revenue, vacancy, and maintenance invoices directly per property unit inside Microsoft Dynamics 365 Business Central, creating an audit-ready file for the Dutch Tax Administration.',
+                  },
+              ]
+            : [
+                  {
+                      question:
+                          'Wat houdt de Box 3-tegenbewijsregeling en Wet werkelijk rendement in voor vastgoedbeleggers?',
+                      answer:
+                          'Vastgoedbeleggers mogen hun werkelijk behaalde rendement (huurinkomsten plus WOZ-waardeontwikkeling) aantonen wanneer dit lager ligt dan het forfaitaire rendement van de Belastingdienst.',
+                  },
+                  {
+                      question:
+                          'Waarom is registratie op objectniveau in Business Central essentieel voor Box 3?',
+                      answer:
+                          'emlinked legt huuropbrengsten, leegstand en onderhoudskosten direct per pand en eenheid vast in Microsoft Dynamics 365 Business Central, zodat je een sluitend fiscaal dossier opbouwt.',
+                  },
+              ];
+    }
+    if (s.includes('goed-verhuurderschap') || s.includes('good-landlordship')) {
+        return isEn
+            ? [
+                  {
+                      question:
+                          'What does the Dutch Good Landlordship Act require from property managers?',
+                      answer:
+                          'The Act enforces written transparency on tenant rights, a transparent breakdown of annual service charges, and documented complaint handlingprocedures, backed by municipal fines for non-compliance.',
+                  },
+                  {
+                      question:
+                          'How does emlinked support compliance with the Good Landlordship Act?',
+                      answer:
+                          'emlinked centralizes lease agreements, automates itemized service charge reconciliations, and logs all tenant communications and maintenance tickets via the 24/7 Tenant Portal.',
+                  },
+              ]
+            : [
+                  {
+                      question:
+                          'Wat verplicht de Wet goed verhuurderschap voor vastgoedbeheerders?',
+                      answer:
+                          'De wet verplicht verhuurders en beheerders tot schriftelijke informatieplicht, transparante specificatie van servicekosten en een vastgelegde klachten- en meldingsprocedure.',
+                  },
+                  {
+                      question:
+                          'Hoe ondersteunt emlinked naleving van de Wet goed verhuurderschap?',
+                      answer:
+                          'emlinked centraliseert huurdossiers, automatiseert gespecificeerde servicekostenafrekeningen en legt alle communicatie en meldingen vast via het 24/7 Huurdersportaal.',
+                  },
+              ];
+    }
+    if (s.includes('cpi') || s.includes('consumentenprijsindex')) {
+        return isEn
+            ? [
+                  {
+                      question:
+                          'How does CBS CPI calculation impact annual rent indexation?',
+                      answer:
+                          'Statistics Netherlands (CBS) updates its methodology for energy and housing weights in the Consumer Price Index (CPI), directly determining the statutory and contractual rent indexation percentages.',
+                  },
+                  {
+                      question:
+                          'Can rent indexation letters be automated in Business Central?',
+                      answer:
+                          'Yes. emlinked imports CBS CPI series directly into Microsoft Dynamics 365 Business Central, calculates the new rent per lease, and distributes indexation notices automatically.',
+                  },
+              ]
+            : [
+                  {
+                      question:
+                          'Wat betekent de gewijzigde CBS CPI-methodiek voor de jaarlijkse huurindexatie?',
+                      answer:
+                          'Het Centraal Bureau voor de Statistiek (CBS) actualiseert de weging binnen de consumentenprijsindex (CPI), wat direct doorwerkt in de wettelijke en contractuele huurprijsindexering.',
+                  },
+                  {
+                      question:
+                          'Kun je huurindexatie en aanzeggingsbrieven automatiseren in Business Central?',
+                      answer:
+                          'Ja. emlinked leest de CBS CPI-reeks direct in binnen Microsoft Dynamics 365 Business Central, berekent de nieuwe huurtermijnen per contract en verstuurt automatisch de indexatiebrieven.',
+                  },
+              ];
+    }
+    if (
+        s.includes('direct-banking') ||
+        s.includes('incasso') ||
+        s.includes('debt-collection') ||
+        s.includes('direct-debit')
+    ) {
+        return isEn
+            ? [
+                  {
+                      question:
+                          'How does automated SEPA direct debit and bank reconciliation work in Business Central?',
+                      answer:
+                          'emlinked Payment Software and Direct Banking generate SEPA direct debit batches automatically and match incoming bank statements directly against open tenant ledger entries in Business Central.',
+                  },
+                  {
+                      question:
+                          'How are reversals (storneringen) and reminders handled?',
+                      answer:
+                          'Unpaid or reversed direct debits are flagged automatically in the debtor ledger, triggering structured payment reminders with a complete audit trail.',
+                  },
+              ]
+            : [
+                  {
+                      question:
+                          'Hoe werkt automatische SEPA-incasso en bankaflettering in Business Central?',
+                      answer:
+                          'emlinked Payment Software en Direct Banking genereren automatisch SEPA-incassobatches en letteren binnengekomen bankafschriften direct af tegen openstaande huurposten in Business Central.',
+                  },
+                  {
+                      question:
+                          'Hoe worden storneringen en betalingsherinneringen opgevolgd?',
+                      answer:
+                          'Gestorneerde incasso’s en onbetaalde huurtermijnen worden direct zichtbaar op de debiteurenkaart, waarna je gestructureerd herinneringen en aanmaningen verstuurt.',
+                  },
+              ];
+    }
+    if (s.includes('huurdersportaal') || s.includes('tenant-portal')) {
+        return isEn
+            ? [
+                  {
+                      question:
+                          'What can tenants arrange themselves in the emlinked Tenant Portal?',
+                      answer:
+                          'Tenants can view lease agreements and invoices 24/7, pay open balances online, update contact details, and submit maintenance requests with photos directly synced to Business Central.',
+                  },
+              ]
+            : [
+                  {
+                      question:
+                          'Wat kunnen huurders zelf regelen in het emlinked Huurdersportaal?',
+                      answer:
+                          'Huurders kunnen 24/7 hun huurcontracten en facturen inzien, direct online betalen, contactgegevens wijzigen en servicemeldingen met foto’s indienen die realtime in Business Central landen.',
+                  },
+              ];
+    }
+    if (s.includes('huurcontract') || s.includes('lease-agreements')) {
+        return isEn
+            ? [
+                  {
+                      question:
+                          'What is the impact of the Dutch Fixed Rental Contracts Act on property managers?',
+                      answer:
+                          'Permanent lease agreements are once again the statutory standard for residential rentals in the Netherlands, requiring strict tracking of statutory exceptions and notice deadlines.',
+                  },
+              ]
+            : [
+                  {
+                      question:
+                          'Wat verandert de Wet vaste huurcontracten voor vastgoedbeheerders?',
+                      answer:
+                          'Vaste huurcontracten voor onbepaalde tijd zijn weer de wettelijke norm voor woonruimte, waardoor strakke bewaking van wettelijke uitzonderingen en opzegtermijnen in je contractbeheer cruciaal is.',
+                  },
+              ];
+    }
+    return [];
+}
+
+function getContextualSolutionLink(
+    slug: string,
+    category: string | undefined,
+    isEn: boolean,
+): { href: string; label: string; description: string } {
+    const s = slug.toLowerCase();
+    if (s.includes('box-3') || s.includes('box3')) {
+        return {
+            href: isEn ? '/en/box3-check' : '/box3-check',
+            label: isEn ? 'Run the free Box 3 Check' : 'Doe de gratis Box 3 Check',
+            description: isEn
+                ? 'Calculate the actual return impact on your real estate portfolio immediately.'
+                : 'Bereken direct de impact van de Wet werkelijk rendement op jouw vastgoedportefeuille.',
+        };
+    }
+    if (s.includes('huurdersportaal') || s.includes('tenant-portal')) {
+        return {
+            href: isEn ? '/en/apps/tenant-portal' : '/apps/huurdersportaal',
+            label: isEn ? 'Explore the Tenant Portal' : 'Bekijk het Huurdersportaal',
+            description: isEn
+                ? 'Discover how 24/7 tenant self-service integrates natively with Business Central.'
+                : 'Ontdek hoe 24/7 zelfservice voor huurders direct samenwerkt met Business Central.',
+        };
+    }
+    if (
+        s.includes('direct-banking') ||
+        s.includes('incasso') ||
+        s.includes('debt-collection') ||
+        s.includes('direct-debit')
+    ) {
+        return {
+            href: isEn
+                ? '/en/apps/payment-software'
+                : '/apps/payment-software',
+            label: isEn
+                ? 'Explore Payment Software'
+                : 'Bekijk de Payment Software',
+            description: isEn
+                ? 'Automate SEPA direct debits, payment files, and bank reconciliation in Business Central.'
+                : 'Automatiseer SEPA-incasso, betaalbestanden en bankaflettering in Business Central.',
+        };
+    }
+    return {
+        href: isEn
+            ? '/en/apps/property-management-software'
+            : '/apps/vastgoedbeheer-software',
+        label: isEn
+            ? 'Explore Property Management Software'
+            : 'Bekijk Vastgoedbeheer Software',
+        description: isEn
+            ? 'Discover how emlinked automates lease management, CPI indexations, and financials inside Microsoft Business Central.'
+            : 'Ontdek hoe emlinked contractbeheer, CBS-indexaties en financiële administratie automatiseert in Microsoft Business Central.',
+    };
+}
+
 function calculateReadTime(
     body: any,
     isEn: boolean,
@@ -476,7 +705,15 @@ export default async function ArticleDetailPage({
         article.readTime,
     );
 
-    const articleFaqs = extractFaqFromBody(article.body);
+    const bodyFaqs = extractFaqFromBody(article.body);
+    const curatedFaqs =
+        bodyFaqs.length === 0 ? getCuratedArticleFaqs(slug, isEn) : [];
+    const articleFaqs = bodyFaqs.length > 0 ? bodyFaqs : curatedFaqs;
+    const solutionLink = getContextualSolutionLink(
+        slug,
+        article.category,
+        isEn,
+    );
 
     const jsonLdData = JSON.stringify({
         '@context': 'https://schema.org',
@@ -520,7 +757,7 @@ export default async function ArticleDetailPage({
     });
 
     return (
-        <main className='flex-1 bg-background text-foreground relative overflow-hidden'>
+        <div className='flex-1 bg-background text-foreground relative overflow-hidden'>
             {/* Inject JSON-LD */}
             <script
                 type='application/ld+json'
@@ -670,14 +907,14 @@ export default async function ArticleDetailPage({
 
                 {/* Article Key Takeaways Card */}
                 <div className='rounded-xl border border-teal/30 bg-teal/5 p-6 md:p-8 space-y-4'>
-                    <h4 className='font-bold text-lg text-darkblue flex items-center gap-2'>
+                    <h2 className='font-bold text-lg text-darkblue flex items-center gap-2'>
                         <Sparkles className='w-5 h-5 text-teal' />
                         <span>
                             {isEn
                                 ? 'Key Takeaways for Real Estate Managers'
                                 : 'Belangrijkste inzichten voor vastgoedbeheerders'}
                         </span>
-                    </h4>
+                    </h2>
                     <ul className='space-y-2 text-xs md:text-sm text-slate-700'>
                         {article.keyTakeaways &&
                         Array.isArray(article.keyTakeaways) &&
@@ -715,17 +952,68 @@ export default async function ArticleDetailPage({
                         )}
                     </ul>
                 </div>
+
+                {/* Visible Curated FAQ Section for AEO/GEO & Schema Parity */}
+                {curatedFaqs.length > 0 && (
+                    <section
+                        aria-labelledby='article-faq-heading'
+                        className='rounded-xl border border-slate-200 bg-white p-6 md:p-8 space-y-5'
+                    >
+                        <h2
+                            id='article-faq-heading'
+                            className='font-display font-bold text-xl text-darkblue'
+                        >
+                            {isEn
+                                ? 'Frequently asked questions'
+                                : 'Veelgestelde vragen'}
+                        </h2>
+                        <div className='space-y-4'>
+                            {curatedFaqs.map((faq, idx) => (
+                                <div
+                                    key={idx}
+                                    className='border-b border-slate-100 last:border-b-0 pb-4 last:pb-0 space-y-1.5'
+                                >
+                                    <h3 className='font-semibold text-base text-slate-900'>
+                                        {faq.question}
+                                    </h3>
+                                    <p className='text-sm md:text-base text-slate-600 font-light leading-relaxed'>
+                                        {faq.answer}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {/* Contextual Solution Internal Link Card */}
+                <div className='rounded-xl border border-navy-900/15 bg-slate-50 p-6 md:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6'>
+                    <div className='space-y-1.5'>
+                        <h2 className='font-display font-bold text-lg text-darkblue'>
+                            {solutionLink.label}
+                        </h2>
+                        <p className='text-sm text-slate-600 font-light'>
+                            {solutionLink.description}
+                        </p>
+                    </div>
+                    <Link
+                        href={solutionLink.href}
+                        className='inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-navy-900 text-white text-xs font-semibold hover:bg-teal transition-all duration-200 ease-out shrink-0'
+                    >
+                        <span>{solutionLink.label}</span>
+                        <ArrowRight className='w-4 h-4' />
+                    </Link>
+                </div>
             </article>
 
             {/* ── RELATED ARTICLES GRID ── */}
             {relatedArticles.length > 0 && (
                 <section className='px-6 py-16 max-w-7xl mx-auto border-t border-slate-200 space-y-8'>
                     <div className='text-left space-y-2'>
-                        <h3 className='font-display font-bold text-2xl text-darkblue'>
+                        <h2 className='font-display font-bold text-2xl text-darkblue'>
                             {isEn
                                 ? 'Related Articles'
                                 : 'Gerelateerde Artikelen'}
-                        </h3>
+                        </h2>
                         <p className='text-xs text-slate-600 font-light'>
                             {isEn
                                 ? 'Explore more insights from our team.'
@@ -755,7 +1043,7 @@ export default async function ArticleDetailPage({
                                         />
                                     </div>
                                     <div className='p-6 space-y-3 flex-1 flex flex-col justify-between'>
-                                        <h4 className='font-bold text-base text-darkblue group-hover:text-teal transition-colors line-clamp-2'>
+                                        <h3 className='font-bold text-base text-darkblue group-hover:text-teal transition-colors line-clamp-2'>
                                             <Link
                                                 href={
                                                     isEn
@@ -765,7 +1053,7 @@ export default async function ArticleDetailPage({
                                             >
                                                 {rel.title}
                                             </Link>
-                                        </h4>
+                                        </h3>
                                         <p className='text-[0.95rem] text-slate-600 font-light'>
                                             {rel.excerpt}
                                         </p>
@@ -791,6 +1079,6 @@ export default async function ArticleDetailPage({
                     </div>
                 </section>
             )}
-        </main>
+        </div>
     );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { client } from '@/sanity/client';
+import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { PricingCalculator } from '@/components/PricingCalculator';
 import { StrippenkaartenSection } from '@/components/StrippenkaartenSection';
@@ -12,14 +12,16 @@ import { getImageUrl } from '@/sanity/image';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
 import { Badge } from '@/components/ui/Badge';
 
+export const revalidate = 60;
+
 interface PricingPageProps {
     params: Promise<{ locale: string }>;
 }
 
 async function getSanityPageData(locale: string) {
     try {
-        return await client.fetch(
-            `*[_type == "page" && (slug.current == "/prijzen" || slug.current == "prijzen" || slug.current == "pricing" || slug.current == "/pricing" || _id == "page-prijzen-" + $locale) && language == $locale][0] {
+        return await sanityFetch<any>({
+            query: `*[_type == "page" && (slug.current == "/prijzen" || slug.current == "prijzen" || slug.current == "pricing" || slug.current == "/pricing" || _id == "page-prijzen-" + $locale) && language == $locale][0] {
                 title,
                 pageBlocks[] {
                     ...,
@@ -36,12 +38,12 @@ async function getSanityPageData(locale: string) {
                     seoTitle,
                     seoDescription,
                     canonical,
-                    noIndex
+                    noIndex,
+                    structuredData
                 }
             }`,
-            { locale },
-            { cache: 'no-store' },
-        );
+            params: { locale },
+        });
     } catch (e) {
         console.error('Failed to fetch pricing page from Sanity:', e);
         return null;
@@ -313,8 +315,132 @@ export default async function PricingPage({ params }: PricingPageProps) {
         );
     };
 
+    const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/pricing' : '/prijzen'}`;
+    const jsonLdData = pageData?.seo?.structuredData
+        ? typeof pageData.seo.structuredData === 'string'
+            ? pageData.seo.structuredData
+            : JSON.stringify(pageData.seo.structuredData)
+        : JSON.stringify({
+              '@context': 'https://schema.org',
+              '@graph': [
+                  {
+                      '@type': 'WebPage',
+                      '@id': `${canonicalPageUrl}#webpage`,
+                      url: canonicalPageUrl,
+                      name: isEn
+                          ? 'Transparent Pricing & Rates | emlinked'
+                          : 'Transparante Prijzen & Tarieven | emlinked',
+                      description: isEn
+                          ? 'Easily calculate the monthly costs for your property management. Transparent subscription based on contract count, with flexible scaling.'
+                          : 'Bereken eenvoudig de maandelijkse kosten voor jouw vastgoedbeheer. Transparant abonnement gebaseerd op het aantal contracten, met flexibele opschaling.',
+                      inLanguage: isEn ? 'en-US' : 'nl-NL',
+                      isPartOf: {
+                          '@type': 'WebSite',
+                          '@id': `${DEFAULT_DOMAIN}/#website`,
+                      },
+                  },
+                  {
+                      '@type': 'BreadcrumbList',
+                      '@id': `${canonicalPageUrl}#breadcrumb`,
+                      itemListElement: [
+                          {
+                              '@type': 'ListItem',
+                              position: 1,
+                              name: 'Home',
+                              item: isEn
+                                  ? `${DEFAULT_DOMAIN}/en`
+                                  : DEFAULT_DOMAIN,
+                          },
+                          {
+                              '@type': 'ListItem',
+                              position: 2,
+                              name: isEn ? 'Pricing' : 'Prijzen',
+                              item: canonicalPageUrl,
+                          },
+                      ],
+                  },
+                  {
+                      '@type': 'SoftwareApplication',
+                      '@id': `${canonicalPageUrl}#software`,
+                      name: 'emlinked Property Management Suite',
+                      applicationCategory: 'BusinessApplication',
+                      operatingSystem:
+                          'Microsoft Dynamics 365 Business Central Cloud',
+                      offers: {
+                          '@type': 'Offer',
+                          price: '173.76',
+                          priceCurrency: 'EUR',
+                          priceValidUntil: '2027-12-31',
+                          availability: 'https://schema.org/InStock',
+                          url: canonicalPageUrl,
+                      },
+                  },
+                  {
+                      '@type': 'FAQPage',
+                      '@id': `${canonicalPageUrl}#faq`,
+                      mainEntity: isEn
+                          ? [
+                                {
+                                    '@type': 'Question',
+                                    name: 'How are the monthly costs of emlinked calculated?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'emlinked uses a transparent subscription model based on the number of active lease contracts and optional modules. The base subscription starts at €173.76 per month (including the 20% support & maintenance fee) for up to 100 contracts, with lower per-contract rates as your portfolio scales.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'What is included in the 20% support and maintenance fee?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'The 20% support fee guarantees continuous compatibility with semi-annual Microsoft Dynamics 365 Business Central cloud waves, regulatory updates (such as CBS CPI indexation and Box 3 compliance), and access to our Dutch specialist helpdesk.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'How do consultancy and implementation prepaid packs (strippenkaarten) work?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'For onboarding, data migration, training, or custom reports, you can purchase flexible prepaid consultancy packs (strippenkaarten). Hours are logged transparently in 15-minute increments and gain higher volume discounts on larger packs.',
+                                    },
+                                },
+                            ]
+                          : [
+                                {
+                                    '@type': 'Question',
+                                    name: 'Hoe worden de maandelijkse kosten van emlinked berekend?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'emlinked hanteert een transparant abonnementsmodel op basis van het aantal actieve huurcontracten en gekozen modules. Het basisabonnement start vanaf € 173,76 per maand (inclusief 20% support- en onderhoudsfee) voor 100 contracten, waarbij de prijs per contract daalt naarmate je portefeuille groeit.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'Wat valt er onder de 20% support- en onderhoudsfee?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'De 20% supportfee dekt doorlopende compatibiliteit met de halfjaarlijkse Microsoft Dynamics 365 Business Central cloud-updates, wettelijke aanpassingen (zoals CBS CPI-indexatie en Box 3) en directe toegang tot onze Nederlandstalige supportdesk.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'Hoe werken de strippenkaarten voor implementatie en consultancy?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Voor inrichting, datamigratie, training of maatwerkrapportages kun je flexibele strippenkaarten afnemen. Uren worden transparant per kwartier afgeschreven en bij grotere strippenkaarten profiteer je direct van oplopende bundelkorting.',
+                                    },
+                                },
+                            ],
+                  },
+              ],
+          });
+
     return (
         <div className='flex flex-col min-h-screen bg-background text-foreground'>
+            <script
+                type='application/ld+json'
+                dangerouslySetInnerHTML={{ __html: jsonLdData }}
+            />
             {blocksToRender.map((block: any, idx: number) => {
                 const key = block._key || `${block._type}-${idx}`;
 

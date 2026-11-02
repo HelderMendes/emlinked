@@ -659,7 +659,7 @@ const pagesToSeed = [
                 tag: 'SLUIT AAN BIJ DE TOP',
                 title: 'Spreek direct met een van onze Dynamics vastgoed adviseurs',
                 subtitle:
-                    'Bel ons op +31 (0) 20 123 4567 of stuur een e-mail naar info@emlinked.nl.',
+                    'Bel ons op +31 (0)88 70 7000 of stuur een e-mail naar info@emlinked.nl.',
                 buttonLabel: 'Stuur ons een e-mail',
                 buttonLink: 'mailto:info@emlinked.nl',
             },

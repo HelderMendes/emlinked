@@ -2,10 +2,12 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { BsLinkedin } from 'react-icons/bs';
-import { client } from '@/sanity/client';
+import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { ContactForm } from '@/components/contact/ContactForm';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+
+export const revalidate = 60;
 
 interface ContactPageProps {
     params: Promise<{ locale: string }>;
@@ -14,10 +16,10 @@ interface ContactPageProps {
 async function getSiteSettings(locale: string) {
     try {
         const id = `siteSettings-${locale}`;
-        return await client.fetch(
-            `*[_id == $id][0] { phone, email, address, linkedinUrl }`,
-            { id },
-        );
+        return await sanityFetch<any>({
+            query: `*[_id == $id][0] { phone, email, address, linkedinUrl }`,
+            params: { id },
+        });
     } catch (e) {
         console.error('Error fetching site settings from Sanity:', e);
         return null;
@@ -86,15 +88,54 @@ export default async function ContactPage({ params }: ContactPageProps) {
         },
     ];
 
+    const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/contact' : '/contact'}`;
+    const jsonLdData = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'ContactPage',
+                '@id': `${canonicalPageUrl}#webpage`,
+                url: canonicalPageUrl,
+                name: isEn
+                    ? 'Contact & Request Free Demo | emlinked'
+                    : 'Contact & Vrijblijvende Demo Aanvragen | emlinked',
+                description: isEn
+                    ? 'Get in touch with emlinked or request a free demo of our real estate software for Business Central.'
+                    : 'Neem contact op met emlinked of vraag een vrijblijvende demo aan van onze vastgoedsoftware voor Business Central.',
+                inLanguage: isEn ? 'en-US' : 'nl-NL',
+            },
+            {
+                '@type': 'Organization',
+                '@id': `${DEFAULT_DOMAIN}/#organization`,
+                name: 'emlinked B.V.',
+                url: DEFAULT_DOMAIN,
+                telephone: phone,
+                email,
+                address: {
+                    '@type': 'PostalAddress',
+                    streetAddress: 'Gooimeer 12',
+                    postalCode: '1411 DE',
+                    addressLocality: 'Naarden',
+                    addressCountry: 'NL',
+                },
+                sameAs: [linkedinUrl],
+            },
+        ],
+    });
+
     return (
         <div className='flex flex-col min-h-screen'>
+            <script
+                type='application/ld+json'
+                dangerouslySetInnerHTML={{ __html: jsonLdData }}
+            />
             <HeroSection
                 label={isEn ? 'CONTACT' : 'CONTACT'}
                 title={isEn ? 'Get in touch' : 'Neem contact op'}
                 subtitle={
                     isEn
                         ? 'How can we help you? Ask your question about property management, Business Central, or book a demo directly.'
-                        : 'Hoe kunnen we u helpen? Stel uw vraag over vastgoedbeheer, Business Central, of plan direct een demo.'
+                        : 'Hoe kunnen we je helpen? Stel je vraag over vastgoedbeheer, Business Central, of plan direct een demo.'
                 }
                 locale={locale}
                 showProof={false}

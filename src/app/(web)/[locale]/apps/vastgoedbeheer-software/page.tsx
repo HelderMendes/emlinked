@@ -4,8 +4,7 @@ import { sanityFetch } from '@/lib/sanity';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { VastgoedbeheerSoftwareModule } from '@/components/blocks/VastgoedbeheerSoftwareModule';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 interface VastgoedbeheerPageProps {
     params: Promise<{ locale: string }>;

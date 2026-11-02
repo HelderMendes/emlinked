@@ -498,7 +498,9 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         className='inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-teal/10 border border-teal/30 text-teal font-semibold text-xs uppercase tracking-wider hover:bg-teal/20 active:scale-95 transition-all cursor-pointer'
-                        aria-label='Toggle Menu'
+                        aria-label={isEn ? 'Toggle Menu' : 'Menu openen of sluiten'}
+                        aria-expanded={mobileMenuOpen}
+                        aria-controls='mobile-navigation-menu'
                     >
                         <svg
                             className='h-4 w-4'
@@ -524,7 +526,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         <span>
                             {mobileMenuOpen
                                 ? isEn
-                                    ? 'Sluit'
+                                    ? 'Close'
                                     : 'Sluit'
                                 : 'Menu'}
                         </span>
@@ -537,7 +539,9 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 setLangDropdownOpen(!langDropdownOpen)
                             }
                             className='p-1.5 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer'
-                            aria-label='Select Language'
+                            aria-label={isEn ? 'Select Language' : 'Taal selecteren'}
+                            aria-expanded={langDropdownOpen}
+                            aria-haspopup='menu'
                         >
                             <svg
                                 className='size-5 stroke-[1.5]'
@@ -647,7 +651,10 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     </div>
 
                     {/* Desktop Navigation Links */}
-                    <nav className='hidden xl:flex items-center justify-center gap-1.5 2xl:gap-2 grow mt-1'>
+                    <nav
+                        aria-label={isEn ? 'Main navigation' : 'Hoofdnavigatie'}
+                        className='hidden xl:flex items-center justify-center gap-1.5 2xl:gap-2 grow mt-1'
+                    >
                         {menuItems.map((item: any, idx: number) => {
                             const isDropdown = item._type === 'menuDropdown';
                             const isDropdownActive =
@@ -707,7 +714,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                 </svg>
                                             </button>
                                         )}
-                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-80 origin-top rounded-xl border border-teal/30 p-2 shadow-lg transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto z-50 bg-teal-ultra text-navy-dark'>
+                                        <div className='absolute left-1/2 -translate-x-1/2 mt-2 w-80 origin-top rounded-xl border border-teal/30 p-2 shadow-lg transition-all opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:scale-100 group-focus-within:pointer-events-auto z-50 bg-teal-ultra text-navy-dark'>
                                             <div className='flex flex-col gap-1'>
                                                 {item.links?.map(
                                                     (
@@ -831,7 +838,9 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     setLangDropdownOpen(!langDropdownOpen)
                                 }
                                 className='p-1.5 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer flex items-center justify-center'
-                                aria-label='Select Language'
+                                aria-label={isEn ? 'Select Language' : 'Taal selecteren'}
+                                aria-expanded={langDropdownOpen}
+                                aria-haspopup='menu'
                             >
                                 <svg
                                     className='size-6 stroke-[1.5]'
@@ -971,7 +980,15 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                             transition={{ duration: 0.25, ease: 'easeInOut' }}
                             className='relative z-50 xl:hidden border-t border-teal/20 bg-white dark:bg-card overflow-hidden shadow-xl'
                         >
-                            <nav className='flex flex-col p-4 gap-1'>
+                            <nav
+                                id='mobile-navigation-menu'
+                                aria-label={
+                                    isEn
+                                        ? 'Mobile navigation'
+                                        : 'Mobiele navigatie'
+                                }
+                                className='flex flex-col p-4 gap-1'
+                            >
                                 {menuItems.map((item: any, idx: number) => {
                                     const key = `mobile-nav-${idx}`;
                                     if (item._type === 'menuDropdown') {

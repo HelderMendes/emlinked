@@ -9,8 +9,7 @@ import {
 } from '@/components/nieuws/NewsArticlesSection';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 interface NieuwsPageProps {
     params: Promise<{ locale: string }>;
@@ -221,7 +220,7 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
     });
 
     return (
-        <main className='flex-1 bg-background text-foreground relative overflow-hidden'>
+        <div className='flex-1 bg-background text-foreground relative overflow-hidden'>
             {/* Inject JSON-LD */}
             <script
                 type='application/ld+json'
@@ -250,6 +249,6 @@ export default async function NieuwsPage({ params }: NieuwsPageProps) {
                 pinnedArticle={pageData?.featuredArticle}
                 locale={locale}
             />
-        </main>
+        </div>
     );
 }

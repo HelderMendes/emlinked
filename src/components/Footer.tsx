@@ -230,7 +230,11 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     <div className='absolute -top-20 -right-20 w-64 h-64 rounded-full bg-teal/20 blur-3xl pointer-events-none' />
 
                     {isSubmitted ? (
-                        <div className='relative z-10 flex flex-col items-center justify-center gap-1.5 py-6 text-center'>
+                        <div
+                            role='status'
+                            aria-live='polite'
+                            className='relative z-10 flex flex-col items-center justify-center gap-1.5 py-6 text-center'
+                        >
                             <span className='font-display text-xl font-bold text-navy-900'>
                                 {t.formSuccessTitle}
                             </span>
@@ -241,6 +245,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     ) : (
                         <form
                             onSubmit={handleFooterSubmit}
+                            aria-label={t.contactLabel}
                             className='grid grid-cols-1 lg:grid-cols-[auto_1fr_1fr] items-start gap-y-3 gap-x-3 relative z-10'
                         >
                             {/* col 1: title/subtitle — sized to content. Gap to col 2
@@ -260,6 +265,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                             {/* col 2: message — 6-7 visible lines, user can grow it */}
                             <textarea
+                                aria-label={t.placeholderMessage}
                                 value={footerMessage}
                                 onChange={(e) =>
                                     setFooterMessage(e.target.value)
@@ -273,6 +279,8 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             <div className='grid grid-cols-2 gap-3 h-full content-start'>
                                 <input
                                     type='text'
+                                    aria-label={t.placeholderName}
+                                    autoComplete='name'
                                     value={footerName}
                                     onChange={(e) =>
                                         setFooterName(e.target.value)
@@ -291,6 +299,8 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 />
                                 <input
                                     type='email'
+                                    aria-label={t.placeholderEmail}
+                                    autoComplete='email'
                                     value={footerEmail}
                                     onChange={(e) =>
                                         setFooterEmail(e.target.value)
@@ -327,7 +337,10 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 </button>
 
                                 {submitError && (
-                                    <p className='col-span-2 text-[11px] text-red-600'>
+                                    <p
+                                        role='alert'
+                                        className='col-span-2 text-[11px] text-red-600'
+                                    >
                                         {submitError}
                                     </p>
                                 )}
@@ -412,9 +425,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 1: Product (Col span 2) */}
                     <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
-                        <h4 className='md:mt-17 mt-0 lg:mt-0 text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
+                        <h2 className='md:mt-17 mt-0 lg:mt-0 text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.product}
-                        </h4>
+                        </h2>
                         <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
@@ -447,9 +460,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 2: Integrations (Col span 2) */}
                     <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
+                        <h2 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.integrations}
-                        </h4>
+                        </h2>
                         <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
@@ -494,9 +507,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 3: Company (Col span 2) */}
                     <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
+                        <h2 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.company}
-                        </h4>
+                        </h2>
                         <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
@@ -535,9 +548,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 4: Resources (Col span 2) */}
                     <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
-                        <h4 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
+                        <h2 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.resources}
-                        </h4>
+                        </h2>
                         <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link

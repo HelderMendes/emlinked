@@ -17,6 +17,8 @@ import { Box3SolutionWorkflow } from '@/components/blocks/box3/Box3SolutionWorkf
 import { Box3EcosystemSection } from '@/components/blocks/box3/Box3EcosystemSection';
 import { Box3CtaBanner } from '@/components/blocks/box3/Box3CtaBanner';
 
+export const revalidate = 60;
+
 interface Box3PageProps {
     params: Promise<{ locale: string }>;
 }
@@ -42,7 +44,8 @@ async function getSanityPageData(locale: string) {
                     seoTitle,
                     seoDescription,
                     canonical,
-                    noIndex
+                    noIndex,
+                    structuredData
                 }
             }`,
             params: { locale },
@@ -67,7 +70,7 @@ export async function generateMetadata({
         : 'Box 3 Vastgoed Check | Bereken Werkelijk Rendement';
     const fallbackDescription = isEn
         ? 'Calculate the impact of changing Box 3 legislation on your real estate portfolio for free. Discover your fiscal position and keep your yields audit-proof.'
-        : 'Bereken gratis de impact van de Wet werkelijk rendement box 3 op uw vastgoedportefeuille. Ontdek uw fiscale positie en houd uw rendement op orde.';
+        : 'Bereken gratis de impact van de Wet werkelijk rendement box 3 op jouw vastgoedportefeuille. Ontdek je fiscale positie en houd je rendement op orde.';
     const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/box3-check' : '/box3-check'}`;
 
     return buildMetadata({
@@ -274,8 +277,116 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
         </React.Fragment>
     );
 
+    const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/box3-check' : '/box3-check'}`;
+    const jsonLdData = pageData?.seo?.structuredData
+        ? typeof pageData.seo.structuredData === 'string'
+            ? pageData.seo.structuredData
+            : JSON.stringify(pageData.seo.structuredData)
+        : JSON.stringify({
+              '@context': 'https://schema.org',
+              '@graph': [
+                  {
+                      '@type': 'WebPage',
+                      '@id': `${canonicalPageUrl}#webpage`,
+                      url: canonicalPageUrl,
+                      name: isEn
+                          ? 'Box 3 Real Estate Check | Calculate Actual Yield | emlinked'
+                          : 'Box 3 Vastgoed Check | Bereken Werkelijk Rendement | emlinked',
+                      description: isEn
+                          ? 'Calculate the impact of changing Box 3 legislation on your real estate portfolio for free. Discover your fiscal position and keep your yields audit-proof.'
+                          : 'Bereken gratis de impact van de Wet werkelijk rendement box 3 op jouw vastgoedportefeuille. Ontdek je fiscale positie en houd je rendement op orde.',
+                      inLanguage: isEn ? 'en-US' : 'nl-NL',
+                      isPartOf: {
+                          '@type': 'WebSite',
+                          '@id': `${DEFAULT_DOMAIN}/#website`,
+                      },
+                  },
+                  {
+                      '@type': 'BreadcrumbList',
+                      '@id': `${canonicalPageUrl}#breadcrumb`,
+                      itemListElement: [
+                          {
+                              '@type': 'ListItem',
+                              position: 1,
+                              name: 'Home',
+                              item: isEn
+                                  ? `${DEFAULT_DOMAIN}/en`
+                                  : DEFAULT_DOMAIN,
+                          },
+                          {
+                              '@type': 'ListItem',
+                              position: 2,
+                              name: 'Box 3 Check',
+                              item: canonicalPageUrl,
+                          },
+                      ],
+                  },
+                  {
+                      '@type': 'FAQPage',
+                      '@id': `${canonicalPageUrl}#faq`,
+                      mainEntity: isEn
+                          ? [
+                                {
+                                    '@type': 'Question',
+                                    name: 'How is actual return calculated for Box 3 real estate in the Netherlands?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Under the Dutch Box 3 rebuttal scheme (tegenbewijsregeling) and upcoming Actual Return Act, actual return consists of rental income plus WOZ value changes, minus deductible maintenance expenses under the future regime (excluding property improvements and interest expenses under the transitional Supreme Court rules).',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'What is the difference between maintenance costs and property improvement in Box 3?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Regular maintenance restores a property to its original state, whereas property improvements (verbeteringskosten) add new functional value or capacity. Structuring invoices at the property and unit level inside Microsoft Dynamics 365 Business Central ensures audit-ready separation for the Dutch Tax Administration.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'How does emlinked prepare real estate portfolios for Box 3 tax filings?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'emlinked automatically links rental revenue, service charges, maintenance invoices, and WOZ valuations directly to each property object inside Microsoft Dynamics 365 Business Central, providing real-time actual yield calculations per asset.',
+                                    },
+                                },
+                            ]
+                          : [
+                                {
+                                    '@type': 'Question',
+                                    name: 'Hoe wordt het werkelijk rendement voor vastgoed in Box 3 berekend?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Onder de Box 3-tegenbewijsregeling en de aankomende Wet werkelijk rendement box 3 bestaat het werkelijk rendement uit de werkelijke huurinkomsten plus de waardeontwikkeling (WOZ-mutatie), waarbij het cruciaal is om regulier onderhoud strikt te scheiden van pandverbetering.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'Wat is het fiscale verschil tussen onderhoudskosten en verbeteringskosten in Box 3?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Regulier onderhoud brengt een pand terug in de oorspronkelijke staat, terwijl verbeteringskosten nieuwe waarde of duurzame uitbreiding toevoegen. Door facturen direct op pand- en eenheidsniveau in Microsoft Dynamics 365 Business Central te boeken, bouw je automatisch een sluitend fiscaal dossier op.',
+                                    },
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'Hoe maakt emlinked mijn vastgoedportefeuille Box 3 aangifte-klaar?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'emlinked koppelt huurinkomsten, servicekosten, onderhoudsfacturen en WOZ-waarden direct op objectniveau binnen Microsoft Dynamics 365 Business Central, zodat je op elk moment een sluitend overzicht van het werkelijk rendement per pand kunt exporteren.',
+                                    },
+                                },
+                            ],
+                  },
+              ],
+          });
+
     return (
-        <main className='flex-1 text-navy-900 bg-stone-bg'>
+        <div className='flex-1 text-navy-900 bg-stone-bg'>
+            <script
+                type='application/ld+json'
+                dangerouslySetInnerHTML={{ __html: jsonLdData }}
+            />
             {blocksToRender.map((block: any, idx: number) => {
                 const key = block._key || `${block._type}-${idx}`;
 
@@ -339,6 +450,6 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
 
                 return null;
             })}
-        </main>
+        </div>
     );
 }

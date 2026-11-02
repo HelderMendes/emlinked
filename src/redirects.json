@@ -1,35 +1,35 @@
 {
     "https://www.emlinked.nl/": {
-        "destination": "https://www.emlinked.com/",
+        "destination": "https://emlinked.com/",
         "status": 301
     },
     "/": {
-        "destination": "https://www.emlinked.com/",
+        "destination": "https://emlinked.com/",
         "status": 301
     },
     "https://www.emlinked.nl/category/nieuws": {
-        "destination": "https://www.emlinked.com/nieuws",
+        "destination": "https://emlinked.com/nieuws",
         "status": 301
     },
     "/category/nieuws": {
-        "destination": "https://www.emlinked.com/nieuws",
+        "destination": "https://emlinked.com/nieuws",
         "status": 301
     },
     "https://www.emlinked.nl/tag/erp": {
-        "destination": "https://www.emlinked.com/nieuws",
+        "destination": "https://emlinked.com/nieuws",
         "status": 301
     },
     "/tag/erp": {
-        "destination": "https://www.emlinked.com/nieuws",
+        "destination": "https://emlinked.com/nieuws",
         "status": 301
     },
     "https://www.emlinked.nl/contact": {
-        "destination": "https://www.emlinked.com/contact",
+        "destination": "https://emlinked.com/contact",
         "status": 301
     },
 
     "https://www.emlinked.nl/nieuw-emlinked-online-vastgoedbeheer-voor-iphone-en-ipad/": {
-        "destination": "https://www.emlinked.com/nieuws/nieuw-emlinked-online-vastgoedbeheer-voor-iphone-en-ipad",
+        "destination": "https://emlinked.com/nieuws/nieuw-emlinked-online-vastgoedbeheer-voor-iphone-en-ipad",
         "status": 301
     },
     "/nieuw-emlinked-online-vastgoedbeheer-voor-iphone-en-ipad": {
@@ -38,7 +38,7 @@
     },
 
     "https://www.emlinked.nl/wet-goed-verhuurderschap/": {
-        "destination": "https://www.emlinked.com/nieuws/wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders",
+        "destination": "https://emlinked.com/nieuws/wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders",
         "status": 301
     },
     "/wet-goed-verhuurderschap": {
@@ -47,7 +47,7 @@
     },
 
     "https://www.emlinked.nl/cbs-wijzigt-consumentenprijsindex-cpi/": {
-        "destination": "https://www.emlinked.com/nieuws/cbs-wijzigt-consumentenprijsindex-cpi",
+        "destination": "https://emlinked.com/nieuws/cbs-wijzigt-consumentenprijsindex-cpi",
         "status": 301
     },
     "/cbs-wijzigt-consumentenprijsindex-cpi": {
@@ -56,7 +56,7 @@
     },
 
     "https://www.emlinked.nl/emlinked-heeft-een-nieuw-telefoonnummer/": {
-        "destination": "https://www.emlinked.com/nieuws/emlinked-heeft-een-nieuw-telefoonnummer",
+        "destination": "https://emlinked.com/nieuws/emlinked-heeft-een-nieuw-telefoonnummer",
         "status": 301
     },
     "/emlinked-heeft-een-nieuw-telefoonnummer": {
@@ -65,7 +65,7 @@
     },
 
     "https://www.emlinked.nl/wij-zijn-verhuisd-naar-naarden/": {
-        "destination": "https://www.emlinked.com/nieuws/wij-zijn-verhuisd-naar-naarden",
+        "destination": "https://emlinked.com/nieuws/wij-zijn-verhuisd-naar-naarden",
         "status": 301
     },
     "/wij-zijn-verhuisd-naar-naarden": {
@@ -74,7 +74,7 @@
     },
 
     "https://www.emlinked.nl/emlinked-nu-beschikbaar-op-business-central-23/": {
-        "destination": "https://www.emlinked.com/nieuws/geautomatiseerde-incasso-en-bankaflettering-in-business-central-23",
+        "destination": "https://emlinked.com/nieuws/geautomatiseerde-incasso-en-bankaflettering-in-business-central-23",
         "status": 301
     },
     "/emlinked-nu-beschikbaar-op-business-central-23": {
@@ -83,7 +83,7 @@
     },
 
     "https://www.emlinked.nl/emlinked-trainingsaanbod-2024/": {
-        "destination": "https://www.emlinked.com/nieuws/emlinked-trainingsaanbod-2024",
+        "destination": "https://emlinked.com/nieuws/emlinked-trainingsaanbod-2024",
         "status": 301
     },
     "/emlinked-trainingsaanbod-2024": {
@@ -92,7 +92,7 @@
     },
 
     "https://www.emlinked.nl/nieuwe-update-emlinked-vastgoedbeheer-software/": {
-        "destination": "https://www.emlinked.com/nieuws/nieuwe-update-emlinked-vastgoedbeheer-software",
+        "destination": "https://emlinked.com/nieuws/nieuwe-update-emlinked-vastgoedbeheer-software",
         "status": 301
     },
     "/nieuwe-update-emlinked-vastgoedbeheer-software": {
@@ -101,7 +101,7 @@
     },
 
     "https://www.emlinked.nl/our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked/": {
-        "destination": "https://www.emlinked.com/nieuws/our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked",
+        "destination": "https://emlinked.com/nieuws/our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked",
         "status": 301
     },
     "/our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked": {
@@ -110,7 +110,7 @@
     },
 
     "https://www.emlinked.nl/versterk-uw-business-met-de-beste-online-vastgoedbeheer-software/": {
-        "destination": "https://www.emlinked.com/nieuws/online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp",
+        "destination": "https://emlinked.com/nieuws/online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp",
         "status": 301
     },
     "/versterk-uw-business-met-de-beste-online-vastgoedbeheer-software": {
@@ -119,7 +119,7 @@
     },
 
     "https://www.emlinked.nl/direct-banking-banktransacties-bankafschriften-betaalbestanden/": {
-        "destination": "https://www.emlinked.com/nieuws/direct-banking-banktransacties-bankafschriften-betaalbestanden",
+        "destination": "https://emlinked.com/nieuws/direct-banking-banktransacties-bankafschriften-betaalbestanden",
         "status": 301
     },
     "/direct-banking-banktransacties-bankafschriften-betaalbestanden": {
@@ -128,7 +128,7 @@
     },
 
     "https://www.emlinked.nl/emlinked-huurdersportaal/": {
-        "destination": "https://www.emlinked.com/nieuws/emlinked-huurdersportaal",
+        "destination": "https://emlinked.com/nieuws/emlinked-huurdersportaal",
         "status": 301
     },
     "/emlinked-huurdersportaal": {
@@ -137,7 +137,7 @@
     },
 
     "https://www.emlinked.nl/5-redenen-waarom-het-belangrijk-is-om-uw-systemen-te-updaten/": {
-        "destination": "https://www.emlinked.com/nieuws/5-redenen-waarom-het-belangrijk-is-om-uw-systemen-te-updaten",
+        "destination": "https://emlinked.com/nieuws/5-redenen-waarom-het-belangrijk-is-om-uw-systemen-te-updaten",
         "status": 301
     },
     "/5-redenen-waarom-het-belangrijk-is-om-uw-systemen-te-updaten": {
@@ -146,7 +146,7 @@
     },
 
     "https://www.emlinked.nl/vastgoedbeleggers-in-beweging/": {
-        "destination": "https://www.emlinked.com/nieuws/vastgoedbeleggers-in-beweging",
+        "destination": "https://emlinked.com/nieuws/vastgoedbeleggers-in-beweging",
         "status": 301
     },
     "/vastgoedbeleggers-in-beweging": {
@@ -155,7 +155,7 @@
     },
 
     "https://www.emlinked.nl/vast-huurcontract-vs-flexibel-huurcontract/": {
-        "destination": "https://www.emlinked.com/nieuws/vast-huurcontract-vs-flexibel-huurcontract-juridische-en-financiele-impact",
+        "destination": "https://emlinked.com/nieuws/vast-huurcontract-vs-flexibel-huurcontract-juridische-en-financiele-impact",
         "status": 301
     },
     "/vast-huurcontract-vs-flexibel-huurcontract": {
@@ -164,7 +164,7 @@
     },
 
     "https://www.emlinked.nl/voorstellen-nieuwe-box-3/": {
-        "destination": "https://www.emlinked.com/nieuws/box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing",
+        "destination": "https://emlinked.com/nieuws/box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing",
         "status": 301
     },
     "/voorstellen-nieuwe-box-3": {
@@ -173,7 +173,7 @@
     },
 
     "https://www.emlinked.nl/box-3-administratie-niet-verplicht-2/": {
-        "destination": "https://www.emlinked.com/nieuws/box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing",
+        "destination": "https://emlinked.com/nieuws/box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing",
         "status": 301
     },
     "/box-3-administratie-niet-verplicht-2": {
@@ -182,7 +182,7 @@
     },
 
     "https://www.emlinked.nl/persbericht-emlinked-vastgoedsoftware-teamversterking-2026/": {
-        "destination": "https://www.emlinked.com/nieuws/emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026",
+        "destination": "https://emlinked.com/nieuws/emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026",
         "status": 301
     },
     "/persbericht-emlinked-vastgoedsoftware-teamversterking-2026": {

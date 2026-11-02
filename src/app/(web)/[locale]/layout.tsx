@@ -47,10 +47,20 @@ export default async function WebLayout({ children, params }: WebLayoutProps) {
     const { locale } = await params;
     const settings = await getSiteSettings(locale);
 
+    const isEn = locale === 'en';
+
     return (
         <>
+            <a
+                href='#main-content'
+                className='sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-navy-900 focus:text-white focus:text-xs focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal'
+            >
+                {isEn ? 'Skip to main content' : 'Direct naar hoofdinhoud'}
+            </a>
             <Header locale={locale} settings={settings} />
-            <main className='grow flex flex-col'>{children}</main>
+            <main id='main-content' className='grow flex flex-col'>
+                {children}
+            </main>
             <Footer locale={locale} settings={settings} />
             <StickyAnnouncement locale={locale} settings={settings} />
             <CookieConsentBanner locale={locale} />

@@ -107,6 +107,7 @@ export async function POST(request: Request) {
             body: JSON.stringify({
                 from: `${mailFromName} <${mailFrom}>`,
                 to: mailTo,
+                reply_to: email,
                 subject: `Demo Aanvraag: ${name} (${company || 'Geen bedrijf'})`,
                 html: emailHtml
             })

@@ -344,6 +344,7 @@ export async function POST(request: Request) {
             body: JSON.stringify({
                 from: `${mailFromName} Calculator <${mailFrom}>`,
                 to: adminEmail,
+                reply_to: email,
                 subject: `Nieuwe Offerte Berekening: ${company || name}`,
                 html: adminEmailHtml,
             }),
@@ -366,6 +367,7 @@ export async function POST(request: Request) {
             body: JSON.stringify({
                 from: `${mailFromName} <${mailFrom}>`,
                 to: email,
+                reply_to: adminEmail,
                 subject: prospectSubject,
                 html: prospectEmailHtml,
             }),

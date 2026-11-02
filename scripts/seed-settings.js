@@ -154,7 +154,7 @@ async function seed() {
             'Belangrijke update: Emlinked is nu volledig gecertificeerd voor Dynamics 365 Business Central v24.',
         announcementLink: '/integraties',
         phone: '+31 (0)88 707 7000',
-        email: 'support@emlinked.nl',
+        email: 'support@emlinked.com',
         address: 'Gooimeer 12,1411 DE Naarden',
         linkedinUrl: 'https://linkedin.com/company/emlinked',
         twitterUrl: 'https://x.com/emlinked',

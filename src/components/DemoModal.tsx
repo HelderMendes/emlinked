@@ -241,6 +241,9 @@ export function DemoModal({
 
                     {/* Modal Box */}
                     <motion.div
+                        role='dialog'
+                        aria-modal='true'
+                        aria-labelledby='demo-modal-title'
                         initial={{ opacity: 0, scale: 0.95, y: 15 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 15 }}
@@ -254,7 +257,7 @@ export function DemoModal({
                         <button
                             onClick={handleClose}
                             className='absolute top-4 right-4 z-30 w-9 h-9 rounded-full bg-navy-50 hover:bg-teal hover:text-white text-navy-500 flex items-center justify-center transition-all cursor-pointer shadow-md'
-                            aria-label='Sluit modal'
+                            aria-label={locale === 'en' ? 'Close modal' : 'Sluit venster'}
                         >
                             <X className='w-5 h-5' />
                         </button>
@@ -263,9 +266,12 @@ export function DemoModal({
                         <div className='w-full md:w-[320px] bg-navy-50 border-b md:border-b-0 md:border-r border-navy-900/10 text-navy-900 p-8 flex flex-col justify-between relative overflow-hidden shrink-0'>
                             <div className='space-y-8 relative z-10 text-left'>
                                 <div>
-                                    <h3 className='font-display font-extrabold text-2xl tracking-tight text-navy-900'>
+                                    <h2
+                                        id='demo-modal-title'
+                                        className='font-display font-extrabold text-2xl tracking-tight text-navy-900'
+                                    >
                                         {t.title}
-                                    </h3>
+                                    </h2>
                                     <p className='text-sm text-navy-500 mt-2 leading-relaxed'>
                                         {t.subtitle}
                                     </p>
@@ -413,7 +419,10 @@ export function DemoModal({
                                     </div>
 
                                     {status === 'error' && (
-                                        <div className='p-3 bg-red-500/10 border border-red-500/20 text-red-600 rounded-lg flex items-start gap-2 text-xs animate-fadeIn'>
+                                        <div
+                                            role='alert'
+                                            className='p-3 bg-red-500/10 border border-red-500/20 text-red-600 rounded-lg flex items-start gap-2 text-xs animate-fadeIn'
+                                        >
                                             <AlertCircle className='h-4 w-4 shrink-0 mt-0.5' />
                                             <span>{errorMessage}</span>
                                         </div>
@@ -422,14 +431,19 @@ export function DemoModal({
                                     {/* Name Fields */}
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                                            <label
+                                                htmlFor='demo-first-name'
+                                                className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                                            >
                                                 {t.firstNameLabel}{' '}
                                                 <span className='text-teal'>
                                                     *
                                                 </span>
                                             </label>
                                             <input
+                                                id='demo-first-name'
                                                 type='text'
+                                                autoComplete='given-name'
                                                 value={firstName}
                                                 onChange={(e) =>
                                                     setFirstName(e.target.value)
@@ -445,11 +459,16 @@ export function DemoModal({
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                                            <label
+                                                htmlFor='demo-last-name'
+                                                className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                                            >
                                                 {t.lastNameLabel}
                                             </label>
                                             <input
+                                                id='demo-last-name'
                                                 type='text'
+                                                autoComplete='family-name'
                                                 value={lastName}
                                                 onChange={(e) =>
                                                     setLastName(e.target.value)
@@ -468,14 +487,19 @@ export function DemoModal({
                                     {/* Contact Fields */}
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                                            <label
+                                                htmlFor='demo-email'
+                                                className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                                            >
                                                 {t.emailLabel}{' '}
                                                 <span className='text-teal'>
                                                     *
                                                 </span>
                                             </label>
                                             <input
+                                                id='demo-email'
                                                 type='email'
+                                                autoComplete='email'
                                                 value={email}
                                                 onChange={(e) =>
                                                     setEmail(e.target.value)
@@ -508,11 +532,16 @@ export function DemoModal({
                                     {/* Company & Portfolio size */}
                                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                                            <label
+                                                htmlFor='demo-company'
+                                                className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                                            >
                                                 {t.companyLabel}
                                             </label>
                                             <input
+                                                id='demo-company'
                                                 type='text'
+                                                autoComplete='organization'
                                                 value={company}
                                                 onChange={(e) =>
                                                     setCompany(e.target.value)
@@ -527,10 +556,14 @@ export function DemoModal({
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1.5'>
-                                            <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                                            <label
+                                                htmlFor='demo-portfolio-size'
+                                                className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                                            >
                                                 {t.portfolioLabel}
                                             </label>
                                             <select
+                                                id='demo-portfolio-size'
                                                 value={portfolioSize}
                                                 onChange={(e) =>
                                                     setPortfolioSize(
@@ -572,10 +605,14 @@ export function DemoModal({
 
                                     {/* Message */}
                                     <div className='flex flex-col gap-1.5'>
-                                        <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                                        <label
+                                            htmlFor='demo-message'
+                                            className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                                        >
                                             {t.messageLabel}
                                         </label>
                                         <textarea
+                                            id='demo-message'
                                             value={message}
                                             onChange={(e) =>
                                                 setMessage(e.target.value)

@@ -8,6 +8,8 @@ import { PartnersSectionComponent } from '@/components/blocks/partners/PartnersS
 import { Box3CtaBanner } from '@/components/blocks/box3/Box3CtaBanner';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
 
+export const revalidate = 60;
+
 async function getSanityPageData(locale: string) {
     try {
         return await sanityFetch<any>({
@@ -167,8 +169,96 @@ export default async function PartnersSoftwarePage({
         </React.Fragment>
     );
 
+    const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/partners-software' : '/partners-software'}`;
+    const jsonLdData = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'WebPage',
+                '@id': `${canonicalPageUrl}#webpage`,
+                url: canonicalPageUrl,
+                name: isEn
+                    ? 'Partners & Software Integrations (Business Central) | emlinked'
+                    : 'Partners & Software Integraties (Business Central) | emlinked',
+                description: isEn
+                    ? 'Explore all strategic software partners of emlinked. Seamless, certified integrations with Microsoft Business Central, Continia Document Capture, and Idyn Direct Banking.'
+                    : 'Ontdek alle strategische software-partners van emlinked. Naadloze, gecertificeerde integraties met Microsoft Business Central, Continia Document Capture en Idyn Direct Banking.',
+                inLanguage: isEn ? 'en-US' : 'nl-NL',
+                isPartOf: {
+                    '@type': 'WebSite',
+                    '@id': `${DEFAULT_DOMAIN}/#website`,
+                },
+            },
+            {
+                '@type': 'BreadcrumbList',
+                '@id': `${canonicalPageUrl}#breadcrumb`,
+                itemListElement: [
+                    {
+                        '@type': 'ListItem',
+                        position: 1,
+                        name: 'Home',
+                        item: isEn ? `${DEFAULT_DOMAIN}/en` : DEFAULT_DOMAIN,
+                    },
+                    {
+                        '@type': 'ListItem',
+                        position: 2,
+                        name: isEn
+                            ? 'Partners & Integrations'
+                            : 'Partners & Integraties',
+                        item: canonicalPageUrl,
+                    },
+                ],
+            },
+            {
+                '@type': 'FAQPage',
+                '@id': `${canonicalPageUrl}#faq`,
+                mainEntity: isEn
+                    ? [
+                          {
+                              '@type': 'Question',
+                              name: 'Which software partners and add-ons integrate natively with emlinked?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'Because emlinked is built natively on Microsoft Dynamics 365 Business Central, it integrates seamlessly with certified Microsoft AppSource add-ons including Continia Document Capture (OCR invoice processing), Idyn Direct Banking (automated bank statements and payments), and Power BI.',
+                              },
+                          },
+                          {
+                              '@type': 'Question',
+                              name: 'Can my existing Microsoft Dynamics partner remain involved?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'Yes. emlinked collaborates closely with Microsoft Dynamics partners and accounting firms across the Netherlands, ensuring your ERP environment and real estate modules remain aligned.',
+                              },
+                          },
+                      ]
+                    : [
+                          {
+                              '@type': 'Question',
+                              name: 'Welke softwarepartners en add-ons integreren direct met emlinked?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'Omdat emlinked native op Microsoft Dynamics 365 Business Central is gebouwd, werkt het naadloos samen met gecertificeerde Microsoft AppSource-oplossingen zoals Continia Document Capture (OCR-factuurverwerking), Idyn Direct Banking (automatische bankkoppelingen) en Power BI.',
+                              },
+                          },
+                          {
+                              '@type': 'Question',
+                              name: 'Kan onze bestaande Microsoft Business Central partner betrokken blijven?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'Ja. emlinked werkt nauw samen met Microsoft Dynamics-partners en administratiekantoren door heel Nederland, zodat je ERP-inrichting en vastgoedmodules optimaal op elkaar aansluiten.',
+                              },
+                          },
+                      ],
+            },
+        ],
+    });
+
     return (
-        <main className='flex-1 text-navy-900 bg-stone-bg'>
+        <div className='flex-1 text-navy-900 bg-stone-bg'>
+            <script
+                type='application/ld+json'
+                dangerouslySetInnerHTML={{ __html: jsonLdData }}
+            />
             {blocksToRender.map((block: any, idx: number) => {
                 const key = block._key || `${block._type}-${idx}`;
 
@@ -200,6 +290,6 @@ export default async function PartnersSoftwarePage({
                     />
                 );
             })}
-        </main>
+        </div>
     );
 }

@@ -6,13 +6,11 @@ import {
     Zap,
     Layers,
     Target,
-    Sparkles,
     CheckCircle2,
     Building2,
 } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
 import { getImageUrl } from '@/sanity/image';
-import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { TeamBlock, TeamMember } from '@/components/blocks/TeamBlock';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
@@ -20,8 +18,7 @@ import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
 import { Box3CtaBanner } from '@/components/blocks/box3/Box3CtaBanner';
 import { Badge } from '@/components/ui/Badge';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 interface OverOnsPageProps {
     params: Promise<{ locale: string }>;
@@ -529,7 +526,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     );
 
     return (
-        <main className='flex-1 bg-background text-foreground relative overflow-hidden'>
+        <div className='flex-1 bg-background text-foreground relative overflow-hidden'>
             {/* Inject JSON-LD */}
             {jsonLdData && (
                 <script
@@ -576,6 +573,6 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     />
                 );
             })}
-        </main>
+        </div>
     );
 }

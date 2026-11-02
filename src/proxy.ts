@@ -28,8 +28,9 @@ export function proxy(request: NextRequest) {
     }
 
     // 2. Check for legacy domain / path redirects
-    const host = request.headers.get('host') || '';
+    const host = (request.headers.get('host') || '').toLowerCase();
     const isLegacyDomain = host.includes('emlinked.nl');
+    const isWwwCom = host === 'www.emlinked.com';
 
     const legacyAbsoluteUrl = `https://www.emlinked.nl${normalizedPathname}${url.search}`;
     const legacyAbsoluteUrlNoSearch = `https://www.emlinked.nl${normalizedPathname}`;
@@ -65,10 +66,11 @@ export function proxy(request: NextRequest) {
         }
 
         if (redirect.destination) {
-            const destinationUrl = new URL(
-                redirect.destination,
-                'https://www.emlinked.com',
-            );
+            const baseOrigin =
+                isLegacyDomain || isWwwCom
+                    ? 'https://emlinked.com'
+                    : request.url;
+            const destinationUrl = new URL(redirect.destination, baseOrigin);
             if (!redirect.destination.includes('?')) {
                 destinationUrl.search = url.search;
             }
@@ -78,11 +80,11 @@ export function proxy(request: NextRequest) {
         }
     }
 
-    // Handle global domain-level fallback from .nl to .com for non-mapped URLs
-    if (isLegacyDomain) {
+    // Handle global domain-level fallback from .nl or www.emlinked.com to apex emlinked.com
+    if (isLegacyDomain || isWwwCom) {
         const targetUrl = new URL(
             url.pathname + url.search,
-            'https://www.emlinked.com',
+            'https://emlinked.com',
         );
         return NextResponse.redirect(targetUrl, 301);
     }

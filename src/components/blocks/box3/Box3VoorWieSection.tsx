@@ -83,7 +83,7 @@ export function Box3VoorWieSection({
                     </div>
 
                     {/* Right: Integrated Image */}
-                    <div className='lg:col-span-6 relative min-h-[300px] lg:min-h-full overflow-hidden bg-slate-950'>
+                    <div className='lg:col-span-6 relative min-h-100 lg:min-h-full overflow-hidden bg-slate-950'>
                         <Image
                             src={resolvedFiscalContextImage}
                             alt={

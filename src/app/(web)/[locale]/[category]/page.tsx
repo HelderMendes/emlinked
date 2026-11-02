@@ -1,9 +1,11 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { client } from '@/sanity/client';
+import { sanityFetch } from '@/lib/sanity';
 import { Metadata } from 'next';
 import { PortableText, PortableTextComponents } from 'next-sanity';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
+
+export const revalidate = 60;
 
 const legalPageComponents: PortableTextComponents = {
     block: {
@@ -42,17 +44,16 @@ async function getLegalPageData(
     locale: string,
 ): Promise<LegalPageData | null> {
     try {
-        return await client.fetch(
-            `*[_type == "legalPage" && (slug.current == $slug || slug.current == $slashSlug) && language == $locale][0] {
+        return await sanityFetch<LegalPageData | null>({
+            query: `*[_type == "legalPage" && (slug.current == $slug || slug.current == $slashSlug) && language == $locale][0] {
                 title,
                 body,
                 downloadUrl,
                 downloadLabel,
                 seo { seoTitle, seoDescription, noIndex }
             }`,
-            { slug, slashSlug: `/${slug}`, locale },
-            { cache: 'no-store' },
-        );
+            params: { slug, slashSlug: `/${slug}`, locale },
+        });
     } catch (e) {
         console.error('Error fetching legalPage data from Sanity:', e);
         return null;
@@ -75,8 +76,8 @@ interface SlugPageProps {
 // the sibling [category]/[slug]/page.tsx two-segment route.
 async function getSlugPageData(slug: string, locale: string) {
     try {
-        return await client.fetch(
-            `*[_type == "page" && (slug.current == $slug || slug.current == $slashSlug) && language == $locale][0] {
+        return await sanityFetch<any>({
+            query: `*[_type == "page" && (slug.current == $slug || slug.current == $slashSlug) && language == $locale][0] {
                 title,
                 pageBlocks[] {
                     ...,
@@ -124,9 +125,8 @@ async function getSlugPageData(slug: string, locale: string) {
                     structuredData
                 }
             }`,
-            { slug, slashSlug: `/${slug}`, locale },
-            { cache: 'no-store' },
-        );
+            params: { slug, slashSlug: `/${slug}`, locale },
+        });
     } catch (e) {
         console.error('Error fetching page data from Sanity:', e);
         return null;

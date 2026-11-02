@@ -1,6 +1,5 @@
 // Force Next.js HMR recompile for metadata
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 import React from 'react';
 import Link from 'next/link';
@@ -141,26 +140,117 @@ export default async function AppsPage({ params }: AppsPageProps) {
     const rawFeatures = featuresBlock?.features || [];
 
     // Structured JSON-LD Data
+    const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/apps' : '/apps'}`;
     const jsonLd = {
         '@context': 'https://schema.org',
-        '@type': 'SoftwareApplication',
-        name: pageData?.title || 'emlinked Modulaire Vastgoedsoftware Suite',
-        operatingSystem: 'Microsoft Dynamics 365 Business Central Cloud',
-        applicationCategory: 'BusinessApplication',
-        description:
-            pageData?.seo?.seoDescription ||
-            'Native vastgoedbeheer software, huurdersportaal en geautomatiseerde SEPA payment engine gebouwd voor Microsoft Dynamics 365 Business Central.',
-        offers: {
-            '@type': 'Offer',
-            price: '0',
-            priceCurrency: 'EUR',
-            availability: 'https://schema.org/InStock',
-        },
-        publisher: {
-            '@type': 'Organization',
-            name: 'emlinked',
-            url: DEFAULT_DOMAIN,
-        },
+        '@graph': [
+            {
+                '@type': 'WebPage',
+                '@id': `${canonicalPageUrl}#webpage`,
+                url: canonicalPageUrl,
+                name:
+                    pageData?.title ||
+                    (isEn
+                        ? 'Modular Real Estate Software Suite for Business Central | emlinked'
+                        : 'Modulaire Vastgoedsoftware Suite voor Business Central | emlinked'),
+                description:
+                    pageData?.seo?.seoDescription ||
+                    (isEn
+                        ? 'Native property management software, tenant portal, and automated SEPA payment engine built inside Microsoft Dynamics 365 Business Central.'
+                        : 'Native vastgoedbeheer software, huurdersportaal en geautomatiseerde SEPA payment engine gebouwd voor Microsoft Dynamics 365 Business Central.'),
+                inLanguage: isEn ? 'en-US' : 'nl-NL',
+                isPartOf: {
+                    '@type': 'WebSite',
+                    '@id': `${DEFAULT_DOMAIN}/#website`,
+                },
+            },
+            {
+                '@type': 'BreadcrumbList',
+                '@id': `${canonicalPageUrl}#breadcrumb`,
+                itemListElement: [
+                    {
+                        '@type': 'ListItem',
+                        position: 1,
+                        name: 'Home',
+                        item: isEn ? `${DEFAULT_DOMAIN}/en` : DEFAULT_DOMAIN,
+                    },
+                    {
+                        '@type': 'ListItem',
+                        position: 2,
+                        name: isEn ? 'Our Apps' : 'Onze apps',
+                        item: canonicalPageUrl,
+                    },
+                ],
+            },
+            {
+                '@type': 'SoftwareApplication',
+                '@id': `${canonicalPageUrl}#software`,
+                name:
+                    pageData?.title ||
+                    (isEn
+                        ? 'emlinked Modular Real Estate Software Suite'
+                        : 'emlinked Modulaire Vastgoedsoftware Suite'),
+                operatingSystem: 'Microsoft Dynamics 365 Business Central Cloud',
+                applicationCategory: 'BusinessApplication',
+                description:
+                    pageData?.seo?.seoDescription ||
+                    (isEn
+                        ? 'Native property management software, tenant portal, and automated SEPA payment engine built inside Microsoft Dynamics 365 Business Central.'
+                        : 'Native vastgoedbeheer software, huurdersportaal en geautomatiseerde SEPA payment engine gebouwd voor Microsoft Dynamics 365 Business Central.'),
+                offers: {
+                    '@type': 'Offer',
+                    price: '173.76',
+                    priceCurrency: 'EUR',
+                    availability: 'https://schema.org/InStock',
+                },
+                publisher: {
+                    '@type': 'Organization',
+                    name: 'emlinked',
+                    url: DEFAULT_DOMAIN,
+                },
+            },
+            {
+                '@type': 'FAQPage',
+                '@id': `${canonicalPageUrl}#faq`,
+                mainEntity: isEn
+                    ? [
+                          {
+                              '@type': 'Question',
+                              name: 'Which real estate apps are included in the emlinked suite?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'The emlinked suite consists of three modular apps that operate on a single shared database inside Microsoft Dynamics 365 Business Central: Property Management Software (core lease, CPI indexation, and service charge management), the 24/7 Tenant Portal, and Payment Software (automated SEPA direct debit and bank reconciliation).',
+                              },
+                          },
+                          {
+                              '@type': 'Question',
+                              name: 'Can the emlinked apps be deployed modularly?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'Yes. Organizations start with the Property Management core inside Business Central and can activate the Tenant Portal or Payment Software module at any time without data migration or external connectors.',
+                              },
+                          },
+                      ]
+                    : [
+                          {
+                              '@type': 'Question',
+                              name: 'Welke vastgoed-apps maken deel uit van de emlinked suite?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'De emlinked suite bestaat uit drie modulaire apps die op één gedeelde database binnen Microsoft Dynamics 365 Business Central draaien: Vastgoedbeheer Software (contractbeheer, CBS-indexatie en servicekosten), het 24/7 Huurdersportaal en Payment Software (geautomatiseerde SEPA-incasso en bankaflettering).',
+                              },
+                          },
+                          {
+                              '@type': 'Question',
+                              name: 'Kunnen de apps van emlinked modulair worden ingezet?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'Ja. Je start met de basismodule Vastgoedbeheer binnen Business Central en kunt het Huurdersportaal of de Payment Software op elk gewenst moment activeren zonder datamigratie of externe koppelingen.',
+                              },
+                          },
+                      ],
+            },
+        ],
     };
 
     const renderHero = (b: any, key: any) => {
@@ -516,7 +606,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                                         <OutlineLinkButton
                                             href={getPath(
                                                 ctaBlock.secondaryButtonLink ||
-                                                    '/integraties',
+                                                    '/partners-software',
                                             )}
                                             color='navy'
                                         >

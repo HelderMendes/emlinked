@@ -25,7 +25,7 @@ const translations = {
         sendingButton: 'Versturen...',
         successTitle: 'Bericht verstuurd!',
         successMessage:
-            'Dank voor uw bericht. Wij nemen zo snel mogelijk contact met u op.',
+            'Bedankt voor je bericht. Wij nemen zo snel mogelijk contact met je op.',
         errorFallback: 'Er is iets misgegaan. Probeer het later opnieuw.',
     },
     en: {
@@ -127,7 +127,10 @@ export function ContactForm({ locale = 'nl' }: ContactFormProps) {
             </h2>
 
             {status === 'error' && (
-                <div className='p-3 bg-red-500/10 border border-red-500/20 text-red-600 rounded-lg flex items-start gap-2 text-xs'>
+                <div
+                    role='alert'
+                    className='p-3 bg-red-500/10 border border-red-500/20 text-red-600 rounded-lg flex items-start gap-2 text-xs'
+                >
                     <AlertCircle className='h-4 w-4 shrink-0 mt-0.5' />
                     <span>{errorMessage}</span>
                 </div>
@@ -135,12 +138,17 @@ export function ContactForm({ locale = 'nl' }: ContactFormProps) {
 
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                 <div className='flex flex-col gap-1.5'>
-                    <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                    <label
+                        htmlFor='contact-name'
+                        className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                    >
                         {t.nameLabel}{' '}
                         <span className='text-teal'>*</span>
                     </label>
                     <input
+                        id='contact-name'
                         type='text'
+                        autoComplete='name'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
@@ -149,11 +157,16 @@ export function ContactForm({ locale = 'nl' }: ContactFormProps) {
                     />
                 </div>
                 <div className='flex flex-col gap-1.5'>
-                    <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                    <label
+                        htmlFor='contact-company'
+                        className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                    >
                         {t.companyLabel}
                     </label>
                     <input
+                        id='contact-company'
                         type='text'
+                        autoComplete='organization'
                         value={company}
                         onChange={(e) => setCompany(e.target.value)}
                         disabled={status === 'submitting'}
@@ -164,12 +177,17 @@ export function ContactForm({ locale = 'nl' }: ContactFormProps) {
 
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                 <div className='flex flex-col gap-1.5'>
-                    <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                    <label
+                        htmlFor='contact-email'
+                        className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                    >
                         {t.emailLabel}{' '}
                         <span className='text-teal'>*</span>
                     </label>
                     <input
+                        id='contact-email'
                         type='email'
+                        autoComplete='email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -178,11 +196,16 @@ export function ContactForm({ locale = 'nl' }: ContactFormProps) {
                     />
                 </div>
                 <div className='flex flex-col gap-1.5'>
-                    <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                    <label
+                        htmlFor='contact-phone'
+                        className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                    >
                         {t.phoneLabel}
                     </label>
                     <input
+                        id='contact-phone'
                         type='tel'
+                        autoComplete='tel'
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         disabled={status === 'submitting'}
@@ -192,10 +215,14 @@ export function ContactForm({ locale = 'nl' }: ContactFormProps) {
             </div>
 
             <div className='flex flex-col gap-1.5'>
-                <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                <label
+                    htmlFor='contact-subject'
+                    className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                >
                     {t.subjectLabel}
                 </label>
                 <input
+                    id='contact-subject'
                     type='text'
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
@@ -205,11 +232,15 @@ export function ContactForm({ locale = 'nl' }: ContactFormProps) {
             </div>
 
             <div className='flex flex-col gap-1.5'>
-                <label className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'>
+                <label
+                    htmlFor='contact-message'
+                    className='text-[10px] font-extrabold text-navy-900 uppercase tracking-wider font-mono'
+                >
                     {t.messageLabel}{' '}
                     <span className='text-teal'>*</span>
                 </label>
                 <textarea
+                    id='contact-message'
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     required

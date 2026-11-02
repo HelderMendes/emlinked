@@ -2,8 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
@@ -172,26 +171,92 @@ export default async function ReferentiesPage({
         <ShieldCheck key='s' className='w-5 h-5' />,
     ];
 
-    // Structured JSON-LD Data for CollectionPage
+    // Structured JSON-LD Data for CollectionPage + FAQPage
+    const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/references' : '/referenties'}`;
     const jsonLd = {
         '@context': 'https://schema.org',
-        '@type': 'CollectionPage',
-        name:
-            pageData?.seo?.seoTitle ||
-            (isEn
-                ? 'References & Customer Cases | emlinked'
-                : 'Referenties & Klantcases | emlinked'),
-        description:
-            pageData?.seo?.seoDescription ||
-            (isEn
-                ? 'Discover what customers say about emlinked in 5 real estate case studies.'
-                : 'Ontdek wat klanten zeggen over emlinked in 5 praktijkcases.'),
-        url: `${DEFAULT_DOMAIN}${isEn ? '/en/references' : '/referenties'}`,
-        publisher: {
-            '@type': 'Organization',
-            name: 'emlinked',
-            url: DEFAULT_DOMAIN,
-        },
+        '@graph': [
+            {
+                '@type': 'CollectionPage',
+                '@id': `${canonicalPageUrl}#webpage`,
+                name:
+                    pageData?.seo?.seoTitle ||
+                    (isEn
+                        ? 'References & Customer Cases | emlinked'
+                        : 'Referenties & Klantcases | emlinked'),
+                description:
+                    pageData?.seo?.seoDescription ||
+                    (isEn
+                        ? 'Discover what customers say about emlinked in 5 real estate case studies.'
+                        : 'Ontdek wat klanten zeggen over emlinked in 5 praktijkcases.'),
+                url: canonicalPageUrl,
+                inLanguage: isEn ? 'en-US' : 'nl-NL',
+                publisher: {
+                    '@type': 'Organization',
+                    name: 'emlinked',
+                    url: DEFAULT_DOMAIN,
+                },
+            },
+            {
+                '@type': 'BreadcrumbList',
+                '@id': `${canonicalPageUrl}#breadcrumb`,
+                itemListElement: [
+                    {
+                        '@type': 'ListItem',
+                        position: 1,
+                        name: 'Home',
+                        item: isEn ? `${DEFAULT_DOMAIN}/en` : DEFAULT_DOMAIN,
+                    },
+                    {
+                        '@type': 'ListItem',
+                        position: 2,
+                        name: isEn ? 'References' : 'Referenties',
+                        item: canonicalPageUrl,
+                    },
+                ],
+            },
+            {
+                '@type': 'FAQPage',
+                '@id': `${canonicalPageUrl}#faq`,
+                mainEntity: isEn
+                    ? [
+                          {
+                              '@type': 'Question',
+                              name: 'What types of real estate organizations use emlinked?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'emlinked is used by commercial and residential property managers, family offices, institutional real estate investors, retail organizations, and accounting firms that collectively manage over €15 billion in real estate assets.',
+                              },
+                          },
+                          {
+                              '@type': 'Question',
+                              name: 'What operational results do clients achieve after switching to emlinked?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'Clients eliminate error-prone Excel sheets and shadow accounting by running lease administration, CPI indexation, service charge reconciliation, and financial reporting inside a single Microsoft Business Central environment.',
+                              },
+                          },
+                      ]
+                    : [
+                          {
+                              '@type': 'Question',
+                              name: 'Wat voor type vastgoedorganisaties werken met emlinked?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'emlinked wordt ingezet door commerciële en residentiële vastgoedbeheerders, family offices, vastgoedbeleggers, retailorganisaties en administratiekantoren die gezamenlijk meer dan € 15 miljard aan vastgoed beheren.',
+                              },
+                          },
+                          {
+                              '@type': 'Question',
+                              name: 'Welke resultaten behalen klanten na de overstap op emlinked?',
+                              acceptedAnswer: {
+                                  '@type': 'Answer',
+                                  text: 'Klanten elimineren foutgevoelige Excel-lijsten en schaduwadministraties doordat contractbeheer, CBS-indexeringen, servicekostenafrekeningen en financiële rapportages in één geïntegreerde Microsoft Business Central omgeving samenkomen.',
+                              },
+                          },
+                      ],
+            },
+        ],
     };
 
     const renderHero = (b: any, key: any) => {
@@ -703,7 +768,7 @@ export default async function ReferentiesPage({
     );
 
     return (
-        <main className='flex-1 text-navy-900 bg-stone-bg'>
+        <div className='flex-1 text-navy-900 bg-stone-bg'>
             {/* JSON-LD Structured Data */}
             <script
                 type='application/ld+json'
@@ -755,6 +820,6 @@ export default async function ReferentiesPage({
                     />
                 );
             })}
-        </main>
+        </div>
     );
 }
