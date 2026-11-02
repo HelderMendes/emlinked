@@ -63,7 +63,7 @@ async function getSanityNewsPageData(locale: string) {
                     secondaryCtaUrl,
                     floatingLabels[] { value, label },
                     imagePath,
-                    image { asset-> { url } }
+                    image { asset-> { url }, alt }
                 },
                 featuredArticle->{
                     _id,

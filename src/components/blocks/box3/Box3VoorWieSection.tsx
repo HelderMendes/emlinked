@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Scale } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
-import { getImageUrl, type SanityImageLike } from '@/sanity/image';
+import { getImageUrl, getImageAlt, type SanityImageLike } from '@/sanity/image';
 
 interface Box3VoorWieSectionProps {
     voorWieBadge: string;
@@ -87,6 +87,7 @@ export function Box3VoorWieSection({
                         <Image
                             src={resolvedFiscalContextImage}
                             alt={
+                                getImageAlt(fiscalContextImage) ||
                                 fiscalContextTitle ||
                                 'Wet werkelijk rendement box 3 - Fiscale Context'
                             }

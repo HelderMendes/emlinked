@@ -42,7 +42,7 @@ async function getSanityPageData(locale: string) {
                     _key,
                     members[] {
                         ...,
-                        image { asset-> { url } }
+                        image { asset-> { url }, alt }
                     }
                 },
                 seo {

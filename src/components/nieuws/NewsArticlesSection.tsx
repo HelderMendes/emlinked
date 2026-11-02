@@ -11,7 +11,7 @@ import {
     Clock,
     User,
 } from 'lucide-react';
-import { getImageUrl, type SanityImageLike } from '@/sanity/image';
+import { getImageUrl, getImageAlt, type SanityImageLike } from '@/sanity/image';
 
 export interface NewsArticleItem {
     _id?: string;
@@ -176,7 +176,10 @@ export function NewsArticlesSection({
                                     featuredArticle.imagePath ||
                                         '/emlinked/news/Afbeeling-Iryna-en-Raymond-emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026-1.png',
                                 )}
-                                alt={featuredArticle.title}
+                                alt={
+                                    getImageAlt(featuredArticle.mainImage) ||
+                                    featuredArticle.title
+                                }
                                 fill
                                 sizes='(max-width: 1024px) 100vw, 50vw'
                                 className='object-cover object-center group-hover:scale-105 transition-transform duration-700'
@@ -277,7 +280,10 @@ export function NewsArticlesSection({
                                 <div className='relative w-full h-48 bg-slate-100 overflow-hidden'>
                                     <Image
                                         src={imgUrl}
-                                        alt={art.title}
+                                        alt={
+                                            getImageAlt(art.mainImage) ||
+                                            art.title
+                                        }
                                         fill
                                         sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                                         className='object-cover object-center group-hover:scale-105 transition-transform duration-500'

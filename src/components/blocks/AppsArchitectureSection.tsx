@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
-import { getImageUrl, type SanityImageLike } from '@/sanity/image';
+import { getImageUrl, getImageAlt, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 
 interface AppsArchitectureSectionProps {
@@ -80,7 +80,7 @@ export function AppsArchitectureSection({
                     <div className='relative w-full max-w-xl aspect-3/2 mx-auto my-4 rounded-xl overflow-hidden shadow-md'>
                         <Image
                             src={resolvedBgImage}
-                            alt={activeTitle}
+                            alt={getImageAlt(bgImage) || activeTitle}
                             fill
                             sizes='(max-width: 768px) 100vw, 672px'
                             className='object-cover object-center'
@@ -137,7 +137,10 @@ export function AppsArchitectureSection({
                         <div className='relative w-full max-w-md aspect-5.5/5  rounded-xl overflow-hidden border border-navy-900/10 shadow-xl group flex items-center justify-center hover:border-teal/60 transition-all duration-500 '>
                             <Image
                                 src={resolvedCalloutImage}
-                                alt='Samenwerken binnen Business Central ERP'
+                                alt={
+                                    getImageAlt(calloutImage) ||
+                                    'Samenwerken binnen Business Central ERP'
+                                }
                                 fill
                                 sizes='100vw, 40vw'
                                 className='object-cover object-center group-hover:scale-105 transition-transform duration-700 '

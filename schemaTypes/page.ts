@@ -180,6 +180,15 @@ export const page = defineType({
                             title: 'Right Column Image (Sanity Asset Upload)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                             description:
                                 'Upload custom graphic directly to Sanity CDN',
                         }),
@@ -340,6 +349,15 @@ export const page = defineType({
                             title: 'Side Afbeelding (Upload naar Sanity CDN)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                             description:
                                 'Upload de afbeelding naast de philosophy card rechtstreeks naar de Sanity CDN',
                         }),
@@ -403,6 +421,15 @@ export const page = defineType({
                                             title: 'Author Photo Avatar (Sanity Image)',
                                             type: 'image',
                                             options: { hotspot: true },
+                                            fields: [
+                                                defineField({
+                                                    name: 'alt',
+                                                    title: 'Alt Text',
+                                                    type: 'string',
+                                                    description:
+                                                        'Important for accessibility and SEO.',
+                                                }),
+                                            ],
                                         }),
                                         defineField({
                                             name: 'photoPath',
@@ -414,6 +441,15 @@ export const page = defineType({
                                             title: 'Company Logo Image (Sanity Image)',
                                             type: 'image',
                                             options: { hotspot: true },
+                                            fields: [
+                                                defineField({
+                                                    name: 'alt',
+                                                    title: 'Alt Text',
+                                                    type: 'string',
+                                                    description:
+                                                        'Important for accessibility and SEO.',
+                                                }),
+                                            ],
                                         }),
                                         defineField({
                                             name: 'logoPath',
@@ -611,6 +647,15 @@ export const page = defineType({
                             title: 'Background Image (Sanity Asset Upload)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                             description:
                                 'Upload custom graphic directly to Sanity CDN',
                         }),
@@ -626,6 +671,15 @@ export const page = defineType({
                             title: 'Callout Image (Sanity Asset Upload)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                             description:
                                 'Upload custom graphic directly to Sanity CDN',
                         }),
@@ -718,6 +772,15 @@ export const page = defineType({
                                     title: 'Image (Sanity Asset Upload)',
                                     type: 'image',
                                     options: { hotspot: true },
+                                    fields: [
+                                        defineField({
+                                            name: 'alt',
+                                            title: 'Alt Text',
+                                            type: 'string',
+                                            description:
+                                                'Important for accessibility and SEO.',
+                                        }),
+                                    ],
                                     description:
                                         'Upload custom graphic directly to Sanity CDN',
                                 }),
@@ -801,6 +864,15 @@ export const page = defineType({
                             title: 'Section Image (shown next to the header)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                             description: 'Takes priority over the path above.',
                             hidden: ({ parent }) =>
                                 Boolean(
@@ -868,6 +940,15 @@ export const page = defineType({
                                             title: 'Main Module Image (Sanity Asset Upload)',
                                             type: 'image',
                                             options: { hotspot: true },
+                                            fields: [
+                                                defineField({
+                                                    name: 'alt',
+                                                    title: 'Alt Text',
+                                                    type: 'string',
+                                                    description:
+                                                        'Important for accessibility and SEO.',
+                                                }),
+                                            ],
                                             description:
                                                 'Upload de grote preview afbeelding rechtstreeks naar Sanity CDN',
                                         }),
@@ -883,6 +964,15 @@ export const page = defineType({
                                             title: 'Top-Right PNG Icon Badge (Sanity Asset Upload)',
                                             type: 'image',
                                             options: { hotspot: true },
+                                            fields: [
+                                                defineField({
+                                                    name: 'alt',
+                                                    title: 'Alt Text',
+                                                    type: 'string',
+                                                    description:
+                                                        'Important for accessibility and SEO.',
+                                                }),
+                                            ],
                                             description:
                                                 'Upload het PNG-icoontje rechtsboven op de kaart rechtstreeks naar Sanity CDN',
                                         }),
@@ -1091,6 +1181,15 @@ export const page = defineType({
                                             name: 'avatar',
                                             title: 'Author Avatar',
                                             type: 'image',
+                                            fields: [
+                                                defineField({
+                                                    name: 'alt',
+                                                    title: 'Alt Text',
+                                                    type: 'string',
+                                                    description:
+                                                        'Important for accessibility and SEO.',
+                                                }),
+                                            ],
                                         }),
                                     ],
                                 }),
@@ -1199,6 +1298,15 @@ export const page = defineType({
                             title: 'Right Column Image (Sanity Asset Upload)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                             description:
                                 'Upload banner graphic directly to Sanity CDN',
                         }),
@@ -1383,6 +1491,15 @@ export const page = defineType({
                                             title: 'Logo (Sanity Asset Upload)',
                                             type: 'image',
                                             options: { hotspot: true },
+                                            fields: [
+                                                defineField({
+                                                    name: 'alt',
+                                                    title: 'Alt Text',
+                                                    type: 'string',
+                                                    description:
+                                                        'Important for accessibility and SEO.',
+                                                }),
+                                            ],
                                             description:
                                                 'Upload partner logo directly to Sanity CDN',
                                         }),
@@ -1462,6 +1579,15 @@ export const page = defineType({
                             title: 'Diagram Image (centered, below the intro text)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                             description:
                                 'Replaces the hub-and-spoke diagram graphic with a Sanity-uploaded image. Takes priority over the path above.',
                         }),
@@ -1501,6 +1627,15 @@ export const page = defineType({
                                             title: 'Image (Sanity Asset Upload)',
                                             type: 'image',
                                             options: { hotspot: true },
+                                            fields: [
+                                                defineField({
+                                                    name: 'alt',
+                                                    title: 'Alt Text',
+                                                    type: 'string',
+                                                    description:
+                                                        'Important for accessibility and SEO.',
+                                                }),
+                                            ],
                                             description:
                                                 'Upload custom graphic directly to Sanity CDN',
                                         }),
@@ -1518,6 +1653,20 @@ export const page = defineType({
                                             name: 'link',
                                             title: 'Link (Optional)',
                                             type: 'string',
+                                        }),
+                                        defineField({
+                                            name: 'footerSpec',
+                                            title: 'Footer Spec Label (e.g. "PSD2", "Continia OCR Engine")',
+                                            type: 'string',
+                                            description:
+                                                'Small label shown bottom-left of the card, below the divider line.',
+                                        }),
+                                        defineField({
+                                            name: 'nodeLabel',
+                                            title: 'Provider Pill (Optional, e.g. "Ponto")',
+                                            type: 'string',
+                                            description:
+                                                'Small pill shown bottom-right of the card, next to the footer spec label. Leave empty to hide.',
                                         }),
                                     ],
                                 }),
@@ -1833,6 +1982,15 @@ export const page = defineType({
                                             name: 'image',
                                             title: 'Avatar Image',
                                             type: 'image',
+                                            fields: [
+                                                defineField({
+                                                    name: 'alt',
+                                                    title: 'Alt Text',
+                                                    type: 'string',
+                                                    description:
+                                                        'Important for accessibility and SEO.',
+                                                }),
+                                            ],
                                         }),
                                     ],
                                 }),
@@ -1949,6 +2107,15 @@ export const page = defineType({
                             title: 'Hero Image (Sanity Asset)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                         }),
                     ],
                     preview: {
@@ -2014,6 +2181,15 @@ export const page = defineType({
                             title: 'Banner Afbeelding (Upload naar Sanity CDN)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                             description:
                                 'Upload de banner afbeelding rechtstreeks naar de Sanity CDN',
                         }),

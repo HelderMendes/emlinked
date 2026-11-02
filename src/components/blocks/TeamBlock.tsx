@@ -12,7 +12,7 @@ import {
     ArrowRight,
     CheckCircle2,
 } from 'lucide-react';
-import { getImageUrl, type SanityImageLike } from '@/sanity/image';
+import { getImageUrl, getImageAlt, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 
 export interface TeamMember {
@@ -122,7 +122,7 @@ export function TeamBlock({
                                     <div className='relative w-20 h-20 rounded-xl overflow-hidden border-2 border-navy-900/10 group-hover:border-teal/60 transition-colors shrink-0 shadow-lg bg-navy-50'>
                                         <Image
                                             src={avatarUrl}
-                                            alt={member.name}
+                                            alt={getImageAlt(member.image) || member.name}
                                             fill
                                             sizes='80px'
                                             className='object-cover object-center group-hover:scale-105 transition-transform duration-500'
@@ -267,7 +267,7 @@ export function TeamBlock({
                                                         <div className='relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-navy-900/10 bg-white'>
                                                             <Image
                                                                 src={mAvatar}
-                                                                alt={m.name}
+                                                                alt={getImageAlt(m.image) || m.name}
                                                                 fill
                                                                 sizes='40px'
                                                                 className='object-cover object-center'
@@ -310,7 +310,7 @@ export function TeamBlock({
                                                             activeMember.photoPath ||
                                                                 '/emlinked/team/avatar_partners.png',
                                                         )}
-                                                        alt={activeMember.name}
+                                                        alt={getImageAlt(activeMember.image) || activeMember.name}
                                                         fill
                                                         sizes='112px'
                                                         className='object-cover object-center'

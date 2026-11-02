@@ -159,6 +159,15 @@ export const doc = defineType({
                                             title: 'Image',
                                             type: 'image',
                                             options: { hotspot: true },
+                                            fields: [
+                                                defineField({
+                                                    name: 'alt',
+                                                    title: 'Alt Text',
+                                                    type: 'string',
+                                                    description:
+                                                        'Important for accessibility and SEO.',
+                                                }),
+                                            ],
                                             validation: (Rule) =>
                                                 Rule.required(),
                                         }),

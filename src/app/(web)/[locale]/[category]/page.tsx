@@ -82,39 +82,39 @@ async function getSlugPageData(slug: string, locale: string) {
                     ...,
                     _type,
                     _key,
-                    image { asset-> { _id, url } },
-                    heroImage { asset-> { _id, url } },
-                    photo { asset-> { _id, url } },
-                    logo { asset-> { _id, url } },
+                    image { asset-> { _id, url }, alt },
+                    heroImage { asset-> { _id, url }, alt },
+                    photo { asset-> { _id, url }, alt },
+                    logo { asset-> { _id, url }, alt },
                     items[] {
                         ...,
-                        image { asset-> { _id, url } },
-                        logo { asset-> { _id, url } },
-                        photo { asset-> { _id, url } }
+                        image { asset-> { _id, url }, alt },
+                        logo { asset-> { _id, url }, alt },
+                        photo { asset-> { _id, url }, alt }
                     },
                     features[] {
                         ...,
-                        image { asset-> { _id, url } },
-                        iconImage { asset-> { _id, url } }
+                        image { asset-> { _id, url }, alt },
+                        iconImage { asset-> { _id, url }, alt }
                     },
-                    sectionImage { asset-> { _id, url } },
+                    sectionImage { asset-> { _id, url }, alt },
                     integrations[] {
                         ...,
-                        image { asset-> { _id, url } }
+                        image { asset-> { _id, url }, alt }
                     },
-                    diagramImage { asset-> { _id, url } },
+                    diagramImage { asset-> { _id, url }, alt },
                     testimonials[] {
                         ...,
-                        avatar { asset-> { _id, url } }
+                        avatar { asset-> { _id, url }, alt }
                     },
                     partners[] {
                         ...,
-                        logo { asset-> { _id, url } }
+                        logo { asset-> { _id, url }, alt }
                     },
                     members[] {
                         ...,
-                        image { asset-> { _id, url } },
-                        photo { asset-> { _id, url } }
+                        image { asset-> { _id, url }, alt },
+                        photo { asset-> { _id, url }, alt }
                     }
                 },
                 seo {

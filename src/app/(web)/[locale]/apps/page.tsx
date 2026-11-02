@@ -39,14 +39,14 @@ async function getSanityPageData(locale: string) {
                     ...,
                     _type,
                     _key,
-                    image { asset-> { _id, url } },
-                    heroImage { asset-> { _id, url } },
-                    bgImage { asset-> { _id, url } },
-                    calloutImage { asset-> { _id, url } },
+                    image { asset-> { _id, url }, alt },
+                    heroImage { asset-> { _id, url }, alt },
+                    bgImage { asset-> { _id, url }, alt },
+                    calloutImage { asset-> { _id, url }, alt },
                     features[] {
                         ...,
-                        image { asset-> { _id, url } },
-                        iconImage { asset-> { _id, url } },
+                        image { asset-> { _id, url }, alt },
+                        iconImage { asset-> { _id, url }, alt },
                         bullets
                     }
                 },

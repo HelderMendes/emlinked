@@ -14,7 +14,7 @@ import {
 } from '@/components/TestimonialSlider';
 import { TeamBlock, type TeamMember } from '@/components/blocks/TeamBlock';
 import { AppsArchitectureSection } from '@/components/blocks/AppsArchitectureSection';
-import { getImageUrl, type SanityImageLike } from '@/sanity/image';
+import { getImageUrl, getImageAlt, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { ColorIcon } from '@/components/ui/ColorIcon';
 import { cn } from '@/lib/utils';
@@ -65,6 +65,7 @@ interface IntegrationItem {
     _key?: string;
     image?: SanityImageLike;
     footerSpec?: string;
+    nodeLabel?: string;
     badge?: string;
     title?: string;
     description?: string;
@@ -507,7 +508,10 @@ export function PageBlockRenderer({
                                 <div className='relative w-full aspect-video mt-2 rounded-xl overflow-hidden'>
                                     <Image
                                         src={resolvedSectionImg}
-                                        alt={sectionTitle}
+                                        alt={
+                                            getImageAlt(block.sectionImage) ||
+                                            sectionTitle
+                                        }
                                         fill
                                         sizes='(max-width: 1024px) 100vw, 33vw'
                                         className='object-cover'
@@ -603,7 +607,11 @@ export function PageBlockRenderer({
                                                 <ColorIcon
                                                     src={resolvedIconBadge}
                                                     alt={
-                                                        feature.title || 'Icon'
+                                                        getImageAlt(
+                                                            feature.iconImage,
+                                                        ) ||
+                                                        feature.title ||
+                                                        'Icon'
                                                     }
                                                     className='w-7 h-7'
                                                     sizePx={28}
@@ -638,6 +646,9 @@ export function PageBlockRenderer({
                                                             <Image
                                                                 src={cardImg}
                                                                 alt={
+                                                                    getImageAlt(
+                                                                        feature.image,
+                                                                    ) ||
                                                                     feature.title ||
                                                                     'Module'
                                                                 }
@@ -728,7 +739,10 @@ export function PageBlockRenderer({
                             <div className='relative w-full max-w-2xl mx-auto aspect-video -mt-5'>
                                 <Image
                                     src={resolvedDiagramImg}
-                                    alt={sectionTitle}
+                                    alt={
+                                        getImageAlt(block.diagramImage) ||
+                                        sectionTitle
+                                    }
                                     fill
                                     sizes='(max-width: 1024px) 100vw, 672px'
                                     className='object-cover rounded-xl shad'
@@ -750,7 +764,8 @@ export function PageBlockRenderer({
                                           ? 'Continia OCR Engine'
                                           : 'PSD2');
                                 const nodeLabel =
-                                    idx === 0 ? '' : idx === 1 ? '' : 'Ponto';
+                                    item.nodeLabel ??
+                                    (idx === 0 ? '' : idx === 1 ? '' : 'Ponto');
 
                                 return (
                                     <div
@@ -774,6 +789,9 @@ export function PageBlockRenderer({
                                                         <Image
                                                             src={cardIconImg}
                                                             alt={
+                                                                getImageAlt(
+                                                                    item.image,
+                                                                ) ||
                                                                 item.title ||
                                                                 'Integration'
                                                             }
@@ -898,7 +916,7 @@ export function PageBlockRenderer({
                                         ) ||
                                         '/emlinked/home/Vastgoedbeheer_automatiseren.jpg'
                                     }
-                                    alt={title}
+                                    alt={getImageAlt(block.image) || title}
                                     width={700}
                                     height={900}
                                     className='w-full max-w-2xl mx-auto h-auto lg:w-full lg:mx-0 mt-6 object-cover object-center rounded-xl group-hover:scale-105 transition-transform duration-500 shadow-lg'

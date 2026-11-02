@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getImageUrl, type SanityImageLike } from '@/sanity/image';
+import { getImageUrl, getImageAlt, type SanityImageLike } from '@/sanity/image';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/Badge';
 
@@ -109,7 +109,10 @@ export function TestimonialSlider({
                                     {avatarUrl ? (
                                         <Image
                                             src={avatarUrl}
-                                            alt={t.author}
+                                            alt={
+                                                getImageAlt(t.avatar) ||
+                                                t.author
+                                            }
                                             width={40}
                                             height={40}
                                             className='w-10 h-10 rounded-full object-cover shrink-0'

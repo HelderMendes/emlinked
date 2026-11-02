@@ -10,7 +10,7 @@ import {
     Cpu,
     Layers,
 } from 'lucide-react';
-import { getImageUrl, type SanityImageLike } from '@/sanity/image';
+import { getImageUrl, getImageAlt, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 
 export interface PartnerItem {
@@ -183,7 +183,11 @@ export function PartnersSectionComponent({
                                                     partner.logo,
                                                     partner.logoUrl,
                                                 )}
-                                                alt={partner.name}
+                                                alt={
+                                                    getImageAlt(
+                                                        partner.logo,
+                                                    ) || partner.name
+                                                }
                                                 width={620}
                                                 height={300}
                                                 sizes='(max-width: 1024px) 100vw, 33vw'

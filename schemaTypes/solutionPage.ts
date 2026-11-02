@@ -169,6 +169,15 @@ export const solutionPage = defineType({
                             title: 'Hero Image (Sanity Asset Upload)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                             description:
                                 'Upload custom graphic directly to Sanity CDN',
                         }),
@@ -342,6 +351,15 @@ export const solutionPage = defineType({
                                             title: 'Feature Image (Sanity Asset Upload)',
                                             type: 'image',
                                             options: { hotspot: true },
+                                            fields: [
+                                                defineField({
+                                                    name: 'alt',
+                                                    title: 'Alt Text',
+                                                    type: 'string',
+                                                    description:
+                                                        'Important for accessibility and SEO.',
+                                                }),
+                                            ],
                                         }),
                                     ],
                                     preview: {
@@ -550,6 +568,15 @@ export const solutionPage = defineType({
                             title: 'Banner Afbeelding (Upload naar Sanity CDN)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                             description:
                                 'Upload de banner afbeelding rechtstreeks naar de Sanity CDN',
                         }),
@@ -607,6 +634,15 @@ export const solutionPage = defineType({
                             title: 'Illustration Image (Sanity Asset Upload)',
                             type: 'image',
                             options: { hotspot: true },
+                            fields: [
+                                defineField({
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                    description:
+                                        'Important for accessibility and SEO.',
+                                }),
+                            ],
                         }),
                     ],
                     preview: {

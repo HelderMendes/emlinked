@@ -18,11 +18,11 @@ async function getVastgoedbeheerPageData(locale: string) {
                 ...,
                 pageBlocks[] {
                     ...,
-                    image { asset-> { _id, url } },
-                    heroImage { asset-> { _id, url } },
+                    image { asset-> { _id, url }, alt },
+                    heroImage { asset-> { _id, url }, alt },
                     tabs[] {
                         ...,
-                        image { asset-> { _id, url } }
+                        image { asset-> { _id, url }, alt }
                     }
                 },
                 seo {

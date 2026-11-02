@@ -14,7 +14,7 @@ import {
 import Link from 'next/link';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { DEFAULT_DOMAIN } from '@/lib/seo';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, getImageAlt } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 import { ColorIcon } from '@/components/ui/ColorIcon';
@@ -187,6 +187,7 @@ export function VastgoedbeheerSoftwareModule({
             image:
                 getImageUrl(sanityTab?.image, sanityTab?.imagePath) ||
                 def.image,
+            imageAlt: getImageAlt(sanityTab?.image) || def.imageAlt,
         };
     });
 
@@ -419,6 +420,12 @@ export function VastgoedbeheerSoftwareModule({
                     (isEn
                         ? 'Trusted by professional real estate managers and investors in Europe'
                         : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')
+                }
+                image={
+                    heroBlock?.image ||
+                    heroBlock?.heroImage ||
+                    doc?.image ||
+                    doc?.heroImage
                 }
                 imagePath={heroImageUrl}
                 floatingLabels={[
@@ -857,7 +864,10 @@ export function VastgoedbeheerSoftwareModule({
                         <div className='relative w-full rounded-xl overflow-hidden border border-black/10 shadow-sm group bg-white'>
                             <Image
                                 src={archImage}
-                                alt={archTitle}
+                                alt={
+                                    getImageAlt(architectureBlock?.image) ||
+                                    archTitle
+                                }
                                 width={1200}
                                 height={800}
                                 className='w-full h-auto object-cover rounded-xl group-hover:scale-[1.01] transition-transform duration-500 border border-teal/40'
@@ -939,6 +949,7 @@ export function VastgoedbeheerSoftwareModule({
                             <Image
                                 src={ctaImageUrl}
                                 alt={
+                                    getImageAlt(ctaBlock?.image) ||
                                     ctaBlock?.title ||
                                     doc?.cta?.title ||
                                     'Klaar om je vastgoedbeheer software te moderniseren?'

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getImageUrl, type SanityImageLike } from '@/sanity/image';
+import { getImageUrl, getImageAlt, type SanityImageLike } from '@/sanity/image';
 import { cn } from '@/lib/utils';
 import { ArrowUpRight } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
@@ -140,6 +140,8 @@ export function HeroSection({
 }: HeroSectionProps) {
     const isEn = locale === 'en';
     const effectiveHeroImg = getImageUrl(image, imagePath);
+    const effectiveHeroImgAlt =
+        getImageAlt(image) || stripHeroTitleMarkup(title);
     const heroImgDims = getNativeImageDimensions(effectiveHeroImg);
     const effectiveProofText = proofText || '';
 
@@ -298,7 +300,7 @@ export function HeroSection({
                             ) : (
                                 <Image
                                     src={effectiveHeroImg}
-                                    alt={stripHeroTitleMarkup(title)}
+                                    alt={effectiveHeroImgAlt}
                                     width={heroImgDims?.width ?? 1300}
                                     height={heroImgDims?.height ?? 896}
                                     sizes='100vw'
@@ -326,7 +328,7 @@ export function HeroSection({
                                     ) : (
                                         <Image
                                             src={effectiveHeroImg}
-                                            alt={stripHeroTitleMarkup(title)}
+                                            alt={effectiveHeroImgAlt}
                                             fill
                                             sizes='55vw'
                                             className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'

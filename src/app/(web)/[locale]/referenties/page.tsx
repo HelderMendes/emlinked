@@ -8,7 +8,7 @@ export const revalidate = 0;
 import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, getImageAlt } from '@/sanity/image';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
 import { Box3CtaBanner } from '@/components/blocks/box3/Box3CtaBanner';
 import { Badge } from '@/components/ui/Badge';
@@ -368,6 +368,10 @@ export default async function ReferentiesPage({
                                                     <Image
                                                         src={photoUrl}
                                                         alt={
+                                                            getImageAlt(
+                                                                c.photo ||
+                                                                    c.image,
+                                                            ) ||
                                                             c.author ||
                                                             companyName
                                                         }
@@ -446,6 +450,9 @@ export default async function ReferentiesPage({
                                                             <Image
                                                                 src={logoUrl}
                                                                 alt={
+                                                                    getImageAlt(
+                                                                        c.logo,
+                                                                    ) ||
                                                                     companyName
                                                                 }
                                                                 width={400}

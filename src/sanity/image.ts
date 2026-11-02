@@ -34,6 +34,7 @@ export type SanityImageLike =
           url?: string;
           _ref?: string;
           _id?: string;
+          alt?: string;
       }
     | null
     | undefined;
@@ -77,4 +78,12 @@ export function getImageUrl(
     }
 
     return cleanFallback;
+}
+
+// Reads the editor-set alt text off a Sanity image object, if any —
+// undefined for a plain string/null/missing image so callers can chain
+// their own title-based fallback (e.g. `getImageAlt(img) || title`).
+export function getImageAlt(image: SanityImageLike): string | undefined {
+    if (!image || typeof image === 'string') return undefined;
+    return image.alt || undefined;
 }

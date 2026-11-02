@@ -122,6 +122,14 @@ export const article = defineType({
       options: {
         hotspot: true,
       },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          description: 'Important for accessibility and SEO.',
+        }),
+      ],
     }),
     defineField({
       name: 'body',

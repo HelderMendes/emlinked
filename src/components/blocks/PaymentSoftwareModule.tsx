@@ -17,7 +17,7 @@ import {
 import Link from 'next/link';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { DEFAULT_DOMAIN } from '@/lib/seo';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, getImageAlt } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 import { ColorIcon } from '@/components/ui/ColorIcon';
@@ -343,6 +343,12 @@ export function PaymentSoftwareModule({
                 (isEn
                     ? 'Trusted by professional real estate managers and investors in Europe'
                     : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')
+            }
+            image={
+                heroBlock?.image ||
+                heroBlock?.heroImage ||
+                doc?.image ||
+                doc?.heroImage
             }
             imagePath={heroImageUrl}
             floatingLabels={[
@@ -769,6 +775,7 @@ export function PaymentSoftwareModule({
                                     <Image
                                         src={tab0Img}
                                         alt={
+                                            getImageAlt(sepaTab?.image) ||
                                             sepaTab?.title ||
                                             'SEPA Direct Debit Incasso UI Preview'
                                         }
@@ -853,6 +860,9 @@ export function PaymentSoftwareModule({
                                     <Image
                                         src={tab1Img}
                                         alt={
+                                            getImageAlt(
+                                                reconciliationTab?.image,
+                                            ) ||
                                             reconciliationTab?.title ||
                                             'Realtime Bankreconciliatie UI Preview'
                                         }
@@ -937,6 +947,7 @@ export function PaymentSoftwareModule({
                                     <Image
                                         src={tab2Img}
                                         alt={
+                                            getImageAlt(dunningTab?.image) ||
                                             dunningTab?.title ||
                                             'Geautomatiseerd Debiteurenbeheer UI Preview'
                                         }
@@ -1004,7 +1015,10 @@ export function PaymentSoftwareModule({
                         <div className='relative w-full rounded-xl overflow-hidden border border-black/10 shadow-sm group bg-white'>
                             <Image
                                 src={archImage}
-                                alt={archTitle}
+                                alt={
+                                    getImageAlt(architectureBlock?.image) ||
+                                    archTitle
+                                }
                                 width={1200}
                                 height={800}
                                 className='w-full h-auto object-cover rounded-xl group-hover:scale-[1.01] transition-transform duration-500 border border-teal/40'
@@ -1081,6 +1095,7 @@ export function PaymentSoftwareModule({
                             <Image
                                 src={ctaImageUrl}
                                 alt={
+                                    getImageAlt(ctaBlock?.image) ||
                                     ctaBlock?.title ||
                                     'Payment Software Illustratie'
                                 }

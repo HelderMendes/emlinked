@@ -16,7 +16,7 @@ import {
 import Link from 'next/link';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { DEFAULT_DOMAIN } from '@/lib/seo';
-import { getImageUrl } from '@/sanity/image';
+import { getImageUrl, getImageAlt } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 import { ColorIcon } from '@/components/ui/ColorIcon';
@@ -298,6 +298,12 @@ export function HuurdersportaalModule({
                 (isEn
                     ? 'Trusted by professional real estate managers and investors in Europe'
                     : 'Vertrouwd door professionele vastgoedbeheerders en beleggers in Nederland')
+            }
+            image={
+                heroBlock?.image ||
+                heroBlock?.heroImage ||
+                doc?.image ||
+                doc?.heroImage
             }
             imagePath={heroImageUrl}
             floatingLabels={[
@@ -725,6 +731,9 @@ export function HuurdersportaalModule({
                                     <Image
                                         src={tab0Img}
                                         alt={
+                                            getImageAlt(
+                                                maintenanceTab?.image,
+                                            ) ||
                                             maintenanceTab?.title ||
                                             'Reparatie en Onderhoudsbeheer UI Preview'
                                         }
@@ -809,6 +818,7 @@ export function HuurdersportaalModule({
                                     <Image
                                         src={tab1Img}
                                         alt={
+                                            getImageAlt(invoicesTab?.image) ||
                                             invoicesTab?.title ||
                                             'Facturen en Betalingshistorie UI Preview'
                                         }
@@ -893,6 +903,7 @@ export function HuurdersportaalModule({
                                     <Image
                                         src={tab2Img}
                                         alt={
+                                            getImageAlt(documentsTab?.image) ||
                                             documentsTab?.title ||
                                             'Documentenarchief UI Preview'
                                         }
@@ -1016,7 +1027,12 @@ export function HuurdersportaalModule({
                             <div className='relative w-full rounded-xl overflow-hidden border border-black/10 shadow-sm group bg-white'>
                                 <Image
                                     src={bImage}
-                                    alt={bTitle}
+                                    alt={
+                                        getImageAlt(
+                                            block?.image ||
+                                                architectureBlock?.image,
+                                        ) || bTitle
+                                    }
                                     width={1200}
                                     height={800}
                                     className='w-full h-auto object-cover rounded-xl group-hover:scale-[1.01] transition-transform duration-500 border border-teal/40'
@@ -1095,6 +1111,7 @@ export function HuurdersportaalModule({
                             <Image
                                 src={ctaImageUrl}
                                 alt={
+                                    getImageAlt(ctaBlock?.image) ||
                                     ctaBlock?.title ||
                                     'Huurdersportaal Illustratie'
                                 }
