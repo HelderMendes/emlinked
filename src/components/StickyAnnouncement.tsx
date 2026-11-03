@@ -44,7 +44,7 @@ interface StickyAnnouncementProps {
 const content = {
     nl: {
         pillText: 'Belangrijke aankondiging',
-        title: 'Emlinked Vastgoedbeheer',
+        title: 'emlinked Vastgoedbeheer',
         subtitle:
             'Beheer je huurcontracten, indexaties en servicekosten native in één systeem.',
         cta: 'Gratis demo aanvragen',
@@ -61,7 +61,7 @@ const content = {
     },
     en: {
         pillText: 'Important announcement',
-        title: 'Emlinked Property Management',
+        title: 'emlinked Property Management',
         subtitle:
             'Manage leases, indexations, and expenses native in one single system.',
         cta: 'Request a Free Demo',

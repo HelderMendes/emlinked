@@ -214,11 +214,11 @@ export function Box3Calculator({
         subtitle ||
         (isEn
             ? 'Enter your figures below. See instantly whether you are better or worse off under the new Box 3 actual yield regulations.'
-            : 'Vul uw cijfers in. U ziet direct of u beter of slechter af bent onder de nieuwe box 3-regels voor werkelijk rendement.');
+            : 'Vul je cijfers in. Je ziet direct of je beter of slechter af bent onder de nieuwe box 3-regels voor werkelijk rendement.');
     const leftFeatureTitle =
         featureTitle ||
         (isEn
-            ? 'What Emlinked automatically tracks'
+            ? 'What emlinked automatically tracks'
             : 'Wat emlinked automatisch bijhoudt');
 
     return (

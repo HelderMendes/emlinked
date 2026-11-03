@@ -172,8 +172,8 @@ export async function generateMetadata({
     if (!content) return {};
 
     const fallbackTitle = content.title
-        ? `${content.title} — Emlinked`
-        : 'Emlinked Vastgoedbeheer Software';
+        ? `${content.title} — emlinked`
+        : 'emlinked Vastgoedbeheer Software';
     const fallbackDesc =
         content.desc ||
         content.tagline ||
@@ -195,7 +195,7 @@ const solutionsContent = {
             meta: {
                 title: 'Vastgoedbeheer Software — Automatiseer je Portefeuillebeheer',
                 description:
-                    'Beheer je commercieel vastgoed efficiënter met Emlinked. Automatische CPI-indexatie, huurprolongatie en realtime dashboards. Geïntegreerd met Business Central.',
+                    'Beheer je commercieel vastgoed efficiënter met emlinked. Automatische CPI-indexatie, huurprolongatie en realtime dashboards. Geïntegreerd met Business Central.',
                 keywords:
                     'vastgoedbeheer software, commercieel vastgoed, portefeuillebeheer, CPI indexatie, huurprolongatie, Business Central vastgoed',
             },
@@ -204,7 +204,7 @@ const solutionsContent = {
             title: 'Vastgoedbeheer Software',
             tagline:
                 'Jouw volledige vastgoedportefeuille — één platform, volledig in controle.',
-            desc: 'Emlinked automatiseert alles van CPI-indexatie tot kwartaalfacturatie, zodat jij je tijd spendeert aan wat écht telt: groeien met jouw portefeuille. Natively geïntegreerd met Microsoft Dynamics 365 Business Central.',
+            desc: 'emlinked automatiseert alles van CPI-indexatie tot kwartaalfacturatie, zodat jij je tijd spendeert aan wat écht telt: groeien met jouw portefeuille. Natively geïntegreerd met Microsoft Dynamics 365 Business Central.',
             benefits: [
                 'Geen handmatige huurverhogingen meer — CPI indexatie in één klik',
                 'Automatische factuurverzending per e-mail of via portaal',
@@ -216,12 +216,12 @@ const solutionsContent = {
                 {
                     icon: Zap,
                     title: 'Automatische CPI Indexatie',
-                    text: 'Indexeer al jouw huurprijzen op basis van de actuele CPI-cijfers (CBS) met één klik. Emlinked berekent automatisch de nieuwe huurprijs, genereert de aankondigingsbrief en verstuurt de notificatie per e-mail — zonder handmatig werk.',
+                    text: 'Indexeer al jouw huurprijzen op basis van de actuele CPI-cijfers (CBS) met één klik. emlinked berekent automatisch de nieuwe huurprijs, genereert de aankondigingsbrief en verstuurt de notificatie per e-mail — zonder handmatig werk.',
                 },
                 {
                     icon: FileText,
                     title: 'Huurprolongatie & Facturatie',
-                    text: 'Genereer en verstuur maandelijkse of kwartaalfacturen volledig automatisch. Emlinked koppelt elke factuur aan het juiste object, contract en grootboekrekening in Business Central. Geen enkel handmatig boekingswerk.',
+                    text: 'Genereer en verstuur maandelijkse of kwartaalfacturen volledig automatisch. emlinked koppelt elke factuur aan het juiste object, contract en grootboekrekening in Business Central. Geen enkel handmatig boekingswerk.',
                 },
                 {
                     icon: BarChart3,
@@ -245,7 +245,7 @@ const solutionsContent = {
                     step: '02',
                     icon: CalendarCheck,
                     title: 'Automatiseer je processen',
-                    desc: "Stel indexatieregels, facturatieschema's en betalingstermijnen in. Emlinked voert ze automatisch uit op de juiste datum — inclusief notificaties naar huurders en boekingen in Business Central.",
+                    desc: "Stel indexatieregels, facturatieschema's en betalingstermijnen in. emlinked voert ze automatisch uit op de juiste datum — inclusief notificaties naar huurders en boekingen in Business Central.",
                 },
                 {
                     step: '03',
@@ -256,24 +256,24 @@ const solutionsContent = {
             ],
             faq: [
                 {
-                    q: 'Werkt Emlinked ook voor gemengde portefeuilles (wonen + commercieel)?',
-                    a: 'Ja. Emlinked beheert zowel commercieel vastgoed (kantoren, winkels, bedrijfspanden) als woningportefeuilles. Je kunt per object het huurregime en de indexatiemethode instellen — CPI voor vrije sector, wettelijk voor sociale huur.',
+                    q: 'Werkt emlinked ook voor gemengde portefeuilles (wonen + commercieel)?',
+                    a: 'Ja. emlinked beheert zowel commercieel vastgoed (kantoren, winkels, bedrijfspanden) als woningportefeuilles. Je kunt per object het huurregime en de indexatiemethode instellen — CPI voor vrije sector, wettelijk voor sociale huur.',
                 },
                 {
                     q: 'Hoe lang duurt de implementatie?',
                     a: 'De gemiddelde onboarding duurt 2 tot 4 weken, afhankelijk van de grootte van je portefeuille. Ons implementatieteam begeleidt je bij de dataimport, Business Central koppeling en eerste gebruikerstest.',
                 },
                 {
-                    q: 'Is Emlinked gekoppeld aan Microsoft Dynamics 365 Business Central?',
-                    a: 'Ja, Emlinked is natively gebouwd op Business Central. Alle huurcontracten, facturen, betalingen en boekingen zijn volledig gesynchroniseerd met je Business Central omgeving — geen dubbele invoer, geen tussenliggende koppelingen.',
+                    q: 'Is emlinked gekoppeld aan Microsoft Dynamics 365 Business Central?',
+                    a: 'Ja, emlinked is natively gebouwd op Business Central. Alle huurcontracten, facturen, betalingen en boekingen zijn volledig gesynchroniseerd met je Business Central omgeving — geen dubbele invoer, geen tussenliggende koppelingen.',
                 },
                 {
-                    q: 'Kan ik Emlinked ook gebruiken als ik geen accountant in dienst heb?',
-                    a: 'Absoluut. Emlinked automatiseert de financiële processen zodanig dat je voor dagelijkse huuroperaties geen boekhoudkundige kennis nodig hebt. Alle boekingen, afletter- en grootboekposten worden automatisch aangemaakt.',
+                    q: 'Kan ik emlinked ook gebruiken als ik geen accountant in dienst heb?',
+                    a: 'Absoluut. emlinked automatiseert de financiële processen zodanig dat je voor dagelijkse huuroperaties geen boekhoudkundige kennis nodig hebt. Alle boekingen, afletter- en grootboekposten worden automatisch aangemaakt.',
                 },
                 {
                     q: 'Hoe zit het met AVG en gegevensbeveiliging?',
-                    a: 'Emlinked is AVG-compliant en verwerkt alle data op Europese servers (EU-only hosting). Toegang is rolgebaseerd (RBAC), alle communicatie verloopt via TLS 1.3 en data-at-rest is versleuteld.',
+                    a: 'emlinked is AVG-compliant en verwerkt alle data op Europese servers (EU-only hosting). Toegang is rolgebaseerd (RBAC), alle communicatie verloopt via TLS 1.3 en data-at-rest is versleuteld.',
                 },
             ],
             relatedModules: [
@@ -295,7 +295,7 @@ const solutionsContent = {
                 'Probeer de CPI-indexatiecalculator. Vul de huidige huurprijs en het CPI-percentage in en zie direct de nieuwe huurprijs, het financiële verschil én de automatisch gegenereerde notificatiebrief.',
             cta: {
                 title: 'Klaar om jouw portefeuillebeheer te automatiseren?',
-                desc: 'Plan een vrijblijvende demo en laat je zien hoe Emlinked jouw vastgoedbeheer proces volledig digitaliseert — van contract tot betaling.',
+                desc: 'Plan een vrijblijvende demo en laat je zien hoe emlinked jouw vastgoedbeheer proces volledig digitaliseert — van contract tot betaling.',
                 primary: 'Demo aanvragen',
                 secondary: 'Bekijk alle modules',
             },
@@ -313,7 +313,7 @@ const solutionsContent = {
             title: 'Huurdersportaal',
             tagline:
                 'Minder telefoontjes. Tevreden huurders. Meer tijd voor jouw beheer.',
-            desc: 'Het Emlinked Huurdersportaal geeft jouw huurders 24/7 self-service toegang tot hun documenten, facturen en onderhoudsmeldingen — direct gesynchroniseerd met jouw back-office. Minder administratieve druk, hogere huurder tevredenheid.',
+            desc: 'Het emlinked Huurdersportaal geeft jouw huurders 24/7 self-service toegang tot hun documenten, facturen en onderhoudsmeldingen — direct gesynchroniseerd met jouw back-office. Minder administratieve druk, hogere huurder tevredenheid.',
             benefits: [
                 'Huurders melden storingen zelf — jij ontvangt ze meteen in jouw dashboard',
                 'Online inzage in huurcontracten, servicekosten en huisregels',
@@ -348,7 +348,7 @@ const solutionsContent = {
                 'Ervaar hoe jouw huurders storingen indienen. Dien een testmelding in en zie direct hoe deze in jouw beheer dashboard verschijnt — inclusief realtime statuswijzigingen.',
             cta: {
                 title: 'Geef jouw huurders een premium service-ervaring',
-                desc: 'Plan een demo en ontdek hoe je met het Emlinked Huurdersportaal de communicatie met jouw huurders volledig digitaliseert.',
+                desc: 'Plan een demo en ontdek hoe je met het emlinked Huurdersportaal de communicatie met jouw huurders volledig digitaliseert.',
                 primary: 'Demo aanvragen',
                 secondary: 'Bekijk alle modules',
             },
@@ -357,16 +357,16 @@ const solutionsContent = {
             meta: {
                 title: 'Payment Software — Automatische Huurincasso & Bankaflettering',
                 description:
-                    'Automatiseer jouw huurincasso, bankaflettering en betalingsopvolging met Emlinked Pay. PSD2 bankkoppeling, gesplitste eigenaarafdrachten en Business Central integratie.',
+                    'Automatiseer jouw huurincasso, bankaflettering en betalingsopvolging met emlinked Pay. PSD2 bankkoppeling, gesplitste eigenaarafdrachten en Business Central integratie.',
                 keywords:
                     'huurincasso software, automatische bankaflettering, PSD2 vastgoed, split payments vastgoed, Business Central betaling, SEPA incasso',
             },
-            badge: 'Emlinked Pay',
+            badge: 'emlinked Pay',
             heroIcon: CreditCard,
             title: 'Payment Software',
             tagline:
                 'Van huurontvangst tot grootboekboeking — volledig automatisch.',
-            desc: 'Emlinked Pay verbindt jouw bank via PSD2 of Direct Banking. Huurbetalingen worden real-time herkend, automatisch afgeletterd op de juiste debiteur en direct geboekt in Business Central. Gesplitste afdrachten naar meerdere eigenaren inclusief.',
+            desc: 'emlinked Pay verbindt jouw bank via PSD2 of Direct Banking. Huurbetalingen worden real-time herkend, automatisch afgeletterd op de juiste debiteur en direct geboekt in Business Central. Gesplitste afdrachten naar meerdere eigenaren inclusief.',
             benefits: [
                 'PSD2 en Direct Banking koppeling — bankafschriften automatisch ingelezen',
                 'Real-time aflettering op huurder, object en contract',
@@ -378,17 +378,17 @@ const solutionsContent = {
                 {
                     icon: ShieldCheck,
                     title: 'PSD2 Bankkoppeling',
-                    text: 'Verbind jouw zakelijke bankrekening veilig via PSD2 of Direct Banking. Bankafschriften worden automatisch dagelijks gesynchroniseerd. Emlinked herkent huurbetalingen op basis van betalingskenmerk en letert ze automatisch af op het openstaande saldo van de huurder.',
+                    text: 'Verbind jouw zakelijke bankrekening veilig via PSD2 of Direct Banking. Bankafschriften worden automatisch dagelijks gesynchroniseerd. emlinked herkent huurbetalingen op basis van betalingskenmerk en letert ze automatisch af op het openstaande saldo van de huurder.',
                 },
                 {
                     icon: RefreshCw,
                     title: 'Mislukte Incasso Opvolging',
-                    text: 'Wanneer een incasso storneerd of een betaling uitblijft, start Emlinked automatisch de aanmaningsflow. Herinneringen, formele aanmaningen en escalaties worden verstuurd conform jouw eigen beleid — volledig gedocumenteerd in het huurdersdossier.',
+                    text: 'Wanneer een incasso storneerd of een betaling uitblijft, start emlinked automatisch de aanmaningsflow. Herinneringen, formele aanmaningen en escalaties worden verstuurd conform jouw eigen beleid — volledig gedocumenteerd in het huurdersdossier.',
                 },
                 {
                     icon: BarChart3,
                     title: 'Split Payments & Eigenaarafdrachten',
-                    text: 'Definieer per object een verdeelsleutel: beheervergoeding, eigenaar A, eigenaar B. Zodra een huurbetaling binnenkomt, verdeelt Emlinked het bedrag automatisch en boekt elke afdracht op de juiste grootboekrekening. Geen handmatige verdeelberekeningen meer.',
+                    text: 'Definieer per object een verdeelsleutel: beheervergoeding, eigenaar A, eigenaar B. Zodra een huurbetaling binnenkomt, verdeelt emlinked het bedrag automatisch en boekt elke afdracht op de juiste grootboekrekening. Geen handmatige verdeelberekeningen meer.',
                 },
             ],
             proof: [
@@ -398,10 +398,10 @@ const solutionsContent = {
             ],
             simulatorTitle: 'Simuleer een gesplitste betaling',
             simulatorDesc:
-                'Vul een ontvangen huursom in, configureer de verdeelsleutel tussen eigenaren en beheervergoeding, en zie direct hoe Emlinked de betaling automatisch boekt in het Business Central grootboek.',
+                'Vul een ontvangen huursom in, configureer de verdeelsleutel tussen eigenaren en beheervergoeding, en zie direct hoe emlinked de betaling automatisch boekt in het Business Central grootboek.',
             cta: {
-                title: 'Stop met handmatig bankieren. Start met Emlinked Pay.',
-                desc: 'Ontdek in een persoonlijke demo hoe Emlinked Pay jouw gehele betalingsproces automatiseert — van PSD2 koppeling tot grootboekboeking.',
+                title: 'Stop met handmatig bankieren. Start met emlinked Pay.',
+                desc: 'Ontdek in een persoonlijke demo hoe emlinked Pay jouw gehele betalingsproces automatiseert — van PSD2 koppeling tot grootboekboeking.',
                 primary: 'Demo aanvragen',
                 secondary: 'Bekijk alle modules',
             },
@@ -412,7 +412,7 @@ const solutionsContent = {
             meta: {
                 title: 'Property Management Software — Automate your Portfolio',
                 description:
-                    'Manage your commercial real estate portfolio with Emlinked. Automate CPI indexation, rent invoicing and get real-time yield dashboards. Native Business Central integration.',
+                    'Manage your commercial real estate portfolio with emlinked. Automate CPI indexation, rent invoicing and get real-time yield dashboards. Native Business Central integration.',
                 keywords:
                     'property management software, commercial real estate, portfolio management, CPI indexation, Business Central property',
             },
@@ -421,7 +421,7 @@ const solutionsContent = {
             title: 'Property Management Software',
             tagline:
                 'Your entire property portfolio — one platform, complete control.',
-            desc: 'Emlinked automates everything from CPI indexation to quarterly invoicing, so you spend your time growing your portfolio — not managing spreadsheets. Natively integrated with Microsoft Dynamics 365 Business Central.',
+            desc: 'emlinked automates everything from CPI indexation to quarterly invoicing, so you spend your time growing your portfolio — not managing spreadsheets. Natively integrated with Microsoft Dynamics 365 Business Central.',
             benefits: [
                 'No more manual rent increases — CPI indexation in one click',
                 'Automatic invoice delivery via email or tenant portal',
@@ -433,12 +433,12 @@ const solutionsContent = {
                 {
                     icon: Zap,
                     title: 'Automatic CPI Indexation',
-                    text: 'Index all your rents against current CPI figures with one click. Emlinked calculates the new rent, generates the notice letter, and sends the notification email automatically — no manual steps.',
+                    text: 'Index all your rents against current CPI figures with one click. emlinked calculates the new rent, generates the notice letter, and sends the notification email automatically — no manual steps.',
                 },
                 {
                     icon: FileText,
                     title: 'Rent Invoicing & Prolongation',
-                    text: 'Generate and deliver monthly or quarterly rent invoices fully automatically. Emlinked maps every invoice to the correct property, contract, and G/L account in Business Central — zero manual bookkeeping.',
+                    text: 'Generate and deliver monthly or quarterly rent invoices fully automatically. emlinked maps every invoice to the correct property, contract, and G/L account in Business Central — zero manual bookkeeping.',
                 },
                 {
                     icon: BarChart3,
@@ -462,7 +462,7 @@ const solutionsContent = {
                     step: '02',
                     icon: CalendarCheck,
                     title: 'Automate your processes',
-                    desc: 'Configure indexation rules, invoicing schedules and payment terms. Emlinked executes them automatically on the correct date — including tenant notifications and Business Central postings.',
+                    desc: 'Configure indexation rules, invoicing schedules and payment terms. emlinked executes them automatically on the correct date — including tenant notifications and Business Central postings.',
                 },
                 {
                     step: '03',
@@ -473,24 +473,24 @@ const solutionsContent = {
             ],
             faq: [
                 {
-                    q: 'Does Emlinked work for mixed portfolios (residential + commercial)?',
-                    a: 'Yes. Emlinked manages both commercial real estate (offices, retail, industrial) and residential portfolios. You can configure the lease type and indexation method per property.',
+                    q: 'Does emlinked work for mixed portfolios (residential + commercial)?',
+                    a: 'Yes. emlinked manages both commercial real estate (offices, retail, industrial) and residential portfolios. You can configure the lease type and indexation method per property.',
                 },
                 {
                     q: 'How long does implementation take?',
                     a: 'Average onboarding takes 2 to 4 weeks, depending on your portfolio size. Our implementation team guides you through data import, Business Central connection and initial user testing.',
                 },
                 {
-                    q: 'Is Emlinked integrated with Microsoft Dynamics 365 Business Central?',
-                    a: 'Yes, Emlinked is natively built on Business Central. All lease contracts, invoices, payments and ledger postings are fully synchronised with your Business Central environment — no double entry, no middleware.',
+                    q: 'Is emlinked integrated with Microsoft Dynamics 365 Business Central?',
+                    a: 'Yes, emlinked is natively built on Business Central. All lease contracts, invoices, payments and ledger postings are fully synchronised with your Business Central environment — no double entry, no middleware.',
                 },
                 {
-                    q: 'Can I use Emlinked without an in-house accountant?',
-                    a: 'Absolutely. Emlinked automates financial processes so that for daily rental operations you need no accounting knowledge. All postings, reconciliations and ledger entries are created automatically.',
+                    q: 'Can I use emlinked without an in-house accountant?',
+                    a: 'Absolutely. emlinked automates financial processes so that for daily rental operations you need no accounting knowledge. All postings, reconciliations and ledger entries are created automatically.',
                 },
                 {
-                    q: 'How does Emlinked handle data security and GDPR?',
-                    a: 'Emlinked is GDPR-compliant and processes all data on European servers (EU-only hosting). Access is role-based (RBAC), all communication runs over TLS 1.3 and data-at-rest is encrypted.',
+                    q: 'How does emlinked handle data security and GDPR?',
+                    a: 'emlinked is GDPR-compliant and processes all data on European servers (EU-only hosting). Access is role-based (RBAC), all communication runs over TLS 1.3 and data-at-rest is encrypted.',
                 },
             ],
             relatedModules: [
@@ -512,7 +512,7 @@ const solutionsContent = {
                 'Try the CPI indexation calculator. Fill in the current rent and CPI percentage and instantly see the new rent, the financial delta, and the auto-generated tenant notification.',
             cta: {
                 title: 'Ready to automate your property management?',
-                desc: 'Schedule a free demo and see how Emlinked fully digitalises your property management process — from contract to payment.',
+                desc: 'Schedule a free demo and see how emlinked fully digitalises your property management process — from contract to payment.',
                 primary: 'Request a Demo',
                 secondary: 'View all modules',
             },
@@ -530,7 +530,7 @@ const solutionsContent = {
             title: 'Tenant Portal',
             tagline:
                 'Fewer calls. Happier tenants. More time for your property management.',
-            desc: 'The Emlinked Tenant Portal gives your tenants 24/7 self-service access to their documents, invoices, and maintenance tickets — directly synchronised with your back office. Less admin pressure, higher tenant satisfaction.',
+            desc: 'The emlinked Tenant Portal gives your tenants 24/7 self-service access to their documents, invoices, and maintenance tickets — directly synchronised with your back office. Less admin pressure, higher tenant satisfaction.',
             benefits: [
                 'Tenants report issues themselves — you receive them instantly in your dashboard',
                 'Online access to lease agreements, service costs, and house rules',
@@ -565,7 +565,7 @@ const solutionsContent = {
                 'Experience how your tenants submit maintenance requests. Submit a test ticket and watch it appear instantly in your admin dashboard — including live status changes.',
             cta: {
                 title: 'Give your tenants a premium service experience',
-                desc: 'Schedule a demo and discover how the Emlinked Tenant Portal fully digitalises your tenant communication.',
+                desc: 'Schedule a demo and discover how the emlinked Tenant Portal fully digitalises your tenant communication.',
                 primary: 'Request a Demo',
                 secondary: 'View all modules',
             },
@@ -574,15 +574,15 @@ const solutionsContent = {
             meta: {
                 title: 'Payment Software — Automated Rent Collection & Reconciliation',
                 description:
-                    'Automate your rent collection, bank reconciliation, and payment follow-up with Emlinked Pay. PSD2 banking link, split payments, and Business Central integration.',
+                    'Automate your rent collection, bank reconciliation, and payment follow-up with emlinked Pay. PSD2 banking link, split payments, and Business Central integration.',
                 keywords:
                     'rent collection software, bank reconciliation, PSD2 real estate, split payments property, Business Central payments, SEPA direct debit',
             },
-            badge: 'Emlinked Pay',
+            badge: 'emlinked Pay',
             heroIcon: CreditCard,
             title: 'Payment Software',
             tagline: 'From rent receipt to ledger posting — fully automated.',
-            desc: 'Emlinked Pay connects your bank via PSD2 or Direct Banking. Rent payments are recognised in real-time, automatically reconciled to the correct tenant, and posted directly in Business Central. Split payments to multiple owners included.',
+            desc: 'emlinked Pay connects your bank via PSD2 or Direct Banking. Rent payments are recognised in real-time, automatically reconciled to the correct tenant, and posted directly in Business Central. Split payments to multiple owners included.',
             benefits: [
                 'PSD2 and Direct Banking connection — bank statements auto-imported',
                 'Real-time reconciliation per tenant, property, and contract',
@@ -594,17 +594,17 @@ const solutionsContent = {
                 {
                     icon: ShieldCheck,
                     title: 'PSD2 Banking Connection',
-                    text: 'Securely connect your business bank account via PSD2 or Direct Banking. Bank statements are automatically synchronised daily. Emlinked recognises rent payments by payment reference and reconciles them automatically against the open tenant balance.',
+                    text: 'Securely connect your business bank account via PSD2 or Direct Banking. Bank statements are automatically synchronised daily. emlinked recognises rent payments by payment reference and reconciles them automatically against the open tenant balance.',
                 },
                 {
                     icon: RefreshCw,
                     title: 'Failed Collection Follow-up',
-                    text: 'When a direct debit fails or a payment is overdue, Emlinked automatically starts the dunning flow. Reminders, formal notices, and escalations are sent according to your own policy — fully documented in the tenant file.',
+                    text: 'When a direct debit fails or a payment is overdue, emlinked automatically starts the dunning flow. Reminders, formal notices, and escalations are sent according to your own policy — fully documented in the tenant file.',
                 },
                 {
                     icon: BarChart3,
                     title: 'Split Payments & Owner Distributions',
-                    text: 'Define a distribution key per property: management fee, Owner A, Owner B. As soon as a rent payment arrives, Emlinked automatically splits the amount and posts each distribution to the correct G/L account — no manual calculations.',
+                    text: 'Define a distribution key per property: management fee, Owner A, Owner B. As soon as a rent payment arrives, emlinked automatically splits the amount and posts each distribution to the correct G/L account — no manual calculations.',
                 },
             ],
             proof: [
@@ -614,10 +614,10 @@ const solutionsContent = {
             ],
             simulatorTitle: 'Simulate a split payment',
             simulatorDesc:
-                'Enter an incoming rent amount, configure the distribution key between owners and management fee, and see instantly how Emlinked books the payment in the Business Central ledger.',
+                'Enter an incoming rent amount, configure the distribution key between owners and management fee, and see instantly how emlinked books the payment in the Business Central ledger.',
             cta: {
-                title: 'Stop manual banking. Start with Emlinked Pay.',
-                desc: 'Discover in a personal demo how Emlinked Pay automates your entire payment process — from PSD2 connection to ledger posting.',
+                title: 'Stop manual banking. Start with emlinked Pay.',
+                desc: 'Discover in a personal demo how emlinked Pay automates your entire payment process — from PSD2 connection to ledger posting.',
                 primary: 'Request a Demo',
                 secondary: 'View all modules',
             },
@@ -726,8 +726,8 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                     </h2>
                     <p className='text-sm text-muted-foreground text-center mb-12 max-w-xl mx-auto'>
                         {isEn
-                            ? 'A closer look at what makes Emlinked the smartest choice for your portfolio.'
-                            : 'Een dieper blik op wat Emlinked de slimste keuze maakt voor jouw portefeuille.'}
+                            ? 'A closer look at what makes emlinked the smartest choice for your portfolio.'
+                            : 'Een dieper blik op wat emlinked de slimste keuze maakt voor jouw portefeuille.'}
                     </p>
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                         {content.features.map((feature: any, idx: number) => {
@@ -879,8 +879,8 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                         </h2>
                         <p className='text-sm sm:text-base text-[#060e32]/75 dark:text-slate-300 leading-relaxed font-light'>
                             {isEn
-                                ? 'Emlinked delivers maximum efficiency when combining our specialized core apps for Microsoft Business Central.'
-                                : 'Emlinked werkt het krachtigst als gecombineerde suite. Schakel de modules in die jouw vastgoedorganisatie versterken.'}
+                                ? 'emlinked delivers maximum efficiency when combining our specialized core apps for Microsoft Business Central.'
+                                : 'emlinked werkt het krachtigst als gecombineerde suite. Schakel de modules in die jouw vastgoedorganisatie versterken.'}
                         </p>
                     </div>
 
@@ -1058,8 +1058,8 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                             <p className='text-navy-700 leading-relaxed font-light text-base md:text-lg'>
                                 {content.cta.desc ||
                                     (isEn
-                                        ? 'Experience how Emlinked halves administrative workloads and boosts financial control directly inside Business Central.'
-                                        : 'Ervaar zelf hoe Emlinked je administratieve lasten halveren en je financiële controle vergroten.')}
+                                        ? 'Experience how emlinked halves administrative workloads and boosts financial control directly inside Business Central.'
+                                        : 'Ervaar zelf hoe emlinked je administratieve lasten halveren en je financiële controle vergroten.')}
                             </p>
                         </div>
 

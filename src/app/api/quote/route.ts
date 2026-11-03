@@ -353,7 +353,7 @@ export async function POST(request: Request) {
 
                 <div style="margin-top: 32px; text-align: center;">
                     <a href="https://emlinked.com" style="display: inline-block; background-color: #0f1329; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-weight: bold; font-size: 14px;">
-                        ${isEn ? 'Visit emlinked.com' : 'Bekijk Emlinked Platform'}
+                        ${isEn ? 'Visit emlinked.com' : 'Bekijk emlinked Platform'}
                     </a>
                 </div>
 

@@ -9,7 +9,7 @@ interface LoginPageProps {
 
 const content = {
     nl: {
-        title: 'Inloggen Emlinked Portal',
+        title: 'Inloggen emlinked Portal',
         subtitle: 'Toegang tot de beschermde documentatie en releases.',
         emailLabel: 'E-mailadres',
         passwordLabel: 'Wachtwoord',
@@ -17,7 +17,7 @@ const content = {
         notice: 'Opmerking: Klik op de knop om in te loggen en de documentatie te ontgrendelen.',
     },
     en: {
-        title: 'Login Emlinked Portal',
+        title: 'Login emlinked Portal',
         subtitle: 'Access the protected documentation and release notes.',
         emailLabel: 'Email Address',
         passwordLabel: 'Password',

@@ -34,6 +34,110 @@ export interface NewsArticlesSectionProps {
     locale?: string;
 }
 
+const CATEGORY_MAP: Record<
+    string,
+    { key: string; nl: string; en: string }
+> = {
+    bedrijfsnieuws: {
+        key: 'Bedrijfsnieuws',
+        nl: 'Bedrijfsnieuws',
+        en: 'Company news',
+    },
+    organisatie: {
+        key: 'Bedrijfsnieuws',
+        nl: 'Bedrijfsnieuws',
+        en: 'Company news',
+    },
+    organization: {
+        key: 'Bedrijfsnieuws',
+        nl: 'Bedrijfsnieuws',
+        en: 'Company news',
+    },
+    'company news': {
+        key: 'Bedrijfsnieuws',
+        nl: 'Bedrijfsnieuws',
+        en: 'Company news',
+    },
+    'wet- en regelgeving': {
+        key: 'Wet- en regelgeving',
+        nl: 'Wet- en regelgeving',
+        en: 'Legislation & regulation',
+    },
+    'wet & regelgeving': {
+        key: 'Wet- en regelgeving',
+        nl: 'Wet- en regelgeving',
+        en: 'Legislation & regulation',
+    },
+    'legislation & regulation': {
+        key: 'Wet- en regelgeving',
+        nl: 'Wet- en regelgeving',
+        en: 'Legislation & regulation',
+    },
+    'legislation & tax': {
+        key: 'Wet- en regelgeving',
+        nl: 'Wet- en regelgeving',
+        en: 'Legislation & regulation',
+    },
+    vastgoedbeheer: {
+        key: 'Vastgoedbeheer',
+        nl: 'Vastgoedbeheer',
+        en: 'Property management',
+    },
+    'property management': {
+        key: 'Vastgoedbeheer',
+        nl: 'Vastgoedbeheer',
+        en: 'Property management',
+    },
+    'business central & erp': {
+        key: 'Business Central & ERP',
+        nl: 'Business Central & ERP',
+        en: 'Business Central & ERP',
+    },
+    'erp & business central': {
+        key: 'Business Central & ERP',
+        nl: 'Business Central & ERP',
+        en: 'Business Central & ERP',
+    },
+    vastgoedbeleggen: {
+        key: 'Vastgoedbeleggen',
+        nl: 'Vastgoedbeleggen',
+        en: 'Real estate investment',
+    },
+    'beleggen & portefeuille': {
+        key: 'Vastgoedbeleggen',
+        nl: 'Vastgoedbeleggen',
+        en: 'Real estate investment',
+    },
+    'real estate investment': {
+        key: 'Vastgoedbeleggen',
+        nl: 'Vastgoedbeleggen',
+        en: 'Real estate investment',
+    },
+    'investing & portfolio': {
+        key: 'Vastgoedbeleggen',
+        nl: 'Vastgoedbeleggen',
+        en: 'Real estate investment',
+    },
+};
+
+export function normalizeArticleCategoryKey(
+    category: string | undefined,
+): string {
+    if (!category) return '';
+    const entry = CATEGORY_MAP[category.trim().toLowerCase()];
+    return entry ? entry.key : category.trim();
+}
+
+export function formatArticleCategory(
+    category: string | undefined,
+    isEn: boolean,
+): string {
+    if (!category) return '';
+    const entry = CATEGORY_MAP[category.trim().toLowerCase()];
+    if (!entry) return category;
+    return isEn ? entry.en : entry.nl;
+}
+
 export function NewsArticlesSection({
     articles,
     pinnedArticle,
@@ -46,36 +150,44 @@ export function NewsArticlesSection({
     const categories = useMemo(() => {
         return [
             { id: 'all', label: isEn ? 'All Articles' : 'Alle Artikelen' },
-            { id: 'Organisatie', label: isEn ? 'Organization' : 'Organisatie' },
             {
-                id: 'Wet & Regelgeving',
-                label: isEn ? 'Legislation & Tax' : 'Wet & Regelgeving',
+                id: 'Bedrijfsnieuws',
+                label: isEn ? 'Company news' : 'Bedrijfsnieuws',
+            },
+            {
+                id: 'Wet- en regelgeving',
+                label: isEn
+                    ? 'Legislation & regulation'
+                    : 'Wet- en regelgeving',
             },
             {
                 id: 'Vastgoedbeheer',
-                label: isEn ? 'Property Management' : 'Vastgoedbeheer',
+                label: isEn ? 'Property management' : 'Vastgoedbeheer',
             },
             {
-                id: 'ERP & Business Central',
-                label: isEn
-                    ? 'ERP & Business Central'
-                    : 'ERP & Business Central',
+                id: 'Business Central & ERP',
+                label: 'Business Central & ERP',
             },
             {
-                id: 'Beleggen & Portefeuille',
+                id: 'Vastgoedbeleggen',
                 label: isEn
-                    ? 'Investing & Portfolio'
-                    : 'Beleggen & Portefeuille',
+                    ? 'Real estate investment'
+                    : 'Vastgoedbeleggen',
             },
         ];
     }, [isEn]);
 
     const filteredArticles = useMemo(() => {
         return articles.filter((article) => {
+            const normalizedCat = normalizeArticleCategoryKey(article.category);
+            const localizedCatLabel = formatArticleCategory(
+                article.category,
+                isEn,
+            );
             const matchesCategory =
                 selectedCategory === 'all' ||
-                (article.category &&
-                    article.category.toLowerCase() ===
+                (normalizedCat &&
+                    normalizedCat.toLowerCase() ===
                         selectedCategory.toLowerCase());
 
             const query = searchQuery.toLowerCase().trim();
@@ -85,11 +197,13 @@ export function NewsArticlesSection({
                 (article.excerpt &&
                     article.excerpt.toLowerCase().includes(query)) ||
                 (article.category &&
-                    article.category.toLowerCase().includes(query));
+                    article.category.toLowerCase().includes(query)) ||
+                (localizedCatLabel &&
+                    localizedCatLabel.toLowerCase().includes(query));
 
             return matchesCategory && matchesSearch;
         });
-    }, [articles, selectedCategory, searchQuery]);
+    }, [articles, selectedCategory, searchQuery, isEn]);
 
     const featuredArticle = useMemo(() => {
         if (
@@ -203,7 +317,10 @@ export function NewsArticlesSection({
                                 <div className='flex items-center gap-4 text-xs font-mono text-teal'>
                                     {featuredArticle.category && (
                                         <span className='px-2.5 py-1 rounded-md bg-white/10 border border-white/10 uppercase tracking-wider font-semibold'>
-                                            {featuredArticle.category}
+                                            {formatArticleCategory(
+                                                featuredArticle.category,
+                                                isEn,
+                                            )}
                                         </span>
                                     )}
                                     {featuredArticle.readTime && (
@@ -291,7 +408,10 @@ export function NewsArticlesSection({
                                     {art.category && (
                                         <div className='absolute top-3 left-3'>
                                             <span className='px-2.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/20 text-teal font-mono text-[10px] font-bold uppercase shadow-sm'>
-                                                {art.category}
+                                                {formatArticleCategory(
+                                                    art.category,
+                                                    isEn,
+                                                )}
                                             </span>
                                         </div>
                                     )}

@@ -259,7 +259,7 @@ function CpiSimulator({ isEn, locale }: { isEn: boolean; locale: string }) {
                                         Met vriendelijke groet,
                                         <br />
                                         <strong>
-                                            Emlinked Vastgoed Management
+                                            emlinked Vastgoed Management
                                         </strong>
                                     </p>
                                 </div>

@@ -89,7 +89,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
                   backToSite: 'Back to website',
                   landingTitle: 'My emlinked / Manuals',
                   landingBody:
-                      'Browse the manuals for Emlinked property management software. Pick a category in the menu to open a page.',
+                      'Browse the manuals for emlinked property management software. Pick a category in the menu to open a page.',
               }
             : {
                   pageTitle: 'Handleidingen',
@@ -99,7 +99,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
                   backToSite: 'Terug naar website',
                   landingTitle: 'Mijn emlinked / Handleidingen',
                   landingBody:
-                      'Blader door de handleidingen voor de Emlinked vastgoedbeheer software. Kies een categorie in het menu om een pagina te openen.',
+                      'Blader door de handleidingen voor de emlinked vastgoedbeheer software. Kies een categorie in het menu om een pagina te openen.',
               };
 
     return (

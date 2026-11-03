@@ -140,8 +140,8 @@ export function PaymentSoftwareModule({
     const archDesc =
         architectureBlock?.desc ||
         (isEn
-            ? "The Emlinked Payment Engine isn't a disconnected tool. Every SEPA collection, bank reconciliation, and dunning notice syncs directly with your central Business Central database."
-            : 'De Emlinked Payment Engine staat niet los van je boekhouding. Elke SEPA-incasso, bankaflettering en aanmaning wordt direct gesynchroniseerd met je centrale Business Central database.');
+            ? "The emlinked Payment Engine isn't a disconnected tool. Every SEPA collection, bank reconciliation, and dunning notice syncs directly with your central Business Central database."
+            : 'De emlinked Payment Engine staat niet los van je boekhouding. Elke SEPA-incasso, bankaflettering en aanmaning wordt direct gesynchroniseerd met je centrale Business Central database.');
     const defaultArchBullets = isEn
         ? [
               {
@@ -237,7 +237,7 @@ export function PaymentSoftwareModule({
                   {
                       '@type': 'SoftwareApplication',
                       '@id': `${structuredDataUrl}#software`,
-                      name: 'Emlinked Payment Software',
+                      name: 'emlinked Payment Software',
                       applicationCategory: 'BusinessApplication',
                       operatingSystem: 'Web-based, Direct Banking Integration',
                       softwareRequirements:
@@ -247,7 +247,7 @@ export function PaymentSoftwareModule({
                           : 'Geautomatiseerde huurincasso software met SEPA Direct Debit en realtime bankreconciliatie gekoppeld aan Microsoft Business Central.',
                       publisher: {
                           '@type': 'Organization',
-                          name: 'Emlinked',
+                          name: 'emlinked',
                           url: DEFAULT_DOMAIN,
                       },
                   },
@@ -504,14 +504,14 @@ export function PaymentSoftwareModule({
                         </div>
                     </div>
 
-                    {/* Right Card: Emlinked Native Solution */}
+                    {/* Right Card: emlinked Native Solution */}
                     <div className='relative rounded-xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                         <CardBadge
                             icon='/emlinked/apps/native_ERP.svg'
                             alt={
                                 isEn
-                                    ? 'Emlinked Native ERP'
-                                    : 'Emlinked Native ERP'
+                                    ? 'emlinked Native ERP'
+                                    : 'emlinked Native ERP'
                             }
                         />
 

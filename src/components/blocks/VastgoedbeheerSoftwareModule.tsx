@@ -308,8 +308,8 @@ export function VastgoedbeheerSoftwareModule({
                       '@type': 'SoftwareApplication',
                       '@id': `${structuredDataUrl}#software`,
                       name: isEn
-                          ? 'Emlinked Property Management Software'
-                          : 'Emlinked Vastgoedbeheer Software',
+                          ? 'emlinked Property Management Software'
+                          : 'emlinked Vastgoedbeheer Software',
                       applicationCategory: 'BusinessApplication',
                       operatingSystem:
                           'Web-based, Microsoft Dynamics 365 Business Central',
@@ -320,7 +320,7 @@ export function VastgoedbeheerSoftwareModule({
                           : 'De core SaaS module voor vastgoedbeheer. Automatiseer contracten, CPI-indexaties, servicekosten en metragebeheer native in Business Central.',
                       publisher: {
                           '@type': 'Organization',
-                          name: 'Emlinked',
+                          name: 'emlinked',
                           url: DEFAULT_DOMAIN,
                       },
                   },
@@ -334,7 +334,7 @@ export function VastgoedbeheerSoftwareModule({
                                     name: 'How does the integration with Microsoft Dynamics 365 Business Central work?',
                                     acceptedAnswer: {
                                         '@type': 'Answer',
-                                        text: 'Emlinked runs 100% natively inside Business Central. That means there is no separate API connection or shadow database needed. All journal entries, rent collections, and indexations are created directly in your ERP general ledger.',
+                                        text: 'emlinked runs 100% natively inside Business Central. That means there is no separate API connection or shadow database needed. All journal entries, rent collections, and indexations are created directly in your ERP general ledger.',
                                     },
                                 },
                                 {
@@ -352,7 +352,7 @@ export function VastgoedbeheerSoftwareModule({
                                     name: 'Hoe werkt de koppeling met Microsoft Dynamics 365 Business Central?',
                                     acceptedAnswer: {
                                         '@type': 'Answer',
-                                        text: "Emlinked draait 100% native binnen Business Central. Dat betekent dat er geen losse API-koppeling of schaduwdatabase nodig is. Alle journaalposten, huurincasso's en indexaties ontstaan direct in je ERP-grootboek.",
+                                        text: "emlinked draait 100% native binnen Business Central. Dat betekent dat er geen losse API-koppeling of schaduwdatabase nodig is. Alle journaalposten, huurincasso's en indexaties ontstaan direct in je ERP-grootboek.",
                                     },
                                 },
                                 {
@@ -484,8 +484,8 @@ export function VastgoedbeheerSoftwareModule({
                     <p className='text-navy-900/75 text-base md:text-lg leading-relaxed font-light'>
                         {comparisonBlock?.desc ||
                             (isEn
-                                ? 'Many property managers waste precious hours weekly manually syncing property data with accounting ledgers. Emlinked bridges the gap between daily operations and your GL.'
-                                : 'Veel beheerders verliezen wekelijks kostbare uren aan het handmatig synchroniseren van vastgoedgegevens met hun financiële administratie. Emlinked sluit het gat tussen de dagelijkse operatie en je grootboek.')}
+                                ? 'Many property managers waste precious hours weekly manually syncing property data with accounting ledgers. emlinked bridges the gap between daily operations and your GL.'
+                                : 'Veel beheerders verliezen wekelijks kostbare uren aan het handmatig synchroniseren van vastgoedgegevens met hun financiële administratie. emlinked sluit het gat tussen de dagelijkse operatie en je grootboek.')}
                     </p>
                 </div>
                 {/* Side-by-Side Comparison Matrix */}
@@ -585,14 +585,14 @@ export function VastgoedbeheerSoftwareModule({
                         </div>
                     </div>
 
-                    {/* Right Card: Emlinked Solution */}
+                    {/* Right Card: emlinked Solution */}
                     <div className='relative rounded-xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                         <CardBadge
                             icon='/emlinked/apps/native_ERP.svg'
                             alt={
                                 isEn
-                                    ? 'Emlinked Native ERP'
-                                    : 'Emlinked Native ERP'
+                                    ? 'emlinked Native ERP'
+                                    : 'emlinked Native ERP'
                             }
                         />
 
@@ -914,7 +914,7 @@ export function VastgoedbeheerSoftwareModule({
                                     doc?.cta?.desc ||
                                     (isEn
                                         ? 'Experience how emlinked modular apps cut administrative burden in half and maximize financial control.'
-                                        : 'Ervaar zelf hoe de modulaire apps van Emlinked je administratieve lasten halveren en je financiële controle vergroten.')}
+                                        : 'Ervaar zelf hoe de modulaire apps van emlinked je administratieve lasten halveren en je financiële controle vergroten.')}
                             </p>
 
                             {/* Primary & Secondary Action Buttons */}

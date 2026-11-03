@@ -172,7 +172,7 @@ export default async function DocPage({ params }: DocPageProps) {
                   landingBody:
                       "Want to perform an action in emlinked but can't quite figure it out? In my emlinked you'll find user manuals, the latest news, and release notes with the newest features. This way you can get started quickly and efficiently!",
                   landingMsPrefix:
-                      'Emlinked is built on Microsoft Dynamics 365 Business Central. For more background information and additional documentation, visit the official Microsoft page: ',
+                      'emlinked is built on Microsoft Dynamics 365 Business Central. For more background information and additional documentation, visit the official Microsoft page: ',
                   landingMsLinkLabel: 'Microsoft Dynamics 365',
                   landingMsHref:
                       'https://www.microsoft.com/en-us/dynamics-365/products/business-central',
@@ -189,7 +189,7 @@ export default async function DocPage({ params }: DocPageProps) {
                   landingBody:
                       'Wil je in emlinked een actie uitvoeren, maar kom je er even niet uit? In mijn emlinked vind je gebruikershandleidingen, de laatste nieuwtjes en release notes met de nieuwste functionaliteiten. Zo kun je snel en efficiënt aan de slag!',
                   landingMsPrefix:
-                      'Emlinked is ontwikkeld op basis van Microsoft Dynamics 365 Business Central. Voor meer achtergrondinformatie en aanvullende documentatie kun je terecht op de officiële Microsoft-pagina: ',
+                      'emlinked is ontwikkeld op basis van Microsoft Dynamics 365 Business Central. Voor meer achtergrondinformatie en aanvullende documentatie kun je terecht op de officiële Microsoft-pagina: ',
                   landingMsLinkLabel: 'Microsoft Dynamics 365',
                   landingMsHref:
                       'https://www.microsoft.com/nl-nl/dynamics-365/products/business-central',

@@ -62,7 +62,7 @@ export async function POST(request: Request) {
 
         const mailTo = process.env.MAIL_TO_EMAIL || 'info@helderdesign.nl';
         const mailFrom = process.env.MAIL_FROM_EMAIL || 'info@helderdesign.nl';
-        const mailFromName = process.env.MAIL_FROM_NAME || 'Emlinked';
+        const mailFromName = process.env.MAIL_FROM_NAME || 'emlinked';
 
         const safeName = escapeHtml(name);
         const safeEmail = escapeHtml(email);

@@ -58,12 +58,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
     const fallbackTitle =
         locale === 'en'
-            ? 'Emlinked | Real Estate Software for Business Central'
-            : 'Emlinked | Vastgoedsoftware voor Business Central';
+            ? 'emlinked | Real Estate Software for Business Central'
+            : 'emlinked | Vastgoedsoftware voor Business Central';
     const fallbackDescription =
         locale === 'en'
-            ? 'Emlinked helps real estate professionals with software for commercial portfolio management in Microsoft Business Central.'
-            : 'Emlinked helpt vastgoedprofessionals met software voor commercieel portefeuillebeheer in Microsoft Business Central.';
+            ? 'emlinked helps real estate professionals with software for commercial portfolio management in Microsoft Business Central.'
+            : 'emlinked helpt vastgoedprofessionals met software voor commercieel portefeuillebeheer in Microsoft Business Central.';
 
     return {
         metadataBase: new URL(baseUrl),

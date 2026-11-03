@@ -247,11 +247,11 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
         {
             _type: 'richText',
             sectionTitle: isEn
-                ? 'How Emlinked automates Box 3 reporting'
+                ? 'How emlinked automates Box 3 reporting'
                 : 'Hoe emlinked Software je Box 3 Rapportage Automatiseert',
             content: isEn
                 ? [
-                      'Manually collecting banking statements, ledger entries, and maintenance invoices is time-consuming. Emlinked is engineered to automate this fully.',
+                      'Manually collecting banking statements, ledger entries, and maintenance invoices is time-consuming. emlinked is engineered to automate this fully.',
                       'With direct banking sync and automated invoice processing, all income and operating expenses are reconciled to the correct properties. The system yields an audit-proof Box 3 report in one click, ready for tax filing.',
                   ]
                 : [
@@ -265,7 +265,7 @@ export default async function Box3CheckPage({ params }: Box3PageProps) {
                 ? 'Always ready for tax season'
                 : 'Altijd aangifte-klaar met emlinked',
             subtitle: isEn
-                ? 'Discover how Emlinked automates property bookkeeping and Box 3 reporting. Request a custom demo today.'
+                ? 'Discover how emlinked automates property bookkeeping and Box 3 reporting. Request a custom demo today.'
                 : 'Benieuwd hoe we jouw vastgoedadministratie en Box 3 rapportages kunnen automatiseren? Vraag vandaag nog een demo aan.',
             buttonLabel: isEn ? 'Request Demo' : 'Demo Aanvragen',
             buttonLink: '/contact',

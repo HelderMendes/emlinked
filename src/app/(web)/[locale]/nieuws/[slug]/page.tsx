@@ -18,6 +18,10 @@ import { sanityFetch } from '@/lib/sanity';
 import { getImageUrl } from '@/sanity/image';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { GlowingLink } from '@/components/ui/GlowingButton';
+import {
+    formatArticleCategory,
+    normalizeArticleCategoryKey,
+} from '@/components/nieuws/NewsArticlesSection';
 
 export const revalidate = 60;
 
@@ -181,10 +185,15 @@ async function getRelatedArticles(currentArticle: any, locale: string) {
         const now = Date.now();
 
         // 2. Multi-factor scoring for each candidate
+        const normalizedCurrentCat =
+            normalizeArticleCategoryKey(currentCategory);
         const scoredCandidates = candidates.map((candidate) => {
             // A. Category Match (20% weight)
             const categoryScore =
-                candidate.category === currentCategory ? 100 : 0;
+                normalizeArticleCategoryKey(candidate.category) ===
+                normalizedCurrentCat
+                    ? 100
+                    : 0;
 
             // B. Relevance / Keyword Overlap (40% weight)
             const candidateWords = (candidate.title || '')
@@ -234,7 +243,9 @@ async function getRelatedArticles(currentArticle: any, locale: string) {
         const categoryCounts: Record<string, number> = {};
 
         for (const item of scoredCandidates) {
-            const cat = item.candidate.category || 'General';
+            const cat =
+                normalizeArticleCategoryKey(item.candidate.category) ||
+                'General';
             const count = categoryCounts[cat] || 0;
 
             if (count < 2 || selected.length >= candidates.length - 1) {
@@ -265,7 +276,7 @@ async function getRelatedArticles(currentArticle: any, locale: string) {
 const fallbackArticlesBySlug: Record<string, any> = {
     'emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026': {
         title: 'emlinked versterkt team en zet koers voor verdere groei in 2026',
-        category: 'Organisatie',
+        category: 'Bedrijfsnieuws',
         excerpt:
             'emlinked verwelkomt Iryna Samiliak terug als Operationeel Directeur en zet in 2026 in op persoonlijkere klantondersteuning en sterkere operationele processen.',
         readTime: '3 min leestijd',
@@ -281,7 +292,7 @@ const fallbackArticlesBySlug: Record<string, any> = {
     },
     'emlinked-expands-team-and-sets-course-for-2026-growth': {
         title: 'emlinked expands team and sets course for further growth in 2026',
-        category: 'Organisatie',
+        category: 'Bedrijfsnieuws',
         excerpt:
             'emlinked welcomes back Iryna Samiliak as Chief Operating Officer and focuses on more personal customer support and stronger operational processes in 2026.',
         readTime: '3 min read',
@@ -297,7 +308,7 @@ const fallbackArticlesBySlug: Record<string, any> = {
     },
     'wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders': {
         title: 'Wet Goed Verhuurderschap: Wat verandert er voor vastgoedbeheerders?',
-        category: 'Wet & Regelgeving',
+        category: 'Wet- en regelgeving',
         excerpt:
             'Een compleet overzicht van de verplichtingen rond de Wet goed verhuurderschap en hoe je met de juiste software boetes en dossierachterstanden voorkomt.',
         readTime: '5 min leestijd',
@@ -311,7 +322,7 @@ const fallbackArticlesBySlug: Record<string, any> = {
     },
     'good-landlordship-act-what-changes-for-property-managers': {
         title: 'Good Landlordship Act: What changes for real estate managers?',
-        category: 'Wet & Regelgeving',
+        category: 'Wet- en regelgeving',
         excerpt:
             'A comprehensive guide to compliance requirements under the Dutch Good Landlordship Act and how automated software prevents administrative delays.',
         readTime: '5 min read',
@@ -724,6 +735,14 @@ export default async function ArticleDetailPage({
                 url: canonicalPageUrl,
                 headline: article.title,
                 description: article.excerpt,
+                ...(article.category
+                    ? {
+                          articleSection: formatArticleCategory(
+                              article.category,
+                              isEn,
+                          ),
+                      }
+                    : {}),
                 image: `${DEFAULT_DOMAIN}${heroImgUrl}`,
                 datePublished: article.publishedAt || '2026-01-01T00:00:00Z',
                 inLanguage: isEn ? 'en-US' : 'nl-NL',
@@ -800,7 +819,10 @@ export default async function ArticleDetailPage({
                         <div className='flex flex-wrap items-center gap-4 text-xs font-mono text-teal'>
                             {article.category && (
                                 <span className='px-3 py-1 rounded-full bg-teal/15 border border-teal/30 uppercase tracking-wider font-bold'>
-                                    {article.category}
+                                    {formatArticleCategory(
+                                        article.category,
+                                        isEn,
+                                    )}
                                 </span>
                             )}
                             {article.publishedAt && (

@@ -61,11 +61,11 @@ export const article = defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Organisatie', value: 'Organisatie' },
-          { title: 'Wet & Regelgeving', value: 'Wet & Regelgeving' },
-          { title: 'Vastgoedbeheer', value: 'Vastgoedbeheer' },
-          { title: 'ERP & Business Central', value: 'ERP & Business Central' },
-          { title: 'Beleggen & Portefeuille', value: 'Beleggen & Portefeuille' },
+          { title: 'Bedrijfsnieuws / Company news', value: 'Bedrijfsnieuws' },
+          { title: 'Wet- en regelgeving / Legislation & regulation', value: 'Wet- en regelgeving' },
+          { title: 'Vastgoedbeheer / Property management', value: 'Vastgoedbeheer' },
+          { title: 'Business Central & ERP', value: 'Business Central & ERP' },
+          { title: 'Vastgoedbeleggen / Real estate investment', value: 'Vastgoedbeleggen' },
         ],
       },
     }),

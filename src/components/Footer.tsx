@@ -24,7 +24,7 @@ interface FooterProps {
 const translations = {
     nl: {
         tagline:
-            'Emlinked brengt commercieel, technisch en administratief vastgoedbeheer samen in één overzichtelijk platform. Zo werk je efficiënter, met minder fouten en meer grip op je portefeuille.',
+            'emlinked brengt commercieel, technisch en administratief vastgoedbeheer samen in één overzichtelijk platform. Zo werk je efficiënter, met minder fouten en meer grip op je portefeuille.',
         phone: '+31 (0) 88 707 7000',
         address: 'Gooimeer 12, 1411 DE Naarden',
         demoLabel: 'Plan een demo van 30 minuten',
@@ -39,7 +39,7 @@ const translations = {
             'We hebben je aanvraag ontvangen en nemen snel contact op.',
         formErrorFallback: 'Er is iets misgegaan. Probeer het later opnieuw.',
         formRecaptchaRequired: 'Voltooi de reCAPTCHA-controle.',
-        rights: '© 2010 - 2026 Emlinked. Alle rechten voorbehouden.',
+        rights: '© 2010 - 2026 emlinked. Alle rechten voorbehouden.',
         disclaimer: 'Privacybeleid',
         terms: 'Algemene voorwaarden',
         support: 'Help en ondersteuning',
@@ -66,7 +66,7 @@ const translations = {
     },
     en: {
         tagline:
-            'Emlinked brings commercial, technical, and financial property management together in one clear platform. Work more efficiently with total control over your portfolio.',
+            'emlinked brings commercial, technical, and financial property management together in one clear platform. Work more efficiently with total control over your portfolio.',
         phone: '+31 (0) 88 707 7000',
         address: 'Gooimeer 12, 1411 DE Naarden',
         demoLabel: 'Request a free demo session',
@@ -81,7 +81,7 @@ const translations = {
             "We've received your request and will be in touch shortly.",
         formErrorFallback: 'Something went wrong. Please try again later.',
         formRecaptchaRequired: 'Please complete the reCAPTCHA check.',
-        rights: '© 2010 - 2026 Emlinked. All rights reserved.',
+        rights: '© 2010 - 2026 emlinked. All rights reserved.',
         disclaimer: 'Privacy Policy',
         terms: 'Terms & Conditions',
         support: 'Help & Support',

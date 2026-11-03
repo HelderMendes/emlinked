@@ -191,18 +191,18 @@ export function HuurdersportaalModule({
                       '@type': 'SoftwareApplication',
                       '@id': `${structuredDataUrl}#software`,
                       name: isEn
-                          ? 'Emlinked Tenant Portal Software'
-                          : 'Emlinked Huurdersportaal Software',
+                          ? 'emlinked Tenant Portal Software'
+                          : 'emlinked Huurdersportaal Software',
                       applicationCategory: 'BusinessApplication',
                       operatingSystem: 'Web-based, Mobile Responsive',
                       softwareRequirements:
                           'Microsoft Dynamics 365 Business Central',
                       description: isEn
-                          ? 'Online tenant portal for self-service communication, maintenance requests, and document management, synced directly with the Emlinked property software suite.'
-                          : 'Online huurdersportaal voor self-service communicatie, onderhoudsmeldingen en documentenbeheer direct gesynchroniseerd met de Emlinked vastgoedsoftware suite.',
+                          ? 'Online tenant portal for self-service communication, maintenance requests, and document management, synced directly with the emlinked property software suite.'
+                          : 'Online huurdersportaal voor self-service communicatie, onderhoudsmeldingen en documentenbeheer direct gesynchroniseerd met de emlinked vastgoedsoftware suite.',
                       publisher: {
                           '@type': 'Organization',
-                          name: 'Emlinked',
+                          name: 'emlinked',
                           url: DEFAULT_DOMAIN,
                       },
                   },
@@ -224,7 +224,7 @@ export function HuurdersportaalModule({
                                     name: 'Is the tenant portal connected to my property administration?',
                                     acceptedAnswer: {
                                         '@type': 'Answer',
-                                        text: "Yes. The tenant portal is fully synced with Emlinked's central property administration inside Microsoft Dynamics 365 Business Central, so there's no duplicate data entry between the portal and your back office.",
+                                        text: "Yes. The tenant portal is fully synced with emlinked's central property administration inside Microsoft Dynamics 365 Business Central, so there's no duplicate data entry between the portal and your back office.",
                                     },
                                 },
                             ]
@@ -459,14 +459,14 @@ export function HuurdersportaalModule({
                         </div>
                     </div>
 
-                    {/* Right Card: Emlinked Native Solution */}
+                    {/* Right Card: emlinked Native Solution */}
                     <div className='relative rounded-xl border border-black/20 bg-white p-8 space-y-6 shadow-xs flex flex-col justify-between'>
                         <CardBadge
                             icon='/emlinked/apps/native_ERP.svg'
                             alt={
                                 isEn
-                                    ? 'Emlinked Native ERP'
-                                    : 'Emlinked Native ERP'
+                                    ? 'emlinked Native ERP'
+                                    : 'emlinked Native ERP'
                             }
                         />
 
@@ -968,8 +968,8 @@ export function HuurdersportaalModule({
             block?.desc ||
             architectureBlock?.desc ||
             (isEn
-                ? 'The Emlinked tenant portal connects directly to Microsoft Business Central without middle-tier delay.'
-                : 'Het Emlinked huurdersportaal is geen losstaand eiland. Alle meldingen, contractwijzigingen en betalingen worden direct gesynchroniseerd met je centrale Business Central database.');
+                ? 'The emlinked tenant portal connects directly to Microsoft Business Central without middle-tier delay.'
+                : 'Het emlinked huurdersportaal is geen losstaand eiland. Alle meldingen, contractwijzigingen en betalingen worden direct gesynchroniseerd met je centrale Business Central database.');
         const bBullets = block?.bullets?.length
             ? block.bullets.map((text: string) => ({ bold: '', text }))
             : architectureBlock?.bullets?.length
