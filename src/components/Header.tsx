@@ -29,8 +29,15 @@ function getSubIcon(title: string) {
     if (t.includes('huurdersportaal') || t.includes('tenant'))
         return BsChatSquareText;
     if (t.includes('payment') || t.includes('betal')) return BsCreditCard2Back;
-    if (t.includes('referenties') || t.includes('references'))
+    if (
+        t.includes('referenties') ||
+        t.includes('references') ||
+        t.includes('over ons') ||
+        t.includes('about us')
+    )
         return BsPeopleFill;
+    if (t.includes('nieuws') || t.includes('news'))
+        return BsChatSquareText;
     if (
         t.includes('indexatie') ||
         t.includes('indexation') ||

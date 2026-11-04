@@ -75,6 +75,12 @@ export async function generateMetadata(): Promise<Metadata> {
         alternates: {
             canonical: './',
         },
+        verification: {
+            google: [
+                'cutMJTwhsuEum2eawAiLFqS_Rz3gquJdSbeT_XlUKK8',
+                'OyJeke8yQs20ZXMPpaBQAZ6kftBX-ADfs0X0NPqpQ6E',
+            ],
+        },
         openGraph: {
             siteName: 'emlinked',
             locale: locale === 'en' ? 'en_US' : 'nl_NL',

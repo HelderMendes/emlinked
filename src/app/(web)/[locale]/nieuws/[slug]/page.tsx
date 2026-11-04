@@ -21,7 +21,7 @@ import { GlowingLink } from '@/components/ui/GlowingButton';
 import {
     formatArticleCategory,
     normalizeArticleCategoryKey,
-} from '@/components/nieuws/NewsArticlesSection';
+} from '@/lib/articleCategories';
 
 export const revalidate = 60;
 
