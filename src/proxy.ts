@@ -99,6 +99,26 @@ export function proxy(request: NextRequest) {
     const hasLocale = LOCALES.includes(firstPathSegment);
 
     if (!hasLocale) {
+        // Redirect explicit English slugs visited without /en prefix directly to /en/...
+        const isExplicitEnglishPath =
+            normalizedPathname === '/news' ||
+            normalizedPathname.startsWith('/news/') ||
+            normalizedPathname === '/about-us' ||
+            normalizedPathname === '/pricing' ||
+            normalizedPathname === '/references' ||
+            normalizedPathname === '/apps/property-management-software' ||
+            normalizedPathname === '/apps/tenant-portal';
+
+        if (isExplicitEnglishPath) {
+            const targetUrl = new URL(
+                `/en${normalizedPathname}${url.search}`,
+                request.url,
+            );
+            const response = NextResponse.redirect(targetUrl, 301);
+            response.cookies.set('emlinked_locale', 'en', { path: '/', maxAge: 31536000, sameSite: 'lax' });
+            return response;
+        }
+
         // If no locale is specified:
         // 1. Check if the user has an explicit language preference stored in a cookie
         const localeCookie = request.cookies.get('emlinked_locale')?.value;
@@ -120,9 +140,11 @@ export function proxy(request: NextRequest) {
             }
         }
 
-        if (detectedLocale === 'en') {
+        // Only auto-redirect based on cookie/Accept-Language on the root homepage ('/').
+        // Explicit Dutch sub-routes (e.g. /nieuws/..., /prijzen, /over-ons) must render in Dutch.
+        if (detectedLocale === 'en' && normalizedPathname === '/') {
             const targetUrl = new URL(
-                `/en${normalizedPathname}${url.search}`,
+                `/en${url.search}`,
                 request.url,
             );
             const response = NextResponse.redirect(targetUrl, 307);

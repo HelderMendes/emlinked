@@ -121,7 +121,10 @@ interface ArticleDetailPageProps {
 async function getSanityArticleBySlug(slug: string, locale: string) {
     try {
         return await sanityFetch<any>({
-            query: `*[_type == "article" && slug.current == $slug && language == $locale][0] {
+            query: `coalesce(
+                *[_type == "article" && slug.current == $slug && language == $locale][0],
+                *[_type == "article" && slug.current == $slug][0]
+            ) {
                 _id,
                 title,
                 "slug": slug.current,
@@ -696,7 +699,9 @@ export default async function ArticleDetailPage({
     const { locale, slug } = await params;
     const isEn = locale === 'en';
 
-    const article = await getSanityArticleBySlug(slug, locale);
+    const article =
+        (await getSanityArticleBySlug(slug, locale)) ||
+        fallbackArticlesBySlug[slug];
 
     if (!article) {
         notFound();
