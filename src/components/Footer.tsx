@@ -153,6 +153,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                     email: footerEmail,
                     phone: footerPhone,
                     message: footerMessage,
+                    locale: isEn ? 'en' : 'nl',
                     recaptchaToken,
                     action: 'footer_contact',
                 }),

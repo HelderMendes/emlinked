@@ -182,6 +182,7 @@ export function DemoModal({
                     company,
                     portfolioSize,
                     message,
+                    locale,
                     recaptchaToken,
                     action: 'demo_request',
                 }),

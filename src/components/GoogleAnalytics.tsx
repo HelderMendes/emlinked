@@ -43,6 +43,10 @@ function applyConsentUpdate(prefs: CookiePreferences) {
         ad_user_data: marketingGranted,
         ad_personalization: marketingGranted,
     });
+
+    if (prefs.analytics) {
+        window.gtag('event', 'page_view');
+    }
 }
 
 export function GoogleAnalytics() {
