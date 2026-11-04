@@ -88,34 +88,44 @@ export function proxy(request: NextRequest) {
         return NextResponse.redirect(targetUrl, 301);
     }
 
-    // 3. Authentication Gate for `/docs`
-    if (normalizedPathname.startsWith('/docs')) {
+    // 3. Authentication Gate for `/docs` (including `/en/docs` and `/nl/docs`)
+    if (
+        normalizedPathname.startsWith('/docs') ||
+        normalizedPathname.startsWith('/en/docs') ||
+        normalizedPathname.startsWith('/nl/docs')
+    ) {
         const sessionCookie = request.cookies.get('emlinked_session');
 
         if (!sessionCookie) {
             // Resolve preferred locale for login redirection (sends to clean login page for Dutch, /en/login for English)
-            let detectedLocale = DEFAULT_LOCALE;
-            const acceptLanguage = request.headers.get('accept-language');
-            if (acceptLanguage) {
-                const preferred = acceptLanguage
-                    .split(',')[0]
-                    .split('-')[0]
-                    .toLowerCase();
-                if (LOCALES.includes(preferred)) {
-                    detectedLocale = preferred;
+            let detectedLocale = normalizedPathname.startsWith('/en/docs')
+                ? 'en'
+                : DEFAULT_LOCALE;
+            if (!normalizedPathname.startsWith('/en/docs') && !normalizedPathname.startsWith('/nl/docs')) {
+                const acceptLanguage = request.headers.get('accept-language');
+                if (acceptLanguage) {
+                    const preferred = acceptLanguage
+                        .split(',')[0]
+                        .split('-')[0]
+                        .toLowerCase();
+                    if (LOCALES.includes(preferred)) {
+                        detectedLocale = preferred;
+                    }
                 }
             }
 
             const loginPrefix = detectedLocale === 'nl' ? '' : '/en';
             const loginUrl = new URL(
-                `${loginPrefix}/login?callbackUrl=${encodeURIComponent(url.pathname + url.search)}`,
+                `${loginPrefix}/login?callbackUrl=${encodeURIComponent('/docs' + url.search)}`,
                 request.url,
             );
             return NextResponse.redirect(loginUrl, 307);
         }
 
         // Authenticated /docs requests bypass locale prefixing
-        return NextResponse.next();
+        if (normalizedPathname.startsWith('/docs')) {
+            return NextResponse.next();
+        }
     }
 
     // 4. Default Language Bypass & Locale Routing
