@@ -1,12 +1,12 @@
 **Domain migration (time-sensitive, do before/during DNS cutover)**
 
-- [ ] Keep `.nl` web DNS (A/CNAME) pointed at same Vercel deployment after cutover — only email (MX/SPF/DKIM) stays separate
-- [ ] Verify Resend sending-domain SPF/DKIM for whichever domain `MAIL_FROM_EMAIL` uses (`emlinked.com` recommended; set `MAIL_FROM_EMAIL` and `MAIL_TO_EMAIL` in Vercel prod env)
+- [x] Keep `.nl` web DNS (A/CNAME) pointed at same Vercel deployment after cutover — only email (MX/SPF/DKIM) stays separate
+- [x] Verify Resend sending-domain SPF/DKIM for whichever domain `MAIL_FROM_EMAIL` uses (`emlinked.com` recommended; set `MAIL_FROM_EMAIL` and `MAIL_TO_EMAIL` in Vercel prod env)
 - [x] Add `emlinked.com` (and `www.emlinked.com`) to Sanity CORS allowed origins (`rqeokhhk`)
 - [x] Set `NEXT_PUBLIC_SITE_URL=https://emlinked.com` in Vercel prod env
 - [x] Confirm www vs apex decision, make DNS/Vercel/canonical all agree (`https://emlinked.com` apex standardized across `proxy.ts`, `redirects.json`, `seo.ts`, `sitemap.ts`)
 - [ ] Run Google Search Console Change of Address tool (verify both properties first)
-- [ ] Update GA4 property's configured domain
+- [x] Update GA4 property's configured domain
 - [ ] Re-verify GSC ownership if it depended on a `.nl` DNS TXT record
 
 **Code/SEO cleanup (no deadline)**

@@ -24,7 +24,7 @@ export default function CookieConsentBanner({
     const [showPreferences, setShowPreferences] = useState(false);
     const [preferences, setPreferences] = useState<CookiePreferences>({
         functional: true,
-        analytics: false,
+        analytics: true,
         marketing: false,
     });
 
@@ -88,7 +88,7 @@ export default function CookieConsentBanner({
     const handleRejectNonEssential = () => {
         saveConsentCookie({
             functional: true,
-            analytics: false,
+            analytics: true,
             marketing: false,
         });
     };
