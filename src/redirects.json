@@ -380,7 +380,127 @@
         "status": 301
     },
     "/onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked": {
-        "destination": "/nieuws/our-clients-already-manage-over-15-billion-in-real-estate-with-emlinked",
+        "destination": "/nieuws/onze-klanten-beheren-al-meer-dan-15-miljard-aan-vastgoed-met-emlinked",
+        "status": 301
+    },
+    "/huurdersportaal": {
+        "destination": "/apps/huurdersportaal",
+        "status": 301
+    },
+    "/payment-software": {
+        "destination": "/apps/payment-software",
+        "status": 301
+    },
+    "/paylinked": {
+        "destination": "/apps/payment-software",
+        "status": 301
+    },
+    "/vastgoedbeheer-software-2": {
+        "destination": "/apps/vastgoedbeheer-software",
+        "status": 301
+    },
+    "/box3": {
+        "destination": "/box3-check",
+        "status": 301
+    },
+    "/box-3": {
+        "destination": "/box3-check",
+        "status": 301
+    },
+    "/werken-bij": {
+        "destination": "/over-ons",
+        "status": 301
+    },
+    "/vacatures": {
+        "destination": "/over-ons",
+        "status": 301
+    },
+    "/faq": {
+        "destination": "/help",
+        "status": 301
+    },
+    "/support": {
+        "destination": "/help",
+        "status": 301
+    },
+    "/handleiding": {
+        "destination": "/help",
+        "status": 301
+    },
+    "/demo": {
+        "destination": "/contact",
+        "status": 301
+    },
+    "/offerte": {
+        "destination": "/contact",
+        "status": 301
+    },
+    "/afspraak": {
+        "destination": "/contact",
+        "status": 301
+    },
+    "/blog": {
+        "destination": "/nieuws",
+        "status": 301
+    },
+    "/artikelen": {
+        "destination": "/nieuws",
+        "status": 301
+    },
+    "/actueel": {
+        "destination": "/nieuws",
+        "status": 301
+    },
+    "/wat-is-vastgoedbeheer": {
+        "destination": "/nieuws/online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp",
+        "status": 301
+    },
+    "/box-3-vastgoed-2026": {
+        "destination": "/nieuws/box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing",
+        "status": 301
+    },
+    "/huurindexatie-berekenen": {
+        "destination": "/nieuws/cbs-wijzigt-consumentenprijsindex-cpi",
+        "status": 301
+    },
+    "/is-uw-incassodossier-op-orde": {
+        "destination": "/nieuws/is-uw-incassodossier-op-orde",
+        "status": 301
+    },
+    "/online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp": {
+        "destination": "/nieuws/online-vastgoedbeheer-software-de-overstap-van-excel-naar-erp",
+        "status": 301
+    },
+    "/geautomatiseerde-incasso-en-bankaflettering-in-business-central-23": {
+        "destination": "/nieuws/geautomatiseerde-incasso-en-bankaflettering-in-business-central-23",
+        "status": 301
+    },
+    "/box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing": {
+        "destination": "/nieuws/box-3-rendement-2026-werkelijk-rendement-vs-forfaitaire-heffing",
+        "status": 301
+    },
+    "/emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026": {
+        "destination": "/nieuws/emlinked-versterkt-team-en-zet-koers-voor-verdere-groei-in-2026",
+        "status": 301
+    },
+    "/vast-huurcontract-vs-flexibel-huurcontract-juridische-en-financiele-impact": {
+        "destination": "/nieuws/vast-huurcontract-vs-flexibel-huurcontract-juridische-en-financiele-impact",
+        "status": 301
+    },
+    "/wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders": {
+        "destination": "/nieuws/wet-goed-verhuurderschap-wat-verandert-er-voor-vastgoedbeheerders",
+        "status": 301
+    },
+    "/wp-admin": {
+        "destination": "/",
+        "status": 301
+    },
+    "/wp-login.php": {
+        "destination": "/",
+        "status": 301
+    },
+    "/feed": {
+        "destination": "/nieuws",
         "status": 301
     }
 }

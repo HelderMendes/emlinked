@@ -93,6 +93,23 @@ export function proxy(request: NextRequest) {
         return NextResponse.next();
     }
 
+    // Legacy WordPress prefix redirects (/category/*, /tag/*, /author/*, /blog/*, /wp-content/*, /wp-includes/*, /wp-admin/*)
+    if (
+        normalizedPathname.startsWith('/category/') ||
+        normalizedPathname.startsWith('/tag/') ||
+        normalizedPathname.startsWith('/author/') ||
+        normalizedPathname.startsWith('/blog/')
+    ) {
+        return NextResponse.redirect(new URL('/nieuws', request.url), 301);
+    }
+    if (
+        normalizedPathname.startsWith('/wp-content/') ||
+        normalizedPathname.startsWith('/wp-includes/') ||
+        normalizedPathname.startsWith('/wp-admin/')
+    ) {
+        return NextResponse.redirect(new URL('/', request.url), 301);
+    }
+
     // 301 redirect any URL containing uppercase characters to lowercase (e.g. /Box3-check -> /box3-check)
     if (url.pathname !== pathname) {
         const targetUrl = new URL(
@@ -129,36 +146,17 @@ export function proxy(request: NextRequest) {
         }
 
         // If no locale is specified:
-        // 1. Check if the user has an explicit language preference stored in a cookie
+        // Only redirect root ('/') to '/en' if the visitor explicitly selected English via the language switcher cookie.
+        // Never redirect '/' based on Accept-Language, so crawlers, Search Console, and emlinked.nl -> emlinked.com redirects
+        // always receive a clean 200 OK on the Dutch root homepage without a 307/302 hop.
         const localeCookie = request.cookies.get('emlinked_locale')?.value;
-        let detectedLocale = DEFAULT_LOCALE;
 
-        if (localeCookie && LOCALES.includes(localeCookie)) {
-            detectedLocale = localeCookie;
-        } else {
-            // 2. Fallback to Accept-Language headers if no cookie is set
-            const acceptLanguage = request.headers.get('accept-language');
-            if (acceptLanguage) {
-                const preferred = acceptLanguage
-                    .split(',')[0]
-                    .split('-')[0]
-                    .toLowerCase();
-                if (preferred === 'en') {
-                    detectedLocale = 'en';
-                }
-            }
-        }
-
-        // Only auto-redirect based on cookie/Accept-Language on the root homepage ('/').
-        // Explicit Dutch sub-routes (e.g. /nieuws/..., /prijzen, /over-ons) must render in Dutch.
-        if (detectedLocale === 'en' && normalizedPathname === '/') {
+        if (localeCookie === 'en' && normalizedPathname === '/') {
             const targetUrl = new URL(
                 `/en${url.search}`,
                 request.url,
             );
-            const response = NextResponse.redirect(targetUrl, 307);
-            response.cookies.set('emlinked_locale', 'en', { path: '/', maxAge: 31536000, sameSite: 'lax' });
-            return response;
+            return NextResponse.redirect(targetUrl, 307);
         } else {
             // Transparently rewrite to /nl/... so the user sees clean URLs without the /nl prefix
             const rewriteUrl = new URL(

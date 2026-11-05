@@ -293,8 +293,8 @@ export function Box3CalculatorCard({
 
             <p className='text-center text-sm text-[#060e32]/50 mt-4'>
                 {isEn
-                    ? 'Indicative calculation · High Court guidelines · No formal tax advice'
-                    : 'Indicatief · Eerste Kamer akkoord in behandeling · Geen formeel belastingadvies'}
+                    ? 'Indicative calculation · Based on current legislative proposal · No formal tax advice'
+                    : 'Indicatief · Op basis van het huidige wetsvoorstel · Geen formeel belastingadvies'}
             </p>
         </div>
     );

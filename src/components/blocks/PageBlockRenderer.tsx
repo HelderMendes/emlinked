@@ -330,12 +330,20 @@ export function PageBlockRenderer({
 
     const getPath = (path: string) => {
         if (!path) return isEn ? '/en' : '/';
-        if (path.startsWith('#')) return path;
+        if (
+            path.startsWith('#') ||
+            path.startsWith('mailto:') ||
+            path.startsWith('tel:') ||
+            path.startsWith('http://') ||
+            path.startsWith('https://')
+        ) {
+            return path;
+        }
         if (isEn) {
             if (path.startsWith('/en')) return path;
-            return `/en${path === '/' ? '' : path}`;
+            return `/en${path === '/' ? '' : path.startsWith('/') ? path : `/${path}`}`;
         }
-        return path;
+        return path.startsWith('/') ? path : `/${path}`;
     };
 
     switch (block._type) {

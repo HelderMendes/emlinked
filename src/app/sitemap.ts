@@ -16,12 +16,12 @@ function pagePath(slug: string, language: string): string {
 }
 
 function solutionPagePath(slug: string, language: string): string {
-    const clean = cleanSlug(slug);
+    const clean = cleanSlug(slug).replace(/^(?:en\/)?apps\//, '');
     return language === 'en' ? `/en/apps/${clean}` : `/apps/${clean}`;
 }
 
 function articlePath(slug: string, language: string): string {
-    const clean = cleanSlug(slug);
+    const clean = cleanSlug(slug).replace(/^(?:en\/)?(?:nieuws|news)\//, '');
     return language === 'en' ? `/en/news/${clean}` : `/nieuws/${clean}`;
 }
 
@@ -33,7 +33,7 @@ interface SitemapDoc {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const [pages, solutionPages, articles] = await Promise.all([
+    const [pages, solutionPages, articles, legalPages] = await Promise.all([
         client.fetch<SitemapDoc[]>(
             `*[_type == "page" && defined(slug.current)]{
                 "slug": slug.current,
@@ -58,32 +58,55 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                 "noIndex": seo.noIndex
             }`,
         ),
+        client.fetch<SitemapDoc[]>(
+            `*[_type == "legalPage" && defined(slug.current)]{
+                "slug": slug.current,
+                language,
+                _updatedAt,
+                "noIndex": seo.noIndex
+            }`,
+        ),
     ]);
 
+    const seen = new Set<string>();
     const entries: MetadataRoute.Sitemap = [];
+
+    const addEntry = (url: string, lastModified: string) => {
+        if (seen.has(url)) return;
+        seen.add(url);
+        entries.push({ url, lastModified });
+    };
 
     for (const doc of pages) {
         if (doc.noIndex || !doc.slug) continue;
-        entries.push({
-            url: `${DEFAULT_DOMAIN}${pagePath(doc.slug, doc.language)}`,
-            lastModified: doc._updatedAt,
-        });
+        addEntry(
+            `${DEFAULT_DOMAIN}${pagePath(doc.slug, doc.language)}`,
+            doc._updatedAt,
+        );
     }
 
     for (const doc of solutionPages) {
         if (doc.noIndex || !doc.slug) continue;
-        entries.push({
-            url: `${DEFAULT_DOMAIN}${solutionPagePath(doc.slug, doc.language)}`,
-            lastModified: doc._updatedAt,
-        });
+        addEntry(
+            `${DEFAULT_DOMAIN}${solutionPagePath(doc.slug, doc.language)}`,
+            doc._updatedAt,
+        );
     }
 
     for (const doc of articles) {
         if (doc.noIndex || !doc.slug) continue;
-        entries.push({
-            url: `${DEFAULT_DOMAIN}${articlePath(doc.slug, doc.language)}`,
-            lastModified: doc._updatedAt,
-        });
+        addEntry(
+            `${DEFAULT_DOMAIN}${articlePath(doc.slug, doc.language)}`,
+            doc._updatedAt,
+        );
+    }
+
+    for (const doc of legalPages) {
+        if (doc.noIndex || !doc.slug) continue;
+        addEntry(
+            `${DEFAULT_DOMAIN}${pagePath(doc.slug, doc.language)}`,
+            doc._updatedAt,
+        );
     }
 
     return entries;

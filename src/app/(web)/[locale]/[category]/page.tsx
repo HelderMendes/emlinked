@@ -1,5 +1,5 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { sanityFetch } from '@/lib/sanity';
 import { Metadata } from 'next';
 import { PortableText, PortableTextComponents } from 'next-sanity';
@@ -176,6 +176,10 @@ export async function generateMetadata({
 
 export default async function SlugPage({ params }: SlugPageProps) {
     const { locale, category } = await params;
+    if (category !== category.toLowerCase()) {
+        const lower = category.toLowerCase();
+        permanentRedirect(locale === 'en' ? `/en/${lower}` : `/${lower}`);
+    }
     const pageData = await getSlugPageData(category, locale);
 
     if (pageData && pageData.pageBlocks?.length > 0) {
