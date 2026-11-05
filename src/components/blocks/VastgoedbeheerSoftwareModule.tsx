@@ -362,7 +362,9 @@ export function VastgoedbeheerSoftwareModule({
                               '@type': 'ListItem',
                               position: 1,
                               name: isEn ? 'Home' : 'Home',
-                              item: isEn ? `${DEFAULT_DOMAIN}/en` : DEFAULT_DOMAIN,
+                              item: isEn
+                                  ? `${DEFAULT_DOMAIN}/en`
+                                  : DEFAULT_DOMAIN,
                           },
                           {
                               '@type': 'ListItem',
@@ -422,10 +424,7 @@ export function VastgoedbeheerSoftwareModule({
     );
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-    const renderHero = (
-        block: SolutionPageBlock,
-        key: string | number,
-    ) => (
+    const renderHero = (block: SolutionPageBlock, key: string | number) => (
         <React.Fragment key={key}>
             <HeroSection
                 locale={locale}
@@ -565,7 +564,10 @@ export function VastgoedbeheerSoftwareModule({
                                 {comparisonBlock?.leftItems &&
                                 comparisonBlock.leftItems.length > 0 ? (
                                     comparisonBlock.leftItems.map(
-                                        (item: ComparisonItemInput, idx: number) => (
+                                        (
+                                            item: ComparisonItemInput,
+                                            idx: number,
+                                        ) => (
                                             <li
                                                 key={idx}
                                                 className='flex items-start gap-3'
@@ -660,7 +662,10 @@ export function VastgoedbeheerSoftwareModule({
                                 {comparisonBlock?.rightItems &&
                                 comparisonBlock.rightItems.length > 0 ? (
                                     comparisonBlock.rightItems.map(
-                                        (item: ComparisonItemInput, idx: number) => (
+                                        (
+                                            item: ComparisonItemInput,
+                                            idx: number,
+                                        ) => (
                                             <li
                                                 key={idx}
                                                 className='flex items-start gap-3'
@@ -888,24 +893,29 @@ export function VastgoedbeheerSoftwareModule({
                         </p>
 
                         <div className='space-y-4 pt-2 ml-4'>
-                            {archBullets.map((bullet: { bold: string; text: string }, bIdx: number) => (
-                                <div
-                                    key={bIdx}
-                                    className='flex items-start gap-3.5'
-                                >
-                                    <div className='w-6 h-6 rounded-full border border-teal/40 bg-teal/15 flex items-center justify-center shrink-0 mt-0.5 shadow-xs'>
-                                        <Check className='w-3.5 h-3.5 text-teal' />
+                            {archBullets.map(
+                                (
+                                    bullet: { bold: string; text: string },
+                                    bIdx: number,
+                                ) => (
+                                    <div
+                                        key={bIdx}
+                                        className='flex items-start gap-3.5'
+                                    >
+                                        <div className='w-6 h-6 rounded-full border border-teal/40 bg-teal/15 flex items-center justify-center shrink-0 mt-0.5 shadow-xs'>
+                                            <Check className='w-3.5 h-3.5 text-teal' />
+                                        </div>
+                                        <div className='text-sm md:text-base text-navy-900/85 leading-relaxed'>
+                                            {bullet.bold && (
+                                                <strong className='text-navy-900 font-semibold mr-1'>
+                                                    {bullet.bold}
+                                                </strong>
+                                            )}
+                                            {bullet.text}
+                                        </div>
                                     </div>
-                                    <div className='text-sm md:text-base text-navy-900/85 leading-relaxed'>
-                                        {bullet.bold && (
-                                            <strong className='text-navy-900 font-semibold mr-1'>
-                                                {bullet.bold}
-                                            </strong>
-                                        )}
-                                        {bullet.text}
-                                    </div>
-                                </div>
-                            ))}
+                                ),
+                            )}
                         </div>
                     </div>
 
@@ -930,10 +940,7 @@ export function VastgoedbeheerSoftwareModule({
         </section>
     );
 
-    const renderCta = (
-        block: SolutionPageBlock,
-        key: string | number,
-    ) => (
+    const renderCta = (block: SolutionPageBlock, key: string | number) => (
         <section
             key={key}
             className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'
@@ -1023,7 +1030,13 @@ export function VastgoedbeheerSoftwareModule({
         >
             <div className='max-w-3xl mx-auto'>
                 <div className='text-center space-y-4 mb-4'>
-                    <Badge color='teal' uppercase dot dotPulse className='mx-auto'>
+                    <Badge
+                        color='teal'
+                        uppercase
+                        dot
+                        dotPulse
+                        className='mx-auto'
+                    >
                         {isEn ? 'FAQ' : 'VEELGESTELDE VRAGEN'}
                     </Badge>
                     <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-navy-900'>
@@ -1048,7 +1061,7 @@ export function VastgoedbeheerSoftwareModule({
                                     className='w-full flex items-center gap-4 py-6 text-left group'
                                 >
                                     <span
-                                        className={`flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full border transition-colors duration-200 ${
+                                        className={`shrink-0 flex items-center justify-center w-7 h-7 rounded-full border transition-colors duration-200 ${
                                             isOpen
                                                 ? 'bg-teal border-teal text-white'
                                                 : 'border-navy-900/20 text-navy-900 group-hover:border-teal group-hover:text-teal'
