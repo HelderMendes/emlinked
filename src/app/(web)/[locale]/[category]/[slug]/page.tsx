@@ -23,7 +23,6 @@ import {
 } from 'lucide-react';
 import { SolutionSimulators } from '@/components/SolutionSimulators';
 import { sanityFetch } from '@/lib/sanity';
-import { DataGridCanvas } from '@/components/ui/data-grid-canvas';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { VastgoedbeheerSoftwareModule } from '@/components/blocks/VastgoedbeheerSoftwareModule';
@@ -986,7 +985,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                                     )}
 
                                     <div className='space-y-4'>
-                                        <div className='relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-slate-950 border border-gray-200 dark:border-white/10'>
+                                        <div className='relative w-full aspect-video rounded-xl overflow-hidden bg-slate-950 border border-gray-200 dark:border-white/10'>
                                             <Image
                                                 src={appItem.imagePath}
                                                 alt={appItem.title}
