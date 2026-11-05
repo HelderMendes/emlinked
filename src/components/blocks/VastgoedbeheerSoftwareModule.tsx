@@ -10,6 +10,8 @@ import {
     Check,
     CheckCircle2,
     XCircle,
+    Plus,
+    Minus,
 } from 'lucide-react';
 import Link from 'next/link';
 import { HeroSection } from '@/components/blocks/HeroSection';
@@ -23,11 +25,13 @@ import {
     type SolutionPageBlock,
     type ArchitectureBlockData,
     type ComparisonItemInput,
+    type FaqItemInput,
     isHeroBlock,
     isComparisonBlock,
     isFeatureTabsBlock,
     isArchitectureBlock,
     isCtaBlock,
+    isFaqBlock,
 } from '@/sanity/solutionPageBlocks';
 
 function CardBadge({ icon, alt }: { icon: string; alt: string }) {
@@ -62,6 +66,80 @@ export function VastgoedbeheerSoftwareModule({
     const comparisonBlock = pageBlocks.find(isComparisonBlock);
     const architectureBlock = pageBlocks.find(isArchitectureBlock);
     const ctaBlock = pageBlocks.find(isCtaBlock);
+    const faqBlock = pageBlocks.find(isFaqBlock);
+
+    const defaultFaqItems: FaqItemInput[] = isEn
+        ? [
+              {
+                  q: 'How does the integration with Microsoft Dynamics 365 Business Central work?',
+                  a: 'emlinked runs 100% natively inside Business Central. That means there is no separate API connection or shadow database needed. All journal entries, rent collections, and indexations are created directly in your ERP general ledger.',
+              },
+              {
+                  q: 'How are CPI rent indexations automated?',
+                  a: 'The software automatically reads the latest index figures from Statistics Netherlands (CBS), recalculates the rent amounts, and can automatically send indexation letters by email and tenant portal.',
+              },
+              {
+                  q: "What's the difference with standalone property software?",
+                  a: 'Standalone property software needs manual syncing with your accounting ledger every week. emlinked runs natively inside Business Central instead — no separate database, no API connection, no gap between daily operations and your general ledger.',
+              },
+              {
+                  q: 'Who is emlinked property management software for?',
+                  a: 'emlinked is purpose-built for property managers, retail chains, and housing associations managing portfolios from 50 rental units upward.',
+              },
+              {
+                  q: 'What does emlinked cost?',
+                  a: 'Subscriptions start at €173.76 per month for 100 contracts. See the pricing page for the full breakdown based on your portfolio size.',
+              },
+              {
+                  q: 'Can emlinked manage retail chains and variable floor areas?',
+                  a: 'Yes. emlinked supports flexible splitting and merging of rentable units (LFA/GFA), turnover-rent calculations with thresholds and tiers, and management of retailer association contributions and promotion funds.',
+              },
+              {
+                  q: 'How are service charges settled?',
+                  a: 'Service charges are determined, advanced, and settled per m², weighted share, or fixed amount, with advances and actual costs matched directly against purchase invoices via Document Capture.',
+              },
+              {
+                  q: 'Is there duplicate data entry between systems?',
+                  a: 'No. Leases, indexations, and invoices land directly as validated journal entries in your general ledger — there is no separate database or spreadsheet to keep in sync.',
+              },
+          ]
+        : [
+              {
+                  q: 'Hoe werkt de koppeling met Microsoft Dynamics 365 Business Central?',
+                  a: "emlinked draait 100% native binnen Business Central. Dat betekent dat er geen losse API-koppeling of schaduwdatabase nodig is. Alle journaalposten, huurincasso's en indexaties ontstaan direct in je ERP-grootboek.",
+              },
+              {
+                  q: 'Hoe worden CBS CPI-indexaties geautomatiseerd?',
+                  a: 'De software leest automatisch de nieuwste indexcijfers in van het Centraal Bureau voor de Statistiek (CBS), herberekent de huurtermijnen en verstuurt desgewenst automatisch de indexatiebrieven per e-mail en huurdersportaal.',
+              },
+              {
+                  q: 'Wat is het verschil met losse vastgoedsoftware?',
+                  a: 'Losse vastgoedsoftware vereist wekelijks handmatig synchroniseren met je financiële administratie. emlinked draait native binnen Business Central — geen losse database, geen API-koppeling, geen gat tussen de dagelijkse operatie en je grootboek.',
+              },
+              {
+                  q: 'Voor wie is emlinked vastgoedbeheer software geschikt?',
+                  a: 'emlinked is speciaal ontwikkeld voor vastgoedbeheerders, retailketens en woningcorporaties met portefeuilles vanaf 50 verhuureenheden.',
+              },
+              {
+                  q: 'Wat kost emlinked?',
+                  a: 'Een abonnement start vanaf € 173,76 per maand voor 100 contracten. Bekijk de prijzenpagina voor het volledige overzicht op basis van jouw portefeuillegrootte.',
+              },
+              {
+                  q: 'Kan emlinked retailketens en wisselende winkelmetrages beheren?',
+                  a: 'Ja. emlinked ondersteunt flexibele splitsing en samenvoeging van verhuurbare eenheden (VVO/BVO), omzethuurberekeningen met drempels en staffels, en beheer van winkeliersvereniging bijdragen en promotiefondsen.',
+              },
+              {
+                  q: 'Hoe worden servicekosten afgerekend?',
+                  a: 'Servicekosten worden bepaald, voorgeschoten en verrekend per m², gewogen aandeel of vast bedrag, waarbij voorschotten en werkelijke kosten direct worden gematcht met inkoopfacturen via Document Capture.',
+              },
+              {
+                  q: 'Wordt data dubbel ingevoerd tussen systemen?',
+                  a: 'Nee. Huurovereenkomsten, indexaties en facturen landen direct als gevalideerde journaalposten in je grootboek — er is geen losse database of spreadsheet om synchroon te houden.',
+              },
+          ];
+    const faqItems: FaqItemInput[] = faqBlock?.items?.length
+        ? faqBlock.items
+        : defaultFaqItems;
 
     const heroBadge =
         heroBlock?.badge ||
@@ -327,43 +405,14 @@ export function VastgoedbeheerSoftwareModule({
                   {
                       '@type': 'FAQPage',
                       '@id': `${structuredDataUrl}#faq`,
-                      mainEntity: isEn
-                          ? [
-                                {
-                                    '@type': 'Question',
-                                    name: 'How does the integration with Microsoft Dynamics 365 Business Central work?',
-                                    acceptedAnswer: {
-                                        '@type': 'Answer',
-                                        text: 'emlinked runs 100% natively inside Business Central. That means there is no separate API connection or shadow database needed. All journal entries, rent collections, and indexations are created directly in your ERP general ledger.',
-                                    },
-                                },
-                                {
-                                    '@type': 'Question',
-                                    name: 'How are CPI rent indexations automated?',
-                                    acceptedAnswer: {
-                                        '@type': 'Answer',
-                                        text: "The software automatically reads the latest index figures from Statistics Netherlands (CBS), recalculates the rent amounts, and can automatically send indexation letters by email and tenant portal.",
-                                    },
-                                },
-                            ]
-                          : [
-                                {
-                                    '@type': 'Question',
-                                    name: 'Hoe werkt de koppeling met Microsoft Dynamics 365 Business Central?',
-                                    acceptedAnswer: {
-                                        '@type': 'Answer',
-                                        text: "emlinked draait 100% native binnen Business Central. Dat betekent dat er geen losse API-koppeling of schaduwdatabase nodig is. Alle journaalposten, huurincasso's en indexaties ontstaan direct in je ERP-grootboek.",
-                                    },
-                                },
-                                {
-                                    '@type': 'Question',
-                                    name: 'Hoe worden CBS CPI-indexaties geautomatiseerd?',
-                                    acceptedAnswer: {
-                                        '@type': 'Answer',
-                                        text: 'De software leest automatisch de nieuwste indexcijfers in van het Centraal Bureau voor de Statistiek (CBS), herberekent de huurtermijnen en verstuurt desgewenst automatisch de indexatiebrieven per e-mail en huurdersportaal.',
-                                    },
-                                },
-                            ],
+                      mainEntity: faqItems.map((item) => ({
+                          '@type': 'Question',
+                          name: item.q,
+                          acceptedAnswer: {
+                              '@type': 'Answer',
+                              text: item.a,
+                          },
+                      })),
                   },
               ],
           });
@@ -371,6 +420,7 @@ export function VastgoedbeheerSoftwareModule({
     const [activeTab, setActiveTab] = useState<string>(
         featureTabs[0]?.tabId ?? 'indexation',
     );
+    const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
     const renderHero = (
         block: SolutionPageBlock,
@@ -503,12 +553,12 @@ export function VastgoedbeheerSoftwareModule({
 
                         <div className='space-y-6'>
                             <div className='border-b border-black/10 pb-4 pr-16'>
-                                <h3 className='text-lg font-bold text-teal'>
+                                <p className='text-lg font-bold text-teal'>
                                     {comparisonBlock?.leftTitle ||
                                         (isEn
                                             ? 'TRADITIONAL PROPERTY SOFTWARE'
                                             : 'TRADITIONELE VASTGOEDSOFTWARE')}
-                                </h3>
+                                </p>
                             </div>
 
                             <ul className='space-y-4 text-sm text-navy-900/80'>
@@ -598,12 +648,12 @@ export function VastgoedbeheerSoftwareModule({
 
                         <div className='space-y-6'>
                             <div className='border-b border-black/10 pb-4 pr-16'>
-                                <h3 className='text-lg font-bold text-teal'>
+                                <p className='text-lg font-bold text-teal'>
                                     {comparisonBlock?.rightTitle ||
                                         (isEn
                                             ? 'EMLINKED NATIVE DYNAMICS MODULE'
                                             : 'EMLINKED NATIVE DYNAMICS MODULE')}
-                                </h3>
+                                </p>
                             </div>
 
                             <ul className='space-y-4 text-sm text-navy-900'>
@@ -966,6 +1016,77 @@ export function VastgoedbeheerSoftwareModule({
         </section>
     );
 
+    const renderFaq = (block: SolutionPageBlock, key: string | number) => (
+        <section
+            key={key}
+            className='px-6 py-20 bg-background text-navy-900 border-b border-teal/10 relative z-10'
+        >
+            <div className='max-w-3xl mx-auto'>
+                <div className='text-center space-y-4 mb-4'>
+                    <Badge color='teal' uppercase dot dotPulse className='mx-auto'>
+                        {isEn ? 'FAQ' : 'VEELGESTELDE VRAGEN'}
+                    </Badge>
+                    <h2 className='font-display text-3xl md:text-4xl font-bold tracking-tight text-navy-900'>
+                        {faqBlock?.title ||
+                            (isEn
+                                ? 'Frequently asked questions'
+                                : 'Veelgestelde vragen')}
+                    </h2>
+                </div>
+
+                <div className='mt-12 divide-y divide-navy-900/10 border-t border-b border-navy-900/10'>
+                    {faqItems.map((item, idx) => {
+                        const isOpen = openFaqIndex === idx;
+                        return (
+                            <div key={item._key || idx}>
+                                <button
+                                    type='button'
+                                    onClick={() =>
+                                        setOpenFaqIndex(isOpen ? null : idx)
+                                    }
+                                    aria-expanded={isOpen}
+                                    className='w-full flex items-center gap-4 py-6 text-left group'
+                                >
+                                    <span
+                                        className={`flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full border transition-colors duration-200 ${
+                                            isOpen
+                                                ? 'bg-teal border-teal text-white'
+                                                : 'border-navy-900/20 text-navy-900 group-hover:border-teal group-hover:text-teal'
+                                        }`}
+                                    >
+                                        {isOpen ? (
+                                            <Minus className='w-3.5 h-3.5' />
+                                        ) : (
+                                            <Plus className='w-3.5 h-3.5' />
+                                        )}
+                                    </span>
+                                    <span className='font-display text-base md:text-lg font-bold text-navy-900'>
+                                        {item.q}
+                                    </span>
+                                </button>
+                                {isOpen && (
+                                    <div className='pb-6 pl-11 pr-2 -mt-2 border-l-2 border-teal/40 ml-[13px]'>
+                                        <p className='text-navy-700 leading-relaxed font-light pl-4'>
+                                            {item.a}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
+
+                <div className='mt-12 text-center'>
+                    <OutlineLinkButton href='/contact'>
+                        {isEn
+                            ? "Didn't find your question?"
+                            : 'Zit jouw vraag er niet bij?'}
+                    </OutlineLinkButton>
+                </div>
+            </div>
+        </section>
+    );
+
     const blocksToRender: SolutionPageBlock[] =
         pageBlocks.length > 0
             ? pageBlocks
@@ -974,6 +1095,7 @@ export function VastgoedbeheerSoftwareModule({
                   { _type: 'comparisonBlock', _key: 'default_comp' },
                   { _type: 'featureTabsBlock', _key: 'default_tabs' },
                   { _type: 'architectureBlock', _key: 'default_arch' },
+                  { _type: 'faqBlock', _key: 'default_faq' },
                   { _type: 'ctaBlock', _key: 'default_cta' },
               ];
 
@@ -998,6 +1120,8 @@ export function VastgoedbeheerSoftwareModule({
                         return renderFeatureTabs(block, key);
                     case 'architectureBlock':
                         return renderArchitecture(block, key);
+                    case 'faqBlock':
+                        return renderFaq(block, key);
                     case 'ctaBlock':
                         return renderCta(block, key);
                     default:

@@ -882,7 +882,7 @@ export default async function SolutionPage({ params }: SolutionPageProps) {
                         <div className='flex justify-center mb-3'>
                             <Badge color='teal' uppercase dot>
                                 {isEn
-                                    ? 'DE MODULAIRE SUITE'
+                                    ? 'THE MODULAR SUITE'
                                     : 'DE MODULAIRE SUITE'}
                             </Badge>
                         </div>

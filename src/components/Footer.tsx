@@ -450,9 +450,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 1: Product (Col span 2) */}
                     <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
-                        <h2 className='md:mt-17 mt-0 lg:mt-0 text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
+                        <p className='md:mt-17 mt-0 lg:mt-0 text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.product}
-                        </h2>
+                        </p>
                         <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
@@ -485,9 +485,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 2: Integrations (Col span 2) */}
                     <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
-                        <h2 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
+                        <p className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.integrations}
-                        </h2>
+                        </p>
                         <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
@@ -526,9 +526,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 3: Company (Col span 2) */}
                     <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
-                        <h2 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
+                        <p className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.company}
-                        </h2>
+                        </p>
                         <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
@@ -567,9 +567,9 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
 
                     {/* Links Column 4: Resources (Col span 2) */}
                     <div className='col-span-1 lg:col-span-2 flex flex-col gap-4'>
-                        <h2 className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
+                        <p className='text-xs font-bold uppercase tracking-wider text-navy-900 font-mono'>
                             {t.resources}
-                        </h2>
+                        </p>
                         <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link

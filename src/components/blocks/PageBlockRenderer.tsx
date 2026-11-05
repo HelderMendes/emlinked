@@ -366,6 +366,7 @@ export function PageBlockRenderer({
                     secondaryCtaLink={block.secondaryCtaLink}
                     showProof={block.showProof ?? true}
                     proofText={block.proofText}
+                    image={block.image || block.heroImage}
                     imagePath={
                         getImageUrl(
                             block.image || block.heroImage,

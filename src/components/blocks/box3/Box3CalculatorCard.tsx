@@ -293,8 +293,8 @@ export function Box3CalculatorCard({
 
             <p className='text-center text-sm text-[#060e32]/50 mt-4'>
                 {isEn
-                    ? 'Indicative calculation · Based on current legislative proposal · No formal tax advice'
-                    : 'Indicatief · Op basis van het huidige wetsvoorstel · Geen formeel belastingadvies'}
+                    ? 'Indicative calculation based on the proposed Box 3 Actual Return Act (planned from 2028). The House of Representatives approved the bill in February 2026; the Senate has postponed its vote. No rights can be derived from this calculation; it does not constitute tax advice.'
+                    : 'Indicatieve berekening op basis van het wetsvoorstel Wet werkelijk rendement box 3 (beoogd vanaf 2028). De Tweede Kamer heeft het voorstel in februari 2026 aangenomen; de Eerste Kamer heeft de stemming aangehouden. Aan deze berekening kunnen geen rechten worden ontleend; dit is geen fiscaal advies.'}
             </p>
         </div>
     );

@@ -65,7 +65,7 @@ const PROOF_AVATARS = [
     },
     {
         src: '/hero/MichelDeWaal.jpg',
-        name: 'Michel De Waal',
+        name: 'Michel de Waal',
         roleNl: 'Directeur - M2 Capital Real Estate B.V.',
         roleEn: 'Director - M2 Capital Real Estate B.V.',
     },

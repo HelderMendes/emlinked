@@ -1049,7 +1049,7 @@ export function PricingCalculator({
                                     <span>
                                         {isEn
                                             ? 'Total Summary'
-                                            : 'Total Summary'}
+                                            : 'Totaaloverzicht'}
                                     </span>
                                 </h3>
                                 <span className='text-[10px] font-mono uppercase bg-teal/20 text-teal border border-teal/40 px-2.5 py-1 rounded-full font-bold'>

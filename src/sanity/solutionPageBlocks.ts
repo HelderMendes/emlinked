@@ -165,6 +165,10 @@ export function isCtaBlock(b: SolutionPageBlock): b is CtaBlockData {
     return b._type === 'ctaBlock';
 }
 
+export function isFaqBlock(b: SolutionPageBlock): b is FaqBlockData {
+    return b._type === 'faqBlock';
+}
+
 // Legacy/unused-in-schema fallback shapes still read defensively by the
 // solutionPage modules (doc?.comparisonSection, doc?.features, etc.) —
 // the current solutionPage schema never populates these top-level fields

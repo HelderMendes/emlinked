@@ -212,6 +212,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                             ? 'Trusted by professional real estate managers & controllers'
                             : 'Vertrouwd door professionele vastgoedbeheerders en controllers')
                     }
+                    image={b?.image || b?.heroImage}
                     imagePath={heroImageUrl}
                     isHomepage={false}
                     locale={locale}

@@ -35,8 +35,8 @@ export function Box3EcosystemSection({
     const secSubtitle =
         subtitle ||
         (isEn
-            ? 'emlinked is engineered as a certified solution on Microsoft Business Central — the ERP standard for over 50,000 companies globally. You benefit from enterprise security, business continuity, and native integration with Excel and Power BI.'
-            : 'emlinked is ontwikkeld als een gecertificeerde oplossing op Microsoft Business Central — de ERP-standaard voor meer dan 50.000 bedrijven wereldwijd. Je profiteert van enterprise-grade beveiliging, continuïteit en naadloze integratie met Excel en Power BI.');
+            ? 'emlinked is engineered as a certified solution on Microsoft Business Central — the global ERP standard. You benefit from enterprise security, business continuity, and native integration with Excel and Power BI.'
+            : 'emlinked is ontwikkeld als een gecertificeerde oplossing op Microsoft Business Central — de wereldwijde ERP-standaard. Je profiteert van enterprise-grade beveiliging, continuïteit en naadloze integratie met Excel en Power BI.');
 
     const cTitle = cardTitle || 'Microsoft Business Central';
     const cSubtitle = cardSubtitle || 'Certified Dynamics 365 Module';
@@ -68,10 +68,10 @@ export function Box3EcosystemSection({
                 : 'Realtime financiële dashboards',
         },
         {
-            title: isEn ? '50,000+ Customers' : '50.000+ Bedrijven',
+            title: isEn ? 'Global Microsoft Standard' : 'Wereldwijde Microsoft-standaard',
             desc: isEn
-                ? 'Proven global ERP backbone'
-                : 'Bewezen wereldwijd ERP fundament',
+                ? 'Certified Dynamics 365 ERP'
+                : 'Gecertificeerd Dynamics 365 ERP',
         },
     ];
     const trustGrid = trustItems?.length ? trustItems : defaultTrustItems;

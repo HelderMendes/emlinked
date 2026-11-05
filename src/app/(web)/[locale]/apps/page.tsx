@@ -268,6 +268,7 @@ export default async function AppsPage({ params }: AppsPageProps) {
                     secondaryCtaLabel={blk.secondaryCtaLabel}
                     secondaryCtaLink={blk.secondaryCtaLink}
                     showProof={blk.showProof ?? false}
+                    image={blk.image || blk.heroImage}
                     imagePath={
                         getImageUrl(
                             blk.image || blk.heroImage,

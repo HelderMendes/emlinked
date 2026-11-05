@@ -412,7 +412,7 @@ export function NewsArticlesSection({
                         }}
                         className='px-4 py-2 rounded-xl bg-teal text-slate-950 font-bold text-xs hover:bg-teal-light transition-all'
                     >
-                        {isEn ? 'Reset Filters' : 'Reset Filters'}
+                        {isEn ? 'Reset Filters' : 'Filters wissen'}
                     </button>
                 </div>
             )}
