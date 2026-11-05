@@ -38,7 +38,37 @@ const NL_EN_PATH_MAP: Array<[string, string]> = [
     ['/nieuws', '/news'],
     ['/apps/vastgoedbeheer-software', '/apps/property-management-software'],
     ['/apps/huurdersportaal', '/apps/tenant-portal'],
+    ['/privacybeleid', '/privacy-policy'],
+    ['/algemene-voorwaarden', '/terms-and-conditions'],
 ];
+
+function normalizeCanonicalUrl(rawUrl: string, locale: string): string {
+    let pathname: string;
+    try {
+        pathname = new URL(rawUrl, DEFAULT_DOMAIN).pathname;
+    } catch {
+        return rawUrl;
+    }
+    if (pathname.endsWith('/') && pathname !== '/') {
+        pathname = pathname.slice(0, -1);
+    }
+    if (locale === 'en') {
+        const barePath = pathname === '/en'
+            ? '/'
+            : pathname.startsWith('/en/')
+              ? pathname.slice(3)
+              : pathname;
+        const enPath = toEnPath(barePath);
+        return `${DEFAULT_DOMAIN}/en${enPath === '/' ? '' : enPath}`;
+    }
+    const bareNlPath = pathname.startsWith('/nl/')
+        ? pathname.slice(3)
+        : pathname === '/nl'
+          ? '/'
+          : pathname;
+    const nlPath = toNlPath(bareNlPath);
+    return `${DEFAULT_DOMAIN}${nlPath}`;
+}
 
 function toNlPath(enPath: string): string {
     for (const [nl, en] of NL_EN_PATH_MAP) {
@@ -112,7 +142,10 @@ export function buildMetadata({
 
     const description =
         seo?.seoDescription || seo?.description || fallbackDescription;
-    const canonical = seo?.canonical || canonicalUrl;
+    const canonical = normalizeCanonicalUrl(
+        seo?.canonical || canonicalUrl,
+        locale,
+    );
     const robots = seo?.noIndex ? 'noindex, nofollow' : 'index, follow';
 
     const ogImageUrl =

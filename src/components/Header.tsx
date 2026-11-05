@@ -146,7 +146,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                               'Self-service portal for support tickets.',
                       },
                       {
-                          title: 'Payment software',
+                          title: 'Paylinked payment software',
                           path: '/apps/payment-software',
                           description: 'Automated billing transactions.',
                       },
@@ -154,18 +154,32 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
               },
               {
                   _type: 'menuLink',
-                  title: 'Box3-check',
+                  title: 'Box 3-check',
                   path: '/box3-check',
               },
               {
                   _type: 'menuLink',
-                  title: 'Partner software',
+                  title: 'Integrations',
                   path: '/partners-software',
               },
               { _type: 'menuLink', title: 'Pricing', path: '/pricing' },
               { _type: 'menuLink', title: 'References', path: '/references' },
-              { _type: 'menuLink', title: 'About us', path: '/over-ons' },
-              { _type: 'menuLink', title: 'News', path: '/nieuws' },
+              {
+                  _type: 'menuDropdown',
+                  title: 'About emlinked',
+                  links: [
+                      {
+                          title: 'About us',
+                          path: '/over-ons',
+                          description: 'Mission, team, and way of working.',
+                      },
+                      {
+                          title: 'News',
+                          path: '/nieuws',
+                          description: 'News, legislation, and knowledge base.',
+                      },
+                  ],
+              },
           ]
         : [
               {
@@ -186,7 +200,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                               'Self-service portaal voor communicatie & meldingen.',
                       },
                       {
-                          title: 'Payment software',
+                          title: 'Paylinked betaalsoftware',
                           path: '/apps/payment-software',
                           description:
                               'Geautomatiseerde betalingstransacties & bankaflettering.',
@@ -195,18 +209,32 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
               },
               {
                   _type: 'menuLink',
-                  title: 'Box3-check',
+                  title: 'Box 3-check',
                   path: '/box3-check',
               },
               {
                   _type: 'menuLink',
-                  title: 'Partners software',
+                  title: 'Koppelingen',
                   path: '/partners-software',
               },
               { _type: 'menuLink', title: 'Prijzen', path: '/prijzen' },
               { _type: 'menuLink', title: 'Referenties', path: '/referenties' },
-              { _type: 'menuLink', title: 'Over ons', path: '/over-ons' },
-              { _type: 'menuLink', title: 'Nieuws', path: '/nieuws' },
+              {
+                  _type: 'menuDropdown',
+                  title: 'Over emlinked',
+                  links: [
+                      {
+                          title: 'Over ons',
+                          path: '/over-ons',
+                          description: 'Missie, team en werkwijze.',
+                      },
+                      {
+                          title: 'Nieuws',
+                          path: '/nieuws',
+                          description: 'Nieuws, wetgeving en kennisbank.',
+                      },
+                  ],
+              },
           ];
 
     const menuItems = (settings as any)?.navigationMenu || defaultMenu;
@@ -813,9 +841,11 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                     <button
                                         key={idx}
                                         onClick={() => setIsDemoModalOpen(true)}
-                                        className='text-[13px] 2xl:text-sm font-semibold transition-all duration-200 text-foreground/80 hover:text-teal hover:bg-teal/5 px-3 py-1.5 rounded-lg cursor-pointer'
+                                        className='text-[13px] 2xl:text-sm font-semibold transition-all duration-200 text-foreground/80 hover:text-teal hover:bg-teal/5 px-3 py-1.5 rounded-lg cursor-pointer whitespace-nowrap'
                                     >
-                                        {item.title}
+                                        {String(item.title || '')
+                                            .replace(/\u00A0/g, ' ')
+                                            .replace(/\u2011/g, '-')}
                                     </button>
                                 );
                             }
@@ -824,13 +854,15 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 <Link
                                     key={idx}
                                     href={getPath(item.path)}
-                                    className={`text-[13px] 2xl:text-sm font-semibold transition-all duration-200 px-3 py-1.5 rounded-lg ${
+                                    className={`text-[13px] 2xl:text-sm font-semibold transition-all duration-200 px-3 py-1.5 rounded-lg whitespace-nowrap ${
                                         active
                                             ? 'text-teal bg-teal/10 font-bold shadow-xs'
                                             : 'text-foreground/80 hover:text-teal hover:bg-teal/5'
                                     }`}
                                 >
-                                    {item.title}
+                                    {String(item.title || '')
+                                        .replace(/\u00A0/g, ' ')
+                                        .replace(/\u2011/g, '-')}
                                 </Link>
                             );
                         })}

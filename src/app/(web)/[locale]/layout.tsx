@@ -3,7 +3,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StickyAnnouncement from '@/components/StickyAnnouncement';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
-import { client } from '@/sanity/client';
+import { sanityFetch } from '@/lib/sanity';
 
 interface WebLayoutProps {
     children: React.ReactNode;
@@ -13,8 +13,8 @@ interface WebLayoutProps {
 async function getSiteSettings(locale: string) {
     try {
         const id = `siteSettings-${locale}`;
-        return await client.fetch(
-            `*[_id == $id][0] {
+        return await sanityFetch<any>({
+            query: `*[_id == $id][0] {
                 announcementActive,
                 announcementMode,
                 announcementText,
@@ -35,8 +35,8 @@ async function getSiteSettings(locale: string) {
                 twitterUrl,
                 navigationMenu
             }`,
-            { id },
-        );
+            params: { id },
+        });
     } catch (e) {
         console.error('Error fetching site settings from Sanity:', e);
         return null;

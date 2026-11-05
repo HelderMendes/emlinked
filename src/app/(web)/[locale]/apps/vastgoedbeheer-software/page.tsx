@@ -58,7 +58,7 @@ export async function generateMetadata({
         ? 'Advanced real estate management software for property managers, retail chains, and housing corporations. 100% native Business Central integration.'
         : 'Geavanceerde vastgoedbeheer software voor beheerders, retailketens en woningcorporaties. Volledig geautomatiseerd en native gekoppeld aan Business Central.';
 
-    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/apps/vastgoedbeheer-software' : '/apps/vastgoedbeheer-software'}`;
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/apps/property-management-software' : '/apps/vastgoedbeheer-software'}`;
 
     return buildMetadata({
         seo: doc?.seo,

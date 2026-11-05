@@ -332,15 +332,47 @@
         "status": 301
     },
     "/mijn-emlinked/welkom-mijn-emlinked": {
-        "destination": "/login",
+        "destination": "/docs",
         "status": 301
     },
     "/mijn-emlinked/belangrijk-nieuws": {
-        "destination": "/login",
+        "destination": "/docs",
         "status": 301
     },
     "/mijn-emlinked/handleiding-emlinked": {
-        "destination": "/login",
+        "destination": "/docs",
+        "status": 301
+    },
+    "/login": {
+        "destination": "/docs",
+        "status": 301
+    },
+    "/kennisbank/box3-check": {
+        "destination": "/box3-check",
+        "status": 301
+    },
+    "/integraties/business-central": {
+        "destination": "/partners-software",
+        "status": 301
+    },
+    "/integraties/document-capture": {
+        "destination": "/partners-software",
+        "status": 301
+    },
+    "/integraties/direct-banking": {
+        "destination": "/partners-software",
+        "status": 301
+    },
+    "/en/integraties/business-central": {
+        "destination": "/en/partners-software",
+        "status": 301
+    },
+    "/en/integraties/document-capture": {
+        "destination": "/en/partners-software",
+        "status": 301
+    },
+    "/en/integraties/direct-banking": {
+        "destination": "/en/partners-software",
         "status": 301
     },
     "/cbs-wijzigt-consumentenprijsindex-cpi-2": {

@@ -55,7 +55,7 @@ export async function generateMetadata({
         ? 'Reduce administrative pressure on your management team with our digital tenant portal. Real-time synced with Business Central.'
         : 'Verlaag de administratieve druk op uw beheerteam met ons digitale huurdersportaal. Laat huurders zelf reparatieverzoeken en documenten inzien. Realtime gesynchroniseerd.';
 
-    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/apps/huurdersportaal' : '/apps/huurdersportaal'}`;
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/apps/tenant-portal' : '/apps/huurdersportaal'}`;
 
     return buildMetadata({
         seo: doc?.seo,

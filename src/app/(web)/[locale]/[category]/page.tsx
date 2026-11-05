@@ -4,18 +4,19 @@ import { sanityFetch } from '@/lib/sanity';
 import { Metadata } from 'next';
 import { PortableText, PortableTextComponents } from 'next-sanity';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
+import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 
 export const revalidate = 60;
 
 const legalPageComponents: PortableTextComponents = {
     block: {
         h2: ({ children }) => (
-            <h2 className='font-display text-2xl md:text-3xl font-bold text-navy-900 pt-8 pb-2 leading-tight'>
+            <h2 className='font-display text-[28px] md:text-[40px] font-semibold text-navy-900 pt-8 pb-2 leading-[1.15]'>
                 {children}
             </h2>
         ),
         h3: ({ children }) => (
-            <h3 className='font-display text-xl font-bold text-navy-900 pt-5 pb-1 leading-tight'>
+            <h3 className='font-display text-xl md:text-2xl font-semibold text-navy-900 pt-5 pb-1 leading-[1.25]'>
                 {children}
             </h3>
         ),
@@ -137,32 +138,47 @@ export async function generateMetadata({
     params,
 }: SlugPageProps): Promise<Metadata> {
     const { locale, category } = await params;
+    const isEn = locale === 'en';
+    const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? `/en/${category}` : `/${category}`}`;
+
     const pageData = await getSlugPageData(category, locale);
-    if (pageData) {
-        return {
-            title: pageData.seo?.seoTitle || pageData.title,
-            description: pageData.seo?.seoDescription,
-            robots: pageData.seo?.noIndex
-                ? 'noindex, nofollow'
-                : 'index, follow',
-        };
+    if (pageData && (pageData.pageBlocks?.length > 0 || pageData.title)) {
+        return buildMetadata({
+            seo: pageData.seo,
+            fallbackTitle: pageData.seo?.seoTitle || pageData.title,
+            fallbackDescription: pageData.seo?.seoDescription || '',
+            canonicalUrl,
+            locale,
+        });
     }
 
     const legalData = await getLegalPageData(category, locale);
-    if (!legalData) return {};
+    if (!legalData) {
+        return {
+            title: isEn
+                ? '404 - Page not found | emlinked'
+                : '404 - Pagina niet gevonden | emlinked',
+            robots: {
+                index: false,
+                follow: false,
+            },
+        };
+    }
 
-    return {
-        title: legalData.seo?.seoTitle || legalData.title,
-        description: legalData.seo?.seoDescription,
-        robots: legalData.seo?.noIndex ? 'noindex, nofollow' : 'index, follow',
-    };
+    return buildMetadata({
+        seo: legalData.seo,
+        fallbackTitle: legalData.seo?.seoTitle || legalData.title,
+        fallbackDescription: legalData.seo?.seoDescription || '',
+        canonicalUrl,
+        locale,
+    });
 }
 
 export default async function SlugPage({ params }: SlugPageProps) {
     const { locale, category } = await params;
     const pageData = await getSlugPageData(category, locale);
 
-    if (pageData) {
+    if (pageData && pageData.pageBlocks?.length > 0) {
         const blocks = pageData.pageBlocks || [];
         const structuredData = pageData.seo?.structuredData;
 
@@ -194,7 +210,7 @@ export default async function SlugPage({ params }: SlugPageProps) {
     return (
         <div className='flex flex-col px-6 py-20'>
             <div className='max-w-3xl mx-auto w-full'>
-                <h1 className='font-display text-3xl md:text-4xl font-bold text-navy-900 tracking-tight'>
+                <h1 className='font-hero text-[34px] md:text-5xl font-semibold text-navy-900 leading-[1.1] tracking-[-0.02em]'>
                     {legalData.title}
                 </h1>
                 <div className='mt-4'>

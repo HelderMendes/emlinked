@@ -30,6 +30,36 @@ export interface BadgeProps {
  * full sentence into what's meant to be a short tag wraps onto multiple
  * lines instead of overflowing past the viewport edge.
  */
+export function renderWithLowercaseBrand(node: React.ReactNode): React.ReactNode {
+    if (typeof node === 'string') {
+        if (!/emlinked/i.test(node)) return node;
+        const parts = node.split(/(emlinked)/gi);
+        return parts.map((part, idx) =>
+            part.toLowerCase() === 'emlinked' ? (
+                <span key={idx} className='normal-case'>
+                    emlinked
+                </span>
+            ) : (
+                part
+            ),
+        );
+    }
+    if (Array.isArray(node)) {
+        return node.map((child, idx) => (
+            <React.Fragment key={idx}>
+                {renderWithLowercaseBrand(child)}
+            </React.Fragment>
+        ));
+    }
+    if (React.isValidElement<{ children?: React.ReactNode }>(node) && node.props.children) {
+        return React.cloneElement(node, {
+            ...node.props,
+            children: renderWithLowercaseBrand(node.props.children),
+        });
+    }
+    return node;
+}
+
 export function Badge({
     color = 'navy',
     uppercase = false,
@@ -59,7 +89,7 @@ export function Badge({
                     )}
                 />
             )}
-            {children}
+            {renderWithLowercaseBrand(children)}
         </span>
     );
 }

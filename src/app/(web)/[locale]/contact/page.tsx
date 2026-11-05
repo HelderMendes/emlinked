@@ -4,6 +4,7 @@ import { MapPin, Phone, Mail } from 'lucide-react';
 import { BsLinkedin } from 'react-icons/bs';
 import { sanityFetch } from '@/lib/sanity';
 import { HeroSection } from '@/components/blocks/HeroSection';
+import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
 import { ContactForm } from '@/components/contact/ContactForm';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 
@@ -26,11 +27,38 @@ async function getSiteSettings(locale: string) {
     }
 }
 
+async function getContactPageData(locale: string) {
+    try {
+        const id = `page-contact-${locale}`;
+        return await sanityFetch<any>({
+            query: `*[_type == "page" && (_id == $id || slug.current == "contact" || slug.current == "/contact") && language == $locale && defined(pageBlocks)][0] {
+                title,
+                seo {
+                    seoTitle,
+                    seoDescription,
+                    canonical,
+                    noIndex
+                },
+                pageBlocks[] {
+                    ...,
+                    _type,
+                    _key
+                }
+            }`,
+            params: { id, locale },
+        });
+    } catch (e) {
+        console.error('Error fetching contact page from Sanity:', e);
+        return null;
+    }
+}
+
 export async function generateMetadata({
     params,
 }: ContactPageProps): Promise<Metadata> {
     const { locale } = await params;
     const isEn = locale === 'en';
+    const pageData = await getContactPageData(locale);
 
     const fallbackTitle = isEn
         ? 'Contact & Request Free Demo'
@@ -41,7 +69,7 @@ export async function generateMetadata({
     const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/contact' : '/contact'}`;
 
     return buildMetadata({
-        seo: null,
+        seo: pageData?.seo,
         fallbackTitle,
         fallbackDescription,
         canonicalUrl,
@@ -52,14 +80,22 @@ export async function generateMetadata({
 export default async function ContactPage({ params }: ContactPageProps) {
     const { locale } = await params;
     const isEn = locale === 'en';
-    const settings = await getSiteSettings(locale);
+    const [settings, pageData] = await Promise.all([
+        getSiteSettings(locale),
+        getContactPageData(locale),
+    ]);
 
     const phone = settings?.phone || '+31 (0)88 707 7000';
-    const email = settings?.email || 'support@emlinked.com';
+    const email =
+        settings?.email || (isEn ? 'info@emlinked.com' : 'info@emlinked.nl');
     const address = settings?.address || 'Gooimeer 12, 1411 DE Naarden';
     const linkedinUrl =
         settings?.linkedinUrl || 'https://www.linkedin.com/company/emlinked';
     const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+
+    const pageBlocks = pageData?.pageBlocks || [];
+    const heroBlock = pageBlocks.find((b: any) => b._type === 'hero');
+    const otherBlocks = pageBlocks.filter((b: any) => b._type !== 'hero');
 
     const infoCards = [
         {
@@ -130,12 +166,16 @@ export default async function ContactPage({ params }: ContactPageProps) {
                 dangerouslySetInnerHTML={{ __html: jsonLdData }}
             />
             <HeroSection
-                label={isEn ? 'CONTACT' : 'CONTACT'}
-                title={isEn ? 'Get in touch' : 'Neem contact op'}
+                label={heroBlock?.label || (isEn ? 'CONTACT' : 'CONTACT')}
+                title={
+                    heroBlock?.title ||
+                    (isEn ? 'Get in touch' : 'Neem contact op')
+                }
                 subtitle={
-                    isEn
+                    heroBlock?.subtitle ||
+                    (isEn
                         ? 'How can we help you? Ask your question about property management, Business Central, or book a demo directly.'
-                        : 'Hoe kunnen we je helpen? Stel je vraag over vastgoedbeheer, Business Central, of plan direct een demo.'
+                        : 'Hoe kunnen we je helpen? Stel je vraag over vastgoedbeheer, Business Central, of plan direct een demo.')
                 }
                 locale={locale}
                 showProof={false}
@@ -143,7 +183,10 @@ export default async function ContactPage({ params }: ContactPageProps) {
                 hideImage
             />
 
-            <section className='px-6 py-20 bg-background border-b border-black/10'>
+            <section
+                id='contactform'
+                className='px-6 py-20 bg-background border-b border-black/10'
+            >
                 <div className='mx-auto max-w-5xl space-y-12'>
                     <div className='grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8 items-start'>
                         {/* Left: info cards, stacked */}
@@ -199,6 +242,14 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     </div>
                 </div>
             </section>
+
+            {otherBlocks.map((block: any) => (
+                <PageBlockRenderer
+                    key={block._key}
+                    block={block}
+                    locale={locale}
+                />
+            ))}
         </div>
     );
 }

@@ -214,7 +214,7 @@ export default async function HomePage({ params }: HomePageProps) {
                 name: 'emlinked',
                 url: DEFAULT_DOMAIN,
                 logo: `${DEFAULT_DOMAIN}/emlinked/Emlinked_logo__liggend.svg`,
-                email: 'support@emlinked.com',
+                email: isEn ? 'info@emlinked.com' : 'info@emlinked.nl',
                 telephone: '+31 (0)88 707 7000',
                 address: {
                     '@type': 'PostalAddress',

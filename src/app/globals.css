@@ -1,4 +1,3 @@
-@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&f[]=general-sans@300,400,500,600,700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -78,8 +77,8 @@
     --stone-bg: 40 20% 98%;
     --surface-glass: 0 0% 100%;
 
-    --font-sans: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
-    --font-display: 'General Sans', sans-serif;
+    --font-display: var(--font-hero), ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --popover: oklch(0.99 0.005 85);
@@ -204,11 +203,10 @@
     --color-darkBlue: oklch(0.1846 0.0722 268.08);
     --color-emlinkedblue: var(--color-darkBlue);
 
-    --font-sans: var(--font-sans);
-    --font-display: var(--font-display);
-    /* version02: Expose (headline) / Zodiak (body), homepage hero only —
-       see src/app/layout.tsx (expose/zodiak variables) and HeroSection.tsx. */
-    --font-hero: var(--font-hero, var(--font-display));
+    --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-hero), ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    --font-hero: var(--font-hero), ui-sans-serif, system-ui, sans-serif;
     --font-hero-body: var(--font-hero-body, var(--font-sans));
 
     --width-8xl: 88rem;
@@ -224,7 +222,7 @@
         }
     }
 
-    --font-heading: var(--font-sans);
+    --font-heading: var(--font-hero), ui-sans-serif, system-ui, sans-serif;
 
     --color-sidebar-ring: var(--sidebar-ring);
 
@@ -299,16 +297,39 @@ body {
     h2,
     h3,
     .font-display {
-        font-family: var(--font-hero);
-        font-weight: 700;
+        font-family: var(--font-hero), ui-sans-serif, system-ui, sans-serif;
+    }
+
+    h1 {
+        font-weight: 400;
+    }
+
+    h1 strong,
+    h1 b {
+        font-weight: 600;
+    }
+
+    h2,
+    h3 {
+        font-weight: 600;
     }
 
     h4,
     h5,
     h6 {
-        font-family: var(--font-sans);
-        font-weight: 700;
+        font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+        font-weight: 600;
     }
+}
+
+.font-mono {
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+}
+
+.text-xs.font-light,
+.text-sm.font-light {
+    font-weight: 400;
 }
 
 @keyframes gradient-shift {

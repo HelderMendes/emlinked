@@ -189,7 +189,7 @@ export function HeroSection({
                         <h1
                             className={cn(
                                 'font-hero font-semibold leading-[1.1] tracking-[-0.02em] text-[#1D1C1B] max-w-3xl',
-                                titleClassName || 'text-4xl sm:text-5xl',
+                                titleClassName || 'text-[34px] sm:text-5xl',
                             )}
                         >
                             {formatHeroTitle(title, false)}

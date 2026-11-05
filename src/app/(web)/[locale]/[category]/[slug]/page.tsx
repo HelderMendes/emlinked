@@ -162,14 +162,29 @@ export async function generateMetadata({
     params,
 }: SolutionPageProps): Promise<Metadata> {
     const { locale, category, slug } = await params;
+    const isEn = locale === 'en';
 
     // Category routing validation
     const validCategories = ['apps', 'oplossingen', 'solutions'];
-    if (!validCategories.includes(category)) return {};
+    if (!validCategories.includes(category)) {
+        return {
+            title: isEn
+                ? '404 - Page not found | emlinked'
+                : '404 - Pagina niet gevonden | emlinked',
+            robots: { index: false, follow: false },
+        };
+    }
 
     const content = await getSolutionContent(locale, slug);
 
-    if (!content) return {};
+    if (!content) {
+        return {
+            title: isEn
+                ? '404 - Page not found | emlinked'
+                : '404 - Pagina niet gevonden | emlinked',
+            robots: { index: false, follow: false },
+        };
+    }
 
     const fallbackTitle = content.title
         ? `${content.title} — emlinked`

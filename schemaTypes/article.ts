@@ -46,7 +46,14 @@ export const article = defineType({
           return await client.fetch(query, params);
         },
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().custom((slug) => {
+          if (!slug?.current) return 'Slug is verplicht';
+          if (!/^[a-z0-9-]+$/.test(slug.current)) {
+            return 'Gebruik alleen kleine letters, cijfers en streepjes (geen hoofdletters of spaties)';
+          }
+          return true;
+        }),
     }),
     defineField({
       name: 'isFeatured',

@@ -19,6 +19,7 @@
 
 # sanity studio deploy build
 /dist/
+/.sanity/
 
 # production
 /build

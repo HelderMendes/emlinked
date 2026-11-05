@@ -349,15 +349,12 @@ export async function generateMetadata({
         fallbackArticlesBySlug[slug];
 
     if (!article) {
-        return buildMetadata({
-            seo: null,
-            fallbackTitle: isEn
-                ? 'Article Not Found | emlinked'
-                : 'Artikel Niet Gevonden | emlinked',
-            fallbackDescription: '',
-            canonicalUrl: `${DEFAULT_DOMAIN}/${locale}/nieuws`,
-            locale,
-        });
+        return {
+            title: isEn
+                ? '404 - Article Not Found | emlinked'
+                : '404 - Artikel Niet Gevonden | emlinked',
+            robots: { index: false, follow: false },
+        };
     }
 
     const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? `/en/news/${slug}` : `/nieuws/${slug}`}`;

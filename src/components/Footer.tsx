@@ -400,6 +400,30 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                                 </svg>
                                 <span>{settings?.phone || t.phone}</span>
                             </a>
+                            <a
+                                href={`mailto:${settings?.email || (isEn ? 'info@emlinked.com' : 'info@emlinked.nl')}`}
+                                className='flex items-center gap-2 hover:text-teal-hover transition-colors'
+                            >
+                                <svg
+                                    className='h-3.5 w-3.5 text-teal shrink-0'
+                                    fill='none'
+                                    viewBox='0 0 24 24'
+                                    stroke='currentColor'
+                                    strokeWidth='2'
+                                >
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        d='M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75'
+                                    />
+                                </svg>
+                                <span>
+                                    {settings?.email ||
+                                        (isEn
+                                            ? 'info@emlinked.com'
+                                            : 'info@emlinked.nl')}
+                                </span>
+                            </a>
                             <span className='flex items-center gap-2'>
                                 <svg
                                     className='h-3.5 w-3.5 text-teal shrink-0'
@@ -467,9 +491,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                         <ul className='flex flex-col gap-2.5 text-xs text-navy-600'>
                             <li>
                                 <Link
-                                    href={getPath(
-                                        '/integraties/business-central',
-                                    )}
+                                    href={getPath('/partners-software')}
                                     className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.businessCentral}
@@ -477,9 +499,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             </li>
                             <li>
                                 <Link
-                                    href={getPath(
-                                        '/integraties/document-capture',
-                                    )}
+                                    href={getPath('/partners-software')}
                                     className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.documentCapture}
@@ -487,9 +507,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                             </li>
                             <li>
                                 <Link
-                                    href={getPath(
-                                        '/integraties/direct-banking',
-                                    )}
+                                    href={getPath('/partners-software')}
                                     className='hover:text-teal-hover transition-colors'
                                 >
                                     {t.directBanking}

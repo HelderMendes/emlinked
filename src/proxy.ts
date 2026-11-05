@@ -93,6 +93,15 @@ export function proxy(request: NextRequest) {
         return NextResponse.next();
     }
 
+    // 301 redirect any URL containing uppercase characters to lowercase (e.g. /Box3-check -> /box3-check)
+    if (url.pathname !== pathname) {
+        const targetUrl = new URL(
+            `${normalizedPathname}${url.search}`,
+            request.url,
+        );
+        return NextResponse.redirect(targetUrl, 301);
+    }
+
     // 4. Default Language Bypass & Locale Routing
     const pathSegments = normalizedPathname.split('/');
     const firstPathSegment = pathSegments[1]; // segments[0] is empty because path starts with '/'
@@ -189,6 +198,35 @@ export function proxy(request: NextRequest) {
         }
         if (normalizedPathname === '/en/prijzen') {
             const targetUrl = new URL(`/en/pricing${url.search}`, request.url);
+            return NextResponse.redirect(targetUrl, 301);
+        }
+        if (normalizedPathname === '/en/over-ons') {
+            const targetUrl = new URL(`/en/about-us${url.search}`, request.url);
+            return NextResponse.redirect(targetUrl, 301);
+        }
+        if (normalizedPathname === '/en/nieuws') {
+            const targetUrl = new URL(`/en/news${url.search}`, request.url);
+            return NextResponse.redirect(targetUrl, 301);
+        }
+        if (normalizedPathname.startsWith('/en/nieuws/')) {
+            const targetPath = normalizedPathname.replace('/en/nieuws/', '/en/news/');
+            const targetUrl = new URL(`${targetPath}${url.search}`, request.url);
+            return NextResponse.redirect(targetUrl, 301);
+        }
+        if (normalizedPathname === '/en/apps/vastgoedbeheer-software') {
+            const targetUrl = new URL(`/en/apps/property-management-software${url.search}`, request.url);
+            return NextResponse.redirect(targetUrl, 301);
+        }
+        if (normalizedPathname === '/en/apps/huurdersportaal') {
+            const targetUrl = new URL(`/en/apps/tenant-portal${url.search}`, request.url);
+            return NextResponse.redirect(targetUrl, 301);
+        }
+        if (normalizedPathname === '/en/privacybeleid') {
+            const targetUrl = new URL(`/en/privacy-policy${url.search}`, request.url);
+            return NextResponse.redirect(targetUrl, 301);
+        }
+        if (normalizedPathname === '/en/algemene-voorwaarden') {
+            const targetUrl = new URL(`/en/terms-and-conditions${url.search}`, request.url);
             return NextResponse.redirect(targetUrl, 301);
         }
 

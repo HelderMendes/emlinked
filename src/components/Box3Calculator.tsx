@@ -112,8 +112,8 @@ export function useBox3Calculator(
 
         let verdictType: 'good' | 'neutral' | 'bad' = 'good';
         let verdictTitle = isEn
-            ? '✓ Your real estate remains profitable after 2028'
-            : '✓ Uw vastgoed blijft rendabel na 2028';
+            ? '✓ Your real estate remains profitable under the proposed system (from 2028)'
+            : '✓ Je vastgoed blijft rendabel onder het beoogde stelsel (vanaf 2028)';
         let verdictDetail = isEn
             ? `Net cash flow: € ${numFmt(nettoCashflow)}/year. Total yield: € ${numFmt(totaalRendement)}/year.`
             : `Netto cashflow: € ${numFmt(nettoCashflow)}/jaar. Totaalrendement: € ${numFmt(totaalRendement)}/jaar.`;
@@ -122,10 +122,10 @@ export function useBox3Calculator(
             verdictType = 'good';
             verdictTitle = isEn
                 ? '✓ Good news — your tax burden decreases'
-                : '✓ Goed nieuws — uw belastingdruk daalt';
+                : '✓ Goed nieuws — je belastingdruk daalt';
             verdictDetail = isEn
                 ? `You save € ${numFmt(belastingVerschil)}/year compared to the current system!`
-                : `U bespaart € ${numFmt(belastingVerschil)}/jaar ten opzichte van het forfaitaire stelsel!`;
+                : `Je bespaart € ${numFmt(belastingVerschil)}/jaar ten opzichte van het forfaitaire stelsel!`;
         } else if (totaalRendement > 0 && belastingVerschil > 200) {
             verdictType = 'neutral';
             verdictTitle = isEn
@@ -133,15 +133,15 @@ export function useBox3Calculator(
                 : '→ Rendabel — kostendocumentatie is cruciaal';
             verdictDetail = isEn
                 ? `You pay € ${numFmt(belastingVerschil)} more in tax. Every deductible euro counts. emlinked registers this automatically.`
-                : `U betaalt € ${numFmt(belastingVerschil)} meer belasting. Elke aftrekbare euro telt. emlinked registreert dit automatisch.`;
+                : `Je betaalt € ${numFmt(belastingVerschil)} meer belasting. Elke aftrekbare euro telt. emlinked registreert dit automatisch.`;
         } else if (totaalRendement <= 0) {
             verdictType = 'bad';
             verdictTitle = isEn
                 ? '⚠ Negative total yield — reconsider your assumptions'
-                : '⚠ Negatief totaalrendement — heroverweeg uw aannames';
+                : '⚠ Negatief totaalrendement — heroverweeg je aannames';
             verdictDetail = isEn
                 ? `Total yield: € ${numFmt(totaalRendement)}/year. Discuss your options with a tax advisor.`
-                : `Totaalrendement: € ${numFmt(totaalRendement)}/jaar. Bespreek uw opties met een fiscaal adviseur.`;
+                : `Totaalrendement: € ${numFmt(totaalRendement)}/jaar. Bespreek je opties met een fiscaal adviseur.`;
         }
 
         return {
@@ -194,7 +194,7 @@ export function Box3Calculator({
               'Onderhouds- en servicekosten met factuurkoppeling',
               'Hypotheekrente per pand — automatisch aftrekbaar',
               'WOZ-waarden en waardeontwikkeling',
-              'Exporteerbaar voor uw accountant',
+              'Exporteerbaar voor je accountant',
           ];
 
     const featureList = featureItems?.length
@@ -208,13 +208,13 @@ export function Box3Calculator({
     const sectionTitle =
         title ||
         (isEn
-            ? 'Will your real estate remain profitable after 2028?'
-            : 'Blijft uw vastgoed rendabel na 2028?');
+            ? 'Will your real estate remain profitable under the new Box 3?'
+            : 'Blijft je vastgoed rendabel onder het nieuwe Box 3?');
     const sectionSubtitle =
         subtitle ||
         (isEn
-            ? 'Enter your figures below. See instantly whether you are better or worse off under the new Box 3 actual yield regulations.'
-            : 'Vul je cijfers in. Je ziet direct of je beter of slechter af bent onder de nieuwe box 3-regels voor werkelijk rendement.');
+            ? 'Enter your figures below. See instantly whether you are better or worse off under the proposed Box 3 actual yield regulations.'
+            : 'Vul je cijfers in. Je ziet direct of je beter of slechter af bent onder de voorgestelde Box 3-regels voor werkelijk rendement.');
     const leftFeatureTitle =
         featureTitle ||
         (isEn

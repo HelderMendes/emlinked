@@ -43,15 +43,15 @@ export function Box3CalculatorCard({
                         <Calculator className='size-7' />
                     </div>
                     <div>
-                        <h3 className='text-lg font-bold text-[#060e32]'>
+                        <h3 className='text-lg font-semibold text-[#060e32]'>
                             {isEn
-                                ? 'Box 3 Yield Calculator 2028'
-                                : 'Box 3-rendement berekenen · 2028'}
+                                ? 'Box 3 Yield Calculator (proposed from 2028)'
+                                : 'Box 3-rendement berekenen (beoogd vanaf 2028)'}
                         </h3>
-                        <p className='text-xs text-[#060e32]/60 font-light'>
+                        <p className='text-xs text-[#060e32]/60 font-normal'>
                             {isEn
                                 ? 'Simulate your tax shift in real time'
-                                : 'Simuleer direct uw fiscale verschuiving'}
+                                : 'Simuleer direct je fiscale verschuiving'}
                         </p>
                     </div>
                 </div>
@@ -277,8 +277,8 @@ export function Box3CalculatorCard({
                     <div className='bg-white p-3.5 rounded-lg text-center border border-teal/20 shadow-xs'>
                         <div className='text-[11px] text-[#060e32]/60 uppercase tracking-wider font-semibold'>
                             {isEn
-                                ? 'Tax 2028 (Actual Yield)'
-                                : 'Belasting 2028 (werkelijk)'}
+                                ? 'Tax New (Proposed 2028)'
+                                : 'Belasting nieuw (beoogd 2028)'}
                         </div>
                         <div className='text-lg md:text-xl font-extrabold text-teal mt-1'>
                             {formatCurrency(results.belastingNieuw)}
