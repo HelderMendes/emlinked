@@ -58,8 +58,8 @@ export function Box3EcosystemSection({
         {
             title: isEn ? 'Enterprise Security' : 'Enterprise Beveiliging',
             desc: isEn
-                ? 'ISO 27001 & SOC 2 Certified'
-                : 'ISO 27001 & SOC 2 Gecertificeerd',
+                ? 'Runs on ISO 27001 & SOC 2 certified Microsoft infrastructure'
+                : 'Draait op ISO 27001 & SOC 2 gecertificeerde Microsoft-infrastructuur',
         },
         {
             title: isEn ? 'Power BI Analytics' : 'Power BI Analyses',
