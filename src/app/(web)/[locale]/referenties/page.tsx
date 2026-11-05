@@ -8,6 +8,7 @@ import { client } from '@/sanity/client';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
 import { getImageUrl, getImageAlt } from '@/sanity/image';
+import type { SanityImageLike } from '@/sanity/image';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
 import { Box3CtaBanner } from '@/components/blocks/box3/Box3CtaBanner';
 import { Badge } from '@/components/ui/Badge';
@@ -28,7 +29,85 @@ interface ReferentiesPageProps {
     params: Promise<{ locale: string }>;
 }
 
-async function getSanityPageData(locale: string) {
+interface ReferentiesFloatingLabel {
+    value?: string;
+    label?: string;
+}
+
+interface ReferentiesCaseItem {
+    _key?: string;
+    step?: string;
+    title?: string;
+    text?: string;
+    company?: string;
+    feature?: string;
+    metricLabel?: string;
+    tags?: string[];
+    quote?: string;
+    author?: string;
+    role?: string;
+    companyUrl?: string;
+    photo?: SanityImageLike;
+    photoPath?: string;
+    image?: SanityImageLike;
+    imagePath?: string;
+    logo?: SanityImageLike;
+    logoPath?: string;
+}
+
+interface ReferentiesPartnerItem {
+    _key?: string;
+    tag?: string;
+    category?: string;
+    name?: string;
+    title?: string;
+}
+
+interface ReferentiesBullet {
+    _key?: string;
+    bold?: string;
+    title?: string;
+    text?: string;
+}
+
+interface ReferentiesTrustItem {
+    text?: string;
+}
+
+interface ReferentiesBlock {
+    _type?: string;
+    _key?: string;
+    label?: string;
+    title?: string;
+    subtitle?: string;
+    badge?: string;
+    tag?: string;
+    ctaLabel?: string;
+    ctaLink?: string;
+    buttonLabel?: string;
+    buttonLink?: string;
+    image?: SanityImageLike;
+    heroImage?: SanityImageLike;
+    imagePath?: string;
+    floatingLabels?: ReferentiesFloatingLabel[];
+    items?: ReferentiesCaseItem[] | ReferentiesPartnerItem[];
+    bullets?: ReferentiesBullet[];
+}
+
+interface ReferentiesPageData {
+    title?: string;
+    pageBlocks?: ReferentiesBlock[];
+    seo?: {
+        seoTitle?: string;
+        seoDescription?: string;
+        canonical?: string;
+        noIndex?: boolean;
+    };
+}
+
+async function getSanityPageData(
+    locale: string,
+): Promise<ReferentiesPageData | null> {
     try {
         return await client.fetch(
             `*[_type == "page" && (slug.current == "/referenties" || slug.current == "referenties" || slug.current == "/references" || slug.current == "references" || slug.current == "customer-cases" || _id == "page-referenties-" + $locale) && language == $locale][0] {
@@ -128,34 +207,35 @@ export default async function ReferentiesPage({
     const isEn = locale === 'en';
     const pageData = await getSanityPageData(locale);
 
-    const blocks = pageData?.pageBlocks || [];
+    const blocks: ReferentiesBlock[] = pageData?.pageBlocks || [];
     const heroBlock = blocks.find(
-        (b: any) => b._type === 'hero' || b._type === 'heroBlock',
+        (b) => b._type === 'hero' || b._type === 'heroBlock',
     );
-    const trustBarBlock = blocks.find((b: any) => b._type === 'trustBar');
+    const trustBarBlock = blocks.find((b) => b._type === 'trustBar') as
+        | (ReferentiesBlock & { items?: ReferentiesTrustItem[] })
+        | undefined;
     const casesBlock = blocks.find(
-        (b: any) =>
+        (b) =>
             b._type === 'workflow' ||
             b._type === 'casesBlock' ||
             b._type === 'stepsBlock',
     );
     const ecosystemBlock = blocks.find(
-        (b: any) =>
-            b._type === 'ecosystemSection' || b._type === 'integrationsList',
+        (b) => b._type === 'ecosystemSection' || b._type === 'integrationsList',
     );
     const whyBlock = blocks.find(
-        (b: any) =>
+        (b) =>
             b._type === 'architectureSection' ||
             b._type === 'architectureBlock',
     );
     const ctaBlock = blocks.find(
-        (b: any) =>
+        (b) =>
             b._type === 'ctaBanner' ||
             b._type === 'ctaBlock' ||
             b._type === 'cta',
     );
 
-    const defaultBlocks = [
+    const defaultBlocks: ReferentiesBlock[] = [
         { _type: 'hero', ...heroBlock },
         { _type: 'workflow', ...casesBlock },
         { _type: 'ecosystemSection', ...ecosystemBlock },
@@ -163,7 +243,8 @@ export default async function ReferentiesPage({
         { _type: 'ctaBanner', ...ctaBlock },
     ];
 
-    const blocksToRender = blocks.length > 0 ? blocks : defaultBlocks;
+    const blocksToRender: ReferentiesBlock[] =
+        blocks.length > 0 ? blocks : defaultBlocks;
 
     const whyIcons = [
         <Building2 key='b' className='w-5 h-5' />,
@@ -259,7 +340,7 @@ export default async function ReferentiesPage({
         ],
     };
 
-    const renderHero = (b: any, key: any) => {
+    const renderHero = (b: ReferentiesBlock, key: string) => {
         return (
             <React.Fragment key={key}>
                 <HeroSection
@@ -368,8 +449,8 @@ export default async function ReferentiesPage({
         );
     };
 
-    const renderCases = (b: any, key: any) => {
-        const caseItems = b?.items || [];
+    const renderCases = (b: ReferentiesBlock, key: string) => {
+        const caseItems = (b?.items as ReferentiesCaseItem[]) || [];
         return (
             <section
                 key={key}
@@ -407,213 +488,220 @@ export default async function ReferentiesPage({
                     </div>
 
                     <div className='space-y-12'>
-                        {caseItems.map((c: any, index: number) => {
-                            const photoUrl = getImageUrl(
-                                c.photo || c.image,
-                                c.photoPath || c.imagePath,
-                            );
-                            const logoUrl = getImageUrl(c.logo, c.logoPath);
-                            const companyName =
-                                c.company || c.step || `Case ${index + 1}`;
-                            const metricVal = c.feature;
-                            const metricLbl =
-                                c.metricLabel ||
-                                (isEn ? 'Key Result' : 'Kernresultaat');
-                            const tags = c.tags || [];
+                        {caseItems.map(
+                            (c: ReferentiesCaseItem, index: number) => {
+                                const photoUrl = getImageUrl(
+                                    c.photo || c.image,
+                                    c.photoPath || c.imagePath,
+                                );
+                                const logoUrl = getImageUrl(c.logo, c.logoPath);
+                                const companyName =
+                                    c.company || c.step || `Case ${index + 1}`;
+                                const metricVal = c.feature;
+                                const metricLbl =
+                                    c.metricLabel ||
+                                    (isEn ? 'Key Result' : 'Kernresultaat');
+                                const tags = c.tags || [];
 
-                            return (
-                                <div
-                                    key={c._key || index}
-                                    className='rounded-xl border border-black/10 bg-white/80 p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-teal/40 transition-all duration-300'
-                                >
-                                    <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 items-center'>
-                                        <div className='lg:col-span-7 space-y-6'>
-                                            <div className='flex items-start gap-5'>
-                                                {photoUrl && (
-                                                    <Image
-                                                        src={photoUrl}
-                                                        alt={
-                                                            getImageAlt(
-                                                                c.photo ||
-                                                                    c.image,
-                                                            ) ||
-                                                            c.author ||
-                                                            companyName
-                                                        }
-                                                        width={80}
-                                                        height={80}
-                                                        className='w-20 h-20 rounded-xl object-cover border-2 border-teal/50 shadow-lg shrink-0'
-                                                    />
-                                                )}
-                                                <div className='space-y-1'>
-                                                    <span className='text-xs font-mono font-bold text-teal uppercase tracking-wider block'>
-                                                        {c.step ||
-                                                            `CASE ${index + 1}`}
-                                                    </span>
-                                                    <h3 className='font-display text-xl md:text-2xl font-bold text-darkblue dark:text-white leading-tight'>
-                                                        {c.title}
-                                                    </h3>
+                                return (
+                                    <div
+                                        key={c._key || index}
+                                        className='rounded-xl border border-black/10 bg-white/80 p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-teal/40 transition-all duration-300'
+                                    >
+                                        <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 items-center'>
+                                            <div className='lg:col-span-7 space-y-6'>
+                                                <div className='flex items-start gap-5'>
+                                                    {photoUrl && (
+                                                        <Image
+                                                            src={photoUrl}
+                                                            alt={
+                                                                getImageAlt(
+                                                                    c.photo ||
+                                                                        c.image,
+                                                                ) ||
+                                                                c.author ||
+                                                                companyName
+                                                            }
+                                                            width={80}
+                                                            height={80}
+                                                            className='w-20 h-20 rounded-xl object-cover border-2 border-teal/50 shadow-lg shrink-0'
+                                                        />
+                                                    )}
+                                                    <div className='space-y-1'>
+                                                        <span className='text-xs font-mono font-bold text-teal uppercase tracking-wider block'>
+                                                            {c.step ||
+                                                                `CASE ${index + 1}`}
+                                                        </span>
+                                                        <h3 className='font-display text-xl md:text-2xl font-bold text-darkblue dark:text-white leading-tight'>
+                                                            {c.title}
+                                                        </h3>
+                                                    </div>
                                                 </div>
+
+                                                <p className='text-muted-foreground text-base leading-relaxed font-light'>
+                                                    {c.text}
+                                                </p>
+
+                                                {/* Key Metric Banner */}
+                                                {metricVal && (
+                                                    <div className='p-4 border-y border-y-teal/60 flex items-center gap-4 text-darkblue leading-tight text-teal'>
+                                                        <Zap className='w-7 h-7 text-teal shrink-0' />
+                                                        <div>
+                                                            <span className='text-sm font-mono font-bold  text-black/65 uppercase block '>
+                                                                {metricLbl}
+                                                            </span>
+                                                            <span className='font-medium mt-0.5'>
+                                                                {metricVal}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Customer Quote */}
+                                                {c.quote && (
+                                                    <blockquote className='relative ml-4 pl-6 italic text-sm text-foreground/90 font-medium'>
+                                                        <Quote className='w-4 h-4 text-teal/40 absolute -left-2.5 -top-1' />
+                                                        {c.quote}
+                                                        {c.author && (
+                                                            <footer className='text-sm font-bold text-teal not-italic mt-2'>
+                                                                — {c.author}
+                                                                {c.role
+                                                                    ? `, ${c.role}`
+                                                                    : ''}
+                                                            </footer>
+                                                        )}
+                                                    </blockquote>
+                                                )}
                                             </div>
 
-                                            <p className='text-muted-foreground text-base leading-relaxed font-light'>
-                                                {c.text}
-                                            </p>
-
-                                            {/* Key Metric Banner */}
-                                            {metricVal && (
-                                                <div className='p-4 border-y-1 border-y-teal/60 flex items-center gap-4 text-darkblue leading-tight text-teal'>
-                                                    <Zap className='w-7 h-7 text-teal shrink-0' />
-                                                    <div>
-                                                        <span className='text-sm font-mono font-bold  text-black/65 uppercase block '>
-                                                            {metricLbl}
-                                                        </span>
-                                                        <span className='font-medium mt-0.5'>
-                                                            {metricVal}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            )}
-
-                                            {/* Customer Quote */}
-                                            {c.quote && (
-                                                <blockquote className='relative ml-4 pl-6 italic text-sm text-foreground/90 font-medium'>
-                                                    <Quote className='w-4 h-4 text-teal/40 absolute -left-2.5 -top-1' />
-                                                    {c.quote}
-                                                    {c.author && (
-                                                        <footer className='text-sm font-bold text-teal not-italic mt-2'>
-                                                            — {c.author}
-                                                            {c.role
-                                                                ? `, ${c.role}`
-                                                                : ''}
-                                                        </footer>
-                                                    )}
-                                                </blockquote>
-                                            )}
-                                        </div>
-
-                                        {/* Right Column Visual Card: Official Company Logo & Technical Specs */}
-                                        <div className='lg:col-span-5 relative'>
-                                            <div className='relative rounded-xl bg-gray-100 p-6 text-navy-900 border border-navy-900/10 shadow-md space-y-5 overflow-hidden'>
-                                                {/* Header Bar */}
-                                                <div className='flex items-center justify-between border-b border-navy-900/10 pb-3'>
-                                                    <span className='text-xs font-mono text-teal font-bold uppercase tracking-wider'>
-                                                        {companyName}
-                                                    </span>
-                                                    <span className='px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-mono font-bold uppercase flex items-center gap-1.5 shrink-0'>
-                                                        <span className='w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse' />
-                                                        {isEn
-                                                            ? 'Verified'
-                                                            : 'Geverifieerd'}
-                                                    </span>
-                                                </div>
-
-                                                {/* Logo */}
-                                                <div className='flex flex-col items-center justify-center -mt-6'>
-                                                    {logoUrl ? (
-                                                        <div className='relative my-3 w-full bg-white rounded-xl flex items-center justify-center  group-hover:bg-white transition-all duration-300'>
-                                                            <Image
-                                                                src={logoUrl}
-                                                                alt={
-                                                                    getImageAlt(
-                                                                        c.logo,
-                                                                    ) ||
-                                                                    companyName
-                                                                }
-                                                                width={400}
-                                                                height={200}
-                                                                className='w-[70%] h-auto object-contain transition-transform duration-300 group-hover:scale-98 p-3 bg-white rounded-md max-h-28'
-                                                            />
-                                                        </div>
-                                                    ) : (
-                                                        <div className='text-xl font-bold text-teal font-mono text-center py-6'>
+                                            {/* Right Column Visual Card: Official Company Logo & Technical Specs */}
+                                            <div className='lg:col-span-5 relative'>
+                                                <div className='relative rounded-xl bg-gray-100 p-6 text-navy-900 border border-navy-900/10 shadow-md space-y-5 overflow-hidden'>
+                                                    {/* Header Bar */}
+                                                    <div className='flex items-center justify-between border-b border-navy-900/10 pb-3'>
+                                                        <span className='text-xs font-mono text-teal font-bold uppercase tracking-wider'>
                                                             {companyName}
+                                                        </span>
+                                                        <span className='px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-mono font-bold uppercase flex items-center gap-1.5 shrink-0'>
+                                                            <span className='w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse' />
+                                                            {isEn
+                                                                ? 'Verified'
+                                                                : 'Geverifieerd'}
+                                                        </span>
+                                                    </div>
+
+                                                    {/* Logo */}
+                                                    <div className='flex flex-col items-center justify-center -mt-6'>
+                                                        {logoUrl ? (
+                                                            <div className='relative my-3 w-full bg-white rounded-xl flex items-center justify-center  group-hover:bg-white transition-all duration-300'>
+                                                                <Image
+                                                                    src={
+                                                                        logoUrl
+                                                                    }
+                                                                    alt={
+                                                                        getImageAlt(
+                                                                            c.logo,
+                                                                        ) ||
+                                                                        companyName
+                                                                    }
+                                                                    width={400}
+                                                                    height={200}
+                                                                    className='w-[70%] h-auto object-contain transition-transform duration-300 group-hover:scale-98 p-3 bg-white rounded-md max-h-28'
+                                                                />
+                                                            </div>
+                                                        ) : (
+                                                            <div className='text-xl font-bold text-teal font-mono text-center py-6'>
+                                                                {companyName}
+                                                            </div>
+                                                        )}
+                                                        <div className='flex items-center justify-between w-full text-[11px] font-mono'>
+                                                            <span className='text-navy-500 font-semibold truncate'>
+                                                                {c.author ||
+                                                                    (isEn
+                                                                        ? 'Verified Customer'
+                                                                        : 'Geverifieerde Klant')}
+                                                            </span>
+                                                            <span className='text-teal font-bold shrink-0 ml-2'>
+                                                                ERP Native
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Case-Specific Technical Highlights */}
+                                                    {tags.length > 0 && (
+                                                        <div className='space-y-2 pt-1'>
+                                                            <div className='text-[11px] font-mono text-navy-500 uppercase tracking-wider flex items-center justify-between'>
+                                                                <span>
+                                                                    {isEn
+                                                                        ? 'Specifications & Tags'
+                                                                        : 'Specificaties & Tags'}
+                                                                </span>
+                                                                <span className='text-teal font-bold'>
+                                                                    Business
+                                                                    Central
+                                                                </span>
+                                                            </div>
+                                                            <div className='grid grid-cols-2 gap-2 text-xs font-medium text-navy-700'>
+                                                                {tags.map(
+                                                                    (
+                                                                        tag: string,
+                                                                        tIdx: number,
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                tIdx
+                                                                            }
+                                                                            className='flex items-center gap-1.5 bg-stone-bg px-2.5 py-1.5 rounded-lg border border-navy-900/10 hover:border-teal/30 transition-colors'
+                                                                        >
+                                                                            <Check className='w-3.5 h-3.5 text-teal shrink-0' />
+                                                                            <span className='truncate text-[11px]'>
+                                                                                {
+                                                                                    tag
+                                                                                }
+                                                                            </span>
+                                                                        </div>
+                                                                    ),
+                                                                )}
+                                                            </div>
                                                         </div>
                                                     )}
-                                                    <div className='flex items-center justify-between w-full text-[11px] font-mono'>
-                                                        <span className='text-navy-500 font-semibold truncate'>
-                                                            {c.author ||
-                                                                (isEn
-                                                                    ? 'Verified Customer'
-                                                                    : 'Geverifieerde Klant')}
-                                                        </span>
-                                                        <span className='text-teal font-bold shrink-0 ml-2'>
-                                                            ERP Native
-                                                        </span>
-                                                    </div>
+
+                                                    {c.companyUrl && (
+                                                        <div className='w-full pt-3 border-t border-navy-900/10 flex items-center justify-start'>
+                                                            <a
+                                                                href={
+                                                                    c.companyUrl
+                                                                }
+                                                                target='_blank'
+                                                                rel='noopener noreferrer'
+                                                                className='inline-flex items-center gap-2 text-xs font-bold text-navy-900 hover:text-teal transition-colors group/link'
+                                                            >
+                                                                <span className='w-5 h-5 rounded-full bg-teal/15 text-teal border border-teal/40 flex items-center justify-center shrink-0 shadow-xs group-hover/link:bg-teal group-hover/link:text-white transition-colors'>
+                                                                    <ExternalLink className='w-3 h-3' />
+                                                                </span>
+                                                                <span>
+                                                                    {isEn
+                                                                        ? 'Visit company website'
+                                                                        : 'Bezoek bedrijfswebsite'}
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    )}
                                                 </div>
-
-                                                {/* Case-Specific Technical Highlights */}
-                                                {tags.length > 0 && (
-                                                    <div className='space-y-2 pt-1'>
-                                                        <div className='text-[11px] font-mono text-navy-500 uppercase tracking-wider flex items-center justify-between'>
-                                                            <span>
-                                                                {isEn
-                                                                    ? 'Specifications & Tags'
-                                                                    : 'Specificaties & Tags'}
-                                                            </span>
-                                                            <span className='text-teal font-bold'>
-                                                                Business Central
-                                                            </span>
-                                                        </div>
-                                                        <div className='grid grid-cols-2 gap-2 text-xs font-medium text-navy-700'>
-                                                            {tags.map(
-                                                                (
-                                                                    tag: string,
-                                                                    tIdx: number,
-                                                                ) => (
-                                                                    <div
-                                                                        key={
-                                                                            tIdx
-                                                                        }
-                                                                        className='flex items-center gap-1.5 bg-stone-bg px-2.5 py-1.5 rounded-lg border border-navy-900/10 hover:border-teal/30 transition-colors'
-                                                                    >
-                                                                        <Check className='w-3.5 h-3.5 text-teal shrink-0' />
-                                                                        <span className='truncate text-[11px]'>
-                                                                            {
-                                                                                tag
-                                                                            }
-                                                                        </span>
-                                                                    </div>
-                                                                ),
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                )}
-
-                                                {c.companyUrl && (
-                                                    <div className='w-full pt-3 border-t border-navy-900/10 flex items-center justify-start'>
-                                                        <a
-                                                            href={c.companyUrl}
-                                                            target='_blank'
-                                                            rel='noopener noreferrer'
-                                                            className='inline-flex items-center gap-2 text-xs font-bold text-navy-900 hover:text-teal transition-colors group/link'
-                                                        >
-                                                            <span className='w-5 h-5 rounded-full bg-teal/15 text-teal border border-teal/40 flex items-center justify-center shrink-0 shadow-xs group-hover/link:bg-teal group-hover/link:text-white transition-colors'>
-                                                                <ExternalLink className='w-3 h-3' />
-                                                            </span>
-                                                            <span>
-                                                                {isEn
-                                                                    ? 'Visit company website'
-                                                                    : 'Bezoek bedrijfswebsite'}
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                )}
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            );
-                        })}
+                                );
+                            },
+                        )}
                     </div>
                 </div>
             </section>
         );
     };
 
-    const renderEcosystem = (b: any, key: any) => {
-        const partnerItems = b?.items || [];
+    const renderEcosystem = (b: ReferentiesBlock, key: string) => {
+        const partnerItems = (b?.items as ReferentiesPartnerItem[]) || [];
         return (
             <section
                 key={key}
@@ -646,19 +734,23 @@ export default async function ReferentiesPage({
 
                     {partnerItems.length > 0 && (
                         <div className='bg-white rounded-xl border border-navy-900/10 shadow-md overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 divide-y sm:divide-y-0 md:divide-x divide-navy-900/10 text-center max-w-7xl mx-auto py-6'>
-                            {partnerItems.map((p: any, idx: number) => (
-                                <div
-                                    key={p._key || idx}
-                                    className='px-6 flex flex-col items-center justify-center gap-2 group hover:bg-stone-bg transition-colors duration-300'
-                                >
-                                    <span className='text-xs font-mono font-bold text-teal uppercase tracking-wider'>
-                                        {p.tag || p.category || 'Integration'}
-                                    </span>
-                                    <span className='text-sm md:text-base text-navy-700 text-center group-hover:text-teal transition-colors leading-snug'>
-                                        {p.name || p.title}
-                                    </span>
-                                </div>
-                            ))}
+                            {partnerItems.map(
+                                (p: ReferentiesPartnerItem, idx: number) => (
+                                    <div
+                                        key={p._key || idx}
+                                        className='px-6 flex flex-col items-center justify-center gap-2 group hover:bg-stone-bg transition-colors duration-300'
+                                    >
+                                        <span className='text-xs font-mono font-bold text-teal uppercase tracking-wider'>
+                                            {p.tag ||
+                                                p.category ||
+                                                'Integration'}
+                                        </span>
+                                        <span className='text-sm md:text-base text-navy-700 text-center group-hover:text-teal transition-colors leading-snug'>
+                                            {p.name || p.title}
+                                        </span>
+                                    </div>
+                                ),
+                            )}
                         </div>
                     )}
                 </div>
@@ -666,7 +758,7 @@ export default async function ReferentiesPage({
         );
     };
 
-    const renderWhyChooseUs = (b: any, key: any) => {
+    const renderWhyChooseUs = (b: ReferentiesBlock, key: string) => {
         const whyBullets = b?.bullets || [];
         return (
             <section
@@ -699,33 +791,36 @@ export default async function ReferentiesPage({
 
                     {whyBullets.length > 0 && (
                         <div className='bg-white/80 rounded-xl border border-black/10 shadow-sm p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/10 text-left max-w-7xl mx-auto'>
-                            {whyBullets.map((bItem: any, idx: number) => {
-                                const titleStr = bItem.bold
-                                    ? bItem.bold.replace(/:$/, '')
-                                    : bItem.title || '';
-                                return (
-                                    <div
-                                        key={bItem._key || idx}
-                                        className='px-4 py-5 md:py-2 md:px-6 flex flex-col items-start justify-start text-left space-y-3 group'
-                                    >
-                                        <div className='flex items-center gap-3 w-full'>
-                                            <div className='w-10 h-10 rounded-lg border-2 border-teal/60 bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-teal-hover transition-all duration-300 text-navy-900'>
-                                                {
-                                                    whyIcons[
-                                                        idx % whyIcons.length
-                                                    ]
-                                                }
+                            {whyBullets.map(
+                                (bItem: ReferentiesBullet, idx: number) => {
+                                    const titleStr = bItem.bold
+                                        ? bItem.bold.replace(/:$/, '')
+                                        : bItem.title || '';
+                                    return (
+                                        <div
+                                            key={bItem._key || idx}
+                                            className='px-4 py-5 md:py-2 md:px-6 flex flex-col items-start justify-start text-left space-y-3 group'
+                                        >
+                                            <div className='flex items-center gap-3 w-full'>
+                                                <div className='w-10 h-10 rounded-lg border-2 border-teal/60 bg-[#F4F7FA] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 group-hover:border-teal-hover transition-all duration-300 text-navy-900'>
+                                                    {
+                                                        whyIcons[
+                                                            idx %
+                                                                whyIcons.length
+                                                        ]
+                                                    }
+                                                </div>
+                                                <h3 className='text-sm md:text-base font-bold text-[#060e32] text-left leading-tight'>
+                                                    {titleStr}
+                                                </h3>
                                             </div>
-                                            <h3 className='text-sm md:text-base font-bold text-[#060e32] text-left leading-tight'>
-                                                {titleStr}
-                                            </h3>
+                                            <p className='text-sm leading-relaxed font-light text-left'>
+                                                {bItem.text}
+                                            </p>
                                         </div>
-                                        <p className='text-sm leading-relaxed font-light text-left'>
-                                            {bItem.text}
-                                        </p>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                },
+                            )}
                         </div>
                     )}
                 </div>
@@ -733,7 +828,7 @@ export default async function ReferentiesPage({
         );
     };
 
-    const renderCta = (b: any, key: any) => (
+    const renderCta = (b: ReferentiesBlock, key: string) => (
         <div id='contact' key={key}>
             <Box3CtaBanner
                 ctaBadge={b?.tag || (isEn ? 'CONSULTATION' : 'ADVIESGESPREK')}
@@ -775,7 +870,7 @@ export default async function ReferentiesPage({
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
 
-            {blocksToRender.map((block: any, idx: number) => {
+            {blocksToRender.map((block: ReferentiesBlock, idx: number) => {
                 const key = block._key || `${block._type}-${idx}`;
 
                 if (block._type === 'hero' || block._type === 'heroBlock') {
@@ -815,7 +910,11 @@ export default async function ReferentiesPage({
                 return (
                     <PageBlockRenderer
                         key={key}
-                        block={block}
+                        block={
+                            block as unknown as React.ComponentProps<
+                                typeof PageBlockRenderer
+                            >['block']
+                        }
                         locale={locale}
                     />
                 );
