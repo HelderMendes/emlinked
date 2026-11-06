@@ -1,10 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { BsRocketTakeoff } from 'react-icons/bs';
 import { client } from '@/sanity/client';
 import DocsLocaleSwitch from '@/components/docs/DocsLocaleSwitch';
+import { DocsTranslationProvider } from '@/components/docs/DocsTranslationContext';
 import DocsSidebarNav from '@/components/docs/DocsSidebarNav';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
@@ -59,14 +60,21 @@ async function getDocEntries(locale: string) {
 }
 
 export default async function DocsLayout({ children }: DocsLayoutProps) {
+    const headerStore = await headers();
     const cookieStore = await cookies();
+    const headerLocale = headerStore.get('x-locale');
     const locale =
-        cookieStore.get('emlinked_locale')?.value === 'en' ? 'en' : 'nl';
+        headerLocale === 'en' ||
+        (!headerLocale && cookieStore.get('emlinked_locale')?.value === 'en')
+            ? 'en'
+            : 'nl';
 
     const [categories, docs] = await Promise.all([
         getDocCategories(locale),
         getDocEntries(locale),
     ]);
+
+    const docsRoot = locale === 'en' ? '/en/docs' : '/docs';
 
     const sections = categories.map((cat) => ({
         name: cat.title,
@@ -75,7 +83,7 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
             .filter((d) => d.categorySlug === cat.slug)
             .map((d) => ({
                 title: d.title,
-                path: `/docs/${cat.slug}/${d.slug}`,
+                path: `${docsRoot}/${cat.slug}/${d.slug}`,
             })),
     }));
 
@@ -103,86 +111,88 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
               };
 
     return (
-        <div className='flex h-screen bg-stone-bg text-navy-900 font-sans overflow-hidden'>
-            {/* Sidebar Navigation */}
-            <aside className='w-88 border-r border-navy-900/10 bg-card flex flex-col h-full shrink-0'>
-                {/* Sidebar Header */}
-                <div className='h-16 border-b border-navy-900/10 px-6 flex items-center shrink-0 bg-teal-ultra/40'>
-                    <Link href='/' className='flex items-center'>
-                        <Image
-                            src='/emlinked/Emlinked_logo__liggend.svg'
-                            alt='emlinked'
-                            width={156}
-                            height={40}
-                            className='h-10 w-auto'
-                        />
-                    </Link>
-                </div>
-
-                {/* Sidebar Content (Scrollable Categories) */}
-                <nav className='grow overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-border'>
-                    <DocsSidebarNav
-                        sections={sections}
-                        emptyLabel={copy.emptyLabel}
-                        emptyItemsLabel={copy.emptyItemsLabel}
-                    />
-                </nav>
-            </aside>
-
-            {/* Main Content Area */}
-            <div className='grow flex flex-col h-full overflow-hidden'>
-                {/* Top Navbar */}
-                <header className='h-16 border-b border-navy-900/10 bg-card px-8 flex items-center shrink-0'>
-                    <div className='w-96 relative shrink-0'>
-                        <span className='absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-foreground'>
-                            <svg
-                                className='h-4 w-4'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                strokeWidth='2'
-                                stroke='currentColor'
-                            >
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.637 10.637z'
-                                />
-                            </svg>
-                        </span>
-
-                        <input
-                            type='search'
-                            placeholder={copy.search}
-                            className='w-full h-9 pl-9 pr-4 rounded-full border border-navy-900/15 bg-stone-bg text-xs text-navy-900 focus:outline-none focus:border-teal transition-all'
-                        />
-                    </div>
-                    <div className='grow flex items-center justify-center'>
-                        <OutlineLinkButton href='/docs' color='navy'>
-                            <BsRocketTakeoff className='h-4 w-4 shrink-0' />
-                            <span>
-                                {locale === 'en'
-                                    ? 'My emlinked'
-                                    : 'Mijn emlinked'}{' '}
-                                – {copy.pageTitle}
-                            </span>
-                        </OutlineLinkButton>
-                    </div>
-                    <div className='flex items-center gap-4 shrink-0'>
-                        <DocsLocaleSwitch locale={locale} />
-                        <Link
-                            href='/'
-                            className='inline-flex items-center px-4 py-2 rounded-lg border border-navy-900 bg-navy-900 text-white text-xs font-semibold shadow-xs transition-all duration-300 hover:btn-gradient'
-                        >
-                            {copy.backToSite}
+        <DocsTranslationProvider>
+            <div className='flex h-screen bg-stone-bg text-navy-900 font-sans overflow-hidden'>
+                {/* Sidebar Navigation */}
+                <aside className='w-88 border-r border-navy-900/10 bg-card flex flex-col h-full shrink-0'>
+                    {/* Sidebar Header */}
+                    <div className='h-16 border-b border-navy-900/10 px-6 flex items-center shrink-0 bg-teal-ultra/40'>
+                        <Link href='/' className='flex items-center'>
+                            <Image
+                                src='/emlinked/Emlinked_logo__liggend.svg'
+                                alt='emlinked'
+                                width={156}
+                                height={40}
+                                className='h-10 w-auto'
+                            />
                         </Link>
                     </div>
-                </header>
 
-                {/* Scrollable Document Container */}
-                <main className='grow overflow-y-auto bg-stone-bg/60 p-12 scrollbar-thin'>
-                    <div className='max-w-4xl mx-auto'>{children}</div>
-                </main>
+                    {/* Sidebar Content (Scrollable Categories) */}
+                    <nav className='grow overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-border'>
+                        <DocsSidebarNav
+                            sections={sections}
+                            emptyLabel={copy.emptyLabel}
+                            emptyItemsLabel={copy.emptyItemsLabel}
+                        />
+                    </nav>
+                </aside>
+
+                {/* Main Content Area */}
+                <div className='grow flex flex-col h-full overflow-hidden'>
+                    {/* Top Navbar */}
+                    <header className='h-16 border-b border-navy-900/10 bg-card px-8 flex items-center shrink-0'>
+                        <div className='w-96 relative shrink-0'>
+                            <span className='absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-foreground'>
+                                <svg
+                                    className='h-4 w-4'
+                                    fill='none'
+                                    viewBox='0 0 24 24'
+                                    strokeWidth='2'
+                                    stroke='currentColor'
+                                >
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.637 10.637z'
+                                    />
+                                </svg>
+                            </span>
+
+                            <input
+                                type='search'
+                                placeholder={copy.search}
+                                className='w-full h-9 pl-9 pr-4 rounded-full border border-navy-900/15 bg-stone-bg text-xs text-navy-900 focus:outline-none focus:border-teal transition-all'
+                            />
+                        </div>
+                        <div className='grow flex items-center justify-center'>
+                            <OutlineLinkButton href={docsRoot} color='navy'>
+                                <BsRocketTakeoff className='h-4 w-4 shrink-0' />
+                                <span>
+                                    {locale === 'en'
+                                        ? 'My emlinked'
+                                        : 'Mijn emlinked'}{' '}
+                                    – {copy.pageTitle}
+                                </span>
+                            </OutlineLinkButton>
+                        </div>
+                        <div className='flex items-center gap-4 shrink-0'>
+                            <DocsLocaleSwitch locale={locale} />
+                            <Link
+                                href='/'
+                                className='inline-flex items-center px-4 py-2 rounded-lg border border-navy-900 bg-navy-900 text-white text-xs font-semibold shadow-xs transition-all duration-300 hover:btn-gradient'
+                            >
+                                {copy.backToSite}
+                            </Link>
+                        </div>
+                    </header>
+
+                    {/* Scrollable Document Container */}
+                    <main className='grow overflow-y-auto bg-stone-bg/60 p-12 scrollbar-thin'>
+                        <div className='max-w-4xl mx-auto'>{children}</div>
+                    </main>
+                </div>
             </div>
-        </div>
+        </DocsTranslationProvider>
     );
 }

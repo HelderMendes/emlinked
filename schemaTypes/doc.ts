@@ -63,6 +63,23 @@ export const doc = defineType({
             validation: (Rule) => Rule.min(0),
         }),
         defineField({
+            name: 'translationRef',
+            title: 'Translation of',
+            type: 'reference',
+            to: [{ type: 'doc' }],
+            description:
+                "Link to this page's NL/EN counterpart. Used by the docs locale switcher to jump to the equivalent page instead of the documentation homepage.",
+            options: {
+                filter: ({ document }) => ({
+                    filter: 'language != $language',
+                    params: {
+                        language: (document as { language?: string })
+                            ?.language,
+                    },
+                }),
+            },
+        }),
+        defineField({
             name: 'pdfFile',
             title: 'PDF Attachment',
             type: 'file',

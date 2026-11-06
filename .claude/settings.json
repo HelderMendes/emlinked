@@ -1,4 +1,18 @@
 {
+  "permissions": {
+    "allow": [
+      "mcp__Sanity__query_documents",
+      "Bash(pnpm exec *)",
+      "mcp__Sanity__patch_documents",
+      "mcp__Sanity__publish_documents",
+      "Bash(curl -s http://localhost:3000/docs/financieel-beheer/aanpassing-onderwerpregel-inkooporder)",
+      "Bash(git check-ignore *)",
+      "Bash(grep -B5 \"^+docs$\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(echo \"exit $?\")",
+      "Bash(git add *)"
+    ]
+  },
   "enabledPlugins": {
     "nx@nx-claude-plugins": true
   },
@@ -16,10 +30,5 @@
         "www.google-analytics.com"
       ]
     }
-  },
-  "permissions": {
-    "allow": [
-      "mcp__Sanity__query_documents"
-    ]
   }
 }

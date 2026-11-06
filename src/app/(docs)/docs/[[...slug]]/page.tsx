@@ -1,9 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { PortableText, PortableTextComponents } from 'next-sanity';
 import { client } from '@/sanity/client';
 import { getImageUrl } from '@/sanity/image';
+import SetDocsTranslationPath from '@/components/docs/SetDocsTranslationPath';
 
 interface DocPageProps {
     params: Promise<{ slug?: string[] }>;
@@ -14,6 +15,11 @@ interface SanityDocResult {
     categoryTitle: string;
     body?: any[];
     pdfFile?: { url: string; originalFilename: string } | null;
+    translation?: {
+        slug: string;
+        categorySlug: string;
+        language: 'nl' | 'en';
+    } | null;
 }
 
 function getNativeDimensions(
@@ -158,9 +164,14 @@ export default async function DocPage({ params }: DocPageProps) {
     const resolvedParams = await params;
     const slugArray = resolvedParams.slug || [];
 
+    const headerStore = await headers();
     const cookieStore = await cookies();
+    const headerLocale = headerStore.get('x-locale');
     const locale =
-        cookieStore.get('emlinked_locale')?.value === 'en' ? 'en' : 'nl';
+        headerLocale === 'en' ||
+        (!headerLocale && cookieStore.get('emlinked_locale')?.value === 'en')
+            ? 'en'
+            : 'nl';
 
     const copy =
         locale === 'en'
@@ -250,7 +261,12 @@ export default async function DocPage({ params }: DocPageProps) {
                 title,
                 "categoryTitle": category->title,
                 body,
-                "pdfFile": pdfFile.asset-> { url, originalFilename }
+                "pdfFile": pdfFile.asset-> { url, originalFilename },
+                "translation": translationRef-> {
+                    "slug": slug.current,
+                    "categorySlug": category->slug.current,
+                    language
+                }
             }`,
             { locale, categorySlug, itemSlug },
         );
@@ -273,8 +289,13 @@ export default async function DocPage({ params }: DocPageProps) {
         );
     }
 
+    const translatedPath = sanityDoc.translation
+        ? `${sanityDoc.translation.language === 'en' ? '/en/docs' : '/docs'}/${sanityDoc.translation.categorySlug}/${sanityDoc.translation.slug}`
+        : null;
+
     return (
         <div className='space-y-6'>
+            <SetDocsTranslationPath path={translatedPath} />
             <div className='border-b border-teal pb-2'>
                 <div className='text-lg font-bold tracking-widest text-teal-700 uppercase my-2'>
                     {sanityDoc.categoryTitle}

@@ -1,13 +1,27 @@
 'use client';
 
+import { useDocsTranslation } from '@/components/docs/DocsTranslationContext';
+
 interface DocsLocaleSwitchProps {
     locale: 'nl' | 'en';
 }
 
 export default function DocsLocaleSwitch({ locale }: DocsLocaleSwitchProps) {
+    const { translatedPath } = useDocsTranslation();
+
     const setLocale = (loc: 'nl' | 'en') => {
         document.cookie = `emlinked_locale=${loc}; path=/; max-age=31536000; SameSite=Lax`;
-        window.location.reload();
+
+        if (loc === locale) {
+            window.location.reload();
+            return;
+        }
+
+        // translatedPath is set by the current doc page once it resolves its
+        // translationRef counterpart. Falls back to the other locale's docs
+        // root when no link exists yet for this page.
+        window.location.href =
+            translatedPath ?? (loc === 'en' ? '/en/docs' : '/docs');
     };
 
     return (
