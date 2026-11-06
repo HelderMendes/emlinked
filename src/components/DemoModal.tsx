@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -15,7 +15,11 @@ import {
 import { BsLinkedin, BsTwitterX } from 'react-icons/bs';
 import Image from 'next/image';
 import { PhoneInput } from '@/components/ui/PhoneInput';
-import { getRecaptchaToken, RecaptchaV3Script, RecaptchaAttribution } from '@/components/RecaptchaV3';
+import {
+    getRecaptchaToken,
+    RecaptchaV3Script,
+    RecaptchaAttribution,
+} from '@/components/RecaptchaV3';
 
 interface DemoModalProps {
     isOpen: boolean;
@@ -127,7 +131,11 @@ export function DemoModal({
 }: DemoModalProps) {
     const t = translations[locale as 'nl' | 'en'] || translations.nl;
 
-    const [mounted, setMounted] = useState(false);
+    const mounted = useSyncExternalStore(
+        () => () => {},
+        () => true,
+        () => false,
+    );
     const [status, setStatus] = useState<
         'idle' | 'submitting' | 'success' | 'error'
     >('idle');
@@ -145,10 +153,6 @@ export function DemoModal({
     const [message, setMessage] = useState('');
 
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     // Handle escape key to close modal
     useEffect(() => {
@@ -229,7 +233,7 @@ export function DemoModal({
             {isOpen && (
                 <div
                     key='demo-modal'
-                    className='fixed inset-0 z-[999999] flex items-center justify-center p-4 sm:p-6 lg:p-8 overflow-y-auto'
+                    className='fixed inset-0 z-999999 flex items-center justify-center p-4 sm:p-6 lg:p-8 overflow-y-auto'
                 >
                     {/* Backdrop */}
                     <motion.div
@@ -258,7 +262,11 @@ export function DemoModal({
                         <button
                             onClick={handleClose}
                             className='absolute top-4 right-4 z-30 w-9 h-9 rounded-full bg-navy-50 hover:bg-teal hover:text-white text-navy-500 flex items-center justify-center transition-all cursor-pointer shadow-md'
-                            aria-label={locale === 'en' ? 'Close modal' : 'Sluit venster'}
+                            aria-label={
+                                locale === 'en'
+                                    ? 'Close modal'
+                                    : 'Sluit venster'
+                            }
                         >
                             <X className='w-5 h-5' />
                         </button>
@@ -525,7 +533,9 @@ export function DemoModal({
                                                 value={phone}
                                                 onChange={setPhone}
                                                 locale={locale}
-                                                placeholder={t.placeholderPhoneHint}
+                                                placeholder={
+                                                    t.placeholderPhoneHint
+                                                }
                                                 className='h-10'
                                                 disabled={
                                                     status === 'submitting'

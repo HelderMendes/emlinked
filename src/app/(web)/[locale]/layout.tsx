@@ -11,10 +11,32 @@ interface WebLayoutProps {
     params: Promise<{ locale: string }>;
 }
 
+interface SiteSettings {
+    announcementActive?: boolean;
+    announcementMode?: string;
+    announcementText?: string;
+    announcementTitle?: string;
+    announcementCtaLabel?: string;
+    announcementPillText?: string;
+    announcementReviews?: { text: string; author: string }[];
+    announcementLink?: string;
+    announcementNewsItems?: {
+        title?: string;
+        excerpt?: string;
+        slug?: string;
+    }[];
+    phone?: string;
+    email?: string;
+    address?: string;
+    linkedinUrl?: string;
+    twitterUrl?: string;
+    navigationMenu?: unknown;
+}
+
 async function getSiteSettings(locale: string) {
     try {
         const id = `siteSettings-${locale}`;
-        return await sanityFetch<any>({
+        return await sanityFetch<SiteSettings>({
             query: `*[_id == $id][0] {
                 announcementActive,
                 announcementMode,
@@ -51,7 +73,7 @@ export default async function WebLayout({ children, params }: WebLayoutProps) {
         notFound();
     }
 
-    const settings = await getSiteSettings(locale);
+    const settings = (await getSiteSettings(locale)) ?? undefined;
 
     const isEn = locale === 'en';
 
@@ -59,7 +81,7 @@ export default async function WebLayout({ children, params }: WebLayoutProps) {
         <>
             <a
                 href='#main-content'
-                className='sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-navy-900 focus:text-white focus:text-xs focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal'
+                className='sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-100 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-navy-900 focus:text-white focus:text-xs focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal'
             >
                 {isEn ? 'Skip to main content' : 'Direct naar hoofdinhoud'}
             </a>

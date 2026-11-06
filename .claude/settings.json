@@ -57,7 +57,10 @@
       "Bash(ps -p 38650 -o lstart=)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/prijzen)",
       "Bash(ps -p 9031 -o lstart=)",
-      "Bash(lsof -nP -iTCP:3000 -sTCP:LISTEN)"
+      "Bash(lsof -nP -iTCP:3000 -sTCP:LISTEN)",
+      "Bash(ps -p 39506 -o lstart=,pid=)",
+      "Bash(xargs -I{} sh -c 'echo ==={}===; cat {}')",
+      "Bash(npx sanity *)"
     ]
   },
   "enabledPlugins": {

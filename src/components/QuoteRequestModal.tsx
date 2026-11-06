@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import {
     getRecaptchaToken,
@@ -66,10 +66,11 @@ export function QuoteRequestModal({
 }: QuoteRequestModalProps) {
     const isEn = locale === 'en';
 
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    const mounted = useSyncExternalStore(
+        () => () => {},
+        () => true,
+        () => false,
+    );
 
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -160,7 +161,7 @@ export function QuoteRequestModal({
     if (!mounted || !isOpen) return null;
 
     return createPortal(
-        <div className='fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fadeIn'>
+        <div className='fixed inset-0 z-99999 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fadeIn'>
             <div className='relative w-full max-w-xl rounded-xl bg-white p-6 sm:p-8 text-[#060e32] shadow-2xl border border-teal/30 max-h-[90vh] overflow-y-auto'>
                 <button
                     type='button'
@@ -210,18 +211,25 @@ export function QuoteRequestModal({
                                                     {item.priceFormatted}
                                                 </span>
                                             </div>
-                                            {item.labels && item.labels.length > 0
-                                                ? item.labels.map((label, labelIdx) => (
-                                                      <div
-                                                          key={labelIdx}
-                                                          className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'
-                                                      >
-                                                          <span>• {label}</span>
-                                                      </div>
-                                                  ))
+                                            {item.labels &&
+                                            item.labels.length > 0
+                                                ? item.labels.map(
+                                                      (label, labelIdx) => (
+                                                          <div
+                                                              key={labelIdx}
+                                                              className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'
+                                                          >
+                                                              <span>
+                                                                  • {label}
+                                                              </span>
+                                                          </div>
+                                                      ),
+                                                  )
                                                 : item.label && (
                                                       <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
-                                                          <span>• {item.label}</span>
+                                                          <span>
+                                                              • {item.label}
+                                                          </span>
                                                       </div>
                                                   )}
                                         </div>
