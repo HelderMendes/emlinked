@@ -1,4 +1,5 @@
 import React from 'react';
+import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StickyAnnouncement from '@/components/StickyAnnouncement';
@@ -45,6 +46,11 @@ async function getSiteSettings(locale: string) {
 
 export default async function WebLayout({ children, params }: WebLayoutProps) {
     const { locale } = await params;
+
+    if (locale !== 'nl' && locale !== 'en') {
+        notFound();
+    }
+
     const settings = await getSiteSettings(locale);
 
     const isEn = locale === 'en';

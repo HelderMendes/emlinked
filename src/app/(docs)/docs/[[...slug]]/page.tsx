@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 import { cookies, headers } from 'next/headers';
 import { PortableText, PortableTextComponents } from 'next-sanity';
 import { client } from '@/sanity/client';
@@ -187,13 +188,11 @@ export default async function DocPage({ params }: DocPageProps) {
                   landingMsLinkLabel: 'Microsoft Dynamics 365',
                   landingMsHref:
                       'https://www.microsoft.com/en-us/dynamics-365/products/business-central',
-                  notFoundTitle: 'Page not found',
-                  notFoundBody: "This manual page doesn't exist yet in Sanity.",
                   noContent: 'Content for this page has not been added yet.',
                   downloadLabel: 'Download',
               }
             : {
-                  landingTitle: 'Documentation Center',
+                  landingTitle: 'Documentatiecenter',
                   landingSubtitle: 'Ideeën omzetten in realiteit',
                   landingIntro:
                       'Welkom op mijn emlinked, jouw emlinked! Dit is de plek waar je allerlei informatie kunt vinden die belangrijk is voor jou als emlinked gebruiker.',
@@ -204,8 +203,6 @@ export default async function DocPage({ params }: DocPageProps) {
                   landingMsLinkLabel: 'Microsoft Dynamics 365',
                   landingMsHref:
                       'https://www.microsoft.com/nl-nl/dynamics-365/products/business-central',
-                  notFoundTitle: 'Pagina niet gevonden',
-                  notFoundBody: 'Deze handleiding bestaat nog niet in Sanity.',
                   noContent:
                       'Inhoud voor deze handleiding is nog niet toegevoegd.',
                   downloadLabel: 'Downloaden',
@@ -275,18 +272,7 @@ export default async function DocPage({ params }: DocPageProps) {
     }
 
     if (!sanityDoc) {
-        return (
-            <div className='space-y-6'>
-                <div className='border-b border-teal pb-2'>
-                    <h1 className='font-display text-2xl font-bold tracking-tight text-navy-900'>
-                        {copy.notFoundTitle}
-                    </h1>
-                    <p className='text-sm text-navy-700 mt-2'>
-                        {copy.notFoundBody}
-                    </p>
-                </div>
-            </div>
-        );
+        notFound();
     }
 
     const translatedPath = sanityDoc.translation
