@@ -217,6 +217,7 @@ export function PricingCalculator({
     type QuoteItem = {
         category: string;
         label?: string;
+        labels?: string[];
         priceFormatted: string;
     };
     const oneTimeItems: QuoteItem[] = [];
@@ -240,7 +241,7 @@ export function PricingCalculator({
             );
         oneTimeItems.push({
             category: isEn ? 'Support Packs (One-time)' : 'Strippenkaarten',
-            label: labels.join(', '),
+            labels,
             priceFormatted: formatEur(strippenkaartenCost),
         });
     }
@@ -276,7 +277,7 @@ export function PricingCalculator({
             category: isEn
                 ? 'Setup Fees (One-time)'
                 : 'Opstartkosten (Eenmalig)',
-            label: labels.join(', '),
+            labels,
             priceFormatted: formatEur(opstartkostenCost),
         });
     }
@@ -294,7 +295,7 @@ export function PricingCalculator({
             labels.push(isEn ? 'Bank Ledger Entries' : 'Bankposten');
         oneTimeItems.push({
             category: isEn ? 'XML/TXT Export File' : 'XML/TXT Export Bestand',
-            label: labels.join(', '),
+            labels,
             priceFormatted: isEn ? 'Upon calculation' : 'Na berekening',
         });
     }
@@ -315,7 +316,7 @@ export function PricingCalculator({
             category: isEn
                 ? 'Extra Integration & Setup'
                 : 'Extra Integratie En Setup',
-            label: labels.join(', '),
+            labels,
             priceFormatted: isEn ? 'Upon calculation' : 'Na berekening',
         });
     }

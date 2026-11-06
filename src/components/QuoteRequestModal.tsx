@@ -27,6 +27,7 @@ import { PhoneInput } from '@/components/ui/PhoneInput';
 export type QuoteRequestItem = {
     category: string;
     label?: string;
+    labels?: string[];
     priceFormatted: string;
 };
 
@@ -209,11 +210,20 @@ export function QuoteRequestModal({
                                                     {item.priceFormatted}
                                                 </span>
                                             </div>
-                                            {item.label && (
-                                                <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
-                                                    <span>• {item.label}</span>
-                                                </div>
-                                            )}
+                                            {item.labels && item.labels.length > 0
+                                                ? item.labels.map((label, labelIdx) => (
+                                                      <div
+                                                          key={labelIdx}
+                                                          className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'
+                                                      >
+                                                          <span>• {label}</span>
+                                                      </div>
+                                                  ))
+                                                : item.label && (
+                                                      <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
+                                                          <span>• {item.label}</span>
+                                                      </div>
+                                                  )}
                                         </div>
                                     ))}
                                 </div>

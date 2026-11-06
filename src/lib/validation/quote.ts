@@ -29,6 +29,7 @@ export function sanitizeSubjectText(value: string | null | undefined): string {
 const selectedItemSchema = z.object({
     category: z.string().trim().min(1).max(200),
     label: z.string().trim().max(200).optional(),
+    labels: z.array(z.string().trim().max(200)).max(20).optional(),
     priceFormatted: z.string().trim().min(1).max(60),
     isNaBerekening: z.boolean().optional(),
 });

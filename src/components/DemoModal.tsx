@@ -369,7 +369,11 @@ export function DemoModal({
                                 </div>
                                 <Image
                                     src='/emlinked/Emlinked_logo__liggend.svg'
-                                    alt='emlinked - Vastgoedbeheer software homepage'
+                                    alt={
+                                        locale === 'en'
+                                            ? 'emlinked - Property management software homepage'
+                                            : 'emlinked - Vastgoedbeheer software homepage'
+                                    }
                                     className='w-auto h-7 transition-opacity hover:opacity-80'
                                     width={128}
                                     height={32}

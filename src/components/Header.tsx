@@ -515,12 +515,24 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         <Link
                             href={getPath('/')}
                             className='flex items-center'
-                            aria-label='emlinked - Vastgoedbeheer Software'
-                            title='emlinked - Vastgoedbeheer Software'
+                            aria-label={
+                                isEn
+                                    ? 'emlinked - Property Management Software'
+                                    : 'emlinked - Vastgoedbeheer Software'
+                            }
+                            title={
+                                isEn
+                                    ? 'emlinked - Property Management Software'
+                                    : 'emlinked - Vastgoedbeheer Software'
+                            }
                         >
                             <Image
                                 src={logoSrc}
-                                alt='emlinked - Vastgoedbeheer Software'
+                                alt={
+                                    isEn
+                                        ? 'emlinked - Property Management Software'
+                                        : 'emlinked - Vastgoedbeheer Software'
+                                }
                                 width={140}
                                 height={36}
                                 className='w-auto h-8 transition-all'
@@ -671,12 +683,24 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         <Link
                             href={getPath('/')}
                             className='flex items-center'
-                            aria-label='emlinked - Vastgoedbeheer Software'
-                            title='emlinked - Vastgoedbeheer Software'
+                            aria-label={
+                                isEn
+                                    ? 'emlinked - Property Management Software'
+                                    : 'emlinked - Vastgoedbeheer Software'
+                            }
+                            title={
+                                isEn
+                                    ? 'emlinked - Property Management Software'
+                                    : 'emlinked - Vastgoedbeheer Software'
+                            }
                         >
                             <Image
                                 src={logoSrc}
-                                alt='emlinked - Vastgoedbeheer Software'
+                                alt={
+                                    isEn
+                                        ? 'emlinked - Property Management Software'
+                                        : 'emlinked - Vastgoedbeheer Software'
+                                }
                                 width={140}
                                 height={36}
                                 className='w-auto h-9 transition-all'

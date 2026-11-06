@@ -361,7 +361,11 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                         <Link href={getPath('/')} className='inline-flex'>
                             <Image
                                 src='/emlinked/Emlinked_logo__liggend.svg'
-                                alt='emlinked - Vastgoedbeheer software homepage'
+                                alt={
+                                    isEn
+                                        ? 'emlinked - Property management software homepage'
+                                        : 'emlinked - Vastgoedbeheer software homepage'
+                                }
                                 width={187}
                                 height={48}
                                 className='w-auto h-12 transition-opacity hover:opacity-90'

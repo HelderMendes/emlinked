@@ -13,6 +13,7 @@ import { sanityClient } from '@/lib/sanity';
 interface SelectedItem {
     category: string;
     label?: string;
+    labels?: string[];
     priceFormatted: string;
     isNaBerekening?: boolean;
 }
@@ -20,10 +21,7 @@ interface SelectedItem {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const {
-            locale = 'nl',
-            recaptchaToken,
-        } = body;
+        const { locale = 'nl', recaptchaToken } = body;
         const isEn = locale === 'en';
 
         const recaptchaResult = await verifyRecaptcha(
@@ -103,7 +101,7 @@ export async function POST(request: Request) {
             console.warn('RESEND_API_KEY not found in environment.');
             return NextResponse.json(
                 { error: 'E-mail service is momenteel niet geconfigureerd.' },
-                { status: 500 }
+                { status: 500 },
             );
         }
 
@@ -114,17 +112,31 @@ export async function POST(request: Request) {
         // Format item rows HTML — one-time items render in neutral gray
         // (de-emphasized), monthly items keep the teal accent, matching the
         // calculator UI's grouping.
-        const renderItemRow = (item: SelectedItem, accentColor: string) => `
+        const renderItemRow = (item: SelectedItem, accentColor: string) => {
+            const subLines =
+                item.labels && item.labels.length > 0
+                    ? item.labels
+                    : item.label
+                      ? [item.label]
+                      : [];
+            const subLinesHtml = subLines
+                .map(
+                    (label) =>
+                        `<br/><span style="color: ${accentColor}; font-size: 12px;">• ${escapeHtml(label)}</span>`,
+                )
+                .join('');
+            return `
             <tr style="border-bottom: 1px solid #e2e8f0;">
                 <td style="padding: 8px 0; color: #0f1329;">
                     <strong>${escapeHtml(item.category)}</strong>
-                    ${item.label ? `<br/><span style="color: ${accentColor}; font-size: 12px;">• ${escapeHtml(item.label)}</span>` : ''}
+                    ${subLinesHtml}
                 </td>
                 <td style="padding: 8px 0; text-align: right; font-weight: bold; color: #0f1329;">
                     ${escapeHtml(item.priceFormatted)}
                 </td>
             </tr>
         `;
+        };
 
         const oneTimeItemsHtml = oneTimeItems
             .map((item: SelectedItem) => renderItemRow(item, '#64748b'))
@@ -219,9 +231,9 @@ export async function POST(request: Request) {
                         <span>Support Fee (20%):</span>
                         <span>${safeSupportFee}</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; color: #0f1329; pt: 4px;">
-                        <span>TOTAAL MAAND ABONNEMENT:</span>
-                        <span>${safeTotalMonthly} / mnd</span>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; padding-top: 10px;">
+                        <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3;">Totaal &ndash; Maand Abonnement</span>
+                        <span style="font-size: 20px; font-weight: bold; color: #0f1329;">${safeTotalMonthly} <span style="font-size: 12px; font-weight: normal; color: #545b83;">/ mnd</span></span>
                     </div>
                 </div>
                 `
@@ -342,9 +354,9 @@ export async function POST(request: Request) {
                         <span>Support fee (20%):</span>
                         <span style="float: right; font-weight: bold;">${safeSupportFee}</span>
                     </div>
-                    <div style="font-size: 18px; font-weight: bold; color: #0f1329; padding-top: 4px;">
-                        <span>${isEn ? 'TOTAL MONTHLY SUBSCRIPTION:' : 'TOTAAL MAAND ABONNEMENT:'}</span>
-                        <span style="float: right;">${safeTotalMonthly} / mnd</span>
+                    <div style="padding-top: 10px; overflow: hidden;">
+                        <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3;">${isEn ? 'Total – Monthly Subscription' : 'Totaal – Maand Abonnement'}</span>
+                        <span style="float: right; font-size: 20px; font-weight: bold; color: #0f1329;">${safeTotalMonthly} <span style="font-size: 12px; font-weight: normal; color: #545b83;">/ mnd</span></span>
                     </div>
                 </div>
                 `
@@ -424,7 +436,8 @@ export async function POST(request: Request) {
                 locale,
                 oneTimeItems: (oneTimeItems as SelectedItem[]).map((item) => ({
                     _type: 'object',
-                    label: item.label || item.category,
+                    label:
+                        item.labels?.join(', ') || item.label || item.category,
                     amount: item.priceFormatted,
                 })),
                 monthlyItems: (monthlyItems as SelectedItem[]).map((item) => ({
@@ -442,7 +455,10 @@ export async function POST(request: Request) {
                 submittedAt: new Date().toISOString(),
             });
         } catch (persistError) {
-            console.error('Sanity quoteSubmission persist error:', persistError);
+            console.error(
+                'Sanity quoteSubmission persist error:',
+                persistError,
+            );
         }
 
         // Surface send failures instead of silently reporting success —
@@ -466,7 +482,7 @@ export async function POST(request: Request) {
         console.error('Quote calculation submission error:', error);
         return NextResponse.json(
             { error: 'Interne serverfout bij het verzenden van de offerte.' },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

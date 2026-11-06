@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getImageUrl, getImageAlt, type SanityImageLike } from '@/sanity/image';
 import { cn } from '@/lib/utils';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, TrendingUp } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
@@ -233,7 +233,7 @@ export function HeroSection({
                                         color='navy'
                                     >
                                         {secondaryCtaLabel}
-                                        <ArrowUpRight className='w-4 h-4' />
+                                        <TrendingUp className='w-4 h-4' />
                                     </OutlineLinkButton>
                                 )}
                             </div>
@@ -255,7 +255,11 @@ export function HeroSection({
                                             >
                                                 <Image
                                                     src={person.src}
-                                                    alt={person.name}
+                                                    alt={
+                                                        isEn
+                                                            ? `Portrait of ${person.name}`
+                                                            : `Portret van ${person.name}`
+                                                    }
                                                     width={32}
                                                     height={32}
                                                     className='w-8 h-8 rounded-full border-2 border-white object-cover object-top hover:scale-110 transition-transform duration-200 cursor-pointer'

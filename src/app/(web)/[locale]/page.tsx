@@ -266,7 +266,11 @@ export default async function HomePage({ params }: HomePageProps) {
                 inLanguage: isEn ? 'en-US' : 'nl-NL',
                 offers: {
                     '@type': 'Offer',
+                    price: '173.76',
+                    priceCurrency: 'EUR',
+                    priceValidUntil: '2027-12-31',
                     availability: 'https://schema.org/InStock',
+                    url: `${DEFAULT_DOMAIN}${isEn ? '/en/pricing' : '/prijzen'}`,
                 },
             },
         ],

@@ -363,7 +363,7 @@ export default async function PricingPage({ params }: PricingPageProps) {
                   {
                       '@type': 'SoftwareApplication',
                       '@id': `${canonicalPageUrl}#software`,
-                      name: 'emlinked Property Management Suite',
+                      name: 'emlinked',
                       applicationCategory: 'BusinessApplication',
                       operatingSystem:
                           'Microsoft Dynamics 365 Business Central Cloud',
