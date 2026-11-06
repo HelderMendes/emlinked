@@ -4,6 +4,7 @@ import { author } from './author'
 import { article } from './article'
 import { doc } from './doc';
 import { docCategory } from './docCategory';
+import { docsLanding } from './docsLanding';
 import { siteSettings } from './siteSettings';
 import { solutionPage } from './solutionPage';
 import { quoteSubmission } from './quoteSubmission';
@@ -16,6 +17,7 @@ export const schemaTypes = [
     article,
     doc,
     docCategory,
+    docsLanding,
     siteSettings,
     solutionPage,
     quoteSubmission,

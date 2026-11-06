@@ -137,6 +137,19 @@ export default defineConfig({
                                     .title('Mijn emlinked / Handleidingen (NL)')
                                     .items([
                                         S.listItem()
+                                            .title('Introductiepagina')
+                                            .icon(() => '🏠')
+                                            .child(
+                                                S.document()
+                                                    .schemaType('docsLanding')
+                                                    .documentId(
+                                                        'docsLanding-nl',
+                                                    )
+                                                    .title(
+                                                        'Introductiepagina (NL)',
+                                                    ),
+                                            ),
+                                        S.listItem()
                                             .title('Categorieën')
                                             .child(
                                                 S.documentList()
@@ -185,6 +198,19 @@ export default defineConfig({
                                 S.list()
                                     .title('My emlinked / Manuals (EN)')
                                     .items([
+                                        S.listItem()
+                                            .title('Landing Page')
+                                            .icon(() => '🏠')
+                                            .child(
+                                                S.document()
+                                                    .schemaType('docsLanding')
+                                                    .documentId(
+                                                        'docsLanding-en',
+                                                    )
+                                                    .title(
+                                                        'Landing Page (EN)',
+                                                    ),
+                                            ),
                                         S.listItem()
                                             .title('Categories')
                                             .child(

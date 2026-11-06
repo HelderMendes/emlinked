@@ -23,6 +23,32 @@ interface SanityDocResult {
     } | null;
 }
 
+interface SanityDocsLandingResult {
+    title: string;
+    subtitle: string;
+    intro: string;
+    body: string;
+    msLinkPrefix: string;
+    msLinkLabel: string;
+    msLinkHref: string;
+}
+
+async function getDocsLanding(
+    locale: 'nl' | 'en',
+): Promise<SanityDocsLandingResult | null> {
+    try {
+        return await client.fetch<SanityDocsLandingResult | null>(
+            `*[_type == "docsLanding" && _id == $id][0] {
+                title, subtitle, intro, body, msLinkPrefix, msLinkLabel, msLinkHref
+            }`,
+            { id: `docsLanding-${locale}` },
+        );
+    } catch (err) {
+        console.error('Sanity docsLanding fetch error:', err);
+        return null;
+    }
+}
+
 function getNativeDimensions(
     value: any,
 ): { width: number; height: number } | null {
@@ -210,35 +236,45 @@ export default async function DocPage({ params }: DocPageProps) {
 
     // Render Docs landing page when no path segments are provided
     if (slugArray.length === 0) {
+        const landing = await getDocsLanding(locale);
+        const landingTitle = landing?.title ?? copy.landingTitle;
+        const landingSubtitle = landing?.subtitle ?? copy.landingSubtitle;
+        const landingIntro = landing?.intro ?? copy.landingIntro;
+        const landingBody = landing?.body ?? copy.landingBody;
+        const landingMsPrefix = landing?.msLinkPrefix ?? copy.landingMsPrefix;
+        const landingMsLinkLabel =
+            landing?.msLinkLabel ?? copy.landingMsLinkLabel;
+        const landingMsHref = landing?.msLinkHref ?? copy.landingMsHref;
+
         return (
             <div className='space-y-8'>
                 <div className='border-b border-teal pb-2'>
                     <div className='text-lg font-bold tracking-widest text-teal-700 uppercase my-2'>
-                        {copy.landingSubtitle}
+                        {landingSubtitle}
                     </div>
                     <h1 className='font-display text-4xl font-bold tracking-tight text-navy-900'>
-                        {copy.landingTitle}
+                        {landingTitle}
                     </h1>
                 </div>
                 <article className='max-w-none space-y-3 pt-4'>
                     <h2 className='text-2xl font-bold text-navy-900'>
-                        {copy.landingSubtitle}
+                        {landingSubtitle}
                     </h2>
                     <p className='text-md leading-relaxed text-navy-700'>
-                        {copy.landingIntro}
+                        {landingIntro}
                     </p>
                     <p className='text-md leading-relaxed text-navy-700'>
-                        {copy.landingBody}
+                        {landingBody}
                     </p>
                     <p className='text-md leading-relaxed text-navy-700'>
-                        {copy.landingMsPrefix}
+                        {landingMsPrefix}
                         <a
-                            href={copy.landingMsHref}
+                            href={landingMsHref}
                             target='_blank'
                             rel='noopener noreferrer'
                             className='text-teal-700 underline hover:no-underline'
                         >
-                            {copy.landingMsLinkLabel}
+                            {landingMsLinkLabel}
                         </a>
                         .
                     </p>
