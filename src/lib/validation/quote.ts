@@ -26,10 +26,15 @@ export function sanitizeSubjectText(value: string | null | undefined): string {
         .slice(0, 120);
 }
 
+const selectedItemLabelSchema = z.object({
+    label: z.string().trim().max(200),
+    priceFormatted: z.string().trim().max(60).optional(),
+});
+
 const selectedItemSchema = z.object({
     category: z.string().trim().min(1).max(200),
     label: z.string().trim().max(200).optional(),
-    labels: z.array(z.string().trim().max(200)).max(20).optional(),
+    labels: z.array(selectedItemLabelSchema).max(20).optional(),
     priceFormatted: z.string().trim().min(1).max(60),
     isNaBerekening: z.boolean().optional(),
 });

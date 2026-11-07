@@ -1,16 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-    CheckCircle2,
     ChevronDown,
     ChevronUp,
     FileText,
-    HelpCircle,
-    Info,
     Sparkles,
-    Users,
-    Zap,
     ArrowRight,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
@@ -214,31 +209,44 @@ export function PricingCalculator({
     // Items for the lead-capture modal — built from current selections so
     // both the modal's live summary and the /api/quote payload stay in
     // sync (same arrays, no duplicated display logic).
+    type QuoteItemLabel = { label: string; priceFormatted?: string };
     type QuoteItem = {
         category: string;
         label?: string;
-        labels?: string[];
+        labels?: QuoteItemLabel[];
         priceFormatted: string;
     };
     const oneTimeItems: QuoteItem[] = [];
     const monthlyItems: QuoteItem[] = [];
 
     // One-time costs first — matches the calculator UI, where these are
-    // grouped and shown above the recurring monthly items.
+    // grouped and shown above the recurring monthly items. Labels carry
+    // their own priceFormatted when the underlying fee is a fixed amount
+    // (Strippenkaarten, Opstartkosten), so the quote email can show a price
+    // per line item instead of one combined category price.
     if (strippenkaartenCost > 0) {
-        const labels: string[] = [];
+        const labels: QuoteItemLabel[] = [];
         if (strippenkaart5u)
-            labels.push(
-                isEn ? 'Support Pack – (5 hours)' : 'Strippenkaart – (5 uur)',
-            );
+            labels.push({
+                label: isEn
+                    ? 'Support Pack – (5 hours)'
+                    : 'Strippenkaart – (5 uur)',
+                priceFormatted: formatEur(550.0),
+            });
         if (strippenkaart10u)
-            labels.push(
-                isEn ? 'Support Pack – (10 hours)' : 'Strippenkaart – (10 uur)',
-            );
+            labels.push({
+                label: isEn
+                    ? 'Support Pack – (10 hours)'
+                    : 'Strippenkaart – (10 uur)',
+                priceFormatted: formatEur(899.0),
+            });
         if (strippenkaart20u)
-            labels.push(
-                isEn ? 'Support Pack – (20 hours)' : 'Strippenkaart – (20 uur)',
-            );
+            labels.push({
+                label: isEn
+                    ? 'Support Pack – (20 hours)'
+                    : 'Strippenkaart – (20 uur)',
+                priceFormatted: formatEur(1599.0),
+            });
         oneTimeItems.push({
             category: isEn ? 'Support Packs (One-time)' : 'Strippenkaarten',
             labels,
@@ -246,33 +254,40 @@ export function PricingCalculator({
         });
     }
     if (opstartkostenCost > 0) {
-        const labels: string[] = [];
+        const labels: QuoteItemLabel[] = [];
         if (tenantSetup)
-            labels.push(
-                isEn
+            labels.push({
+                label: isEn
                     ? 'Tenant setup & configuration'
                     : 'Opzetten/inrichten emlinked Tenant',
-            );
+                priceFormatted: formatEur(300.0),
+            });
         if (directBankingSetup)
-            labels.push(isEn ? 'Setup Direct Banking' : 'Setup Direct Banking');
+            labels.push({
+                label: isEn ? 'Setup Direct Banking' : 'Setup Direct Banking',
+                priceFormatted: formatEur(300.0),
+            });
         if (docCaptureSetup)
-            labels.push(
-                isEn
+            labels.push({
+                label: isEn
                     ? 'Initial Document Capture Setup'
                     : 'Initiële installatie Document Capture',
-            );
+                priceFormatted: formatEur(300.0),
+            });
         if (trainingVastgoed)
-            labels.push(
-                isEn
+            labels.push({
+                label: isEn
                     ? 'emlinked Property Training (1 day)'
                     : 'Training emlinked Vastgoed (1 dag)',
-            );
+                priceFormatted: formatEur(799.0),
+            });
         if (trainingFinance)
-            labels.push(
-                isEn
+            labels.push({
+                label: isEn
                     ? 'emlinked Finance Training (1 day)'
                     : 'Training emlinked Finance (1 dag)',
-            );
+                priceFormatted: formatEur(998.0),
+            });
         oneTimeItems.push({
             category: isEn
                 ? 'Setup Fees (One-time)'
@@ -282,17 +297,23 @@ export function PricingCalculator({
         });
     }
     if (isAnyXmlSelected) {
-        const labels: string[] = [];
+        const labels: QuoteItemLabel[] = [];
         if (inkoopFactuurXml)
-            labels.push(isEn ? 'Purchase Invoice' : 'Inkoop factuur');
+            labels.push({
+                label: isEn ? 'Purchase Invoice' : 'Inkoop factuur',
+            });
         if (inkoopCreditFactuurXml)
-            labels.push(isEn ? 'Purchase Credit Memo' : 'Inkoop creditfactuur');
+            labels.push({
+                label: isEn ? 'Purchase Credit Memo' : 'Inkoop creditfactuur',
+            });
         if (verkoopFactuurXml)
-            labels.push(isEn ? 'Sales Invoice' : 'Verkoop factuur');
+            labels.push({ label: isEn ? 'Sales Invoice' : 'Verkoop factuur' });
         if (verkoopCreditNotaXml)
-            labels.push(isEn ? 'Sales Credit Memo' : 'Verkoop credit nota');
+            labels.push({
+                label: isEn ? 'Sales Credit Memo' : 'Verkoop credit nota',
+            });
         if (bankpostenXml)
-            labels.push(isEn ? 'Bank Ledger Entries' : 'Bankposten');
+            labels.push({ label: isEn ? 'Bank Ledger Entries' : 'Bankposten' });
         oneTimeItems.push({
             category: isEn ? 'XML/TXT Export File' : 'XML/TXT Export Bestand',
             labels,
@@ -300,18 +321,20 @@ export function PricingCalculator({
         });
     }
     if (isAnyExtraIntegrationSelected) {
-        const labels: string[] = [];
+        const labels: QuoteItemLabel[] = [];
         if (officeIntegratieSetup)
-            labels.push(
-                isEn
+            labels.push({
+                label: isEn
                     ? 'Office Integration & Setup'
                     : 'Office integratie en setup',
-            );
+            });
         if (bankIntegratieSetup)
-            labels.push(
-                isEn ? 'Bank Integration & Setup' : 'Bank integratie en setup',
-            );
-        if (docCaptureCustomSetup) labels.push('Document Capture');
+            labels.push({
+                label: isEn
+                    ? 'Bank Integration & Setup'
+                    : 'Bank integratie en setup',
+            });
+        if (docCaptureCustomSetup) labels.push({ label: 'Document Capture' });
         oneTimeItems.push({
             category: isEn
                 ? 'Extra Integration & Setup'
@@ -1074,116 +1097,134 @@ export function PricingCalculator({
                                             : 'Eenmalige Kosten'}
                                     </span>
 
-                                    {/* 7. Strippenkaarten (only when selected) */}
+                                    {/* 7. Strippenkaarten (only when selected) — per-item
+                                        price shown per bullet instead of a combined
+                                        category price, since that duplicated the box's
+                                        own "Totaal – Eenmalige Kosten" line. */}
                                     {strippenkaartenCost > 0 && (
                                         <div className='pb-1 border-b border-navy-900/10'>
-                                            <div className='flex justify-between items-center font-medium text-navy-900'>
+                                            <div className='font-medium text-navy-900'>
                                                 <span>
                                                     {isEn
                                                         ? 'Support Packs (One-time)'
                                                         : 'Strippenkaarten'}
                                                 </span>
-                                                <span className='font-semibold'>
-                                                    {formatEur(
-                                                        strippenkaartenCost,
-                                                    )}
-                                                </span>
                                             </div>
                                             {strippenkaart5u && (
-                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal flex justify-between'>
                                                     <span>
                                                         •{' '}
                                                         {isEn
                                                             ? 'Support Pack – (5 hours)'
                                                             : 'Strippenkaart – (5 uur)'}
                                                     </span>
+                                                    <span>
+                                                        {formatEur(550.0)}
+                                                    </span>
                                                 </div>
                                             )}
                                             {strippenkaart10u && (
-                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal flex justify-between'>
                                                     <span>
                                                         •{' '}
                                                         {isEn
                                                             ? 'Support Pack – (10 hours)'
                                                             : 'Strippenkaart – (10 uur)'}
                                                     </span>
+                                                    <span>
+                                                        {formatEur(899.0)}
+                                                    </span>
                                                 </div>
                                             )}
                                             {strippenkaart20u && (
-                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal flex justify-between'>
                                                     <span>
                                                         •{' '}
                                                         {isEn
                                                             ? 'Support Pack – (20 hours)'
                                                             : 'Strippenkaart – (20 uur)'}
                                                     </span>
+                                                    <span>
+                                                        {formatEur(1599.0)}
+                                                    </span>
                                                 </div>
                                             )}
                                         </div>
                                     )}
 
-                                    {/* 8. Opstartkosten (only when selected) */}
+                                    {/* 8. Opstartkosten (only when selected) — same
+                                        per-item price treatment as Strippenkaarten. */}
                                     {opstartkostenCost > 0 && (
-                                        <div className='py-1 border-b border-navy-900/10'>
-                                            <div className='flex justify-between items-center font-medium text-navy-900'>
+                                        <div className='pt-1 -pb-3'>
+                                            <div className='font-medium text-navy-900'>
                                                 <span>
                                                     {isEn
                                                         ? 'Setup Fees (One-time)'
                                                         : 'Opstartkosten (Eenmalig)'}
                                                 </span>
-                                                <span className='font-semibold'>
-                                                    {formatEur(
-                                                        opstartkostenCost,
-                                                    )}
-                                                </span>
                                             </div>
                                             {tenantSetup && (
-                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal flex justify-between'>
                                                     <span>
                                                         •{' '}
                                                         {isEn
                                                             ? 'Tenant setup & configuration'
                                                             : 'Opzetten/inrichten emlinked Tenant'}
                                                     </span>
+                                                    <span>
+                                                        {formatEur(300.0)}
+                                                    </span>
                                                 </div>
                                             )}
                                             {directBankingSetup && (
-                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal flex justify-between'>
                                                     <span>
                                                         •{' '}
                                                         {isEn
                                                             ? 'Setup Direct Banking'
                                                             : 'Setup Direct Banking'}
                                                     </span>
+                                                    <span>
+                                                        {formatEur(300.0)}
+                                                    </span>
                                                 </div>
                                             )}
                                             {docCaptureSetup && (
-                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal flex justify-between'>
                                                     <span>
                                                         •{' '}
                                                         {isEn
                                                             ? 'Initial Document Capture Setup'
                                                             : 'Initiële installatie Document Capture'}
                                                     </span>
+                                                    <span>
+                                                        {formatEur(300.0)}
+                                                    </span>
                                                 </div>
                                             )}
                                             {trainingVastgoed && (
-                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal flex justify-between'>
                                                     <span>
                                                         •{' '}
                                                         {isEn
                                                             ? 'emlinked Property Training (1 day)'
                                                             : 'Training emlinked Vastgoed (1 dag)'}
                                                     </span>
+                                                    <span>
+                                                        {formatEur(799.0)}
+                                                    </span>
                                                 </div>
                                             )}
                                             {trainingFinance && (
-                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal'>
+                                                <div className='pl-3 pt-1 text-[11px] text-navy-500 font-normal flex justify-between'>
                                                     <span>
                                                         •{' '}
                                                         {isEn
                                                             ? 'emlinked Finance Training (1 day)'
                                                             : 'Training emlinked Finance (1 dag)'}
+                                                    </span>
+                                                    <span>
+                                                        {formatEur(998.0)}
                                                     </span>
                                                 </div>
                                             )}

@@ -24,10 +24,15 @@ import {
 } from 'lucide-react';
 import { PhoneInput } from '@/components/ui/PhoneInput';
 
+export type QuoteRequestItemLabel = {
+    label: string;
+    priceFormatted?: string;
+};
+
 export type QuoteRequestItem = {
     category: string;
     label?: string;
-    labels?: string[];
+    labels?: QuoteRequestItemLabel[];
     priceFormatted: string;
 };
 
@@ -203,37 +208,50 @@ export function QuoteRequestModal({
                                 </span>
 
                                 <div className='divide-y divide-slate-200/60'>
-                                    {oneTimeItems.map((item, idx) => (
-                                        <div key={idx} className='py-1'>
-                                            <div className='flex justify-between items-center font-medium text-[#060e32]'>
-                                                <span>{item.category}</span>
-                                                <span className='font-semibold'>
-                                                    {item.priceFormatted}
-                                                </span>
-                                            </div>
-                                            {item.labels &&
-                                            item.labels.length > 0
-                                                ? item.labels.map(
-                                                      (label, labelIdx) => (
-                                                          <div
-                                                              key={labelIdx}
-                                                              className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'
-                                                          >
+                                    {oneTimeItems.map((item, idx) => {
+                                        const hasPricedLabels = item.labels?.some(
+                                            (l) => l.priceFormatted,
+                                        );
+                                        return (
+                                            <div key={idx} className='py-1'>
+                                                <div className='flex justify-between items-center font-medium text-[#060e32]'>
+                                                    <span>{item.category}</span>
+                                                    {!hasPricedLabels && (
+                                                        <span className='font-semibold'>
+                                                            {item.priceFormatted}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                {item.labels &&
+                                                item.labels.length > 0
+                                                    ? item.labels.map(
+                                                          (entry, labelIdx) => (
+                                                              <div
+                                                                  key={labelIdx}
+                                                                  className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal flex justify-between'
+                                                              >
+                                                                  <span>
+                                                                      •{' '}
+                                                                      {entry.label}
+                                                                  </span>
+                                                                  {entry.priceFormatted && (
+                                                                      <span>
+                                                                          {entry.priceFormatted}
+                                                                      </span>
+                                                                  )}
+                                                              </div>
+                                                          ),
+                                                      )
+                                                    : item.label && (
+                                                          <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
                                                               <span>
-                                                                  • {label}
+                                                                  • {item.label}
                                                               </span>
                                                           </div>
-                                                      ),
-                                                  )
-                                                : item.label && (
-                                                      <div className='pl-3 pt-0.5 text-[11px] text-slate-500 font-normal'>
-                                                          <span>
-                                                              • {item.label}
-                                                          </span>
-                                                      </div>
-                                                  )}
-                                        </div>
-                                    ))}
+                                                      )}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
 
                                 <div className='flex justify-between items-center pt-2 border-t border-slate-300'>

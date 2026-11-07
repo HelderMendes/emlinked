@@ -10,10 +10,15 @@ import { EMLINKED_LOGO_DATA_URI } from '@/lib/emailAssets';
 import { verifyRecaptcha } from '@/lib/recaptcha';
 import { sanityClient } from '@/lib/sanity';
 
+interface SelectedItemLabel {
+    label: string;
+    priceFormatted?: string;
+}
+
 interface SelectedItem {
     category: string;
     label?: string;
-    labels?: string[];
+    labels?: SelectedItemLabel[];
     priceFormatted: string;
     isNaBerekening?: boolean;
 }
@@ -109,13 +114,16 @@ export async function POST(request: Request) {
         const mailFrom = process.env.MAIL_FROM_EMAIL || 'info@helderdesign.nl';
         const mailFromName = process.env.MAIL_FROM_NAME || 'emlinked';
 
-        // Format item rows HTML — one-time items render in neutral gray
-        // (de-emphasized), monthly items keep the teal accent, matching the
-        // calculator UI's grouping.
+        // Format item rows HTML — monthly items keep the teal accent,
+        // matching the calculator UI's grouping. One-time items break out
+        // into one row per label when each label has its own fixed price
+        // (Strippenkaarten, Opstartkosten), instead of one combined-price
+        // row per category — otherwise that row's price duplicates the
+        // "Totaal – Eenmalige Kosten" line directly below it.
         const renderItemRow = (item: SelectedItem, accentColor: string) => {
             const subLines =
                 item.labels && item.labels.length > 0
-                    ? item.labels
+                    ? item.labels.map((l) => l.label)
                     : item.label
                       ? [item.label]
                       : [];
@@ -138,8 +146,41 @@ export async function POST(request: Request) {
         `;
         };
 
+        const renderOneTimeRow = (item: SelectedItem) => {
+            const hasPricedLabels = Boolean(
+                item.labels?.length &&
+                    item.labels.every((l) => l.priceFormatted),
+            );
+
+            if (hasPricedLabels && item.labels) {
+                const labelRows = item.labels
+                    .map(
+                        (l) => `
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 4px 0 4px 12px; color: #64748b; font-size: 12px;">
+                    • ${escapeHtml(l.label)}
+                </td>
+                <td style="padding: 4px 0; text-align: right; color: #0f1329; font-size: 12px;">
+                    ${escapeHtml(l.priceFormatted || '')}
+                </td>
+            </tr>`,
+                    )
+                    .join('');
+                return `
+            <tr>
+                <td colspan="2" style="padding: 8px 0 2px; color: #0f1329;">
+                    <strong>${escapeHtml(item.category)}</strong>
+                </td>
+            </tr>
+            ${labelRows}
+        `;
+            }
+
+            return renderItemRow(item, '#64748b');
+        };
+
         const oneTimeItemsHtml = oneTimeItems
-            .map((item: SelectedItem) => renderItemRow(item, '#64748b'))
+            .map((item: SelectedItem) => renderOneTimeRow(item))
             .join('');
         const monthlyItemsHtml = monthlyItems
             .map((item: SelectedItem) => renderItemRow(item, '#00b3b3'))
@@ -198,28 +239,14 @@ export async function POST(request: Request) {
                 ${
                     monthlyItemsHtml
                         ? `
-                <h3 style="color: #0f1329; font-size: 15px; margin-bottom: 10px;">Geselecteerde Onderdelen & Specificatie</h3>
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px;">
-                    <thead>
-                        <tr style="border-bottom: 2px solid #ccffff; text-align: left; color: #545b83; font-size: 12px; text-transform: uppercase;">
-                            <th style="padding-bottom: 8px;">Onderdeel</th>
-                            <th style="padding-bottom: 8px; text-align: right;">Bedrag</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${monthlyItemsHtml}
-                    </tbody>
-                </table>
-                `
-                        : ''
-                }
-
-                ${
-                    monthlyItemsHtml
-                        ? `
                 <div style="background-color: #ffffff; color: #0f1329; padding: 16px; border-radius: 8px; margin-top: 20px; border: 1px solid #00b3b3;">
                     <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3; margin-bottom: 10px;">Maandelijks Abonnement</div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px;">
+                        <tbody>
+                            ${monthlyItemsHtml}
+                        </tbody>
+                    </table>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; padding-top: 6px; border-top: 1px solid #e5e7eb;">
                         <span>emlinked Basis Maand Abonnement:</span>
                         <span>${safeBaseMonthlyPrice}</span>
                     </div>
@@ -317,40 +344,24 @@ export async function POST(request: Request) {
                 ${
                     monthlyItemsHtml
                         ? `
-                <h3 style="color: #0f1329; font-size: 15px; margin-top: 20px; margin-bottom: 10px;">
-                    ${isEn ? 'Selected Features & Summary' : 'Geselecteerde Opties & Specificatie'}
-                </h3>
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px;">
-                    <thead>
-                        <tr style="border-bottom: 2px solid #ccffff; text-align: left; color: #545b83; font-size: 12px; text-transform: uppercase;">
-                            <th style="padding-bottom: 8px;">${isEn ? 'Feature' : 'Onderdeel'}</th>
-                            <th style="padding-bottom: 8px; text-align: right;">${isEn ? 'Amount' : 'Bedrag'}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${monthlyItemsHtml}
-                    </tbody>
-                </table>
-                `
-                        : ''
-                }
-
-                ${
-                    monthlyItemsHtml
-                        ? `
                 <div style="background-color: #ffffff; color: #0f1329; padding: 20px; border-radius: 10px; margin-top: 20px; border: 1px solid #00b3b3;">
                     <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3; margin-bottom: 12px;">
                         ${isEn ? 'Monthly Subscription' : 'Maandelijks Abonnement'}
                     </div>
-                    <div style="margin-bottom: 8px; font-size: 13px; color: #1c234f;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px;">
+                        <tbody>
+                            ${monthlyItemsHtml}
+                        </tbody>
+                    </table>
+                    <div style="margin-bottom: 8px; font-size: 13px; color: #1c234f; padding-top: 6px; border-top: 1px solid #e5e7eb; overflow: hidden;">
                         <span>${isEn ? 'Base Monthly Subscription:' : 'emlinked Basis Maand Abonnement:'}</span>
                         <span style="float: right; font-weight: bold;">${safeBaseMonthlyPrice}</span>
                     </div>
-                    <div style="margin-bottom: 8px; font-size: 13px; color: #1c234f;">
+                    <div style="margin-bottom: 8px; font-size: 13px; color: #1c234f; overflow: hidden;">
                         <span>${isEn ? 'Monthly Subscriptions – Extra Services:' : 'Maand Abonnement – Extra Diensten:'}</span>
                         <span style="float: right; font-weight: bold;">${safeMonthlyAdditions}</span>
                     </div>
-                    <div style="margin-bottom: 12px; font-size: 13px; color: #00b3b3; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px;">
+                    <div style="margin-bottom: 12px; font-size: 13px; color: #00b3b3; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; overflow: hidden;">
                         <span>Support fee (20%):</span>
                         <span style="float: right; font-weight: bold;">${safeSupportFee}</span>
                     </div>
@@ -437,7 +448,9 @@ export async function POST(request: Request) {
                 oneTimeItems: (oneTimeItems as SelectedItem[]).map((item) => ({
                     _type: 'object',
                     label:
-                        item.labels?.join(', ') || item.label || item.category,
+                        item.labels?.map((l) => l.label).join(', ') ||
+                        item.label ||
+                        item.category,
                     amount: item.priceFormatted,
                 })),
                 monthlyItems: (monthlyItems as SelectedItem[]).map((item) => ({
