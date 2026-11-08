@@ -93,23 +93,6 @@ export function proxy(request: NextRequest) {
         return NextResponse.next();
     }
 
-    // Legacy WordPress prefix redirects (/category/*, /tag/*, /author/*, /blog/*, /wp-content/*, /wp-includes/*, /wp-admin/*)
-    if (
-        normalizedPathname.startsWith('/category/') ||
-        normalizedPathname.startsWith('/tag/') ||
-        normalizedPathname.startsWith('/author/') ||
-        normalizedPathname.startsWith('/blog/')
-    ) {
-        return NextResponse.redirect(new URL('/nieuws', request.url), 301);
-    }
-    if (
-        normalizedPathname.startsWith('/wp-content/') ||
-        normalizedPathname.startsWith('/wp-includes/') ||
-        normalizedPathname.startsWith('/wp-admin/')
-    ) {
-        return NextResponse.redirect(new URL('/', request.url), 301);
-    }
-
     // 301 redirect any URL containing uppercase characters to lowercase (e.g. /Box3-check -> /box3-check)
     if (url.pathname !== pathname) {
         const targetUrl = new URL(

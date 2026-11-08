@@ -12,7 +12,7 @@
         "status": 301
     },
     "/category/nieuws": {
-        "destination": "https://emlinked.com/nieuws",
+        "destination": "/nieuws",
         "status": 301
     },
     "https://www.emlinked.nl/tag/erp": {
@@ -20,7 +20,7 @@
         "status": 301
     },
     "/tag/erp": {
-        "destination": "https://emlinked.com/nieuws",
+        "destination": "/nieuws",
         "status": 301
     },
     "https://www.emlinked.nl/contact": {

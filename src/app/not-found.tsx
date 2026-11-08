@@ -8,20 +8,20 @@ export default function NotFound() {
     const isEn = pathname === '/en' || pathname.startsWith('/en/');
 
     return (
-        <section className='flex flex-col items-center justify-center text-center px-6 py-32 min-h-screen'>
+        <section className='flex flex-col items-center justify-center text-center px-6 py-32 grow'>
             <meta name='robots' content='noindex, nofollow' />
-            <span className='text-xs font-semibold uppercase tracking-wider text-teal'>
+            <span className='text-[180px] leading-50 font-semibold uppercase tracking-tight text-teal'>
                 404
             </span>
-            <h1 className='font-display text-3xl md:text-4xl font-bold text-navy-900 tracking-tight mt-3'>
+            <h1 className='font-display text-3xl md:text-4xl font-bold text-navy-900 tracking-tight -mt-2'>
                 {isEn ? 'Page not found' : 'Pagina niet gevonden'}
             </h1>
-            <p className='text-base text-navy-700 leading-relaxed mt-4 max-w-md'>
+            <p className='text-4xl text-navy-700 leading-relaxed mt-4 max-w-md'>
                 {isEn
-                    ? "This page doesn't exist or may have moved."
-                    : 'Deze pagina bestaat niet (meer) of is verplaatst.'}
+                    ? "This page doesn't exist!"
+                    : 'Deze pagina bestaat niet!'}
             </p>
-            <div className='mt-8 flex flex-col sm:flex-row items-center justify-center gap-4'>
+            <div className='mt-12 flex flex-col sm:flex-row items-center justify-center gap-4'>
                 <Link
                     href={isEn ? '/en' : '/'}
                     className='inline-flex items-center justify-center h-11 px-6 rounded-lg bg-navy-900 hover:btn-gradient text-sm font-semibold text-white transition-colors'

@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { client } from '@/sanity/client';
 import { GoogleAnalytics } from '@/components/GoogleAnalytics';
-import { ThemeProvider } from '@/components/ThemeProvider';
 import './globals.css';
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
@@ -114,15 +113,7 @@ export default async function RootLayout({
         >
             <body className='min-h-full flex flex-col'>
                 <GoogleAnalytics />
-                <ThemeProvider
-                    attribute='class'
-                    defaultTheme='light'
-                    forcedTheme='light'
-                    enableSystem={false}
-                    disableTransitionOnChange
-                >
-                    {children}
-                </ThemeProvider>
+                {children}
             </body>
         </html>
     );
