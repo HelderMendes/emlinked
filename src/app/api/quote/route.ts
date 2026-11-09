@@ -227,7 +227,7 @@ export async function POST(request: Request) {
                             ${oneTimeItemsHtml}
                         </tbody>
                     </table>
-                    <div style="display: flex; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid #cbd5e1;">
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px;">
                         <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; color: #475569;">Totaal – Eenmalige Kosten</span>
                         <span style="font-size: 13px; font-weight: bold; color: #0f1329;">${safeTotalOneTime}</span>
                     </div>
@@ -240,13 +240,16 @@ export async function POST(request: Request) {
                     monthlyItemsHtml
                         ? `
                 <div style="background-color: #ffffff; color: #0f1329; padding: 16px; border-radius: 8px; margin-top: 20px; border: 1px solid #00b3b3;">
-                    <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3; margin-bottom: 10px;">Maandelijks Abonnement</div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3;">Maandelijks Abonnement</span>
+                        <span style="font-size: 11px; font-weight: bold; color: #00b3b3;">${safeBaseMonthlyPrice}</span>
+                    </div>
                     <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px;">
                         <tbody>
                             ${monthlyItemsHtml}
                         </tbody>
                     </table>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; padding-top: 6px; border-top: 1px solid #e5e7eb;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
                         <span>emlinked Basis Maand Abonnement:</span>
                         <span>${safeBaseMonthlyPrice}</span>
                     </div>
@@ -330,7 +333,7 @@ export async function POST(request: Request) {
                             ${oneTimeItemsHtml}
                         </tbody>
                     </table>
-                    <div style="display: flex; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid #cbd5e1;">
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px;">
                         <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; color: #475569;">
                             ${isEn ? 'Total One-time Costs' : 'Totaal – Eenmalige Kosten'}
                         </span>
@@ -345,15 +348,18 @@ export async function POST(request: Request) {
                     monthlyItemsHtml
                         ? `
                 <div style="background-color: #ffffff; color: #0f1329; padding: 20px; border-radius: 10px; margin-top: 20px; border: 1px solid #00b3b3;">
-                    <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3; margin-bottom: 12px;">
-                        ${isEn ? 'Monthly Subscription' : 'Maandelijks Abonnement'}
+                    <div style="margin-bottom: 12px; overflow: hidden;">
+                        <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #00b3b3;">
+                            ${isEn ? 'Monthly Subscription' : 'Maandelijks Abonnement'}
+                        </span>
+                        <span style="float: right; font-size: 11px; font-weight: bold; color: #00b3b3;">${safeBaseMonthlyPrice}</span>
                     </div>
                     <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px;">
                         <tbody>
                             ${monthlyItemsHtml}
                         </tbody>
                     </table>
-                    <div style="margin-bottom: 8px; font-size: 13px; color: #1c234f; padding-top: 6px; border-top: 1px solid #e5e7eb; overflow: hidden;">
+                    <div style="margin-bottom: 8px; font-size: 13px; color: #1c234f; overflow: hidden;">
                         <span>${isEn ? 'Base Monthly Subscription:' : 'emlinked Basis Maand Abonnement:'}</span>
                         <span style="float: right; font-weight: bold;">${safeBaseMonthlyPrice}</span>
                     </div>
