@@ -122,7 +122,10 @@ export function TeamBlock({
                                     <div className='relative w-20 h-20 rounded-xl overflow-hidden border-2 border-navy-900/10 group-hover:border-teal/60 transition-colors shrink-0 shadow-lg bg-navy-50'>
                                         <Image
                                             src={avatarUrl}
-                                            alt={getImageAlt(member.image) || member.name}
+                                            alt={
+                                                getImageAlt(member.image) ||
+                                                member.name
+                                            }
                                             fill
                                             sizes='80px'
                                             className='object-cover object-center group-hover:scale-105 transition-transform duration-500'
@@ -210,7 +213,7 @@ export function TeamBlock({
                 createPortal(
                     <AnimatePresence>
                         {selectedIndex !== null && activeMember && (
-                            <div className='fixed inset-0 z-[999999] flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-navy-900/40 backdrop-blur-md'>
+                            <div className='fixed inset-0 z-999999 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-navy-900/40 backdrop-blur-md'>
                                 {/* Overlay backdrop button for click outside */}
                                 <motion.div
                                     initial={{ opacity: 0 }}
@@ -267,7 +270,11 @@ export function TeamBlock({
                                                         <div className='relative w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-navy-900/10 bg-white'>
                                                             <Image
                                                                 src={mAvatar}
-                                                                alt={getImageAlt(m.image) || m.name}
+                                                                alt={
+                                                                    getImageAlt(
+                                                                        m.image,
+                                                                    ) || m.name
+                                                                }
                                                                 fill
                                                                 sizes='40px'
                                                                 className='object-cover object-center'
@@ -310,7 +317,12 @@ export function TeamBlock({
                                                             activeMember.photoPath ||
                                                                 '/emlinked/team/avatar_partners.png',
                                                         )}
-                                                        alt={getImageAlt(activeMember.image) || activeMember.name}
+                                                        alt={
+                                                            getImageAlt(
+                                                                activeMember.image,
+                                                            ) ||
+                                                            activeMember.name
+                                                        }
                                                         fill
                                                         sizes='112px'
                                                         className='object-cover object-center'

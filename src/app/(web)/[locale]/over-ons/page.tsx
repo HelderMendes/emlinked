@@ -10,15 +10,146 @@ import {
     Building2,
 } from 'lucide-react';
 import { sanityFetch } from '@/lib/sanity';
-import { getImageUrl } from '@/sanity/image';
+import { getImageAlt, getImageUrl, type SanityImageLike } from '@/sanity/image';
 import { HeroSection } from '@/components/blocks/HeroSection';
 import { TeamBlock, TeamMember } from '@/components/blocks/TeamBlock';
-import { buildMetadata, DEFAULT_DOMAIN } from '@/lib/seo';
+import { buildMetadata, DEFAULT_DOMAIN, SeoDataInput } from '@/lib/seo';
 import { PageBlockRenderer } from '@/components/blocks/PageBlockRenderer';
 import { Box3CtaBanner } from '@/components/blocks/box3/Box3CtaBanner';
 import { Badge } from '@/components/ui/Badge';
 
 export const revalidate = 60;
+
+interface FloatingLabelLike {
+    value?: string;
+    label?: string;
+}
+
+interface HeroBlockLike {
+    _type: 'hero' | 'heroBlock';
+    _key?: string;
+    badge?: string;
+    tagline?: string;
+    description?: string;
+    ctaLabel?: string;
+    ctaLink?: string;
+    secondaryCtaLabel?: string;
+    secondaryCtaLink?: string;
+    image?: SanityImageLike;
+    imagePath?: string;
+    floatingLabels?: FloatingLabelLike[];
+    proofText?: string;
+}
+
+interface PhilosophyCardLike {
+    badge?: string;
+    title?: string;
+    text?: string;
+    quote?: string;
+    signatureName?: string;
+    signatureRole?: string;
+}
+
+interface FeatureHighlightLike {
+    title?: string;
+    description?: string;
+}
+
+interface WorkflowBlockLike {
+    _type: 'workflow' | 'featuresList';
+    _key?: string;
+    badge?: string;
+    title?: string;
+    subtitle?: string;
+    philosophyCard?: PhilosophyCardLike;
+    featureHighlights?: FeatureHighlightLike[];
+    image?: SanityImageLike;
+    imagePath?: string;
+}
+
+interface TrustCardLike {
+    title?: string;
+    description?: string;
+}
+
+interface TrustBarBlockLike {
+    _type: 'trustBar' | 'trust';
+    _key?: string;
+    badge?: string;
+    title?: string;
+    subtitle?: string;
+    cards?: TrustCardLike[];
+}
+
+interface TeamBlockLike {
+    _type: 'teamBlock' | 'team';
+    _key?: string;
+    members?: TeamMember[];
+    sectionTitle?: string;
+    sectionSubtitle?: string;
+}
+
+interface CtaBlockLike {
+    _type: 'ctaBlock' | 'ctaBanner' | 'cta';
+    _key?: string;
+    tag?: string;
+    title?: string;
+    subtitle?: string;
+    primaryCtaLabel?: string;
+    primaryCtaUrl?: string;
+    secondaryCtaLabel?: string;
+    secondaryCtaUrl?: string;
+    image?: SanityImageLike;
+    imagePath?: string;
+}
+
+// Anything else in pageBlocks that isn't one of the 5 types this page
+// renders itself — handed off as-is to the shared PageBlockRenderer,
+// which already knows how to render (or safely ignore) every other
+// Sanity block type.
+interface GenericBlock {
+    _type: string;
+    _key?: string;
+    [key: string]: unknown;
+}
+
+type OverOnsBlock =
+    | HeroBlockLike
+    | WorkflowBlockLike
+    | TrustBarBlockLike
+    | TeamBlockLike
+    | CtaBlockLike
+    | GenericBlock;
+
+function isHeroBlock(b: OverOnsBlock): b is HeroBlockLike {
+    return b._type === 'hero' || b._type === 'heroBlock';
+}
+function isWorkflowBlock(b: OverOnsBlock): b is WorkflowBlockLike {
+    return b._type === 'workflow' || b._type === 'featuresList';
+}
+function isTrustBarBlock(b: OverOnsBlock): b is TrustBarBlockLike {
+    return b._type === 'trustBar' || b._type === 'trust';
+}
+function isTeamBlock(b: OverOnsBlock): b is TeamBlockLike {
+    return b._type === 'teamBlock' || b._type === 'team';
+}
+function isCtaBlock(b: OverOnsBlock): b is CtaBlockLike {
+    return (
+        b._type === 'ctaBlock' || b._type === 'ctaBanner' || b._type === 'cta'
+    );
+}
+
+interface PageSeo extends SeoDataInput {
+    structuredData?: string | Record<string, unknown>;
+}
+
+interface SanityPageResult {
+    title?: string;
+    tagline?: string;
+    desc?: string;
+    pageBlocks?: OverOnsBlock[];
+    seo?: PageSeo;
+}
 
 // Derives initials for the philosophy card's signature circle from the
 // signatory's name, so it's never stale when the name changes in Sanity
@@ -36,11 +167,13 @@ interface OverOnsPageProps {
     params: Promise<{ locale: string }>;
 }
 
-async function getSanityPageData(locale: string) {
+async function getSanityPageData(
+    locale: string,
+): Promise<SanityPageResult | null> {
     try {
         const pageId =
             locale === 'en' ? 'page-over-ons-en' : 'page-over-ons-nl';
-        return await sanityFetch<any>({
+        return await sanityFetch<SanityPageResult | null>({
             query: `*[_type == "page" && (_id == $pageId || slug.current == $slug || slug.current == $slashSlug || slug.current == "team") && language == $locale][0] {
                 title,
                 tagline,
@@ -104,27 +237,14 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
     const isEn = locale === 'en';
     const pageData = await getSanityPageData(locale);
 
-    const pageBlocks = pageData?.pageBlocks || [];
-    const heroBlock = pageBlocks.find(
-        (b: any) => b._type === 'heroBlock' || b._type === 'hero',
-    );
-    const missionBlock = pageBlocks.find(
-        (b: any) => b._type === 'workflow' || b._type === 'featuresList',
-    );
-    const valuesBlock = pageBlocks.find(
-        (b: any) => b._type === 'trustBar' || b._type === 'trust',
-    );
-    const teamBlock = pageBlocks.find(
-        (b: any) => b._type === 'teamBlock' || b._type === 'team',
-    );
-    const ctaBlock = pageBlocks.find(
-        (b: any) =>
-            b._type === 'ctaBlock' ||
-            b._type === 'ctaBanner' ||
-            b._type === 'cta',
-    );
+    const pageBlocks: OverOnsBlock[] = pageData?.pageBlocks || [];
+    const heroBlock = pageBlocks.find(isHeroBlock);
+    const missionBlock = pageBlocks.find(isWorkflowBlock);
+    const valuesBlock = pageBlocks.find(isTrustBarBlock);
+    const teamBlock = pageBlocks.find(isTeamBlock);
+    const ctaBlock = pageBlocks.find(isCtaBlock);
 
-    const defaultBlocks = [
+    const defaultBlocks: OverOnsBlock[] = [
         { _type: 'hero', ...heroBlock },
         { _type: 'workflow', ...missionBlock },
         { _type: 'trustBar', ...valuesBlock },
@@ -132,7 +252,8 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
         { _type: 'ctaBlock', ...ctaBlock },
     ];
 
-    const blocksToRender = pageBlocks.length > 0 ? pageBlocks : defaultBlocks;
+    const blocksToRender: OverOnsBlock[] =
+        pageBlocks.length > 0 ? pageBlocks : defaultBlocks;
 
     // Extract dynamic content from Sanity
     const heroTitle =
@@ -148,8 +269,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
             ? 'emlinked combines deep real estate expertise with native Microsoft Business Central software, giving property managers and controllers full control over contracts, invoicing, and reporting.'
             : 'emlinked combineert diepgaande vastgoedexpertise met native Microsoft Business Central software, zodat vastgoedbeheerders en controllers grip houden op contracten, facturatie en rapportages.');
 
-    const teamMembers: TeamMember[] =
-        teamBlock?.members?.length > 0 ? teamBlock.members : [];
+    const teamMembers: TeamMember[] = teamBlock?.members || [];
 
     // Structured JSON-LD Data
     const canonicalPageUrl = `${DEFAULT_DOMAIN}${isEn ? '/en/about-us' : '/over-ons'}`;
@@ -196,7 +316,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
               ],
           });
 
-    const renderHero = (b: any, key: any) => (
+    const renderHero = (b: HeroBlockLike, key: string) => (
         <React.Fragment key={key}>
             <HeroSection
                 label={
@@ -251,7 +371,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
         </React.Fragment>
     );
 
-    const renderMission = (b: any, key: any) => (
+    const renderMission = (b: WorkflowBlockLike, key: string) => (
         <section
             key={key}
             className='py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/20'
@@ -358,7 +478,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                               : 'Meetbare tijdswinst',
                                       },
                                   ]
-                            ).map((item: any, idx: number) => (
+                            ).map((item: FeatureHighlightLike, idx: number) => (
                                 <div
                                     key={idx}
                                     className='flex items-start gap-3 p-4 rounded-xl border border-black/10 bg-white/80 shadow-xs'
@@ -380,7 +500,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                     </div>
 
                     {/* Right: Integrated Image, height matches left column */}
-                    <div className='lg:col-span-5 relative min-h-[300px] overflow-hidden bg-slate-950'>
+                    <div className='lg:col-span-5 relative min-h-100 overflow-hidden bg-slate-950'>
                         <Image
                             src={getImageUrl(
                                 b?.image,
@@ -388,7 +508,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                     '/emlinked/referenties/beheerders_referencties.jpg',
                             )}
                             alt={
-                                b?.image?.alt ||
+                                getImageAlt(b?.image) ||
                                 (isEn
                                     ? 'emlinked property management specialists'
                                     : 'emlinked vastgoedbeheer specialisten')
@@ -404,7 +524,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
         </section>
     );
 
-    const renderValues = (b: any, key: any) => (
+    const renderValues = (b: TrustBarBlockLike, key: string) => (
         <section
             key={key}
             className='px-6 py-20 relative z-10 bg-linear-to-br from-[#FFFBEF] via-[#FFFDF9] to-[#FFF3D4] text-[#060e32] border-b border-teal/10'
@@ -461,7 +581,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                       : 'Proactieve doorontwikkeling en flexibele configuratie die direct inspelen op veranderende organisatiebehoeften.',
                               },
                           ]
-                    ).map((card: any, idx: number) => {
+                    ).map((card: TrustCardLike, idx: number) => {
                         const Icon = [ShieldCheck, Layers, Zap][idx % 3];
                         return (
                             <div
@@ -485,9 +605,9 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
         </section>
     );
 
-    const renderTeam = (b: any, key: any) => {
+    const renderTeam = (b: TeamBlockLike, key: string) => {
         const members: TeamMember[] =
-            b?.members?.length > 0 ? b.members : teamMembers;
+            b.members && b.members.length > 0 ? b.members : teamMembers;
         return (
             <div
                 key={key}
@@ -503,7 +623,7 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
         );
     };
 
-    const renderCta = (b: any, key: any) => (
+    const renderCta = (b: CtaBlockLike, key: string) => (
         <div key={key}>
             <Box3CtaBanner
                 ctaBadge={
@@ -553,40 +673,37 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                 />
             )}
 
-            {blocksToRender.map((block: any, idx: number) => {
+            {blocksToRender.map((block: OverOnsBlock, idx: number) => {
                 const key = block._key || `${block._type}-${idx}`;
 
-                if (block._type === 'hero' || block._type === 'heroBlock') {
+                if (isHeroBlock(block)) {
                     return renderHero(block, key);
                 }
 
-                if (
-                    block._type === 'workflow' ||
-                    block._type === 'featuresList'
-                ) {
+                if (isWorkflowBlock(block)) {
                     return renderMission(block, key);
                 }
 
-                if (block._type === 'trustBar' || block._type === 'trust') {
+                if (isTrustBarBlock(block)) {
                     return renderValues(block, key);
                 }
 
-                if (block._type === 'teamBlock' || block._type === 'team') {
+                if (isTeamBlock(block)) {
                     return renderTeam(block, key);
                 }
 
-                if (
-                    block._type === 'ctaBlock' ||
-                    block._type === 'ctaBanner' ||
-                    block._type === 'cta'
-                ) {
+                if (isCtaBlock(block)) {
                     return renderCta(block, key);
                 }
 
                 return (
                     <PageBlockRenderer
                         key={key}
-                        block={block}
+                        block={
+                            block as React.ComponentProps<
+                                typeof PageBlockRenderer
+                            >['block']
+                        }
                         locale={locale}
                     />
                 );
