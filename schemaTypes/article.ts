@@ -25,6 +25,22 @@ export const article = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'translationRef',
+      title: 'Translation of',
+      type: 'reference',
+      to: [{ type: 'article' }],
+      description:
+        "Link to this article's NL/EN counterpart. Used to build correct hreflang tags and cross-language links instead of guessing the other slug.",
+      options: {
+        filter: ({ document }) => ({
+          filter: 'language != $language',
+          params: {
+            language: (document as { language?: string })?.language,
+          },
+        }),
+      },
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',

@@ -991,11 +991,15 @@ export function VastgoedbeheerSoftwareModule({
                                 </Link>
 
                                 <OutlineLinkButton
-                                    href={isEn ? '/en/apps' : '/apps'}
+                                    href={
+                                        ctaBlock?.secondaryButtonUrl ||
+                                        (isEn ? '/en/apps' : '/apps')
+                                    }
                                     color='navy'
                                 >
                                     <span>
-                                        {isEn ? 'All Apps' : 'Alle apps'}
+                                        {ctaBlock?.secondaryButtonText ||
+                                            (isEn ? 'All Apps' : 'Alle apps')}
                                     </span>
                                 </OutlineLinkButton>
                             </div>

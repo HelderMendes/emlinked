@@ -20,6 +20,18 @@ import { Badge } from '@/components/ui/Badge';
 
 export const revalidate = 60;
 
+// Derives initials for the philosophy card's signature circle from the
+// signatory's name, so it's never stale when the name changes in Sanity
+// (e.g. "emlinked Management" -> "EM", "Raymond Perridon" -> "RP").
+function getInitials(name: string): string {
+    return name
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map((word) => word.charAt(0).toUpperCase())
+        .join('');
+}
+
 interface OverOnsPageProps {
     params: Promise<{ locale: string }>;
 }
@@ -152,9 +164,11 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                       '@type': 'AboutPage',
                       '@id': `${canonicalPageUrl}#webpage`,
                       url: canonicalPageUrl,
-                      name: isEn
-                          ? 'About emlinked | Our Team & Mission'
-                          : 'Over emlinked | Ons Team & Onze Missie',
+                      name:
+                          pageData?.seo?.seoTitle ||
+                          (isEn
+                              ? 'About emlinked | Our Team & Mission'
+                              : 'Over emlinked | Ons Team & Onze Missie'),
                       description: heroSub,
                       inLanguage: isEn ? 'en-US' : 'nl-NL',
                       isPartOf: {
@@ -303,7 +317,10 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                         </blockquote>
                         <div className='flex items-center gap-3 pt-2 border-t border-black/10'>
                             <div className='w-8 h-8 rounded-full bg-teal/15 flex items-center justify-center text-teal text-xs font-bold font-mono'>
-                                EM
+                                {getInitials(
+                                    b?.philosophyCard?.signatureName ||
+                                        'emlinked Management',
+                                )}
                             </div>
                             <div>
                                 <div className='text-xs font-bold text-[#060e32]'>
@@ -371,9 +388,10 @@ export default async function OverOnsPage({ params }: OverOnsPageProps) {
                                     '/emlinked/referenties/beheerders_referencties.jpg',
                             )}
                             alt={
-                                isEn
+                                b?.image?.alt ||
+                                (isEn
                                     ? 'emlinked property management specialists'
-                                    : 'emlinked vastgoedbeheer specialisten'
+                                    : 'emlinked vastgoedbeheer specialisten')
                             }
                             fill
                             sizes='(max-width: 1024px) 100vw, 50vw'

@@ -43,7 +43,7 @@ const translations = {
         disclaimer: 'Privacybeleid',
         terms: 'Algemene voorwaarden',
         support: 'Help en ondersteuning',
-        docs: 'Documentatiecenter',
+        docs: 'Documentatie',
 
         // Navigation headers
         product: 'Product',
@@ -361,11 +361,7 @@ export default function Footer({ locale = 'nl', settings }: FooterProps) {
                         <Link href={getPath('/')} className='inline-flex'>
                             <Image
                                 src='/emlinked/Emlinked_logo__liggend.svg'
-                                alt={
-                                    isEn
-                                        ? 'emlinked - Property management software homepage'
-                                        : 'emlinked - Vastgoedbeheer software homepage'
-                                }
+                                alt='emlinked'
                                 width={187}
                                 height={48}
                                 className='w-auto h-12 transition-opacity hover:opacity-90'

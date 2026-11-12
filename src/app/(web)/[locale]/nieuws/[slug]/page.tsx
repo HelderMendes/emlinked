@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import {
     Calendar,
     Clock,
@@ -49,6 +49,7 @@ interface Article {
     body?: PortableTextBlockLike[];
     seo?: SeoDataInput;
     paragraphs?: string[];
+    translation?: { slug: string; language: string } | null;
 }
 
 type RelatedArticle = Pick<
@@ -164,10 +165,7 @@ async function getSanityArticleBySlug(
 ): Promise<Article | null> {
     try {
         return await sanityFetch<Article | null>({
-            query: `coalesce(
-                *[_type == "article" && slug.current == $slug && language == $locale][0],
-                *[_type == "article" && slug.current == $slug][0]
-            ) {
+            query: `*[_type == "article" && slug.current == $slug && language == $locale][0] {
                 _id,
                 title,
                 "slug": slug.current,
@@ -180,6 +178,10 @@ async function getSanityArticleBySlug(
                 imagePath,
                 mainImage,
                 body,
+                "translation": translationRef-> {
+                    "slug": slug.current,
+                    language
+                },
                 seo {
                     seoTitle,
                     seoDescription,
@@ -194,6 +196,41 @@ async function getSanityArticleBySlug(
         console.error('Failed to fetch article from Sanity:', e);
         return null;
     }
+}
+
+// A slug that belongs to the OTHER language's article (e.g. the NL slug
+// visited under /en/news/...) used to silently render that article's
+// content under the wrong URL via the coalesce() fallback this replaces.
+// If that article has a linked translation in the requested locale, 301
+// there; otherwise this slug genuinely doesn't exist in this locale, so the
+// caller 404s instead of guessing.
+async function getArticleCrossLanguageRedirectPath(
+    slug: string,
+    locale: string,
+): Promise<string | null> {
+    try {
+        const translation = await sanityFetch<{
+            slug?: string;
+            language?: string;
+        } | null>({
+            query: `*[_type == "article" && slug.current == $slug && language != $locale][0].translationRef-> {
+                "slug": slug.current,
+                language
+            }`,
+            params: { slug, locale },
+        });
+        if (translation?.slug && translation.language === locale) {
+            return locale === 'en'
+                ? `/en/news/${translation.slug}`
+                : `/nieuws/${translation.slug}`;
+        }
+    } catch (e) {
+        console.error(
+            'Failed to resolve article cross-language redirect:',
+            e,
+        );
+    }
+    return null;
 }
 
 async function getRelatedArticles(
@@ -395,6 +432,13 @@ export async function generateMetadata({
         fallbackArticlesBySlug[slug];
 
     if (!article) {
+        const redirectPath = await getArticleCrossLanguageRedirectPath(
+            slug,
+            locale,
+        );
+        if (redirectPath) {
+            permanentRedirect(redirectPath);
+        }
         return {
             title: isEn
                 ? '404 - Article Not Found | emlinked'
@@ -405,13 +449,43 @@ export async function generateMetadata({
 
     const canonicalUrl = `${DEFAULT_DOMAIN}${isEn ? `/en/news/${slug}` : `/nieuws/${slug}`}`;
 
-    return buildMetadata({
+    const metadata = buildMetadata({
         seo: article.seo,
         fallbackTitle: `${article.title} | emlinked Nieuws`,
         fallbackDescription: article.excerpt || '',
         canonicalUrl,
         locale,
     });
+
+    // Articles' NL/EN slugs aren't a deterministic transform of each other
+    // (unlike most other pages), so override the generic slug-swap hreflang
+    // with the real translation address from Sanity's translationRef —
+    // omitting the alternate entirely when no translation is linked yet,
+    // rather than guessing a wrong address.
+    const translation = article.translation;
+    const nlUrl = !isEn
+        ? canonicalUrl
+        : translation?.language === 'nl'
+          ? `${DEFAULT_DOMAIN}/nieuws/${translation.slug}`
+          : undefined;
+    const enUrl = isEn
+        ? canonicalUrl
+        : translation?.language === 'en'
+          ? `${DEFAULT_DOMAIN}/en/news/${translation.slug}`
+          : undefined;
+
+    const languages: Record<string, string> = {};
+    if (nlUrl) languages.nl = nlUrl;
+    if (enUrl) languages.en = enUrl;
+    languages['x-default'] = nlUrl || canonicalUrl;
+
+    return {
+        ...metadata,
+        alternates: {
+            ...metadata.alternates,
+            languages,
+        },
+    };
 }
 
 function blockPlainText(block: PortableTextBlockLike | undefined): string {
@@ -729,6 +803,13 @@ export default async function ArticleDetailPage({
         fallbackArticlesBySlug[slug];
 
     if (!article) {
+        const redirectPath = await getArticleCrossLanguageRedirectPath(
+            slug,
+            locale,
+        );
+        if (redirectPath) {
+            permanentRedirect(redirectPath);
+        }
         notFound();
     }
 

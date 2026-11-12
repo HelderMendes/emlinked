@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cookies, headers } from 'next/headers';
 import { PortableText, PortableTextComponents } from 'next-sanity';
@@ -185,6 +186,49 @@ function DownloadIcon() {
             />
         </svg>
     );
+}
+
+export async function generateMetadata({
+    params,
+}: DocPageProps): Promise<Metadata> {
+    const resolvedParams = await params;
+    const slugArray = resolvedParams.slug || [];
+
+    const headerStore = await headers();
+    const cookieStore = await cookies();
+    const headerLocale = headerStore.get('x-locale');
+    const locale: 'nl' | 'en' =
+        headerLocale === 'en' ||
+        (!headerLocale && cookieStore.get('emlinked_locale')?.value === 'en')
+            ? 'en'
+            : 'nl';
+
+    const sectionLabel = locale === 'en' ? 'Documentation' : 'Documentatie';
+
+    if (slugArray.length === 0) {
+        const landing = await getDocsLanding(locale);
+        const landingTitle =
+            landing?.title ??
+            (locale === 'en' ? 'Documentation Center' : 'Documentatiecenter');
+        return { title: landingTitle };
+    }
+
+    const categorySlug = slugArray[0] || '';
+    const itemSlug = slugArray[1] || '';
+
+    try {
+        const doc = await client.fetch<{ title: string } | null>(
+            `*[_type == "doc" && language == $locale && category->slug.current == $categorySlug && slug.current == $itemSlug][0] { title }`,
+            { locale, categorySlug, itemSlug },
+        );
+        if (doc?.title) {
+            return { title: `${doc.title} | ${sectionLabel}` };
+        }
+    } catch (err) {
+        console.error('Sanity doc metadata fetch error:', err);
+    }
+
+    return { title: sectionLabel };
 }
 
 export default async function DocPage({ params }: DocPageProps) {

@@ -564,6 +564,13 @@ export const solutionPage = defineType({
                             type: 'string',
                         }),
                         defineField({
+                            name: 'secondaryButtonUrl',
+                            title: 'Secondary Button Link',
+                            type: 'string',
+                            description:
+                                'Relative path the secondary button links to (e.g. /apps). Falls back to the apps overview if left empty.',
+                        }),
+                        defineField({
                             name: 'imagePath',
                             title: 'Afbeelding Pad (Fallback String)',
                             type: 'string',

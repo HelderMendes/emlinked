@@ -68,11 +68,6 @@ export function TestimonialSlider({
     const activeTitle = title || '';
     const activeSubtitle = subtitle || '';
 
-    const getPath = (path: string) => {
-        if (locale === 'nl') return path;
-        return `/en${path}`;
-    };
-
     return (
         <section className='px-6 py-20 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative z-10'>
             <div className='mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 flex flex-col gap-12'>
@@ -99,7 +94,11 @@ export function TestimonialSlider({
                         return (
                             <Link
                                 key={t.id}
-                                href={getPath('/referenties')}
+                                href={
+                                    locale === 'nl'
+                                        ? '/referenties'
+                                        : '/en/references'
+                                }
                                 className='p-6 rounded-xl border border-navy-900/10 hover:border-teal/40 hover:shadow-lg transition-all duration-300 flex flex-col gap-4 group bg-white/95'
                             >
                                 <p className='  text-navy-700/75 leading-relaxed font-medium text-center'>

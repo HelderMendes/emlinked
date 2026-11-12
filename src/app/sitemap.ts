@@ -2,6 +2,13 @@ import { MetadataRoute } from 'next';
 import { client } from '@/sanity/client';
 import { DEFAULT_DOMAIN } from '@/lib/seo';
 
+// Sitemap routes are cached indefinitely by default (no request-time APIs
+// are used here), so without this the sitemap would only regenerate on a
+// new deploy — a newly published article or doc wouldn't appear in
+// sitemap.xml until then. Hourly is plenty fresh for a sitemap (unlike a
+// page's own 60s revalidate) without hammering Sanity on every crawl.
+export const revalidate = 3600;
+
 // Strips leading/trailing slashes so every doc's stored slug (which varies
 // -- "/apps", "apps", "/pricing", "" for home, etc.) normalizes the same way
 // before a locale prefix is added back.
@@ -25,6 +32,18 @@ function articlePath(slug: string, language: string): string {
     return language === 'en' ? `/en/news/${clean}` : `/nieuws/${clean}`;
 }
 
+function docPath(
+    categorySlug: string,
+    slug: string,
+    language: string,
+): string {
+    const cleanCategory = cleanSlug(categorySlug);
+    const cleanSlugPart = cleanSlug(slug);
+    return language === 'en'
+        ? `/en/docs/${cleanCategory}/${cleanSlugPart}`
+        : `/docs/${cleanCategory}/${cleanSlugPart}`;
+}
+
 interface SitemapDoc {
     slug: string | null;
     language: string;
@@ -32,8 +51,13 @@ interface SitemapDoc {
     noIndex?: boolean;
 }
 
+interface SitemapDocPage extends SitemapDoc {
+    categorySlug: string | null;
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const [pages, solutionPages, articles, legalPages] = await Promise.all([
+    const [pages, solutionPages, articles, legalPages, docs] =
+        await Promise.all([
         client.fetch<SitemapDoc[]>(
             `*[_type == "page" && defined(slug.current)]{
                 "slug": slug.current,
@@ -61,6 +85,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         client.fetch<SitemapDoc[]>(
             `*[_type == "legalPage" && defined(slug.current)]{
                 "slug": slug.current,
+                language,
+                _updatedAt,
+                "noIndex": seo.noIndex
+            }`,
+        ),
+        client.fetch<SitemapDocPage[]>(
+            `*[_type == "doc" && defined(slug.current) && defined(category->slug.current)]{
+                "slug": slug.current,
+                "categorySlug": category->slug.current,
                 language,
                 _updatedAt,
                 "noIndex": seo.noIndex
@@ -105,6 +138,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         if (doc.noIndex || !doc.slug) continue;
         addEntry(
             `${DEFAULT_DOMAIN}${pagePath(doc.slug, doc.language)}`,
+            doc._updatedAt,
+        );
+    }
+
+    for (const doc of docs) {
+        if (doc.noIndex || !doc.slug || !doc.categorySlug) continue;
+        addEntry(
+            `${DEFAULT_DOMAIN}${docPath(doc.categorySlug, doc.slug, doc.language)}`,
             doc._updatedAt,
         );
     }

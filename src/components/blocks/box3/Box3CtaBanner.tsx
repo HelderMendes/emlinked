@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
-import { getImageUrl, type SanityImageLike } from '@/sanity/image';
+import { getImageAlt, getImageUrl, type SanityImageLike } from '@/sanity/image';
 import { Badge } from '@/components/ui/Badge';
 import { OutlineLinkButton } from '@/components/ui/OutlineLinkButton';
 
@@ -35,6 +35,7 @@ export function Box3CtaBanner({
         image,
         imagePath || '/emlinked/box3/box3-automatiseren.jpg',
     );
+    const bannerImgAlt = getImageAlt(image) || ctaTitle || 'emlinked CTA';
 
     return (
         <section className='lg:px-14 p-4 py-24 bg-linear-to-br from-teal-ultra via-stone-bg to-teal-pale/60 relative overflow-hidden z-10'>
@@ -76,7 +77,7 @@ export function Box3CtaBanner({
                         <div className='lg:col-span-4 flex justify-start lg:justify-end'>
                             <Image
                                 src={bannerImg}
-                                alt={ctaTitle || 'emlinked CTA'}
+                                alt={bannerImgAlt}
                                 width={700}
                                 height={500}
                                 className='w-full h-[310px] max-h-[310px] object-cover object-center rounded-lg group-hover:scale-105 transition-transform duration-500 shadow-lg border border-amber-600/40'

@@ -408,7 +408,7 @@ export function TeamBlock({
                                                         <span>
                                                             {isEn
                                                                 ? 'Send Email'
-                                                                : 'E-mail Sturen'}
+                                                                : 'E-mail sturen'}
                                                         </span>
                                                     </a>
                                                 )}

@@ -343,10 +343,6 @@
         "destination": "/docs",
         "status": 301
     },
-    "/login": {
-        "destination": "/docs",
-        "status": 301
-    },
     "/kennisbank/box3-check": {
         "destination": "/box3-check",
         "status": 301

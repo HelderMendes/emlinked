@@ -341,7 +341,8 @@ export function HeroSection({
                                     ) : (
                                         <Image
                                             src={effectiveHeroImg}
-                                            alt={effectiveHeroImgAlt}
+                                            alt=''
+                                            aria-hidden='true'
                                             fill
                                             sizes='55vw'
                                             className='object-cover lg:mask-[linear-gradient(to_right,transparent,black_22%)]'

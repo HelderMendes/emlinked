@@ -74,7 +74,6 @@ const translations = {
         prijzen: 'Prijzen',
         overons: 'Over ons',
         nieuws: 'Nieuws',
-        mijnEmlinked: 'Mijn emlinked',
 
         // Submenu links
         vastgoedbeheer: 'Vastgoedbeheer Software',
@@ -97,7 +96,6 @@ const translations = {
         prijzen: 'Pricing',
         overons: 'About us',
         nieuws: 'News',
-        mijnEmlinked: 'My emlinked',
 
         // Submenu links
         vastgoedbeheer: 'Property Management Software',
@@ -502,7 +500,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                     className='w-1/2 bg-teal-pale text-navy-900 hover:bg-teal-100 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-none border-l border-teal/30 transition-colors cursor-pointer font-semibold'
                 >
                     <BsRocketTakeoff className='h-3.5 w-3.5 shrink-0 text-teal' />
-                    <span>{t.mijnEmlinked}</span>
+                    <span>{t.docs}</span>
                 </Link>
             </div>
 
@@ -528,11 +526,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         >
                             <Image
                                 src={logoSrc}
-                                alt={
-                                    isEn
-                                        ? 'emlinked - Property Management Software'
-                                        : 'emlinked - Vastgoedbeheer Software'
-                                }
+                                alt='emlinked'
                                 width={140}
                                 height={36}
                                 className='w-auto h-8 transition-all'
@@ -696,11 +690,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         >
                             <Image
                                 src={logoSrc}
-                                alt={
-                                    isEn
-                                        ? 'emlinked - Property Management Software'
-                                        : 'emlinked - Vastgoedbeheer Software'
-                                }
+                                alt='emlinked'
                                 width={140}
                                 height={36}
                                 className='w-auto h-9 transition-all'
@@ -1015,7 +1005,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         {/* Sign In Button / Portal Access */}
                         <OutlineLinkButton href='/docs' color='navy'>
                             <BsRocketTakeoff className='h-4 w-4 shrink-0' />
-                            <span>{t.mijnEmlinked}</span>
+                            <span>{t.docs}</span>
                         </OutlineLinkButton>
                     </div>
                 </div>

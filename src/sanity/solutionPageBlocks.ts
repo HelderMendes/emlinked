@@ -125,6 +125,7 @@ export interface CtaBlockData {
     desc?: string;
     primaryButtonText?: string;
     secondaryButtonText?: string;
+    secondaryButtonUrl?: string;
     imagePath?: string;
     image?: SanityImageLike;
 }

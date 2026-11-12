@@ -317,7 +317,7 @@ export function HuurdersportaalModule({
                 },
                 {
                     icon: <Clock className='w-3.5 h-3.5' />,
-                    value: heroBlock?.floatingLabels?.[1]?.value || '< 15 min',
+                    value: heroBlock?.floatingLabels?.[1]?.value || '< 30 min',
                     label:
                         heroBlock?.floatingLabels?.[1]?.label ||
                         (isEn ? 'Avg Response' : 'Gem. Responstijd'),
@@ -1097,11 +1097,15 @@ export function HuurdersportaalModule({
                                 </Link>
 
                                 <OutlineLinkButton
-                                    href={isEn ? '/en/apps' : '/apps'}
+                                    href={
+                                        ctaBlock?.secondaryButtonUrl ||
+                                        (isEn ? '/en/apps' : '/apps')
+                                    }
                                     color='navy'
                                 >
                                     <span>
-                                        {isEn ? 'All Apps' : 'Alle apps'}
+                                        {ctaBlock?.secondaryButtonText ||
+                                            (isEn ? 'All Apps' : 'Alle apps')}
                                     </span>
                                 </OutlineLinkButton>
                             </div>
