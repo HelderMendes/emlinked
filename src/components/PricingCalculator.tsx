@@ -400,16 +400,16 @@ export function PricingCalculator({
             category: isEn
                 ? 'Direct Banking'
                 : 'Direct Banking: Elektronisch Bankieren',
-            label: directBankingLabels[directBankingTier].split(' (+')[0],
+            label:
+                directBankingLabels[directBankingTier].match(
+                    /\(([^)]+)\)/,
+                )?.[1] || '',
             priceFormatted: formatEur(directBankingCost),
         });
     }
     if (directBankingPlus) {
         monthlyItems.push({
             category: isEn
-                ? 'Direct Banking'
-                : 'Direct Banking: Elektronisch Bankieren',
-            label: isEn
                 ? 'Direct Banking Plus (Including AI)'
                 : 'Direct Banking Plus (incl. AI)',
             priceFormatted: formatEur(directBankingPlusCost),
@@ -1510,9 +1510,8 @@ export function PricingCalculator({
                                     </div>
                                 )}
 
-                                {/* 6. Direct Banking (only when selected) */}
-                                {(directBankingTier > 0 ||
-                                    directBankingPlus) && (
+                                {/* 6. Direct Banking tier (only when selected) */}
+                                {directBankingTier > 0 && (
                                     <div className='py-1'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
@@ -1521,34 +1520,32 @@ export function PricingCalculator({
                                                     : 'Direct Banking: Elektronisch Bankieren'}
                                             </span>
                                             <span className='font-semibold text-navy-900'>
-                                                {formatEur(
-                                                    directBankingCost +
-                                                        directBankingPlusCost,
-                                                )}
+                                                {formatEur(directBankingCost)}
                                             </span>
                                         </div>
-                                        {directBankingTier > 0 && (
-                                            <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {
-                                                        directBankingLabels[
-                                                            directBankingTier
-                                                        ].split(' (+')[0]
-                                                    }
-                                                </span>
-                                            </div>
-                                        )}
-                                        {directBankingPlus && (
-                                            <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
-                                                <span>
-                                                    •{' '}
-                                                    {isEn
-                                                        ? 'Direct Banking Plus (Including AI)'
-                                                        : 'Direct Banking Plus (incl. AI)'}
-                                                </span>
-                                            </div>
-                                        )}
+                                        <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
+                                            <span>
+                                                •{' '}
+                                                {directBankingLabels[
+                                                    directBankingTier
+                                                ].match(/\(([^)]+)\)/)?.[1] ||
+                                                    ''}
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* 7. Direct Banking Plus addon (only when selected) */}
+                                {directBankingPlus && (
+                                    <div className='flex justify-between items-center py-1 font-medium'>
+                                        <span>
+                                            {isEn
+                                                ? 'Direct Banking Plus (Including AI)'
+                                                : 'Direct Banking Plus (incl. AI)'}
+                                        </span>
+                                        <span className='font-semibold text-navy-900'>
+                                            {formatEur(directBankingPlusCost)}
+                                        </span>
                                     </div>
                                 )}
 
