@@ -1,6 +1,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import Header from '@/components/Header';
+import Header, { type MenuItem } from '@/components/Header';
 import Footer from '@/components/Footer';
 import StickyAnnouncement from '@/components/StickyAnnouncement';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
@@ -30,7 +30,7 @@ interface SiteSettings {
     address?: string;
     linkedinUrl?: string;
     twitterUrl?: string;
-    navigationMenu?: unknown;
+    navigationMenu?: MenuItem[];
 }
 
 async function getSiteSettings(locale: string) {

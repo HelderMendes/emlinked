@@ -54,26 +54,26 @@ function getSubIcon(title: string) {
     return BsArrowUpRight;
 }
 
-interface SubLinkItem {
+export interface SubLinkItem {
     title: string;
     path: string;
     description?: string;
 }
 
-interface MenuDropdownItem {
+export interface MenuDropdownItem {
     _type: 'menuDropdown';
     title: string;
     path?: string;
     links?: SubLinkItem[];
 }
 
-interface MenuLinkItem {
+export interface MenuLinkItem {
     _type: 'menuLink';
     title: string;
     path: string;
 }
 
-type MenuItem = MenuDropdownItem | MenuLinkItem;
+export type MenuItem = MenuDropdownItem | MenuLinkItem;
 
 interface HeaderProps {
     locale?: string;
