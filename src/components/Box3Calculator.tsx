@@ -1,18 +1,7 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import {
-    Calculator,
-    CheckCircle2,
-    AlertTriangle,
-    Info,
-    ArrowRight,
-    Building2,
-    Coins,
-    Sparkles,
-    FileSpreadsheet,
-    ShieldCheck,
-} from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Sparkles, ShieldCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Box3CalculatorCard } from '@/components/blocks/box3/Box3CalculatorCard';
 

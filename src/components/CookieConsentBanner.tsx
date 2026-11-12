@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Cookie, Settings, Check, X, Lock } from 'lucide-react';
+import { Cookie, Settings, Check, X, Lock } from 'lucide-react';
 
 interface CookieConsentBannerProps {
     locale?: string;

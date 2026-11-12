@@ -9,6 +9,7 @@ import {
     ArrowRight,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
+import { TierSelect } from '@/components/ui/TierSelect';
 import {
     QuoteRequestModal,
     QuoteRequestRecaptchaScripts,
@@ -35,6 +36,7 @@ export function PricingCalculator({
     const [extraUsers, setExtraUsers] = useState<number>(0);
     const [teamUsers, setTeamUsers] = useState<number>(0);
     const [directBankingTier, setDirectBankingTier] = useState<number>(0);
+    const [directBankingPlus, setDirectBankingPlus] = useState<boolean>(false);
 
     // Accordions
     const [extraSetupOpen, setExtraSetupOpen] = useState<boolean>(true);
@@ -141,24 +143,32 @@ export function PricingCalculator({
             : 'Tot 700 huurders (+€ 157,30/mnd)',
     ];
 
-    const directBankingPrices = [0, 22.5, 38.5, 75.0, 97.5, 150.0];
+    const directBankingPrices = [
+        0, 23.5, 40.0, 77.5, 100.0, 155.0, 205.0, 310.0,
+    ];
     const directBankingLabels = [
         isEn ? 'No Direct Banking' : 'Geen Direct Banking',
         isEn
-            ? 'Direct banking (Small | 1 account) (+€ 22.50/mo)'
-            : 'Direct banking (Klein | 1 rekening) (+€ 22,50/mnd)',
+            ? 'Direct banking (Small | 1 bank account) (+€ 23.50/mo)'
+            : 'Direct banking (Small | 1 rekening) (+€ 23,50/mnd)',
         isEn
-            ? 'Direct banking (Medium | 1-3 accounts) (+€ 38.50/mo)'
-            : 'Direct banking (Medium | 1-3 rekeningen) (+€ 38,50/mnd)',
+            ? 'Direct banking (Medium | 2-3 bank accounts) (+€ 40.00/mo)'
+            : 'Direct banking (Medium | 2-3 rekeningen) (+€ 40,00/mnd)',
         isEn
-            ? 'Direct banking (Normal | 1-6 accounts) (+€ 75.00/mo)'
-            : 'Direct banking (Normal | 1-6 rekeningen) (+€ 75,00/mnd)',
+            ? 'Direct banking (Normal | 4-6 bank accounts) (+€ 77.50/mo)'
+            : 'Direct banking (Normal | 4-6 rekeningen) (+€ 77,50/mnd)',
         isEn
-            ? 'Direct banking (Large | 1-9 accounts) (+€ 97.50/mo)'
-            : 'Direct banking (Large | 1-9 rekeningen) (+€ 97,50/mnd)',
+            ? 'Direct banking (Large | 7-9 bank accounts) (+€ 100.00/mo)'
+            : 'Direct banking (Large | 7-9 rekeningen) (+€ 100,00/mnd)',
         isEn
-            ? 'Direct banking (Extra large | 1-12 accounts) (+€ 150.00/mo)'
-            : 'Direct banking (Extra large | 1-12 rekeningen) (+€ 150,00/mnd)',
+            ? 'Direct banking (Extra Large | 10-12 bank accounts) (+€ 155.00/mo)'
+            : 'Direct banking (Extra Large | 10-12 rekeningen) (+€ 155,00/mnd)',
+        isEn
+            ? 'Direct banking (Extra extra Large | 13-20 bank accounts) (+€ 205.00/mo)'
+            : 'Direct banking (Extra extra Large | 13-20 rekeningen) (+€ 205,00/mnd)',
+        isEn
+            ? 'Direct banking (Unlimited | 21+ bank accounts) (+€ 310.00/mo)'
+            : 'Direct banking (Unlimited | 21+ rekeningen) (+€ 310,00/mnd)',
     ];
 
     const extraContractsCost = extraContractPrices[extraContractsTier] || 0;
@@ -166,6 +176,7 @@ export function PricingCalculator({
     const extraUsersCost = extraUsers * 139.2;
     const teamUsersCost = teamUsers * 21.8;
     const directBankingCost = directBankingPrices[directBankingTier] || 0;
+    const directBankingPlusCost = directBankingPlus ? 75.0 : 0;
 
     // Sum monthly additions
     const monthlyAdditions =
@@ -173,7 +184,8 @@ export function PricingCalculator({
         tenantPortalCost +
         extraUsersCost +
         teamUsersCost +
-        directBankingCost;
+        directBankingCost +
+        directBankingPlusCost;
 
     const monthlySubtotal = baseMonthlyPrice + monthlyAdditions;
 
@@ -392,6 +404,17 @@ export function PricingCalculator({
             priceFormatted: formatEur(directBankingCost),
         });
     }
+    if (directBankingPlus) {
+        monthlyItems.push({
+            category: isEn
+                ? 'Direct Banking'
+                : 'Direct Banking: Elektronisch Bankieren',
+            label: isEn
+                ? 'Direct Banking Plus (Including AI)'
+                : 'Direct Banking Plus (incl. AI)',
+            priceFormatted: formatEur(directBankingPlusCost),
+        });
+    }
 
     return (
         <section
@@ -473,26 +496,16 @@ export function PricingCalculator({
                                         ? 'Extra contracts *'
                                         : 'Extra contracten *'}
                                 </label>
-                                <div className='relative'>
-                                    <select
-                                        value={extraContractsTier}
-                                        onChange={(e) =>
-                                            setExtraContractsTier(
-                                                Number(e.target.value),
-                                            )
-                                        }
-                                        className='w-full appearance-none rounded-md border border-black/20 bg-slate-50 pl-3 pr-10 py-2 text-sm font-medium text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30 transition-all cursor-pointer'
-                                    >
-                                        {extraContractLabels.map(
-                                            (label, idx) => (
-                                                <option key={idx} value={idx}>
-                                                    {label}
-                                                </option>
-                                            ),
-                                        )}
-                                    </select>
-                                    <ChevronDown className='w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none' />
-                                </div>
+                                <TierSelect
+                                    label={
+                                        isEn
+                                            ? 'Extra contracts'
+                                            : 'Extra contracten'
+                                    }
+                                    options={extraContractLabels}
+                                    value={extraContractsTier}
+                                    onChange={setExtraContractsTier}
+                                />
                                 <p className='text-[11px] text-slate-500 font-light'>
                                     {isEn
                                         ? 'Select tier if your portfolio exceeds 100 active lease contracts'
@@ -507,26 +520,16 @@ export function PricingCalculator({
                                         ? 'Tenant Portal *'
                                         : 'Huurdersportaal *'}
                                 </label>
-                                <div className='relative'>
-                                    <select
-                                        value={tenantPortalTier}
-                                        onChange={(e) =>
-                                            setTenantPortalTier(
-                                                Number(e.target.value),
-                                            )
-                                        }
-                                        className='w-full appearance-none rounded-md border border-black/20 bg-slate-50 pl-3 pr-10 py-2 text-sm font-medium text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30 transition-all cursor-pointer'
-                                    >
-                                        {tenantPortalLabels.map(
-                                            (label, idx) => (
-                                                <option key={idx} value={idx}>
-                                                    {label}
-                                                </option>
-                                            ),
-                                        )}
-                                    </select>
-                                    <ChevronDown className='w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none' />
-                                </div>
+                                <TierSelect
+                                    label={
+                                        isEn
+                                            ? 'Tenant Portal'
+                                            : 'Huurdersportaal'
+                                    }
+                                    options={tenantPortalLabels}
+                                    value={tenantPortalTier}
+                                    onChange={setTenantPortalTier}
+                                />
                             </div>
 
                             {/* Extra Gebruikers Slider */}
@@ -636,31 +639,57 @@ export function PricingCalculator({
                                         ? 'Direct Banking: Electronic Banking'
                                         : 'Direct Banking: Elektronisch bankieren'}
                                 </label>
-                                <div className='relative'>
-                                    <select
-                                        value={directBankingTier}
-                                        onChange={(e) =>
-                                            setDirectBankingTier(
-                                                Number(e.target.value),
-                                            )
-                                        }
-                                        className='w-full appearance-none rounded-md border border-black/20 bg-slate-50 pl-3 pr-10 py-2 text-sm font-medium text-[#060e32] focus:border-teal focus:outline-hidden focus:ring-2 focus:ring-teal/30 transition-all cursor-pointer'
-                                    >
-                                        {directBankingLabels.map(
-                                            (label, idx) => (
-                                                <option key={idx} value={idx}>
-                                                    {label}
-                                                </option>
-                                            ),
-                                        )}
-                                    </select>
-                                    <ChevronDown className='w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none' />
-                                </div>
+                                <TierSelect
+                                    label={
+                                        isEn
+                                            ? 'Direct Banking: Electronic Banking'
+                                            : 'Direct Banking: Elektronisch bankieren'
+                                    }
+                                    options={directBankingLabels}
+                                    value={directBankingTier}
+                                    onChange={setDirectBankingTier}
+                                />
                                 <p className='text-[11px] text-slate-500 font-light'>
                                     {isEn
                                         ? 'Excl. Ponto subscription at € 4.00 per account'
                                         : 'Excl. Ponto Abonnement à € 4,- per rekening'}
                                 </p>
+                                <label
+                                    className={`flex items-center gap-3 cursor-pointer px-3 py-1.5 rounded-md border transition-all ${
+                                        directBankingPlus
+                                            ? 'border-teal/30 bg-teal/5'
+                                            : 'border-black/10 hover:border-teal/50 bg-slate-50/50'
+                                    }`}
+                                >
+                                    <input
+                                        type='checkbox'
+                                        checked={directBankingPlus}
+                                        onChange={(e) =>
+                                            setDirectBankingPlus(
+                                                e.target.checked,
+                                            )
+                                        }
+                                        className='w-4 h-4 accent-teal rounded-sm'
+                                    />
+                                    <span className='flex w-full items-center justify-between gap-3 text-sm font-medium text-[#060e32]'>
+                                        <span>
+                                            {isEn
+                                                ? 'Direct Banking Plus (Including AI)'
+                                                : 'Direct Banking Plus (incl. AI)'}
+                                        </span>
+                                        <span
+                                            className={`shrink-0 text-xs font-mono font-bold ${
+                                                directBankingPlus
+                                                    ? 'text-teal'
+                                                    : 'text-slate-500'
+                                            }`}
+                                        >
+                                            {isEn
+                                                ? '€ 75.00/mo'
+                                                : '€ 75,00/mnd'}
+                                        </span>
+                                    </span>
+                                </label>
                             </div>
                         </div>
 
@@ -1482,7 +1511,8 @@ export function PricingCalculator({
                                 )}
 
                                 {/* 6. Direct Banking (only when selected) */}
-                                {directBankingTier > 0 && (
+                                {(directBankingTier > 0 ||
+                                    directBankingPlus) && (
                                     <div className='py-1'>
                                         <div className='flex justify-between items-center font-medium'>
                                             <span>
@@ -1491,19 +1521,34 @@ export function PricingCalculator({
                                                     : 'Direct Banking: Elektronisch Bankieren'}
                                             </span>
                                             <span className='font-semibold text-navy-900'>
-                                                {formatEur(directBankingCost)}
+                                                {formatEur(
+                                                    directBankingCost +
+                                                        directBankingPlusCost,
+                                                )}
                                             </span>
                                         </div>
-                                        <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
-                                            <span>
-                                                •{' '}
-                                                {
-                                                    directBankingLabels[
-                                                        directBankingTier
-                                                    ].split(' (+')[0]
-                                                }
-                                            </span>
-                                        </div>
+                                        {directBankingTier > 0 && (
+                                            <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
+                                                <span>
+                                                    •{' '}
+                                                    {
+                                                        directBankingLabels[
+                                                            directBankingTier
+                                                        ].split(' (+')[0]
+                                                    }
+                                                </span>
+                                            </div>
+                                        )}
+                                        {directBankingPlus && (
+                                            <div className='pl-3 pt-0.5 text-[11px] text-teal/80 font-normal'>
+                                                <span>
+                                                    •{' '}
+                                                    {isEn
+                                                        ? 'Direct Banking Plus (Including AI)'
+                                                        : 'Direct Banking Plus (incl. AI)'}
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
 

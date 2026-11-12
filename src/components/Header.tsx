@@ -54,6 +54,27 @@ function getSubIcon(title: string) {
     return BsArrowUpRight;
 }
 
+interface SubLinkItem {
+    title: string;
+    path: string;
+    description?: string;
+}
+
+interface MenuDropdownItem {
+    _type: 'menuDropdown';
+    title: string;
+    path?: string;
+    links?: SubLinkItem[];
+}
+
+interface MenuLinkItem {
+    _type: 'menuLink';
+    title: string;
+    path: string;
+}
+
+type MenuItem = MenuDropdownItem | MenuLinkItem;
+
 interface HeaderProps {
     locale?: string;
     settings?: {
@@ -63,6 +84,7 @@ interface HeaderProps {
         phone?: string;
         email?: string;
         address?: string;
+        navigationMenu?: MenuItem[];
     };
 }
 
@@ -115,7 +137,6 @@ const translations = {
 export default function Header({ locale = 'nl', settings }: HeaderProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [langDropdownOpen, setLangDropdownOpen] = useState(false);
-    const [mounted, setMounted] = useState(false);
     const pathname = usePathname();
     const t = translations[locale as 'nl' | 'en'] || translations.nl;
     const isEn = locale === 'en';
@@ -125,7 +146,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
     const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
 
     // Fallback menu structure if Sanity settings are empty
-    const defaultMenu = isEn
+    const defaultMenu: MenuItem[] = isEn
         ? [
               {
                   _type: 'menuDropdown',
@@ -235,15 +256,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
               },
           ];
 
-    const menuItems = (settings as any)?.navigationMenu || defaultMenu;
+    const menuItems: MenuItem[] = settings?.navigationMenu || defaultMenu;
 
     const headerRef = useRef<HTMLElement>(null);
     const mobileDropdownRef = useRef<HTMLDivElement>(null);
     const desktopDropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        setMounted(true);
-
         // Close mobile menu & language dropdown when clicking/tapping outside
         const handleClickOutside = (event: MouseEvent | TouchEvent) => {
             const target = event.target as Node;
@@ -300,11 +319,28 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
         };
     }, []);
 
-    // Close mobile menu on path changes & reset default expanded submenu
-    useEffect(() => {
+    // Close mobile menu on path changes & reset default expanded submenu.
+    // Adjusted during render (not in an effect) per React's guidance for
+    // resetting state when a value changes — avoids the extra post-commit
+    // render pass an effect would cause.
+    const [prevPathname, setPrevPathname] = useState(pathname);
+    if (pathname !== prevPathname) {
+        setPrevPathname(pathname);
         setMobileMenuOpen(false);
         setMobileSubmenu(isEn ? 'Our apps' : 'Onze apps');
-    }, [pathname, isEn]);
+    }
+
+    // Desktop mega-menus open via CSS :focus-within. Clicking a link inside
+    // one navigates without blurring it, so the panel stays open on the new
+    // page until focus moves. Blur after each route change to close it.
+    useEffect(() => {
+        if (
+            document.activeElement instanceof HTMLElement &&
+            headerRef.current?.contains(document.activeElement)
+        ) {
+            document.activeElement.blur();
+        }
+    }, [pathname]);
 
     // Helper to prepend locale for links and translate categories/slugs
     const getPath = (path: string) => {
@@ -704,16 +740,13 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                         aria-label={isEn ? 'Main navigation' : 'Hoofdnavigatie'}
                         className='hidden xl:flex items-center justify-center gap-1.5 2xl:gap-2 grow mt-1'
                     >
-                        {menuItems.map((item: any, idx: number) => {
-                            const isDropdown = item._type === 'menuDropdown';
-                            const isDropdownActive =
-                                isDropdown &&
-                                (item.links?.some((l: any) =>
-                                    isActive(l.path),
-                                ) ||
-                                    isActive(item.path));
+                        {menuItems.map((item: MenuItem, idx: number) => {
+                            if (item._type === 'menuDropdown') {
+                                const isDropdownActive =
+                                    item.links?.some((l: SubLinkItem) =>
+                                        isActive(l.path),
+                                    ) || (item.path ? isActive(item.path) : false);
 
-                            if (isDropdown) {
                                 return (
                                     <div
                                         key={idx}
@@ -767,7 +800,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                             <div className='flex flex-col gap-1'>
                                                 {item.links?.map(
                                                     (
-                                                        subLink: any,
+                                                        subLink: SubLinkItem,
                                                         sIdx: number,
                                                     ) => {
                                                         const isDemo =
@@ -1042,7 +1075,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                 }
                                 className='flex flex-col p-4 gap-1'
                             >
-                                {menuItems.map((item: any, idx: number) => {
+                                {menuItems.map((item: MenuItem, idx: number) => {
                                     const key = `mobile-nav-${idx}`;
                                     if (item._type === 'menuDropdown') {
                                         const isOpen =
@@ -1113,7 +1146,7 @@ export default function Header({ locale = 'nl', settings }: HeaderProps) {
                                                     <div className='pl-5 pr-1 pt-1.5 flex flex-col gap-0.5 mt-1'>
                                                         {item.links?.map(
                                                             (
-                                                                subLink: any,
+                                                                subLink: SubLinkItem,
                                                                 sIdx: number,
                                                             ) => {
                                                                 const isDemo =

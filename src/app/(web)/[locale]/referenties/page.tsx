@@ -506,7 +506,7 @@ export default async function ReferentiesPage({
                                 return (
                                     <div
                                         key={c._key || index}
-                                        className='rounded-xl border border-black/10 bg-white/80 p-8 md:p-12 shadow-md relative overflow-hidden group hover:border-teal/40 transition-all duration-300'
+                                        className='rounded-xl border border-black/10 bg-white/80 p-4 md:p-12 shadow-md relative overflow-hidden group hover:border-teal/40 transition-all duration-300'
                                     >
                                         <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 items-center'>
                                             <div className='lg:col-span-7 space-y-6'>
@@ -544,7 +544,7 @@ export default async function ReferentiesPage({
 
                                                 {/* Key Metric Banner */}
                                                 {metricVal && (
-                                                    <div className='p-4 border-y border-y-teal/60 flex items-center gap-4 text-darkblue leading-tight text-teal'>
+                                                    <div className='p-2 md:p-4 border-y border-y-teal/60 flex items-center md:gap-4 text-darkblue leading-tight text-teal gap-2'>
                                                         <Zap className='w-7 h-7 text-teal shrink-0' />
                                                         <div>
                                                             <span className='text-sm font-mono font-bold  text-black/65 uppercase block '>
@@ -576,7 +576,7 @@ export default async function ReferentiesPage({
 
                                             {/* Right Column Visual Card: Official Company Logo & Technical Specs */}
                                             <div className='lg:col-span-5 relative'>
-                                                <div className='relative rounded-xl bg-gray-100 p-6 text-navy-900 border border-navy-900/10 shadow-md space-y-5 overflow-hidden'>
+                                                <div className='relative rounded-xl bg-gray-100 p-3 md:p-6 text-navy-900 border border-navy-900/10 shadow-md space-y-5 overflow-hidden'>
                                                     {/* Header Bar */}
                                                     <div className='flex items-center justify-between border-b border-navy-900/10 pb-3'>
                                                         <span className='text-xs font-mono text-teal font-bold uppercase tracking-wider'>
